@@ -1,0 +1,247 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:3867794090434878240",
+      "lastPropertyId": "4:4570083749155237849",
+      "name": "ClasificacionProyecto",
+      "properties": [
+        {
+          "id": "1:7521607225935953493",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6944626713596755992",
+          "name": "descripcion",
+          "type": 9
+        },
+        {
+          "id": "3:5691040412648373501",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "4:4570083749155237849",
+          "name": "fechaSync",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:6117759740444770997",
+      "lastPropertyId": "6:8341443670952491819",
+      "name": "Emprendimiento",
+      "properties": [
+        {
+          "id": "1:3991281244965765077",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6017954821795207299",
+          "name": "imagen",
+          "type": 9
+        },
+        {
+          "id": "3:3980554204008347119",
+          "name": "nombre",
+          "type": 9
+        },
+        {
+          "id": "4:9086365290951858859",
+          "name": "descripcion",
+          "type": 9
+        },
+        {
+          "id": "5:2452280981631945624",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "6:8341443670952491819",
+          "name": "fechaSync",
+          "type": 10
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:8612740868205840040",
+          "name": "usuario",
+          "targetId": "5:3964965102569712035"
+        }
+      ]
+    },
+    {
+      "id": "3:2166617641346171935",
+      "lastPropertyId": "10:3462034544506880697",
+      "name": "Jornada",
+      "properties": [
+        {
+          "id": "1:6909534581842096739",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5386075232935579859",
+          "name": "numeroJornada",
+          "type": 6
+        },
+        {
+          "id": "3:4364625688543508975",
+          "name": "fechaRevision",
+          "type": 10
+        },
+        {
+          "id": "4:8474005816611301515",
+          "name": "circuloEmpresa",
+          "type": 9
+        },
+        {
+          "id": "5:291034994140840826",
+          "name": "analisisFinanciero",
+          "type": 9
+        },
+        {
+          "id": "6:7245017250220973753",
+          "name": "convenio",
+          "type": 9
+        },
+        {
+          "id": "7:552297950480807692",
+          "name": "agregarRegistro",
+          "type": 9
+        },
+        {
+          "id": "8:5889322915921969172",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "9:8304755835049178217",
+          "name": "fechaSync",
+          "type": 10
+        },
+        {
+          "id": "10:3462034544506880697",
+          "name": "emprendimientoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "1:8599028730148103623",
+          "relationTarget": "Emprendimiento"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:1366246136666677579",
+      "lastPropertyId": "4:5347718656034637228",
+      "name": "PriporidadProyecto",
+      "properties": [
+        {
+          "id": "1:7079790605743243388",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6172998306654734553",
+          "name": "descripcion",
+          "type": 9
+        },
+        {
+          "id": "3:2574672497671950469",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "4:5347718656034637228",
+          "name": "fechaSync",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:3964965102569712035",
+      "lastPropertyId": "11:176765185759695924",
+      "name": "Usuario",
+      "properties": [
+        {
+          "id": "1:6915994077861086090",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4932511096555161847",
+          "name": "nombre",
+          "type": 9
+        },
+        {
+          "id": "3:6273269044269879201",
+          "name": "apellido",
+          "type": 9
+        },
+        {
+          "id": "4:3662632218083065242",
+          "name": "telefono",
+          "type": 9
+        },
+        {
+          "id": "5:3180136282497114098",
+          "name": "celular",
+          "type": 9
+        },
+        {
+          "id": "6:647799949869266031",
+          "name": "correo",
+          "type": 9
+        },
+        {
+          "id": "7:3681945340148367110",
+          "name": "password",
+          "type": 9
+        },
+        {
+          "id": "8:2965121636634238955",
+          "name": "imagen",
+          "type": 9
+        },
+        {
+          "id": "9:2158551797062253471",
+          "name": "rol",
+          "type": 6
+        },
+        {
+          "id": "10:6431279296723446945",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "11:176765185759695924",
+          "name": "fechaSync",
+          "type": 10
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "5:3964965102569712035",
+  "lastIndexId": "1:8599028730148103623",
+  "lastRelationId": "1:8612740868205840040",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}
