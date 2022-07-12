@@ -9,40 +9,44 @@ String formatTimeOfDay(TimeOfDay timeOfDay) {
   return '$hour:$min:$sec';
 }
 
-InputDecoration getInputDecoration(
-  BuildContext context,
-  String labelText,
-  String hintText,
-) {
+InputDecoration getInputDecoration({
+  required BuildContext context,
+  required String labelText,
+  String? hintText,
+  InkWell? inkWell,
+}) {
   return InputDecoration(
-    labelText: AppLocalizations.of(context).getText(
-      labelText /* Nombre de Evento */,
-    ),
-    labelStyle: AppTheme.of(context).title3.override(
-          fontFamily: 'Montserrat',
-          color: AppTheme.of(context).secondaryText,
+    labelText: labelText,
+    labelStyle: AppTheme.of(context).bodyText1.override(
+          fontFamily: 'Poppins',
+          color: Colors.white,
           fontSize: 15,
           fontWeight: FontWeight.normal,
         ),
-    hintText: AppLocalizations.of(context).getText(
-      hintText /* Nombre del Evento... */,
+    hintText: hintText,
+    hintStyle: AppTheme.of(context).bodyText1.override(
+          fontFamily: 'Poppins',
+          color: Colors.white,
+          fontSize: 15,
+          fontWeight: FontWeight.w500,
+        ),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: const BorderSide(
+        color: Color(0x00000000),
+        width: 1,
+      ),
+      borderRadius: BorderRadius.circular(30),
     ),
-    // enabledBorder: OutlineInputBorder(
-    //   borderSide: BorderSide(
-    //     color: AppTheme.of(context).contornos,
-    //     width: 1,
-    //   ),
-    //   borderRadius: BorderRadius.circular(8),
-    // ),
-    // focusedBorder: OutlineInputBorder(
-    //   borderSide: BorderSide(
-    //     color: AppTheme.of(context).contornos,
-    //     width: 1,
-    //   ),
-    //   borderRadius: BorderRadius.circular(8),
-    // ),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: const BorderSide(
+        color: Color(0x00000000),
+        width: 1,
+      ),
+      borderRadius: BorderRadius.circular(30),
+    ),
     filled: true,
-    // fillColor: AppTheme.of(context).campos,
+    fillColor: const Color(0x52FFFFFF),
+    suffixIcon: inkWell,
   );
 }
 

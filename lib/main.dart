@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 
 import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/services/navigation_service.dart';
 import 'package:bizpro_app/internationalization/internationalization.dart';
 import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/app_state.dart';
+import 'package:bizpro_app/user_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppTheme.initialize();
 
-  AppState();
-
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => UserState(),
+          lazy: false,
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -39,6 +48,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'bizproEM',
       localizationsDelegates: const [
         AppLocalizationsDelegate(),
