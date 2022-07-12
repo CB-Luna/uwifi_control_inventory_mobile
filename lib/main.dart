@@ -6,7 +6,7 @@ import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/services/navigation_service.dart';
 import 'package:bizpro_app/internationalization/internationalization.dart';
 import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/user_provider.dart';
+import 'package:bizpro_app/providers/user_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

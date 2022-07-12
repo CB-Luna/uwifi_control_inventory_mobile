@@ -5,7 +5,7 @@ import 'package:bizpro_app/util/custom_functions.dart';
 import 'package:bizpro_app/screens/widgets/toggle_icon.dart';
 import 'package:bizpro_app/screens/widgets/custom_button.dart';
 import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/user_provider.dart';
+import 'package:bizpro_app/providers/user_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
