@@ -25,6 +25,10 @@ void main() async {
           create: (_) => UserState(),
           lazy: false,
         ),
+        ChangeNotifierProvider(
+          create: (_) => NetworkState(),
+          lazy: false,
+        ),
       ],
       child: const MyApp(),
     ),

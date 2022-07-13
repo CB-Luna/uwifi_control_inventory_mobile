@@ -97,6 +97,7 @@ class UserState extends ChangeNotifier {
 
   void updateRecuerdame() {
     recuerdame = !recuerdame;
+    prefs.setBool('recuerdame', recuerdame);
     notifyListeners();
   }
 
