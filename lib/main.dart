@@ -1,20 +1,23 @@
+import 'package:bizpro_app/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/services/navigation_service.dart';
 import 'package:bizpro_app/internationalization/internationalization.dart';
 import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/providers/user_provider.dart';
 import 'package:bizpro_app/object_box_files/object_box_entity.dart';
 
 late ObjectBox objectbox;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   objectbox = await ObjectBox.create();
+  //TODO: revisar persistencia
+  await initHiveForFlutter();
   await AppTheme.initialize();
-  
+
   runApp(
     MultiProvider(
       providers: [
@@ -50,25 +53,29 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'bizproEM',
-      localizationsDelegates: const [
-        AppLocalizationsDelegate(),
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      locale: _locale,
-      supportedLocales: const [Locale('en', '')],
-      theme: ThemeData(brightness: Brightness.light),
-      darkTheme: ThemeData(brightness: Brightness.dark),
-      themeMode: _themeMode,
-      navigatorKey: NavigationService.navigatorKey,
-      initialRoute: '/',
-      routes: {
-        '/': (_) => const SplashScreen(),
-      },
+    final UserState userState = Provider.of<UserState>(context);
+    return GraphQLProvider(
+      client: userState.client,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'bizproEM',
+        localizationsDelegates: const [
+          AppLocalizationsDelegate(),
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        locale: _locale,
+        supportedLocales: const [Locale('en', '')],
+        theme: ThemeData(brightness: Brightness.light),
+        darkTheme: ThemeData(brightness: Brightness.dark),
+        themeMode: _themeMode,
+        navigatorKey: NavigationService.navigatorKey,
+        initialRoute: '/',
+        routes: {
+          '/': (_) => const SplashScreen(),
+        },
+      ),
     );
   }
 }
