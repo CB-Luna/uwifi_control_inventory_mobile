@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
+import 'package:bizpro_app/providers/providers.dart';
+import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/util/custom_functions.dart';
 import 'package:bizpro_app/screens/widgets/toggle_icon.dart';
 import 'package:bizpro_app/screens/widgets/custom_button.dart';
 import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/providers/user_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -80,6 +82,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                       child: TextFormField(
                         controller: userState.emailController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'El correo es requerido';
+                          }
+                          return null;
+                        },
                         decoration: getInputDecoration(
                           context: context,
                           labelText: 'Correo electrónico',
@@ -100,6 +108,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: TextFormField(
                         controller: userState.passwordController,
                         obscureText: !contrasenaVisibility,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'La contraseña es requerida';
+                          }
+                          return null;
+                        },
                         decoration: getInputDecoration(
                           context: context,
                           labelText: 'Contraseña',
@@ -131,48 +145,102 @@ class _LoginScreenState extends State<LoginScreen> {
                     Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-                      child: CustomButton(
-                        onPressed: () async {
-                          //TODO: hacer login, agregar pantalla emprendimientos
-                          // final user = await signInWithEmail(
-                          //   context,
-                          //   correoElectronicoController.text,
-                          //   contrasenaController.text,
-                          // );
-                          // if (user == null) {
-                          //   return;
-                          // }
+                      child: Mutation(
+                          options: MutationOptions(
+                            document: gql(login),
+                            onCompleted: (dynamic resultData) async {
+                              if (resultData == null) return;
 
-                          // setState(() =>
-                          //     FFAppState().contrasena = contrasenaController.text);
-                          // setState(() => FFAppState().correoElectronico =
-                          //     correoElectronicoController.text);
-                          // await Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => MisEmprendimientosWidget(),
-                          //   ),
-                          // );
-                        },
-                        text: 'Iniciar sesión',
-                        options: ButtonOptions(
-                          width: 170,
-                          height: 50,
-                          color: const Color(0xFF006AFF),
-                          textStyle: AppTheme.of(context).subtitle2.override(
-                                fontFamily: 'Montserrat',
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                              ),
-                          elevation: 0,
-                          borderSide: const BorderSide(
-                            color: Colors.transparent,
-                            width: 1,
+                              userState.setEmail();
+                              //TODO: quitar?
+                              userState.setPassword();
+
+                              final jwt = resultData['login']['jwt'];
+                              await userState.setToken(jwt);
+
+                              // final user = resultData['login']['user'];
+
+                              // final userId = int.parse(user['id']);
+
+                              // await prefs.setInt('userId', userId);
+
+                              // authenticationState.userId = userId;
+
+                              // await GraphQLConfiguration.initClient(authenticationState);
+
+                              // final String role = await getRole(jwt);
+
+                              // authenticationState.setRole(role);
+                              // await prefs.setString('role', role);
+
+                              if (!mounted) return;
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const EmprendimientosScreen(),
+                                ),
+                              );
+                            },
+                            onError: (OperationException? exception) {
+                              if (exception == null) return;
+                              if (exception.graphqlErrors.isEmpty) {
+                                return;
+                              }
+                              final message =
+                                  exception.graphqlErrors[0].message;
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Error: $message'),
+                                ),
+                              );
+                            },
                           ),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
+                          builder:
+                              (RunMutation runMutation, QueryResult? result) {
+                            if (result!.isLoading) {
+                              return const Center(
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    Colors.white,
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return CustomButton(
+                                onPressed: () async {
+                                  if (!formKey.currentState!.validate()) {
+                                    return;
+                                  }
+                                  //TODO: hacer login, agregar pantalla emprendimientos
+                                  runMutation({
+                                    'email': userState.emailController.text,
+                                    'password':
+                                        userState.passwordController.text,
+                                  });
+                                },
+                                text: 'Iniciar sesión',
+                                options: ButtonOptions(
+                                  width: 170,
+                                  height: 50,
+                                  color: const Color(0xFF006AFF),
+                                  textStyle:
+                                      AppTheme.of(context).subtitle2.override(
+                                            fontFamily: 'Montserrat',
+                                            color: Colors.white,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                  elevation: 0,
+                                  borderSide: const BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              );
+                            }
+                          }),
                     ),
 
                     //Recordar
