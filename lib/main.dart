@@ -9,10 +9,10 @@ import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/providers/user_provider.dart';
 import 'package:bizpro_app/object_box_files/object_box_entity.dart';
 
-late ObjectBox objectbox;
+// late ObjectBox objectbox;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  objectbox = await ObjectBox.create();
+  // objectbox = await ObjectBox.create();
   await AppTheme.initialize();
   
   runApp(
