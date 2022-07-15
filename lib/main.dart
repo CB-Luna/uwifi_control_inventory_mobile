@@ -1,5 +1,7 @@
-import 'package:bizpro_app/providers/providers.dart';
 import 'package:flutter/material.dart';
+import 'package:bizpro_app/providers/providers.dart';
+import 'package:bizpro_app/database/object_box_database.dart';
+
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
@@ -8,12 +10,11 @@ import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/services/navigation_service.dart';
 import 'package:bizpro_app/internationalization/internationalization.dart';
 import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/object_box_files/object_box_entity.dart';
 
-// late ObjectBox objectbox;
+late ObjectBoxDatabase dataBase;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // objectbox = await ObjectBox.create();
+  dataBase = await ObjectBoxDatabase.create();
   //TODO: revisar persistencia
   await initHiveForFlutter();
   await AppTheme.initialize();
