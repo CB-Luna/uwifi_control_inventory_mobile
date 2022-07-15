@@ -43,10 +43,4 @@ class NetworkState extends ChangeNotifier {
     }
     return msg;
   }
-
-  @override
-  void dispose() {
-    // subscription.cancel();
-    super.dispose();
-  }
 }
