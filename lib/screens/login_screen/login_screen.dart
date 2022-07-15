@@ -1,3 +1,4 @@
+import 'package:bizpro_app/graphql/query_user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -27,7 +28,6 @@ class _LoginScreenState extends State<LoginScreen> {
         jwt
         user {
           id
-          email
         }
       }
     }
@@ -157,21 +157,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
                               final jwt = resultData['login']['jwt'];
                               await userState.setToken(jwt);
+                              final userId =
+                                  int.parse(resultData['login']['user']['id']);
 
-                              // final user = resultData['login']['user'];
-
-                              // final userId = int.parse(user['id']);
-
-                              // await prefs.setInt('userId', userId);
-
-                              // authenticationState.userId = userId;
-
-                              // await GraphQLConfiguration.initClient(authenticationState);
-
-                              // final String role = await getRole(jwt);
-
-                              // authenticationState.setRole(role);
-                              // await prefs.setString('role', role);
+                              final user = await getUser(jwt, userId);
 
                               if (!mounted) return;
                               await Navigator.push(
@@ -184,6 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             onError: (OperationException? exception) {
                               if (exception == null) return;
+                              //TODO: check offline connection
                               if (exception.graphqlErrors.isEmpty) {
                                 return;
                               }
@@ -212,7 +202,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   if (!formKey.currentState!.validate()) {
                                     return;
                                   }
-                                  //TODO: hacer login, agregar pantalla emprendimientos
                                   runMutation({
                                     'email': userState.emailController.text,
                                     'password':
@@ -298,13 +287,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                       child: InkWell(
                         onTap: () async {
-                          //TODO: agregar ResetPassword screen
-                          // await Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => ResetPasswordWidget(),
-                          //   ),
-                          // );
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ResetPasswordScreen(),
+                            ),
+                          );
                         },
                         child: Text(
                           'Olvidé mi contraseña',
