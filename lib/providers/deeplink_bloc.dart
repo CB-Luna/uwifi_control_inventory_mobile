@@ -49,6 +49,7 @@ class DeepLinkBloc extends Bloc {
       return null;
     } on FormatException catch (_) {
       print("Malformed initial Uri.");
+      return null;
     }
   }
 }

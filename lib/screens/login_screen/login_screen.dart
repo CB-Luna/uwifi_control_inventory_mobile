@@ -1,4 +1,5 @@
 import 'package:bizpro_app/graphql/query_user.dart';
+import 'package:bizpro_app/models/usuario_activo.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -160,7 +161,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               final userId =
                                   int.parse(resultData['login']['user']['id']);
 
-                              final user = await getUser(jwt, userId);
+                              final userData = await getUser(jwt, userId);
+
+                              if (userData == null) return;
+
+                              userState.usuarioActivo =
+                                  UsuarioActivo.fromMap(userData);
+
+                              //TODO: check user roles
 
                               if (!mounted) return;
                               await Navigator.push(
@@ -173,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             onError: (OperationException? exception) {
                               if (exception == null) return;
-                              //TODO: check offline connection
+                              //TODO: catch network error
                               if (exception.graphqlErrors.isEmpty) {
                                 return;
                               }
@@ -202,6 +210,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   if (!formKey.currentState!.validate()) {
                                     return;
                                   }
+                                  //TODO: revisar status de red y si es la primera vez
+                                  //TODO: hacer push a pantalla de loading
                                   runMutation({
                                     'email': userState.emailController.text,
                                     'password':
