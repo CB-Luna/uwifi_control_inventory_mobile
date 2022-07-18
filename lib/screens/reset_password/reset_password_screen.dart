@@ -153,8 +153,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             child: Mutation(
                 options: MutationOptions(
                   document: gql(forgotPassword),
-                  onCompleted: (_) async {
-                    print('Completado. Correo: ${emailAddressController.text}');
+                  onCompleted: (resultData) async {
+                    if (resultData == null) return;
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
