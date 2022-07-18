@@ -56,6 +56,7 @@ dependencies:
   provider: ^6.0.3
   shared_preferences: ^2.0.15
   timeago: ^3.2.2
+  uni_links: ^0.5.1
 
 dev_dependencies:
   flutter_lints: ^2.0.0

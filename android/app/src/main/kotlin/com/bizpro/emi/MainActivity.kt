@@ -1,4 +1,4 @@
-package com.example.bizpro_app
+package com.bizpro.emi
 
 import io.flutter.embedding.android.FlutterActivity
 

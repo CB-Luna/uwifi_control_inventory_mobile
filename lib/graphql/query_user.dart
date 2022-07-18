@@ -1,5 +1,6 @@
 import 'package:bizpro_app/const.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:gql/language.dart';
 
 const String userQuery = """
 query(\$id: ID) {
@@ -47,7 +48,7 @@ Future<Map<String, dynamic>?> getUser(String jwt, int userId) async {
   );
 
   final QueryOptions queryUserOptions = QueryOptions(
-    document: gql(userQuery),
+    document: parseString(userQuery),
     variables: {"id": userId},
   );
 

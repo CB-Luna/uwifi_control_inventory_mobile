@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:bizpro_app/models/usuario_activo.dart';
 import 'package:bizpro_app/services/navigation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -7,8 +10,16 @@ import 'package:bizpro_app/const.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
-//TODO: agregar roles
-enum Role { administrador, publico }
+enum Rol {
+  emprendedor,
+  promotor,
+  staffLogistica,
+  staffDireccion,
+  administrador,
+  amigoDelCambio,
+  voluntarioEstrategico,
+  publico,
+}
 
 class UserState extends ChangeNotifier {
   static const storage = FlutterSecureStorage();
@@ -58,7 +69,7 @@ class UserState extends ChangeNotifier {
 
     //Revisar su expiracion
     if (isTokenExpired(jwt)) {
-      //TODO: await?
+      //TODO: await?, revisar navegacion
       logout();
       return ValueNotifier(_publicClient);
     }
@@ -71,6 +82,10 @@ class UserState extends ChangeNotifier {
   //Variables autenticacion
   List<String> token = [];
 
+  //Objeto con informacion del usuario activo
+  UsuarioActivo? usuarioActivo;
+  Rol rol = Rol.publico;
+
   //Constructor de provider
   UserState() {
     recuerdame = prefs.getBool('recuerdame') ?? false;
@@ -82,6 +97,11 @@ class UserState extends ChangeNotifier {
 
     emailController.text = _email;
     passwordController.text = _password;
+
+    //Inicializar usuario activo
+    final String? posibleUsuario = prefs.getString('usuarioActivo');
+    if (posibleUsuario == null) return;
+    usuarioActivo = UsuarioActivo.fromJson(posibleUsuario);
   }
 
   //Funciones Login Screen
@@ -103,7 +123,6 @@ class UserState extends ChangeNotifier {
 
   //Funciones GraphQL
   //Funcion que revisa si un jwt ha expirado
-  //TODO: restarle un dia?
   bool isTokenExpired(String jwt) {
     DateTime? expiryDate = Jwt.getExpiryDate(jwt);
     if (expiryDate == null) return false;
@@ -156,11 +175,24 @@ class UserState extends ChangeNotifier {
   Future<String> readToken() async {
     final jwt = await storage.read(key: 'token') ?? '';
     if (jwt != '') {
+      if (isTokenExpired(jwt) || usuarioActivo == null) {
+        await logout();
+        return '';
+      }
       token.add(jwt);
       initClient();
     }
     notifyListeners();
     return jwt;
+  }
+
+  void setActiveUser(Map<String, dynamic> userData) {
+    usuarioActivo = UsuarioActivo.fromJson(userData.toString());
+    setRole(usuarioActivo!.role);
+  }
+
+  void saveActiveUser() {
+    prefs.setString('activeUser', usuarioActivo!.toJson());
   }
 
   Future<void> logout() async {
@@ -170,21 +202,33 @@ class UserState extends ChangeNotifier {
     notifyListeners();
   }
 
-  // void setRole(String role) {
-  //   switch (role) {
-  //     case 'Administrador':
-  //       this.role = Role.administrador;
-  //       break;
-  //     case 'Asistente':
-  //       this.role = Role.asistente;
-  //       break;
-  //     case 'Public':
-  //       this.role = Role.publico;
-  //       break;
-  //     default:
-  //       this.role = Role.asistente;
-  //   }
-  // }
+  void setRole(String rol) {
+    switch (rol) {
+      case 'Emprendedor':
+        this.rol = Rol.emprendedor;
+        break;
+      case 'Promotor':
+        this.rol = Rol.promotor;
+        break;
+      case 'Staff Logistica':
+        this.rol = Rol.staffLogistica;
+        break;
+      case 'Staff Direccion':
+        this.rol = Rol.staffDireccion;
+        break;
+      case 'Administrador':
+        this.rol = Rol.administrador;
+        break;
+      case 'Amigo Del Cambio':
+        this.rol = Rol.amigoDelCambio;
+        break;
+      case 'Voluntario Estrategico':
+        this.rol = Rol.voluntarioEstrategico;
+        break;
+      default:
+        this.rol = Rol.publico;
+    }
+  }
 
   @override
   void dispose() {
