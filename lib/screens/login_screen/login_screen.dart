@@ -1,9 +1,12 @@
 import 'package:bizpro_app/graphql/query_user.dart';
+import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/screens/emprendimientos_screen/mis_emprendimientos_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import 'package:bizpro_app/providers/providers.dart';
+import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/util/custom_functions.dart';
 import 'package:bizpro_app/screens/widgets/toggle_icon.dart';
@@ -38,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final UserState userState = Provider.of<UserState>(context);
-
+    final usuarioProvider = Provider.of<UsuarioController>(context);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: const Color(0xFFCAEFFE),
@@ -150,7 +153,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             document: gql(login),
                             onCompleted: (dynamic resultData) async {
                               if (resultData == null) return;
-
                               userState.setEmail();
                               //TODO: quitar?
                               userState.setPassword();
@@ -162,12 +164,32 @@ class _LoginScreenState extends State<LoginScreen> {
 
                               final user = await getUser(jwt, userId);
 
-                              if (!mounted) return;
+                              //TODO: Conseguir password y rol en entero
+                              if (true) {
+                                usuarioProvider.add(
+                                user!['attributes']['username'], user['attributes']['apellidoP'],user['attributes']['apellidoM'], 
+                                DateTime.parse(user['attributes']['nacimiento']), user['attributes']['telefono'],
+                                user['attributes']['celular'], user['attributes']['email'], "CBLuna2022", 
+                                user['attributes']['imagen']['data']['attributes']['url'], 1);
+                              }
+
+                              // currentUserId = usuarioProvider.usuarios.last.id;
+
+                              // print("USER: $user");
+                              // print("USERNAME: ${user['attributes']['username']}");
+                              // print("APELLIDOP: ${user['attributes']['apellidoP']}");
+                              // print("APELLIDOM: ${user['attributes']['apellidoM']}");
+                              // print("NACIMIENTO: ${user['attributes']['nacimiento']}");
+                              // print("TELEFONO: ${user['attributes']['telefono']}");
+                              // print("CELULAR: ${user['attributes']['celular']}");
+                              // print("CORREO: ${user['attributes']['email']}");
+                              // print("IMAGEN: ${user['attributes']['imagen']['data']['attributes']['url']}");
+
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      const EmprendimientosScreen(),
+                                      const MisEmprendimientosScreen(dropdownrol: 'Administrador',),
                                 ),
                               );
                             },

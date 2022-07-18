@@ -818,9 +818,7 @@ final _entities = <ModelEntity>[
         ModelBacklink(
             name: 'emprendedores', srcEntity: 'Emprendedores', srcField: ''),
         ModelBacklink(
-            name: 'emprendendimientos',
-            srcEntity: 'Emprendimientos',
-            srcField: '')
+            name: 'emprendimientos', srcEntity: 'Emprendimientos', srcField: '')
       ]),
   ModelEntity(
       id: const IdUid(21, 311544265460535081),
@@ -1828,7 +1826,7 @@ ModelDefinition getObjectBoxModel() {
                   object.emprendedores,
               RelInfo<Emprendimientos>.toOneBacklink(12, object.id,
                       (Emprendimientos srcObject) => srcObject.comunidades):
-                  object.emprendendimientos
+                  object.emprendimientos
             },
         getId: (Comunidades object) => object.id,
         setId: (Comunidades object, int id) {
@@ -1867,7 +1865,7 @@ ModelDefinition getObjectBoxModel() {
                   (Emprendedores srcObject) => srcObject.comunidades),
               store.box<Comunidades>());
           InternalToManyAccess.setRelInfo(
-              object.emprendendimientos,
+              object.emprendimientos,
               store,
               RelInfo<Emprendimientos>.toOneBacklink(12, object.id,
                   (Emprendimientos srcObject) => srcObject.comunidades),

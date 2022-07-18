@@ -426,7 +426,7 @@ class Comunidades {
   @Backlink()
   final emprendedores = ToMany<Emprendedores>();
   @Backlink()
-  final emprendendimientos = ToMany<Emprendimientos>();
+  final emprendimientos = ToMany<Emprendimientos>();
 
   Comunidades({
     this.id = 0,

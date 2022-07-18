@@ -6,12 +6,20 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
+import 'providers/database_providers/emprendimiento_controller.dart';
+import 'providers/database_providers/usuario_controller.dart';
+import 'providers/database_providers/comunidad_controller.dart';
+
 import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/services/navigation_service.dart';
 import 'package:bizpro_app/internationalization/internationalization.dart';
 import 'package:bizpro_app/theme/theme.dart';
 
+
+
+
 late ObjectBoxDatabase dataBase;
+// late final int currentUserId;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   dataBase = await ObjectBoxDatabase.create();
@@ -22,6 +30,15 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider<EmprendimientoController>(
+          create: (context) => EmprendimientoController(),
+        ),
+        ChangeNotifierProvider<UsuarioController>(
+          create: (context) => UsuarioController(),
+        ),
+        ChangeNotifierProvider<ComunidadController>(
+          create: (context) => ComunidadController(),
+        ),
         ChangeNotifierProvider(
           create: (_) => UserState(),
           lazy: false,
