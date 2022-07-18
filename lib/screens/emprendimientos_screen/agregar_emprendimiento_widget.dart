@@ -95,6 +95,7 @@ class _AgregarEmprendimientoWidgetState
                         padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                         child: InkWell(
                           onTap: ()  {
+                            emprendimientoProvider.imagen = "https://www.amo-alebrijes.com/wp-content/uploads/2016/08/Tutoriales-tipos-de-alebrijes.jpg";
                             // final selectedMedia =
                             //     await selectMediaWithSourceBottomSheet(
                             //   context: context,

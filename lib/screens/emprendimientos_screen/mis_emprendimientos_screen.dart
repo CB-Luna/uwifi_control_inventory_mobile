@@ -1,3 +1,4 @@
+import 'package:bizpro_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -5,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:bizpro_app/components/lista_empredimientos_widget.dart';
 import 'package:bizpro_app/screens/emprendimientos_screen/agregar_emprendimiento_widget.dart';
+import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
@@ -36,6 +38,7 @@ class _MisEmprendimientosScreenState extends State<MisEmprendimientosScreen> {
   @override
   Widget build(BuildContext context) {
     final usuarioProvider = Provider.of<UsuarioController>(context);
+    final emprendimientoProvider = Provider.of<EmprendimientoController>(context);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
@@ -698,12 +701,11 @@ class _MisEmprendimientosScreenState extends State<MisEmprendimientosScreen> {
                             ),
                           );
                         }
-                        final resultado = (usuarioProvider.usuarios.toList())
-                            .take(15)
-                            .toList();
-                        // if (resultado.isEmpty) {
-                        //   return ListaEmpredimientosWidget();
-                        // }
+                        print(currentUserId);
+                        final resultado = (usuarioProvider.usuarios[0].emprendimientos.toList());
+                        if (resultado.isEmpty) {
+                          return ListaEmpredimientosWidget();
+                        }
                         return ListView.builder(
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
@@ -792,7 +794,7 @@ class _MisEmprendimientosScreenState extends State<MisEmprendimientosScreen> {
                                         children: [
                                           Expanded(
                                             child: Text(
-                                              resultadoItem.rol.toString(),
+                                              resultadoItem.descripcion,
                                               maxLines: 1,
                                               style:
                                                   AppTheme.of(context)

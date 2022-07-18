@@ -173,7 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 user['attributes']['imagen']['data']['attributes']['url'], 1);
                               }
 
-                              // currentUserId = usuarioProvider.usuarios.last.id;
+                              currentUserId = usuarioProvider.usuarios.last.id;
 
                               // print("USER: $user");
                               // print("USERNAME: ${user['attributes']['username']}");
