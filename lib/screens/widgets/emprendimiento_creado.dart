@@ -9,7 +9,7 @@ class EmprendimientoCreado extends StatefulWidget {
   const EmprendimientoCreado({Key? key}) : super(key: key);
 
   @override
-  _EmprendimientoCreadoState createState() => _EmprendimientoCreadoState();
+  State<EmprendimientoCreado> createState() => _EmprendimientoCreadoState();
 }
 
 class _EmprendimientoCreadoState extends State<EmprendimientoCreado> {
@@ -19,7 +19,7 @@ class _EmprendimientoCreadoState extends State<EmprendimientoCreado> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Color(0xFFDDEEF8),
+      backgroundColor: const Color(0xFFDDEEF8),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -32,7 +32,7 @@ class _EmprendimientoCreadoState extends State<EmprendimientoCreado> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                     child: Text(
                       'Emprendimiento\nCreado!',
                       textAlign: TextAlign.center,
@@ -44,7 +44,7 @@ class _EmprendimientoCreadoState extends State<EmprendimientoCreado> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                     child: Text(
                       'Listo, el emprendimiento se agregará a tu\nlista de emprendimientos.',
                       textAlign: TextAlign.center,
@@ -56,7 +56,7 @@ class _EmprendimientoCreadoState extends State<EmprendimientoCreado> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 70, 0, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 70, 0, 0),
                     child: Lottie.network(
                       'https://assets10.lottiefiles.com/packages/lf20_o3bfunhr.json',
                       width: 250,
@@ -67,7 +67,7 @@ class _EmprendimientoCreadoState extends State<EmprendimientoCreado> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 100, 0, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 100, 0, 0),
                     child: FFButtonWidget(
                       onPressed: () async {
                         await Navigator.push(
@@ -81,12 +81,12 @@ class _EmprendimientoCreadoState extends State<EmprendimientoCreado> {
                       options: FFButtonOptions(
                         width: 200,
                         height: 45,
-                        color: Color(0xFF28BFFA),
+                        color: const Color(0xFF28BFFA),
                         textStyle: AppTheme.of(context).subtitle2.override(
                               fontFamily: 'Poppins',
                               color: Colors.white,
                             ),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Colors.transparent,
                           width: 1,
                         ),

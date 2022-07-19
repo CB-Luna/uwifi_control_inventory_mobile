@@ -261,7 +261,7 @@ class SideMenu extends StatelessWidget {
 
                     CustomMenuItem(
                       label: 'Cerrar Sesión',
-                      iconData: Icons.inventory,
+                      iconData: Icons.logout,
                       onTap: () async {
                         await userState.logout();
                       },
