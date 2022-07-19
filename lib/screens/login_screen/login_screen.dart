@@ -1,9 +1,5 @@
 import 'package:bizpro_app/graphql/query_user.dart';
-<<<<<<< HEAD
-import 'package:bizpro_app/main.dart';
-=======
 import 'package:bizpro_app/models/usuario_activo.dart';
->>>>>>> cc0af14a8775b96ac21bfd7eff579b99e0f76d60
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
