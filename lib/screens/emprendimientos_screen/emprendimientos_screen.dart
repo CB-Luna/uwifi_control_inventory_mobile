@@ -77,7 +77,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                     child: Builder(
                       builder: (context) {
                         //TODO: agregar query con el ID correcto
-                        final resultado = (usuarioProvider.usuarios[currentUserId].emprendimientos.toList());
+                        final resultado = (usuarioProvider.usuarios[0].emprendimientos.toList());
                         return ListView.builder(
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,

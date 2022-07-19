@@ -1,5 +1,9 @@
 import 'package:bizpro_app/graphql/query_user.dart';
+<<<<<<< HEAD
 import 'package:bizpro_app/main.dart';
+=======
+import 'package:bizpro_app/models/usuario_activo.dart';
+>>>>>>> cc0af14a8775b96ac21bfd7eff579b99e0f76d60
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -175,16 +179,21 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (!usuarioProvider.validateUser(userData['attributes']['email'] ?? 'NONE')) {
                                 print('Usuario no existente');
                                 usuarioProvider.add(
-                                userData['attributes']['username'], userData['attributes']['apellidoP'],userData['attributes']['apellidoM'], 
-                                DateTime.parse(userData['attributes']['nacimiento']), userData['attributes']['telefono'],
-                                userData['attributes']['celular'], userData['attributes']['email'], "CBLuna2022", 
-                                userData['attributes']['imagen']['data']['attributes']['url'], 1);
-                                currentUserId = 0;
+                                    userData['attributes']['username'],
+                                    userData['attributes']['apellidoP'],
+                                    '',
+                                    DateTime.parse(
+                                        userData['attributes']['nacimiento']),
+                                    userData['attributes']['telefono'],
+                                    userData['attributes']['celular'],
+                                    userData['attributes']['email'],
+                                    "CBLuna2022",
+                                    userData['attributes']['imagen']['data']
+                                        ['attributes']['url'],
+                                    1);
                               }
-                              else{
-                                print('Usuario ya existente');
-                                currentUserId = 0;
-                              }
+
+                              // currentUserId = usuarioProvider.usuarios.last.id;
 
                               // print("USER: $user");
                               // print("USERNAME: ${user['attributes']['username']}");
@@ -196,6 +205,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               // print("CORREO: ${user['attributes']['email']}");
                               // print("IMAGEN: ${user['attributes']['imagen']['data']['attributes']['url']}");
 
+                              if (!mounted) return;
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(

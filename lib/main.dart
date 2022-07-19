@@ -17,7 +17,7 @@ import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/providers/deeplink_bloc.dart';
 
 late ObjectBoxDatabase dataBase;
-late int currentUserId;
+// late final int currentUserId;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   dataBase = await ObjectBoxDatabase.create();
