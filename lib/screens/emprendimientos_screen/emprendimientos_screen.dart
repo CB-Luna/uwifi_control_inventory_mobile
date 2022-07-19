@@ -1,11 +1,18 @@
+import 'package:bizpro_app/main.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:bizpro_app/providers/providers.dart';
+import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
+import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
+
 import 'package:bizpro_app/screens/widgets/custom_button.dart';
 import 'package:bizpro_app/screens/widgets/side_menu/side_menu.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
+
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:provider/provider.dart';
+import 'package:bizpro_app/screens/emprendimientos_screen/agregar_emprendimiento_widget.dart';
 
 class EmprendimientosScreen extends StatefulWidget {
   const EmprendimientosScreen({Key? key}) : super(key: key);
@@ -20,6 +27,8 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
 
   @override
   Widget build(BuildContext context) {
+     final usuarioProvider = Provider.of<UsuarioController>(context);
+    final emprendimientoProvider = Provider.of<EmprendimientoController>(context);
     final UserState userState = Provider.of<UserState>(context);
     return Scaffold(
       key: scaffoldKey,
@@ -29,12 +38,12 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
           ? FloatingActionButton(
               onPressed: () async {
                 //TODO: agregar pantalla
-                // await Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => AgregarEmprendimientoWidget(),
-                //   ),
-                // );
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AgregarEmprendimientoWidget(),
+                  ),
+                );
               },
               backgroundColor: const Color(0xFF006AFF),
               elevation: 8,
@@ -67,8 +76,8 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 145, 0, 6),
                     child: Builder(
                       builder: (context) {
-                        //TODO: agregar query
-                        final resultado = [];
+                        //TODO: agregar query con el ID correcto
+                        final resultado = (usuarioProvider.usuarios[currentUserId].emprendimientos.toList());
                         return ListView.builder(
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
@@ -134,11 +143,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                         children: [
                                           Expanded(
                                             child: Text(
-                                              resultadoItem.nombre
-                                                  .maybeHandleOverflow(
-                                                maxChars: 30,
-                                                replacement: '…',
-                                              ),
+                                              resultadoItem.nombre,
                                               maxLines: 1,
                                               style: AppTheme.of(context)
                                                   .title3
@@ -162,11 +167,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                         children: [
                                           Expanded(
                                             child: Text(
-                                              resultadoItem.comunidad
-                                                  .maybeHandleOverflow(
-                                                maxChars: 50,
-                                                replacement: '…',
-                                              ),
+                                              resultadoItem.comunidades.toString(),
                                               maxLines: 1,
                                               style: AppTheme.of(context)
                                                   .bodyText2

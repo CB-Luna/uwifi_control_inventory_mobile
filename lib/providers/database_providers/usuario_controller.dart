@@ -62,5 +62,25 @@ class UsuarioController extends ChangeNotifier {
     usuarios = dataBase.usuariosBox.getAll();
     notifyListeners();
   }
+
+  bool validateUser(String correo) {
+    usuarios = dataBase.usuariosBox.getAll();
+    for(int i = 0; i < usuarios.length ; i++) {
+      if (usuarios[i].correo == correo) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  int? getUserID(String correo) {
+    final id;
+    usuarios = dataBase.usuariosBox.getAll();
+    for(int i = 0; i < usuarios.length ; i++) {
+      if (usuarios[i].correo == correo) {
+        return usuarios[i].id;
+      }
+    }
+  }
   
 }

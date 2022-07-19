@@ -1,6 +1,5 @@
 import 'package:bizpro_app/graphql/query_user.dart';
-import 'package:bizpro_app/models/usuario_activo.dart';
-import 'package:bizpro_app/screens/emprendimientos_screen/mis_emprendimientos_screen.dart';
+import 'package:bizpro_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -172,12 +171,19 @@ class _LoginScreenState extends State<LoginScreen> {
                               //TODO: check user roles
 
                               //TODO: Conseguir password y rol en entero
-                              if (true) {
+
+                              if (!usuarioProvider.validateUser(userData['attributes']['email'] ?? 'NONE')) {
+                                print('Usuario no existente');
                                 usuarioProvider.add(
                                 userData['attributes']['username'], userData['attributes']['apellidoP'],userData['attributes']['apellidoM'], 
                                 DateTime.parse(userData['attributes']['nacimiento']), userData['attributes']['telefono'],
                                 userData['attributes']['celular'], userData['attributes']['email'], "CBLuna2022", 
                                 userData['attributes']['imagen']['data']['attributes']['url'], 1);
+                                currentUserId = 0;
+                              }
+                              else{
+                                print('Usuario ya existente');
+                                currentUserId = 0;
                               }
 
                               // print("USER: $user");
@@ -194,7 +200,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      const MisEmprendimientosScreen(dropdownrol: 'Administrador',),
+                                      const EmprendimientosScreen(),
                                 ),
                               );
                             },
