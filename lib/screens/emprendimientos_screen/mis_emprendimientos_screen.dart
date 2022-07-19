@@ -701,7 +701,6 @@ class _MisEmprendimientosScreenState extends State<MisEmprendimientosScreen> {
                             ),
                           );
                         }
-                        print(currentUserId);
                         final resultado = (usuarioProvider.usuarios[0].emprendimientos.toList());
                         if (resultado.isEmpty) {
                           return ListaEmpredimientosWidget();

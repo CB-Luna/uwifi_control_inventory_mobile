@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bizpro_app/models/usuario_activo.dart';
 import 'package:bizpro_app/services/navigation_service.dart';
 import 'package:flutter/material.dart';
@@ -99,9 +97,9 @@ class UserState extends ChangeNotifier {
     passwordController.text = _password;
 
     //Inicializar usuario activo
-    final String? posibleUsuario = prefs.getString('usuarioActivo');
-    if (posibleUsuario == null) return;
-    usuarioActivo = UsuarioActivo.fromJson(posibleUsuario);
+    // final String? posibleUsuario = prefs.getString('usuarioActivo');
+    // if (posibleUsuario == null) return;
+    // usuarioActivo = UsuarioActivo.fromJson(posibleUsuario);
   }
 
   //Funciones Login Screen

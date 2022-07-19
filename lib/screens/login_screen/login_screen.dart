@@ -166,8 +166,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
                               if (userData == null) return;
 
-                              userState.usuarioActivo =
-                                  UsuarioActivo.fromMap(userData);
+                              // userState.usuarioActivo =
+                              //     UsuarioActivo.fromMap(userData);
 
                               //TODO: check user roles
 
@@ -179,8 +179,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 userData['attributes']['celular'], userData['attributes']['email'], "CBLuna2022", 
                                 userData['attributes']['imagen']['data']['attributes']['url'], 1);
                               }
-
-                              currentUserId = usuarioProvider.usuarios.last.id;
 
                               // print("USER: $user");
                               // print("USERNAME: ${user['attributes']['username']}");
