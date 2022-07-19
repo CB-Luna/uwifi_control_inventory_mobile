@@ -24,7 +24,7 @@ class UsuarioActivo {
   String email;
   String role;
   String apellidoP;
-  String apellidoM;
+  String? apellidoM;
   DateTime nacimiento;
   String celular;
   String telefono;
@@ -122,7 +122,7 @@ class DataAttributes {
   String toJson() => json.encode(toMap());
 
   factory DataAttributes.fromMap(Map<String, dynamic> json) => DataAttributes(
-        name: json["name"],
+        name: json["url"],
       );
 
   Map<String, dynamic> toMap() => {

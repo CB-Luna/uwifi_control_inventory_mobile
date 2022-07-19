@@ -1,6 +1,5 @@
 import 'package:bizpro_app/graphql/query_user.dart';
 import 'package:bizpro_app/models/usuario_activo.dart';
-import 'package:bizpro_app/screens/emprendimientos_screen/mis_emprendimientos_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -174,13 +173,21 @@ class _LoginScreenState extends State<LoginScreen> {
                               //TODO: Conseguir password y rol en entero
                               if (true) {
                                 usuarioProvider.add(
-                                userData['attributes']['username'], userData['attributes']['apellidoP'],userData['attributes']['apellidoM'], 
-                                DateTime.parse(userData['attributes']['nacimiento']), userData['attributes']['telefono'],
-                                userData['attributes']['celular'], userData['attributes']['email'], "CBLuna2022", 
-                                userData['attributes']['imagen']['data']['attributes']['url'], 1);
+                                    userData['attributes']['username'],
+                                    userData['attributes']['apellidoP'],
+                                    '',
+                                    DateTime.parse(
+                                        userData['attributes']['nacimiento']),
+                                    userData['attributes']['telefono'],
+                                    userData['attributes']['celular'],
+                                    userData['attributes']['email'],
+                                    "CBLuna2022",
+                                    userData['attributes']['imagen']['data']
+                                        ['attributes']['url'],
+                                    1);
                               }
 
-                              currentUserId = usuarioProvider.usuarios.last.id;
+                              // currentUserId = usuarioProvider.usuarios.last.id;
 
                               // print("USER: $user");
                               // print("USERNAME: ${user['attributes']['username']}");
@@ -192,11 +199,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               // print("CORREO: ${user['attributes']['email']}");
                               // print("IMAGEN: ${user['attributes']['imagen']['data']['attributes']['url']}");
 
+                              if (!mounted) return;
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      const MisEmprendimientosScreen(dropdownrol: 'Administrador',),
+                                      const EmprendimientosScreen(),
                                 ),
                               );
                             },

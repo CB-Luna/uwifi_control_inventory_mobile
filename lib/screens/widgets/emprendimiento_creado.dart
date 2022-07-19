@@ -1,22 +1,18 @@
-import 'package:bizpro_app/screens/emprendimientos_screen/mis_emprendimientos_screen.dart';
+import 'package:bizpro_app/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
-
-
 class EmprendimientoCreado extends StatefulWidget {
   const EmprendimientoCreado({Key? key}) : super(key: key);
 
   @override
-  _EmprendimientoCreadoState createState() =>
-      _EmprendimientoCreadoState();
+  _EmprendimientoCreadoState createState() => _EmprendimientoCreadoState();
 }
 
-class _EmprendimientoCreadoState
-    extends State<EmprendimientoCreado> {
+class _EmprendimientoCreadoState extends State<EmprendimientoCreado> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -77,7 +73,7 @@ class _EmprendimientoCreadoState
                         await Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => MisEmprendimientosScreen(dropdownrol: "Administrador"),
+                            builder: (context) => const EmprendimientosScreen(),
                           ),
                         );
                       },
@@ -86,11 +82,10 @@ class _EmprendimientoCreadoState
                         width: 200,
                         height: 45,
                         color: Color(0xFF28BFFA),
-                        textStyle:
-                            AppTheme.of(context).subtitle2.override(
-                                  fontFamily: 'Poppins',
-                                  color: Colors.white,
-                                ),
+                        textStyle: AppTheme.of(context).subtitle2.override(
+                              fontFamily: 'Poppins',
+                              color: Colors.white,
+                            ),
                         borderSide: BorderSide(
                           color: Colors.transparent,
                           width: 1,

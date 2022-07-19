@@ -1,6 +1,5 @@
-import 'dart:developer';
-
 import 'package:bizpro_app/models/usuario_activo.dart';
+import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/services/navigation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -99,9 +98,9 @@ class UserState extends ChangeNotifier {
     passwordController.text = _password;
 
     //Inicializar usuario activo
-    final String? posibleUsuario = prefs.getString('usuarioActivo');
-    if (posibleUsuario == null) return;
-    usuarioActivo = UsuarioActivo.fromJson(posibleUsuario);
+    // final String? posibleUsuario = prefs.getString('usuarioActivo');
+    // if (posibleUsuario == null) return;
+    // usuarioActivo = UsuarioActivo.fromJson(posibleUsuario);
   }
 
   //Funciones Login Screen
@@ -146,7 +145,6 @@ class UserState extends ChangeNotifier {
           if (exception is HttpLinkServerException) {
             if (exception.response.statusCode == 401) {
               logout();
-              NavigationService.replaceTo('/');
             }
           }
           return null;
@@ -176,7 +174,7 @@ class UserState extends ChangeNotifier {
     final jwt = await storage.read(key: 'token') ?? '';
     if (jwt != '') {
       if (isTokenExpired(jwt) || usuarioActivo == null) {
-        await logout();
+        await logout(false);
         return '';
       }
       token.add(jwt);
@@ -195,11 +193,16 @@ class UserState extends ChangeNotifier {
     prefs.setString('activeUser', usuarioActivo!.toJson());
   }
 
-  Future<void> logout() async {
+  Future<void> logout([bool remove = true]) async {
     await storage.delete(key: 'token');
     token.clear();
     _authenticatedClient = null;
     notifyListeners();
+    if (remove) {
+      await NavigationService.removeTo(MaterialPageRoute(
+        builder: (context) => const SplashScreen(),
+      ));
+    }
   }
 
   void setRole(String rol) {
