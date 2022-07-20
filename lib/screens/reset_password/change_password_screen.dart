@@ -1,6 +1,9 @@
+import 'package:bizpro_app/providers/user_provider.dart';
+import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/screens/widgets/custom_button.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({
@@ -15,14 +18,17 @@ class ChangePasswordScreen extends StatefulWidget {
 }
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
-  TextEditingController contrasenaController = TextEditingController();
-  bool contrasenaVisibility = false;
-  TextEditingController correoElectronicoController = TextEditingController();
+  TextEditingController nuevaContrasenaController = TextEditingController();
+  TextEditingController confNuevaContrasenaController = TextEditingController();
+  bool nuevaContrasenaVisibility = false;
+  bool confNuevaContrasenaVisibility = false;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
+    final UserState userState = Provider.of<UserState>(context);
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: AppTheme.of(context).primaryBackground,
@@ -30,7 +36,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+            padding: const EdgeInsetsDirectional.fromSTEB(20, 40, 20, 0),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -51,23 +57,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Text(
-                          'correoElectrónico',
-                          style: AppTheme.of(context).bodyText1.override(
-                                fontFamily: 'Poppins',
-                                color: const Color(0xFF006AFF),
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                              ),
-                        ),
-                      ],
-                    ),
-                  ),
                   Form(
                     key: formKey,
                     autovalidateMode: AutovalidateMode.always,
@@ -75,8 +64,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: TextFormField(
-                        controller: correoElectronicoController,
-                        autofocus: true,
+                        controller: nuevaContrasenaController,
+                        obscureText: !nuevaContrasenaVisibility,
                         decoration: InputDecoration(
                           labelText: 'Nueva Contraseña',
                           labelStyle: AppTheme.of(context).bodyText1.override(
@@ -106,6 +95,22 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                             ),
                             borderRadius: BorderRadius.circular(30),
                           ),
+                          filled: true,
+                          fillColor: const Color(0x52FFFFFF),
+                          suffixIcon: InkWell(
+                            onTap: () => setState(
+                              () => nuevaContrasenaVisibility =
+                                  !nuevaContrasenaVisibility,
+                            ),
+                            focusNode: FocusNode(skipTraversal: true),
+                            child: Icon(
+                              nuevaContrasenaVisibility
+                                  ? Icons.visibility_outlined
+                                  : Icons.visibility_off_outlined,
+                              color: const Color(0xFF006AFF),
+                              size: 22,
+                            ),
+                          ),
                         ),
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -119,9 +124,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                     child: TextFormField(
-                      controller: contrasenaController,
-                      autofocus: true,
-                      obscureText: !contrasenaVisibility,
+                      controller: confNuevaContrasenaController,
+                      obscureText: !confNuevaContrasenaVisibility,
                       decoration: InputDecoration(
                         labelText: 'Confirmar Contraseña',
                         labelStyle: AppTheme.of(context).bodyText1.override(
@@ -155,11 +159,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         fillColor: const Color(0x52FFFFFF),
                         suffixIcon: InkWell(
                           onTap: () => setState(
-                            () => contrasenaVisibility = !contrasenaVisibility,
+                            () => confNuevaContrasenaVisibility =
+                                !confNuevaContrasenaVisibility,
                           ),
                           focusNode: FocusNode(skipTraversal: true),
                           child: Icon(
-                            contrasenaVisibility
+                            confNuevaContrasenaVisibility
                                 ? Icons.visibility_outlined
                                 : Icons.visibility_off_outlined,
                             color: const Color(0xFF006AFF),
@@ -195,10 +200,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         //     contrasenaController.text);
                         // setState(() => FFAppState().correoElectronico =
                         //     correoElectronicoController.text);
-                        // await Navigator.push(
+                        await userState.logout();
+                        // await Navigator.pushReplacement(
                         //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => ElegirRolesWidget(),
+                        //   PageRouteBuilder(
+                        //     pageBuilder:
+                        //         (context, animation, secondaryAnimation) =>
+                        //             const LoginScreen(),
+                        //     transitionDuration: const Duration(seconds: 0),
                         //   ),
                         // );
                       },

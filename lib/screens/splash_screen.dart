@@ -1,9 +1,9 @@
+import 'package:bizpro_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import 'package:bizpro_app/providers/deeplink_bloc.dart';
 import 'package:bizpro_app/providers/providers.dart';
 import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -16,7 +16,6 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final UserState userState = Provider.of<UserState>(context, listen: false);
-    DeepLinkBloc bloc = DeepLinkBloc();
 
     return Scaffold(
       body: Center(

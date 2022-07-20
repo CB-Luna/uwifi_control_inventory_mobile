@@ -180,7 +180,6 @@ class UserState extends ChangeNotifier {
       token.add(jwt);
       initClient();
     }
-    notifyListeners();
     return jwt;
   }
 
@@ -197,7 +196,6 @@ class UserState extends ChangeNotifier {
     await storage.delete(key: 'token');
     token.clear();
     _authenticatedClient = null;
-    notifyListeners();
     if (remove) {
       await NavigationService.removeTo(MaterialPageRoute(
         builder: (context) => const SplashScreen(),
