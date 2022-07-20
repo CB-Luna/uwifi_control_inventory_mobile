@@ -83,7 +83,7 @@ class UserState extends ChangeNotifier {
 
   //Objeto con informacion del usuario activo
   UsuarioActivo? usuarioActivo;
-  Rol rol = Rol.publico;
+  Rol rol = Rol.administrador;
 
   //Constructor de provider
   UserState() {
@@ -97,7 +97,7 @@ class UserState extends ChangeNotifier {
     emailController.text = _email;
     passwordController.text = _password;
 
-    //Inicializar usuario activo
+    //TODO Inicializar usuario activo
     // final String? posibleUsuario = prefs.getString('usuarioActivo');
     // if (posibleUsuario == null) return;
     // usuarioActivo = UsuarioActivo.fromJson(posibleUsuario);
@@ -169,11 +169,11 @@ class UserState extends ChangeNotifier {
     await storage.write(key: 'token', value: jwt);
     notifyListeners();
   }
-
+  //TDOD: Quitar user Activo == null
   Future<String> readToken() async {
     final jwt = await storage.read(key: 'token') ?? '';
     if (jwt != '') {
-      if (isTokenExpired(jwt) || usuarioActivo == null) {
+      if (isTokenExpired(jwt)) {
         await logout(false);
         return '';
       }
@@ -230,6 +230,27 @@ class UserState extends ChangeNotifier {
         break;
       default:
         this.rol = Rol.publico;
+    }
+  }
+
+  int getRole(String rol) {
+    switch (rol) {
+      case 'Emprendedor':
+        return 0;
+      case 'Promotor':
+        return 1;
+      case 'Staff Logistica':
+        return 2;
+      case 'Staff Direccion':
+        return 3;
+      case 'Administrador':
+        return 4;
+      case 'Amigo Del Cambio':
+        return 5;
+      case 'Voluntario Estrategico':
+        return 6;
+      default:
+        return 7;
     }
   }
 

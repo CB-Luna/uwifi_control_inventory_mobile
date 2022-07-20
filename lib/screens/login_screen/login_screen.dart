@@ -160,6 +160,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               await userState.setToken(jwt);
                               final userId =
                                   int.parse(resultData['login']['user']['id']);
+                              
+                              prefs.setInt("userId", userId);
 
                               final userData = await getUser(jwt, userId);
 
@@ -171,8 +173,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               //TODO: check user roles
 
                               //TODO: Conseguir password y rol en entero
-
-                              if (!usuarioProvider.validateUser(userData['attributes']['email'] ?? 'NONE')) {
+                              //Modo OnLine
+                              if (usuarioProvider.validateUser(userData['attributes']['email'] ?? 'NONE')) {
+                                print('Usuario ya existente');
+                                usuarioProvider.getUserID(userData['attributes']['email']);
+                              }
+                              else{
                                 print('Usuario no existente');
                                 usuarioProvider.add(
                                     userData['attributes']['username'],
@@ -186,12 +192,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                     "CBLuna2022",
                                     userData['attributes']['imagen']['data']
                                         ['attributes']['url'],
-                                    1);
+                                    userState.getRole(userData['attributes']['role']['data']
+                                        ['attributes']['name'].toString()));
+                                    // print(userState.getRole(userData['attributes']['role']['data']
+                                    //     ['attributes']['name'].toString()));    
                               }
 
                               // currentUserId = usuarioProvider.usuarios.last.id;
 
-                              // print("USER: $user");
+                              // print("USER: $userData");
                               // print("USERNAME: ${user['attributes']['username']}");
                               // print("APELLIDOP: ${user['attributes']['apellidoP']}");
                               // print("APELLIDOM: ${user['attributes']['apellidoM']}");

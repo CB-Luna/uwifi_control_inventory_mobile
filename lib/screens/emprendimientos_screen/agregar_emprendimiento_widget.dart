@@ -1,12 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import 'package:bizpro_app/providers/database_providers/comunidad_controller.dart';
 import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
+import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
+import 'package:bizpro_app/providers/select_image_provider.dart';
 
 import 'package:bizpro_app/screens/widgets/emprendimiento_creado.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/theme/theme.dart';
 
 
@@ -27,12 +33,14 @@ class _AgregarEmprendimientoWidgetState
   final formKey4 = GlobalKey<FormState>();
   final formKey3 = GlobalKey<FormState>();
   final formKey2 = GlobalKey<FormState>();
-
+  XFile? image;
 
   @override
   Widget build(BuildContext context) {
     final emprendimientoProvider = Provider.of<EmprendimientoController>(context);
     final comunidadProvider = Provider.of<ComunidadController>(context);
+    final usuarioProvider = Provider.of<UsuarioController>(context);
+    final selectImageProvider = Provider.of<SelectImageProvider>(context);
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -94,47 +102,41 @@ class _AgregarEmprendimientoWidgetState
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                         child: InkWell(
-                          onTap: ()  {
+                          onTap: () async{
+
+                            // selectImageProvider.pickFiles();
+                            // emprendimientoProvider.imagen = selectImageProvider.fileName;
                             emprendimientoProvider.imagen = "https://www.amo-alebrijes.com/wp-content/uploads/2016/08/Tutoriales-tipos-de-alebrijes.jpg";
-                            // final selectedMedia =
-                            //     await selectMediaWithSourceBottomSheet(
-                            //   context: context,
-                            //   allowPhoto: true,
-                            // );
-                            // if (selectedMedia != null &&
-                            //     selectedMedia.every((m) => validateFileFormat(
-                            //         m.storagePath, context))) {
-                            //   showUploadMessage(
-                            //     context,
-                            //     'Uploading file...',
-                            //     showLoading: true,
-                            //   );
-                            //   final downloadUrls = 
-                            //   // (await Future.wait(
-                            //   //         selectedMedia.map((m) async =>
-                            //   //             await uploadData(
-                            //   //                 m.storagePath, m.bytes))))
-                            //   //     .where((u) => u != null)
-                            //   //     .toList();
-                            //   null;
-                            //   ScaffoldMessenger.of(context)
-                            //       .hideCurrentSnackBar();
-                            //   if (downloadUrls != null &&
-                            //       downloadUrls.length == selectedMedia.length) {
-                            //     setState(
-                            //         () => emprendimientoProvider.imagen = downloadUrls.first);
-                            //     showUploadMessage(
-                            //       context,
-                            //       'Success!',
-                            //     );
-                            //   } else {
-                            //     showUploadMessage(
-                            //       context,
-                            //       'Failed to upload media',
-                            //     );
-                            //     return;
-                            //   }
-                            // }
+                            String? option = await showModalBottomSheet(
+                              context: context,
+                              builder: (_) => const CustomBottomSheet(),
+                            );
+
+                            if (option == null) return;
+
+                            final picker = ImagePicker();
+
+                            late final XFile? pickedFile;
+
+                            if (option == 'camera') {
+                              pickedFile = await picker.pickImage(
+                                source: ImageSource.camera,
+                                imageQuality: 100,
+                              );
+                            } else {
+                              pickedFile = await picker.pickImage(
+                                source: ImageSource.gallery,
+                                imageQuality: 100,
+                              );
+                            }
+
+                            if (pickedFile == null) {
+                              return;
+                            }
+
+                            setState(() {
+                              image = pickedFile;
+                            });
                           },
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.9,
@@ -153,21 +155,7 @@ class _AgregarEmprendimientoWidgetState
                                 width: 2,
                               ),
                             ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                // ClipRRect(
-                                //   borderRadius: BorderRadius.circular(8),
-                                //   child: Image.network(
-                                //     "https://www.amo-alebrijes.com/wp-content/uploads/2016/08/Tutoriales-tipos-de-alebrijes.jpg",
-                                //     width:
-                                //         MediaQuery.of(context).size.width * 0.9,
-                                //     height: 180,
-                                //     fit: BoxFit.cover,
-                                //   ),
-                                // ),
-                              ],
-                            ),
+                            child: getImage(image?.path)
                           ),
                         ),
                       ),
@@ -393,6 +381,7 @@ class _AgregarEmprendimientoWidgetState
                                 
                                 comunidadProvider.add();
                                 emprendimientoProvider.add(comunidadProvider.comunidades.last.id);
+                                usuarioProvider.addEmprendimiento(emprendimientoProvider.emprendimientos[emprendimientoProvider.emprendimientos.length - 1]);
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -444,3 +433,23 @@ class _AgregarEmprendimientoWidgetState
     );
   }
 }
+
+Widget getImage(String? image) {
+    if (image == null) {
+      return const Image(
+        image: AssetImage('assets/images/animation_500_l3ur8tqa.gif'),
+        fit: BoxFit.contain,
+      );
+    } else if (image.startsWith('http')) {
+      return FadeInImage(
+        placeholder:
+            const AssetImage('assets/images/animation_500_l3ur8tqa.gif'),
+        image: NetworkImage(image),
+        fit: BoxFit.cover,
+      );
+    }
+    return Image.file(
+      File(image),
+      fit: BoxFit.cover,
+    );
+  }

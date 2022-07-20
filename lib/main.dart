@@ -10,6 +10,8 @@ import 'providers/database_providers/emprendimiento_controller.dart';
 import 'providers/database_providers/usuario_controller.dart';
 import 'providers/database_providers/comunidad_controller.dart';
 
+import 'package:bizpro_app/providers/select_image_provider.dart';
+
 import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/services/navigation_service.dart';
 import 'package:bizpro_app/internationalization/internationalization.dart';
@@ -31,12 +33,15 @@ void main() async {
       providers: [
         ChangeNotifierProvider<EmprendimientoController>(
           create: (context) => EmprendimientoController(),
+          lazy: false,
         ),
         ChangeNotifierProvider<UsuarioController>(
-          create: (context) => UsuarioController(),
+          create: (context) => UsuarioController(email: prefs.getString("email")),
+          lazy: false,
         ),
         ChangeNotifierProvider<ComunidadController>(
           create: (context) => ComunidadController(),
+          lazy: false,
         ),
         ChangeNotifierProvider(
           create: (_) => UserState(),
@@ -45,6 +50,9 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => NetworkState(),
           lazy: false,
+        ),
+        ChangeNotifierProvider<SelectImageProvider>(
+          create: (context) => SelectImageProvider(),
         ),
       ],
       child: const MyApp(),

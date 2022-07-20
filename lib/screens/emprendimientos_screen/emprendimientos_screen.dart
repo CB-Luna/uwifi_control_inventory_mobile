@@ -12,6 +12,7 @@ import 'package:bizpro_app/theme/theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:bizpro_app/screens/emprendimientos_screen/detalle_proyecto_screen.dart';
 import 'package:bizpro_app/screens/emprendimientos_screen/agregar_emprendimiento_widget.dart';
 
 class EmprendimientosScreen extends StatefulWidget {
@@ -27,7 +28,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
 
   @override
   Widget build(BuildContext context) {
-     final usuarioProvider = Provider.of<UsuarioController>(context);
+    final usuarioProvider = Provider.of<UsuarioController>(context);
     final emprendimientoProvider = Provider.of<EmprendimientoController>(context);
     final UserState userState = Provider.of<UserState>(context);
     return Scaffold(
@@ -77,7 +78,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                     child: Builder(
                       builder: (context) {
                         //TODO: agregar query con el ID correcto
-                        final resultado = (usuarioProvider.usuarios[0].emprendimientos.toList());
+                        final resultado = usuarioProvider.usuarioCurrent!.emprendimientos.toList();
                         return ListView.builder(
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
@@ -108,16 +109,14 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                     InkWell(
                                       onTap: () async {
                                         //TODO: agregar pantalla
-                                        // await Navigator.push(
-                                        //   context,
-                                        //   MaterialPageRoute(
-                                        //     builder: (context) =>
-                                        //         DetalleProyectoWidget(
-                                        //       proyectoDocRef:
-                                        //           resultadoItem.reference,
-                                        //     ),
-                                        //   ),
-                                        // );
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                DetalleProyectoScreen(
+                                            ),
+                                          ),
+                                        );
                                       },
                                       child: ClipRRect(
                                         borderRadius: const BorderRadius.only(
@@ -167,7 +166,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                         children: [
                                           Expanded(
                                             child: Text(
-                                              resultadoItem.comunidades.toString(),
+                                              resultadoItem.comunidades.target?.nombre.toString() ?? 'NONE',
                                               maxLines: 1,
                                               style: AppTheme.of(context)
                                                   .bodyText2
