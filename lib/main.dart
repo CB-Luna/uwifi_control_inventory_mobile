@@ -1,3 +1,4 @@
+import 'package:bizpro_app/providers/deeplink_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/providers/providers.dart';
 import 'package:bizpro_app/database/object_box_database.dart';
@@ -16,11 +17,11 @@ import 'package:bizpro_app/internationalization/internationalization.dart';
 import 'package:bizpro_app/theme/theme.dart';
 
 late ObjectBoxDatabase dataBase;
-// late final int currentUserId;
+DeepLinkBloc bloc = DeepLinkBloc();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   dataBase = await ObjectBoxDatabase.create();
-  //TODO: revisar persistencia
   await initHiveForFlutter();
   await AppTheme.initialize();
 

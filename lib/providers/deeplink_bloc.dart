@@ -8,7 +8,8 @@ abstract class Bloc {
 }
 
 class DeepLinkBloc extends Bloc {
-  final StreamController<String> _stateController = StreamController();
+  final StreamController<String> _stateController =
+      StreamController.broadcast();
 
   Stream<String?> get state => _stateController.stream;
 
@@ -29,8 +30,7 @@ class DeepLinkBloc extends Bloc {
     // Here can be any uri analysis, checking tokens etc, if it’s necessary
     // Throw deep link URI into the BloC's stream
     if (uri == null) return;
-    print(uri.toString());
-
+    print(uri);
     //If url has code, app redirects to reset password screen
     //If not, app starts normally
     stateSink.add(uri.queryParameters['code']);
