@@ -27,9 +27,9 @@ class UserState extends ChangeNotifier {
   String _email = '';
 
   String get email => _email;
-  void setEmail() {
+  Future<void> setEmail() async {
     _email = emailController.text;
-    prefs.setString('email', emailController.text);
+    await prefs.setString('email', emailController.text);
   }
 
   //Controlador para LoginScreen
@@ -39,9 +39,9 @@ class UserState extends ChangeNotifier {
   String _password = '';
 
   String get password => _password;
-  void setPassword() {
+  Future<void> setPassword() async {
     _password = passwordController.text;
-    prefs.setString('password', passwordController.text);
+    await prefs.setString('password', passwordController.text);
   }
 
   //Controlador para LoginScreen
@@ -103,20 +103,9 @@ class UserState extends ChangeNotifier {
     // usuarioActivo = UsuarioActivo.fromJson(posibleUsuario);
   }
 
-  //Funciones Login Screen
-  void clearEmail() {
-    emailController.clear;
-    notifyListeners();
-  }
-
-  void clearPassword() {
-    passwordController.clear();
-    notifyListeners();
-  }
-
-  void updateRecuerdame() {
+  void updateRecuerdame() async {
     recuerdame = !recuerdame;
-    prefs.setBool('recuerdame', recuerdame);
+    await prefs.setBool('recuerdame', recuerdame);
     notifyListeners();
   }
 
@@ -188,8 +177,8 @@ class UserState extends ChangeNotifier {
     setRole(usuarioActivo!.role);
   }
 
-  void saveActiveUser() {
-    prefs.setString('activeUser', usuarioActivo!.toJson());
+  void saveActiveUser() async {
+    await prefs.setString('activeUser', usuarioActivo!.toJson());
   }
 
   Future<void> logout([bool remove = true]) async {

@@ -152,15 +152,21 @@ class _LoginScreenState extends State<LoginScreen> {
                             document: gql(login),
                             onCompleted: (dynamic resultData) async {
                               if (resultData == null) return;
-                              userState.setEmail();
-                              //TODO: quitar?
-                              userState.setPassword();
-
+                              if (userState.recuerdame == true) {
+                                await userState.setEmail();
+                                //TODO: quitar?
+                                await userState.setPassword();
+                              } else {
+                                userState.emailController.text = '';
+                                userState.passwordController.text = '';
+                                await prefs.remove('email');
+                                await prefs.remove('password');
+                              }
                               final jwt = resultData['login']['jwt'];
                               await userState.setToken(jwt);
                               final userId =
                                   int.parse(resultData['login']['user']['id']);
-                              
+
                               prefs.setInt("userId", userId);
 
                               final userData = await getUser(jwt, userId);
@@ -174,11 +180,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
                               //TODO: Conseguir password y rol en entero
                               //Modo OnLine
-                              if (usuarioProvider.validateUser(userData['attributes']['email'] ?? 'NONE')) {
+                              if (usuarioProvider.validateUser(
+                                  userData['attributes']['email'] ?? 'NONE')) {
                                 print('Usuario ya existente');
-                                usuarioProvider.getUserID(userData['attributes']['email']);
-                              }
-                              else{
+                                usuarioProvider
+                                    .getUserID(userData['attributes']['email']);
+                              } else {
                                 print('Usuario no existente');
                                 usuarioProvider.add(
                                     userData['attributes']['username'],
@@ -192,10 +199,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                     "CBLuna2022",
                                     userData['attributes']['imagen']['data']
                                         ['attributes']['url'],
-                                    userState.getRole(userData['attributes']['role']['data']
-                                        ['attributes']['name'].toString()));
-                                    // print(userState.getRole(userData['attributes']['role']['data']
-                                    //     ['attributes']['name'].toString()));    
+                                    userState.getRole(userData['attributes']
+                                                ['role']['data']['attributes']
+                                            ['name']
+                                        .toString()));
+                                // print(userState.getRole(userData['attributes']['role']['data']
+                                //     ['attributes']['name'].toString()));
                               }
 
                               // currentUserId = usuarioProvider.usuarios.last.id;

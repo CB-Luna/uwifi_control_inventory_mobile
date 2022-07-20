@@ -79,7 +79,10 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                     child: Builder(
                       builder: (context) {
                         //TODO: agregar query con el ID correcto
-                        final resultado = usuarioProvider.usuarioCurrent!.emprendimientos.toList();
+                        final resultado = usuarioProvider
+                                .usuarioCurrent?.emprendimientos
+                                .toList() ??
+                            [];
                         return ListView.builder(
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
@@ -114,8 +117,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                DetalleProyectoScreen(
-                                            ),
+                                                DetalleProyectoScreen(),
                                           ),
                                         );
                                       },
@@ -167,7 +169,10 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                         children: [
                                           Expanded(
                                             child: Text(
-                                              resultadoItem.comunidades.target?.nombre.toString() ?? 'NONE',
+                                              resultadoItem.comunidades.target
+                                                      ?.nombre
+                                                      .toString() ??
+                                                  'NONE',
                                               maxLines: 1,
                                               style: AppTheme.of(context)
                                                   .bodyText2
