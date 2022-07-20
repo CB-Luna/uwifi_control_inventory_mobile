@@ -16,7 +16,6 @@ import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/services/navigation_service.dart';
 import 'package:bizpro_app/internationalization/internationalization.dart';
 import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/providers/deeplink_bloc.dart';
 
 late ObjectBoxDatabase dataBase;
 // late final int currentUserId;
@@ -26,7 +25,6 @@ void main() async {
   //TODO: revisar persistencia
   await initHiveForFlutter();
   await AppTheme.initialize();
-  DeepLinkBloc();
 
   runApp(
     MultiProvider(

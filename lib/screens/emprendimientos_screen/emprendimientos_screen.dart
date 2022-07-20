@@ -29,7 +29,8 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
   @override
   Widget build(BuildContext context) {
     final usuarioProvider = Provider.of<UsuarioController>(context);
-    final emprendimientoProvider = Provider.of<EmprendimientoController>(context);
+    final emprendimientoProvider =
+        Provider.of<EmprendimientoController>(context);
     final UserState userState = Provider.of<UserState>(context);
     return Scaffold(
       key: scaffoldKey,
@@ -42,7 +43,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                 await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AgregarEmprendimientoWidget(),
+                    builder: (context) => const AgregarEmprendimientoScreen(),
                   ),
                 );
               },
@@ -61,7 +62,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
           children: [
             Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 1,
+              height: MediaQuery.of(context).size.height,
               decoration: BoxDecoration(
                 color: const Color(0xFFEEEEEE),
                 image: DecorationImage(
@@ -216,7 +217,6 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                     0, 35, 0, 0),
                                 child: InkWell(
                                   onTap: () async {
-                                    //TODO: agregar
                                     scaffoldKey.currentState?.openDrawer();
                                   },
                                   child: Container(
