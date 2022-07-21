@@ -42,7 +42,8 @@ dependencies:
   flutter_spinkit: ^5.1.0
   font_awesome_flutter: ^10.1.0
   google_fonts: ^3.0.1
-  graphql_flutter: ^5.1.0
+  http: ^0.13.4
+  http_interceptor: ^1.0.2
   image_picker: ^0.8.5+3
   intl: ^0.17.0
   just_audio: ^0.9.28

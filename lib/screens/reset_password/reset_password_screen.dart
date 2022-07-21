@@ -1,7 +1,7 @@
 import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/screens/widgets/custom_button.dart';
+import 'package:bizpro_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:bizpro_app/theme/theme.dart';
 
@@ -150,65 +150,50 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           ),
           Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
-            child: Mutation(
-                options: MutationOptions(
-                  document: gql(forgotPassword),
-                  onCompleted: (resultData) async {
-                    if (resultData == null) return;
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const PasswordEmailSentScreen(),
+            child: CustomButton(
+              onPressed: () async {
+                if (emailAddressController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Email required!',
                       ),
-                    );
-                  },
-                  onError: (OperationException? exception) {
-                    if (exception == null) return;
-                    if (exception.graphqlErrors.isEmpty) return;
-                    final message = exception.graphqlErrors[0].message;
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Error: $message'),
-                      ),
-                    );
-                  },
-                ),
-                builder: (RunMutation runMutation, QueryResult? result) {
-                  return CustomButton(
-                    onPressed: () async {
-                      if (emailAddressController.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              'Email required!',
-                            ),
-                          ),
-                        );
-                        return;
-                      }
-
-                      runMutation({
-                        'email': emailAddressController.text,
-                      });
-                    },
-                    text: 'Enviar enlace de acceso',
-                    options: ButtonOptions(
-                      width: 270,
-                      height: 50,
-                      color: const Color(0xFF2CC3F4),
-                      textStyle: AppTheme.of(context).subtitle2.override(
-                            fontFamily: 'Poppins',
-                            color: AppTheme.of(context).secondaryBackground,
-                          ),
-                      elevation: 3,
-                      borderSide: const BorderSide(
-                        color: Colors.transparent,
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
                     ),
                   );
-                }),
+                  return;
+                }
+
+                final res = await AuthService.requestPasswordReset(
+                  emailAddressController.text,
+                );
+
+                if (res == false) return;
+
+                if (!mounted) return;
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PasswordEmailSentScreen(),
+                  ),
+                );
+              },
+              text: 'Enviar enlace de acceso',
+              options: ButtonOptions(
+                width: 270,
+                height: 50,
+                color: const Color(0xFF2CC3F4),
+                textStyle: AppTheme.of(context).subtitle2.override(
+                      fontFamily: 'Poppins',
+                      color: AppTheme.of(context).secondaryBackground,
+                    ),
+                elevation: 3,
+                borderSide: const BorderSide(
+                  color: Colors.transparent,
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
           ),
         ],
       ),

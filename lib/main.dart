@@ -1,11 +1,11 @@
-import 'package:bizpro_app/providers/deeplink_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
+
+import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/providers/deeplink_bloc.dart';
 import 'package:bizpro_app/providers/providers.dart';
 import 'package:bizpro_app/database/object_box_database.dart';
-
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:provider/provider.dart';
 
 import 'providers/database_providers/emprendedor_controller.dart';
 import 'providers/database_providers/emprendimiento_controller.dart';
@@ -25,7 +25,6 @@ DeepLinkBloc bloc = DeepLinkBloc();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   dataBase = await ObjectBoxDatabase.create();
-  await initHiveForFlutter();
   await AppTheme.initialize();
 
   runApp(
@@ -36,7 +35,8 @@ void main() async {
           lazy: false,
         ),
         ChangeNotifierProvider<UsuarioController>(
-          create: (context) => UsuarioController(email: prefs.getString("email")),
+          create: (context) =>
+              UsuarioController(email: prefs.getString("email")),
           lazy: false,
         ),
         ChangeNotifierProvider<ComunidadController>(
@@ -87,28 +87,26 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final UserState userState = Provider.of<UserState>(context);
-    return GraphQLProvider(
-      client: userState.client,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'bizproEM',
-        localizationsDelegates: const [
-          AppLocalizationsDelegate(),
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        locale: _locale,
-        supportedLocales: const [Locale('en', '')],
-        theme: ThemeData(brightness: Brightness.light),
-        darkTheme: ThemeData(brightness: Brightness.dark),
-        themeMode: _themeMode,
-        navigatorKey: NavigationService.navigatorKey,
-        initialRoute: '/',
-        routes: {
-          '/': (_) => const SplashScreen(),
-        },
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'bizproEM',
+      localizationsDelegates: const [
+        AppLocalizationsDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      locale: _locale,
+      supportedLocales: const [Locale('en', '')],
+      theme: ThemeData(brightness: Brightness.light),
+      darkTheme: ThemeData(brightness: Brightness.dark),
+      themeMode: _themeMode,
+      navigatorKey: NavigationService.navigatorKey,
+      scaffoldMessengerKey: snackbarKey,
+      initialRoute: '/',
+      routes: {
+        '/': (_) => const SplashScreen(),
+      },
     );
   }
 }

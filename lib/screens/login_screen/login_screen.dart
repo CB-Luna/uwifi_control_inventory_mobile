@@ -1,8 +1,6 @@
-import 'package:bizpro_app/graphql/query_user.dart';
-import 'package:bizpro_app/models/usuario_activo.dart';
+import 'package:bizpro_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 
 import 'package:bizpro_app/providers/providers.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
@@ -23,17 +21,6 @@ class _LoginScreenState extends State<LoginScreen> {
   bool contrasenaVisibility = false;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  final String login = """
-    mutation(\$email: String!, \$password: String!) {
-      login(input: {identifier: \$email, password: \$password}) {
-        jwt
-        user {
-          id
-        }
-      }
-    }
-  """;
 
   final formKey = GlobalKey<FormState>();
 
@@ -148,149 +135,112 @@ class _LoginScreenState extends State<LoginScreen> {
                     Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-                      child: Mutation(
-                          options: MutationOptions(
-                            document: gql(login),
-                            onCompleted: (dynamic resultData) async {
-                              if (resultData == null) return;
-                              if (userState.recuerdame == true) {
-                                await userState.setEmail();
-                                //TODO: quitar?
-                                await userState.setPassword();
-                              } else {
-                                userState.emailController.text = '';
-                                userState.passwordController.text = '';
-                                await prefs.remove('email');
-                                await prefs.remove('password');
-                              }
-                              final jwt = resultData['login']['jwt'];
-                              await userState.setToken(jwt);
-                              final userId =
-                                  int.parse(resultData['login']['user']['id']);
+                      child: CustomButton(
+                        onPressed: () async {
+                          if (!formKey.currentState!.validate()) {
+                            return;
+                          }
+                          //TODO: revisar status de red y si es la primera vez
+                          //TODO: hacer push a pantalla de loading
+                          final loginResponse = await AuthService.login(
+                            userState.emailController.text,
+                            userState.passwordController.text,
+                          );
+                          if (loginResponse == null) return;
 
-                              prefs.setInt("userId", userId);
+                          if (userState.recuerdame == true) {
+                            await userState.setEmail();
+                            //TODO: quitar?
+                            await userState.setPassword();
+                          } else {
+                            userState.emailController.text = '';
+                            userState.passwordController.text = '';
+                            await prefs.remove('email');
+                            await prefs.remove('password');
+                          }
 
-                              final userData = await getUser(jwt, userId);
+                          await userState.setToken(loginResponse.token);
+                          final userId = loginResponse.user.id;
 
-                              if (userData == null) return;
+                          prefs.setString("userId", userId);
 
-                              // userState.usuarioActivo =
-                              //     UsuarioActivo.fromMap(userData);
+                          // userState.usuarioActivo =
+                          //     UsuarioActivo.fromMap(userData);
 
-                              //TODO: check user roles
+                          //TODO: check user roles
 
-                              //TODO: Conseguir password y rol en entero
-                              //Modo OnLine
-                              if (usuarioProvider.validateUser(
-                                  userData['attributes']['email'] ?? 'NONE')) {
-                                print('Usuario ya existente');
-                                usuarioProvider
-                                    .getUserID(userData['attributes']['email']);
-                              } else {
-                                print('Usuario no existente');
-                                usuarioProvider.add(
-                                    userData['attributes']['username'],
-                                    userData['attributes']['apellidoP'],
-                                    '',
-                                    DateTime.parse(
-                                        userData['attributes']['nacimiento']),
-                                    userData['attributes']['telefono'],
-                                    userData['attributes']['celular'],
-                                    userData['attributes']['email'],
-                                    "CBLuna2022",
-                                    userData['attributes']?['imagen']?['data']
-                                            ?['attributes']?['url'] ??
-                                        '',
-                                    userState.getRole(userData['attributes']
-                                                ['role']['data']['attributes']
-                                            ['name']
-                                        .toString()));
-                                // print(userState.getRole(userData['attributes']['role']['data']
-                                //     ['attributes']['name'].toString()));
-                              }
+                          //TODO: Conseguir password y rol en entero
+                          //Modo OnLine
+                          // if (usuarioProvider.validateUser(
+                          //     userData['attributes']['email'] ??
+                          //         'NONE')) {
+                          //   print('Usuario ya existente');
+                          //   usuarioProvider.getUserID(
+                          //       userData['attributes']['email']);
+                          // } else {
+                          //   print('Usuario no existente');
+                          //   usuarioProvider.add(
+                          //       userData['attributes']['username'],
+                          //       userData['attributes']['apellidoP'],
+                          //       '',
+                          //       DateTime.parse(userData['attributes']
+                          //           ['nacimiento']),
+                          //       userData['attributes']['telefono'],
+                          //       userData['attributes']['celular'],
+                          //       userData['attributes']['email'],
+                          //       "CBLuna2022",
+                          //       userData['attributes']?['imagen']
+                          //                   ?['data']?['attributes']
+                          //               ?['url'] ??
+                          //           '',
+                          //       userState.getRole(userData['attributes']
+                          //                   ['role']['data']
+                          //               ['attributes']['name']
+                          //           .toString()));
+                          //   // print(userState.getRole(userData['attributes']['role']['data']
+                          //   //     ['attributes']['name'].toString()));
+                          // }
 
-                              // currentUserId = usuarioProvider.usuarios.last.id;
+                          // currentUserId = usuarioProvider.usuarios.last.id;
 
-                              // print("USER: $userData");
-                              // print("USERNAME: ${user['attributes']['username']}");
-                              // print("APELLIDOP: ${user['attributes']['apellidoP']}");
-                              // print("APELLIDOM: ${user['attributes']['apellidoM']}");
-                              // print("NACIMIENTO: ${user['attributes']['nacimiento']}");
-                              // print("TELEFONO: ${user['attributes']['telefono']}");
-                              // print("CELULAR: ${user['attributes']['celular']}");
-                              // print("CORREO: ${user['attributes']['email']}");
-                              // print("IMAGEN: ${user['attributes']['imagen']['data']['attributes']['url']}");
+                          // print("USER: $userData");
+                          // print("USERNAME: ${user['attributes']['username']}");
+                          // print("APELLIDOP: ${user['attributes']['apellidoP']}");
+                          // print("APELLIDOM: ${user['attributes']['apellidoM']}");
+                          // print("NACIMIENTO: ${user['attributes']['nacimiento']}");
+                          // print("TELEFONO: ${user['attributes']['telefono']}");
+                          // print("CELULAR: ${user['attributes']['celular']}");
+                          // print("CORREO: ${user['attributes']['email']}");
+                          // print("IMAGEN: ${user['attributes']['imagen']['data']['attributes']['url']}");
 
-                              if (!mounted) return;
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const EmprendimientosScreen(),
-                                ),
-                              );
-                            },
-                            onError: (OperationException? exception) {
-                              if (exception == null) return;
-                              //TODO: catch network error
-                              if (exception.graphqlErrors.isEmpty) {
-                                return;
-                              }
-                              final message =
-                                  exception.graphqlErrors[0].message;
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('Error: $message'),
-                                ),
-                              );
-                            },
+                          if (!mounted) return;
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const EmprendimientosScreen(),
+                            ),
+                          );
+                        },
+                        text: 'Iniciar sesión',
+                        options: ButtonOptions(
+                          width: 170,
+                          height: 50,
+                          color: const Color(0xFF006AFF),
+                          textStyle: AppTheme.of(context).subtitle2.override(
+                                fontFamily: 'Montserrat',
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                              ),
+                          elevation: 0,
+                          borderSide: const BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
                           ),
-                          builder:
-                              (RunMutation runMutation, QueryResult? result) {
-                            if (result!.isLoading) {
-                              return const Center(
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                    Colors.white,
-                                  ),
-                                ),
-                              );
-                            } else {
-                              return CustomButton(
-                                onPressed: () async {
-                                  if (!formKey.currentState!.validate()) {
-                                    return;
-                                  }
-                                  //TODO: revisar status de red y si es la primera vez
-                                  //TODO: hacer push a pantalla de loading
-                                  runMutation({
-                                    'email': userState.emailController.text,
-                                    'password':
-                                        userState.passwordController.text,
-                                  });
-                                },
-                                text: 'Iniciar sesión',
-                                options: ButtonOptions(
-                                  width: 170,
-                                  height: 50,
-                                  color: const Color(0xFF006AFF),
-                                  textStyle:
-                                      AppTheme.of(context).subtitle2.override(
-                                            fontFamily: 'Montserrat',
-                                            color: Colors.white,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                  elevation: 0,
-                                  borderSide: const BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                              );
-                            }
-                          }),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
                     ),
 
                     //Recordar
