@@ -142,17 +142,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             return;
                           }
 
-                          //TODO: revisar status de red y si es la primera vez
-                          //TODO: hacer push a pantalla de loading
-                          final connectivityResult =
-                              await (Connectivity().checkConnectivity());
-                          // if(esPrimeraVez) {} else {}
-                          if (connectivityResult == ConnectivityResult.none) {
-                            //offline
-                            // loginOffline(email, contrasena);
-                          } else {
-                            //online
-                            final loginResponse = await AuthService.login(
+                          // userState.usuarioActivo =
+                          //     UsuarioActivo.fromMap(userData);
+
+                          //TODO: check user roles
+
+                          //TODO: Conseguir password y rol en entero
+                          //Modo OnLine
+                          final loginResponse = await AuthService.login(
                               userState.emailController.text,
                               userState.passwordController.text,
                             );
@@ -161,9 +158,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             final userId = loginResponse.user.id;
 
                             prefs.setString("userId", userId);
-                          }
 
-                          if (userState.recuerdame == true) {
+                           if (userState.recuerdame == true) {
                             await userState.setEmail();
                             //TODO: quitar?
                             await userState.setPassword();
@@ -174,13 +170,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             await prefs.remove('password');
                           }
 
-                          // userState.usuarioActivo =
-                          //     UsuarioActivo.fromMap(userData);
-
-                          //TODO: check user roles
-
-                          //TODO: Conseguir password y rol en entero
-                          //Modo OnLine
                           if (usuarioProvider.validateUser(
                               loginResponse.user.email)) {
                             print('Usuario ya existente');
@@ -202,17 +191,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             // print("Rol ${loginResponse.user.profile.idRolFk.toString()}");
                           }
 
-                          // currentUserId = usuarioProvider.usuarios.last.id;
-
-                          // print("USER: $userData");
-                          // print("USERNAME: ${user['attributes']['username']}");
-                          // print("APELLIDOP: ${user['attributes']['apellidoP']}");
-                          // print("APELLIDOM: ${user['attributes']['apellidoM']}");
-                          // print("NACIMIENTO: ${user['attributes']['nacimiento']}");
-                          // print("TELEFONO: ${user['attributes']['telefono']}");
-                          // print("CELULAR: ${user['attributes']['celular']}");
-                          // print("CORREO: ${user['attributes']['email']}");
-                          // print("IMAGEN: ${user['attributes']['imagen']['data']['attributes']['url']}");
 
                           if (!mounted) return;
                           await Navigator.push(
