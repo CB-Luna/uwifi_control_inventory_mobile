@@ -45,7 +45,7 @@ class _DetalleProyectoScreen2State extends State<DetalleProyectoScreen2> {
                     getImage(widget.emprendimiento.imagen)!,
                     Container(
                       width: double.infinity,
-                      height: 200,
+                      height: 180,
                       decoration: BoxDecoration(
                         color: Color(0x51000000),
                       ),
@@ -54,7 +54,7 @@ class _DetalleProyectoScreen2State extends State<DetalleProyectoScreen2> {
                       alignment: AlignmentDirectional(0, 0),
                       child: Container(
                         width: double.infinity,
-                        height: 200,
+                        height: 180,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [

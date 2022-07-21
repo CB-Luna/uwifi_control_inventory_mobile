@@ -377,7 +377,7 @@ class _AgregarEmprendimientoScreenState
 
                                 comunidadProvider.add();
                                 emprendimientoProvider.add(comunidadProvider.comunidades.last.id);
-                                usuarioProvider.addEmprendimiento(emprendimientoProvider.emprendimientos[emprendimientoProvider.emprendimientos.length - 1]);
+                                usuarioProvider.addEmprendimiento(emprendimientoProvider.emprendimiento!);
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(

@@ -126,17 +126,27 @@ class UsuarioController extends ChangeNotifier {
 
   void addEmprendimiento(Emprendimientos emprendimiento) {
       usuarioCurrent!.emprendimientos.add(emprendimiento);
-      dataBase.usuariosBox.put(usuarioCurrent!);
+      usuarioCurrent!.emprendimientos.applyToDb();
       print('Emprendimiento modificado exitosamente');
       notifyListeners();
   }
-
-  void updateEmprendimientoRemove(Emprendimientos emprendimiento) {
+  
+  void removeEmprendimiento(Emprendimientos emprendimiento) {
     usuarioCurrent!.emprendimientos.remove(emprendimiento);
-    dataBase.usuariosBox.put(usuarioCurrent!);
+    usuarioCurrent!.emprendimientos.applyToDb();
     print('Emprendimiento actualizado exitosamente');
     notifyListeners();
 
+  }
+
+  List<String> getEmprendedores(Emprendimientos emprendimiento)
+  {
+    final List<String> emprendedores = [];
+    emprendimiento.emprendedores.forEach((element) {
+      emprendedores.add(element.nombre);
+    });
+
+    return emprendedores;
   }
 
   

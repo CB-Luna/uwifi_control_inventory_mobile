@@ -35,7 +35,7 @@ class EmprendedorController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void add() {
+  void add(int idEmprendimiento) {
     final nuevoEmprendedor = Emprendedores(
       nombre: nombre, 
       apellidoP: apellidoP, 
@@ -46,15 +46,30 @@ class EmprendedorController extends ChangeNotifier {
       telefono: telefono, 
       comentarios: comentarios,  
       );
-      dataBase.emprendedoresBox.put(nuevoEmprendedor);
-      emprendedores.add(nuevoEmprendedor);
-      print('Emprendedor agregado exitosamente');
-      notifyListeners();
+      // final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
+      // if (emprendimiento != null) {
+      //   emprendimiento.emprendedores.add(nuevoEmprendedor);
+      //   dataBase.emprendimientosBox.put(emprendimiento);
+      //   emprendedores.add(nuevoEmprendedor);
+      // }
+
+      final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
+      if (emprendimiento != null) {
+        emprendimiento.emprendedores.add(nuevoEmprendedor);
+        emprendimiento.emprendedores.applyToDb();
+        // dataBase.emprendedoresBox.put(nuevoEmprendedor);
+        emprendedores.add(nuevoEmprendedor);
+        print('Emprendedor agregado exitosamente');
+        notifyListeners();
+      }
+
+      // dataBase.emprendedoresBox.put(nuevoEmprendedor);
+      // emprendedores.add(nuevoEmprendedor);
   }
 
   void remove(Emprendedores emprendedor) {
     dataBase.emprendedoresBox.remove(emprendedor.id);
-    emprendedores.remove(emprendedor);
+    // emprendedores.remove(emprendedor);
     notifyListeners(); 
   }
 

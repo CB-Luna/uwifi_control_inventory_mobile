@@ -3,7 +3,7 @@ import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/database/entitys.dart';
 class EmprendimientoController extends ChangeNotifier {
 
-  List<Emprendimientos> emprendimientos = [];
+  Emprendimientos? emprendimiento;
 
   GlobalKey<FormState> emprendimientoFormKey = GlobalKey<FormState>();
  
@@ -37,27 +37,28 @@ class EmprendimientoController extends ChangeNotifier {
       );
       nuevoEmprendimiento.comunidades.target = dataBase.comunidadesBox.get(idComunidad);
       dataBase.emprendimientosBox.put(nuevoEmprendimiento);
-      emprendimientos.add(nuevoEmprendimiento);
+      emprendimiento = nuevoEmprendimiento;
       print('Emprendimiento agregado exitosamente');
       notifyListeners();
   }
 
   void updateEmprendedores(int idEmprendimiento, Emprendedores emprendedor) {
-    final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
+    emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     emprendimiento!.emprendedores.add(emprendedor);
+    dataBase.emprendimientosBox.put(emprendimiento!);
     notifyListeners();
   }
 
   void remove(Emprendimientos emprendimiento) {
     dataBase.emprendimientosBox.remove(emprendimiento.id);
-    emprendimientos.remove(emprendimiento);
+    this.emprendimiento = null;
 
     notifyListeners(); 
   }
 
-  getAll() {
-    emprendimientos = dataBase.emprendimientosBox.getAll();
-    notifyListeners();
-  }
+  // getAll() {
+  //   emprendimientos = dataBase.emprendimientosBox.getAll();
+  //   notifyListeners();
+  // }
   
 }

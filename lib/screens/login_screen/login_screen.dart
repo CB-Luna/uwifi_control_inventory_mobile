@@ -171,35 +171,26 @@ class _LoginScreenState extends State<LoginScreen> {
 
                           //TODO: Conseguir password y rol en entero
                           //Modo OnLine
-                          // if (usuarioProvider.validateUser(
-                          //     userData['attributes']['email'] ??
-                          //         'NONE')) {
-                          //   print('Usuario ya existente');
-                          //   usuarioProvider.getUserID(
-                          //       userData['attributes']['email']);
-                          // } else {
-                          //   print('Usuario no existente');
-                          //   usuarioProvider.add(
-                          //       userData['attributes']['username'],
-                          //       userData['attributes']['apellidoP'],
-                          //       '',
-                          //       DateTime.parse(userData['attributes']
-                          //           ['nacimiento']),
-                          //       userData['attributes']['telefono'],
-                          //       userData['attributes']['celular'],
-                          //       userData['attributes']['email'],
-                          //       "CBLuna2022",
-                          //       userData['attributes']?['imagen']
-                          //                   ?['data']?['attributes']
-                          //               ?['url'] ??
-                          //           '',
-                          //       userState.getRole(userData['attributes']
-                          //                   ['role']['data']
-                          //               ['attributes']['name']
-                          //           .toString()));
-                          //   // print(userState.getRole(userData['attributes']['role']['data']
-                          //   //     ['attributes']['name'].toString()));
-                          // }
+                          if (usuarioProvider.validateUser(
+                              loginResponse.user.email)) {
+                            print('Usuario ya existente');
+                            usuarioProvider.getUserID(
+                                loginResponse.user.email);
+                          } else {
+                            print('Usuario no existente');
+                            usuarioProvider.add(
+                                loginResponse.user.profile.nombre,
+                                loginResponse.user.profile.apellidoP,
+                                loginResponse.user.profile.apellidoM,
+                                loginResponse.user.profile.nacimiento,
+                                loginResponse.user.profile.telefono,
+                                loginResponse.user.profile.celular,
+                                loginResponse.user.email,
+                                "test1234",
+                                loginResponse.user.profile.imagen,
+                                userState.getRole(loginResponse.user.profile.idRolFk)); //TODO Verificar como es el rol
+                            // print("Rol ${loginResponse.user.profile.idRolFk.toString()}");
+                          }
 
                           // currentUserId = usuarioProvider.usuarios.last.id;
 

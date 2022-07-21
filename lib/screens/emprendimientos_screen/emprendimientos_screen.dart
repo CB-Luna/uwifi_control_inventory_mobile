@@ -29,6 +29,20 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      getInfo();
+    });
+  }
+
+  getInfo() {
+    print("PREFERS: ${prefs.getString("email")}");
+    context.read<UsuarioController>().getUser(prefs.getString("email") ?? "NONE");
+  }
+
+  @override
   Widget build(BuildContext context) {
     final usuarioProvider = Provider.of<UsuarioController>(context);
     final emprendimientoProvider =
@@ -85,7 +99,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                 .usuarioCurrent?.emprendimientos
                                 .toList() ??
                             [];
-                        final List<String> emprendedores = [];
+                        List<String> emprendedores = [];
                         return ListView.builder(
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
@@ -93,9 +107,10 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                           itemCount: resultado.length,
                           itemBuilder: (context, resultadoIndex) {
                             final resultadoItem = resultado[resultadoIndex];
-                            resultadoItem.emprendedores.forEach((element) {
-                              emprendedores.add(element.nombre);
-                            });
+                            emprendedores = usuarioProvider.getEmprendedores(resultadoItem);
+                            // resultadoItem.emprendedores.forEach((element) {
+                            //   emprendedores.add(element.nombre);
+                            // });
                             return Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   15, 10, 15, 0),

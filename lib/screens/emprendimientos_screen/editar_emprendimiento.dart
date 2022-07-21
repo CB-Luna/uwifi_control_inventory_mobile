@@ -381,7 +381,7 @@ class _EditarProyectoWidgetState extends State<EditarProyectoWidget> {
                               children: [
                                 FFButtonWidget(
                                   onPressed: () async  {
-                                    usuarioProvider.updateEmprendimientoRemove(widget.emprendimiento);
+                                    usuarioProvider.removeEmprendimiento(widget.emprendimiento);
                                      await Navigator.push(
                                       context,
                                       MaterialPageRoute(

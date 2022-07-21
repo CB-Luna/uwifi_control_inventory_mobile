@@ -6,6 +6,7 @@ import 'package:bizpro_app/theme/theme.dart';
 
 import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
 import 'package:bizpro_app/providers/database_providers/emprendedor_controller.dart';
+import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
@@ -35,6 +36,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
     final emprendimientoProvider =
         Provider.of<EmprendimientoController>(context);
     final emprendedorProvider = Provider.of<EmprendedorController>(context);
+    final usuarioProvider = Provider.of<UsuarioController>(context);
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -552,8 +554,8 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                           children: [
                             FFButtonWidget(
                               onPressed: () async {
-                                emprendedorProvider.add();
-                                emprendimientoProvider.updateEmprendedores(widget.idEmprendimiento, emprendedorProvider.emprendedores[emprendedorProvider.emprendedores.length - 1]); 
+                                emprendedorProvider.add(widget.idEmprendimiento);
+                                // emprendimientoProvider.updateEmprendedores(widget.idEmprendimiento, emprendedorProvider.emprendedores[emprendedorProvider.emprendedores.length - 1]); 
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(

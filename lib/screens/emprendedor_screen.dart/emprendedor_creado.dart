@@ -1,4 +1,5 @@
 import 'package:bizpro_app/screens/emprendimientos_screen/detalle_proyecto_screen_2.dart';
+import 'package:bizpro_app/screens/emprendimientos_screen/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -72,12 +73,12 @@ class _EmprendedorCreadoState extends State<EmprendedorCreado> {
                     padding: EdgeInsetsDirectional.fromSTEB(0, 100, 0, 0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        // await Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => DetalleProyectoScreen2(),
-                        //   ),
-                        // );
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EmprendimientosScreen(),
+                          ),
+                        );
                       },
                       text: 'Listo',
                       options: FFButtonOptions(
