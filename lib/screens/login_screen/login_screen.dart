@@ -110,6 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: TextFormField(
                         controller: userState.passwordController,
                         obscureText: !contrasenaVisibility,
+                        obscuringCharacter: '*',
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'La contraseña es requerida';
@@ -197,8 +198,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                     userData['attributes']['celular'],
                                     userData['attributes']['email'],
                                     "CBLuna2022",
-                                    userData['attributes']['imagen']['data']
-                                        ['attributes']['url'],
+                                    userData['attributes']?['imagen']?['data']
+                                            ?['attributes']?['url'] ??
+                                        '',
                                     userState.getRole(userData['attributes']
                                                 ['role']['data']['attributes']
                                             ['name']

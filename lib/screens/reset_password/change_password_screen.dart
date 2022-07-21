@@ -64,6 +64,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: TextFormField(
                         controller: nuevaContrasenaController,
+                        obscuringCharacter: '*',
                         obscureText: !nuevaContrasenaVisibility,
                         decoration: InputDecoration(
                           labelText: 'Nueva Contraseña',
@@ -125,6 +126,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     child: TextFormField(
                       controller: confNuevaContrasenaController,
                       obscureText: !confNuevaContrasenaVisibility,
+                      obscuringCharacter: '*',
                       decoration: InputDecoration(
                         labelText: 'Confirmar Contraseña',
                         labelStyle: AppTheme.of(context).bodyText1.override(
