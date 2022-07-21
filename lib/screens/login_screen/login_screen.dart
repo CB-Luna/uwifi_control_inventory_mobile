@@ -1,4 +1,5 @@
 import 'package:bizpro_app/services/auth_service.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -140,13 +141,27 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (!formKey.currentState!.validate()) {
                             return;
                           }
+
                           //TODO: revisar status de red y si es la primera vez
                           //TODO: hacer push a pantalla de loading
-                          final loginResponse = await AuthService.login(
-                            userState.emailController.text,
-                            userState.passwordController.text,
-                          );
-                          if (loginResponse == null) return;
+                          final connectivityResult =
+                              await (Connectivity().checkConnectivity());
+                          // if(esPrimeraVez) {} else {}
+                          if (connectivityResult == ConnectivityResult.none) {
+                            //offline
+                            // loginOffline(email, contrasena);
+                          } else {
+                            //online
+                            final loginResponse = await AuthService.login(
+                              userState.emailController.text,
+                              userState.passwordController.text,
+                            );
+                            if (loginResponse == null) return;
+                            await userState.setToken(loginResponse.token);
+                            final userId = loginResponse.user.id;
+
+                            prefs.setString("userId", userId);
+                          }
 
                           if (userState.recuerdame == true) {
                             await userState.setEmail();
@@ -158,11 +173,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             await prefs.remove('email');
                             await prefs.remove('password');
                           }
-
-                          await userState.setToken(loginResponse.token);
-                          final userId = loginResponse.user.id;
-
-                          prefs.setString("userId", userId);
 
                           // userState.usuarioActivo =
                           //     UsuarioActivo.fromMap(userData);
