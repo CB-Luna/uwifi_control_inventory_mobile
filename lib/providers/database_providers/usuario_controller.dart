@@ -131,5 +131,13 @@ class UsuarioController extends ChangeNotifier {
       notifyListeners();
   }
 
+  void updateEmprendimientoRemove(Emprendimientos emprendimiento) {
+    usuarioCurrent!.emprendimientos.remove(emprendimiento);
+    dataBase.usuariosBox.put(usuarioCurrent!);
+    print('Emprendimiento actualizado exitosamente');
+    notifyListeners();
+
+  }
+
   
 }

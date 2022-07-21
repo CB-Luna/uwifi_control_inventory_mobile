@@ -209,13 +209,11 @@ final _entities = <ModelEntity>[
         ModelRelation(
             id: const IdUid(2, 7335578884425240534),
             name: 'usuarios',
-            targetId: const IdUid(10, 252808688812742776)),
-        ModelRelation(
-            id: const IdUid(3, 1226469011453769556),
-            name: 'emprendedores',
-            targetId: const IdUid(21, 311544265460535081))
+            targetId: const IdUid(10, 252808688812742776))
       ],
       backlinks: <ModelBacklink>[
+        ModelBacklink(
+            name: 'emprendedores', srcEntity: 'Emprendedores', srcField: ''),
         ModelBacklink(
             name: 'clasifiProyecto',
             srcEntity: 'ClasificacionProyecto',
@@ -889,11 +887,13 @@ final _entities = <ModelEntity>[
             indexId: const IdUid(26, 1728042511720879376),
             relationTarget: 'Comunidades')
       ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[
-        ModelBacklink(
-            name: 'emprendimientos', srcEntity: 'Emprendimientos', srcField: '')
-      ]),
+      relations: <ModelRelation>[
+        ModelRelation(
+            id: const IdUid(4, 4334679211015697719),
+            name: 'emprendimientos',
+            targetId: const IdUid(8, 804684152773215409))
+      ],
+      backlinks: <ModelBacklink>[]),
   ModelEntity(
       id: const IdUid(22, 334643984474072026),
       name: 'Estados',
@@ -988,7 +988,7 @@ ModelDefinition getObjectBoxModel() {
       entities: _entities,
       lastEntityId: const IdUid(23, 6229275484692578053),
       lastIndexId: const IdUid(28, 8154602671126157109),
-      lastRelationId: const IdUid(3, 1226469011453769556),
+      lastRelationId: const IdUid(4, 4334679211015697719),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
         1366246136666677579,
@@ -1052,7 +1052,7 @@ ModelDefinition getObjectBoxModel() {
         6494676936156636610,
         7984657088306364599
       ],
-      retiredRelationUids: const [],
+      retiredRelationUids: const [1226469011453769556],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
       version: 1);
@@ -1179,7 +1179,7 @@ ModelDefinition getObjectBoxModel() {
             ],
         toManyRelations: (Emprendimientos object) => {
               RelInfo<Emprendimientos>.toMany(2, object.id): object.usuarios,
-              RelInfo<Emprendimientos>.toMany(3, object.id):
+              RelInfo<Emprendedores>.toManyBacklink(4, object.id):
                   object.emprendedores,
               RelInfo<ClasificacionProyecto>.toOneBacklink(
                   6,
@@ -1265,7 +1265,7 @@ ModelDefinition getObjectBoxModel() {
           InternalToManyAccess.setRelInfo(
               object.emprendedores,
               store,
-              RelInfo<Emprendimientos>.toMany(3, object.id),
+              RelInfo<Emprendedores>.toManyBacklink(4, object.id),
               store.box<Emprendimientos>());
           InternalToManyAccess.setRelInfo(
               object.clasifiProyecto,
@@ -1876,7 +1876,7 @@ ModelDefinition getObjectBoxModel() {
         model: _entities[15],
         toOneRelations: (Emprendedores object) => [object.comunidades],
         toManyRelations: (Emprendedores object) => {
-              RelInfo<Emprendimientos>.toManyBacklink(3, object.id):
+              RelInfo<Emprendedores>.toMany(4, object.id):
                   object.emprendimientos
             },
         getId: (Emprendedores object) => object.id,
@@ -1938,7 +1938,7 @@ ModelDefinition getObjectBoxModel() {
           InternalToManyAccess.setRelInfo(
               object.emprendimientos,
               store,
-              RelInfo<Emprendimientos>.toManyBacklink(3, object.id),
+              RelInfo<Emprendedores>.toMany(4, object.id),
               store.box<Emprendedores>());
           return object;
         }),
@@ -2159,11 +2159,6 @@ class Emprendimientos_ {
   /// see [Emprendimientos.usuarios]
   static final usuarios =
       QueryRelationToMany<Emprendimientos, Usuarios>(_entities[3].relations[0]);
-
-  /// see [Emprendimientos.emprendedores]
-  static final emprendedores =
-      QueryRelationToMany<Emprendimientos, Emprendedores>(
-          _entities[3].relations[1]);
 }
 
 /// [Usuarios] entity fields to define ObjectBox queries.
@@ -2609,6 +2604,11 @@ class Emprendedores_ {
   /// see [Emprendedores.comunidades]
   static final comunidades = QueryRelationToOne<Emprendedores, Comunidades>(
       _entities[15].properties[11]);
+
+  /// see [Emprendedores.emprendimientos]
+  static final emprendimientos =
+      QueryRelationToMany<Emprendedores, Emprendimientos>(
+          _entities[15].relations[0]);
 }
 
 /// [Estados] entity fields to define ObjectBox queries.

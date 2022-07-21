@@ -252,13 +252,13 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         FFButtonWidget(
-                          onPressed: () async {
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AgregarEmprendedorScreen(),
-                              ),
-                            );
+                          onPressed: () {
+                            // await Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => AgregarEmprendedorScreen(),
+                            //   ),
+                            // );
                           },
                           text: 'Emprendedor',
                           options: FFButtonOptions(

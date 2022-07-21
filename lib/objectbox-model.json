@@ -204,11 +204,6 @@
           "id": "2:7335578884425240534",
           "name": "usuarios",
           "targetId": "10:252808688812742776"
-        },
-        {
-          "id": "3:1226469011453769556",
-          "name": "emprendedores",
-          "targetId": "21:311544265460535081"
         }
       ]
     },
@@ -874,7 +869,13 @@
           "relationTarget": "Comunidades"
         }
       ],
-      "relations": []
+      "relations": [
+        {
+          "id": "4:4334679211015697719",
+          "name": "emprendimientos",
+          "targetId": "8:804684152773215409"
+        }
+      ]
     },
     {
       "id": "22:334643984474072026",
@@ -945,7 +946,7 @@
   ],
   "lastEntityId": "23:6229275484692578053",
   "lastIndexId": "28:8154602671126157109",
-  "lastRelationId": "3:1226469011453769556",
+  "lastRelationId": "4:4334679211015697719",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
@@ -1011,6 +1012,8 @@
     6494676936156636610,
     7984657088306364599
   ],
-  "retiredRelationUids": [],
+  "retiredRelationUids": [
+    1226469011453769556
+  ],
   "version": 1
 }

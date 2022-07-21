@@ -1,4 +1,6 @@
 import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/screens/emprendimientos_screen/detalle_proyecto_screen_2.dart';
+import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -83,6 +85,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                 .usuarioCurrent?.emprendimientos
                                 .toList() ??
                             [];
+                        final List<String> emprendedores = [];
                         return ListView.builder(
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
@@ -90,6 +93,9 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                           itemCount: resultado.length,
                           itemBuilder: (context, resultadoIndex) {
                             final resultadoItem = resultado[resultadoIndex];
+                            resultadoItem.emprendedores.forEach((element) {
+                              emprendedores.add(element.nombre);
+                            });
                             return Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   15, 10, 15, 0),
@@ -117,7 +123,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                DetalleProyectoScreen(),
+                                                DetalleProyectoScreen2(emprendimiento: resultadoItem,),
                                           ),
                                         );
                                       },
@@ -128,18 +134,13 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                           topLeft: Radius.circular(8),
                                           topRight: Radius.circular(8),
                                         ),
-                                        child: CachedNetworkImage(
-                                          imageUrl: resultadoItem.imagen,
-                                          width: double.infinity,
-                                          height: 190,
-                                          fit: BoxFit.cover,
-                                        ),
+                                        child: getImage(resultadoItem.imagen),
                                       ),
                                     ),
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              16, 12, 16, 8),
+                                              16, 10, 16, 5),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
@@ -147,12 +148,13 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                             child: Text(
                                               resultadoItem.nombre,
                                               maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
                                               style: AppTheme.of(context)
                                                   .title3
                                                   .override(
                                                     fontFamily: 'Poppins',
                                                     color: Colors.white,
-                                                    fontSize: 18,
+                                                    fontSize: 16,
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                             ),
@@ -163,7 +165,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              16, 0, 16, 8),
+                                              16, 0, 16, 5),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
@@ -174,12 +176,13 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                                       .toString() ??
                                                   'NONE',
                                               maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
                                               style: AppTheme.of(context)
                                                   .bodyText2
                                                   .override(
                                                     fontFamily: 'Poppins',
                                                     color: Colors.black,
-                                                    fontSize: 13,
+                                                    fontSize: 12,
                                                     fontWeight:
                                                         FontWeight.normal,
                                                   ),
@@ -188,10 +191,42 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                         ],
                                       ),
                                     ),
-                                    Container(
-                                      height: 40,
-                                      decoration: const BoxDecoration(),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              16, 0, 16, 5),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              emprendedores.isEmpty ?
+                                                  'SIN EMPRENDEDORES' 
+                                                  :
+                                                  emprendedores.length > 1 ?
+                                                  emprendedores.join(", ")
+                                                  :
+                                                  emprendedores[0],
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: AppTheme.of(context)
+                                                  .bodyText2
+                                                  .override(
+                                                    fontFamily: 'Poppins',
+                                                    color: Colors.black,
+                                                    fontSize: 12,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
+                                    // Container(
+                                    //   height: 40,
+                                    //   decoration: const BoxDecoration(),
+                                    // ),
                                   ],
                                 ),
                               ),

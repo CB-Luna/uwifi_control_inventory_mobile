@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,7 +9,8 @@ import 'package:bizpro_app/providers/database_providers/emprendimiento_controlle
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/providers/select_image_provider.dart';
 
-import 'package:bizpro_app/screens/widgets/emprendimiento_creado.dart';
+import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
+import 'package:bizpro_app/screens/emprendimientos_screen/emprendimiento_creado.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -104,9 +104,6 @@ class _AgregarEmprendimientoScreenState
                         child: InkWell(
                           onTap: () async{
 
-                            // selectImageProvider.pickFiles();
-                            // emprendimientoProvider.imagen = selectImageProvider.fileName;
-                            emprendimientoProvider.imagen = "https://www.amo-alebrijes.com/wp-content/uploads/2016/08/Tutoriales-tipos-de-alebrijes.jpg";
                             String? option = await showModalBottomSheet(
                               context: context,
                               builder: (_) => const CustomBottomSheet(),
@@ -136,6 +133,7 @@ class _AgregarEmprendimientoScreenState
 
                             setState(() {
                               image = pickedFile;
+                              emprendimientoProvider.imagen = image!.path;
                             });
                           },
                           child: Container(
@@ -155,7 +153,7 @@ class _AgregarEmprendimientoScreenState
                                 width: 2,
                               ),
                             ),
-                            child: getImage(image?.path)
+                            child: getImage(image?.path),
                           ),
                         ),
                       ),
@@ -429,23 +427,3 @@ class _AgregarEmprendimientoScreenState
     );
   }
 }
-
-Widget getImage(String? image) {
-    if (image == null) {
-      return const Image(
-        image: AssetImage('assets/images/animation_500_l3ur8tqa.gif'),
-        fit: BoxFit.contain,
-      );
-    } else if (image.startsWith('http')) {
-      return FadeInImage(
-        placeholder:
-            const AssetImage('assets/images/animation_500_l3ur8tqa.gif'),
-        image: NetworkImage(image),
-        fit: BoxFit.cover,
-      );
-    }
-    return Image.file(
-      File(image),
-      fit: BoxFit.cover,
-    );
-  }

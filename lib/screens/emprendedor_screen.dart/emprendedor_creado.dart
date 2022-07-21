@@ -1,0 +1,108 @@
+import 'package:bizpro_app/screens/emprendimientos_screen/detalle_proyecto_screen_2.dart';
+import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:bizpro_app/theme/theme.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
+
+class EmprendedorCreado extends StatefulWidget {
+  const EmprendedorCreado({Key? key}) : super(key: key);
+
+  @override
+  _EmprendedorCreadoState createState() =>
+      _EmprendedorCreadoState();
+}
+
+class _EmprendedorCreadoState extends State<EmprendedorCreado> {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: scaffoldKey,
+      backgroundColor: Color(0xFFDDEEF8),
+      body: SafeArea(
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+                    child: Text(
+                      'Emprendedor\nCreado!',
+                      textAlign: TextAlign.center,
+                      style: AppTheme.of(context).bodyText1.override(
+                            fontFamily: 'Poppins',
+                            color: Colors.black,
+                            fontSize: 30,
+                          ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                    child: Text(
+                      'Listo, el emprendor se agregará \na la lista de emprendedores.',
+                      textAlign: TextAlign.center,
+                      style: AppTheme.of(context).bodyText1.override(
+                            fontFamily: 'Poppins',
+                            color: Colors.black,
+                            fontSize: 15,
+                          ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 70, 0, 0),
+                    child: Lottie.network(
+                      'https://assets10.lottiefiles.com/packages/lf20_o3bfunhr.json',
+                      width: 250,
+                      height: 180,
+                      fit: BoxFit.cover,
+                      repeat: false,
+                      animate: true,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 100, 0, 0),
+                    child: FFButtonWidget(
+                      onPressed: () async {
+                        // await Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => DetalleProyectoScreen2(),
+                        //   ),
+                        // );
+                      },
+                      text: 'Listo',
+                      options: FFButtonOptions(
+                        width: 200,
+                        height: 45,
+                        color: Color(0xFF28BFFA),
+                        textStyle:
+                            AppTheme.of(context).subtitle2.override(
+                                  fontFamily: 'Poppins',
+                                  color: Colors.white,
+                                ),
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

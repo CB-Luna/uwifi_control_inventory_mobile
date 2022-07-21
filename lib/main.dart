@@ -7,6 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
+import 'providers/database_providers/emprendedor_controller.dart';
 import 'providers/database_providers/emprendimiento_controller.dart';
 import 'providers/database_providers/usuario_controller.dart';
 import 'providers/database_providers/comunidad_controller.dart';
@@ -40,6 +41,10 @@ void main() async {
         ),
         ChangeNotifierProvider<ComunidadController>(
           create: (context) => ComunidadController(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<EmprendedorController>(
+          create: (context) => EmprendedorController(),
           lazy: false,
         ),
         ChangeNotifierProvider(
