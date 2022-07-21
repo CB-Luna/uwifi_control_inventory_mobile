@@ -45,7 +45,7 @@
                 <data android:scheme="http" />
                 <data android:scheme="https" />
 
-                <data android:host="strapi-emi.cbluna-dev.com" />
+                <data android:host="pocketbase.cbluna-dev.com" />
 
             </intent-filter>
         </activity>

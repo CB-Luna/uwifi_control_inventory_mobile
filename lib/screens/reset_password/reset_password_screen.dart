@@ -16,14 +16,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   TextEditingController emailAddressController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final String forgotPassword = """
-    mutation(\$email: String!) {
-      forgotPassword(email: \$email) {
-        ok
-      }
-    }
-  """;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -30,10 +30,11 @@ class DeepLinkBloc extends Bloc {
     // Here can be any uri analysis, checking tokens etc, if it’s necessary
     // Throw deep link URI into the BloC's stream
     if (uri == null) return;
-    print(uri);
+    final String url = uri.toString();
+    final String code = url.split('/').last;
     //If url has code, app redirects to reset password screen
     //If not, app starts normally
-    stateSink.add(uri.queryParameters['code']);
+    stateSink.add(code);
   }
 
   @override

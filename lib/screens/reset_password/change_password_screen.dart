@@ -1,5 +1,6 @@
 import 'package:bizpro_app/providers/user_provider.dart';
 import 'package:bizpro_app/screens/widgets/custom_button.dart';
+import 'package:bizpro_app/services/auth_service.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -188,29 +189,16 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         if (!formKey.currentState!.validate()) {
                           return;
                         }
-                        // final user = await signInWithEmail(
-                        //   context,
-                        //   correoElectronicoController.text,
-                        //   contrasenaController.text,
-                        // );
-                        // if (user == null) {
-                        //   return;
-                        // }
 
-                        // setState(() => FFAppState().contrasena =
-                        //     contrasenaController.text);
-                        // setState(() => FFAppState().correoElectronico =
-                        //     correoElectronicoController.text);
+                        final res = await AuthService.confirmPasswordReset(
+                          widget.token,
+                          nuevaContrasenaController.text,
+                          confNuevaContrasenaController.text,
+                        );
+
+                        if (res == false) return;
+
                         await userState.logout();
-                        // await Navigator.pushReplacement(
-                        //   context,
-                        //   PageRouteBuilder(
-                        //     pageBuilder:
-                        //         (context, animation, secondaryAnimation) =>
-                        //             const LoginScreen(),
-                        //     transitionDuration: const Duration(seconds: 0),
-                        //   ),
-                        // );
                       },
                       text: 'Cambiar contraseña',
                       options: ButtonOptions(

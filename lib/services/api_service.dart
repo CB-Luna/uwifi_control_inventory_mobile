@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/services/apiinterceptor.dart';
+import 'package:bizpro_app/services/api_interceptor.dart';
 import 'package:http/http.dart';
 import 'package:http_interceptor/http/intercepted_client.dart';
 

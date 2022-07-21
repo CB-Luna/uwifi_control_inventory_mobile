@@ -86,7 +86,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    final UserState userState = Provider.of<UserState>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'bizproEM',
