@@ -33,7 +33,9 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      getInfo();
+      setState(() {
+        getInfo();
+      });
     });
   }
 
