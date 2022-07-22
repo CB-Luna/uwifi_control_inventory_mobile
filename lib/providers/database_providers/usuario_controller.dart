@@ -69,7 +69,7 @@ class UsuarioController extends ChangeNotifier {
       
       dataBase.usuariosBox.put(nuevoUsuario);
       usuarios.add(nuevoUsuario);
-      getUserID(correo);
+      getUser(correo);
       print('Usuario agregado exitosamente');
       notifyListeners();
   }
@@ -91,6 +91,16 @@ class UsuarioController extends ChangeNotifier {
     final usuarios = dataBase.usuariosBox.getAll();
     for(int i = 0; i < usuarios.length ; i++) {
       if (usuarios[i].correo == email) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool validateUserOffline(String email, String password) {
+    final usuarios = dataBase.usuariosBox.getAll();
+    for(int i = 0; i < usuarios.length ; i++) {
+      if (usuarios[i].correo == email && usuarios[i].password == password) {
         return true;
       }
     }

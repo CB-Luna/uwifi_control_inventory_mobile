@@ -36,7 +36,7 @@ void main() async {
         ),
         ChangeNotifierProvider<UsuarioController>(
           create: (context) =>
-              UsuarioController(email: prefs.getString("email")),
+              UsuarioController(email: prefs.getString("userId")),
           lazy: false,
         ),
         ChangeNotifierProvider<ComunidadController>(

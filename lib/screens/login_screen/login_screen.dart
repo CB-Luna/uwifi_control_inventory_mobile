@@ -1,3 +1,4 @@
+import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/services/auth_service.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
@@ -142,39 +143,65 @@ class _LoginScreenState extends State<LoginScreen> {
                             return;
                           }
 
-                          // userState.usuarioActivo =
-                          //     UsuarioActivo.fromMap(userData);
+                          //TODO: revisar status de red y si es la primera vez
+                          //TODO: hacer push a pantalla de loading
+                          final connectivityResult =
+                              await (Connectivity().checkConnectivity());
+                          // if(esPrimeraVez) {} else {}
+                          if (connectivityResult == ConnectivityResult.none) {
+                            //offline
+                            // loginOffline(email, contrasena);
+                            if (usuarioProvider.validateUserOffline(
+                              prefs.getString("userId") ?? "NONE", userState.passwordController.text)) {
+                              print('Usuario ya existente');
+                              usuarioProvider.getUser(
+                                  prefs.getString("userId")!);
+                              if (userState.recuerdame == true) {
+                                await userState.setEmail();
+                                //TODO: quitar?
+                                await userState.setPassword();
+                              } else {
+                                userState.emailController.text = '';
+                                userState.passwordController.text = '';
+                                await prefs.remove('email');
+                                await prefs.remove('password');
+                              }
 
-                          //TODO: check user roles
+                              if (!mounted) return;
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const EmprendimientosScreen(),
+                                ),
+                              );
+                          } else {
+                            print('Usuario no existente');
+                            snackbarKey.currentState?.showSnackBar(const SnackBar(
+                              content: Text("Credenciales incorrectas o no ha sido registrado al sistema"),
+                            ));
 
-                          //TODO: Conseguir password y rol en entero
-                          //Modo OnLine
-                          final loginResponse = await AuthService.login(
+                             //TODO Verificar como es el rol
+                            // print("Rol ${loginResponse.user.profile.idRolFk.toString()}");
+                          }
+
+                          } else {
+                            //online
+                            final loginResponse = await AuthService.login(
                               userState.emailController.text,
                               userState.passwordController.text,
                             );
                             if (loginResponse == null) return;
                             await userState.setToken(loginResponse.token);
-                            final userId = loginResponse.user.id;
+                            final userId = loginResponse.user.email;
 
                             prefs.setString("userId", userId);
 
-                           if (userState.recuerdame == true) {
-                            await userState.setEmail();
-                            //TODO: quitar?
-                            await userState.setPassword();
-                          } else {
-                            userState.emailController.text = '';
-                            userState.passwordController.text = '';
-                            await prefs.remove('email');
-                            await prefs.remove('password');
-                          }
-
-                          if (usuarioProvider.validateUser(
-                              loginResponse.user.email)) {
+                            if (usuarioProvider.validateUser(
+                              userId)) {
                             print('Usuario ya existente');
-                            usuarioProvider.getUserID(
-                                loginResponse.user.email);
+                            usuarioProvider.getUser(
+                                userId);
                           } else {
                             print('Usuario no existente');
                             usuarioProvider.add(
@@ -185,21 +212,32 @@ class _LoginScreenState extends State<LoginScreen> {
                                 loginResponse.user.profile.telefono,
                                 loginResponse.user.profile.celular,
                                 loginResponse.user.email,
-                                "test1234",
+                                userState.passwordController.text,
                                 loginResponse.user.profile.imagen,
                                 userState.getRole(loginResponse.user.profile.idRolFk)); //TODO Verificar como es el rol
                             // print("Rol ${loginResponse.user.profile.idRolFk.toString()}");
                           }
+                            if (userState.recuerdame == true) {
+                              await userState.setEmail();
+                              //TODO: quitar?
+                              await userState.setPassword();
+                            } else {
+                              userState.emailController.text = '';
+                              userState.passwordController.text = '';
+                              await prefs.remove('email');
+                              await prefs.remove('password');
+                            }
 
+                            if (!mounted) return;
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const EmprendimientosScreen(),
+                              ),
+                            );
 
-                          if (!mounted) return;
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  const EmprendimientosScreen(),
-                            ),
-                          );
+                          }
                         },
                         text: 'Iniciar sesión',
                         options: ButtonOptions(
