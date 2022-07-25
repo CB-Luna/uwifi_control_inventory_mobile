@@ -27,58 +27,59 @@ class UsuarioController extends ChangeNotifier {
     print("El email es: $email");
     print("Currentuser: $currentUser");
     if (email != null) {
-      final query = dataBase.usuariosBox.query(
-        Usuarios_.correo.equals(email)).build();
-        currentUser = currentUser;
-        usuarioCurrent = query.findUnique();
-        print(usuarioCurrent?.nombre ?? "SIN NOMBRE");
+      final query =
+          dataBase.usuariosBox.query(Usuarios_.correo.equals(email)).build();
+      currentUser = currentUser;
+      usuarioCurrent = query.findFirst();
+      print(usuarioCurrent?.nombre ?? "SIN NOMBRE");
     }
-
   }
 
-
   GlobalKey<FormState> usuarioFormKey = GlobalKey<FormState>();
- 
-  
 
   bool validateForm() {
     return usuarioFormKey.currentState!.validate() ? true : false;
   }
 
-
-  void clearInformation()
-  {
+  void clearInformation() {
     notifyListeners();
   }
 
-  void add(String nombre, String apellidoP, String apellidoM, 
-  DateTime nacimiento, String telefono, String celular, String correo, 
-  String password, String imagen, int rol) {
+  void add(
+      String nombre,
+      String apellidoP,
+      String apellidoM,
+      DateTime nacimiento,
+      String telefono,
+      String celular,
+      String correo,
+      String password,
+      String imagen,
+      int rol) {
     final nuevoUsuario = Usuarios(
-      nombre: nombre, 
-      apellidoP: apellidoP, 
-      apellidoM: apellidoM, 
-      nacimiento: nacimiento, 
-      telefono: telefono, 
-      celular: celular, 
-      correo: correo, 
-      password: password, 
-      imagen: imagen, 
-      rol: rol    
-      );
-      
-      dataBase.usuariosBox.put(nuevoUsuario);
-      usuarios.add(nuevoUsuario);
-      getUser(correo);
-      print('Usuario agregado exitosamente');
-      notifyListeners();
+        nombre: nombre,
+        apellidoP: apellidoP,
+        apellidoM: apellidoM,
+        nacimiento: nacimiento,
+        telefono: telefono,
+        celular: celular,
+        correo: correo,
+        password: password,
+        imagen: imagen,
+        rol: rol);
+
+    dataBase.usuariosBox.put(nuevoUsuario);
+    usuarios.add(nuevoUsuario);
+    getUser(correo);
+    print('Usuario agregado exitosamente');
+    notifyListeners();
   }
 
   // void remove(Usuarios usuario) {
   //   dataBase.usuariosBox.remove(usuario.id);
   //   usuarios.remove(usuario);
 
-  //   notifyListeners(); 
+  //   notifyListeners();
   // }
 
   getAll() {
@@ -89,7 +90,7 @@ class UsuarioController extends ChangeNotifier {
   //Usuario existente o no en la base de Datos
   bool validateUser(String email) {
     final usuarios = dataBase.usuariosBox.getAll();
-    for(int i = 0; i < usuarios.length ; i++) {
+    for (int i = 0; i < usuarios.length; i++) {
       if (usuarios[i].correo == email) {
         return true;
       }
@@ -99,7 +100,7 @@ class UsuarioController extends ChangeNotifier {
 
   bool validateUserOffline(String email, String password) {
     final usuarios = dataBase.usuariosBox.getAll();
-    for(int i = 0; i < usuarios.length ; i++) {
+    for (int i = 0; i < usuarios.length; i++) {
       if (usuarios[i].correo == email && usuarios[i].password == password) {
         return true;
       }
@@ -107,10 +108,10 @@ class UsuarioController extends ChangeNotifier {
     return false;
   }
 
-  //Se recupera ID del Usuario ya existente 
+  //Se recupera ID del Usuario ya existente
   void getUserID(String email) {
     final usuarios = dataBase.usuariosBox.getAll();
-    for(int i = 0; i < usuarios.length ; i++) {
+    for (int i = 0; i < usuarios.length; i++) {
       if (usuarios[i].correo == email) {
         currentUserId = usuarios[i].id;
         currentUser = email;
@@ -122,10 +123,10 @@ class UsuarioController extends ChangeNotifier {
 
   //Se recupera informacion del Usuario ya existente
   void getUser(String email) {
-    final query = dataBase.usuariosBox.query(
-        Usuarios_.correo.equals(email)).build();
-        currentUser = email;
-        usuarioCurrent = query.findUnique();
+    final query =
+        dataBase.usuariosBox.query(Usuarios_.correo.equals(email)).build();
+    currentUser = email;
+    usuarioCurrent = query.findFirst();
   }
 
   // void addEmprendimiento(Emprendimientos nuevoEmprendimiento, int idCurrentUser) {
@@ -135,18 +136,17 @@ class UsuarioController extends ChangeNotifier {
   // }
 
   void addEmprendimiento(Emprendimientos emprendimiento) {
-      usuarioCurrent!.emprendimientos.add(emprendimiento);
-      usuarioCurrent!.emprendimientos.applyToDb();
-      print('Emprendimiento modificado exitosamente');
-      notifyListeners();
+    usuarioCurrent!.emprendimientos.add(emprendimiento);
+    usuarioCurrent!.emprendimientos.applyToDb();
+    print('Emprendimiento modificado exitosamente');
+    notifyListeners();
   }
-  
+
   void removeEmprendimiento(Emprendimientos emprendimiento) {
     usuarioCurrent!.emprendimientos.remove(emprendimiento);
     usuarioCurrent!.emprendimientos.applyToDb();
     print('Emprendimiento actualizado exitosamente');
     notifyListeners();
-
   }
 
   List<Emprendimientos> getEmprendimientos() {
@@ -168,6 +168,4 @@ class UsuarioController extends ChangeNotifier {
 
     return emprendedores;
   }
-
-  
 }

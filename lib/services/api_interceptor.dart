@@ -14,7 +14,7 @@ class ApiInterceptor implements InterceptorContract {
   Future<RequestData> interceptRequest({required RequestData data}) async {
     String token = await tokenOrEmpty;
     try {
-      data.headers["Authorization"] = token;
+      data.headers["Authorization"] = 'User $token';
     } catch (e) {
       print(e);
     }

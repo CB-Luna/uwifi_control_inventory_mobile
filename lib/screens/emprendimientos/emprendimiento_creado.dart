@@ -57,8 +57,8 @@ class _EmprendimientoCreadoState extends State<EmprendimientoCreado> {
                   ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 70, 0, 0),
-                    child: Lottie.network(
-                      'https://assets10.lottiefiles.com/packages/lf20_o3bfunhr.json',
+                    child: Lottie.asset(
+                      'assets/lottie_animations/elemento-creado.json',
                       width: 250,
                       height: 180,
                       fit: BoxFit.cover,

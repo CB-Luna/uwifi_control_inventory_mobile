@@ -226,7 +226,7 @@ class _LanguagePickerDropdown extends StatelessWidget {
               'Unset',
               style: TextStyle(
                 color: Colors.red,
-                fontFamily: 'Product Sans',
+                fontFamily: 'Poppins',
                 fontStyle: FontStyle.italic,
                 fontSize: 15,
               ),
