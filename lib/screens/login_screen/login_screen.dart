@@ -71,6 +71,27 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
 
+                    //TITULO
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                      child: Container(
+                        height: 40,
+                        decoration: const BoxDecoration(
+                          color: Color(0x00EEEEEE),
+                        ),
+                        child: Text(
+                          'Inicia sesión',
+                          style: AppTheme.of(context).title1.override(
+                                fontFamily: 'Poppins',
+                                color: Colors.white,
+                                // fontSize: 15,
+                                // fontWeight: FontWeight.w500,
+                              ),
+                        ),
+                      ),
+                    ),
+
                     //CORREO
                     Padding(
                       padding:
@@ -243,7 +264,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             );
                           }
                         },
-                        text: 'Iniciar sesión',
+                        text: 'Ingresar',
                         options: ButtonOptions(
                           width: 170,
                           height: 50,
@@ -283,7 +304,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Recuérdame',
+                                'Recordarme',
                                 style: AppTheme.of(context).bodyText1.override(
                                       fontFamily: 'Poppins',
                                       color: Colors.white,
@@ -327,7 +348,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           );
                         },
                         child: Text(
-                          'Olvidé mi contraseña',
+                          '¿Olvidaste tu contraseña?',
                           style: AppTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
                                 color: Colors.white,

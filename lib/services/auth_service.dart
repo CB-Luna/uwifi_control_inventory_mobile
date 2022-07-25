@@ -30,7 +30,7 @@ abstract class AuthService {
           return loginResponse;
         default:
           snackbarKey.currentState?.showSnackBar(const SnackBar(
-            content: Text("Correo o contraseña incorrectos"),
+            content: Text("Usuario y/o contraseña incorrectos"),
           ));
           break;
       }
@@ -64,7 +64,7 @@ abstract class AuthService {
       return false;
     } catch (e) {
       snackbarKey.currentState?.showSnackBar(const SnackBar(
-        content: Text("Ocurrió un error"),
+        content: Text("Error al realizar la petición"),
       ));
       return false;
     }
@@ -95,7 +95,7 @@ abstract class AuthService {
       }
     } catch (e) {
       snackbarKey.currentState?.showSnackBar(const SnackBar(
-        content: Text("Ocurrió un error"),
+        content: Text("Error al realizar la petición"),
       ));
       return false;
     }

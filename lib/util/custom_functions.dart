@@ -12,6 +12,7 @@ String formatTimeOfDay(TimeOfDay timeOfDay) {
 InputDecoration getInputDecoration({
   required BuildContext context,
   required String labelText,
+  String requiredCharacter = '*',
   String? hintText,
   InkWell? inkWell,
 }) {
