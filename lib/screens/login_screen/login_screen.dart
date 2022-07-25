@@ -152,10 +152,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             //offline
                             // loginOffline(email, contrasena);
                             if (usuarioProvider.validateUserOffline(
-                              prefs.getString("userId") ?? "NONE", userState.passwordController.text)) {
+                                prefs.getString("userId") ?? "NONE",
+                                userState.passwordController.text)) {
                               print('Usuario ya existente');
-                              usuarioProvider.getUser(
-                                  prefs.getString("userId")!);
+                              // usuarioProvider.getUser(
+                              //     prefs.getString("userId")!);
                               if (userState.recuerdame == true) {
                                 await userState.setEmail();
                                 //TODO: quitar?
@@ -175,16 +176,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                       const EmprendimientosScreen(),
                                 ),
                               );
-                          } else {
-                            print('Usuario no existente');
-                            snackbarKey.currentState?.showSnackBar(const SnackBar(
-                              content: Text("Credenciales incorrectas o no ha sido registrado al sistema"),
-                            ));
+                            } else {
+                              print('Usuario no existente');
+                              snackbarKey.currentState
+                                  ?.showSnackBar(const SnackBar(
+                                content: Text(
+                                    "Credenciales incorrectas o no ha sido registrado al sistema"),
+                              ));
 
-                             //TODO Verificar como es el rol
-                            // print("Rol ${loginResponse.user.profile.idRolFk.toString()}");
-                          }
-
+                              //TODO Verificar como es el rol
+                              // print("Rol ${loginResponse.user.profile.idRolFk.toString()}");
+                            }
                           } else {
                             //online
                             final loginResponse = await AuthService.login(
@@ -197,26 +199,25 @@ class _LoginScreenState extends State<LoginScreen> {
 
                             prefs.setString("userId", userId);
 
-                            if (usuarioProvider.validateUser(
-                              userId)) {
-                            print('Usuario ya existente');
-                            usuarioProvider.getUser(
-                                userId);
-                          } else {
-                            print('Usuario no existente');
-                            usuarioProvider.add(
-                                loginResponse.user.profile.nombre,
-                                loginResponse.user.profile.apellidoP,
-                                loginResponse.user.profile.apellidoM,
-                                loginResponse.user.profile.nacimiento,
-                                loginResponse.user.profile.telefono,
-                                loginResponse.user.profile.celular,
-                                loginResponse.user.email,
-                                userState.passwordController.text,
-                                loginResponse.user.profile.imagen,
-                                userState.getRole(loginResponse.user.profile.idRolFk)); //TODO Verificar como es el rol
-                            // print("Rol ${loginResponse.user.profile.idRolFk.toString()}");
-                          }
+                            if (usuarioProvider.validateUser(userId)) {
+                              print('Usuario ya existente');
+                              usuarioProvider.getUser(userId);
+                            } else {
+                              print('Usuario no existente');
+                              usuarioProvider.add(
+                                  loginResponse.user.profile.nombre,
+                                  loginResponse.user.profile.apellidoP,
+                                  loginResponse.user.profile.apellidoM,
+                                  loginResponse.user.profile.nacimiento,
+                                  loginResponse.user.profile.telefono,
+                                  loginResponse.user.profile.celular,
+                                  loginResponse.user.email,
+                                  userState.passwordController.text,
+                                  loginResponse.user.profile.imagen,
+                                  userState.getRole(loginResponse.user.profile
+                                      .idRolFk)); //TODO Verificar como es el rol
+                              // print("Rol ${loginResponse.user.profile.idRolFk.toString()}");
+                            }
                             if (userState.recuerdame == true) {
                               await userState.setEmail();
                               //TODO: quitar?
@@ -236,7 +237,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                     const EmprendimientosScreen(),
                               ),
                             );
-
                           }
                         },
                         text: 'Iniciar sesión',

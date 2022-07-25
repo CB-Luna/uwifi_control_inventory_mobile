@@ -1,18 +1,14 @@
-import 'package:bizpro_app/screens/emprendimientos_screen/detalle_proyecto_screen_2.dart';
 import 'package:bizpro_app/screens/emprendimientos_screen/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
 class EmprendedorCreado extends StatefulWidget {
   const EmprendedorCreado({Key? key}) : super(key: key);
 
   @override
-  _EmprendedorCreadoState createState() =>
-      _EmprendedorCreadoState();
+  State<EmprendedorCreado> createState() => _EmprendedorCreadoState();
 }
 
 class _EmprendedorCreadoState extends State<EmprendedorCreado> {
@@ -22,7 +18,7 @@ class _EmprendedorCreadoState extends State<EmprendedorCreado> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Color(0xFFDDEEF8),
+      backgroundColor: const Color(0xFFDDEEF8),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -35,7 +31,7 @@ class _EmprendedorCreadoState extends State<EmprendedorCreado> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                     child: Text(
                       'Emprendedor\nCreado!',
                       textAlign: TextAlign.center,
@@ -47,7 +43,7 @@ class _EmprendedorCreadoState extends State<EmprendedorCreado> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                     child: Text(
                       'Listo, el emprendor se agregará \na la lista de emprendedores.',
                       textAlign: TextAlign.center,
@@ -59,9 +55,9 @@ class _EmprendedorCreadoState extends State<EmprendedorCreado> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 70, 0, 0),
-                    child: Lottie.network(
-                      'https://assets10.lottiefiles.com/packages/lf20_o3bfunhr.json',
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 70, 0, 0),
+                    child: Lottie.asset(
+                      'assets/lottie_animations/elemento-creado.json',
                       width: 250,
                       height: 180,
                       fit: BoxFit.cover,
@@ -70,13 +66,13 @@ class _EmprendedorCreadoState extends State<EmprendedorCreado> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 100, 0, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 100, 0, 0),
                     child: FFButtonWidget(
                       onPressed: () async {
                         await Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => EmprendimientosScreen(),
+                            builder: (context) => const EmprendimientosScreen(),
                           ),
                         );
                       },
@@ -84,13 +80,12 @@ class _EmprendedorCreadoState extends State<EmprendedorCreado> {
                       options: FFButtonOptions(
                         width: 200,
                         height: 45,
-                        color: Color(0xFF28BFFA),
-                        textStyle:
-                            AppTheme.of(context).subtitle2.override(
-                                  fontFamily: 'Poppins',
-                                  color: Colors.white,
-                                ),
-                        borderSide: BorderSide(
+                        color: const Color(0xFF28BFFA),
+                        textStyle: AppTheme.of(context).subtitle2.override(
+                              fontFamily: 'Poppins',
+                              color: Colors.white,
+                            ),
+                        borderSide: const BorderSide(
                           color: Colors.transparent,
                           width: 1,
                         ),
