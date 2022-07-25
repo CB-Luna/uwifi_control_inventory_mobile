@@ -93,7 +93,6 @@ class Profile {
     required this.nacimiento,
     required this.nombre,
     required this.telefono,
-    required this.token,
     required this.updated,
     required this.userId,
   });
@@ -112,7 +111,6 @@ class Profile {
   DateTime nacimiento;
   String nombre;
   String telefono;
-  String token;
   DateTime updated;
   String userId;
 
@@ -135,7 +133,6 @@ class Profile {
         nacimiento: DateTime.parse(json["nacimiento"]),
         nombre: json["nombre"],
         telefono: json["telefono"],
-        token: json["token"],
         updated: DateTime.parse(json["updated"]),
         userId: json["userId"],
       );
@@ -155,7 +152,6 @@ class Profile {
         "nacimiento": nacimiento.toIso8601String(),
         "nombre": nombre,
         "telefono": telefono,
-        "token": token,
         "updated": updated.toIso8601String(),
         "userId": userId,
       };
