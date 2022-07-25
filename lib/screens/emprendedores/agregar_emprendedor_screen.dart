@@ -1,4 +1,3 @@
-import 'package:bizpro_app/screens/emprendedor_screen.dart/emprendedor_creado.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
@@ -7,6 +6,8 @@ import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
 import 'package:bizpro_app/providers/database_providers/emprendedor_controller.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
+
+import 'package:bizpro_app/screens/emprendedores/emprendedor_creado.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';

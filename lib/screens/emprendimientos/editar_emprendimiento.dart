@@ -5,7 +5,7 @@ import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
-import 'package:bizpro_app/screens/emprendimientos_screen/emprendimientos_screen.dart';
+import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 class EditarProyectoWidget extends StatefulWidget {

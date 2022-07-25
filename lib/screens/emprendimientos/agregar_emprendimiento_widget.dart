@@ -10,7 +10,7 @@ import 'package:bizpro_app/providers/database_providers/usuario_controller.dart'
 import 'package:bizpro_app/providers/select_image_provider.dart';
 
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
-import 'package:bizpro_app/screens/emprendimientos_screen/emprendimiento_creado.dart';
+import 'package:bizpro_app/screens/emprendimientos/emprendimiento_creado.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/theme/theme.dart';

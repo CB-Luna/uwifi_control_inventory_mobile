@@ -1,8 +1,8 @@
-import 'package:bizpro_app/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:bizpro_app/theme/theme.dart';
+import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 class EmprendimientoCreado extends StatefulWidget {

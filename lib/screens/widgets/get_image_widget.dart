@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 Widget? getImage(String? image) {
     if (image == null) {
       return null;
-    } else if (image.startsWith('http')) {
+    } else if (image.startsWith('http') || image.startsWith('https')) {
       return FadeInImage(
         height: 180,
         width: double.infinity,

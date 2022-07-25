@@ -77,5 +77,14 @@ class EmprendedorController extends ChangeNotifier {
     emprendedores = dataBase.emprendedoresBox.getAll();
     notifyListeners();
   }
+
+  void getEmprendedoresActualUser(List<Emprendimientos> emprendimientos) {
+    emprendedores = [];
+    emprendimientos.forEach((element) {
+      element.emprendedores.forEach(
+        (element) {emprendedores.add(element);
+        });
+    });
+  }
   
 }

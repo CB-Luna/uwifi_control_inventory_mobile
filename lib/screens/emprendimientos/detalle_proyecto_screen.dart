@@ -1,29 +1,32 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:bizpro_app/screens/emprendimientos_screen/editar_emprendimiento.dart';
-import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
-import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:bizpro_app/screens/emprendedor_screen.dart/agregar_emprendedor_screen.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
+import 'package:bizpro_app/util/flutter_flow_util.dart';
 
-class DetalleProyectoScreen2 extends StatefulWidget {
+import 'package:bizpro_app/screens/emprendimientos/editar_emprendimiento.dart';
+import 'package:bizpro_app/screens/emprendedores/agregar_emprendedor_screen.dart';
+
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+
+class DetalleProyectoScreen extends StatefulWidget {
 
   final Emprendimientos emprendimiento;
 
-  const DetalleProyectoScreen2({
+  const DetalleProyectoScreen({
     Key? key,
     required this.emprendimiento,
   }) : super(key: key);
 
 
   @override
-  _DetalleProyectoScreen2State createState() =>
-      _DetalleProyectoScreen2State();
+  _DetalleProyectoScreenState createState() =>
+      _DetalleProyectoScreenState();
 }
 
-class _DetalleProyectoScreen2State extends State<DetalleProyectoScreen2> {
+class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override

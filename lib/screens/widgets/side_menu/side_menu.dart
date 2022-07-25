@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/providers/providers.dart';
-import 'package:bizpro_app/screens/widgets/side_menu/custom_menu_item.dart';
 import 'package:bizpro_app/theme/theme.dart';
+
+import 'package:bizpro_app/screens/emprendedores/emprendedores_screen.dart';
+import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
+import 'package:bizpro_app/screens/widgets/side_menu/custom_menu_item.dart';
+
 
 class SideMenu extends StatelessWidget {
   const SideMenu({Key? key}) : super(key: key);
@@ -151,16 +153,13 @@ class SideMenu extends StatelessWidget {
                       label: 'Emprendedores',
                       iconData: Icons.groups,
                       onTap: () async {
-                        //TODO: agregar pantalla
-                        // await Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) =>
-                        //         MisEmprendoresWidget(
-                        //       dropdownrol2: widget.dropdownrol,
-                        //     ),
-                        //   ),
-                        // );
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                EmprendedoresScreen(),
+                          ),
+                        );
                       },
                     ),
 
