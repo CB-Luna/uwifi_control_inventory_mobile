@@ -12,7 +12,7 @@ String formatTimeOfDay(TimeOfDay timeOfDay) {
 InputDecoration getInputDecoration({
   required BuildContext context,
   required String labelText,
-  String requiredCharacter = '*',
+  // String requiredCharacter = '*',
   String? hintText,
   InkWell? inkWell,
 }) {
@@ -31,22 +31,22 @@ InputDecoration getInputDecoration({
           fontSize: 15,
           fontWeight: FontWeight.w500,
         ),
-    enabledBorder: UnderlineInputBorder(
+    enabledBorder: OutlineInputBorder(
       borderSide: const BorderSide(
-        color: Color(0x00000000),
+        color: Colors.white,
         width: 1,
       ),
       borderRadius: BorderRadius.circular(30),
     ),
-    focusedBorder: UnderlineInputBorder(
+    focusedBorder: OutlineInputBorder(
       borderSide: const BorderSide(
-        color: Color(0x00000000),
+        color: Colors.white,
         width: 1,
       ),
       borderRadius: BorderRadius.circular(30),
     ),
     filled: true,
-    fillColor: const Color(0x52FFFFFF),
+    fillColor: const Color(0x22FFFFFF),
     suffixIcon: inkWell,
   );
 }

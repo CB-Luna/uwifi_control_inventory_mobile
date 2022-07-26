@@ -1,5 +1,4 @@
 import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/models/usuario_activo.dart';
 import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/services/navigation_service.dart';
 import 'package:flutter/material.dart';
@@ -48,8 +47,6 @@ class UserState extends ChangeNotifier {
   //Variables autenticacion
   List<String> token = [];
 
-  //Objeto con informacion del usuario activo
-  UsuarioActivo? usuarioActivo;
   Rol rol = Rol.administrador;
 
   //Constructor de provider
@@ -103,15 +100,6 @@ class UserState extends ChangeNotifier {
       token.add(jwt);
     }
     return jwt;
-  }
-
-  void setActiveUser(Map<String, dynamic> userData) {
-    usuarioActivo = UsuarioActivo.fromJson(userData.toString());
-    setRole(usuarioActivo!.role);
-  }
-
-  void saveActiveUser() async {
-    await prefs.setString('activeUser', usuarioActivo!.toJson());
   }
 
   Future<void> logout([bool remove = true]) async {

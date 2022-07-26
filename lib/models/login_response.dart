@@ -81,38 +81,16 @@ class Profile {
   Profile({
     required this.collectionId,
     required this.collectionName,
-    required this.apellidoM,
-    required this.apellidoP,
-    required this.archivado,
-    required this.celular,
     required this.created,
     required this.id,
-    required this.idRolFk,
-    required this.idStatusSyncFk,
-    this.imagen,
-    required this.nacimiento,
-    required this.nombre,
-    this.telefono, 
-    this.token,
     required this.updated,
     required this.userId,
   });
 
   String collectionId;
   String collectionName;
-  String apellidoM;
-  String apellidoP;
-  bool archivado;
-  String celular;
   DateTime created;
   String id;
-  String idRolFk;
-  String idStatusSyncFk;
-  String? imagen;
-  DateTime nacimiento;
-  String nombre;
-  String? telefono;
-  String? token;
   DateTime updated;
   String userId;
 
@@ -123,19 +101,8 @@ class Profile {
   factory Profile.fromMap(Map<String, dynamic> json) => Profile(
         collectionId: json["@collectionId"],
         collectionName: json["@collectionName"],
-        apellidoM: json["apellido_m"],
-        apellidoP: json["apellido_p"],
-        archivado: json["archivado"],
-        celular: json["celular"],
         created: DateTime.parse(json["created"]),
         id: json["id"],
-        idRolFk: json["id_rol_fk"],
-        idStatusSyncFk: json["id_status_fk"],
-        imagen: json["imagen"],
-        nacimiento: DateTime.parse(json["nacimiento"]),
-        nombre: json["nombre"],
-        telefono: json["telefono"],
-        token: json["token"],
         updated: DateTime.parse(json["updated"]),
         userId: json["userId"],
       );
@@ -143,19 +110,8 @@ class Profile {
   Map<String, dynamic> toMap() => {
         "@collectionId": collectionId,
         "@collectionName": collectionName,
-        "apellido_m": apellidoM,
-        "apellido_p": apellidoP,
-        "archivado": archivado,
-        "celular": celular,
         "created": created.toIso8601String(),
         "id": id,
-        "id_rol_fk": idRolFk,
-        "id_status_fk": idStatusSyncFk,
-        "imagen": imagen,
-        "nacimiento": nacimiento.toIso8601String(),
-        "nombre": nombre,
-        "telefono": telefono,
-        "token": token,
         "updated": updated.toIso8601String(),
         "userId": userId,
       };

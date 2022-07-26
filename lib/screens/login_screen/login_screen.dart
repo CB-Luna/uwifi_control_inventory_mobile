@@ -1,3 +1,4 @@
+import 'package:bizpro_app/services/api_service.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -108,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       style: AppTheme.of(context).bodyText1.override(
                             fontFamily: 'Poppins',
-                            color: Colors.white,
+                            color: const Color(0xFF393838),
                             fontSize: 15,
                             fontWeight: FontWeight.normal,
                           ),
@@ -151,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       style: AppTheme.of(context).bodyText1.override(
                             fontFamily: 'Poppins',
-                            color: Colors.white,
+                            color: const Color(0xFF393838),
                             fontSize: 15,
                             fontWeight: FontWeight.normal,
                           ),
@@ -212,7 +213,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             // print("Rol ${loginResponse.user.profile.idRolFk.toString()}");
                           }
                         } else {
-                          //online
+                          //Proceso online
+
+                          //Login
                           final loginResponse = await AuthService.login(
                             userState.emailController.text,
                             userState.passwordController.text,
@@ -223,23 +226,30 @@ class _LoginScreenState extends State<LoginScreen> {
 
                           prefs.setString("userId", userId);
 
+                          //User Query
+                          final emiUser = await ApiService.getEmiUser(
+                              loginResponse.user.id);
+
+                          if (emiUser == null) return;
+
                           if (usuarioProvider.validateUser(userId)) {
                             print('Usuario ya existente');
                             usuarioProvider.getUser(userId);
                           } else {
                             print('Usuario no existente');
                             usuarioProvider.add(
-                                loginResponse.user.profile.nombre,
-                                loginResponse.user.profile.apellidoP,
-                                loginResponse.user.profile.apellidoM,
-                                loginResponse.user.profile.nacimiento,
-                                loginResponse.user.profile.telefono ?? "",
-                                loginResponse.user.profile.celular,
-                                loginResponse.user.email,
-                                userState.passwordController.text,
-                                loginResponse.user.profile.imagen ?? "",
-                                userState.getRole(loginResponse.user.profile
-                                    .idRolFk)); //TODO Verificar como es el rol
+                              emiUser.nombreUsuario,
+                              emiUser.apellidoP,
+                              emiUser.apellidoM ?? '',
+                              emiUser.nacimiento,
+                              emiUser.telefono ?? "",
+                              emiUser.celular,
+                              loginResponse.user.email,
+                              userState.passwordController.text,
+                              emiUser.avatar ?? "",
+                              userState.getRole(emiUser
+                                  .idRolFk), //TODO Verificar como es el rol
+                            );
                             // print("Rol ${loginResponse.user.profile.idRolFk.toString()}");
                           }
                           if (userState.recuerdame == true) {
