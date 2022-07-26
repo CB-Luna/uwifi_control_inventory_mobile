@@ -56,5 +56,9 @@ class JornadaController extends ChangeNotifier {
         });
     });
   }
+  void getJornadasByEmprendimiento(Emprendimientos emprendimiento) {
+    jornadas = [];
+    jornadas = emprendimiento.jornadas.toList();
+  }
   
 }
