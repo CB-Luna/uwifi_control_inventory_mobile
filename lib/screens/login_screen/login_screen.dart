@@ -1,4 +1,4 @@
-
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/providers/providers.dart';
@@ -8,7 +8,6 @@ import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/services/auth_service.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-
 
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/screens.dart';
@@ -101,6 +100,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'El correo es requerido';
+                          } else if (!EmailValidator.validate(value)) {
+                            return 'Por favor ingresa un correo válido';
                           }
                           return null;
                         },
@@ -126,8 +127,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         obscureText: !contrasenaVisibility,
                         obscuringCharacter: '*',
                         validator: (value) {
+                          final RegExp regex = RegExp(
+                              r"^(?=.*[A-Z])(?=.*\d)(?=.*\d)[A-Za-z\d!#\$%&/\(\)=?¡¿+\*\.-_:,;]{8,50}$");
                           if (value == null || value.isEmpty) {
                             return 'La contraseña es requerida';
+                          } else if (!regex.hasMatch(value)) {
+                            return 'La contraseña debe tener al menos 8 caracteres, una letra mayúscula y dos números.\nLos caracteres especiales válidos son: !#\$%&/()=?¡¿+*.-_:,; y no se permite el uso de\nespacios, tildes o acentos.';
                           }
                           return null;
                         },
@@ -229,18 +234,18 @@ class _LoginScreenState extends State<LoginScreen> {
                               usuarioProvider.getUser(userId);
                             } else {
                               print('Usuario no existente');
-                              usuarioProvider.add(
-                                  loginResponse.user.profile.nombre,
-                                  loginResponse.user.profile.apellidoP,
-                                  loginResponse.user.profile.apellidoM,
-                                  loginResponse.user.profile.nacimiento,
-                                  loginResponse.user.profile.telefono,
-                                  loginResponse.user.profile.celular,
-                                  loginResponse.user.email,
-                                  userState.passwordController.text,
-                                  loginResponse.user.profile.imagen,
-                                  userState.getRole(loginResponse.user.profile
-                                      .idRolFk)); //TODO Verificar como es el rol
+                              // usuarioProvider.add(
+                              //     loginResponse.user.profile.nombre,
+                              //     loginResponse.user.profile.apellidoP,
+                              //     loginResponse.user.profile.apellidoM,
+                              //     loginResponse.user.profile.nacimiento,
+                              //     loginResponse.user.profile.telefono,
+                              //     loginResponse.user.profile.celular,
+                              //     loginResponse.user.email,
+                              //     userState.passwordController.text,
+                              //     loginResponse.user.profile.imagen,
+                              //     userState.getRole(loginResponse.user.profile
+                              //         .idRolFk)); //TODO Verificar como es el rol
                               // print("Rol ${loginResponse.user.profile.idRolFk.toString()}");
                             }
                             if (userState.recuerdame == true) {
