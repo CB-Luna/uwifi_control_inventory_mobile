@@ -38,35 +38,45 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           child: Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(20, 40, 20, 0),
             child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/images/emlogo.png',
-                    fit: BoxFit.cover,
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 30),
-                    child: Text(
-                      'Cambiar Contraseña',
-                      style: AppTheme.of(context).bodyText1.override(
-                            fontFamily: 'Poppins',
-                            fontSize: 20,
-                          ),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/images/emlogo.png',
+                      fit: BoxFit.cover,
                     ),
-                  ),
-                  Form(
-                    key: formKey,
-                    autovalidateMode: AutovalidateMode.always,
-                    child: Padding(
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 30),
+                      child: Text(
+                        'Cambiar Contraseña',
+                        style: AppTheme.of(context).bodyText1.override(
+                              fontFamily: 'Poppins',
+                              fontSize: 20,
+                            ),
+                      ),
+                    ),
+                    Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: TextFormField(
                         controller: nuevaContrasenaController,
                         obscuringCharacter: '*',
                         obscureText: !nuevaContrasenaVisibility,
+                        validator: (value) {
+                          final RegExp regex = RegExp(
+                              r"^(?=.*[A-Z])(?=.*\d)(?=.*\d)[A-Za-z\d!#\$%&/\(\)=?¡¿+\*\.-_:,;]{8,50}$");
+                          if (value == null || value.isEmpty) {
+                            return 'La contraseña es requerida';
+                          } else if (!regex.hasMatch(value)) {
+                            return 'La contraseña debe tener al menos 8 caracteres, una letra mayúscula y dos números.\nLos caracteres especiales válidos son: !#\$%&/()=?¡¿+*.-_:,; y no se permite el uso de\nespacios, tildes o acentos.';
+                          }
+                          return null;
+                        },
                         decoration: InputDecoration(
                           labelText: 'Nueva Contraseña',
                           labelStyle: AppTheme.of(context).bodyText1.override(
@@ -121,106 +131,117 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                             ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                    child: TextFormField(
-                      controller: confNuevaContrasenaController,
-                      obscureText: !confNuevaContrasenaVisibility,
-                      obscuringCharacter: '*',
-                      decoration: InputDecoration(
-                        labelText: 'Confirmar Contraseña',
-                        labelStyle: AppTheme.of(context).bodyText1.override(
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                      child: TextFormField(
+                        controller: confNuevaContrasenaController,
+                        obscureText: !confNuevaContrasenaVisibility,
+                        obscuringCharacter: '*',
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'La contraseña de confirmación es requerida';
+                          } else if (value != nuevaContrasenaController.text) {
+                            return 'Las contraseñas no coinciden';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Confirmar Contraseña',
+                          labelStyle: AppTheme.of(context).bodyText1.override(
+                                fontFamily: 'Poppins',
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.normal,
+                              ),
+                          hintText: 'Confirma la contraseña...',
+                          hintStyle: AppTheme.of(context).bodyText1.override(
+                                fontFamily: 'Poppins',
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.normal,
+                              ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: Color(0xFF006AFF),
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: Color(0xFF006AFF),
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          filled: true,
+                          fillColor: const Color(0x52FFFFFF),
+                          suffixIcon: InkWell(
+                            onTap: () => setState(
+                              () => confNuevaContrasenaVisibility =
+                                  !confNuevaContrasenaVisibility,
+                            ),
+                            focusNode: FocusNode(skipTraversal: true),
+                            child: Icon(
+                              confNuevaContrasenaVisibility
+                                  ? Icons.visibility_outlined
+                                  : Icons.visibility_off_outlined,
+                              color: const Color(0xFF006AFF),
+                              size: 22,
+                            ),
+                          ),
+                        ),
+                        style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
                               color: Colors.black,
                               fontSize: 15,
                               fontWeight: FontWeight.normal,
                             ),
-                        hintText: 'Confirma la contraseña...',
-                        hintStyle: AppTheme.of(context).bodyText1.override(
-                              fontFamily: 'Poppins',
-                              color: Colors.black,
-                              fontSize: 15,
-                              fontWeight: FontWeight.normal,
-                            ),
-                        enabledBorder: OutlineInputBorder(
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                      child: CustomButton(
+                        onPressed: () async {
+                          if (!formKey.currentState!.validate()) {
+                            return;
+                          }
+
+                          final res = await AuthService.confirmPasswordReset(
+                            widget.token,
+                            nuevaContrasenaController.text,
+                            confNuevaContrasenaController.text,
+                          );
+
+                          if (res == false)
+                            return; //TODO: redireccionar a login
+
+                          await userState.logout();
+                        },
+                        text: 'Cambiar contraseña',
+                        options: ButtonOptions(
+                          width: 250,
+                          height: 50,
+                          color: const Color(0xFF006AFF),
+                          textStyle: AppTheme.of(context).subtitle2.override(
+                                fontFamily: 'Montserrat',
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                              ),
+                          elevation: 0,
                           borderSide: const BorderSide(
-                            color: Color(0xFF006AFF),
-                            width: 2,
+                            color: Colors.transparent,
+                            width: 1,
                           ),
                           borderRadius: BorderRadius.circular(30),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0xFF006AFF),
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        filled: true,
-                        fillColor: const Color(0x52FFFFFF),
-                        suffixIcon: InkWell(
-                          onTap: () => setState(
-                            () => confNuevaContrasenaVisibility =
-                                !confNuevaContrasenaVisibility,
-                          ),
-                          focusNode: FocusNode(skipTraversal: true),
-                          child: Icon(
-                            confNuevaContrasenaVisibility
-                                ? Icons.visibility_outlined
-                                : Icons.visibility_off_outlined,
-                            color: const Color(0xFF006AFF),
-                            size: 22,
-                          ),
-                        ),
-                      ),
-                      style: AppTheme.of(context).bodyText1.override(
-                            fontFamily: 'Poppins',
-                            color: Colors.black,
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                          ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-                    child: CustomButton(
-                      onPressed: () async {
-                        if (!formKey.currentState!.validate()) {
-                          return;
-                        }
-
-                        final res = await AuthService.confirmPasswordReset(
-                          widget.token,
-                          nuevaContrasenaController.text,
-                          confNuevaContrasenaController.text,
-                        );
-
-                        if (res == false) return; //TODO: redireccionar a login
-
-                        await userState.logout();
-                      },
-                      text: 'Cambiar contraseña',
-                      options: ButtonOptions(
-                        width: 250,
-                        height: 50,
-                        color: const Color(0xFF006AFF),
-                        textStyle: AppTheme.of(context).subtitle2.override(
-                              fontFamily: 'Montserrat',
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                            ),
-                        elevation: 0,
-                        borderSide: const BorderSide(
-                          color: Colors.transparent,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

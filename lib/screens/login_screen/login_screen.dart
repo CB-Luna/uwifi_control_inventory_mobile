@@ -1,4 +1,4 @@
-
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/providers/providers.dart';
@@ -8,7 +8,6 @@ import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/services/auth_service.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-
 
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/screens.dart';
@@ -71,6 +70,27 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
 
+                    //TITULO
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                      child: Container(
+                        height: 40,
+                        decoration: const BoxDecoration(
+                          color: Color(0x00EEEEEE),
+                        ),
+                        child: Text(
+                          'Inicia sesión',
+                          style: AppTheme.of(context).title1.override(
+                                fontFamily: 'Poppins',
+                                color: Colors.white,
+                                // fontSize: 15,
+                                // fontWeight: FontWeight.w500,
+                              ),
+                        ),
+                      ),
+                    ),
+
                     //CORREO
                     Padding(
                       padding:
@@ -80,6 +100,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'El correo es requerido';
+                          } else if (!EmailValidator.validate(value)) {
+                            return 'Por favor ingresa un correo válido';
                           }
                           return null;
                         },
@@ -105,8 +127,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         obscureText: !contrasenaVisibility,
                         obscuringCharacter: '*',
                         validator: (value) {
+                          final RegExp regex = RegExp(
+                              r"^(?=.*[A-Z])(?=.*\d)(?=.*\d)[A-Za-z\d!#\$%&/\(\)=?¡¿+\*\.-_:,;]{8,50}$");
                           if (value == null || value.isEmpty) {
                             return 'La contraseña es requerida';
+                          } else if (!regex.hasMatch(value)) {
+                            return 'La contraseña debe tener al menos 8 caracteres, una letra mayúscula y dos números.\nLos caracteres especiales válidos son: !#\$%&/()=?¡¿+*.-_:,; y no se permite el uso de\nespacios, tildes o acentos.';
                           }
                           return null;
                         },
@@ -243,7 +269,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             );
                           }
                         },
-                        text: 'Iniciar sesión',
+                        text: 'Ingresar',
                         options: ButtonOptions(
                           width: 170,
                           height: 50,
@@ -283,7 +309,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Recuérdame',
+                                'Recordarme',
                                 style: AppTheme.of(context).bodyText1.override(
                                       fontFamily: 'Poppins',
                                       color: Colors.white,
@@ -327,7 +353,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           );
                         },
                         child: Text(
-                          'Olvidé mi contraseña',
+                          '¿Olvidaste tu contraseña?',
                           style: AppTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
                                 color: Colors.white,

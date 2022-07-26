@@ -16,15 +16,14 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final UserState userState = Provider.of<UserState>(context, listen: false);
-
     return Scaffold(
       body: Center(
         child: StreamBuilder(
           stream: bloc.state,
           builder: (context, AsyncSnapshot<String?> snapshot) {
             if (snapshot.hasData && snapshot.data != '') {
-              SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-                Navigator.pushAndRemoveUntil(
+              SchedulerBinding.instance.addPostFrameCallback((timeStamp) async {
+                await Navigator.pushAndRemoveUntil(
                     context,
                     PageRouteBuilder(
                       pageBuilder: ((context, animation, secondaryAnimation) =>
