@@ -17,8 +17,8 @@ class EmprendedorController extends ChangeNotifier {
   String telefono = '';
   String comentarios = '';
 
-  bool validateForm() {
-    return emprendedorFormKey.currentState!.validate() ? true : false;
+  bool validateForm(GlobalKey<FormState> emprendedorKey) {
+    return emprendedorKey.currentState!.validate() ? true : false;
   }
 
 

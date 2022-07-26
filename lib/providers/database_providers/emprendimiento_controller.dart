@@ -16,8 +16,8 @@ class EmprendimientoController extends ChangeNotifier {
   TextEditingController textControllerNombre = TextEditingController();
   TextEditingController textControllerDescripcion = TextEditingController();
 
-  bool validateForm() {
-    return emprendimientoFormKey.currentState!.validate() ? true : false;
+  bool validateForm(GlobalKey<FormState> emprendimientoKey) {
+    return emprendimientoKey.currentState!.validate() ? true : false;
   }
 
 

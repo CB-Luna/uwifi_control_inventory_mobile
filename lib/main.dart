@@ -12,7 +12,7 @@ import 'providers/database_providers/emprendedor_controller.dart';
 import 'providers/database_providers/emprendimiento_controller.dart';
 import 'providers/database_providers/usuario_controller.dart';
 import 'providers/database_providers/comunidad_controller.dart';
-
+import 'providers/database_providers/jornada_controller.dart';
 import 'package:bizpro_app/providers/select_image_provider.dart';
 
 import 'package:bizpro_app/screens/screens.dart';
@@ -47,6 +47,10 @@ void main() async {
         ),
         ChangeNotifierProvider<EmprendedorController>(
           create: (context) => EmprendedorController(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<JornadaController>(
+          create: (context) => JornadaController(),
           lazy: false,
         ),
         ChangeNotifierProvider(

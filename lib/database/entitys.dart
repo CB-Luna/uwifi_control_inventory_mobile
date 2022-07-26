@@ -8,13 +8,9 @@ class Emprendimientos {
   String nombre;
   String descripcion;
   DateTime fechaRegistro;
-  DateTime fechaSync;
   final usuarios = ToMany<Usuarios>();
   final prioridadProyecto = ToOne<PrioridadProyecto>();
-  final jornada1 = ToOne<Jornada1>();
-  final jornada2 = ToOne<Jornada2>();
-  final jornada3 = ToOne<Jornada3>();
-  final jornada4 = ToOne<Jornada4>();
+  final jornadas = ToMany<Jornadas>();
   final comunidades = ToOne<Comunidades>();
   @Backlink()
   final emprendedores = ToMany<Emprendedores>();
@@ -36,10 +32,10 @@ class Emprendimientos {
     required this.descripcion,
     DateTime? fechaRegistro,
     DateTime? fechaSync,
-    }) : fechaRegistro = fechaRegistro ?? DateTime.now(), fechaSync = fechaSync ?? DateTime.now();
+    }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-  String get fechaSyncFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaSync);
+
 }
 
 @Entity()
@@ -54,10 +50,9 @@ class Emprendedores {
   String telefono;
   String comentarios;
   DateTime fechaRegistro;
-  DateTime fechaSync;
   final comunidades = ToOne<Comunidades>();
   final emprendimientos = ToMany<Emprendimientos>();
-
+  final statusSync = ToOne<StatusSync>();
 
   Emprendedores({
     this.id = 0,
@@ -70,11 +65,9 @@ class Emprendedores {
     required this.telefono,
     required this.comentarios,
     DateTime? fechaRegistro,
-    DateTime? fechaSync,
-    }): fechaRegistro = fechaRegistro ?? DateTime.now(), fechaSync = fechaSync ?? DateTime.now();
+    }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-  String get fechaSyncFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaSync);
 }
 
 
@@ -137,112 +130,48 @@ class EstadoEmp {
 }
 
 @Entity()
-class Jornada1 {
+class Jornadas {
   int id;
-  String tarea;
-  String estado;
-  DateTime fechaRevision;
-  String circuloEmpresa;
+  String numJornada;
+  DateTime proximaVisita;
   DateTime fechaRegistro;
-  DateTime fechaSync;
-  final emprendimientos = ToOne<Emprendimientos>();
-
-  Jornada1({
+  final emprendimiento = ToOne<Emprendimientos>();
+  final tarea = ToOne<Tareas>();
+  final statusSync = ToOne<StatusSync>();
+  Jornadas({
     this.id = 0,
-    required this.tarea,
-    required this.estado,
-    required this.fechaRevision,
-    required this.circuloEmpresa,
+    required this.numJornada,
+    required this.proximaVisita,
     DateTime? fechaRegistro,
-    DateTime? fechaSync,
-    }): fechaRegistro = fechaRegistro ?? DateTime.now(), fechaSync = fechaSync ?? DateTime.now();
+    }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-  String get fechaSyncFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaSync);
 
 }
 
 @Entity()
-class Jornada2 {
+class Tareas {
   int id;
-  String tarea;
-  String estado;
-  String comentarios;
+  String descripcion;
+  String observacion;
+  int porcentaje;
+  String imagenes;
   DateTime fechaRevision;
-  String analisisFinanciero;
   DateTime fechaRegistro;
-  DateTime fechaSync;
-  final emprendimientos = ToOne<Emprendimientos>();
-
-  Jornada2({
+  final jornada = ToOne<Jornadas>();
+  final consultoria = ToOne<Consultorias>();
+  final statusSync = ToOne<StatusSync>();
+  Tareas({
     this.id = 0,
-    required this.tarea,
-    required this.estado,
-    required this.comentarios,
+    required this.descripcion,
+    required this.observacion,
+    required this.porcentaje,
+    required this.imagenes,
     required this.fechaRevision,
-    required this.analisisFinanciero,
     DateTime? fechaRegistro,
-    DateTime? fechaSync,
-    }): fechaRegistro = fechaRegistro ?? DateTime.now(), fechaSync = fechaSync ?? DateTime.now();
+    }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-  String get fechaSyncFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaSync);
-
-}
-
-@Entity()
-class Jornada3 {
-  int id;
-  String tarea;
-  String estado;
-  String comentarios;
-  DateTime fechaRevision;
-  String convenio;
-  DateTime fechaRegistro;
-  DateTime fechaSync;
-  final emprendimientos = ToOne<Emprendimientos>();
-
-  Jornada3({
-    this.id = 0,
-    required this.tarea,
-    required this.estado,
-    required this.comentarios,
-    required this.fechaRevision,
-    required this.convenio,
-    DateTime? fechaRegistro,
-    DateTime? fechaSync,
-    }): fechaRegistro = fechaRegistro ?? DateTime.now(), fechaSync = fechaSync ?? DateTime.now();
-
-  String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-  String get fechaSyncFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaSync);
-
-}
-
-@Entity()
-class Jornada4 {
-  int id;
-  String tarea;
-  String estado;
-  String comentarios;
-  DateTime fechaRevision;
-  String convenio;
-  DateTime fechaRegistro;
-  DateTime fechaSync;
-  final emprendimientos = ToOne<Emprendimientos>();
-
-  Jornada4({
-    this.id = 0,
-    required this.tarea,
-    required this.estado,
-    required this.comentarios,
-    required this.fechaRevision,
-    required this.convenio,
-    DateTime? fechaRegistro,
-    DateTime? fechaSync,
-    }): fechaRegistro = fechaRegistro ?? DateTime.now(), fechaSync = fechaSync ?? DateTime.now();
-
-  String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-  String get fechaSyncFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaSync);
 
 }
 
@@ -260,7 +189,7 @@ class Usuarios {
   String imagen;
   int rol;
   DateTime fechaRegistro;
-  DateTime fechaSync;
+  final statusSync = ToOne<StatusSync>();
   @Backlink()
   final emprendimientos = ToMany<Emprendimientos>();
 
@@ -278,11 +207,9 @@ class Usuarios {
     required this.imagen,
     required this.rol,
     DateTime? fechaRegistro,
-    DateTime? fechaSync,
-    }): fechaRegistro = fechaRegistro ?? DateTime.now(), fechaSync = fechaSync ?? DateTime.now();
+    }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-  String get fechaSyncFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaSync);
 }
 
 
@@ -366,53 +293,19 @@ class ProdEmprendi {
 @Entity()
 class Consultorias {
   int id;
-  DateTime proximaVisita;
   String documentos; //TODO preguntar que es un arraystring
   DateTime fechaRegistro;
-  DateTime fechaSync;
-  final emprendimientos = ToOne<Emprendimientos>();
+  final emprendimiento = ToOne<Emprendimientos>();
+  final statusSync = ToOne<StatusSync>();
   @Backlink()
   final tareas = ToMany<Tareas>();
   Consultorias({
     this.id = 0,
-    required this.proximaVisita,
     required this.documentos,
     DateTime? fechaRegistro,
-    DateTime? fechaSync,
-    }): fechaRegistro = fechaRegistro ?? DateTime.now(), fechaSync = fechaSync ?? DateTime.now();
+    }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-  String get fechaSyncFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaSync);
-
-}
-
-@Entity()
-class Tareas {
-  int id;
-  String nombre;
-  String descripcion;
-  String observacion;
-  int porcentaje;
-  DateTime fechaRevision;
-  String imagenes; //TODO preguntar que es un arraystring
-  DateTime fechaRegistro;
-  DateTime fechaSync;
-  final consultorias = ToOne<Consultorias>();
-
-  Tareas({
-    this.id = 0,
-    required this.nombre,
-    required this.descripcion,
-    required this.observacion,
-    required this.porcentaje,
-    required this.fechaRevision,
-    required this.imagenes,
-    DateTime? fechaRegistro,
-    DateTime? fechaSync,
-    }): fechaRegistro = fechaRegistro ?? DateTime.now(), fechaSync = fechaSync ?? DateTime.now();
-
-  String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-  String get fechaSyncFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaSync);
 
 }
 
@@ -480,5 +373,30 @@ class Estados {
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
   String get fechaSyncFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaSync);
+
+}
+
+@Entity()
+class StatusSync {
+  int id;
+  String status;
+  DateTime fechaRegistro;
+  @Backlink()
+  final emprendedores = ToMany<Emprendedores>();
+  @Backlink()
+  final tareas = ToMany<Tareas>();
+  @Backlink()
+  final consultorias = ToMany<Consultorias>();
+  @Backlink()
+  final usuarios = ToMany<Usuarios>();
+  @Backlink()
+  final jornadas = ToMany<Jornadas>();
+  StatusSync({
+    this.id = 0,
+    required this.status,
+    DateTime? fechaRegistro,
+    }): fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
 
 }

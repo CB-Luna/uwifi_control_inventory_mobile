@@ -5,11 +5,11 @@ import 'package:bizpro_app/objectbox.g.dart';
 class ObjectBoxDatabase {
  late final Store store;
 
-  /// A Box of emprendimientos.
   late final Box<Usuarios> usuariosBox;
   late final Box<Emprendimientos> emprendimientosBox;
   late final Box<Comunidades> comunidadesBox;
   late final Box<Emprendedores> emprendedoresBox;
+  late final Box<Jornadas> jornadasBox;
   
 
   ObjectBoxDatabase._create(this.store) {
@@ -18,6 +18,7 @@ class ObjectBoxDatabase {
     emprendimientosBox = Box<Emprendimientos>(store);
     comunidadesBox = Box<Comunidades>(store);
     emprendedoresBox = Box<Emprendedores>(store);
+    jornadasBox = Box<Jornadas>(store);
   }
 
   /// Create an instance of ObjectBox to use throughout the app.

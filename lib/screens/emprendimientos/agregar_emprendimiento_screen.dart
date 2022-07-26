@@ -25,9 +25,10 @@ class AgregarEmprendimientoScreen extends StatefulWidget {
 
 class _AgregarEmprendimientoScreenState
     extends State<AgregarEmprendimientoScreen> {
-
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+  final emprendimientoKey = GlobalKey<FormState>();
   XFile? image;
-
+  
   @override
   Widget build(BuildContext context) {
     final emprendimientoProvider =
@@ -36,6 +37,7 @@ class _AgregarEmprendimientoScreenState
     final usuarioProvider = Provider.of<UsuarioController>(context);
     final selectImageProvider = Provider.of<SelectImageProvider>(context);
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: const Color(0xFF008DD4),
         automaticallyImplyLeading: true,
@@ -67,7 +69,7 @@ class _AgregarEmprendimientoScreenState
           onTap: () => FocusScope.of(context).unfocus(),
           child: SingleChildScrollView(
             child: Form(
-              key: emprendimientoProvider.emprendimientoFormKey,
+              key: emprendimientoKey,
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -327,10 +329,11 @@ class _AgregarEmprendimientoScreenState
                             children: [
                               FFButtonWidget(
                                 onPressed: () async {
-                                  if (emprendimientoProvider.emprendimientoFormKey.currentState!.validate()) {
+                                  if (emprendimientoProvider.validateForm(emprendimientoKey)) {
                                     comunidadProvider.add();
                                     emprendimientoProvider.add(comunidadProvider.comunidades.last.id);
                                     usuarioProvider.addEmprendimiento(emprendimientoProvider.emprendimiento!);
+                                    emprendimientoProvider.clearInformation();
                                     await Navigator.push(
                                       context,
                                       MaterialPageRoute(

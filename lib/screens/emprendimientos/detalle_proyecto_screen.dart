@@ -1,4 +1,3 @@
-import 'package:bizpro_app/screens/emprendimientos/jornadas/registra_jornada.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -8,7 +7,7 @@ import 'package:bizpro_app/util/flutter_flow_util.dart';
 
 import 'package:bizpro_app/screens/emprendimientos/editar_emprendimiento.dart';
 import 'package:bizpro_app/screens/emprendedores/agregar_emprendedor_screen.dart';
-
+import 'package:bizpro_app/screens/jornadas/agregar_jornada_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
@@ -339,7 +338,9 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        RegistrarJornada(),
+                                                        AgregarJornadaScreen(
+                                                          idEmprendimiento: widget.emprendimiento.id, 
+                                                          nombreEmprendimiento: widget.emprendimiento.nombre),
                                                   ),
                                                 );
                                               },
@@ -373,7 +374,9 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        AgregarEmprendedorScreen(idEmprendimiento: widget.emprendimiento.id,),
+                                                        AgregarEmprendedorScreen(
+                                                          idEmprendimiento: widget.emprendimiento.id, 
+                                                          nombreEmprendimiento: widget.emprendimiento.nombre),
                                                   ),
                                                 );
                                               },

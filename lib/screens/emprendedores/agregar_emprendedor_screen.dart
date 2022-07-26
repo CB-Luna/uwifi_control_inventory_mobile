@@ -5,9 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 
-import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
 import 'package:bizpro_app/providers/database_providers/emprendedor_controller.dart';
-import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 
 import 'package:bizpro_app/screens/emprendedores/emprendedor_creado.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
@@ -17,8 +15,9 @@ import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 class AgregarEmprendedorScreen extends StatefulWidget {
   
   final int idEmprendimiento;
+  final String nombreEmprendimiento;
 
-  const AgregarEmprendedorScreen({Key? key, required this.idEmprendimiento}) : super(key: key);
+  const AgregarEmprendedorScreen({Key? key, required this.idEmprendimiento, required this.nombreEmprendimiento}) : super(key: key);
 
   @override
   _AgregarEmprendedorScreenState createState() =>
@@ -27,6 +26,7 @@ class AgregarEmprendedorScreen extends StatefulWidget {
 
 class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final emprendedorKey = GlobalKey<FormState>();
   XFile? image;
 
   @override
@@ -36,17 +36,14 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final emprendimientoProvider =
-        Provider.of<EmprendimientoController>(context);
     final emprendedorProvider = Provider.of<EmprendedorController>(context);
-    final usuarioProvider = Provider.of<UsuarioController>(context);
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: Color(0xFF008DD4),
         automaticallyImplyLeading: true,
         title: Text(
-          'Emprendedores',
+          'Registrar Emprendedor',
           style: AppTheme.of(context).bodyText1.override(
                 fontFamily: 'Poppins',
                 color: Colors.white,
@@ -63,7 +60,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
           onTap: () => FocusScope.of(context).unfocus(),
           child: SingleChildScrollView(
             child: Form(
-              key: emprendedorProvider.emprendedorFormKey,
+              key: emprendedorKey,
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -148,12 +145,54 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(15, 16, 15, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(5, 10, 5, 10),
+                          child: TextFormField(
+                            readOnly: true,
+                            enabled: false,
+                            initialValue: widget.nombreEmprendimiento,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              labelText: 'Emprendimiento',
+                              labelStyle:
+                                  AppTheme.of(context).title3.override(
+                                        fontFamily: 'Montserrat',
+                                        color: AppTheme.of(context)
+                                            .secondaryText,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              filled: true,
+                              fillColor: Colors.white,
+                            ),
+                            style: AppTheme.of(context).title3.override(
+                                  fontFamily: 'Poppins',
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                          ),
+                        ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                           child: TextFormField(
@@ -604,9 +643,10 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                             children: [
                               FFButtonWidget(
                                 onPressed: () async {
-                                  if (emprendedorProvider.emprendedorFormKey.currentState!.validate()) {
+                                  if (emprendedorProvider.validateForm(emprendedorKey)) {
                                     emprendedorProvider.add(widget.idEmprendimiento);
                                     // emprendimientoProvider.updateEmprendedores(widget.idEmprendimiento, emprendedorProvider.emprendedores[emprendedorProvider.emprendedores.length - 1]); 
+                                    emprendedorProvider.clearInformation();
                                     await Navigator.push(
                                       context,
                                       MaterialPageRoute(
