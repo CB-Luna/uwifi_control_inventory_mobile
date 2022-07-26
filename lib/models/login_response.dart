@@ -89,11 +89,11 @@ class Profile {
     required this.id,
     required this.idRolFk,
     required this.idStatusSyncFk,
-    required this.imagen,
+    this.imagen,
     required this.nacimiento,
     required this.nombre,
-    required this.telefono,
-    required this.token,
+    this.telefono, 
+    this.token,
     required this.updated,
     required this.userId,
   });
@@ -108,11 +108,11 @@ class Profile {
   String id;
   String idRolFk;
   String idStatusSyncFk;
-  String imagen;
+  String? imagen;
   DateTime nacimiento;
   String nombre;
-  String telefono;
-  String token;
+  String? telefono;
+  String? token;
   DateTime updated;
   String userId;
 
@@ -130,7 +130,7 @@ class Profile {
         created: DateTime.parse(json["created"]),
         id: json["id"],
         idRolFk: json["id_rol_fk"],
-        idStatusSyncFk: json["id_status_sync_fk"],
+        idStatusSyncFk: json["id_status_fk"],
         imagen: json["imagen"],
         nacimiento: DateTime.parse(json["nacimiento"]),
         nombre: json["nombre"],
@@ -150,7 +150,7 @@ class Profile {
         "created": created.toIso8601String(),
         "id": id,
         "id_rol_fk": idRolFk,
-        "id_status_sync_fk": idStatusSyncFk,
+        "id_status_fk": idStatusSyncFk,
         "imagen": imagen,
         "nacimiento": nacimiento.toIso8601String(),
         "nombre": nombre,

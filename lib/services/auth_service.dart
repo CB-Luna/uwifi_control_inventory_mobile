@@ -23,9 +23,12 @@ abstract class AuthService {
         "password": password,
       });
 
+      print("Se hace el post");
       switch (res.statusCode) {
         case 200:
+        print("Entra al case 200");
           final loginResponse = LoginResponse.fromJson(res.body);
+          print("Se transforma el login");
           storage.write(key: "token", value: loginResponse.token);
           return loginResponse;
         default:

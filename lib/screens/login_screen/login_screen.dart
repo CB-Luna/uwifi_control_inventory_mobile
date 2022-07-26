@@ -213,11 +213,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                   loginResponse.user.profile.apellidoP,
                                   loginResponse.user.profile.apellidoM,
                                   loginResponse.user.profile.nacimiento,
-                                  loginResponse.user.profile.telefono,
+                                  loginResponse.user.profile.telefono ?? "",
                                   loginResponse.user.profile.celular,
                                   loginResponse.user.email,
                                   userState.passwordController.text,
-                                  loginResponse.user.profile.imagen,
+                                  loginResponse.user.profile.imagen ?? "",
                                   userState.getRole(loginResponse.user.profile
                                       .idRolFk)); //TODO Verificar como es el rol
                               // print("Rol ${loginResponse.user.profile.idRolFk.toString()}");

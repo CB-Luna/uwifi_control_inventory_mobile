@@ -25,12 +25,7 @@ class AgregarEmprendimientoScreen extends StatefulWidget {
 
 class _AgregarEmprendimientoScreenState
     extends State<AgregarEmprendimientoScreen> {
-  late AudioPlayer soundPlayer;
-  final formKey1 = GlobalKey<FormState>();
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-  final formKey4 = GlobalKey<FormState>();
-  final formKey3 = GlobalKey<FormState>();
-  final formKey2 = GlobalKey<FormState>();
+
   XFile? image;
 
   @override
@@ -41,7 +36,6 @@ class _AgregarEmprendimientoScreenState
     final usuarioProvider = Provider.of<UsuarioController>(context);
     final selectImageProvider = Provider.of<SelectImageProvider>(context);
     return Scaffold(
-      key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: const Color(0xFF008DD4),
         automaticallyImplyLeading: true,
@@ -72,104 +66,112 @@ class _AgregarEmprendimientoScreenState
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Registro de Emprendimiento',
-                        style: AppTheme.of(context).bodyText1.override(
-                              fontFamily: 'Poppins',
-                              color: const Color(0xFF0D0E0F),
-                              fontSize: 16,
-                            ),
-                      ),
-                    ],
-                  ),
-                ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Form(
-                      key: formKey1,
-                      child: Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                        child: InkWell(
-                          onTap: () async{
-
-                            String? option = await showModalBottomSheet(
-                              context: context,
-                              builder: (_) => const CustomBottomSheet(),
-                            );
-
-                            if (option == null) return;
-
-                            final picker = ImagePicker();
-
-                            late final XFile? pickedFile;
-
-                            if (option == 'camera') {
-                              pickedFile = await picker.pickImage(
-                                source: ImageSource.camera,
-                                imageQuality: 100,
-                              );
-                            } else {
-                              pickedFile = await picker.pickImage(
-                                source: ImageSource.gallery,
-                                imageQuality: 100,
-                              );
-                            }
-
-                            if (pickedFile == null) {
-                              return;
-                            }
-
-                            setState(() {
-                              image = pickedFile;
-                              emprendimientoProvider.imagen = image!.path;
-                            });
-                          },
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            height: 180,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: Image.asset(
-                                  'assets/images/animation_500_l3ur8tqa.gif',
-                                ).image,
+            child: Form(
+              key: emprendimientoProvider.emprendimientoFormKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Registro de Emprendimiento',
+                          style: AppTheme.of(context).bodyText1.override(
+                                fontFamily: 'Poppins',
+                                color: const Color(0xFF0D0E0F),
+                                fontSize: 16,
                               ),
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: const Color(0xFF2CC3F4),
-                                width: 2,
-                              ),
-                            ),
-                            child: getImage(image?.path),
-                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(15, 16, 15, 0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Form(
-                        key: formKey4,
-                        child: Padding(
+                  ),
+                  FormField(
+                    builder: (state) {
+                        return Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                            child: InkWell(
+                              onTap: () async{
+                                
+                                String? option = await showModalBottomSheet(
+                                  context: context,
+                                  builder: (_) => const CustomBottomSheet(),
+                                );
+                                
+                                if (option == null) return;
+                                
+                                final picker = ImagePicker();
+                                
+                                late final XFile? pickedFile;
+                                
+                                if (option == 'camera') {
+                                  pickedFile = await picker.pickImage(
+                                    source: ImageSource.camera,
+                                    imageQuality: 100,
+                                  );
+                                } else {
+                                  pickedFile = await picker.pickImage(
+                                    source: ImageSource.gallery,
+                                    imageQuality: 100,
+                                  );
+                                }
+                                
+                                if (pickedFile == null) {
+                                  return;
+                                }
+                                
+                                setState(() {
+                                  image = pickedFile;
+                                  emprendimientoProvider.imagen = image!.path;
+                                });
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                height: 180,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: Image.asset(
+                                      'assets/images/animation_500_l3ur8tqa.gif',
+                                    ).image,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                    color: const Color(0xFF2CC3F4),
+                                    width: 2,
+                                  ),
+                                ),
+                                child: getImage(image?.path),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                    validator: (val) {
+                      if (emprendimientoProvider.imagen == null ||
+                          emprendimientoProvider.imagen.isEmpty) {
+                        return 'Para continuar, cargue una imagen';
+                      }
+                      return null;
+                    }
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(15, 16, 15, 0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                           child: TextFormField(
@@ -213,15 +215,12 @@ class _AgregarEmprendimientoScreenState
                               if (val == null || val.isEmpty) {
                                 return 'Para continuar, ingrese el nombre.';
                               }
-
+            
                               return null;
                             },
                           ),
                         ),
-                      ),
-                      Form(
-                        key: formKey3,
-                        child: Padding(
+                        Padding(
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                           child: TextFormField(
@@ -266,15 +265,12 @@ class _AgregarEmprendimientoScreenState
                               if (val == null || val.isEmpty) {
                                 return 'Para continuar, ingrese la descripción.';
                               }
-
+            
                               return null;
                             },
                           ),
                         ),
-                      ),
-                      Form(
-                        key: formKey2,
-                        child: Padding(
+                        Padding(
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                           child: TextFormField(
@@ -318,108 +314,79 @@ class _AgregarEmprendimientoScreenState
                               if (val == null || val.isEmpty) {
                                 return 'Para continuar, ingrese la comunidad.';
                               }
-
                               return null;
                             },
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            FFButtonWidget(
-                              onPressed: () async {
-                                if (formKey1.currentState == null ||
-                                    !formKey1.currentState!.validate()) {
-                                  return;
-                                }
-
-                                if (emprendimientoProvider.imagen == null ||
-                                    emprendimientoProvider.imagen.isEmpty) {
-                                  await showDialog(
-                                    context: context,
-                                    builder: (alertDialogContext) {
-                                      return AlertDialog(
-                                        title: const Text('Campos vacíos'),
-                                        content: const Text(
-                                            'Para continuar, debe llenar todos los campos e incluír una imagen.'),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(
-                                                alertDialogContext),
-                                            child: const Text('Bien'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                  return;
-                                }
-
-                                if (formKey4.currentState == null ||
-                                    !formKey4.currentState!.validate()) {
-                                  return;
-                                }
-
-                                if (formKey3.currentState == null ||
-                                    !formKey3.currentState!.validate()) {
-                                  return;
-                                }
-
-                                if (formKey2.currentState == null ||
-                                    !formKey2.currentState!.validate()) {
-                                  return;
-                                }
-
-                                comunidadProvider.add();
-                                emprendimientoProvider.add(comunidadProvider.comunidades.last.id);
-                                usuarioProvider.addEmprendimiento(emprendimientoProvider.emprendimiento!);
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const EmprendimientoCreado(),
-                                  ),
-                                );
-                                soundPlayer = AudioPlayer();
-                                if (soundPlayer.playing) {
-                                  await soundPlayer.stop();
-                                }
-                                soundPlayer.setVolume(1);
-                                await soundPlayer
-                                    .setAsset('assets/audios/successeffect.mp3')
-                                    .then((_) => soundPlayer.play());
-                              },
-                              text: 'Agregar Emprendimiento',
-                              options: FFButtonOptions(
-                                width: 290,
-                                height: 50,
-                                color: const Color(0xFF2CC3F4),
-                                textStyle: AppTheme.of(context).title3.override(
-                                      fontFamily: 'Montserrat',
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                                elevation: 3,
-                                borderSide: const BorderSide(
+                        Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              FFButtonWidget(
+                                onPressed: () async {
+                                  if (emprendimientoProvider.emprendimientoFormKey.currentState!.validate()) {
+                                    comunidadProvider.add();
+                                    emprendimientoProvider.add(comunidadProvider.comunidades.last.id);
+                                    usuarioProvider.addEmprendimiento(emprendimientoProvider.emprendimiento!);
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const EmprendimientoCreado(),
+                                      ),
+                                    );
+                                  }
+                                  else {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (alertDialogContext) {
+                                        return AlertDialog(
+                                          title: const Text('Campos vacíos'),
+                                          content: const Text(
+                                              'Para continuar, debe llenar todos los campos e incluír una imagen.'),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(
+                                                  alertDialogContext),
+                                              child: const Text('Bien'),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                    return;
+                                  }
+                                },
+                                text: 'Agregar Emprendimiento',
+                                options: FFButtonOptions(
+                                  width: 290,
+                                  height: 50,
                                   color: const Color(0xFF2CC3F4),
-                                  width: 0,
+                                  textStyle: AppTheme.of(context).title3.override(
+                                        fontFamily: 'Montserrat',
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                  elevation: 3,
+                                  borderSide: const BorderSide(
+                                    color: const Color(0xFF2CC3F4),
+                                    width: 0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                                borderRadius: BorderRadius.circular(8),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

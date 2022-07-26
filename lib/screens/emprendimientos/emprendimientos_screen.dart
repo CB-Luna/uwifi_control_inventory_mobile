@@ -12,7 +12,7 @@ import 'package:bizpro_app/screens/emprendimientos/detalle_proyecto_screen.dart'
 import 'package:bizpro_app/screens/widgets/custom_button.dart';
 import 'package:bizpro_app/screens/widgets/side_menu/side_menu.dart';
 
-import 'package:bizpro_app/screens/emprendimientos/agregar_emprendimiento_widget.dart';
+import 'package:bizpro_app/screens/emprendimientos/agregar_emprendimiento_screen.dart';
 
 class EmprendimientosScreen extends StatefulWidget {
   const EmprendimientosScreen({Key? key}) : super(key: key);

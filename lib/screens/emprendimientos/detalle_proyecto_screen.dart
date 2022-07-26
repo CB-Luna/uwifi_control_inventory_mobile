@@ -1,3 +1,4 @@
+import 'package:bizpro_app/screens/emprendimientos/jornadas/registra_jornada.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -333,14 +334,14 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                               MainAxisAlignment.center,
                                           children: [
                                             InkWell(
-                                              onTap: () {
-                                                // await Navigator.push(
-                                                //   context,
-                                                //   MaterialPageRoute(
-                                                //     builder: (context) =>
-                                                //         RegistrarJornadaWidget(),
-                                                //   ),
-                                                // );
+                                              onTap: () async {
+                                                await Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        RegistrarJornada(),
+                                                  ),
+                                                );
                                               },
                                               child: Icon(
                                                 Icons.folder_rounded,
