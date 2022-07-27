@@ -86,5 +86,10 @@ class EmprendedorController extends ChangeNotifier {
         });
     });
   }
+
+  void getEmprendedoresByEmprendimiento(Emprendimientos emprendimiento) {
+    emprendedores = [];
+    emprendedores = emprendimiento.emprendedores.toList();
+  }
   
 }
