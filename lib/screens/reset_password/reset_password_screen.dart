@@ -18,6 +18,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
 
+  //TODO: cambiar mensaje
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +65,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
                       child: Text(
-                        'Problemas para entrar?',
+                        '¿Problemas para entrar?',
                         style: AppTheme.of(context).title1.override(
                               fontFamily: 'Poppins',
                               fontSize: 20,
@@ -127,7 +129,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       labelStyle: AppTheme.of(context).bodyText2,
                       hintText: 'Ingresa tu correo electrónico...',
                       hintStyle: AppTheme.of(context).bodyText1.override(
-                            fontFamily: 'Lexend Deca',
+                            fontFamily: 'Poppins',
                             color: const Color(0xFF57636C),
                             fontSize: 14,
                             fontWeight: FontWeight.normal,
