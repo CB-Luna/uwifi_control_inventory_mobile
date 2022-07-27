@@ -6,19 +6,14 @@ import 'package:bizpro_app/providers/user_provider.dart';
 import 'package:bizpro_app/providers/database_providers/emprendedor_controller.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 
-
 import 'package:bizpro_app/screens/widgets/custom_button.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:bizpro_app/screens/widgets/side_menu/side_menu.dart';
 
-
-
 class EmprendedoresScreen extends StatefulWidget {
-
   const EmprendedoresScreen({
     Key? key,
   }) : super(key: key);
-
 
   @override
   _EmprendedoresScreenState createState() => _EmprendedoresScreenState();
@@ -28,7 +23,7 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
   TextEditingController textController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-   @override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -41,36 +36,37 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
 
   getInfo() {
     print("PREFERS: ${prefs.getString("userId")}");
-    context.read<EmprendedorController>().getEmprendedoresActualUser(context.read<UsuarioController>().getEmprendimientos());
+    context.read<EmprendedorController>().getEmprendedoresActualUser(
+        context.read<UsuarioController>().getEmprendimientos());
   }
 
   @override
   Widget build(BuildContext context) {
     final UserState userState = Provider.of<UserState>(context);
-    final emprendedorProvider =
-        Provider.of<EmprendedorController>(context);
+    final emprendedorProvider = Provider.of<EmprendedorController>(context);
     return Scaffold(
       key: scaffoldKey,
       drawer: const SideMenu(),
-      backgroundColor: Color(0xFF2BC1F6),
+      backgroundColor: const Color(0xFF2BC1F6),
       floatingActionButton: userState.rol == Rol.administrador
           ? FloatingActionButton(
-          onPressed: () {
-            // await Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => AgregarEmprendedorScreen(),
-            //   ),
-            // );
-          },
-          backgroundColor: Color(0xFF006AFF),
-          elevation: 8,
-          child: Icon(
-            Icons.add,
-            color: Colors.white,
-            size: 24,
-          ),
-      ) : null,
+              onPressed: () {
+                // await Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => AgregarEmprendedorScreen(),
+                //   ),
+                // );
+              },
+              backgroundColor: const Color(0xFF006AFF),
+              elevation: 8,
+              child: const Icon(
+                Icons.add,
+                color: Colors.white,
+                size: 24,
+              ),
+            )
+          : null,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Stack(
@@ -90,139 +86,136 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
               child: Stack(
                 children: [
                   Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(0, 145, 0, 6),
-                          child: Builder(
-                            builder: (context) {
-                              return ListView.builder(
-                                padding: EdgeInsets.zero,
-                                shrinkWrap: true,
-                                scrollDirection: Axis.vertical,
-                                itemCount: emprendedorProvider.emprendedores.length,
-                                itemBuilder: (context, resultadoIndex) {
-                                  return Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        5, 10, 5, 0),
-                                    child: Container(
-                                      width: double.infinity,
-                                      height: 265,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            blurRadius: 4,
-                                            color: Color(0x32000000),
-                                            offset: Offset(0, 2),
-                                          )
-                                        ],
-                                        borderRadius:
-                                            BorderRadius.circular(8),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 145, 0, 6),
+                    child: Builder(
+                      builder: (context) {
+                        return ListView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemCount: emprendedorProvider.emprendedores.length,
+                            itemBuilder: (context, resultadoIndex) {
+                              return Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    5, 10, 5, 0),
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 265,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      const BoxShadow(
+                                        blurRadius: 4,
+                                        color: Color(0x32000000),
+                                        offset: Offset(0, 2),
+                                      )
+                                    ],
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          // await Navigator.push(
+                                          //   context,
+                                          //   MaterialPageRoute(
+                                          //     builder: (context) =>
+                                          //         DetallesEmprendedorWidget(),
+                                          //   ),
+                                          // );
+                                        },
+                                        child: ClipRRect(
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              bottomLeft: Radius.circular(0),
+                                              bottomRight: Radius.circular(0),
+                                              topLeft: Radius.circular(8),
+                                              topRight: Radius.circular(8),
+                                            ),
+                                            child: getImage(
+                                                "https://mymodernmet.com/wp/wp-content/uploads/2019/05/Alebrijes-1-e1558455347541.jpg")),
                                       ),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              // await Navigator.push(
-                                              //   context,
-                                              //   MaterialPageRoute(
-                                              //     builder: (context) =>
-                                              //         DetallesEmprendedorWidget(),
-                                              //   ),
-                                              // );
-                                            },
-                                            child: ClipRRect(
-                                              borderRadius: BorderRadius.only(
-                                                bottomLeft:
-                                                    Radius.circular(0),
-                                                bottomRight:
-                                                    Radius.circular(0),
-                                                topLeft: Radius.circular(8),
-                                                topRight: Radius.circular(8),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(16, 12, 16, 8),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 0, 5, 0),
+                                              child: Text(
+                                                emprendedorProvider
+                                                    .emprendedores[
+                                                        resultadoIndex]
+                                                    .nombre,
+                                                style: AppTheme.of(context)
+                                                    .bodyText1
+                                                    .override(
+                                                      fontFamily: 'Poppins',
+                                                      color: Colors.black,
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
                                               ),
-                                              child: getImage("https://mymodernmet.com/wp/wp-content/uploads/2019/05/Alebrijes-1-e1558455347541.jpg")
                                             ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsetsDirectional
-                                                .fromSTEB(16, 12, 16, 8),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                              0, 0, 5, 0),
-                                                  child: Text(
-                                                    emprendedorProvider.
-                                                      emprendedores[resultadoIndex].nombre,
-                                                    style: AppTheme
-                                                            .of(context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily:
-                                                              'Poppins',
-                                                          color: Colors.black,
-                                                          fontSize: 15,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
+                                            Text(
+                                              emprendedorProvider
+                                                  .emprendedores[resultadoIndex]
+                                                  .apellidoP,
+                                              style: AppTheme.of(context)
+                                                  .bodyText1
+                                                  .override(
+                                                    fontFamily: 'Poppins',
+                                                    color: Colors.black,
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w600,
                                                   ),
-                                                ),
-                                                Text(
-                                                  emprendedorProvider.
-                                                      emprendedores[resultadoIndex].apellidoP,
-                                                  style: AppTheme.of(
-                                                          context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Poppins',
-                                                        color: Colors.black,
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                ),
-                                              ],
                                             ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsetsDirectional
-                                                .fromSTEB(16, 0, 16, 8),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Expanded(
-                                                  child: Text(       
-                                                      emprendedorProvider.
-                                                      emprendedores[resultadoIndex].comunidades.target?.nombre ?? "SIN COMUNIDAD",
-                                                    style:
-                                                        AppTheme.of(
-                                                                context)
-                                                            .bodyText2
-                                                            .override(
-                                                              fontFamily:
-                                                                  'Outfit',
-                                                              color: Color(
-                                                                  0xFF57636C),
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .normal,
-                                                            ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                });
-                            },
-                          ),
-                        ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(16, 0, 16, 8),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                emprendedorProvider
+                                                        .emprendedores[
+                                                            resultadoIndex]
+                                                        .comunidades
+                                                        .target
+                                                        ?.nombre ??
+                                                    "SIN COMUNIDAD",
+                                                style: AppTheme.of(context)
+                                                    .bodyText2
+                                                    .override(
+                                                      fontFamily: 'Outfit',
+                                                      color: const Color(
+                                                          0xFF57636C),
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                    ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            });
+                      },
+                    ),
+                  ),
                   Container(
                     width: MediaQuery.of(context).size.width,
                     height: 160,

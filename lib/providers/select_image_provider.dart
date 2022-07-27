@@ -1,36 +1,31 @@
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class SelectImageProvider extends ChangeNotifier {
-
-
   //Image data
   bool fileSelected = false;
   String fileName = "";
   // late Uint8List fileBytes;
 
-
   void pickFiles() async {
     FilePickerResult? result;
     result = await FilePicker.platform.pickFiles(
-      allowMultiple: false, 
-      type: FileType.custom, 
-      allowedExtensions: ['jpg', 'png', 'jpeg'] );
-      checkFileName(result);
+        allowMultiple: false,
+        type: FileType.custom,
+        allowedExtensions: ['jpg', 'png', 'jpeg']);
+    checkFileName(result);
   }
 
   void checkFileName(result) {
     if (result != null) {
       fileSelected = true;
       fileName = result.files.first.name;
-      // fileBytes = result.files.first.bytes; 
+      // fileBytes = result.files.first.bytes;
       // Upload file
       //await FirebaseStorage.instance.ref('uploads/$fileName').putData(fileBytes);
-      }
-    else{
+    } else {
       fileSelected = false;
       fileName = '';
     }
@@ -51,7 +46,7 @@ class SelectImageProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-    uploadFileLastBill(){
+  uploadFileLastBill() {
     // print("+++FileName: $fileName");
     // print("+++FileBytes: $fileBytes");
     // Map<String, String> headers = {};
@@ -64,11 +59,9 @@ class SelectImageProvider extends ChangeNotifier {
     // //send request
     // request.send().then((response) {
     // if (response.statusCode == 200) print("Uploaded!");
-    
+
     // print("****** Status Code:  ${response.statusCode} *********");
-    
+
     // });
-
-}
-
+  }
 }

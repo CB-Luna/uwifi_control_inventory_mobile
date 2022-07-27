@@ -9,13 +9,15 @@ import 'package:bizpro_app/providers/database_providers/jornada_controller.dart'
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-
 class AgregarJornadaScreen extends StatefulWidget {
-  
   final int idEmprendimiento;
   final String nombreEmprendimiento;
-  
-  const AgregarJornadaScreen({Key? key, required this.idEmprendimiento, required this.nombreEmprendimiento}) : super(key: key);
+
+  const AgregarJornadaScreen(
+      {Key? key,
+      required this.idEmprendimiento,
+      required this.nombreEmprendimiento})
+      : super(key: key);
 
   @override
   _AgregarJornadaScreenState createState() => _AgregarJornadaScreenState();
@@ -36,7 +38,8 @@ class _AgregarJornadaScreenState extends State<AgregarJornadaScreen> {
   void initState() {
     super.initState();
   }
-   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+
+  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     setState(() {
       if (args.value is PickerDateRange) {
         _range = '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
@@ -58,7 +61,7 @@ class _AgregarJornadaScreenState extends State<AgregarJornadaScreen> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Color(0xFF008DD4),
+        backgroundColor: const Color(0xFF008DD4),
         automaticallyImplyLeading: true,
         title: Text(
           'Registrar Jornada',
@@ -72,7 +75,7 @@ class _AgregarJornadaScreenState extends State<AgregarJornadaScreen> {
         centerTitle: true,
         elevation: 4,
       ),
-      backgroundColor: Color(0xFFD9EEF9),
+      backgroundColor: const Color(0xFFD9EEF9),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -83,7 +86,8 @@ class _AgregarJornadaScreenState extends State<AgregarJornadaScreen> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(20, 15, 20, 0),
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(20, 15, 20, 0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -92,7 +96,7 @@ class _AgregarJornadaScreenState extends State<AgregarJornadaScreen> {
                           'Registro de Jornadas',
                           style: AppTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
-                                color: Color(0xFF0D0E0F),
+                                color: const Color(0xFF0D0E0F),
                                 fontSize: 16,
                               ),
                         ),
@@ -100,14 +104,16 @@ class _AgregarJornadaScreenState extends State<AgregarJornadaScreen> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(15, 16, 15, 0),
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(15, 16, 15, 0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                           child: TextFormField(
                             readOnly: true,
                             enabled: false,
@@ -115,23 +121,21 @@ class _AgregarJornadaScreenState extends State<AgregarJornadaScreen> {
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Emprendimiento',
-                              labelStyle:
-                                  AppTheme.of(context).title3.override(
-                                        fontFamily: 'Montserrat',
-                                        color: AppTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                      ),
+                              labelStyle: AppTheme.of(context).title3.override(
+                                    fontFamily: 'Montserrat',
+                                    color: AppTheme.of(context).secondaryText,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.normal,
+                                  ),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.transparent,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.transparent,
                                   width: 1,
                                 ),
@@ -149,7 +153,8 @@ class _AgregarJornadaScreenState extends State<AgregarJornadaScreen> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                           child: TextFormField(
                             onChanged: (value) {
                               jornadaProvider.numJornada = value;
@@ -167,25 +172,25 @@ class _AgregarJornadaScreenState extends State<AgregarJornadaScreen> {
                                       ),
                               hintText: 'Ingresa el número de jornada...',
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0xFF060606),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0xFF060606),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               filled: true,
-                              fillColor: Color(0xFFF3F2F2),
+                              fillColor: const Color(0xFFF3F2F2),
                             ),
                             style: AppTheme.of(context).title3.override(
                                   fontFamily: 'Poppins',
-                                  color: Color(0xFF060606),
+                                  color: const Color(0xFF060606),
                                   fontSize: 15,
                                   fontWeight: FontWeight.normal,
                                 ),
@@ -214,130 +219,150 @@ class _AgregarJornadaScreenState extends State<AgregarJornadaScreen> {
                         //   ],
                         // ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                           child: TextFormField(
                             controller: textControllerFecha,
                             obscureText: false,
                             focusNode: FocusNode(), //Only tap event available
-                            enableInteractiveSelection: false, //Disable on change event
+                            enableInteractiveSelection:
+                                false, //Disable on change event
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
-                            labelText: 'Próxima visita*',
-                            labelStyle:
-                                AppTheme.of(context).title3.override(
-                                      fontFamily: 'Montserrat',
-                                      color: AppTheme.of(context)
-                                          .secondaryText,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                            hintText: 'Selecciona fecha de la próxima visita...',
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFF060606),
-                                width: 1,
+                              labelText: 'Próxima visita',
+                              labelStyle: AppTheme.of(context).title3.override(
+                                    fontFamily: 'Montserrat',
+                                    color: AppTheme.of(context).secondaryText,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                              hintText:
+                                  'Selecciona fecha de la próxima visita...',
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                  color: Color(0xFF060606),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
                               ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFF060606),
-                                width: 1,
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                  color: const Color(0xFF060606),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
                               ),
-                              borderRadius: BorderRadius.circular(8),
+                              filled: true,
+                              fillColor: const Color(0xFFF3F2F2),
                             ),
-                            filled: true,
-                            fillColor: Color(0xFFF3F2F2),
-                          ),
-                          style: AppTheme.of(context).title3.override(
-                            fontFamily: 'Poppins',
-                            color: Color(0xFF060606),
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                          ),
-                          validator: (value) {
-                            return fechaCharacters
-                                .hasMatch(value ?? '')
-                            ? null
-                            : 'Para continuar, ingrese una fecha dd/MM/yyyy';
-                          },
-                          onTap: () {
-                          showDialog(
+                            style: AppTheme.of(context).title3.override(
+                                  fontFamily: 'Poppins',
+                                  color: const Color(0xFF060606),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                            validator: (value) {
+                              return fechaCharacters.hasMatch(value ?? '')
+                                  ? null
+                                  : 'Para continuar, ingrese una fecha dd/MM/yyyy';
+                            },
+                            onTap: () {
+                              showDialog(
                                 context: context,
                                 barrierDismissible: false,
                                 builder: (_) {
                                   return AlertDialog(
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                              ),
-                              clipBehavior: Clip.antiAlias,
-                              contentPadding: const EdgeInsets.all(0),
-                              content: SizedBox(
-                                width:400,
-                                height:400,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Text(
-                                      "Seleccione una fecha disponible",
-                                      style: AppTheme.of(context).title3.override(
-                                          fontFamily: 'Poppins',
-                                          color: Color(0xFF060606),
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.normal,
-                                        ),
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(32.0)),
                                     ),
-                                    SfDateRangePicker(
-                                      showNavigationArrow: true,
-                                      onSelectionChanged: _onSelectionChanged,
-                                      initialSelectedDate: dateNow.add(const Duration(days: 1)),
-                                      enablePastDates: false,
-                                      maxDate: dateNow.add(const Duration(days: 100)),
-                                      selectionMode: DateRangePickerSelectionMode.single,
-                                      selectableDayPredicate: (DateTime dateTime) {
-                                      return dateTime.weekday == 6 || dateTime.weekday == 7 ? false : true;
-                                      },
-                                    ),
-                                    FFButtonWidget(
-                                      onPressed: () {
-                                        if(selectedDate != null) {
-                                        jornadaProvider.proximaVisita = selectedDate!;
-                                        textControllerFecha.text = DateFormat("dd/MM/yyyy").format(selectedDate!);
-                                        Navigator.of(context).pop();
-                                      }
-                                      },
-                                      text: 'Aceptar',
-                                      options: FFButtonOptions(
-                                        width: 150,
-                                        height: 40,
-                                        color: AppTheme.of(context).primaryColor,
-                                        textStyle: AppTheme.of(context).subtitle2.override(
-                                              fontFamily: 'Poppins',
-                                              color: Colors.white,
-                                              fontSize: 15,
+                                    clipBehavior: Clip.antiAlias,
+                                    contentPadding: const EdgeInsets.all(0),
+                                    content: SizedBox(
+                                      width: 400,
+                                      height: 400,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Text(
+                                            "Seleccione una fecha disponible",
+                                            style: AppTheme.of(context)
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  color:
+                                                      const Color(0xFF060606),
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                          ),
+                                          SfDateRangePicker(
+                                            showNavigationArrow: true,
+                                            onSelectionChanged:
+                                                _onSelectionChanged,
+                                            initialSelectedDate: dateNow
+                                                .add(const Duration(days: 1)),
+                                            enablePastDates: false,
+                                            maxDate: dateNow
+                                                .add(const Duration(days: 100)),
+                                            selectionMode:
+                                                DateRangePickerSelectionMode
+                                                    .single,
+                                            selectableDayPredicate:
+                                                (DateTime dateTime) {
+                                              return dateTime.weekday == 6 ||
+                                                      dateTime.weekday == 7
+                                                  ? false
+                                                  : true;
+                                            },
+                                          ),
+                                          FFButtonWidget(
+                                            onPressed: () {
+                                              if (selectedDate != null) {
+                                                jornadaProvider.proximaVisita =
+                                                    selectedDate!;
+                                                textControllerFecha.text =
+                                                    DateFormat("dd/MM/yyyy")
+                                                        .format(selectedDate!);
+                                                Navigator.of(context).pop();
+                                              }
+                                            },
+                                            text: 'Aceptar',
+                                            options: FFButtonOptions(
+                                              width: 150,
+                                              height: 40,
+                                              color: AppTheme.of(context)
+                                                  .primaryColor,
+                                              textStyle: AppTheme.of(context)
+                                                  .subtitle2
+                                                  .override(
+                                                    fontFamily: 'Poppins',
+                                                    color: Colors.white,
+                                                    fontSize: 15,
+                                                  ),
+                                              borderSide: const BorderSide(
+                                                color: Colors.transparent,
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
                                             ),
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-
-                            );
+                                  );
                                 },
                               );
-                          },
+                            },
                           ),
                         ),
                       ],
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -350,12 +375,10 @@ class _AgregarJornadaScreenState extends State<AgregarJornadaScreen> {
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      const JornadaCreada(),
+                                  builder: (context) => const JornadaCreada(),
                                 ),
                               );
-                            }
-                            else {
+                            } else {
                               await showDialog(
                                 context: context,
                                 builder: (alertDialogContext) {
@@ -365,8 +388,8 @@ class _AgregarJornadaScreenState extends State<AgregarJornadaScreen> {
                                         'Para continuar, debe llenar todos los campos'),
                                     actions: [
                                       TextButton(
-                                        onPressed: () => Navigator.pop(
-                                            alertDialogContext),
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
                                         child: const Text('Bien'),
                                       ),
                                     ],
@@ -377,7 +400,7 @@ class _AgregarJornadaScreenState extends State<AgregarJornadaScreen> {
                             }
                           },
                           text: 'Agregar Jornada',
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.person,
                             color: Colors.white,
                             size: 15,
@@ -385,16 +408,14 @@ class _AgregarJornadaScreenState extends State<AgregarJornadaScreen> {
                           options: FFButtonOptions(
                             width: 290,
                             height: 50,
-                            color: Color(0xFF2CC3F4),
-                            textStyle: AppTheme.of(context)
-                                .title3
-                                .override(
+                            color: const Color(0xFF2CC3F4),
+                            textStyle: AppTheme.of(context).title3.override(
                                   fontFamily: 'Poppins',
                                   color: Colors.white,
                                   fontWeight: FontWeight.w300,
                                 ),
                             elevation: 3,
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Color(0xFF2CC3F4),
                               width: 0,
                             ),
@@ -412,5 +433,4 @@ class _AgregarJornadaScreenState extends State<AgregarJornadaScreen> {
       ),
     );
   }
-   
 }

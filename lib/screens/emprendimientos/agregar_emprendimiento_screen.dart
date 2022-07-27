@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
+// import 'package:just_audio/just_audio.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +28,7 @@ class _AgregarEmprendimientoScreenState
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final emprendimientoKey = GlobalKey<FormState>();
   XFile? image;
-  
+
   @override
   Widget build(BuildContext context) {
     final emprendimientoProvider =
@@ -90,84 +90,81 @@ class _AgregarEmprendimientoScreenState
                       ],
                     ),
                   ),
-                  FormField(
-                    builder: (state) {
-                        return Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                            child: InkWell(
-                              onTap: () async{
-                                
-                                String? option = await showModalBottomSheet(
-                                  context: context,
-                                  builder: (_) => const CustomBottomSheet(),
+                  FormField(builder: (state) {
+                    return Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                          child: InkWell(
+                            onTap: () async {
+                              String? option = await showModalBottomSheet(
+                                context: context,
+                                builder: (_) => const CustomBottomSheet(),
+                              );
+
+                              if (option == null) return;
+
+                              final picker = ImagePicker();
+
+                              late final XFile? pickedFile;
+
+                              if (option == 'camera') {
+                                pickedFile = await picker.pickImage(
+                                  source: ImageSource.camera,
+                                  imageQuality: 100,
                                 );
-                                
-                                if (option == null) return;
-                                
-                                final picker = ImagePicker();
-                                
-                                late final XFile? pickedFile;
-                                
-                                if (option == 'camera') {
-                                  pickedFile = await picker.pickImage(
-                                    source: ImageSource.camera,
-                                    imageQuality: 100,
-                                  );
-                                } else {
-                                  pickedFile = await picker.pickImage(
-                                    source: ImageSource.gallery,
-                                    imageQuality: 100,
-                                  );
-                                }
-                                
-                                if (pickedFile == null) {
-                                  return;
-                                }
-                                
-                                setState(() {
-                                  image = pickedFile;
-                                  emprendimientoProvider.imagen = image!.path;
-                                });
-                              },
-                              child: Container(
-                                width: MediaQuery.of(context).size.width * 0.9,
-                                height: 180,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: Image.asset(
-                                      'assets/images/animation_500_l3ur8tqa.gif',
-                                    ).image,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: const Color(0xFF2CC3F4),
-                                    width: 2,
-                                  ),
+                              } else {
+                                pickedFile = await picker.pickImage(
+                                  source: ImageSource.gallery,
+                                  imageQuality: 100,
+                                );
+                              }
+
+                              if (pickedFile == null) {
+                                return;
+                              }
+
+                              setState(() {
+                                image = pickedFile;
+                                emprendimientoProvider.imagen = image!.path;
+                              });
+                            },
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              height: 180,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: Image.asset(
+                                    'assets/images/animation_500_l3ur8tqa.gif',
+                                  ).image,
                                 ),
-                                child: getImage(image?.path),
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: const Color(0xFF2CC3F4),
+                                  width: 2,
+                                ),
                               ),
+                              child: getImage(image?.path),
                             ),
                           ),
-                        ],
-                      );
-                    },
-                    validator: (val) {
-                      if (emprendimientoProvider.imagen == null ||
-                          emprendimientoProvider.imagen.isEmpty) {
-                        return 'Para continuar, cargue una imagen';
-                      }
-                      return null;
+                        ),
+                      ],
+                    );
+                  }, validator: (val) {
+                    if (emprendimientoProvider.imagen == null ||
+                        emprendimientoProvider.imagen.isEmpty) {
+                      return 'Para continuar, cargue una imagen';
                     }
-                  ),
+                    return null;
+                  }),
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(15, 16, 15, 0),
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(15, 16, 15, 0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -217,7 +214,7 @@ class _AgregarEmprendimientoScreenState
                               if (val == null || val.isEmpty) {
                                 return 'Para continuar, ingrese el nombre.';
                               }
-            
+
                               return null;
                             },
                           ),
@@ -241,7 +238,7 @@ class _AgregarEmprendimientoScreenState
                               hintText: 'Descripción del emprendimiento...',
                               enabledBorder: OutlineInputBorder(
                                 borderSide: const BorderSide(
-                                  color: const Color(0x00060606),
+                                  color: Color(0x00060606),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
@@ -267,7 +264,7 @@ class _AgregarEmprendimientoScreenState
                               if (val == null || val.isEmpty) {
                                 return 'Para continuar, ingrese la descripción.';
                               }
-            
+
                               return null;
                             },
                           ),
@@ -329,7 +326,8 @@ class _AgregarEmprendimientoScreenState
                             children: [
                               FFButtonWidget(
                                 onPressed: () async {
-                                  if (emprendimientoProvider.validateForm(emprendimientoKey)) {
+                                  if (emprendimientoProvider
+                                      .validateForm(emprendimientoKey)) {
                                     comunidadProvider.add();
                                     emprendimientoProvider.add(comunidadProvider.comunidades.last.id);
                                     usuarioProvider.addEmprendimiento(emprendimientoProvider.emprendimiento!);
@@ -340,8 +338,7 @@ class _AgregarEmprendimientoScreenState
                                             const EmprendimientoCreado(),
                                       ),
                                     );
-                                  }
-                                  else {
+                                  } else {
                                     await showDialog(
                                       context: context,
                                       builder: (alertDialogContext) {
@@ -367,15 +364,16 @@ class _AgregarEmprendimientoScreenState
                                   width: 290,
                                   height: 50,
                                   color: const Color(0xFF2CC3F4),
-                                  textStyle: AppTheme.of(context).title3.override(
-                                        fontFamily: 'Montserrat',
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w300,
-                                      ),
+                                  textStyle:
+                                      AppTheme.of(context).title3.override(
+                                            fontFamily: 'Montserrat',
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w300,
+                                          ),
                                   elevation: 3,
                                   borderSide: const BorderSide(
-                                    color: const Color(0xFF2CC3F4),
+                                    color: Color(0xFF2CC3F4),
                                     width: 0,
                                   ),
                                   borderRadius: BorderRadius.circular(8),

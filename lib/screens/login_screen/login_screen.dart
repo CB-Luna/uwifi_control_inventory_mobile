@@ -418,6 +418,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
                                 ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ],

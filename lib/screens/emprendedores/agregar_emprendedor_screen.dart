@@ -13,11 +13,14 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 
 class AgregarEmprendedorScreen extends StatefulWidget {
-  
   final int idEmprendimiento;
   final String nombreEmprendimiento;
 
-  const AgregarEmprendedorScreen({Key? key, required this.idEmprendimiento, required this.nombreEmprendimiento}) : super(key: key);
+  const AgregarEmprendedorScreen(
+      {Key? key,
+      required this.idEmprendimiento,
+      required this.nombreEmprendimiento})
+      : super(key: key);
 
   @override
   _AgregarEmprendedorScreenState createState() =>
@@ -40,7 +43,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Color(0xFF008DD4),
+        backgroundColor: const Color(0xFF008DD4),
         automaticallyImplyLeading: true,
         title: Text(
           'Registrar Emprendedor',
@@ -54,7 +57,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
         centerTitle: true,
         elevation: 4,
       ),
-      backgroundColor: Color(0xFFD9EEF9),
+      backgroundColor: const Color(0xFFD9EEF9),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -65,7 +68,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -85,47 +88,46 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                         child: InkWell(
-                          onTap: () async{
-            
-                              String? option = await showModalBottomSheet(
-                                context: context,
-                                builder: (_) => const CustomBottomSheet(),
+                          onTap: () async {
+                            String? option = await showModalBottomSheet(
+                              context: context,
+                              builder: (_) => const CustomBottomSheet(),
+                            );
+
+                            if (option == null) return;
+
+                            final picker = ImagePicker();
+
+                            late final XFile? pickedFile;
+
+                            if (option == 'camera') {
+                              pickedFile = await picker.pickImage(
+                                source: ImageSource.camera,
+                                imageQuality: 100,
                               );
-            
-                              if (option == null) return;
-            
-                              final picker = ImagePicker();
-            
-                              late final XFile? pickedFile;
-            
-                              if (option == 'camera') {
-                                pickedFile = await picker.pickImage(
-                                  source: ImageSource.camera,
-                                  imageQuality: 100,
-                                );
-                              } else {
-                                pickedFile = await picker.pickImage(
-                                  source: ImageSource.gallery,
-                                  imageQuality: 100,
-                                );
-                              }
-            
-                              if (pickedFile == null) {
-                                return;
-                              }
-            
-                              setState(() {
-                                image = pickedFile;
-                              });
-                            },
+                            } else {
+                              pickedFile = await picker.pickImage(
+                                source: ImageSource.gallery,
+                                imageQuality: 100,
+                              );
+                            }
+
+                            if (pickedFile == null) {
+                              return;
+                            }
+
+                            setState(() {
+                              image = pickedFile;
+                            });
+                          },
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.9,
                             height: 180,
                             decoration: BoxDecoration(
-                              color: AppTheme.of(context)
-                                  .secondaryBackground,
+                              color: AppTheme.of(context).secondaryBackground,
                               image: DecorationImage(
                                 fit: BoxFit.cover,
                                 image: Image.asset(
@@ -134,7 +136,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                               ),
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
-                                color: Color(0xFF2CC3F4),
+                                color: const Color(0xFF2CC3F4),
                                 width: 2,
                               ),
                             ),
@@ -145,14 +147,15 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                    padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 10, 5, 10),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              5, 10, 5, 10),
                           child: TextFormField(
                             readOnly: true,
                             enabled: false,
@@ -160,23 +163,21 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Emprendimiento',
-                              labelStyle:
-                                  AppTheme.of(context).title3.override(
-                                        fontFamily: 'Montserrat',
-                                        color: AppTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                      ),
+                              labelStyle: AppTheme.of(context).title3.override(
+                                    fontFamily: 'Montserrat',
+                                    color: AppTheme.of(context).secondaryText,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.normal,
+                                  ),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.transparent,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.transparent,
                                   width: 1,
                                 ),
@@ -194,7 +195,8 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                           child: TextFormField(
                             onChanged: (value) {
                               emprendedorProvider.nombre = value;
@@ -212,14 +214,14 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                       ),
                               hintText: 'Ingresa nombre..',
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0xFF060606),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0xFF060606),
                                   width: 1,
                                 ),
@@ -235,15 +237,15 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                   fontWeight: FontWeight.normal,
                                 ),
                             validator: (value) {
-                              return nombreCharacters
-                                  .hasMatch(value ?? '')
-                              ? null
-                              : 'Para continuar, ingrese el nombre';
+                              return nombreCharacters.hasMatch(value ?? '')
+                                  ? null
+                                  : 'Para continuar, ingrese el nombre';
                             },
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                           child: TextFormField(
                             onChanged: (value) {
                               emprendedorProvider.apellidoP = value;
@@ -261,21 +263,21 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                       ),
                               hintText: 'Ingresa el apellido Paterno',
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0xFF060606),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0xFF060606),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               filled: true,
-                              fillColor: Color(0xFFF3F2F2),
+                              fillColor: const Color(0xFFF3F2F2),
                             ),
                             style: AppTheme.of(context).title3.override(
                                   fontFamily: 'Poppins',
@@ -284,15 +286,15 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                   fontWeight: FontWeight.normal,
                                 ),
                             validator: (value) {
-                              return nombreCharacters
-                                  .hasMatch(value ?? '')
-                              ? null
-                              : 'Para continuar, ingrese el apellido paterno';
+                              return nombreCharacters.hasMatch(value ?? '')
+                                  ? null
+                                  : 'Para continuar, ingrese el apellido paterno';
                             },
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                           child: TextFormField(
                             onChanged: (value) {
                               emprendedorProvider.apellidoM = value;
@@ -310,21 +312,21 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                       ),
                               hintText: 'Ingresa el apellido Materno',
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0xFF060606),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0xFF060606),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               filled: true,
-                              fillColor: Color(0xFFF3F2F2),
+                              fillColor: const Color(0xFFF3F2F2),
                             ),
                             style: AppTheme.of(context).title3.override(
                                   fontFamily: 'Poppins',
@@ -333,15 +335,15 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                   fontWeight: FontWeight.normal,
                                 ),
                             validator: (value) {
-                              return nombreCharacters
-                                  .hasMatch(value ?? '')
-                              ? null
-                              : 'Para continuar, ingrese el apellido materno';
+                              return nombreCharacters.hasMatch(value ?? '')
+                                  ? null
+                                  : 'Para continuar, ingrese el apellido materno';
                             },
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                           child: TextFormField(
                             onChanged: (value) {
                               emprendedorProvider.curp = value;
@@ -359,14 +361,14 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                       ),
                               hintText: 'Ingresa el CURP..',
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0xFF060606),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0xFF060606),
                                   width: 1,
                                 ),
@@ -382,15 +384,15 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                   fontWeight: FontWeight.normal,
                                 ),
                             validator: (value) {
-                              return curpCharacters
-                                  .hasMatch(value ?? '')
-                              ? null
-                              : 'Para continuar, ingrese un CURP';
+                              return curpCharacters.hasMatch(value ?? '')
+                                  ? null
+                                  : 'Para continuar, ingrese un CURP';
                             },
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                           child: TextFormField(
                             onChanged: (value) {
                               emprendedorProvider.integrantesFamilia = value;
@@ -408,25 +410,25 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                       ),
                               hintText: 'Ingrese los integrantes...',
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0xFF060606),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0xFF060606),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               filled: true,
-                              fillColor: Color(0xFFF3F2F2),
+                              fillColor: const Color(0xFFF3F2F2),
                             ),
                             style: AppTheme.of(context).title3.override(
                                   fontFamily: 'Poppins',
-                                  color: Color(0xFF060606),
+                                  color: const Color(0xFF060606),
                                   fontSize: 15,
                                   fontWeight: FontWeight.normal,
                                 ),
@@ -479,7 +481,8 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                         //   ),
                         // ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                           child: TextFormField(
                             onChanged: (value) {
                               emprendedorProvider.telefono = value;
@@ -497,21 +500,21 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                       ),
                               hintText: 'Ingrese número telefónico...',
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0xFF060606),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0xFF060606),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               filled: true,
-                              fillColor: Color(0xFFF3F2F2),
+                              fillColor: const Color(0xFFF3F2F2),
                             ),
                             style: AppTheme.of(context).title3.override(
                                   fontFamily: 'Poppins',
@@ -520,14 +523,15 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                   fontWeight: FontWeight.normal,
                                 ),
                             inputFormatters: [
-                                LengthLimitingTextInputFormatter(14),
-                                telefonoFormat
-                              ],
+                              LengthLimitingTextInputFormatter(14),
+                              telefonoFormat
+                            ],
                             validator: (value) {
-                              return (telefonoCharacters.hasMatch(value ?? '') &&
-                                        value?.length == 14)
-                                    ? null
-                                    : 'Para continuar, ingrese un número telefónico';
+                              return (telefonoCharacters
+                                          .hasMatch(value ?? '') &&
+                                      value?.length == 14)
+                                  ? null
+                                  : 'Para continuar, ingrese un número telefónico';
                             },
                           ),
                         ),
@@ -574,20 +578,21 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                         Container(
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
-                            color: Color(0xFFD9EEF9),
+                            color: const Color(0xFFD9EEF9),
                             boxShadow: [
-                              BoxShadow(
+                              const BoxShadow(
                                 color: Color(0xFFDBE2E7),
                                 offset: Offset(0, 0),
                               )
                             ],
                             border: Border.all(
-                              color: Color(0x0025232E),
+                              color: const Color(0x0025232E),
                             ),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                           child: TextFormField(
                             onChanged: (value) {
                               emprendedorProvider.comentarios = value;
@@ -605,38 +610,39 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                       ),
                               hintText: 'Ingresar comentarios...',
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0xFF060606),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0xFF060606),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               filled: true,
-                              fillColor: Color(0xFFF3F2F2),
+                              fillColor: const Color(0xFFF3F2F2),
                             ),
                             style: AppTheme.of(context).title3.override(
                                   fontFamily: 'Poppins',
-                                  color: Color(0xFF131515),
+                                  color: const Color(0xFF131515),
                                   fontSize: 15,
                                   fontWeight: FontWeight.normal,
                                 ),
                             maxLines: 5,
                             validator: (value) {
                               return cualquierCharacters.hasMatch(value ?? '')
-                              ? null
-                              : 'Para continuar, ingrese un comentario';
+                                  ? null
+                                  : 'Para continuar, ingrese un comentario';
                             },
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -653,8 +659,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                             const EmprendedorCreado(),
                                       ),
                                     );
-                                  }
-                                  else {
+                                  } else {
                                     await showDialog(
                                       context: context,
                                       builder: (alertDialogContext) {
@@ -676,7 +681,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                   }
                                 },
                                 text: 'Agregar Emprendedor',
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.person,
                                   color: Colors.white,
                                   size: 15,
@@ -684,16 +689,15 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                 options: FFButtonOptions(
                                   width: 290,
                                   height: 50,
-                                  color: Color(0xFF2CC3F4),
-                                  textStyle: AppTheme.of(context)
-                                      .title3
-                                      .override(
-                                        fontFamily: 'Poppins',
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w300,
-                                      ),
+                                  color: const Color(0xFF2CC3F4),
+                                  textStyle:
+                                      AppTheme.of(context).title3.override(
+                                            fontFamily: 'Poppins',
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w300,
+                                          ),
                                   elevation: 3,
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0xFF2CC3F4),
                                     width: 0,
                                   ),
