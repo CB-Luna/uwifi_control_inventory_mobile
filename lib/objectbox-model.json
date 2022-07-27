@@ -561,7 +561,7 @@
     },
     {
       "id": "21:311544265460535081",
-      "lastPropertyId": "14:3552854491581449237",
+      "lastPropertyId": "15:9187449762833663479",
       "name": "Emprendedores",
       "properties": [
         {
@@ -638,6 +638,11 @@
           "flags": 520,
           "indexId": "39:5629854475557113245",
           "relationTarget": "Emprendimientos"
+        },
+        {
+          "id": "15:9187449762833663479",
+          "name": "imagen",
+          "type": 9
         }
       ],
       "relations": []

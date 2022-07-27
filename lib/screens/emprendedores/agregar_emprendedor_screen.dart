@@ -83,68 +83,80 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                       ],
                     ),
                   ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                        child: InkWell(
-                          onTap: () async {
-                            String? option = await showModalBottomSheet(
-                              context: context,
-                              builder: (_) => const CustomBottomSheet(),
-                            );
-
-                            if (option == null) return;
-
-                            final picker = ImagePicker();
-
-                            late final XFile? pickedFile;
-
-                            if (option == 'camera') {
-                              pickedFile = await picker.pickImage(
-                                source: ImageSource.camera,
-                                imageQuality: 100,
-                              );
-                            } else {
-                              pickedFile = await picker.pickImage(
-                                source: ImageSource.gallery,
-                                imageQuality: 100,
-                              );
-                            }
-
-                            if (pickedFile == null) {
-                              return;
-                            }
-
-                            setState(() {
-                              image = pickedFile;
-                            });
-                          },
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            height: 180,
-                            decoration: BoxDecoration(
-                              color: AppTheme.of(context).secondaryBackground,
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: Image.asset(
-                                  'assets/images/animation_500_l3ur8tqa.gif',
-                                ).image,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: const Color(0xFF2CC3F4),
-                                width: 2,
+                  FormField(
+                    builder: (state) {
+                       return  Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                            child: InkWell(
+                              onTap: () async {
+                                String? option = await showModalBottomSheet(
+                                  context: context,
+                                  builder: (_) => const CustomBottomSheet(),
+                                );
+                    
+                                if (option == null) return;
+                    
+                                final picker = ImagePicker();
+                    
+                                late final XFile? pickedFile;
+                    
+                                if (option == 'camera') {
+                                  pickedFile = await picker.pickImage(
+                                    source: ImageSource.camera,
+                                    imageQuality: 100,
+                                  );
+                                } else {
+                                  pickedFile = await picker.pickImage(
+                                    source: ImageSource.gallery,
+                                    imageQuality: 100,
+                                  );
+                                }
+                    
+                                if (pickedFile == null) {
+                                  return;
+                                }
+                    
+                                setState(() {
+                                  image = pickedFile;
+                                  emprendedorProvider.imagen = image!.path;
+                                });
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                height: 180,
+                                decoration: BoxDecoration(
+                                  color: AppTheme.of(context).secondaryBackground,
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: Image.asset(
+                                      'assets/images/animation_500_l3ur8tqa.gif',
+                                    ).image,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                    color: const Color(0xFF2CC3F4),
+                                    width: 2,
+                                  ),
+                                ),
+                                child: getImage(image?.path),
                               ),
                             ),
-                            child: getImage(image?.path),
                           ),
-                        ),
-                      ),
-                    ],
+                        ],
+                      );
+                    },
+                    validator: (val) {
+                    if (emprendedorProvider.imagen == null ||
+                        emprendedorProvider.imagen.isEmpty) {
+                      return 'Para continuar, cargue una imagen';
+                    }
+                    return null;
+                  }
                   ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),

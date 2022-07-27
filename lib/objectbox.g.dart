@@ -581,7 +581,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(21, 311544265460535081),
       name: 'Emprendedores',
-      lastPropertyId: const IdUid(14, 3552854491581449237),
+      lastPropertyId: const IdUid(15, 9187449762833663479),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -654,7 +654,12 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(39, 5629854475557113245),
-            relationTarget: 'Emprendimientos')
+            relationTarget: 'Emprendimientos'),
+        ModelProperty(
+            id: const IdUid(15, 9187449762833663479),
+            name: 'imagen',
+            type: 9,
+            flags: 0)
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
@@ -1580,7 +1585,8 @@ ModelDefinition getObjectBoxModel() {
               fbb.writeString(object.integrantesFamilia);
           final telefonoOffset = fbb.writeString(object.telefono);
           final comentariosOffset = fbb.writeString(object.comentarios);
-          fbb.startTable(15);
+          final imagenOffset = fbb.writeString(object.imagen);
+          fbb.startTable(16);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nombreOffset);
           fbb.addOffset(2, apellidoPOffset);
@@ -1594,6 +1600,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(11, object.comunidades.targetId);
           fbb.addInt64(12, object.statusSync.targetId);
           fbb.addInt64(13, object.emprendimiento.targetId);
+          fbb.addOffset(14, imagenOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -1603,6 +1610,8 @@ ModelDefinition getObjectBoxModel() {
 
           final object = Emprendedores(
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              imagen: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 32, ''),
               nombre: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 6, ''),
               apellidoP: const fb.StringReader(asciiOptimization: true)
@@ -1615,10 +1624,8 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 14, ''),
               integrantesFamilia: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 16, ''),
-              telefono: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 18, ''),
-              comentarios:
-                  const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
+              telefono: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 18, ''),
+              comentarios: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0)));
           object.comunidades.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0);
@@ -2252,6 +2259,10 @@ class Emprendedores_ {
   static final emprendimiento =
       QueryRelationToOne<Emprendedores, Emprendimientos>(
           _entities[11].properties[12]);
+
+  /// see [Emprendedores.imagen]
+  static final imagen =
+      QueryStringProperty<Emprendedores>(_entities[11].properties[13]);
 }
 
 /// [Estados] entity fields to define ObjectBox queries.

@@ -40,6 +40,7 @@ class Emprendimientos {
 @Entity()
 class Emprendedores {
   int id;
+  String imagen;
   String nombre;
   String apellidoP;
   String apellidoM;
@@ -55,6 +56,7 @@ class Emprendedores {
 
   Emprendedores({
     this.id = 0,
+    required this.imagen,
     required this.nombre,
     required this.apellidoP,
     required this.apellidoM,

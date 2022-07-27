@@ -8,6 +8,7 @@ class EmprendedorController extends ChangeNotifier {
   GlobalKey<FormState> emprendedorFormKey = GlobalKey<FormState>();
 
   //Emprendedor
+  String imagen = '';
   String nombre = '';
   String apellidoP = '';
   String apellidoM = '';
@@ -24,6 +25,7 @@ class EmprendedorController extends ChangeNotifier {
 
   void clearInformation()
   {
+    imagen = '';
     nombre = '';
     apellidoP = '';
     apellidoM = '';
@@ -37,6 +39,7 @@ class EmprendedorController extends ChangeNotifier {
 
   void add(int idEmprendimiento) {
     final nuevoEmprendedor = Emprendedores(
+      imagen: imagen,
       nombre: nombre, 
       apellidoP: apellidoP, 
       apellidoM: apellidoM, 
@@ -55,6 +58,7 @@ class EmprendedorController extends ChangeNotifier {
 
       final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
       if (emprendimiento != null) {
+        nuevoEmprendedor.comunidades.target = emprendimiento.comunidades.target;
         emprendimiento.emprendedor.target = nuevoEmprendedor;
         dataBase.emprendimientosBox.put(emprendimiento);
         // dataBase.emprendedoresBox.put(nuevoEmprendedor);

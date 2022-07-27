@@ -133,8 +133,9 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                               topLeft: Radius.circular(8),
                                               topRight: Radius.circular(8),
                                             ),
-                                            child: getImage(
-                                                "https://mymodernmet.com/wp/wp-content/uploads/2019/05/Alebrijes-1-e1558455347541.jpg")),
+                                            child: getImage(emprendedorProvider
+                                                  .emprendedores[resultadoIndex]
+                                                  .imagen)),
                                       ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional
