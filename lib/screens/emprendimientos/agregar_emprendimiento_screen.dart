@@ -182,7 +182,7 @@ class _AgregarEmprendimientoScreenState
                             },
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Nombre de emprendimiento',
+                              labelText: 'Nombre de emprendimiento*',
                               labelStyle: AppTheme.of(context).title3.override(
                                     fontFamily: 'Montserrat',
                                     color: AppTheme.of(context).secondaryText,
@@ -231,7 +231,7 @@ class _AgregarEmprendimientoScreenState
                             },
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Descripción de emprendimiento',
+                              labelText: 'Descripción de emprendimiento*',
                               labelStyle: AppTheme.of(context).title3.override(
                                     fontFamily: 'Montserrat',
                                     color: AppTheme.of(context).secondaryText,
@@ -281,7 +281,7 @@ class _AgregarEmprendimientoScreenState
                             },
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Comunidad',
+                              labelText: 'Comunidad*',
                               labelStyle: AppTheme.of(context).title3.override(
                                     fontFamily: 'Montserrat',
                                     color: AppTheme.of(context).secondaryText,
@@ -333,7 +333,6 @@ class _AgregarEmprendimientoScreenState
                                     comunidadProvider.add();
                                     emprendimientoProvider.add(comunidadProvider.comunidades.last.id);
                                     usuarioProvider.addEmprendimiento(emprendimientoProvider.emprendimiento!);
-                                    emprendimientoProvider.clearInformation();
                                     await Navigator.push(
                                       context,
                                       MaterialPageRoute(

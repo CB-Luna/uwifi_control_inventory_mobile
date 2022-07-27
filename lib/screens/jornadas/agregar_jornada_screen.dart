@@ -156,7 +156,7 @@ class _AgregarJornadaScreenState extends State<AgregarJornadaScreen> {
                             },
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Número de jornada',
+                              labelText: 'Número de jornada*',
                               labelStyle:
                                   AppTheme.of(context).title3.override(
                                         fontFamily: 'Montserrat',
@@ -222,7 +222,7 @@ class _AgregarJornadaScreenState extends State<AgregarJornadaScreen> {
                             enableInteractiveSelection: false, //Disable on change event
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
-                            labelText: 'Próxima visita',
+                            labelText: 'Próxima visita*',
                             labelStyle:
                                 AppTheme.of(context).title3.override(
                                       fontFamily: 'Montserrat',
@@ -347,7 +347,6 @@ class _AgregarJornadaScreenState extends State<AgregarJornadaScreen> {
                             if (jornadaProvider.validateForm(jornadaKey)) {
                               jornadaProvider.add(widget.idEmprendimiento);
                               // emprendimientoProvider.updateEmprendedores(widget.idEmprendimiento, emprendedorProvider.emprendedores[emprendedorProvider.emprendedores.length - 1]); 
-                              jornadaProvider.clearInformation();
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(

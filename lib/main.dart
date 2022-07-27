@@ -8,6 +8,7 @@ import 'package:bizpro_app/providers/deeplink_bloc.dart';
 import 'package:bizpro_app/providers/providers.dart';
 import 'package:bizpro_app/database/object_box_database.dart';
 
+import 'providers/database_providers/consultoria_controller.dart';
 import 'providers/database_providers/emprendedor_controller.dart';
 import 'providers/database_providers/emprendimiento_controller.dart';
 import 'providers/database_providers/usuario_controller.dart';
@@ -51,6 +52,10 @@ void main() async {
         ),
         ChangeNotifierProvider<JornadaController>(
           create: (context) => JornadaController(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<ConsultoriaController>(
+          create: (context) => ConsultoriaController(),
           lazy: false,
         ),
         ChangeNotifierProvider(

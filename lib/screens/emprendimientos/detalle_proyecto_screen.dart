@@ -1,3 +1,5 @@
+import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
+import 'package:bizpro_app/screens/consultorias/agregar_consultoria.dart';
 import 'package:bizpro_app/screens/emprendedores/agregar_emprendedor_screen.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada_screen.dart';
 import 'package:expandable/expandable.dart';
@@ -10,6 +12,7 @@ import 'package:bizpro_app/util/flutter_flow_util.dart';
 
 import 'package:bizpro_app/screens/emprendimientos/editar_emprendimiento.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 
 class DetalleProyectoScreen extends StatefulWidget {
@@ -32,6 +35,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final usuarioProvider = Provider.of<UsuarioController>(context);
     final List<String> emprendedores = [];
     widget.emprendimiento.emprendedores.forEach((element) {
       emprendedores.add(element.nombre);
@@ -398,7 +402,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                                                 .fromSTEB(0,
                                                                     5, 0, 5),
                                                         child: AutoSizeText(
-                                                          "Creador",
+                                                          "${usuarioProvider.usuarioCurrent!.nombre} ${usuarioProvider.usuarioCurrent!.apellidoP}",
                                                           textAlign:
                                                               TextAlign.start,
                                                           maxLines: 1,
@@ -966,17 +970,14 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                             MainAxisAlignment.center,
                                         children: [
                                           InkWell(
-                                            onTap: ()  {
-                                              // await Navigator.push(
-                                              //   context,
-                                              //   MaterialPageRoute(
-                                              //     builder: (context) =>
-                                              //         RegistrarConsultoria2Widget(
-                                              //       infoProyecto:
-                                              //           widget.proyectoDocRef,
-                                              //     ),
-                                              //   ),
-                                              // );
+                                            onTap: ()  async {
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      AgregarConsultoriaScreen(),
+                                                ),
+                                              );
                                             },
                                             child: Icon(
                                               Icons.work_outlined,

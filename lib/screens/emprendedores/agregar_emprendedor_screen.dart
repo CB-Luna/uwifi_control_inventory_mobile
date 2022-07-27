@@ -201,7 +201,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                             },
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Nombre(s)',
+                              labelText: 'Nombre(s)*',
                               labelStyle:
                                   AppTheme.of(context).title3.override(
                                         fontFamily: 'Montserrat',
@@ -250,7 +250,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                             },
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Apellido Paterno',
+                              labelText: 'Apellido Paterno*',
                               labelStyle:
                                   AppTheme.of(context).title3.override(
                                         fontFamily: 'Montserrat',
@@ -299,7 +299,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                             },
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Apellido Materno',
+                              labelText: 'Apellido Materno*',
                               labelStyle:
                                   AppTheme.of(context).title3.override(
                                         fontFamily: 'Montserrat',
@@ -348,7 +348,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                             },
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'CURP',
+                              labelText: 'CURP*',
                               labelStyle:
                                   AppTheme.of(context).title3.override(
                                         fontFamily: 'Montserrat',
@@ -397,7 +397,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                             },
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Integrantes de familia',
+                              labelText: 'Integrantes de familia*',
                               labelStyle:
                                   AppTheme.of(context).title3.override(
                                         fontFamily: 'Montserrat',
@@ -486,7 +486,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                             },
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Numero telefónico',
+                              labelText: 'Numero telefónico*',
                               labelStyle:
                                   AppTheme.of(context).title3.override(
                                         fontFamily: 'Montserrat',
@@ -594,7 +594,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                             },
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Comentarios',
+                              labelText: 'Comentarios*',
                               labelStyle:
                                   AppTheme.of(context).title3.override(
                                         fontFamily: 'Montserrat',
@@ -646,7 +646,6 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                   if (emprendedorProvider.validateForm(emprendedorKey)) {
                                     emprendedorProvider.add(widget.idEmprendimiento);
                                     // emprendimientoProvider.updateEmprendedores(widget.idEmprendimiento, emprendedorProvider.emprendedores[emprendedorProvider.emprendedores.length - 1]); 
-                                    emprendedorProvider.clearInformation();
                                     await Navigator.push(
                                       context,
                                       MaterialPageRoute(
