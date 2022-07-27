@@ -12,8 +12,7 @@ class Emprendimientos {
   final prioridadProyecto = ToOne<PrioridadProyecto>();
   final jornadas = ToMany<Jornadas>();
   final comunidades = ToOne<Comunidades>();
-  @Backlink()
-  final emprendedores = ToMany<Emprendedores>();
+  final emprendedor = ToOne<Emprendedores>();
   @Backlink()
   final clasifiProyecto = ToMany<ClasificacionProyecto>();
   @Backlink()
@@ -51,7 +50,7 @@ class Emprendedores {
   String comentarios;
   DateTime fechaRegistro;
   final comunidades = ToOne<Comunidades>();
-  final emprendimientos = ToMany<Emprendimientos>();
+  final emprendimiento = ToOne<Emprendimientos>();
   final statusSync = ToOne<StatusSync>();
 
   Emprendedores({

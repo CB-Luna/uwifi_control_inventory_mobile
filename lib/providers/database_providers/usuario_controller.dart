@@ -159,13 +159,4 @@ class UsuarioController extends ChangeNotifier {
     return emprendimientos;
   }
 
-  List<String> getEmprendedores(Emprendimientos emprendimiento)
-  {
-    final List<String> emprendedores = [];
-    emprendimiento.emprendedores.forEach((element) {
-      emprendedores.add(element.nombre);
-    });
-
-    return emprendedores;
-  }
 }

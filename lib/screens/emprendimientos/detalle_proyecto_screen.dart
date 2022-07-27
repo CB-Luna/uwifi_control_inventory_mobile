@@ -1,5 +1,6 @@
+import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
-import 'package:bizpro_app/screens/consultorias/agregar_consultoria.dart';
+import 'package:bizpro_app/screens/consultorias/agregar_consultoria_screen.dart';
 import 'package:bizpro_app/screens/emprendedores/agregar_emprendedor_screen.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada_screen.dart';
 import 'package:expandable/expandable.dart';
@@ -36,15 +37,18 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
   @override
   Widget build(BuildContext context) {
     final usuarioProvider = Provider.of<UsuarioController>(context);
-    final List<String> emprendedores = [];
-    widget.emprendimiento.emprendedores.forEach((element) {
-      emprendedores.add(element.nombre);
-    });
+    String emprendedor = "";
+    if (widget.emprendimiento.emprendedor.target != null) {
+        emprendedor = widget.emprendimiento.emprendedor.target!.nombre;
+      }
     final List<Jornadas> jornadas =[];
     widget.emprendimiento.jornadas.forEach((element) {
       jornadas.add(element);
     });
     final List<Consultorias> consultorias =[];
+    widget.emprendimiento.consultorias.forEach((element) {
+      consultorias.add(element);
+    });
     return Scaffold(
         key: scaffoldKey,
         backgroundColor: AppTheme.of(context).primaryBackground,
@@ -317,13 +321,10 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                                                 .fromSTEB(0,
                                                                     5, 0, 0),
                                                         child: Text(
-                                                          emprendedores.isEmpty ?
-                                                          'SIN EMPRENDEDORES' 
+                                                          emprendedor == "" ?
+                                                          'SIN EMPRENDEDOR' 
                                                           :
-                                                          emprendedores.length > 1 ?
-                                                          emprendedores.join(", ")
-                                                          :
-                                                          emprendedores[0],
+                                                          emprendedor,
                                                           style: AppTheme
                                                                   .of(context)
                                                               .bodyText1
@@ -795,7 +796,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                                                               0),
                                                                           child:
                                                                               Text(
-                                                                            'Consultoría No.',
+                                                                            'Consultoría No. ${consultoria.id}',
                                                                             maxLines: 1,
                                                                             style: AppTheme.of(context).title3.override(
                                                                                   fontFamily: 'Poppins',
@@ -824,7 +825,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                                                       Expanded(
                                                                         child:
                                                                             Text(
-                                                                          'Emprendedor:',
+                                                                          'Emprendedor: ${consultoria.emprendimiento.target?.emprendedor.target?.nombre ?? "Sin Emprendedor"}',
                                                                           maxLines:
                                                                               1,
                                                                           style: AppTheme.of(context).bodyText2.override(
@@ -853,7 +854,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                                                       Expanded(
                                                                         child:
                                                                             Text(
-                                                                          'Revisión: ',
+                                                                          'Registro: ${dateTimeFormat('dd/MM/yyyy', consultoria.fechaRegistro)}',
                                                                           maxLines:
                                                                               1,
                                                                           style: AppTheme.of(context).bodyText2.override(
@@ -975,7 +976,11 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      AgregarConsultoriaScreen(),
+                                                      AgregarConsultoriaScreen(
+                                                        idEmprendimiento: widget.emprendimiento.id, 
+                                                        nombreEmprendimiento: widget.emprendimiento.nombre,
+                                                        nombreEmprendedor: widget.emprendimiento.emprendedor.target?.nombre ?? "SIN EMPRENDEDOR",
+                                                      ),
                                                 ),
                                               );
                                             },
@@ -1066,7 +1071,8 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                         children: [
                                           InkWell(
                                             onTap: () async {
-                                              await Navigator.push(
+                                              if (widget.emprendimiento.emprendedor.target == null) {
+                                                await Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
@@ -1075,6 +1081,13 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                                         nombreEmprendimiento: widget.emprendimiento.nombre),
                                                 ),
                                               );
+                                              } else{
+                                                snackbarKey.currentState
+                                                  ?.showSnackBar(const SnackBar(
+                                                    content: Text(
+                                                        "Ya hay un emprendedor registrado a este emprendimiento"),
+                                                  ));
+                                              }
                                             },
                                             child: Icon(
                                               Icons

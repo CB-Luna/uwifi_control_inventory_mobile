@@ -44,7 +44,7 @@ class EmprendimientoController extends ChangeNotifier {
 
   void updateEmprendedores(int idEmprendimiento, Emprendedores emprendedor) {
     emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
-    emprendimiento!.emprendedores.add(emprendedor);
+    emprendimiento!.emprendedor.target = emprendedor;
     dataBase.emprendimientosBox.put(emprendimiento!);
     notifyListeners();
   }

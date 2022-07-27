@@ -103,7 +103,6 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                           itemCount: resultado.length,
                           itemBuilder: (context, resultadoIndex) {
                             final resultadoItem = resultado[resultadoIndex];
-                            emprendedores = usuarioProvider.getEmprendedores(resultadoItem);
                             // resultadoItem.emprendedores.forEach((element) {
                             //   emprendedores.add(element.nombre);
                             // });
@@ -211,13 +210,8 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                         children: [
                                           Expanded(
                                             child: Text(
-                                              emprendedores.isEmpty ?
-                                                  'SIN EMPRENDEDORES' 
-                                                  :
-                                                  emprendedores.length > 1 ?
-                                                  emprendedores.join(", ")
-                                                  :
-                                                  emprendedores[0],
+                                              resultadoItem.emprendedor.target?.nombre ??
+                                                  'SIN EMPRENDEDOR',
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               style: AppTheme.of(context)

@@ -116,7 +116,7 @@
     },
     {
       "id": "8:804684152773215409",
-      "lastPropertyId": "12:8462464237235982526",
+      "lastPropertyId": "13:2319564184498508408",
       "name": "Emprendimientos",
       "properties": [
         {
@@ -160,6 +160,14 @@
           "flags": 520,
           "indexId": "28:8154602671126157109",
           "relationTarget": "Comunidades"
+        },
+        {
+          "id": "13:2319564184498508408",
+          "name": "emprendedorId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "40:6767241145070274732",
+          "relationTarget": "Emprendedores"
         }
       ],
       "relations": [
@@ -553,7 +561,7 @@
     },
     {
       "id": "21:311544265460535081",
-      "lastPropertyId": "13:9142089170751540909",
+      "lastPropertyId": "14:3552854491581449237",
       "name": "Emprendedores",
       "properties": [
         {
@@ -622,15 +630,17 @@
           "flags": 520,
           "indexId": "34:6386641065826609180",
           "relationTarget": "StatusSync"
+        },
+        {
+          "id": "14:3552854491581449237",
+          "name": "emprendimientoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "39:5629854475557113245",
+          "relationTarget": "Emprendimientos"
         }
       ],
-      "relations": [
-        {
-          "id": "4:4334679211015697719",
-          "name": "emprendimientos",
-          "targetId": "8:804684152773215409"
-        }
-      ]
+      "relations": []
     },
     {
       "id": "22:334643984474072026",
@@ -777,7 +787,7 @@
     }
   ],
   "lastEntityId": "26:6276906075580230896",
-  "lastIndexId": "38:8145611823764249187",
+  "lastIndexId": "40:6767241145070274732",
   "lastRelationId": "5:2038229905033466972",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
@@ -908,7 +918,8 @@
     4856817907692795203
   ],
   "retiredRelationUids": [
-    1226469011453769556
+    1226469011453769556,
+    4334679211015697719
   ],
   "version": 1
 }

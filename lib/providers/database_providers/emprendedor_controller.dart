@@ -55,8 +55,8 @@ class EmprendedorController extends ChangeNotifier {
 
       final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
       if (emprendimiento != null) {
-        emprendimiento.emprendedores.add(nuevoEmprendedor);
-        emprendimiento.emprendedores.applyToDb();
+        emprendimiento.emprendedor.target = nuevoEmprendedor;
+        dataBase.emprendimientosBox.put(emprendimiento);
         // dataBase.emprendedoresBox.put(nuevoEmprendedor);
         emprendedores.add(nuevoEmprendedor);
         print('Emprendedor agregado exitosamente');
@@ -81,15 +81,17 @@ class EmprendedorController extends ChangeNotifier {
   void getEmprendedoresActualUser(List<Emprendimientos> emprendimientos) {
     emprendedores = [];
     emprendimientos.forEach((element) {
-      element.emprendedores.forEach(
-        (element) {emprendedores.add(element);
-        });
+      if (element.emprendedor.target != null) {
+        emprendedores.add(element.emprendedor.target!);
+      }
     });
   }
 
   void getEmprendedoresByEmprendimiento(Emprendimientos emprendimiento) {
     emprendedores = [];
-    emprendedores = emprendimiento.emprendedores.toList();
+     if (emprendimiento.emprendedor.target != null) {
+        emprendedores.add(emprendimiento.emprendedor.target!);
+      }
   }
   
 }
