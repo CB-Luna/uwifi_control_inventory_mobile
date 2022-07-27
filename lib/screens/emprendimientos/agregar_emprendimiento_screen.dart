@@ -238,7 +238,7 @@ class _AgregarEmprendimientoScreenState
                               hintText: 'Descripción del emprendimiento...',
                               enabledBorder: OutlineInputBorder(
                                 borderSide: const BorderSide(
-                                  color: const Color(0x00060606),
+                                  color: Color(0x00060606),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
@@ -376,7 +376,7 @@ class _AgregarEmprendimientoScreenState
                                           ),
                                   elevation: 3,
                                   borderSide: const BorderSide(
-                                    color: const Color(0xFF2CC3F4),
+                                    color: Color(0xFF2CC3F4),
                                     width: 0,
                                   ),
                                   borderRadius: BorderRadius.circular(8),

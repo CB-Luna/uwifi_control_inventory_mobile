@@ -17,7 +17,7 @@ class EditarProyectoWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _EditarProyectoWidgetState createState() => _EditarProyectoWidgetState();
+  State<EditarProyectoWidget> createState() => _EditarProyectoWidgetState();
 }
 
 class _EditarProyectoWidgetState extends State<EditarProyectoWidget> {
@@ -52,7 +52,7 @@ class _EditarProyectoWidgetState extends State<EditarProyectoWidget> {
                 fontSize: 22,
               ),
         ),
-        actions: [],
+        actions: const [],
         centerTitle: true,
         elevation: 4,
       ),
@@ -108,7 +108,7 @@ class _EditarProyectoWidgetState extends State<EditarProyectoWidget> {
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
-                            children: [
+                            children: const [
                               // ClipRRect(
                               //   borderRadius: BorderRadius.circular(8),
                               //   child: Image.network(
@@ -176,8 +176,8 @@ class _EditarProyectoWidgetState extends State<EditarProyectoWidget> {
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                           color: const Color(0xFFD9EEF9),
-                          boxShadow: [
-                            const BoxShadow(
+                          boxShadow: const [
+                            BoxShadow(
                               color: Color(0xFFDBE2E7),
                               offset: Offset(0, 0),
                             )
