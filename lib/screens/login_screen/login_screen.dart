@@ -235,6 +235,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (usuarioProvider.validateUser(userId)) {
                             print('Usuario ya existente');
                             usuarioProvider.getUser(userId);
+                            usuarioProvider.updatePasswordLocal(userState.passwordController.text);
                           } else {
                             print('Usuario no existente');
                             usuarioProvider.add(
@@ -250,6 +251,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               userState.getRole(emiUser
                                   .idRolFk), //TODO Verificar como es el rol
                             );
+                            usuarioProvider.getUser(loginResponse.user.email);
                             // print("Rol ${loginResponse.user.profile.idRolFk.toString()}");
                           }
                           if (userState.recuerdame == true) {

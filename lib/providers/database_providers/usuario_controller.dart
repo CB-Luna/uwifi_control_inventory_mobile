@@ -70,7 +70,6 @@ class UsuarioController extends ChangeNotifier {
 
     dataBase.usuariosBox.put(nuevoUsuario);
     usuarios.add(nuevoUsuario);
-    getUser(correo);
     print('Usuario agregado exitosamente');
     notifyListeners();
   }
@@ -127,6 +126,14 @@ class UsuarioController extends ChangeNotifier {
         dataBase.usuariosBox.query(Usuarios_.correo.equals(email)).build();
     currentUser = email;
     usuarioCurrent = query.findFirst();
+  }
+
+  //Se actualiza password del usuarioCurrent
+  void updatePasswordLocal(String password) {
+    if (usuarioCurrent != null) {
+      usuarioCurrent!.password = password;
+      dataBase.usuariosBox.put(usuarioCurrent!);
+    }
   }
 
   // void addEmprendimiento(Emprendimientos nuevoEmprendimiento, int idCurrentUser) {
