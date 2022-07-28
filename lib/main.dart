@@ -28,7 +28,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   dataBase = await ObjectBoxDatabase.create();
   GoogleFonts.config.allowRuntimeFetching = false;
-  await AppTheme.initialize();
+  await initGlobals();
 
   runApp(
     MultiProvider(
@@ -87,13 +87,9 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Locale _locale = const Locale('es');
-  ThemeMode _themeMode = AppTheme.themeMode;
+  final ThemeMode _themeMode = ThemeMode.system;
 
   void setLocale(Locale value) => setState(() => _locale = value);
-  void setThemeMode(ThemeMode mode) => setState(() {
-        _themeMode = mode;
-        AppTheme.saveThemeMode(mode);
-      });
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +105,6 @@ class _MyAppState extends State<MyApp> {
       locale: _locale,
       supportedLocales: const [Locale('en', '')],
       theme: ThemeData(brightness: Brightness.light),
-      darkTheme: ThemeData(brightness: Brightness.dark),
       themeMode: _themeMode,
       navigatorKey: NavigationService.navigatorKey,
       scaffoldMessengerKey: snackbarKey,

@@ -1,30 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-const kThemeModeKey = '__theme_mode__';
-late SharedPreferences prefs;
 
 abstract class AppTheme {
-  static Future initialize() async =>
-      prefs = await SharedPreferences.getInstance();
-  static ThemeMode get themeMode {
-    final darkMode = prefs.getBool(kThemeModeKey);
-    return darkMode == null
-        ? ThemeMode.system
-        : darkMode
-            ? ThemeMode.dark
-            : ThemeMode.light;
-  }
-
-  static void saveThemeMode(ThemeMode mode) => mode == ThemeMode.system
-      ? prefs.remove(kThemeModeKey)
-      : prefs.setBool(kThemeModeKey, mode == ThemeMode.dark);
-
-  static AppTheme of(BuildContext context) =>
-      Theme.of(context).brightness == Brightness.dark
-          ? DarkModeTheme()
-          : LightModeTheme();
+  static AppTheme of(BuildContext context) => LightModeTheme();
 
   abstract Color primaryColor;
   abstract Color secondaryColor;
@@ -43,6 +21,12 @@ abstract class AppTheme {
   abstract Color turquoise;
   abstract Color cultured;
   abstract Color cerise;
+  abstract Color grayIcon;
+  abstract Color gray200;
+  abstract Color gray600;
+  abstract Color black600;
+  abstract Color tertiary400;
+  abstract Color textColor;
 
   String get title1Family => typography.title1Family;
   TextStyle get title1 => typography.title1;
@@ -76,62 +60,38 @@ class LightModeTheme extends AppTheme {
   @override
   Color secondaryBackground = const Color(0xFFFFFFFF);
   @override
-  Color primaryText = const Color(0xFF101213);
+  Color primaryText = const Color(0xFF221573);
   @override
-  Color secondaryText = const Color(0xFF57636C);
+  Color secondaryText = const Color(0xFF4672FF);
 
   @override
-  Color primaryBtnText = const Color(0xFFFFFFFF);
+  Color primaryBtnText = Color(0xFFFFFFFF);
   @override
-  Color lineColor = const Color(0xFFE0E3E7);
+  Color lineColor = Color(0xFFE0E3E7);
   @override
-  Color customColor1 = const Color(0xFF2FB73C);
+  Color customColor1 = Color(0xFF2FB73C);
   @override
-  Color richBlackFOGRA39 = const Color(0xFF070707);
+  Color richBlackFOGRA39 = Color(0xFF070707);
   @override
-  Color blue = const Color(0xFF3A28DE);
+  Color blue = Color(0xFF3A28DE);
   @override
-  Color turquoise = const Color(0xFF34D1BF);
+  Color turquoise = Color(0xFF34D1BF);
   @override
-  Color cultured = const Color(0xFFEFEFEF);
+  Color cultured = Color(0xFFEFEFEF);
   @override
-  Color cerise = const Color(0xFFD1345B);
-}
-
-class DarkModeTheme extends AppTheme {
+  Color cerise = Color(0xFFD1345B);
   @override
-  Color primaryColor = const Color(0xFF4B39EF);
+  Color grayIcon = Color(0xFF95A1AC);
   @override
-  Color secondaryColor = const Color(0xFF39D2C0);
+  Color gray200 = Color(0xFFDBE2E7);
   @override
-  Color tertiaryColor = const Color(0xFFEE8B60);
+  Color gray600 = Color(0xFF262D34);
   @override
-  Color alternate = const Color(0xFFFF5963);
+  Color black600 = Color(0xFF090F13);
   @override
-  Color primaryBackground = const Color(0xFFFFFFFF);
+  Color tertiary400 = Color(0xFF39D2C0);
   @override
-  Color secondaryBackground = const Color(0xFFFFFFFF);
-  @override
-  Color primaryText = const Color(0xFFFFFFFF);
-  @override
-  Color secondaryText = const Color(0xFF95A1AC);
-
-  @override
-  Color primaryBtnText = const Color(0xFFFFFFFF);
-  @override
-  Color lineColor = const Color(0xFF22282F);
-  @override
-  Color customColor1 = const Color(0xFF452FB7);
-  @override
-  Color richBlackFOGRA39 = const Color(0xFF070707);
-  @override
-  Color blue = const Color(0xFF3A28DE);
-  @override
-  Color turquoise = const Color(0xFF34D1BF);
-  @override
-  Color cultured = const Color(0xFFEFEFEF);
-  @override
-  Color cerise = const Color(0xFFD1345B);
+  Color textColor = Color(0xFF1E2429);
 }
 
 abstract class Typography {

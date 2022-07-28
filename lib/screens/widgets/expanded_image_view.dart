@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
-class FlutterExpandedImageView extends StatelessWidget {
-  const FlutterExpandedImageView({
+class ExpandedImageView extends StatelessWidget {
+  const ExpandedImageView({
+    Key? key,
     required this.image,
     this.allowRotation = false,
     this.useHeroAnimation = true,
     required this.tag,
-  });
+  }) : super(key: key);
 
   final Widget image;
   final bool allowRotation;
@@ -22,7 +23,7 @@ class FlutterExpandedImageView extends StatelessWidget {
       child: SafeArea(
         child: Stack(
           children: [
-            Container(
+            SizedBox(
               height: screenSize.height,
               width: screenSize.width,
               child: PhotoView.customChild(

@@ -13,6 +13,6 @@ class NavigationService {
 
   static removeTo(Route newRoute) async {
     return await navigatorKey.currentState!
-        .pushAndRemoveUntil(newRoute, (route) => false);
+        .pushAndRemoveUntil(newRoute, ModalRoute.withName('/'));
   }
 }

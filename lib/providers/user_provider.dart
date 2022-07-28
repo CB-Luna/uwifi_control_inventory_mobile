@@ -89,7 +89,6 @@ class UserState extends ChangeNotifier {
     notifyListeners();
   }
 
-  //TDOD: Quitar user Activo == null
   Future<String> readToken() async {
     final jwt = await storage.read(key: 'token') ?? '';
     if (jwt != '') {
@@ -107,7 +106,7 @@ class UserState extends ChangeNotifier {
     token.clear();
     if (remove) {
       await NavigationService.removeTo(MaterialPageRoute(
-        builder: (context) => const SplashScreen(),
+        builder: (context) => const LoginScreen(),
       ));
     }
   }

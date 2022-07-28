@@ -33,9 +33,6 @@ extension DateTimeComparisonOperators on DateTime {
 void setAppLanguage(BuildContext context, String language) =>
     MyApp.of(context).setLocale(Locale(language, ''));
 
-void setDarkModeSetting(BuildContext context, ThemeMode themeMode) =>
-    MyApp.of(context).setThemeMode(themeMode);
-
 extension FFStringExt on String {
   String maybeHandleOverflow({
     required int maxChars,

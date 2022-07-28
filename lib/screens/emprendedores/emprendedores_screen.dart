@@ -1,3 +1,4 @@
+import 'package:bizpro_app/helpers/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +17,7 @@ class EmprendedoresScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _EmprendedoresScreenState createState() => _EmprendedoresScreenState();
+  State<EmprendedoresScreen> createState() => _EmprendedoresScreenState();
 }
 
 class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
@@ -103,8 +104,8 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                   height: 265,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
-                                    boxShadow: [
-                                      const BoxShadow(
+                                    boxShadow: const [
+                                      BoxShadow(
                                         blurRadius: 4,
                                         color: Color(0x32000000),
                                         offset: Offset(0, 2),
@@ -134,8 +135,8 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                               topRight: Radius.circular(8),
                                             ),
                                             child: getImage(emprendedorProvider
-                                                  .emprendedores[resultadoIndex]
-                                                  .imagen)),
+                                                .emprendedores[resultadoIndex]
+                                                .imagen)),
                                       ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional
