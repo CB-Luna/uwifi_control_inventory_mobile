@@ -14,7 +14,6 @@ export 'dart:convert' show jsonEncode, jsonDecode;
 export 'package:intl/intl.dart';
 export 'package:page_transition/page_transition.dart';
 
-
 T valueOrDefault<T>(T value, T defaultValue) =>
     (value is String && value.isEmpty) || value == null ? defaultValue : value;
 
@@ -157,12 +156,8 @@ const kTextValidatorEmailRegex =
 const kTextValidatorWebsiteRegex =
     r'(https?:\/\/)?(www\.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)|(https?:\/\/)?(www\.)?(?!ww)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)';
 
-
 void setAppLanguage(BuildContext context, String language) =>
     MyApp.of(context).setLocale(Locale(language, ''));
-
-void setDarkModeSetting(BuildContext context, ThemeMode themeMode) =>
-    MyApp.of(context).setThemeMode(themeMode);
 
 void showSnackbar(
   BuildContext context,
@@ -196,11 +191,8 @@ void showSnackbar(
 
 String maybeHandleOverflow(String original, int maxChars, String replacement) {
   if (original.length > maxChars) {
-
     return original.replaceRange(maxChars, null, replacement);
-  }
-  else{
+  } else {
     return original;
   }
-
 }

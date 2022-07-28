@@ -8,10 +8,22 @@ import 'package:bizpro_app/providers/providers.dart';
 import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/theme/theme.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  late Future<void> displaySplashImage;
+  @override
+  void initState() {
+    displaySplashImage = Future.delayed(const Duration(seconds: 6));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,19 +48,23 @@ class SplashScreen extends StatelessWidget {
               });
             } else {
               return FutureBuilder(
-                future: userState.readToken(),
-                builder: (_, AsyncSnapshot snapshot) {
+                future: Future.wait([
+                  userState.readToken(),
+                  displaySplashImage,
+                ]),
+                builder: (_, AsyncSnapshot<List> snapshot) {
                   if (!snapshot.hasData) {
-                    return SizedBox(
-                      width: 50,
-                      height: 50,
-                      child: SpinKitRipple(
-                        color: AppTheme.of(context).primaryColor,
-                        size: 50,
+                    return Container(
+                      color: Colors.transparent,
+                      child: Builder(
+                        builder: (context) => Image.asset(
+                          'assets/images/Final_Comp.gif',
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     );
                   }
-                  if (snapshot.data == '') {
+                  if (snapshot.data![0] == '') {
                     return const LoginScreen();
                   } else {
                     return const EmprendimientosScreen();

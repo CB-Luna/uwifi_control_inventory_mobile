@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
             image: DecorationImage(
               fit: BoxFit.cover,
               image: Image.asset(
-                'assets/images/mesgbluegradient.jpeg',
+                'assets/images/bglogin2.png',
               ).image,
             ),
           ),
@@ -82,9 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         'Inicia sesión',
                         style: AppTheme.of(context).title1.override(
                               fontFamily: 'Poppins',
-                              color: Colors.white,
-                              // fontSize: 15,
-                              // fontWeight: FontWeight.w500,
+                              color: const Color(0xFF221573),
                             ),
                       ),
                     ),
@@ -109,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       style: AppTheme.of(context).bodyText1.override(
                             fontFamily: 'Poppins',
-                            color: const Color(0xFF393838),
+                            color: const Color(0xFF221573),
                             fontSize: 15,
                             fontWeight: FontWeight.normal,
                           ),
@@ -235,7 +233,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (usuarioProvider.validateUser(userId)) {
                             print('Usuario ya existente');
                             usuarioProvider.getUser(userId);
-                            usuarioProvider.updatePasswordLocal(userState.passwordController.text);
+                            usuarioProvider.updatePasswordLocal(
+                                userState.passwordController.text);
                           } else {
                             print('Usuario no existente');
                             usuarioProvider.add(
@@ -279,7 +278,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       options: ButtonOptions(
                         width: 170,
                         height: 50,
-                        color: const Color(0xFF006AFF),
+                        color: const Color(0xFF4672FF),
                         textStyle: AppTheme.of(context).subtitle2.override(
                               fontFamily: 'Montserrat',
                               color: Colors.white,
@@ -291,7 +290,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: Colors.transparent,
                           width: 1,
                         ),
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                     ),
                   ),
@@ -317,7 +316,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               'Recordarme',
                               style: AppTheme.of(context).bodyText1.override(
                                     fontFamily: 'Poppins',
-                                    color: Colors.white,
+                                    color: const Color(0xFF4672FF),
                                     fontSize: 15,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -329,12 +328,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               value: userState.recuerdame,
                               onIcon: const Icon(
                                 Icons.check_box,
-                                color: Colors.white,
+                                color: Color(0xFF4672FF),
                                 size: 25,
                               ),
                               offIcon: const Icon(
                                 Icons.check_box_outline_blank,
-                                color: Colors.white,
+                                color: Color(0xFF4672FF),
                                 size: 25,
                               ),
                             ),
@@ -360,7 +359,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         '¿Olvidaste tu contraseña?',
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
-                              color: Colors.white,
+                              color: const Color(0xFF221573),
                               fontSize: 15,
                               decoration: TextDecoration.underline,
                             ),
@@ -384,7 +383,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                               child: FaIcon(
                                 FontAwesomeIcons.shieldHalved,
-                                color: Color(0xFF4A4949),
+                                color: Color(0xFF959595),
                                 size: 40,
                               ),
                             ),
@@ -395,7 +394,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 'Acceso\nseguro',
                                 style: AppTheme.of(context).bodyText1.override(
                                       fontFamily: 'Poppins',
-                                      color: const Color(0xFF4A4949),
+                                      color: const Color(0xFF959595),
                                       fontSize: 13,
                                     ),
                               ),
@@ -406,17 +405,17 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: 2,
                           height: 80,
                           decoration: const BoxDecoration(
-                            color: Color(0xFF4A4949),
+                            color: Color(0xFF959595),
                           ),
                         ),
                         Padding(
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                           child: Text(
-                            'La seguridad es nuestra prioridad, para\n ello utilizamos los estándares mas altos.',
+                            'La seguridad es nuestra prioridad, para\nello utilizamos los estándares\nmas altos.',
                             style: AppTheme.of(context).bodyText1.override(
                                   fontFamily: 'Poppins',
-                                  color: const Color(0xFF4A4949),
+                                  color: const Color(0xFF959595),
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
                                 ),

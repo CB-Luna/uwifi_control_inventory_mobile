@@ -20,33 +20,33 @@ InputDecoration getInputDecoration({
     labelText: labelText,
     labelStyle: AppTheme.of(context).bodyText1.override(
           fontFamily: 'Poppins',
-          color: Colors.white,
+          color: const Color(0xFF4672FF),
           fontSize: 15,
           fontWeight: FontWeight.normal,
         ),
     hintText: hintText,
     hintStyle: AppTheme.of(context).bodyText1.override(
           fontFamily: 'Poppins',
-          color: Colors.white,
+          color: const Color(0xFF4672FF),
           fontSize: 15,
           fontWeight: FontWeight.w500,
         ),
     enabledBorder: OutlineInputBorder(
       borderSide: const BorderSide(
-        color: Colors.white,
-        width: 1,
+        color: Color(0xFF221573),
+        width: 2,
       ),
-      borderRadius: BorderRadius.circular(30),
+      borderRadius: BorderRadius.circular(12),
     ),
     focusedBorder: OutlineInputBorder(
       borderSide: const BorderSide(
-        color: Colors.white,
-        width: 1,
+        color: Color(0xFF221573),
+        width: 2,
       ),
-      borderRadius: BorderRadius.circular(30),
+      borderRadius: BorderRadius.circular(12),
     ),
     filled: true,
-    fillColor: const Color(0x22FFFFFF),
+    fillColor: const Color(0x58FFFFFF),
     suffixIcon: inkWell,
   );
 }
