@@ -13,6 +13,7 @@ class Emprendimientos {
   final jornadas = ToMany<Jornadas>();
   final comunidades = ToOne<Comunidades>();
   final emprendedor = ToOne<Emprendedores>();
+  final statusSync = ToOne<StatusSync>();
   @Backlink()
   final clasifiProyecto = ToMany<ClasificacionProyecto>();
   @Backlink()
@@ -384,6 +385,8 @@ class StatusSync {
   DateTime fechaRegistro;
   @Backlink()
   final emprendedores = ToMany<Emprendedores>();
+  @Backlink()
+  final emprendimientos = ToMany<Emprendimientos>();
   @Backlink()
   final tareas = ToMany<Tareas>();
   @Backlink()

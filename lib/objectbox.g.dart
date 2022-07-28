@@ -129,7 +129,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(8, 804684152773215409),
       name: 'Emprendimientos',
-      lastPropertyId: const IdUid(13, 2319564184498508408),
+      lastPropertyId: const IdUid(15, 1684532864788042377),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -177,7 +177,14 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(40, 6767241145070274732),
-            relationTarget: 'Emprendedores')
+            relationTarget: 'Emprendedores'),
+        ModelProperty(
+            id: const IdUid(15, 1684532864788042377),
+            name: 'statusSyncId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(42, 6945808217463090366),
+            relationTarget: 'StatusSync')
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -809,6 +816,10 @@ final _entities = <ModelEntity>[
       backlinks: <ModelBacklink>[
         ModelBacklink(
             name: 'emprendedores', srcEntity: 'Emprendedores', srcField: ''),
+        ModelBacklink(
+            name: 'emprendimientos',
+            srcEntity: 'Emprendimientos',
+            srcField: ''),
         ModelBacklink(name: 'tareas', srcEntity: 'Tareas', srcField: ''),
         ModelBacklink(
             name: 'consultorias', srcEntity: 'Consultorias', srcField: ''),
@@ -838,7 +849,7 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(26, 6276906075580230896),
-      lastIndexId: const IdUid(40, 6767241145070274732),
+      lastIndexId: const IdUid(42, 6945808217463090366),
       lastRelationId: const IdUid(5, 2038229905033466972),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -862,7 +873,8 @@ ModelDefinition getObjectBoxModel() {
         3380866187592452154,
         898977627675318720,
         4860061050288630164,
-        6477492978039659709
+        6477492978039659709,
+        1884784676683692244
       ],
       retiredPropertyUids: const [
         7079790605743243388,
@@ -964,7 +976,8 @@ ModelDefinition getObjectBoxModel() {
         317028010342762687,
         6994977916160921655,
         6540004964666285680,
-        4856817907692795203
+        4856817907692795203,
+        3441574004683600331
       ],
       retiredRelationUids: const [1226469011453769556, 4334679211015697719],
       modelVersion: 5,
@@ -1083,8 +1096,12 @@ ModelDefinition getObjectBoxModel() {
         }),
     Emprendimientos: EntityDefinition<Emprendimientos>(
         model: _entities[3],
-        toOneRelations: (Emprendimientos object) =>
-            [object.prioridadProyecto, object.comunidades, object.emprendedor],
+        toOneRelations: (Emprendimientos object) => [
+              object.prioridadProyecto,
+              object.comunidades,
+              object.emprendedor,
+              object.statusSync
+            ],
         toManyRelations: (Emprendimientos object) => {
               RelInfo<Emprendimientos>.toMany(2, object.id): object.usuarios,
               RelInfo<Emprendimientos>.toMany(5, object.id): object.jornadas,
@@ -1114,7 +1131,7 @@ ModelDefinition getObjectBoxModel() {
           final imagenOffset = fbb.writeString(object.imagen);
           final nombreOffset = fbb.writeString(object.nombre);
           final descripcionOffset = fbb.writeString(object.descripcion);
-          fbb.startTable(14);
+          fbb.startTable(16);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, imagenOffset);
           fbb.addOffset(2, nombreOffset);
@@ -1123,6 +1140,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(6, object.prioridadProyecto.targetId);
           fbb.addInt64(11, object.comunidades.targetId);
           fbb.addInt64(12, object.emprendedor.targetId);
+          fbb.addInt64(14, object.statusSync.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -1149,6 +1167,9 @@ ModelDefinition getObjectBoxModel() {
           object.emprendedor.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0);
           object.emprendedor.attach(store);
+          object.statusSync.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 32, 0);
+          object.statusSync.attach(store);
           InternalToManyAccess.setRelInfo(
               object.usuarios,
               store,
@@ -1778,6 +1799,9 @@ ModelDefinition getObjectBoxModel() {
               RelInfo<Emprendedores>.toOneBacklink(13, object.id,
                       (Emprendedores srcObject) => srcObject.statusSync):
                   object.emprendedores,
+              RelInfo<Emprendimientos>.toOneBacklink(15, object.id,
+                      (Emprendimientos srcObject) => srcObject.statusSync):
+                  object.emprendimientos,
               RelInfo<Tareas>.toOneBacklink(13, object.id,
                   (Tareas srcObject) => srcObject.statusSync): object.tareas,
               RelInfo<Consultorias>.toOneBacklink(8, object.id,
@@ -1817,6 +1841,12 @@ ModelDefinition getObjectBoxModel() {
               store,
               RelInfo<Emprendedores>.toOneBacklink(13, object.id,
                   (Emprendedores srcObject) => srcObject.statusSync),
+              store.box<StatusSync>());
+          InternalToManyAccess.setRelInfo(
+              object.emprendimientos,
+              store,
+              RelInfo<Emprendimientos>.toOneBacklink(15, object.id,
+                  (Emprendimientos srcObject) => srcObject.statusSync),
               store.box<StatusSync>());
           InternalToManyAccess.setRelInfo(
               object.tareas,
@@ -1953,6 +1983,10 @@ class Emprendimientos_ {
   /// see [Emprendimientos.emprendedor]
   static final emprendedor = QueryRelationToOne<Emprendimientos, Emprendedores>(
       _entities[3].properties[7]);
+
+  /// see [Emprendimientos.statusSync]
+  static final statusSync = QueryRelationToOne<Emprendimientos, StatusSync>(
+      _entities[3].properties[8]);
 
   /// see [Emprendimientos.usuarios]
   static final usuarios =
