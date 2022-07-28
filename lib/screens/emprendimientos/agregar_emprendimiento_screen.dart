@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:bizpro_app/providers/database_providers/comunidad_controller.dart';
 import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
-import 'package:bizpro_app/providers/select_image_provider.dart';
 
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimiento_creado.dart';
@@ -35,7 +34,6 @@ class _AgregarEmprendimientoScreenState
         Provider.of<EmprendimientoController>(context);
     final comunidadProvider = Provider.of<ComunidadController>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
-    final selectImageProvider = Provider.of<SelectImageProvider>(context);
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(

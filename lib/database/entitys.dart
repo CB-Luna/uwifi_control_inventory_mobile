@@ -8,6 +8,8 @@ class Emprendimientos {
   String nombre;
   String descripcion;
   DateTime fechaRegistro;
+  bool activo;
+  bool archivado;
   final usuarios = ToMany<Usuarios>();
   final prioridadProyecto = ToOne<PrioridadProyecto>();
   final jornadas = ToMany<Jornadas>();
@@ -31,7 +33,8 @@ class Emprendimientos {
     required this.nombre,
     required this.descripcion,
     DateTime? fechaRegistro,
-    DateTime? fechaSync,
+    required this.activo,
+    required this.archivado,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);

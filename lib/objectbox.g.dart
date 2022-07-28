@@ -129,7 +129,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(8, 804684152773215409),
       name: 'Emprendimientos',
-      lastPropertyId: const IdUid(15, 1684532864788042377),
+      lastPropertyId: const IdUid(17, 2815575313211393813),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -184,7 +184,17 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(42, 6945808217463090366),
-            relationTarget: 'StatusSync')
+            relationTarget: 'StatusSync'),
+        ModelProperty(
+            id: const IdUid(16, 5126173959103968444),
+            name: 'activo',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(17, 2815575313211393813),
+            name: 'archivado',
+            type: 1,
+            flags: 0)
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -1131,7 +1141,7 @@ ModelDefinition getObjectBoxModel() {
           final imagenOffset = fbb.writeString(object.imagen);
           final nombreOffset = fbb.writeString(object.nombre);
           final descripcionOffset = fbb.writeString(object.descripcion);
-          fbb.startTable(16);
+          fbb.startTable(18);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, imagenOffset);
           fbb.addOffset(2, nombreOffset);
@@ -1141,6 +1151,8 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(11, object.comunidades.targetId);
           fbb.addInt64(12, object.emprendedor.targetId);
           fbb.addInt64(14, object.statusSync.targetId);
+          fbb.addBool(15, object.activo);
+          fbb.addBool(16, object.archivado);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -1157,7 +1169,11 @@ ModelDefinition getObjectBoxModel() {
               descripcion: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 10, ''),
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0)));
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0)),
+              activo: const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 34, false),
+              archivado: const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 36, false));
           object.prioridadProyecto.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
           object.prioridadProyecto.attach(store);
@@ -1987,6 +2003,14 @@ class Emprendimientos_ {
   /// see [Emprendimientos.statusSync]
   static final statusSync = QueryRelationToOne<Emprendimientos, StatusSync>(
       _entities[3].properties[8]);
+
+  /// see [Emprendimientos.activo]
+  static final activo =
+      QueryBooleanProperty<Emprendimientos>(_entities[3].properties[9]);
+
+  /// see [Emprendimientos.archivado]
+  static final archivado =
+      QueryBooleanProperty<Emprendimientos>(_entities[3].properties[10]);
 
   /// see [Emprendimientos.usuarios]
   static final usuarios =

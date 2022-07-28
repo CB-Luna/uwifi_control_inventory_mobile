@@ -116,7 +116,7 @@
     },
     {
       "id": "8:804684152773215409",
-      "lastPropertyId": "15:1684532864788042377",
+      "lastPropertyId": "17:2815575313211393813",
       "name": "Emprendimientos",
       "properties": [
         {
@@ -176,6 +176,16 @@
           "flags": 520,
           "indexId": "42:6945808217463090366",
           "relationTarget": "StatusSync"
+        },
+        {
+          "id": "16:5126173959103968444",
+          "name": "activo",
+          "type": 1
+        },
+        {
+          "id": "17:2815575313211393813",
+          "name": "archivado",
+          "type": 1
         }
       ],
       "relations": [

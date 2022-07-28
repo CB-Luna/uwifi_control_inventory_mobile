@@ -34,6 +34,8 @@ class EmprendimientoController extends ChangeNotifier {
       imagen: imagen, 
       nombre: nombre,
       descripcion: descripcion,
+      activo: true,
+      archivado: false,
       );
       nuevoEmprendimiento.comunidades.target = dataBase.comunidadesBox.get(idComunidad);
       dataBase.emprendimientosBox.put(nuevoEmprendimiento);

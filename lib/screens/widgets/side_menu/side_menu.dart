@@ -1,3 +1,4 @@
+import 'package:bizpro_app/screens/sync/sync_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/providers/providers.dart';
@@ -255,6 +256,22 @@ class SideMenu extends StatelessWidget {
                           //         ListaPromotoresWidget(),
                           //   ),
                           // );
+                        },
+                      ),
+
+                    CustomMenuItem(
+                        label: 'Syncronización',
+                        iconData: Icons.sync_outlined,
+                        lineHeight: 1.2,
+                        onTap: () async {
+                          // TODO: agregar pantalla
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  SyncScreen(),
+                            ),
+                          );
                         },
                       ),
 

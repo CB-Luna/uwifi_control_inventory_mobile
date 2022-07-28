@@ -66,9 +66,6 @@ void main() async {
           create: (_) => NetworkState(),
           lazy: false,
         ),
-        ChangeNotifierProvider<SelectImageProvider>(
-          create: (context) => SelectImageProvider(),
-        ),
       ],
       child: const MyApp(),
     ),
