@@ -260,11 +260,11 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                               const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                           child: TextFormField(
                             onChanged: (value) {
-                              emprendedorProvider.apellidoP = value;
+                              emprendedorProvider.apellidos = value;
                             },
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Apellido Paterno*',
+                              labelText: 'Apellidos*',
                               labelStyle:
                                   AppTheme.of(context).title3.override(
                                         fontFamily: 'Montserrat',
@@ -273,7 +273,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal,
                                       ),
-                              hintText: 'Ingresa el apellido Paterno',
+                              hintText: 'Ingresa los apellidos',
                               enabledBorder: OutlineInputBorder(
                                 borderSide: const BorderSide(
                                   color: Color(0xFF060606),
@@ -300,56 +300,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                             validator: (value) {
                               return nombreCharacters.hasMatch(value ?? '')
                                   ? null
-                                  : 'Para continuar, ingrese el apellido paterno';
-                            },
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
-                          child: TextFormField(
-                            onChanged: (value) {
-                              emprendedorProvider.apellidoM = value;
-                            },
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelText: 'Apellido Materno*',
-                              labelStyle:
-                                  AppTheme.of(context).title3.override(
-                                        fontFamily: 'Montserrat',
-                                        color: AppTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                              hintText: 'Ingresa el apellido Materno',
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0xFF060606),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0xFF060606),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              filled: true,
-                              fillColor: const Color(0xFFF3F2F2),
-                            ),
-                            style: AppTheme.of(context).title3.override(
-                                  fontFamily: 'Poppins',
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                            validator: (value) {
-                              return nombreCharacters.hasMatch(value ?? '')
-                                  ? null
-                                  : 'Para continuar, ingrese el apellido materno';
+                                  : 'Para continuar, ingrese los apellidos';
                             },
                           ),
                         ),
@@ -438,17 +389,17 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                               filled: true,
                               fillColor: const Color(0xFFF3F2F2),
                             ),
+                            keyboardType: TextInputType.number,
                             style: AppTheme.of(context).title3.override(
                                   fontFamily: 'Poppins',
                                   color: const Color(0xFF060606),
                                   fontSize: 15,
                                   fontWeight: FontWeight.normal,
                                 ),
-                            validator: (val) {
-                              if (val == null || val.isEmpty) {
-                                return 'Para continuar, ingrese los integrantes.';
-                              }
-                              return null;
+                            validator: (value) {
+                              return familiaCharacters.hasMatch(value ?? '')
+                                  ? null
+                                  : 'Para continuar, ingrese un número de integrantes [0-99]';
                             },
                           ),
                         ),

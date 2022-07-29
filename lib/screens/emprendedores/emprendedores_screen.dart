@@ -167,7 +167,7 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                             Text(
                                               emprendedorProvider
                                                   .emprendedores[resultadoIndex]
-                                                  .apellidoP,
+                                                  .apellidos,
                                               style: AppTheme.of(context)
                                                   .bodyText1
                                                   .override(

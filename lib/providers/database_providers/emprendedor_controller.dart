@@ -10,9 +10,8 @@ class EmprendedorController extends ChangeNotifier {
   //Emprendedor
   String imagen = '';
   String nombre = '';
-  String apellidoP = '';
-  String apellidoM = '';
-  DateTime? nacimiento = DateTime.now();
+  String apellidos = '';
+  DateTime? nacimiento = DateTime.parse("2000-02-27 13:27:00");
   String curp = '';
   String integrantesFamilia = '';
   String telefono = '';
@@ -27,8 +26,7 @@ class EmprendedorController extends ChangeNotifier {
   {
     imagen = '';
     nombre = '';
-    apellidoP = '';
-    apellidoM = '';
+    apellidos = '';
     nacimiento = null;
     curp = '';
     integrantesFamilia = '';
@@ -41,24 +39,19 @@ class EmprendedorController extends ChangeNotifier {
     final nuevoEmprendedor = Emprendedores(
       imagen: imagen,
       nombre: nombre, 
-      apellidoP: apellidoP, 
-      apellidoM: apellidoM, 
+      apellidos: apellidos,
       nacimiento: nacimiento!, 
       curp: curp, 
       integrantesFamilia: integrantesFamilia, 
       telefono: telefono, 
       comentarios: comentarios,  
       );
-      // final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
-      // if (emprendimiento != null) {
-      //   emprendimiento.emprendedores.add(nuevoEmprendedor);
-      //   dataBase.emprendimientosBox.put(emprendimiento);
-      //   emprendedores.add(nuevoEmprendedor);
-      // }
 
       final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
       if (emprendimiento != null) {
+        final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
         nuevoEmprendedor.comunidades.target = emprendimiento.comunidades.target;
+        nuevoEmprendedor.statusSync.target = nuevoSync;
         emprendimiento.emprendedor.target = nuevoEmprendedor;
         dataBase.emprendimientosBox.put(emprendimiento);
         // dataBase.emprendedoresBox.put(nuevoEmprendedor);

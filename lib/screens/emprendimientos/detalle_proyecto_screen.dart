@@ -337,6 +337,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                                               ),
                                                         ),
                                                       ),
+                                                      // getImage(widget.emprendimiento.emprendedor.target?.imagen ?? null)!,
                                                       Padding(
                                                         padding:
                                                             EdgeInsetsDirectional
@@ -722,7 +723,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                                               index];
                                                       return Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
+                                                            const EdgeInsetsDirectional
                                                                 .fromSTEB(
                                                                     15,
                                                                     10,
@@ -775,7 +776,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                                                       .max,
                                                               children: [
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
+                                                                  padding: const EdgeInsetsDirectional
                                                                       .fromSTEB(
                                                                           16,
                                                                           5,
@@ -811,7 +812,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
+                                                                  padding: const EdgeInsetsDirectional
                                                                       .fromSTEB(
                                                                           16,
                                                                           0,
@@ -840,7 +841,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                  padding: EdgeInsetsDirectional
+                                                                  padding: const EdgeInsetsDirectional
                                                                       .fromSTEB(
                                                                           16,
                                                                           0,
@@ -879,7 +880,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                               ),
                                             ],
                                           ),
-                                          theme: ExpandableThemeData(
+                                          theme: const ExpandableThemeData(
                                             tapHeaderToExpand: true,
                                             tapBodyToExpand: false,
                                             tapBodyToCollapse: false,
@@ -909,7 +910,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                           children: [
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                                  const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                               child: Material(
                                 color: Colors.transparent,
                                 elevation: 10,
@@ -946,7 +947,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                                 ),
                                               );
                                             },
-                                            child: Icon(
+                                            child: const Icon(
                                               Icons.folder_rounded,
                                               color: Colors.white,
                                               size: 24,
@@ -984,7 +985,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                                 ),
                                               );
                                             },
-                                            child: Icon(
+                                            child: const Icon(
                                               Icons.work_outlined,
                                               color: Colors.white,
                                               size: 24,
@@ -1021,7 +1022,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                               //   ),
                                               // );
                                             },
-                                            child: Icon(
+                                            child: const Icon(
                                               Icons
                                                   .stacked_line_chart_rounded,
                                               color: Colors.white,
@@ -1046,7 +1047,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Icon(
+                                          const Icon(
                                             Icons.attach_money_rounded,
                                             color: Colors.white,
                                             size: 24,

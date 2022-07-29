@@ -1,17 +1,13 @@
 import 'dart:io';
+import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/providers/sync_provider.dart';
 import 'package:flutter/material.dart';
 // import 'package:just_audio/just_audio.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-import 'package:bizpro_app/providers/database_providers/comunidad_controller.dart';
-import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
-import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
-
-import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
-import 'package:bizpro_app/screens/emprendimientos/emprendimiento_creado.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/theme/theme.dart';
 
 class SyncScreen extends StatefulWidget {
@@ -26,14 +22,12 @@ class _SyncScreenState
     extends State<SyncScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final emprendimientoKey = GlobalKey<FormState>();
+  bool loading = false; 
   XFile? image;
 
   @override
   Widget build(BuildContext context) {
-    final emprendimientoProvider =
-        Provider.of<EmprendimientoController>(context);
-    final comunidadProvider = Provider.of<ComunidadController>(context);
-    final usuarioProvider = Provider.of<UsuarioController>(context);
+    final syncProvider = Provider.of<SyncProvider>(context);
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -69,6 +63,9 @@ class _SyncScreenState
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [       
+                loading ? 
+                CircularProgressIndicator()
+                :
                 Padding(
                   padding:
                       const EdgeInsetsDirectional.fromSTEB(15, 16, 15, 0),
@@ -86,8 +83,77 @@ class _SyncScreenState
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             FFButtonWidget(
-                              onPressed: ()  {
-                                
+                              onPressed: () async {
+                                final listEmprendedoresToSync = syncProvider.verificarEstadoEmprendedores(dataBase.emprendedoresBox.getAll());
+                                if (listEmprendedoresToSync.isEmpty) {
+                                  snackbarKey.currentState
+                                  ?.showSnackBar(const SnackBar(
+                                    content: Text(
+                                        "No hay emprendedores por sincronizar"),
+                                  ));
+                                }
+                                else{
+                                  await syncProvider.syncPostEmprendedores(listEmprendedoresToSync);
+                                }
+                              },
+                              text: 'Syncronizar Empendedores',
+                              options: FFButtonOptions(
+                                width: 290,
+                                height: 50,
+                                color: const Color(0xFF2CC3F4),
+                                textStyle:
+                                    AppTheme.of(context).title3.override(
+                                          fontFamily: 'Montserrat',
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w300,
+                                        ),
+                                elevation: 3,
+                                borderSide: const BorderSide(
+                                  color: Color(0xFF2CC3F4),
+                                  width: 0,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FFButtonWidget(
+                              onPressed: () {
+                                setState() async {
+                                final listEmprendimientosToSync = syncProvider.verificarEstadoEmprendimientos(dataBase.emprendimientosBox.getAll());
+                                if (listEmprendimientosToSync.isEmpty) {
+                                  snackbarKey.currentState
+                                  ?.showSnackBar(const SnackBar(
+                                    content: Text(
+                                        "No hay emprendimientos por sincronizar"),
+                                  ));
+                                }
+                                else{
+                                  if (syncProvider.buttonEmprendimientos) {
+                                    loading = true;
+                                    await syncProvider.syncPostEmprendimientos(listEmprendimientosToSync);
+                                    loading = false;
+                                    syncProvider.buttonEmprendimientos = false;
+                                  } else {
+                                    snackbarKey.currentState
+                                  ?.showSnackBar(const SnackBar(
+                                    content: Text(
+                                        "Necesitas sincronizar primero los emprendedores"),
+                                  ));
+                                  }
+                                  
+                                }
+                                }
                               },
                               text: 'Syncronizar Emprendimientos',
                               options: FFButtonOptions(

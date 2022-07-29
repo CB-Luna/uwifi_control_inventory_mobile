@@ -37,7 +37,9 @@ class EmprendimientoController extends ChangeNotifier {
       activo: true,
       archivado: false,
       );
+      final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
       nuevoEmprendimiento.comunidades.target = dataBase.comunidadesBox.get(idComunidad);
+      nuevoEmprendimiento.statusSync.target = nuevoSync;
       dataBase.emprendimientosBox.put(nuevoEmprendimiento);
       emprendimiento = nuevoEmprendimiento;
       print('Emprendimiento agregado exitosamente');

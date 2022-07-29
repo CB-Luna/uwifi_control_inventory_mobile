@@ -1,3 +1,4 @@
+import 'package:bizpro_app/providers/sync_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,7 +15,6 @@ import 'providers/database_providers/emprendimiento_controller.dart';
 import 'providers/database_providers/usuario_controller.dart';
 import 'providers/database_providers/comunidad_controller.dart';
 import 'providers/database_providers/jornada_controller.dart';
-import 'package:bizpro_app/providers/select_image_provider.dart';
 
 import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/services/navigation_service.dart';
@@ -56,6 +56,10 @@ void main() async {
         ),
         ChangeNotifierProvider<ConsultoriaController>(
           create: (context) => ConsultoriaController(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<SyncProvider>(
+          create: (context) => SyncProvider(),
           lazy: false,
         ),
         ChangeNotifierProvider(
