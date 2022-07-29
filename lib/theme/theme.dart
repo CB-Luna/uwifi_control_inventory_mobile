@@ -65,33 +65,33 @@ class LightModeTheme extends AppTheme {
   Color secondaryText = const Color(0xFF4672FF);
 
   @override
-  Color primaryBtnText = Color(0xFFFFFFFF);
+  Color primaryBtnText = const Color(0xFFFFFFFF);
   @override
-  Color lineColor = Color(0xFFE0E3E7);
+  Color lineColor = const Color(0xFFE0E3E7);
   @override
-  Color customColor1 = Color(0xFF2FB73C);
+  Color customColor1 = const Color(0xFF2FB73C);
   @override
-  Color richBlackFOGRA39 = Color(0xFF070707);
+  Color richBlackFOGRA39 = const Color(0xFF070707);
   @override
-  Color blue = Color(0xFF3A28DE);
+  Color blue = const Color(0xFF3A28DE);
   @override
-  Color turquoise = Color(0xFF34D1BF);
+  Color turquoise = const Color(0xFF34D1BF);
   @override
-  Color cultured = Color(0xFFEFEFEF);
+  Color cultured = const Color(0xFFEFEFEF);
   @override
-  Color cerise = Color(0xFFD1345B);
+  Color cerise = const Color(0xFFD1345B);
   @override
-  Color grayIcon = Color(0xFF95A1AC);
+  Color grayIcon = const Color(0xFF95A1AC);
   @override
-  Color gray200 = Color(0xFFDBE2E7);
+  Color gray200 = const Color(0xFFDBE2E7);
   @override
-  Color gray600 = Color(0xFF262D34);
+  Color gray600 = const Color(0xFF262D34);
   @override
-  Color black600 = Color(0xFF090F13);
+  Color black600 = const Color(0xFF090F13);
   @override
-  Color tertiary400 = Color(0xFF39D2C0);
+  Color tertiary400 = const Color(0xFF39D2C0);
   @override
-  Color textColor = Color(0xFF1E2429);
+  Color textColor = const Color(0xFF1E2429);
 }
 
 abstract class Typography {

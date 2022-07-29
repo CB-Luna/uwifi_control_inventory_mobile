@@ -27,7 +27,7 @@ class CustomMenuItem extends StatelessWidget {
           width: 200,
           height: 40,
           decoration: BoxDecoration(
-            color: const Color(0x84FFFFFF),
+            color: AppTheme.of(context).secondaryText,
             borderRadius: BorderRadius.circular(12),
           ),
           child: InkWell(
@@ -52,12 +52,11 @@ class CustomMenuItem extends StatelessWidget {
                   Text(
                     label,
                     style: AppTheme.of(context).bodyText1.override(
-                          fontFamily: 'Poppins',
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.normal,
-                          lineHeight: lineHeight,
-                        ),
+                        fontFamily: AppTheme.of(context).bodyText1Family,
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.normal,
+                        lineHeight: lineHeight),
                   ),
                 ],
               ),

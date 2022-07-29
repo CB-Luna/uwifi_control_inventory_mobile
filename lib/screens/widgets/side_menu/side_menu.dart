@@ -1,3 +1,6 @@
+import 'package:bizpro_app/database/entitys.dart';
+import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
+import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_widget.dart';
 import 'package:bizpro_app/screens/sync/sync_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,13 +11,28 @@ import 'package:bizpro_app/screens/emprendedores/emprendedores_screen.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/side_menu/custom_menu_item.dart';
 
-
 class SideMenu extends StatelessWidget {
   const SideMenu({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final UserState userState = Provider.of<UserState>(context);
+    final usuarioProvider = Provider.of<UsuarioController>(context);
+
+    if (usuarioProvider.usuarioCurrent == null) {
+      return const Scaffold(
+        body: Center(
+          child: Text('Error al leer información'),
+        ),
+      );
+    }
+
+    final Usuarios currentUser = usuarioProvider.usuarioCurrent!;
+
+    //TODO: almacenar imagen?
+    const String currentUserPhoto =
+        'assets/images/default-user-profile-picture.jpg';
+
     return SafeArea(
       child: SizedBox(
         width: 220,
@@ -26,22 +44,17 @@ class SideMenu extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFEEEEEE),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: Image.asset(
-                      'assets/images/mesgbluegradient.jpeg',
-                    ).image,
-                  ),
-                ),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: Image.asset(
+                        'assets/images/bglogin2.png',
+                      ).image,
+                    ),
+                    borderRadius: BorderRadius.circular(0)),
               ),
-              Container(
+              SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
-                decoration: BoxDecoration(
-                  color: const Color(0x3E000000),
-                  borderRadius: BorderRadius.circular(0),
-                ),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -70,8 +83,9 @@ class SideMenu extends StatelessWidget {
                               'Encuentro con México',
                               maxLines: 2,
                               style: AppTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white,
+                                    fontFamily:
+                                        AppTheme.of(context).bodyText1Family,
+                                    color: AppTheme.of(context).primaryText,
                                     fontSize: 14,
                                   ),
                             ),
@@ -81,56 +95,49 @@ class SideMenu extends StatelessWidget {
                     ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 25, 0, 0),
+                          const EdgeInsetsDirectional.fromSTEB(5, 25, 5, 0),
                       child: InkWell(
                         onTap: () async {
-                          //TODO: agregar pantalla
-                          // await Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => PerfilUsuarioWidget(),
-                          //   ),
-                          // );
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const PerfilUsuarioScreen(),
+                            ),
+                          );
                         },
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            //TODO: agregar imagen
-                            // Padding(
-                            //   padding: const EdgeInsetsDirectional.fromSTEB(
-                            //       10, 0, 5, 0),
-                            //   child: AuthUserStreamWidget(
-                            //     child: Container(
-                            //       width: 40,
-                            //       height: 40,
-                            //       clipBehavior: Clip.antiAlias,
-                            //       decoration: const BoxDecoration(
-                            //         shape: BoxShape.circle,
-                            //       ),
-                            //       child: Image.network(
-                            //         currentUserPhoto,
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
-                            //TODO: agregar nombre
-                            // Padding(
-                            //   padding: const EdgeInsetsDirectional.fromSTEB(
-                            //       0, 5, 0, 0),
-                            //   child: AuthUserStreamWidget(
-                            //     child: Text(
-                            //       currentUserDisplayName,
-                            //       maxLines: 2,
-                            //       style: AppTheme.of(context)
-                            //           .bodyText1
-                            //           .override(
-                            //             fontFamily: 'Poppins',
-                            //             color: Colors.white,
-                            //             fontSize: 20,
-                            //           ),
-                            //     ),
-                            //   ),
-                            // ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  10, 0, 5, 0),
+                              child: Container(
+                                width: 40,
+                                height: 40,
+                                clipBehavior: Clip.antiAlias,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                //TODO: manejar imagen de red
+                                child: Image.asset(
+                                  currentUserPhoto,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 5, 0, 0),
+                              child: Text(
+                                currentUser.nombre,
+                                maxLines: 2,
+                                style: AppTheme.of(context).bodyText1.override(
+                                      fontFamily:
+                                          AppTheme.of(context).bodyText1Family,
+                                      color: AppTheme.of(context).primaryText,
+                                      fontSize: 16,
+                                    ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -157,8 +164,7 @@ class SideMenu extends StatelessWidget {
                         await Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                EmprendedoresScreen(),
+                            builder: (context) => const EmprendedoresScreen(),
                           ),
                         );
                       },
@@ -260,20 +266,19 @@ class SideMenu extends StatelessWidget {
                       ),
 
                     CustomMenuItem(
-                        label: 'Syncronización',
-                        iconData: Icons.sync_outlined,
-                        lineHeight: 1.2,
-                        onTap: () async {
-                          // TODO: agregar pantalla
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  SyncScreen(),
-                            ),
-                          );
-                        },
-                      ),
+                      label: 'Syncronización',
+                      iconData: Icons.sync_outlined,
+                      lineHeight: 1.2,
+                      onTap: () async {
+                        // TODO: agregar pantalla
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SyncScreen(),
+                          ),
+                        );
+                      },
+                    ),
 
                     CustomMenuItem(
                       label: 'Cerrar Sesión',
