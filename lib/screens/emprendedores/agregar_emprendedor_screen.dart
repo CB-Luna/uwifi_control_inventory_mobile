@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 
+import 'package:bizpro_app/providers/sync_provider.dart';
 import 'package:bizpro_app/providers/database_providers/emprendedor_controller.dart';
 
 import 'package:bizpro_app/screens/emprendedores/emprendedor_creado.dart';
@@ -40,6 +41,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
   @override
   Widget build(BuildContext context) {
     final emprendedorProvider = Provider.of<EmprendedorController>(context);
+    final syncProvider = Provider.of<SyncProvider>(context);
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -486,13 +488,13 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                   fontWeight: FontWeight.normal,
                                 ),
                             inputFormatters: [
-                              LengthLimitingTextInputFormatter(14),
+                              LengthLimitingTextInputFormatter(12),
                               telefonoFormat
                             ],
                             validator: (value) {
                               return (telefonoCharacters
                                           .hasMatch(value ?? '') &&
-                                      value?.length == 14)
+                                      value?.length == 12)
                                   ? null
                                   : 'Para continuar, ingrese un número telefónico';
                             },
@@ -614,7 +616,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                 onPressed: () async {
                                   if (emprendedorProvider.validateForm(emprendedorKey)) {
                                     emprendedorProvider.add(widget.idEmprendimiento);
-                                    // emprendimientoProvider.updateEmprendedores(widget.idEmprendimiento, emprendedorProvider.emprendedores[emprendedorProvider.emprendedores.length - 1]); 
+                                    syncProvider.alreadySyncEmprendedores = false;
                                     await Navigator.push(
                                       context,
                                       MaterialPageRoute(

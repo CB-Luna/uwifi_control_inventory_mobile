@@ -11,6 +11,7 @@ class ObjectBoxDatabase {
   late final Box<Emprendedores> emprendedoresBox;
   late final Box<Jornadas> jornadasBox;
   late final Box<Consultorias> consultoriasBox;
+  late final Box<Bitacora> bitacoraBox;
   
 
   ObjectBoxDatabase._create(this.store) {
@@ -21,6 +22,7 @@ class ObjectBoxDatabase {
     emprendedoresBox = Box<Emprendedores>(store);
     jornadasBox = Box<Jornadas>(store);
     consultoriasBox = Box<Consultorias>(store);
+    bitacoraBox = Box<Bitacora>(store);
   }
 
   /// Create an instance of ObjectBox to use throughout the app.

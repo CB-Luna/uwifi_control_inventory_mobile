@@ -56,7 +56,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
 
     return Scaffold(
       key: scaffoldKey,
-      drawer: const SideMenu(),
+      drawer: SideMenu(),
       backgroundColor: Colors.white,
       floatingActionButton: userState.rol == Rol.administrador
           ? FloatingActionButton(

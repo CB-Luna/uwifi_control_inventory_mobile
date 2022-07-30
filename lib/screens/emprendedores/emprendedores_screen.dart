@@ -47,7 +47,7 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
     final emprendedorProvider = Provider.of<EmprendedorController>(context);
     return Scaffold(
       key: scaffoldKey,
-      drawer: const SideMenu(),
+      drawer: SideMenu(),
       backgroundColor: const Color(0xFF2BC1F6),
       floatingActionButton: userState.rol == Rol.administrador
           ? FloatingActionButton(

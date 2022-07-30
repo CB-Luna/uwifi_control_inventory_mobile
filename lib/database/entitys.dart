@@ -4,6 +4,7 @@ import 'package:objectbox/objectbox.dart';
 @Entity()
 class Emprendimientos {
   int id;
+  String idEjecucion;
   String imagen;
   String nombre;
   String descripcion;
@@ -32,6 +33,7 @@ class Emprendimientos {
   
   Emprendimientos({
     this.id = 0,
+    required this.idEjecucion,
     required this.imagen,
     required this.nombre,
     required this.descripcion,
@@ -48,7 +50,8 @@ class Emprendimientos {
 @Entity()
 class Bitacora{
   int id;
-  String instruccion;
+  String idEjecucion;
+  String instrucciones;
   DateTime fechaRegistro;
   DateTime? fechaSync;
   @Backlink()
@@ -66,7 +69,8 @@ class Bitacora{
   
   Bitacora({
     this.id = 0,
-    required this.instruccion,
+    required this.idEjecucion,
+    required this.instrucciones,
     DateTime? fechaRegistro,
     this.fechaSync,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
@@ -78,6 +82,7 @@ class Bitacora{
 @Entity()
 class Emprendedores {
   int id;
+  String idEjecucion;
   String imagen;
   String nombre;
   String apellidos;
@@ -96,6 +101,7 @@ class Emprendedores {
 
   Emprendedores({
     this.id = 0,
+    required this.idEjecucion,
     required this.imagen,
     required this.nombre,
     required this.apellidos,

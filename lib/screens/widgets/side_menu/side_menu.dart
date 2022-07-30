@@ -1,4 +1,7 @@
-import 'package:bizpro_app/screens/sync/sync_screen.dart';
+import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
+import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_widget.dart';
+import 'package:bizpro_app/screens/sync/sincronizacion_screen.dart';
+import 'package:bizpro_app/screens/widgets/bottom_sheet_sincronizar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/providers/providers.dart';
@@ -10,10 +13,15 @@ import 'package:bizpro_app/screens/widgets/side_menu/custom_menu_item.dart';
 
 
 class SideMenu extends StatelessWidget {
+  
+
   const SideMenu({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    const String currentUserPhoto =
+        'assets/images/default-user-profile-picture.jpg';
+    final usuarioProvider = Provider.of<UsuarioController>(context);
     final UserState userState = Provider.of<UserState>(context);
     return SafeArea(
       child: SizedBox(
@@ -80,61 +88,56 @@ class SideMenu extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 25, 0, 0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(5, 25, 5, 0),
                       child: InkWell(
                         onTap: () async {
-                          //TODO: agregar pantalla
-                          // await Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => PerfilUsuarioWidget(),
-                          //   ),
-                          // );
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const PerfilUsuarioScreen(),
+                            ),
+                          );
                         },
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            //TODO: agregar imagen
-                            // Padding(
-                            //   padding: const EdgeInsetsDirectional.fromSTEB(
-                            //       10, 0, 5, 0),
-                            //   child: AuthUserStreamWidget(
-                            //     child: Container(
-                            //       width: 40,
-                            //       height: 40,
-                            //       clipBehavior: Clip.antiAlias,
-                            //       decoration: const BoxDecoration(
-                            //         shape: BoxShape.circle,
-                            //       ),
-                            //       child: Image.network(
-                            //         currentUserPhoto,
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
-                            //TODO: agregar nombre
-                            // Padding(
-                            //   padding: const EdgeInsetsDirectional.fromSTEB(
-                            //       0, 5, 0, 0),
-                            //   child: AuthUserStreamWidget(
-                            //     child: Text(
-                            //       currentUserDisplayName,
-                            //       maxLines: 2,
-                            //       style: AppTheme.of(context)
-                            //           .bodyText1
-                            //           .override(
-                            //             fontFamily: 'Poppins',
-                            //             color: Colors.white,
-                            //             fontSize: 20,
-                            //           ),
-                            //     ),
-                            //   ),
-                            // ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  10, 0, 5, 0),
+                              child: Container(
+                                  width: 40,
+                                  height: 40,
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Image.asset(
+                                    currentUserPhoto,
+                                  ),
+                                ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 5, 0, 0),
+                              child: Text(
+                                  "${usuarioProvider.usuarioCurrent!.nombre} ${usuarioProvider.usuarioCurrent!.apellidoP}",
+                                  maxLines: 2,
+                                  style: AppTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily:
+                                            AppTheme.of(context)
+                                                .bodyText1Family,
+                                        color: AppTheme.of(context)
+                                            .primaryText,
+                                        fontSize: 16,
+                                      ),
+                                ),
+                            ),
                           ],
                         ),
                       ),
-                    ),
+                        ),
 
                     CustomMenuItem(
                       label: 'Emprendimientos',
@@ -181,97 +184,29 @@ class SideMenu extends StatelessWidget {
                     ),
 
                     CustomMenuItem(
-                      label: 'Jornadas',
-                      iconData: Icons.folder_rounded,
-                      onTap: () async {
-                        //TODO: agregar pantalla
-                        // await Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) =>
-                        //         ListaPromotoresWidget(),
-                        //   ),
-                        // );
-                      },
-                    ),
-
-                    CustomMenuItem(
-                      label: 'Consultorías',
-                      iconData: Icons.work,
-                      onTap: () async {
-                        //TODO: agregar pantalla
-                        // await Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) =>
-                        //         ListaPromotoresWidget(),
-                        //   ),
-                        // );
-                      },
-                    ),
-
-                    if (userState.rol == Rol.administrador)
-                      CustomMenuItem(
-                        label: 'Inversión',
-                        iconData: Icons.show_chart_rounded,
-                        onTap: () async {
-                          //TODO: agregar pantalla
-                          // await Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) =>
-                          //         ListaPromotoresWidget(),
-                          //   ),
-                          // );
-                        },
-                      ),
-
-                    if (userState.rol == Rol.administrador)
-                      CustomMenuItem(
-                        label: 'Ventas',
-                        iconData: Icons.attach_money,
-                        onTap: () async {
-                          //TODO: agregar pantalla
-                          // await Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) =>
-                          //         ListaPromotoresWidget(),
-                          //   ),
-                          // );
-                        },
-                      ),
-
-                    if (userState.rol == Rol.administrador)
-                      CustomMenuItem(
-                        label: 'Proveedores\ny productos',
-                        iconData: Icons.inventory,
+                        label: 'Sincronizar',
+                        iconData: Icons.sync_rounded,
                         lineHeight: 1.2,
                         onTap: () async {
-                          //TODO: agregar pantalla
-                          // await Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) =>
-                          //         ListaPromotoresWidget(),
-                          //   ),
-                          // );
-                        },
-                      ),
 
-                    CustomMenuItem(
-                        label: 'Syncronización',
-                        iconData: Icons.sync_outlined,
-                        lineHeight: 1.2,
-                        onTap: () async {
-                          // TODO: agregar pantalla
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  SyncScreen(),
-                            ),
+                          await showModalBottomSheet(
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            builder: (context) {
+                              return Padding(
+                                padding:
+                                    MediaQuery.of(context).viewInsets,
+                                child: SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height *
+                                          0.45,
+                                  child: const BottomSheetSincronizarWidget(),
+                                ),
+                              );
+                            },
                           );
+                          
                         },
                       ),
 

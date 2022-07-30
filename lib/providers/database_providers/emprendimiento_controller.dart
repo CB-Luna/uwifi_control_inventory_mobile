@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/database/entitys.dart';
+import 'package:uuid/uuid.dart';
 class EmprendimientoController extends ChangeNotifier {
 
   Emprendimientos? emprendimiento;
@@ -8,6 +9,7 @@ class EmprendimientoController extends ChangeNotifier {
   GlobalKey<FormState> emprendimientoFormKey = GlobalKey<FormState>();
  
   //Emprendimiento
+  var uuid = Uuid();
   String imagen = '';
   String nombre = '';
   String descripcion = '';
@@ -31,6 +33,7 @@ class EmprendimientoController extends ChangeNotifier {
 
   void add(int idComunidad) {
     final nuevoEmprendimiento = Emprendimientos(
+      idEjecucion: uuid.v4(),
       imagen: imagen, 
       nombre: nombre,
       descripcion: descripcion,
@@ -38,8 +41,10 @@ class EmprendimientoController extends ChangeNotifier {
       archivado: false,
       );
       final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
+      final nuevaInstruccion = Bitacora(instrucciones: 'syncAddEmprendimiento', idEjecucion: nuevoEmprendimiento.idEjecucion); //Se crea la nueva instruccion a realizar en bitacora
       nuevoEmprendimiento.comunidades.target = dataBase.comunidadesBox.get(idComunidad);
       nuevoEmprendimiento.statusSync.target = nuevoSync;
+      nuevoEmprendimiento.bitacora.target = nuevaInstruccion;
       dataBase.emprendimientosBox.put(nuevoEmprendimiento);
       emprendimiento = nuevoEmprendimiento;
       print('Emprendimiento agregado exitosamente');
@@ -54,7 +59,7 @@ class EmprendimientoController extends ChangeNotifier {
   }
 
   void remove(Emprendimientos emprendimiento) {
-    dataBase.emprendimientosBox.remove(emprendimiento.id);
+    dataBase.emprendimientosBox.remove(emprendimiento.id); //Se elimina de bitacora la instruccion creada anteriormente
     this.emprendimiento = null;
 
     notifyListeners(); 
