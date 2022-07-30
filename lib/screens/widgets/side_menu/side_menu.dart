@@ -1,3 +1,4 @@
+import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_widget.dart';
 import 'package:bizpro_app/screens/sync/sincronizacion_screen.dart';
@@ -11,7 +12,6 @@ import 'package:bizpro_app/screens/emprendedores/emprendedores_screen.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/side_menu/custom_menu_item.dart';
 
-
 class SideMenu extends StatelessWidget {
   
 
@@ -23,6 +23,17 @@ class SideMenu extends StatelessWidget {
         'assets/images/default-user-profile-picture.jpg';
     final usuarioProvider = Provider.of<UsuarioController>(context);
     final UserState userState = Provider.of<UserState>(context);
+
+    if (usuarioProvider.usuarioCurrent == null) {
+      return const Scaffold(
+        body: Center(
+          child: Text('Error al leer información'),
+        ),
+      );
+    }
+
+    final Usuarios currentUser = usuarioProvider.usuarioCurrent!;
+
     return SafeArea(
       child: SizedBox(
         width: 220,
@@ -34,22 +45,17 @@ class SideMenu extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFEEEEEE),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: Image.asset(
-                      'assets/images/mesgbluegradient.jpeg',
-                    ).image,
-                  ),
-                ),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: Image.asset(
+                        'assets/images/bglogin2.png',
+                      ).image,
+                    ),
+                    borderRadius: BorderRadius.circular(0)),
               ),
-              Container(
+              SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
-                decoration: BoxDecoration(
-                  color: const Color(0x3E000000),
-                  borderRadius: BorderRadius.circular(0),
-                ),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -78,8 +84,9 @@ class SideMenu extends StatelessWidget {
                               'Encuentro con México',
                               maxLines: 2,
                               style: AppTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white,
+                                    fontFamily:
+                                        AppTheme.of(context).bodyText1Family,
+                                    color: AppTheme.of(context).primaryText,
                                     fontSize: 14,
                                   ),
                             ),
@@ -160,8 +167,7 @@ class SideMenu extends StatelessWidget {
                         await Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                EmprendedoresScreen(),
+                            builder: (context) => const EmprendedoresScreen(),
                           ),
                         );
                       },
