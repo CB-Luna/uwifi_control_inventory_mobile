@@ -1,4 +1,4 @@
-import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -6,6 +6,7 @@ import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/providers/user_provider.dart';
 import 'package:bizpro_app/providers/database_providers/emprendedor_controller.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
+import 'package:bizpro_app/helpers/globals.dart';
 
 import 'package:bizpro_app/screens/widgets/custom_button.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
@@ -45,6 +46,11 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
   Widget build(BuildContext context) {
     final UserState userState = Provider.of<UserState>(context);
     final emprendedorProvider = Provider.of<EmprendedorController>(context);
+
+    //TODO: almacenar imagen?
+    const String currentUserPhoto =
+        'assets/images/default-user-profile-picture.jpg';
+        
     return Scaffold(
       key: scaffoldKey,
       drawer: SideMenu(),
@@ -80,12 +86,279 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                 image: DecorationImage(
                   fit: BoxFit.cover,
                   image: Image.asset(
-                    'assets/images/mesgbluegradient.jpeg',
+                    'assets/images/bglogin2.png',
                   ).image,
                 ),
               ),
               child: Stack(
                 children: [
+                  
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 160,
+                    decoration: const BoxDecoration(),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              20, 40, 20, 0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              InkWell(
+                                onTap: () async {
+                                  scaffoldKey.currentState?.openDrawer();
+                                },
+                                child: Container(
+                                  width: 50,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF4672FF),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
+                                      Icon(
+                                        Icons.menu_rounded,
+                                        color: Colors.white,
+                                        size: 28,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                'Emprendedores',
+                                style: AppTheme.of(context).bodyText1.override(
+                                      fontFamily: 'Poppins',
+                                      color: const Color(0xFF221573),
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                              ),
+                              InkWell(
+                                onTap: () async {
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const PerfilUsuarioScreen(),
+                                    ),
+                                  );
+                                },
+                                child: Hero(
+                                  tag: currentUserPhoto,
+                                  transitionOnUserGestures: true,
+                                  child: Container(
+                                    width: 40,
+                                    height: 40,
+                                    clipBehavior: Clip.antiAlias,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                    ),
+                                    //TODO: manejar imagenes de red
+                                    child: Image.asset(
+                                      currentUserPhoto,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    15, 0, 0, 0),
+                                child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.75,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0x49FFFFFF),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: Color(0x39000000),
+                                      )
+                                    ],
+                                    borderRadius: BorderRadius.circular(40),
+                                  ),
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            4, 4, 0, 4),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(4, 0, 4, 0),
+                                            child: TextFormField(
+                                              controller: textController,
+                                              obscureText: false,
+                                              decoration: InputDecoration(
+                                                labelText:
+                                                    'Ingresa búsqueda...',
+                                                labelStyle: AppTheme.of(context)
+                                                    .bodyText2
+                                                    .override(
+                                                      fontFamily: 'Poppins',
+                                                      color: Colors.white,
+                                                      fontSize: 13,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                    ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 2,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 2,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                prefixIcon: const Icon(
+                                                  Icons.search_sharp,
+                                                  color: Colors.white,
+                                                  size: 15,
+                                                ),
+                                              ),
+                                              style: AppTheme.of(context)
+                                                  .bodyText1
+                                                  .override(
+                                                    fontFamily: 'Poppins',
+                                                    color: Colors.white,
+                                                    fontSize: 13,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(0, 0, 10, 0),
+                                          child: CustomButton(
+                                            onPressed: () async {
+                                              //TODO: agregar funcionalidad
+                                              // setState(() =>
+                                              //     algoliaSearchResults = null);
+                                              // await ProyectosRecord.search(
+                                              //   term: textController.text,
+                                              //   maxResults: 15,
+                                              // )
+                                              //     .then((r) =>
+                                              //         algoliaSearchResults = r)
+                                              //     .onError((_, __) =>
+                                              //         algoliaSearchResults = [])
+                                              //     .whenComplete(
+                                              //         () => setState(() {}));
+                                            },
+                                            text: '',
+                                            icon: const Icon(
+                                              Icons.search_rounded,
+                                              size: 15,
+                                            ),
+                                            options: ButtonOptions(
+                                              width: 50,
+                                              height: 40,
+                                              color: const Color(0xFF4672FF),
+                                              textStyle: AppTheme.of(context)
+                                                  .subtitle2
+                                                  .override(
+                                                    fontFamily: 'Poppins',
+                                                    color: Colors.white,
+                                                    fontSize: 9,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                              borderSide: const BorderSide(
+                                                color: Colors.transparent,
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    10, 0, 0, 0),
+                                child: Container(
+                                  width: 45,
+                                  height: 45,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF4672FF),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        backgroundColor:
+                                            const Color(0xFF3B9FE5),
+                                        context: context,
+                                        builder: (context) {
+                                          return Padding(
+                                            padding: MediaQuery.of(context)
+                                                .viewInsets,
+                                            child: Container(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  1,
+                                              //TODO: agregar pantalla
+                                              // child: GridEmpredimientosWidget(),
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: const [
+                                        Icon(
+                                          Icons.grid_view,
+                                          color: Colors.white,
+                                          size: 32,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 145, 0, 6),
                     child: Builder(
@@ -103,16 +376,16 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                   width: double.infinity,
                                   height: 265,
                                   decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        blurRadius: 4,
-                                        color: Color(0x32000000),
-                                        offset: Offset(0, 2),
-                                      )
-                                    ],
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
+                                  color: const Color(0xB14672FF),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      blurRadius: 4,
+                                      color: Color(0x32000000),
+                                      offset: Offset(0, 2),
+                                    )
+                                  ],
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
@@ -149,32 +422,36 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                                   const EdgeInsetsDirectional
                                                       .fromSTEB(0, 0, 5, 0),
                                               child: Text(
-                                                emprendedorProvider
+                                              emprendedorProvider
                                                     .emprendedores[
                                                         resultadoIndex]
                                                     .nombre,
-                                                style: AppTheme.of(context)
-                                                    .bodyText1
-                                                    .override(
-                                                      fontFamily: 'Poppins',
-                                                      color: Colors.black,
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
-                                              ),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: AppTheme.of(context)
+                                                  .title3
+                                                  .override(
+                                                    fontFamily: 'Poppins',
+                                                    color: Colors.white,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                            ),
                                             ),
                                             Text(
                                               emprendedorProvider
-                                                  .emprendedores[resultadoIndex]
-                                                  .apellidos,
+                                                    .emprendedores[
+                                                        resultadoIndex]
+                                                    .apellidos,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
                                               style: AppTheme.of(context)
-                                                  .bodyText1
+                                                  .title3
                                                   .override(
                                                     fontFamily: 'Poppins',
-                                                    color: Colors.black,
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.white,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w500,
                                                   ),
                                             ),
                                           ],
@@ -188,24 +465,25 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                           children: [
                                             Expanded(
                                               child: Text(
-                                                emprendedorProvider
+                                              emprendedorProvider
                                                         .emprendedores[
                                                             resultadoIndex]
                                                         .comunidades
                                                         .target
                                                         ?.nombre ??
                                                     "SIN COMUNIDAD",
-                                                style: AppTheme.of(context)
-                                                    .bodyText2
-                                                    .override(
-                                                      fontFamily: 'Outfit',
-                                                      color: const Color(
-                                                          0xFF57636C),
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                    ),
-                                              ),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: AppTheme.of(context)
+                                                  .bodyText2
+                                                  .override(
+                                                    fontFamily: 'Poppins',
+                                                    color: Colors.black,
+                                                    fontSize: 12,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                            )
                                             ),
                                           ],
                                         ),
@@ -216,243 +494,6 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                               );
                             });
                       },
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 160,
-                    decoration: const BoxDecoration(
-                      color: Color(0x00EEEEEE),
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              20, 10, 0, 0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 35, 0, 0),
-                                child: InkWell(
-                                  onTap: () async {
-                                    scaffoldKey.currentState?.openDrawer();
-                                  },
-                                  child: Container(
-                                    width: 50,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0x57FFFFFF),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: const [
-                                        Icon(
-                                          Icons.menu_rounded,
-                                          color: Colors.white,
-                                          size: 28,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 35, 60, 0),
-                                child: Text(
-                                  'Emprendedores',
-                                  style:
-                                      AppTheme.of(context).bodyText1.override(
-                                            fontFamily: 'Poppins',
-                                            color: Colors.white,
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  15, 10, 0, 0),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width * 0.75,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: const Color(0x49FFFFFF),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      blurRadius: 3,
-                                      color: Color(0x39000000),
-                                      offset: Offset(0, 1),
-                                    )
-                                  ],
-                                  borderRadius: BorderRadius.circular(40),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      4, 4, 0, 4),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(4, 0, 4, 0),
-                                          child: TextFormField(
-                                            controller: textController,
-                                            obscureText: false,
-                                            decoration: InputDecoration(
-                                              labelText: 'Ingresa búsqueda...',
-                                              labelStyle: AppTheme.of(context)
-                                                  .bodyText2
-                                                  .override(
-                                                    fontFamily: 'Poppins',
-                                                    color: Colors.white,
-                                                    fontSize: 13,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: const BorderSide(
-                                                  color: Color(0x00000000),
-                                                  width: 2,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderSide: const BorderSide(
-                                                  color: Color(0x00000000),
-                                                  width: 2,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                              ),
-                                              prefixIcon: const Icon(
-                                                Icons.search_sharp,
-                                                color: Colors.white,
-                                                size: 15,
-                                              ),
-                                            ),
-                                            style: AppTheme.of(context)
-                                                .bodyText1
-                                                .override(
-                                                  fontFamily: 'Poppins',
-                                                  color: Colors.white,
-                                                  fontSize: 13,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0, 0, 10, 0),
-                                        child: CustomButton(
-                                          onPressed: () async {
-                                            //TODO: agregar funcionalidad
-                                            // setState(() =>
-                                            //     algoliaSearchResults = null);
-                                            // await ProyectosRecord.search(
-                                            //   term: textController.text,
-                                            //   maxResults: 15,
-                                            // )
-                                            //     .then((r) =>
-                                            //         algoliaSearchResults = r)
-                                            //     .onError((_, __) =>
-                                            //         algoliaSearchResults = [])
-                                            //     .whenComplete(
-                                            //         () => setState(() {}));
-                                          },
-                                          text: 'Buscar',
-                                          options: ButtonOptions(
-                                            width: 68,
-                                            height: 40,
-                                            color: const Color(0xFF006AFF),
-                                            textStyle: AppTheme.of(context)
-                                                .subtitle2
-                                                .override(
-                                                  fontFamily: 'Poppins',
-                                                  color: Colors.white,
-                                                  fontSize: 9,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
-                                            borderSide: const BorderSide(
-                                              color: Colors.transparent,
-                                              width: 1,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  5, 10, 5, 0),
-                              child: CustomButton(
-                                onPressed: () async {
-                                  //TODO: agregar
-                                  // await showModalBottomSheet(
-                                  //   isScrollControlled: true,
-                                  //   backgroundColor: const Color(0xFF3B9FE5),
-                                  //   context: context,
-                                  //   builder: (context) {
-                                  //     return Padding(
-                                  //       padding:
-                                  //           MediaQuery.of(context).viewInsets,
-                                  //       child: Container(
-                                  //         height: MediaQuery.of(context)
-                                  //                 .size
-                                  //                 .height *
-                                  //             1,
-                                  //         child: GridEmpredimientosWidget(),
-                                  //       ),
-                                  //     );
-                                  //   },
-                                  // );
-                                },
-                                text: '',
-                                icon: const Icon(
-                                  Icons.grid_view,
-                                  size: 30,
-                                ),
-                                options: ButtonOptions(
-                                  width: 55,
-                                  height: 50,
-                                  color: const Color(0x3BFFFFFF),
-                                  textStyle:
-                                      AppTheme.of(context).subtitle2.override(
-                                            fontFamily: 'Poppins',
-                                            color: Colors.white,
-                                          ),
-                                  borderSide: const BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
                     ),
                   ),
                 ],

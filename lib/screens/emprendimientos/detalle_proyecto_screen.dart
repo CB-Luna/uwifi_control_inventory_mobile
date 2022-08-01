@@ -211,16 +211,35 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                       child: ExpandableNotifier(
                                         initialExpanded: false,
                                         child: ExpandablePanel(
-                                          header: Text(
-                                            'Detalles Emprendimiento',
-                                            style:
-                                                AppTheme.of(context)
-                                                    .title1
-                                                    .override(
-                                                      fontFamily: 'Poppins',
-                                                      color: Colors.black,
-                                                      fontSize: 20,
-                                                    ),
+                                          header: Row(
+                                            mainAxisSize: 
+                                              MainAxisSize.max,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(0,
+                                                            0, 8, 0),
+                                                child: Icon(
+                                                  Icons.info_rounded,
+                                                  color: AppTheme
+                                                          .of(context)
+                                                      .secondaryText,
+                                                  size: 24,
+                                                ),
+                                              ),
+                                              Text(
+                                                'Detalles Emprendimiento',
+                                                style:
+                                                    AppTheme.of(context)
+                                                        .title1
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          color: Colors.black,
+                                                          fontSize: 20,
+                                                        ),
+                                              ),
+                                            ],
                                           ),
                                           collapsed: Column(
                                             mainAxisSize: MainAxisSize.max,
@@ -452,16 +471,36 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                       child: ExpandableNotifier(
                                         initialExpanded: false,
                                         child: ExpandablePanel(
-                                          header: Text(
-                                            'Jornadas',
-                                            style:
-                                                AppTheme.of(context)
-                                                    .title1
-                                                    .override(
-                                                      fontFamily: 'Poppins',
-                                                      color: Colors.black,
-                                                      fontSize: 20,
-                                                    ),
+                                          header: Row(
+                                            mainAxisSize: 
+                                              MainAxisSize.max,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(0,
+                                                            0, 8, 0),
+                                                child: FaIcon(
+                                                  FontAwesomeIcons
+                                                      .calendarCheck,
+                                                  color: AppTheme
+                                                          .of(context)
+                                                      .secondaryText,
+                                                  size: 20,
+                                                ),
+                                              ),
+                                              Text(
+                                                'Jornadas',
+                                                style:
+                                                    AppTheme.of(context)
+                                                        .title1
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          color: Colors.black,
+                                                          fontSize: 20,
+                                                        ),
+                                              ),
+                                            ],
                                           ),
                                           collapsed: Column(
                                             mainAxisSize: MainAxisSize.max,
@@ -683,16 +722,36 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                       child: ExpandableNotifier(
                                         initialExpanded: false,
                                         child: ExpandablePanel(
-                                          header: Text(
-                                            'Consultorías',
-                                            style:
-                                                AppTheme.of(context)
-                                                    .title1
-                                                    .override(
-                                                      fontFamily: 'Poppins',
-                                                      color: Colors.black,
-                                                      fontSize: 20,
-                                                    ),
+                                          header: Row(
+                                            mainAxisSize: 
+                                              MainAxisSize.max,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(0,
+                                                            0, 8, 0),
+                                                child: Icon(
+                                                  Icons
+                                                      .folder_rounded,
+                                                  color: AppTheme
+                                                          .of(context)
+                                                      .secondaryText,
+                                                  size: 24,
+                                                ),
+                                              ),
+                                              Text(
+                                                'Consultorías',
+                                                style:
+                                                    AppTheme.of(context)
+                                                        .title1
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          color: Colors.black,
+                                                          fontSize: 20,
+                                                        ),
+                                              ),
+                                            ],
                                           ),
                                           collapsed: Column(
                                             mainAxisSize: MainAxisSize.max,
