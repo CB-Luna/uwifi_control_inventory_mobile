@@ -11,7 +11,10 @@ import 'package:bizpro_app/theme/theme.dart';
 class SplashScreen extends StatefulWidget {
   const SplashScreen({
     Key? key,
+    this.splashTimer = 6,
   }) : super(key: key);
+
+  final int splashTimer;
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -21,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
   late Future<void> displaySplashImage;
   @override
   void initState() {
-    displaySplashImage = Future.delayed(const Duration(seconds: 6));
+    displaySplashImage = Future.delayed(Duration(seconds: widget.splashTimer));
     super.initState();
   }
 

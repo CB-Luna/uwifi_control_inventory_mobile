@@ -106,7 +106,9 @@ class UserState extends ChangeNotifier {
     token.clear();
     if (remove) {
       await NavigationService.removeTo(MaterialPageRoute(
-        builder: (context) => const LoginScreen(),
+        builder: (context) => const SplashScreen(
+          splashTimer: 0,
+        ),
       ));
     }
   }

@@ -19,7 +19,6 @@ import 'providers/database_providers/jornada_controller.dart';
 import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/services/navigation_service.dart';
 import 'package:bizpro_app/internationalization/internationalization.dart';
-import 'package:bizpro_app/theme/theme.dart';
 
 late ObjectBoxDatabase dataBase;
 DeepLinkBloc bloc = DeepLinkBloc();
