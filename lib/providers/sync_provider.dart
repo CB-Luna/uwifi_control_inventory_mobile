@@ -36,7 +36,7 @@ class SyncProvider extends ChangeNotifier {
       switch (instruccionesBitacora[i].instrucciones) {
         case "syncAddEmprendimiento":
         print("Entro aqui");
-        final emprendimientoToSync = dataBase.emprendimientosBox.query(Emprendimientos_.idEjecucion.equals(instruccionesBitacora[i].idEjecucion)).build().findUnique();
+        final emprendimientoToSync = dataBase.emprendimientosBox.query(Emprendimientos_.bitacora.equals(instruccionesBitacora[i].id)).build().findUnique();
           if(emprendimientoToSync!.statusSync.target!.status == "HoI36PzYw1wtbO1") {
             print("Entro aqui en el if");
             break;
@@ -52,8 +52,14 @@ class SyncProvider extends ChangeNotifier {
           }          
           break;
         case "syncAddEmprendedor":
-          var emprendedorToSync = dataBase.emprendedoresBox.query(Emprendedores_.idEjecucion.equals(instruccionesBitacora[i].idEjecucion)).build().findUnique(); 
-            print("Status Emprendedor ${emprendedorToSync!.statusSync.target!.status}");
+          var emprendedorToSync = dataBase.emprendedoresBox.query(Emprendedores_.bitacora.equals(instruccionesBitacora[i].id)).build().findUnique(); 
+          var emprendedorPrueba = dataBase.emprendedoresBox.getAll();
+          for (var i = 0; i < emprendedorPrueba.length; i++) {
+            print("Status Emprendedor Prueba: ${emprendedorPrueba[i].statusSync.target!.status}");  
+          print("IDBR Emprendedor Prueba: ${emprendedorPrueba[i].idDBR}");
+          }
+            print("Status Emprendedor Query: ${emprendedorToSync!.statusSync.target!.status}");
+            print("IDBR Emprendedor Query: ${emprendedorToSync.idDBR}");
             if(emprendedorToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") { 
               break;
             } else {
@@ -119,10 +125,19 @@ class SyncProvider extends ChangeNotifier {
         var updateEmprendedor = dataBase.emprendedoresBox.get(emprendedores[i].id);
         if (updateEmprendedor != null && idDBR != null) {
           print("Entro al if de syncPostEmprendedores");
+          print("Previo estado del Emprendedor: ${updateEmprendedor.statusSync.target!.status}");
           updateEmprendedor.statusSync.target!.status = "HoI36PzYw1wtbO1";
+          print("Actualizacion de estado del Emprendedor: ${updateEmprendedor.statusSync.target!.status}");
           updateEmprendedor.idDBR = idDBR;
 
           dataBase.emprendedoresBox.put(updateEmprendedor);
+
+          var emprendedoresPrueba = dataBase.emprendedoresBox.getAll();
+          for (var i = 0; i < emprendedoresPrueba.length; i++) {
+            print("Status Emprendedor Prueba: ${emprendedoresPrueba[i].statusSync.target!.status}");  
+          print("IDBR Emprendedor Prueba: ${emprendedoresPrueba[i].idDBR}");
+          }
+
           print(dataBase.emprendedoresBox.count());
         }
 

@@ -56,7 +56,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
 
     return Scaffold(
       key: scaffoldKey,
-      drawer: const SideMenu(),
+      drawer: SideMenu(),
       backgroundColor: Colors.white,
       floatingActionButton: userState.rol == Rol.administrador
           ? FloatingActionButton(
@@ -484,8 +484,12 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                           Expanded(
                                             child: Text(
                                               resultadoItem.emprendedor.target
-                                                      ?.nombre ??
-                                                  'SIN EMPRENDEDOR',
+                                                      ?.nombre == null ?
+                                                  'SIN EMPRENDEDOR'
+                                                  :
+                                                  "${resultadoItem.emprendedor.target
+                                                      !.nombre} ${resultadoItem.emprendedor.target
+                                                      !.apellidos}",
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               style: AppTheme.of(context)
