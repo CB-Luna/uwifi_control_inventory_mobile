@@ -103,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       decoration: getInputDecoration(
                         context: context,
-                        labelText: 'Correo electrónico',
+                        labelText: 'Correo electrónico *',
                       ),
                       style: AppTheme.of(context).bodyText1.override(
                             fontFamily: 'Poppins',
@@ -133,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       decoration: getInputDecoration(
                         context: context,
-                        labelText: 'Contraseña',
+                        labelText: 'Contraseña *',
                         inkWell: InkWell(
                           onTap: () => setState(
                             () => contrasenaVisibility = !contrasenaVisibility,
@@ -143,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             contrasenaVisibility
                                 ? Icons.visibility_outlined
                                 : Icons.visibility_off_outlined,
-                            color: Colors.white,
+                            color: const Color(0xFF4672FF),
                             size: 22,
                           ),
                         ),

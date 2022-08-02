@@ -1,5 +1,5 @@
 import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_widget.dart';
+import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -56,7 +56,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
 
     return Scaffold(
       key: scaffoldKey,
-      drawer: SideMenu(),
+      drawer: const SideMenu(),
       backgroundColor: Colors.white,
       floatingActionButton: userState.rol == Rol.administrador
           ? FloatingActionButton(

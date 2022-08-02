@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
+import 'package:bizpro_app/screens/perfil_usuario/device_information_widget.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:bizpro_app/screens/widgets/expanded_image_view.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -311,6 +312,12 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                     borderRadius: 8,
                     margin: const EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
                     hidesUnderline: true,
+                  ),
+                ),
+                const Flexible(
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: DeviceInformationWidget(),
                   ),
                 ),
               ],

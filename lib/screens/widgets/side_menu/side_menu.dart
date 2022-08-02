@@ -1,6 +1,6 @@
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
-import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_widget.dart';
+import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
 import 'package:bizpro_app/screens/sync/sincronizacion_screen.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_sincronizar_widget.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +13,6 @@ import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/side_menu/custom_menu_item.dart';
 
 class SideMenu extends StatelessWidget {
-  
-
   const SideMenu({Key? key}) : super(key: key);
 
   @override
@@ -95,7 +93,8 @@ class SideMenu extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(5, 25, 5, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(5, 25, 5, 0),
                       child: InkWell(
                         onTap: () async {
                           await Navigator.push(
@@ -112,39 +111,35 @@ class SideMenu extends StatelessWidget {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   10, 0, 5, 0),
                               child: Container(
-                                  width: 40,
-                                  height: 40,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Image.asset(
-                                    currentUserPhoto,
-                                  ),
+                                width: 40,
+                                height: 40,
+                                clipBehavior: Clip.antiAlias,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
                                 ),
+                                child: Image.asset(
+                                  currentUserPhoto,
+                                ),
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 5, 0, 0),
                               child: Text(
-                                  "${usuarioProvider.usuarioCurrent!.nombre} ${usuarioProvider.usuarioCurrent!.apellidoP}",
-                                  maxLines: 2,
-                                  style: AppTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily:
-                                            AppTheme.of(context)
-                                                .bodyText1Family,
-                                        color: AppTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 16,
-                                      ),
-                                ),
+                                "${usuarioProvider.usuarioCurrent!.nombre} ${usuarioProvider.usuarioCurrent!.apellidoP}",
+                                maxLines: 2,
+                                style: AppTheme.of(context).bodyText1.override(
+                                      fontFamily:
+                                          AppTheme.of(context).bodyText1Family,
+                                      color: AppTheme.of(context).primaryText,
+                                      fontSize: 16,
+                                    ),
+                              ),
                             ),
                           ],
                         ),
                       ),
-                        ),
+                    ),
 
                     CustomMenuItem(
                       label: 'Emprendimientos',
@@ -190,31 +185,27 @@ class SideMenu extends StatelessWidget {
                     ),
 
                     CustomMenuItem(
-                        label: 'Sincronizar',
-                        iconData: Icons.sync_rounded,
-                        lineHeight: 1.2,
-                        onTap: () async {
-
-                          await showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (context) {
-                              return Padding(
-                                padding:
-                                    MediaQuery.of(context).viewInsets,
-                                child: SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height *
-                                          0.45,
-                                  child: const BottomSheetSincronizarWidget(),
-                                ),
-                              );
-                            },
-                          );
-                          
-                        },
-                      ),
+                      label: 'Sincronizar',
+                      iconData: Icons.sync_rounded,
+                      lineHeight: 1.2,
+                      onTap: () async {
+                        await showModalBottomSheet(
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          context: context,
+                          builder: (context) {
+                            return Padding(
+                              padding: MediaQuery.of(context).viewInsets,
+                              child: SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.45,
+                                child: const BottomSheetSincronizarWidget(),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
 
                     CustomMenuItem(
                       label: 'Cerrar Sesión',

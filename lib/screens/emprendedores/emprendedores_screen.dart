@@ -1,4 +1,4 @@
-import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_widget.dart';
+import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -50,7 +50,7 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
     //TODO: almacenar imagen?
     const String currentUserPhoto =
         'assets/images/default-user-profile-picture.jpg';
-        
+
     return Scaffold(
       key: scaffoldKey,
       drawer: SideMenu(),
@@ -92,7 +92,6 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
               ),
               child: Stack(
                 children: [
-                  
                   Container(
                     width: MediaQuery.of(context).size.width,
                     height: 160,
@@ -376,16 +375,16 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                   width: double.infinity,
                                   height: 265,
                                   decoration: BoxDecoration(
-                                  color: const Color(0xB14672FF),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      blurRadius: 4,
-                                      color: Color(0x32000000),
-                                      offset: Offset(0, 2),
-                                    )
-                                  ],
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
+                                    color: const Color(0xB14672FF),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        blurRadius: 4,
+                                        color: Color(0x32000000),
+                                        offset: Offset(0, 2),
+                                      )
+                                    ],
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
@@ -422,27 +421,27 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                                   const EdgeInsetsDirectional
                                                       .fromSTEB(0, 0, 5, 0),
                                               child: Text(
-                                              emprendedorProvider
+                                                emprendedorProvider
                                                     .emprendedores[
                                                         resultadoIndex]
                                                     .nombre,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: AppTheme.of(context)
-                                                  .title3
-                                                  .override(
-                                                    fontFamily: 'Poppins',
-                                                    color: Colors.white,
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                            ),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: AppTheme.of(context)
+                                                    .title3
+                                                    .override(
+                                                      fontFamily: 'Poppins',
+                                                      color: Colors.white,
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
+                                              ),
                                             ),
                                             Text(
                                               emprendedorProvider
-                                                    .emprendedores[
-                                                        resultadoIndex]
-                                                    .apellidos,
+                                                  .emprendedores[resultadoIndex]
+                                                  .apellidos,
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               style: AppTheme.of(context)
@@ -464,14 +463,14 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Expanded(
-                                              child: Text(
+                                                child: Text(
                                               emprendedorProvider
-                                                        .emprendedores[
-                                                            resultadoIndex]
-                                                        .comunidades
-                                                        .target
-                                                        ?.nombre ??
-                                                    "SIN COMUNIDAD",
+                                                      .emprendedores[
+                                                          resultadoIndex]
+                                                      .comunidades
+                                                      .target
+                                                      ?.nombre ??
+                                                  "SIN COMUNIDAD",
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               style: AppTheme.of(context)
@@ -483,8 +482,7 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                                     fontWeight:
                                                         FontWeight.normal,
                                                   ),
-                                            )
-                                            ),
+                                            )),
                                           ],
                                         ),
                                       ),

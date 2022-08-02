@@ -33,10 +33,11 @@ dependencies:
   cached_network_image: ^3.2.1
   connectivity_plus: ^2.3.5
   cupertino_icons: ^1.0.2
+  device_info_plus: ^4.0.1
   email_validator: ^2.1.2
   emoji_flag_converter: ^1.1.0
   expandable: ^5.0.1
-  file_picker: ^4.6.1
+  file_picker: ^5.0.0
   flutter:
     sdk: flutter
   flutter_localizations:
