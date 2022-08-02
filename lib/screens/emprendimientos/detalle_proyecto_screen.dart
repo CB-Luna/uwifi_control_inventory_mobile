@@ -39,7 +39,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
     final usuarioProvider = Provider.of<UsuarioController>(context);
     String emprendedor = "";
     if (widget.emprendimiento.emprendedor.target != null) {
-        emprendedor = widget.emprendimiento.emprendedor.target!.nombre;
+        emprendedor = "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
       }
     final List<Jornadas> jornadas =[];
     widget.emprendimiento.jornadas.forEach((element) {
@@ -996,6 +996,51 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                         children: [
                                           InkWell(
                                             onTap: () async {
+                                              if (widget.emprendimiento.emprendedor.target == null) {
+                                                await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      AgregarEmprendedorScreen(
+                                                        idEmprendimiento: widget.emprendimiento.id, 
+                                                        nombreEmprendimiento: widget.emprendimiento.nombre),
+                                                ),
+                                              );
+                                              } else{
+                                                snackbarKey.currentState
+                                                  ?.showSnackBar(const SnackBar(
+                                                    content: Text(
+                                                        "Ya hay un emprendedor registrado a este emprendimiento"),
+                                                  ));
+                                              }
+                                            },
+                                            child: Icon(
+                                              Icons
+                                                  .groups_sharp,
+                                              color: Colors.white,
+                                              size: 24,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Emprendedores',
+                                            style:
+                                                AppTheme.of(context)
+                                                    .bodyText1
+                                                    .override(
+                                                      fontFamily: 'Poppins',
+                                                      color: Colors.white,
+                                                      fontSize: 8,
+                                                    ),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          InkWell(
+                                            onTap: () async {
                                               await Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -1113,51 +1158,6 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                           ),
                                           Text(
                                             'Ventas',
-                                            style:
-                                                AppTheme.of(context)
-                                                    .bodyText1
-                                                    .override(
-                                                      fontFamily: 'Poppins',
-                                                      color: Colors.white,
-                                                      fontSize: 8,
-                                                    ),
-                                          ),
-                                        ],
-                                      ),
-                                      Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          InkWell(
-                                            onTap: () async {
-                                              if (widget.emprendimiento.emprendedor.target == null) {
-                                                await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      AgregarEmprendedorScreen(
-                                                        idEmprendimiento: widget.emprendimiento.id, 
-                                                        nombreEmprendimiento: widget.emprendimiento.nombre),
-                                                ),
-                                              );
-                                              } else{
-                                                snackbarKey.currentState
-                                                  ?.showSnackBar(const SnackBar(
-                                                    content: Text(
-                                                        "Ya hay un emprendedor registrado a este emprendimiento"),
-                                                  ));
-                                              }
-                                            },
-                                            child: Icon(
-                                              Icons
-                                                  .groups_sharp,
-                                              color: Colors.white,
-                                              size: 24,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Emprendedores',
                                             style:
                                                 AppTheme.of(context)
                                                     .bodyText1
