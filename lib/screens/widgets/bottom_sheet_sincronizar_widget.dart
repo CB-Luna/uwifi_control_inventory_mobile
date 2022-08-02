@@ -13,7 +13,9 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 
 class BottomSheetSincronizarWidget extends StatefulWidget {
-  const BottomSheetSincronizarWidget({Key? key}) : super(key: key);
+
+  final bool isVisible;
+  const BottomSheetSincronizarWidget({Key? key, required this.isVisible}) : super(key: key);
 
   @override
   _BottomSheetSincronizarWidgetState createState() =>
@@ -150,36 +152,39 @@ class _BottomSheetSincronizarWidgetState
                                 ),
                               ),
                             ),
-                            FFButtonWidget(
-                              onPressed: () async {
-                                syncProvider.procesoCargando(true);
-                                syncProvider.procesoTerminado(false);
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        SincronizacionScreen(),
-                                  ),
-                                );
-                              },
-                              text: 'SINCRONIZAR',
-                              options: FFButtonOptions(
-                                width: 150,
-                                height: 50,
-                                color:
-                                    AppTheme.of(context).secondaryText,
-                                textStyle: AppTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
+                            Visibility(
+                              visible: widget.isVisible,
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  syncProvider.procesoCargando(true);
+                                  syncProvider.procesoTerminado(false);
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          SincronizacionScreen(),
                                     ),
-                                elevation: 2,
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
+                                  );
+                                },
+                                text: 'SINCRONIZAR',
+                                options: FFButtonOptions(
+                                  width: 150,
+                                  height: 50,
+                                  color:
+                                      AppTheme.of(context).secondaryText,
+                                  textStyle: AppTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                  elevation: 2,
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
                                 ),
                               ),
                             ),

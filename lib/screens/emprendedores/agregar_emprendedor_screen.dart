@@ -481,6 +481,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                               filled: true,
                               fillColor: const Color(0xFFF3F2F2),
                             ),
+                            keyboardType: TextInputType.number,
                             style: AppTheme.of(context).title3.override(
                                   fontFamily: 'Poppins',
                                   color: Colors.black,

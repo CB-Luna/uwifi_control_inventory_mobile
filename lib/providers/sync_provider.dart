@@ -56,8 +56,8 @@ class SyncProvider extends ChangeNotifier {
           var emprendedorPrueba = dataBase.emprendedoresBox.getAll();
           for (var i = 0; i < emprendedorPrueba.length; i++) {
             print("Status Emprendedor Prueba: ${emprendedorPrueba[i].statusSync.target!.status}");  
-          print("IDBR Emprendedor Prueba: ${emprendedorPrueba[i].idDBR}");
-          }
+            print("IDBR Emprendedor Prueba: ${emprendedorPrueba[i].idDBR}");
+            }
             print("Status Emprendedor Query: ${emprendedorToSync!.statusSync.target!.status}");
             print("IDBR Emprendedor Query: ${emprendedorToSync.idDBR}");
             if(emprendedorToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") { 
@@ -201,45 +201,6 @@ class SyncProvider extends ChangeNotifier {
     return true;
 }
 
-//   Future<String?> syncGetEmprendedor(String nombreEmprendedor, String curp) async {
-//       try {
-//       Item? emprendedor; 
-//       var url = Uri.parse('$baseUrl/api/collections/emprendedores/records?filter=(nombre_emprendedor= $nombreEmprendedor)');
-
-//       var response = await http.get(url);
-
-//       print("Antes del fromJason en syncGetEmprendedor");
-//       final responseGetEmprendedores = GetEmprendedores.fromJson(
-//           response.body);
-//       print("Despues del fromJason en syncGetEmprendedor");
-//       if(responseGetEmprendedores.items != null) {
-//         print("Si hice el Get");
-//         final emprendedores = responseGetEmprendedores.items;
-//         for (var i = 0; i < emprendedores!.length; i++) {
-//           if (emprendedores[i].curp == curp) {
-//             emprendedor = emprendedores[i];
-//           }
-//         }
-//         if (emprendedor != null) {
-//           return emprendedor.id;
-//         }
-//         else{
-//           return null;
-//         }
-
-//       } else{
-//         print("No hice el Get");
-//         return null;
-//       }
-
-
-//     } catch (e) {
-//       print('ERROR - function syncGetEmprendedor(): $e');
-//       return null;
-//     }
-
-// }
-
 
 List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> emprendimientos) {
   final List<Emprendimientos> emprendimientosToSync = [];
@@ -257,6 +218,8 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
       try {
 
       var url = Uri.parse('$baseUrl/api/collections/emprendimientos/records');
+
+      print("ID Promotor: ${emprendimientos[i].usuarios.target!.idDBR}");
 
       final bodyMsg = jsonEncode({
           "nombre_emprendimiento": emprendimientos[i].nombre,
@@ -303,6 +266,8 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
 
       var url = Uri.parse('$baseUrl/api/collections/emprendimientos/records');
 
+      print("ID Promotor: ${emprendimiento.usuarios.target!.idDBR}");
+      
       final bodyMsg = jsonEncode({
           "nombre_emprendimiento": emprendimiento.nombre,
           "descripcion": emprendimiento.descripcion,
@@ -325,6 +290,8 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
         body: bodyMsg,
         );
       print("Se postea emprendimientos");
+      print(response.body);
+
       var updateEmprendimiento = dataBase.emprendimientosBox.get(emprendimiento.id);
       if (updateEmprendimiento != null) {
         updateEmprendimiento.statusSync.target!.status = "HoI36PzYw1wtbO1"; 

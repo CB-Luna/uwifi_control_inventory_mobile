@@ -406,7 +406,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                                                 .fromSTEB(0,
                                                                     5, 0, 0),
                                                         child: Text(
-                                                          'Creado por el Provedor',
+                                                          'Creado por el Promotor',
                                                           style: AppTheme
                                                                   .of(context)
                                                               .bodyText1

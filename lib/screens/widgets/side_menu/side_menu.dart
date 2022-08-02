@@ -1,8 +1,10 @@
 import 'package:bizpro_app/database/entitys.dart';
+import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
 import 'package:bizpro_app/screens/sync/sincronizacion_screen.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_sincronizar_widget.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/providers/providers.dart';
@@ -189,6 +191,9 @@ class SideMenu extends StatelessWidget {
                       iconData: Icons.sync_rounded,
                       lineHeight: 1.2,
                       onTap: () async {
+                        final connectivityResult =
+                              await (Connectivity().checkConnectivity());
+                        final bitacora = dataBase.bitacoraBox.getAll().toList();
                         await showModalBottomSheet(
                           isScrollControlled: true,
                           backgroundColor: Colors.transparent,
@@ -199,7 +204,10 @@ class SideMenu extends StatelessWidget {
                               child: SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * 0.45,
-                                child: const BottomSheetSincronizarWidget(),
+                                child: connectivityResult == ConnectivityResult.none || bitacora.isEmpty ?
+                                  BottomSheetSincronizarWidget(isVisible: false,)
+                                  :
+                                  BottomSheetSincronizarWidget(isVisible: true,),
                               ),
                             );
                           },

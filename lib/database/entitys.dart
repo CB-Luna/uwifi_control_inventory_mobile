@@ -13,7 +13,7 @@ class Emprendimientos {
   bool archivado;
   @Unique()
   String? idDBR;
-  final usuarios = ToMany<Usuarios>();
+  final usuarios = ToOne<Usuarios>();
   final prioridadProyecto = ToOne<PrioridadProyecto>();
   final jornadas = ToMany<Jornadas>();
   final comunidades = ToOne<Comunidades>();

@@ -233,7 +233,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             //User Query
                             final emiUser = await ApiService.getEmiUser(
                                 loginResponse.user.id);
-
+                                
+                            
                             if (emiUser == null) return;
 
                             if (usuarioProvider.validateUser(userId)) {
@@ -253,6 +254,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 loginResponse.user.email,
                                 userState.passwordController.text,
                                 emiUser.avatar ?? "",
+                                loginResponse.user.id,
                                 userState.getRole(emiUser
                                     .idRolFk), //TODO Verificar como es el rol
                               );

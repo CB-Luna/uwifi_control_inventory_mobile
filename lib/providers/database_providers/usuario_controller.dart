@@ -55,6 +55,7 @@ class UsuarioController extends ChangeNotifier {
       String correo,
       String password,
       String imagen,
+      String idDBR,
       int rol) {
     final nuevoUsuario = Usuarios(
         nombre: nombre,
@@ -66,7 +67,9 @@ class UsuarioController extends ChangeNotifier {
         correo: correo,
         password: password,
         imagen: imagen,
-        rol: rol);
+        rol: rol,
+        idDBR: idDBR,
+        );
 
     dataBase.usuariosBox.put(nuevoUsuario);
     usuarios.add(nuevoUsuario);
