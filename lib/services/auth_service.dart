@@ -1,5 +1,6 @@
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/models/emi_user_by_id.dart';
 import 'package:bizpro_app/models/login_response.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -42,6 +43,34 @@ abstract class AuthService {
       ));
       return null;
     }
+  }
+
+  static Future<String?> userEMIByID(String idUser) async {
+    try {
+
+      print("User ID: $idUser");
+      var url = Uri.parse("https://pocketbase.cbluna-dev.com/api/collections/emi_users/records/?filter=(user='$idUser')");
+
+      var response = await get(url);
+
+      print(response.body);
+
+      final reverseUserEMIById = EmiUserById.fromJson(
+          response.body);
+
+      print("Resultado del userEMIByID: ${reverseUserEMIById.items?[0].id}");
+
+      if (reverseUserEMIById.items == null) {
+        print('Items not Found');
+      } else {
+        return reverseUserEMIById.items?[0].id;
+      }
+    } catch (e) {
+      print('ERROR - function userEMIByID(): $e');
+      return null;
+    }
+    return null;
+  
   }
 
   static Future<bool> requestPasswordReset(
