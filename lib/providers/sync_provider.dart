@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/models/getEmprendedores.dart';
 import 'package:bizpro_app/models/response_post_emprendedor.dart';
 import 'package:flutter/material.dart';
 
@@ -12,8 +11,7 @@ import '../objectbox.g.dart';
 
 class SyncProvider extends ChangeNotifier {
 
-  bool alreadySyncEmprendedores = false;
-  bool alreadySyncEmprendimientos = false;
+  final alreadySyncInstance = dataBase.AlreadySyncBox.get(0);
 
   bool procesoterminado = false;
   bool procesocargando = false;
@@ -42,7 +40,7 @@ class SyncProvider extends ChangeNotifier {
             break;
           } else {
             print("Entro aqui en el else");
-            if (alreadySyncEmprendedores) {
+            if (alreadySyncInstance!.emprendedores) {
               await syncPostEmprendimiento(emprendimientoToSync);
             } else {
               final emprendedores = verificarEstadoEmprendedores(dataBase.emprendedoresBox.getAll());
@@ -74,6 +72,8 @@ class SyncProvider extends ChangeNotifier {
     print("Proceso terminado");
     procesoterminado = true;
     procesocargando = false;
+    //Se elimina el contenido de la Bitacora
+    dataBase.bitacoraBox.removeAll();
     notifyListeners();
 
   }
@@ -126,18 +126,23 @@ class SyncProvider extends ChangeNotifier {
         if (updateEmprendedor != null && idDBR != null) {
           print("Entro al if de syncPostEmprendedores");
           print("Previo estado del Emprendedor: ${updateEmprendedor.statusSync.target!.status}");
-          updateEmprendedor.statusSync.target!.status = "HoI36PzYw1wtbO1";
-          print("Actualizacion de estado del Emprendedor: ${updateEmprendedor.statusSync.target!.status}");
+          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendedor.statusSync.target!.id)).build().findUnique();
+          if (statusSync != null) {
+            statusSync.status = "HoI36PzYw1wtbO1";
+            dataBase.statusSyncBox.put(statusSync);
+            print("Se hace el conteo de la tabla statusSync");
+            print(dataBase.statusSyncBox.count());
+          }
           updateEmprendedor.idDBR = idDBR;
-
           dataBase.emprendedoresBox.put(updateEmprendedor);
+          print("Actualizacion de estado del Emprendedor");
 
           var emprendedoresPrueba = dataBase.emprendedoresBox.getAll();
           for (var i = 0; i < emprendedoresPrueba.length; i++) {
-            print("Status Emprendedor Prueba: ${emprendedoresPrueba[i].statusSync.target!.status}");  
+          print("Status Emprendedor Prueba: ${emprendedoresPrueba[i].statusSync.target!.status}");  
           print("IDBR Emprendedor Prueba: ${emprendedoresPrueba[i].idDBR}");
           }
-
+          print("Se hace el conteo de la tabla Emprendedores");
           print(dataBase.emprendedoresBox.count());
         }
 
@@ -147,7 +152,7 @@ class SyncProvider extends ChangeNotifier {
       }
       
     }
-    alreadySyncEmprendedores = true;
+    alreadySyncInstance!.emprendedores = true;
     return true;
 }
 
@@ -186,11 +191,29 @@ class SyncProvider extends ChangeNotifier {
 
         var responsePostEmprendedor = ResponsePostEmprendedor.fromJson(response.body);
         String idDBR = responsePostEmprendedor.id;
+
         var updateEmprendedor = dataBase.emprendedoresBox.get(emprendedor.id);
         if (updateEmprendedor != null && idDBR != null) {
-          updateEmprendedor.statusSync.target!.status = "HoI36PzYw1wtbO1";
+          print("Entro al if de syncPostEmprendedor");
+          print("Previo estado del Emprendedor: ${updateEmprendedor.statusSync.target!.status}");
+          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendedor.statusSync.target!.id)).build().findUnique();
+          if (statusSync != null) {
+            statusSync.status = "HoI36PzYw1wtbO1";
+            dataBase.statusSyncBox.put(statusSync);
+            print("Se hace el conteo de la tabla statusSync");
+            print(dataBase.statusSyncBox.count());
+          }
           updateEmprendedor.idDBR = idDBR;
           dataBase.emprendedoresBox.put(updateEmprendedor);
+          print("Actualizacion de estado del Emprendedor");
+
+          var emprendedoresPrueba = dataBase.emprendedoresBox.getAll();
+          for (var i = 0; i < emprendedoresPrueba.length; i++) {
+          print("Status Emprendedor Prueba: ${emprendedoresPrueba[i].statusSync.target!.status}");  
+          print("IDBR Emprendedor Prueba: ${emprendedoresPrueba[i].idDBR}");
+          }
+          print("Se hace el conteo de la tabla Emprendedores");
+          print(dataBase.emprendedoresBox.count());
         }
 
       } catch (e) {
@@ -245,8 +268,21 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
 
       var updateEmprendimiento = dataBase.emprendimientosBox.get(emprendimientos[i].id);
       if (updateEmprendimiento != null) {
-        updateEmprendimiento.statusSync.target!.status = "HoI36PzYw1wtbO1";
-        dataBase.emprendimientosBox.put(updateEmprendimiento);
+        print("Previo estado del Emprendimiento: ${updateEmprendimiento.statusSync.target!.status}");
+          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendimiento.statusSync.target!.id)).build().findUnique();
+          if (statusSync != null) {
+            statusSync.status = "HoI36PzYw1wtbO1";
+            dataBase.statusSyncBox.put(statusSync);
+            print("Se hace el conteo de la tabla statusSync");
+            print(dataBase.statusSyncBox.count());
+          }
+        print("Actualizacion de estado del Emprendimiento");
+
+        var emprendimientosPrueba = dataBase.emprendimientosBox.getAll();
+        for (var i = 0; i < emprendimientosPrueba.length; i++) {
+        print("Status Emprendimiento Prueba: ${emprendimientosPrueba[i].statusSync.target!.status}");  
+        print("IDBR Emprendimiento Prueba: ${emprendimientosPrueba[i].idDBR}");
+        }
       }
 
     } catch (e) {
@@ -294,9 +330,21 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
 
       var updateEmprendimiento = dataBase.emprendimientosBox.get(emprendimiento.id);
       if (updateEmprendimiento != null) {
-        updateEmprendimiento.statusSync.target!.status = "HoI36PzYw1wtbO1"; 
-        dataBase.emprendimientosBox.put(updateEmprendimiento);
-        print("Se actualiza emprendimiento");
+        print("Previo estado del Emprendimiento: ${updateEmprendimiento.statusSync.target!.status}");
+          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendimiento.statusSync.target!.id)).build().findUnique();
+          if (statusSync != null) {
+            statusSync.status = "HoI36PzYw1wtbO1";
+            dataBase.statusSyncBox.put(statusSync);
+            print("Se hace el conteo de la tabla statusSync");
+            print(dataBase.statusSyncBox.count());
+          }
+        print("Actualizacion de estado del Emprendimiento");
+
+        var emprendimientosPrueba = dataBase.emprendimientosBox.getAll();
+        for (var i = 0; i < emprendimientosPrueba.length; i++) {
+        print("Status Emprendimiento Prueba: ${emprendimientosPrueba[i].statusSync.target!.status}");  
+        print("IDBR Emprendimiento Prueba: ${emprendimientosPrueba[i].idDBR}");
+        }
       }
       else{
         return false;
@@ -308,5 +356,10 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
       return false;
     }
 
+}
+
+void deleteBitacora() {
+  dataBase.bitacoraBox.removeAll();
+  notifyListeners();
 }
 }

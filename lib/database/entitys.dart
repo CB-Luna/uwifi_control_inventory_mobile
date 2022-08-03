@@ -492,3 +492,33 @@ class StatusSync {
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
 
 }
+
+@Entity()
+class AlreadySync {
+  int id;
+  bool emprendedores;
+  bool emprendimientos;
+  DateTime fechaActualizacion;
+
+  AlreadySync({
+    this.id = 0,
+    this.emprendedores = false,
+    this.emprendimientos = false,
+    DateTime? fechaActualizacion,
+    }): fechaActualizacion = fechaActualizacion ?? DateTime.now();
+
+  AlreadySync copyWith ({
+    int? id,
+    bool? emprendedores,
+    bool? emprendimientos,
+    DateTime? fechaActualizacion
+  }) {
+    return AlreadySync(
+      emprendedores: emprendedores ?? this.emprendedores,
+      emprendimientos: emprendimientos ?? this.emprendimientos,
+      fechaActualizacion: fechaActualizacion ?? this.fechaActualizacion
+    );
+  }
+  String get fechaActualizacionFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaActualizacion);
+
+}
