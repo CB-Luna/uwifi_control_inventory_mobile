@@ -233,8 +233,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             //User Query
                             final emiUser = await ApiService.getEmiUser(
                                 loginResponse.user.id);
-                                
-                            final idDBR = await AuthService.userEMIByID(loginResponse.user.id);
+
+                            final idDBR = await AuthService.userEMIByID(
+                                loginResponse.user.id);
 
                             if (emiUser == null) return;
 
@@ -427,7 +428,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     5, 0, 0, 0),
                                 child: Text(
-                                  'La seguridad es nuestra prioridad, para\nello utilizamos los estándares\nmas altos.',
+                                  'La seguridad es nuestra prioridad, para\nello utilizamos los estándares\nmás altos.',
                                   style:
                                       AppTheme.of(context).bodyText1.override(
                                             fontFamily: 'Poppins',

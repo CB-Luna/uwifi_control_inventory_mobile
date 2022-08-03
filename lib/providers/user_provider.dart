@@ -3,7 +3,6 @@ import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/services/navigation_service.dart';
 import 'package:flutter/material.dart';
 
-import 'package:bizpro_app/theme/theme.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
 enum Rol {
