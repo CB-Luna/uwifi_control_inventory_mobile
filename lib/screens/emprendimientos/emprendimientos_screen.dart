@@ -1,4 +1,5 @@
 import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/screens/emprendimientos/grid_emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,7 +12,6 @@ import 'package:bizpro_app/providers/database_providers/usuario_controller.dart'
 
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:bizpro_app/screens/emprendimientos/detalle_proyecto_screen.dart';
-import 'package:bizpro_app/screens/widgets/custom_button.dart';
 import 'package:bizpro_app/screens/widgets/side_menu/side_menu.dart';
 
 import 'package:bizpro_app/screens/emprendimientos/agregar_emprendimiento_screen.dart';
@@ -57,7 +57,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
 
     return Scaffold(
       key: scaffoldKey,
-      drawer: SideMenu(),
+      drawer: const SideMenu(),
       backgroundColor: Colors.white,
       floatingActionButton: userState.rol == Rol.administrador
           ? FloatingActionButton(
@@ -107,8 +107,6 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               20, 40, 20, 0),
                           child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               InkWell(
                                 onTap: () async {
@@ -134,40 +132,18 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                   ),
                                 ),
                               ),
-                              Text(
-                                'Emprendimientos',
-                                style: AppTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      color: const Color(0xFF221573),
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                              ),
-                              InkWell(
-                                onTap: () async {
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const PerfilUsuarioScreen(),
-                                    ),
-                                  );
-                                },
-                                child: Hero(
-                                  tag: currentUserPhoto,
-                                  transitionOnUserGestures: true,
-                                  child: Container(
-                                    width: 40,
-                                    height: 40,
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                    ),
-                                    //TODO: manejar imagenes de red
-                                    child: Image.asset(
-                                      currentUserPhoto,
-                                    ),
-                                  ),
+                              Expanded(
+                                child: Text(
+                                  'Emprendimientos',
+                                  textAlign: TextAlign.center,
+                                  style:
+                                      AppTheme.of(context).bodyText1.override(
+                                            fontFamily: AppTheme.of(context)
+                                                .bodyText1Family,
+                                            color: const Color(0xFF221573),
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                 ),
                               ),
                             ],
@@ -330,12 +306,12 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                           return Padding(
                                             padding: MediaQuery.of(context)
                                                 .viewInsets,
-                                            child: Container(
+                                            child: SizedBox(
                                               height: MediaQuery.of(context)
                                                   .size
                                                   .height,
-                                              //TODO: agregar pantalla
-                                              // child: GridEmpredimientosWidget(),
+                                              child:
+                                                  const GridEmpredimientosScreen(),
                                             ),
                                           );
                                         },
