@@ -1,3 +1,4 @@
+import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +31,7 @@ class _SincronizacionScreenState extends State<SincronizacionScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
-        context.read<SyncProvider>().executeInstrucciones(dataBase.bitacoraBox.getAll().toList());
+        context.read<SyncProvider>().executeInstrucciones(dataBase.bitacoraBox.getAll().toList().where((element) => element.usuario == prefs.getString("userId")!).toList());
       });
     });
   }

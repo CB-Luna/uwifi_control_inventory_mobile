@@ -13,7 +13,7 @@ class ObjectBoxDatabase {
   late final Box<Consultorias> consultoriasBox;
   late final Box<Bitacora> bitacoraBox;
   late final Box<StatusSync> statusSyncBox;
-  late final Box<AlreadySync> AlreadySyncBox;
+  late final Box<VariablesUsuario> VariablesUsuarioBox;
 
   ObjectBoxDatabase._create(this.store) {
     // Add any additional setup code, e.g. build queries.
@@ -25,7 +25,7 @@ class ObjectBoxDatabase {
     consultoriasBox = Box<Consultorias>(store);
     bitacoraBox = Box<Bitacora>(store);
     statusSyncBox = Box<StatusSync>(store);
-    AlreadySyncBox = Box<AlreadySync>(store);
+    VariablesUsuarioBox = Box<VariablesUsuario>(store);
   }
 
   /// Create an instance of ObjectBox to use throughout the app.

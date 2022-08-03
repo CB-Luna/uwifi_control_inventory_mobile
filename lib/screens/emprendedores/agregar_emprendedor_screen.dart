@@ -617,7 +617,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                 onPressed: () async {
                                   if (emprendedorProvider.validateForm(emprendedorKey)) {
                                     emprendedorProvider.add(widget.idEmprendimiento);
-                                    syncProvider.alreadySyncInstance!.emprendedores = false;
+                                    syncProvider.alreadySyncEmprendedores = false;
                                     await Navigator.push(
                                       context,
                                       MaterialPageRoute(

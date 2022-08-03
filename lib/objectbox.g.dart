@@ -227,11 +227,6 @@ final _entities = <ModelEntity>[
             indexId: const IdUid(79, 8062585399034389472),
             relationTarget: 'Bitacora'),
         ModelProperty(
-            id: const IdUid(21, 6939545807929048684),
-            name: 'idEjecucion',
-            type: 9,
-            flags: 0),
-        ModelProperty(
             id: const IdUid(22, 4309447383493916637),
             name: 'usuariosId',
             type: 11,
@@ -786,12 +781,7 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(78, 668466277065793709),
-            relationTarget: 'Bitacora'),
-        ModelProperty(
-            id: const IdUid(20, 6161823828674097276),
-            name: 'idEjecucion',
-            type: 9,
-            flags: 0)
+            relationTarget: 'Bitacora')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
@@ -979,7 +969,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(27, 1774905738150923512),
       name: 'Bitacora',
-      lastPropertyId: const IdUid(10, 4387081276626837570),
+      lastPropertyId: const IdUid(11, 3616607795938519256),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1003,8 +993,8 @@ final _entities = <ModelEntity>[
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(10, 4387081276626837570),
-            name: 'idEjecucion',
+            id: const IdUid(11, 3616607795938519256),
+            name: 'usuario',
             type: 9,
             flags: 0)
       ],
@@ -1021,7 +1011,36 @@ final _entities = <ModelEntity>[
             name: 'consultorias', srcEntity: 'Consultorias', srcField: ''),
         ModelBacklink(name: 'usuarios', srcEntity: 'Usuarios', srcField: ''),
         ModelBacklink(name: 'jornadas', srcEntity: 'Jornadas', srcField: '')
-      ])
+      ]),
+  ModelEntity(
+      id: const IdUid(29, 7625539946193612618),
+      name: 'VariablesUsuario',
+      lastPropertyId: const IdUid(4, 7664581841173068663),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 6845935698624323595),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 2773772202661284417),
+            name: 'emprendedores',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 2001355623132513549),
+            name: 'emprendimientos',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 7664581841173068663),
+            name: 'fechaActualizacion',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[])
 ];
 
 /// Open an ObjectBox store with the model declared in this file.
@@ -1044,7 +1063,7 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(27, 1774905738150923512),
+      lastEntityId: const IdUid(29, 7625539946193612618),
       lastIndexId: const IdUid(83, 7569304066565191687),
       lastRelationId: const IdUid(7, 7628231779967948088),
       lastSequenceId: const IdUid(0, 0),
@@ -1058,7 +1077,8 @@ ModelDefinition getObjectBoxModel() {
         2428686942234365602,
         1323666498433169999,
         2042416188864880761,
-        1021087970446956343
+        1021087970446956343,
+        4631117986834657050
       ],
       retiredIndexUids: const [
         8990521503430950587,
@@ -1214,7 +1234,14 @@ ModelDefinition getObjectBoxModel() {
         6280052136229997375,
         3221284138384568926,
         8861650403401684419,
-        8988217608763532952
+        8988217608763532952,
+        4387081276626837570,
+        6161823828674097276,
+        6939545807929048684,
+        1388327886429615646,
+        3312783263241748230,
+        782321710570789969,
+        2948145743703110893
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -1392,7 +1419,6 @@ ModelDefinition getObjectBoxModel() {
           final descripcionOffset = fbb.writeString(object.descripcion);
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          final idEjecucionOffset = fbb.writeString(object.idEjecucion);
           fbb.startTable(23);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, imagenOffset);
@@ -1407,7 +1433,6 @@ ModelDefinition getObjectBoxModel() {
           fbb.addBool(16, object.archivado);
           fbb.addOffset(18, idDBROffset);
           fbb.addInt64(19, object.bitacora.targetId);
-          fbb.addOffset(20, idEjecucionOffset);
           fbb.addInt64(21, object.usuarios.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
@@ -1418,8 +1443,6 @@ ModelDefinition getObjectBoxModel() {
 
           final object = Emprendimientos(
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              idEjecucion: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 44, ''),
               imagen: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 6, ''),
               nombre: const fb.StringReader(asciiOptimization: true)
@@ -1432,7 +1455,8 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 34, false),
               archivado: const fb.BoolReader()
                   .vTableGet(buffer, rootOffset, 36, false),
-              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 40));
+              idDBR: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 40));
           object.prioridadProyecto.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
           object.prioridadProyecto.attach(store);
@@ -1941,7 +1965,6 @@ ModelDefinition getObjectBoxModel() {
           final apellidosOffset = fbb.writeString(object.apellidos);
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          final idEjecucionOffset = fbb.writeString(object.idEjecucion);
           fbb.startTable(21);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nombreOffset);
@@ -1958,7 +1981,6 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(15, apellidosOffset);
           fbb.addOffset(17, idDBROffset);
           fbb.addInt64(18, object.bitacora.targetId);
-          fbb.addOffset(19, idEjecucionOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -1968,8 +1990,6 @@ ModelDefinition getObjectBoxModel() {
 
           final object = Emprendedores(
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              idEjecucion: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 42, ''),
               imagen: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 32, ''),
               nombre: const fb.StringReader(asciiOptimization: true)
@@ -1982,8 +2002,10 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 14, ''),
               integrantesFamilia: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 16, ''),
-              telefono: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 18, ''),
-              comentarios: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
+              telefono: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, ''),
+              comentarios:
+                  const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 38));
           object.comunidades.targetId =
@@ -2265,13 +2287,13 @@ ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (Bitacora object, fb.Builder fbb) {
           final instruccionesOffset = fbb.writeString(object.instrucciones);
-          final idEjecucionOffset = fbb.writeString(object.idEjecucion);
-          fbb.startTable(11);
+          final usuarioOffset = fbb.writeString(object.usuario);
+          fbb.startTable(12);
           fbb.addInt64(0, object.id);
           fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addInt64(3, object.fechaSync?.millisecondsSinceEpoch);
           fbb.addOffset(8, instruccionesOffset);
-          fbb.addOffset(9, idEjecucionOffset);
+          fbb.addOffset(10, usuarioOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -2282,8 +2304,8 @@ ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 10);
           final object = Bitacora(
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              idEjecucion: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 22, ''),
+              usuario: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 24, ''),
               instrucciones: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 20, ''),
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
@@ -2327,6 +2349,38 @@ ModelDefinition getObjectBoxModel() {
               RelInfo<Jornadas>.toOneBacklink(
                   11, object.id, (Jornadas srcObject) => srcObject.bitacora),
               store.box<Bitacora>());
+          return object;
+        }),
+    VariablesUsuario: EntityDefinition<VariablesUsuario>(
+        model: _entities[17],
+        toOneRelations: (VariablesUsuario object) => [],
+        toManyRelations: (VariablesUsuario object) => {},
+        getId: (VariablesUsuario object) => object.id,
+        setId: (VariablesUsuario object, int id) {
+          object.id = id;
+        },
+        objectToFB: (VariablesUsuario object, fb.Builder fbb) {
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addBool(1, object.emprendedores);
+          fbb.addBool(2, object.emprendimientos);
+          fbb.addInt64(3, object.fechaActualizacion.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = VariablesUsuario(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              emprendedores:
+                  const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false),
+              emprendimientos:
+                  const fb.BoolReader().vTableGet(buffer, rootOffset, 8, false),
+              fechaActualizacion: DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0)));
+
           return object;
         })
   };
@@ -2471,13 +2525,9 @@ class Emprendimientos_ {
   static final bitacora = QueryRelationToOne<Emprendimientos, Bitacora>(
       _entities[3].properties[12]);
 
-  /// see [Emprendimientos.idEjecucion]
-  static final idEjecucion =
-      QueryStringProperty<Emprendimientos>(_entities[3].properties[13]);
-
   /// see [Emprendimientos.usuarios]
   static final usuarios = QueryRelationToOne<Emprendimientos, Usuarios>(
-      _entities[3].properties[14]);
+      _entities[3].properties[13]);
 
   /// see [Emprendimientos.jornadas]
   static final jornadas =
@@ -2826,10 +2876,6 @@ class Emprendedores_ {
   /// see [Emprendedores.bitacora]
   static final bitacora =
       QueryRelationToOne<Emprendedores, Bitacora>(_entities[11].properties[14]);
-
-  /// see [Emprendedores.idEjecucion]
-  static final idEjecucion =
-      QueryStringProperty<Emprendedores>(_entities[11].properties[15]);
 }
 
 /// [Estados] entity fields to define ObjectBox queries.
@@ -2951,7 +2997,26 @@ class Bitacora_ {
   static final instrucciones =
       QueryStringProperty<Bitacora>(_entities[16].properties[3]);
 
-  /// see [Bitacora.idEjecucion]
-  static final idEjecucion =
+  /// see [Bitacora.usuario]
+  static final usuario =
       QueryStringProperty<Bitacora>(_entities[16].properties[4]);
+}
+
+/// [VariablesUsuario] entity fields to define ObjectBox queries.
+class VariablesUsuario_ {
+  /// see [VariablesUsuario.id]
+  static final id =
+      QueryIntegerProperty<VariablesUsuario>(_entities[17].properties[0]);
+
+  /// see [VariablesUsuario.emprendedores]
+  static final emprendedores =
+      QueryBooleanProperty<VariablesUsuario>(_entities[17].properties[1]);
+
+  /// see [VariablesUsuario.emprendimientos]
+  static final emprendimientos =
+      QueryBooleanProperty<VariablesUsuario>(_entities[17].properties[2]);
+
+  /// see [VariablesUsuario.fechaActualizacion]
+  static final fechaActualizacion =
+      QueryIntegerProperty<VariablesUsuario>(_entities[17].properties[3]);
 }

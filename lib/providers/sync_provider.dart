@@ -11,7 +11,9 @@ import '../objectbox.g.dart';
 
 class SyncProvider extends ChangeNotifier {
 
-  final alreadySyncInstance = dataBase.AlreadySyncBox.get(0);
+  //  final AlreadySyncInstance = dataBase.VariablesUsuarioBox.get(0)!.emprendedores;
+  bool alreadySyncEmprendedores = false;
+  bool alreadySyncEmprendimientos = false;
 
   bool procesoterminado = false;
   bool procesocargando = false;
@@ -40,7 +42,7 @@ class SyncProvider extends ChangeNotifier {
             break;
           } else {
             print("Entro aqui en el else");
-            if (alreadySyncInstance!.emprendedores) {
+            if (alreadySyncEmprendedores) {
               await syncPostEmprendimiento(emprendimientoToSync);
             } else {
               final emprendedores = verificarEstadoEmprendedores(dataBase.emprendedoresBox.getAll());
@@ -152,7 +154,7 @@ class SyncProvider extends ChangeNotifier {
       }
       
     }
-    alreadySyncInstance!.emprendedores = true;
+    alreadySyncEmprendedores = true;
     return true;
 }
 
