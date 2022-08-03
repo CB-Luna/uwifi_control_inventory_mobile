@@ -12,29 +12,25 @@ class CustomBottomSheet extends StatelessWidget {
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            // mainAxisSize: MainAxisSize.min,
             children: [
-              //TODO: add localizations
               InkWell(
                 child: SizedBox(
                   width: double.infinity,
                   height: size.height * 0.1,
                   child: TextButton(
                     onPressed: () => Navigator.pop(context, 'camera'),
-                    child: const Text('Camera'),
+                    child: const Text('Cámara'),
                   ),
                 ),
               ),
-
               const Divider(thickness: 1),
-
               InkWell(
                 child: SizedBox(
                   width: double.infinity,
                   height: size.height * 0.1,
                   child: TextButton(
                     onPressed: () => Navigator.pop(context, 'gallery'),
-                    child: const Text('Gallery'),
+                    child: const Text('Galería'),
                   ),
                 ),
               ),

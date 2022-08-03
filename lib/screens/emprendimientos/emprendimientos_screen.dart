@@ -1,6 +1,7 @@
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
 
@@ -209,8 +210,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                               controller: textController,
                                               obscureText: false,
                                               decoration: InputDecoration(
-                                                labelText:
-                                                    'Ingresa búsqueda...',
+                                                labelText: 'Buscar...',
                                                 labelStyle: AppTheme.of(context)
                                                     .bodyText2
                                                     .override(
@@ -258,47 +258,49 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                         ),
                                         Padding(
                                           padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0, 0, 10, 0),
-                                          child: CustomButton(
-                                            onPressed: () async {
-                                              //TODO: agregar funcionalidad
-                                              // setState(() =>
-                                              //     algoliaSearchResults = null);
-                                              // await ProyectosRecord.search(
-                                              //   term: textController.text,
-                                              //   maxResults: 15,
-                                              // )
-                                              //     .then((r) =>
-                                              //         algoliaSearchResults = r)
-                                              //     .onError((_, __) =>
-                                              //         algoliaSearchResults = [])
-                                              //     .whenComplete(
-                                              //         () => setState(() {}));
-                                            },
-                                            text: '',
-                                            icon: const Icon(
-                                              Icons.search_rounded,
-                                              size: 15,
-                                            ),
-                                            options: ButtonOptions(
-                                              width: 50,
-                                              height: 40,
-                                              color: const Color(0xFF4672FF),
-                                              textStyle: AppTheme.of(context)
-                                                  .subtitle2
-                                                  .override(
-                                                    fontFamily: 'Poppins',
-                                                    color: Colors.white,
-                                                    fontSize: 9,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
-                                              borderSide: const BorderSide(
-                                                color: Colors.transparent,
-                                                width: 1,
-                                              ),
+                                              .fromSTEB(0, 0, 5, 0),
+                                          child: Container(
+                                            width: 40,
+                                            height: 40,
+                                            decoration: BoxDecoration(
+                                              color: AppTheme.of(context)
+                                                  .secondaryText,
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  const BorderRadius.only(
+                                                bottomLeft: Radius.circular(8),
+                                                bottomRight:
+                                                    Radius.circular(30),
+                                                topLeft: Radius.circular(8),
+                                                topRight: Radius.circular(30),
+                                              ),
+                                            ),
+                                            child: InkWell(
+                                              onTap: () async {
+                                                // setState(() =>
+                                                //     algoliaSearchResults = null);
+                                                // await ProyectosRecord.search(
+                                                //   term: textController.text,
+                                                //   maxResults: 15,
+                                                // )
+                                                //     .then((r) =>
+                                                //         algoliaSearchResults = r)
+                                                //     .onError((_, __) =>
+                                                //         algoliaSearchResults = [])
+                                                //     .whenComplete(
+                                                //         () => setState(() {}));
+                                              },
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: const [
+                                                  Icon(
+                                                    Icons.search_rounded,
+                                                    color: Colors.white,
+                                                    size: 24,
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -330,9 +332,8 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                                 .viewInsets,
                                             child: Container(
                                               height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  1,
+                                                  .size
+                                                  .height,
                                               //TODO: agregar pantalla
                                               // child: GridEmpredimientosWidget(),
                                             ),
@@ -352,6 +353,30 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                         ),
                                       ],
                                     ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    10, 0, 0, 0),
+                                child: Container(
+                                  width: 45,
+                                  height: 45,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF4672FF),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: const [
+                                      FaIcon(
+                                        FontAwesomeIcons.fileArrowDown,
+                                        color: Colors.white,
+                                        size: 25,
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -484,12 +509,10 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                           Expanded(
                                             child: Text(
                                               resultadoItem.emprendedor.target
-                                                      ?.nombre == null ?
-                                                  'SIN EMPRENDEDOR'
-                                                  :
-                                                  "${resultadoItem.emprendedor.target
-                                                      !.nombre} ${resultadoItem.emprendedor.target
-                                                      !.apellidos}",
+                                                          ?.nombre ==
+                                                      null
+                                                  ? 'SIN EMPRENDEDOR'
+                                                  : "${resultadoItem.emprendedor.target!.nombre} ${resultadoItem.emprendedor.target!.apellidos}",
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               style: AppTheme.of(context)
