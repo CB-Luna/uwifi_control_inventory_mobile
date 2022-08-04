@@ -11,7 +11,7 @@ import 'package:bizpro_app/providers/database_providers/emprendimiento_controlle
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
-import 'package:bizpro_app/screens/emprendimientos/detalle_proyecto_screen.dart';
+import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
 import 'package:bizpro_app/screens/widgets/side_menu/side_menu.dart';
 
 import 'package:bizpro_app/screens/emprendimientos/agregar_emprendimiento_screen.dart';
@@ -405,7 +405,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                DetalleProyectoScreen(
+                                                DetalleEmprendimientoScreen(
                                               emprendimiento: resultadoItem,
                                             ),
                                           ),
