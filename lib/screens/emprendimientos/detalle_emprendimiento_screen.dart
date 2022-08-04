@@ -171,7 +171,7 @@ class _DetalleEmprendimientoScreenState
                         await Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => EditarProyectoWidget(
+                              builder: (context) => EditarEmprendimientoScreen(
                                   emprendimiento: widget.emprendimiento)),
                         );
                       },
@@ -210,438 +210,383 @@ class _DetalleEmprendimientoScreenState
               left: 20,
               right: 20,
               child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            decoration: const BoxDecoration(
-                              color: Color(0xFFF2F4F8),
-                            ),
-                            child: Container(
-                              width: double.infinity,
-                              color: const Color(0xFFF2F4F8),
-                              child: ExpandableNotifier(
-                                initialExpanded: false,
-                                child: ExpandablePanel(
-                                  header: Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0, 0, 8, 0),
-                                        child: Icon(
-                                          Icons.info_rounded,
-                                          color: AppTheme.of(context)
-                                              .secondaryText,
-                                          size: 24,
-                                        ),
-                                      ),
-                                      Text(
-                                        'Detalles Emprendimiento',
-                                        style: AppTheme.of(context)
-                                            .title1
-                                            .override(
-                                              fontFamily: 'Poppins',
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                  collapsed: const Divider(
-                                    thickness: 1.5,
-                                    color: Color(0xFF8B8B8B),
-                                  ),
-                                  expanded: Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.9,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFFCACACA),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              5, 0, 5, 0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 5, 0, 0),
-                                            child: Text(
-                                              'Descripción del emprendimiento',
-                                              style: AppTheme.of(context)
-                                                  .bodyText1
-                                                  .override(
-                                                    fontFamily: 'Poppins',
-                                                    fontSize: 15,
-                                                  ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 5, 0, 0),
-                                            child: AutoSizeText(
-                                              maybeHandleOverflow(
-                                                  widget.emprendimiento
-                                                      .descripcion,
-                                                  100,
-                                                  "..."),
-                                              textAlign: TextAlign.start,
-                                              maxLines: 4,
-                                              style: AppTheme.of(context)
-                                                  .bodyText1
-                                                  .override(
-                                                    fontFamily: 'Poppins',
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 5, 0, 0),
-                                            child: Text(
-                                              'Emprendedor',
-                                              style: AppTheme.of(context)
-                                                  .bodyText1
-                                                  .override(
-                                                    fontFamily: 'Poppins',
-                                                    fontSize: 15,
-                                                  ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 5, 0, 0),
-                                            child: Text(
-                                              emprendedor == ""
-                                                  ? 'SIN EMPRENDEDOR'
-                                                  : emprendedor,
-                                              style: AppTheme.of(context)
-                                                  .bodyText1
-                                                  .override(
-                                                    fontFamily: 'Poppins',
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                            ),
-                                          ),
-                                          // getImage(widget.emprendimiento.emprendedor.target?.imagen ?? null)!,
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 5, 0, 0),
-                                            child: Text(
-                                              'Fecha de creación',
-                                              style: AppTheme.of(context)
-                                                  .bodyText1
-                                                  .override(
-                                                    fontFamily: 'Poppins',
-                                                    fontSize: 15,
-                                                  ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 5, 0, 5),
-                                            child: AutoSizeText(
-                                              dateTimeFormat(
-                                                  'dd/MM/yyyy',
-                                                  widget.emprendimiento
-                                                      .fechaRegistro),
-                                              textAlign: TextAlign.start,
-                                              maxLines: 1,
-                                              style: AppTheme.of(context)
-                                                  .bodyText1
-                                                  .override(
-                                                    fontFamily: 'Poppins',
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 5, 0, 0),
-                                            child: Text(
-                                              'Creado por el Promotor',
-                                              style: AppTheme.of(context)
-                                                  .bodyText1
-                                                  .override(
-                                                    fontFamily: 'Poppins',
-                                                    fontSize: 15,
-                                                  ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 5, 0, 5),
-                                            child: AutoSizeText(
-                                              "${usuarioProvider.usuarioCurrent!.nombre} ${usuarioProvider.usuarioCurrent!.apellidoP}",
-                                              textAlign: TextAlign.start,
-                                              maxLines: 1,
-                                              style: AppTheme.of(context)
-                                                  .bodyText1
-                                                  .override(
-                                                    fontFamily: 'Poppins',
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  theme: const ExpandableThemeData(
-                                    tapHeaderToExpand: true,
-                                    tapBodyToExpand: false,
-                                    tapBodyToCollapse: false,
-                                    headerAlignment:
-                                        ExpandablePanelHeaderAlignment.center,
-                                    hasIcon: true,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            decoration: const BoxDecoration(
-                              color: Color(0xFFF2F4F8),
-                            ),
-                            child: Container(
-                              width: double.infinity,
-                              color: const Color(0xFFF2F4F8),
-                              child: ExpandableNotifier(
-                                initialExpanded: false,
-                                child: ExpandablePanel(
-                                  header: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0, 0, 8, 0),
-                                        child: FaIcon(
-                                          FontAwesomeIcons.calendarCheck,
-                                          color: AppTheme.of(context)
-                                              .secondaryText,
-                                          size: 20,
-                                        ),
-                                      ),
-                                      Text(
-                                        'Jornadas',
-                                        style: AppTheme.of(context)
-                                            .title1
-                                            .override(
-                                              fontFamily: 'Poppins',
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                  collapsed: const Divider(
-                                    thickness: 1.5,
-                                    color: Color(0xFF8B8B8B),
-                                  ),
-                                  expanded: Builder(
-                                    builder: (context) {
-                                      return ListView.builder(
-                                        padding: EdgeInsets.zero,
-                                        shrinkWrap: true,
-                                        scrollDirection: Axis.vertical,
-                                        itemCount: jornadas.length,
-                                        itemBuilder: (context, index) {
-                                          final jornada = jornadas[index];
-                                          return Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(15, 10, 15, 0),
-                                            child: InkWell(
-                                              onTap: () {
-                                                // await Navigator
-                                                //     .push(
-                                                //   context,
-                                                //   MaterialPageRoute(
-                                                //     builder:
-                                                //         (context) =>
-                                                //             DetalleJornadaWidget(
-                                                //       proyectoDocRef:
-                                                //           listViewJornadasRecord
-                                                //               .refemprendimiento,
-                                                //     ),
-                                                //   ),
-                                                // );
-                                              },
-                                              child: Container(
-                                                width: double.infinity,
-                                                height: 100,
-                                                decoration: BoxDecoration(
-                                                  color:
-                                                      const Color(0xFF1F68CB),
-                                                  boxShadow: const [
-                                                    BoxShadow(
-                                                      blurRadius: 4,
-                                                      color: Color(0x32000000),
-                                                      offset: Offset(0, 2),
-                                                    )
-                                                  ],
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                ),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                              16, 5, 16, 5),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          Expanded(
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                      0,
-                                                                      5,
-                                                                      0,
-                                                                      0),
-                                                              child: Text(
-                                                                'Jornada No. ${jornada.numJornada.toString()}',
-                                                                maxLines: 1,
-                                                                style: AppTheme.of(
-                                                                        context)
-                                                                    .title3
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Poppins',
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                    ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                              16, 0, 16, 5),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          Expanded(
-                                                            child: Text(
-                                                              'Fecha de registro: ${dateTimeFormat('dd/MM/yyyy', jornada.fechaRegistro)}',
-                                                              maxLines: 1,
-                                                              style: AppTheme.of(
-                                                                      context)
-                                                                  .bodyText2
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Poppins',
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontSize:
-                                                                        13,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal,
-                                                                  ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                              16, 0, 16, 5),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          Expanded(
-                                                            child: Text(
-                                                              'Próxima visita: ${dateTimeFormat('dd/MM/yyyy', jornada.proximaVisita)}',
-                                                              maxLines: 1,
-                                                              style: AppTheme.of(
-                                                                      context)
-                                                                  .bodyText2
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Poppins',
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontSize:
-                                                                        13,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal,
-                                                                  ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                  theme: const ExpandableThemeData(
-                                    tapHeaderToExpand: true,
-                                    tapBodyToExpand: false,
-                                    tapBodyToCollapse: false,
-                                    headerAlignment:
-                                        ExpandablePanelHeaderAlignment.center,
-                                    hasIcon: true,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                      child: Container(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
                         width: MediaQuery.of(context).size.width,
                         decoration: const BoxDecoration(
-                          color: Color(0xFFF2F4F8),
+                          color: Color(0x00F2F4F8),
                         ),
                         child: Container(
                           width: double.infinity,
-                          color: const Color(0xFFF2F4F8),
+                          color: const Color(0x00F2F4F8),
+                          child: ExpandableNotifier(
+                            initialExpanded: false,
+                            child: ExpandablePanel(
+                              header: Row(
+                                children: [
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 8, 0),
+                                    child: Icon(
+                                      Icons.info_rounded,
+                                      color: AppTheme.of(context).secondaryText,
+                                      size: 24,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Detalles Emprendimiento',
+                                    style: AppTheme.of(context).title1.override(
+                                          fontFamily:
+                                              AppTheme.of(context).title1Family,
+                                          color:
+                                              AppTheme.of(context).primaryText,
+                                          fontSize: 20,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                              collapsed: const Divider(
+                                thickness: 1.5,
+                                color: Color(0xFF8B8B8B),
+                              ),
+                              expanded: Container(
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                decoration: BoxDecoration(
+                                  color: const Color(0x1C4672FF),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      5, 0, 5, 0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 5, 0, 0),
+                                        child: Text(
+                                          'Descripción del emprendimiento',
+                                          style: AppTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                fontSize: 15,
+                                              ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 5, 0, 0),
+                                        child: AutoSizeText(
+                                          maybeHandleOverflow(
+                                              widget.emprendimiento.descripcion,
+                                              100,
+                                              "..."),
+                                          textAlign: TextAlign.start,
+                                          maxLines: 4,
+                                          style: AppTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 5, 0, 0),
+                                        child: Text(
+                                          'Emprendedor',
+                                          style: AppTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                fontSize: 15,
+                                              ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 5, 0, 0),
+                                        child: Text(
+                                          emprendedor == ""
+                                              ? 'SIN EMPRENDEDOR'
+                                              : emprendedor,
+                                          style: AppTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                        ),
+                                      ),
+                                      // getImage(widget.emprendimiento.emprendedor.target?.imagen ?? null)!,
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 5, 0, 0),
+                                        child: Text(
+                                          'Fecha de creación',
+                                          style: AppTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                fontSize: 15,
+                                              ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 5, 0, 5),
+                                        child: AutoSizeText(
+                                          dateTimeFormat(
+                                              'dd/MM/yyyy',
+                                              widget.emprendimiento
+                                                  .fechaRegistro),
+                                          textAlign: TextAlign.start,
+                                          maxLines: 1,
+                                          style: AppTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 5, 0, 0),
+                                        child: Text(
+                                          'Creado por el Promotor',
+                                          style: AppTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                fontSize: 15,
+                                              ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 5, 0, 5),
+                                        child: AutoSizeText(
+                                          "${usuarioProvider.usuarioCurrent!.nombre} ${usuarioProvider.usuarioCurrent!.apellidoP}",
+                                          textAlign: TextAlign.start,
+                                          maxLines: 1,
+                                          style: AppTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              theme: ExpandableThemeData(
+                                tapHeaderToExpand: true,
+                                tapBodyToExpand: false,
+                                tapBodyToCollapse: false,
+                                headerAlignment:
+                                    ExpandablePanelHeaderAlignment.center,
+                                hasIcon: true,
+                                iconColor: AppTheme.of(context).secondaryText,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        decoration: const BoxDecoration(
+                          color: Color(0x00F2F4F8),
+                        ),
+                        child: Container(
+                          width: double.infinity,
+                          color: const Color(0x00F2F4F8),
+                          child: ExpandableNotifier(
+                            initialExpanded: false,
+                            child: ExpandablePanel(
+                              header: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 8, 0),
+                                    child: FaIcon(
+                                      FontAwesomeIcons.calendarCheck,
+                                      color: AppTheme.of(context).secondaryText,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Jornadas',
+                                    style: AppTheme.of(context).title1.override(
+                                          fontFamily:
+                                              AppTheme.of(context).title1Family,
+                                          color:
+                                              AppTheme.of(context).primaryText,
+                                          fontSize: 20,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                              collapsed: const Divider(
+                                thickness: 1.5,
+                                color: Color(0xFF8B8B8B),
+                              ),
+                              expanded: Builder(
+                                builder: (context) {
+                                  return ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: jornadas.length,
+                                    itemBuilder: (context, index) {
+                                      final jornada = jornadas[index];
+                                      return Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(15, 10, 15, 0),
+                                        child: InkWell(
+                                          onTap: () {
+                                            // await Navigator
+                                            //     .push(
+                                            //   context,
+                                            //   MaterialPageRoute(
+                                            //     builder:
+                                            //         (context) =>
+                                            //             DetalleJornadaWidget(
+                                            //       proyectoDocRef:
+                                            //           listViewJornadasRecord
+                                            //               .refemprendimiento,
+                                            //     ),
+                                            //   ),
+                                            // );
+                                          },
+                                          child: Container(
+                                            width: double.infinity,
+                                            height: 100,
+                                            decoration: BoxDecoration(
+                                              color: const Color(0xFF1F68CB),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  blurRadius: 4,
+                                                  color: Color(0x32000000),
+                                                  offset: Offset(0, 2),
+                                                )
+                                              ],
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                          16, 5, 16, 5),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                            0, 5, 0, 0),
+                                                    child: Text(
+                                                      'Jornada No. ${jornada.numJornada.toString()}',
+                                                      maxLines: 1,
+                                                      style: AppTheme.of(
+                                                              context)
+                                                          .title3
+                                                          .override(
+                                                            fontFamily:
+                                                                'Poppins',
+                                                            color: Colors.white,
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                          16, 0, 16, 5),
+                                                  child: Text(
+                                                    'Fecha de registro: ${dateTimeFormat('dd/MM/yyyy', jornada.fechaRegistro)}',
+                                                    maxLines: 1,
+                                                    style: AppTheme.of(context)
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          color: Colors.black,
+                                                          fontSize: 13,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                          16, 0, 16, 5),
+                                                  child: Text(
+                                                    'Próxima visita: ${dateTimeFormat('dd/MM/yyyy', jornada.proximaVisita)}',
+                                                    maxLines: 1,
+                                                    style: AppTheme.of(context)
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          color: Colors.black,
+                                                          fontSize: 13,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                              theme: ExpandableThemeData(
+                                tapHeaderToExpand: true,
+                                tapBodyToExpand: false,
+                                tapBodyToCollapse: false,
+                                headerAlignment:
+                                    ExpandablePanelHeaderAlignment.center,
+                                hasIcon: true,
+                                iconColor: AppTheme.of(context).secondaryText,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        decoration: const BoxDecoration(
+                          color: Color(0x00F2F4F8),
+                        ),
+                        child: Container(
+                          width: double.infinity,
+                          color: const Color(0x00F2F4F8),
                           child: ExpandableNotifier(
                             initialExpanded: false,
                             child: ExpandablePanel(
@@ -661,8 +606,10 @@ class _DetalleEmprendimientoScreenState
                                   Text(
                                     'Consultorías',
                                     style: AppTheme.of(context).title1.override(
-                                          fontFamily: 'Poppins',
-                                          color: Colors.black,
+                                          fontFamily:
+                                              AppTheme.of(context).title1Family,
+                                          color:
+                                              AppTheme.of(context).primaryText,
                                           fontSize: 20,
                                         ),
                                   ),
@@ -810,237 +757,220 @@ class _DetalleEmprendimientoScreenState
                                   ),
                                 ],
                               ),
-                              theme: const ExpandableThemeData(
+                              theme: ExpandableThemeData(
                                 tapHeaderToExpand: true,
                                 tapBodyToExpand: false,
                                 tapBodyToCollapse: false,
                                 headerAlignment:
                                     ExpandablePanelHeaderAlignment.center,
                                 hasIcon: true,
+                                iconColor: AppTheme.of(context).secondaryText,
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
 
             //Menu inferior
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
-                      child: Material(
-                        color: Colors.transparent,
-                        elevation: 10,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.9,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: const Color(0xC6006AFF),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  InkWell(
-                                    onTap: () async {
-                                      if (widget.emprendimiento.emprendedor
-                                              .target ==
-                                          null) {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                AgregarEmprendedorScreen(
-                                                    idEmprendimiento: widget
-                                                        .emprendimiento.id,
-                                                    nombreEmprendimiento: widget
-                                                        .emprendimiento.nombre),
-                                          ),
-                                        );
-                                      } else {
-                                        snackbarKey.currentState
-                                            ?.showSnackBar(const SnackBar(
-                                          content: Text(
-                                              "Ya hay un emprendedor registrado a este emprendimiento"),
-                                        ));
-                                      }
-                                    },
-                                    child: const Icon(
-                                      Icons.groups_sharp,
-                                      color: Colors.white,
-                                      size: 24,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Emprendedores',
-                                    style:
-                                        AppTheme.of(context).bodyText1.override(
-                                              fontFamily: 'Poppins',
-                                              color: Colors.white,
-                                              fontSize: 8,
-                                            ),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  InkWell(
-                                    onTap: () async {
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                AgregarJornadaScreen(
-                                                    idEmprendimiento: widget
-                                                        .emprendimiento.id,
-                                                    nombreEmprendimiento: widget
-                                                        .emprendimiento
-                                                        .nombre)),
-                                      );
-                                    },
-                                    child: const Icon(
-                                      Icons.folder_rounded,
-                                      color: Colors.white,
-                                      size: 24,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Jornada',
-                                    style:
-                                        AppTheme.of(context).bodyText1.override(
-                                              fontFamily: 'Poppins',
-                                              color: Colors.white,
-                                              fontSize: 8,
-                                            ),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  InkWell(
-                                    onTap: () async {
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              AgregarConsultoriaScreen(
-                                            idEmprendimiento:
-                                                widget.emprendimiento.id,
-                                            nombreEmprendimiento:
-                                                widget.emprendimiento.nombre,
-                                            nombreEmprendedor: widget
-                                                    .emprendimiento
-                                                    .emprendedor
-                                                    .target
-                                                    ?.nombre ??
-                                                "SIN EMPRENDEDOR",
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    child: const Icon(
-                                      Icons.work_outlined,
-                                      color: Colors.white,
-                                      size: 24,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Consultoría',
-                                    style:
-                                        AppTheme.of(context).bodyText1.override(
-                                              fontFamily: 'Poppins',
-                                              color: Colors.white,
-                                              fontSize: 8,
-                                            ),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      // await Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //     builder: (context) =>
-                                      //         InversionWidget(
-                                      //       infoEmprendimiento:
-                                      //           widget.proyectoDocRef,
-                                      //     ),
-                                      //   ),
-                                      // );
-                                    },
-                                    child: const Icon(
-                                      Icons.stacked_line_chart_rounded,
-                                      color: Colors.white,
-                                      size: 24,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Inversión',
-                                    style:
-                                        AppTheme.of(context).bodyText1.override(
-                                              fontFamily: 'Poppins',
-                                              color: Colors.white,
-                                              fontSize: 8,
-                                            ),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.attach_money_rounded,
-                                    color: Colors.white,
-                                    size: 24,
-                                  ),
-                                  Text(
-                                    'Ventas',
-                                    style:
-                                        AppTheme.of(context).bodyText1.override(
-                                              fontFamily: 'Poppins',
-                                              color: Colors.white,
-                                              fontSize: 8,
-                                            ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+            Positioned.fill(
+              bottom: 30,
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Material(
+                  color: Colors.transparent,
+                  elevation: 10,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: const Color(0xCF4672FF),
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                  ],
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () async {
+                                if (widget.emprendimiento.emprendedor.target ==
+                                    null) {
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          AgregarEmprendedorScreen(
+                                        idEmprendimiento:
+                                            widget.emprendimiento.id,
+                                        nombreEmprendimiento:
+                                            widget.emprendimiento.nombre,
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  snackbarKey.currentState
+                                      ?.showSnackBar(const SnackBar(
+                                    content: Text(
+                                        "Ya hay un emprendedor registrado a este emprendimiento"),
+                                  ));
+                                }
+                              },
+                              child: const Icon(
+                                Icons.groups_sharp,
+                                color: Colors.white,
+                                size: 24,
+                              ),
+                            ),
+                            Text(
+                              'Emprendedores',
+                              style: AppTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.white,
+                                    fontSize: 8,
+                                  ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AgregarJornadaScreen(
+                                      idEmprendimiento:
+                                          widget.emprendimiento.id,
+                                      nombreEmprendimiento:
+                                          widget.emprendimiento.nombre,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: const Icon(
+                                Icons.folder_rounded,
+                                color: Colors.white,
+                                size: 24,
+                              ),
+                            ),
+                            Text(
+                              'Jornada',
+                              style: AppTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.white,
+                                    fontSize: 8,
+                                  ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        AgregarConsultoriaScreen(
+                                      idEmprendimiento:
+                                          widget.emprendimiento.id,
+                                      nombreEmprendimiento:
+                                          widget.emprendimiento.nombre,
+                                      nombreEmprendedor: widget.emprendimiento
+                                              .emprendedor.target?.nombre ??
+                                          "SIN EMPRENDEDOR",
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: const Icon(
+                                Icons.work_outlined,
+                                color: Colors.white,
+                                size: 24,
+                              ),
+                            ),
+                            Text(
+                              'Consultoría',
+                              style: AppTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.white,
+                                    fontSize: 8,
+                                  ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                // await Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) =>
+                                //         InversionWidget(
+                                //       infoEmprendimiento:
+                                //           widget.proyectoDocRef,
+                                //     ),
+                                //   ),
+                                // );
+                              },
+                              child: const Icon(
+                                Icons.stacked_line_chart_rounded,
+                                color: Colors.white,
+                                size: 24,
+                              ),
+                            ),
+                            Text(
+                              'Inversión',
+                              style: AppTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.white,
+                                    fontSize: 8,
+                                  ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.attach_money_rounded,
+                              color: Colors.white,
+                              size: 24,
+                            ),
+                            Text(
+                              'Ventas',
+                              style: AppTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.white,
+                                    fontSize: 8,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ],
+              ),
             ),
           ],
         ),

@@ -1,19 +1,17 @@
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/screens/emprendimientos/grid_emprendimientos_screen.dart';
-import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/theme/theme.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/providers/providers.dart';
+import 'package:bizpro_app/screens/emprendimientos/grid_emprendimientos_screen.dart';
 import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
-
+import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
 import 'package:bizpro_app/screens/widgets/side_menu/side_menu.dart';
-
 import 'package:bizpro_app/screens/emprendimientos/agregar_emprendimiento_screen.dart';
 
 class EmprendimientosScreen extends StatefulWidget {
@@ -24,7 +22,7 @@ class EmprendimientosScreen extends StatefulWidget {
 }
 
 class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
-  TextEditingController textController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -50,10 +48,6 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
     final emprendimientoProvider =
         Provider.of<EmprendimientoController>(context);
     final UserState userState = Provider.of<UserState>(context);
-
-    //TODO: almacenar imagen?
-    const String currentUserPhoto =
-        'assets/images/default-user-profile-picture.jpg';
 
     return Scaffold(
       key: scaffoldKey,
@@ -183,8 +177,9 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(4, 0, 4, 0),
                                             child: TextFormField(
-                                              controller: textController,
-                                              obscureText: false,
+                                              controller: searchController,
+                                              // onChanged: (value) =>
+                                              //     setState(() {}),
                                               decoration: InputDecoration(
                                                 labelText: 'Buscar...',
                                                 labelStyle: AppTheme.of(context)
@@ -252,30 +247,12 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                             ),
                                             child: InkWell(
                                               onTap: () async {
-                                                // setState(() =>
-                                                //     algoliaSearchResults = null);
-                                                // await ProyectosRecord.search(
-                                                //   term: textController.text,
-                                                //   maxResults: 15,
-                                                // )
-                                                //     .then((r) =>
-                                                //         algoliaSearchResults = r)
-                                                //     .onError((_, __) =>
-                                                //         algoliaSearchResults = [])
-                                                //     .whenComplete(
-                                                //         () => setState(() {}));
+                                                setState(() {});
                                               },
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: const [
-                                                  Icon(
-                                                    Icons.search_rounded,
-                                                    color: Colors.white,
-                                                    size: 24,
-                                                  ),
-                                                ],
+                                              child: const Icon(
+                                                Icons.search_rounded,
+                                                color: Colors.white,
+                                                size: 24,
                                               ),
                                             ),
                                           ),
@@ -367,15 +344,26 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                     child: Builder(
                       builder: (context) {
                         //TODO: agregar query con el ID correcto
-                        final resultado = usuarioProvider.getEmprendimientos();
+                        List<Emprendimientos> emprendimientos =
+                            usuarioProvider.getEmprendimientos();
+                        if (searchController.text != '') {
+                          emprendimientos.removeWhere((element) {
+                            final tempNombre = element.nombre.toLowerCase();
+                            final tempBusqueda =
+                                searchController.text.toLowerCase();
+                            return !tempNombre.contains(tempBusqueda);
+                          });
+                        }
+
                         List<String> emprendedores = [];
                         return ListView.builder(
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
-                          itemCount: resultado.length,
+                          itemCount: emprendimientos.length,
                           itemBuilder: (context, resultadoIndex) {
-                            final resultadoItem = resultado[resultadoIndex];
+                            final emprendimiento =
+                                emprendimientos[resultadoIndex];
                             // resultadoItem.emprendedores.forEach((element) {
                             //   emprendedores.add(element.nombre);
                             // });
@@ -397,7 +385,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Column(
-                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     InkWell(
                                       onTap: () async {
@@ -406,7 +394,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 DetalleEmprendimientoScreen(
-                                              emprendimiento: resultadoItem,
+                                              emprendimiento: emprendimiento,
                                             ),
                                           ),
                                         );
@@ -418,97 +406,70 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                           topLeft: Radius.circular(8),
                                           topRight: Radius.circular(8),
                                         ),
-                                        child: getImage(resultadoItem.imagen),
+                                        child: getImage(emprendimiento.imagen),
                                       ),
                                     ),
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               16, 10, 16, 5),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              resultadoItem.nombre,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: AppTheme.of(context)
-                                                  .title3
-                                                  .override(
-                                                    fontFamily: 'Poppins',
-                                                    color: Colors.white,
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
+                                      child: Text(
+                                        emprendimiento.nombre,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: AppTheme.of(context)
+                                            .title3
+                                            .override(
+                                              fontFamily: 'Poppins',
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
                                             ),
-                                          ),
-                                        ],
                                       ),
                                     ),
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               16, 0, 16, 5),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              resultadoItem.comunidades.target
-                                                      ?.nombre
-                                                      .toString() ??
-                                                  'NONE',
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: AppTheme.of(context)
-                                                  .bodyText2
-                                                  .override(
-                                                    fontFamily: 'Poppins',
-                                                    color: Colors.black,
-                                                    fontSize: 12,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
+                                      child: Text(
+                                        emprendimiento
+                                                .comunidades.target?.nombre
+                                                .toString() ??
+                                            'NONE',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: AppTheme.of(context)
+                                            .bodyText2
+                                            .override(
+                                              fontFamily: 'Poppins',
+                                              color: Colors.black,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.normal,
                                             ),
-                                          ),
-                                        ],
                                       ),
                                     ),
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               16, 0, 16, 5),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              resultadoItem.emprendedor.target
-                                                          ?.nombre ==
-                                                      null
-                                                  ? 'SIN EMPRENDEDOR'
-                                                  : "${resultadoItem.emprendedor.target!.nombre} ${resultadoItem.emprendedor.target!.apellidos}",
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: AppTheme.of(context)
-                                                  .bodyText2
-                                                  .override(
-                                                    fontFamily: 'Poppins',
-                                                    color: Colors.black,
-                                                    fontSize: 12,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
+                                      child: Text(
+                                        emprendimiento.emprendedor.target
+                                                    ?.nombre ==
+                                                null
+                                            ? 'SIN EMPRENDEDOR'
+                                            : "${emprendimiento.emprendedor.target!.nombre} ${emprendimiento.emprendedor.target!.apellidos}",
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: AppTheme.of(context)
+                                            .bodyText2
+                                            .override(
+                                              fontFamily: 'Poppins',
+                                              color: Colors.black,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.normal,
                                             ),
-                                          ),
-                                        ],
                                       ),
                                     ),
-                                    // Container(
-                                    //   height: 40,
-                                    //   decoration: const BoxDecoration(),
-                                    // ),
                                   ],
                                 ),
                               ),

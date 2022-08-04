@@ -24,7 +24,7 @@ class AgregarEmprendimientoScreen extends StatefulWidget {
 class _AgregarEmprendimientoScreenState
     extends State<AgregarEmprendimientoScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final emprendimientoKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   XFile? image;
 
   @override
@@ -56,7 +56,7 @@ class _AgregarEmprendimientoScreenState
               ),
               SingleChildScrollView(
                 child: Form(
-                  key: emprendimientoKey,
+                  key: formKey,
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
@@ -192,7 +192,6 @@ class _AgregarEmprendimientoScreenState
                                       ),
                                     ],
                                   ),
-                                  // child: getImage(image?.path),
                                 ),
                               ),
                             ),
@@ -394,7 +393,7 @@ class _AgregarEmprendimientoScreenState
                                   FFButtonWidget(
                                     onPressed: () async {
                                       if (emprendimientoProvider
-                                          .validateForm(emprendimientoKey)) {
+                                          .validateForm(formKey)) {
                                         comunidadProvider.add();
                                         emprendimientoProvider.add(
                                             comunidadProvider
