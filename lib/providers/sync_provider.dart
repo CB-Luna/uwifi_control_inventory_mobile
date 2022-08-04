@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
+import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/models/response_post_emprendedor.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +11,6 @@ import 'package:http/http.dart' as http;
 import '../objectbox.g.dart';
 
 class SyncProvider extends ChangeNotifier {
-
-  //  final AlreadySyncInstance = dataBase.VariablesUsuarioBox.get(0)!.emprendedores;
-  bool alreadySyncEmprendedores = false;
-  bool alreadySyncEmprendimientos = false;
 
   bool procesoterminado = false;
   bool procesocargando = false;
@@ -42,7 +39,7 @@ class SyncProvider extends ChangeNotifier {
             break;
           } else {
             print("Entro aqui en el else");
-            if (alreadySyncEmprendedores) {
+            if (dataBase.VariablesUsuarioBox.get(prefs.getInt("idVariablesUser")!)!.emprendedores) {
               await syncPostEmprendimiento(emprendimientoToSync);
             } else {
               final emprendedores = verificarEstadoEmprendedores(dataBase.emprendedoresBox.getAll());
@@ -154,7 +151,12 @@ class SyncProvider extends ChangeNotifier {
       }
       
     }
-    alreadySyncEmprendedores = true;
+    final updateVariableUser = dataBase.VariablesUsuarioBox.get(prefs.getInt("idVariablesUser")!);
+    if (updateVariableUser != null) {
+      updateVariableUser.emprendedores = true;
+      dataBase.VariablesUsuarioBox.put(updateVariableUser);
+    }
+    
     return true;
 }
 
@@ -305,6 +307,8 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
       var url = Uri.parse('$baseUrl/api/collections/emprendimientos/records');
 
       print("ID Promotor: ${emprendimiento.usuarios.target!.idDBR}");
+
+      print("ID Emprendedor: ${emprendimiento.emprendedor.target!.idDBR}");
       
       final bodyMsg = jsonEncode({
           "nombre_emprendimiento": emprendimiento.nombre,

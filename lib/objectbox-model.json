@@ -242,7 +242,7 @@
     },
     {
       "id": "10:252808688812742776",
-      "lastPropertyId": "17:7181885270107922782",
+      "lastPropertyId": "18:4567358900391945362",
       "name": "Usuarios",
       "properties": [
         {
@@ -328,6 +328,14 @@
           "flags": 520,
           "indexId": "82:4608900919778481553",
           "relationTarget": "Bitacora"
+        },
+        {
+          "id": "18:4567358900391945362",
+          "name": "variablesUsuarioId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "84:5311167113567925142",
+          "relationTarget": "VariablesUsuario"
         }
       ],
       "relations": []
@@ -1024,7 +1032,7 @@
     }
   ],
   "lastEntityId": "29:7625539946193612618",
-  "lastIndexId": "83:7569304066565191687",
+  "lastIndexId": "84:5311167113567925142",
   "lastRelationId": "7:7628231779967948088",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

@@ -1,3 +1,5 @@
+import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -617,7 +619,11 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                 onPressed: () async {
                                   if (emprendedorProvider.validateForm(emprendedorKey)) {
                                     emprendedorProvider.add(widget.idEmprendimiento);
-                                    syncProvider.alreadySyncEmprendedores = false;
+                                    final updateVariableUser = dataBase.VariablesUsuarioBox.get(prefs.getInt("idVariablesUser")!);
+                                    if (updateVariableUser != null) {
+                                      updateVariableUser.emprendedores = false;
+                                      dataBase.VariablesUsuarioBox.put(updateVariableUser);
+                                    }
                                     await Navigator.push(
                                       context,
                                       MaterialPageRoute(

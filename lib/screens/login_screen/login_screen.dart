@@ -1,3 +1,5 @@
+import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/objectbox.g.dart';
 import 'package:bizpro_app/services/api_service.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -181,11 +183,25 @@ class _LoginScreenState extends State<LoginScreen> {
                             //offline
                             // loginOffline(email, contrasena);
                             if (usuarioProvider.validateUserOffline(
-                                prefs.getString("userId") ?? "NONE",
+                                userState.emailController.text,
                                 userState.passwordController.text)) {
                               print('Usuario ya existente');
-                              // usuarioProvider.getUser(
-                              //     prefs.getString("userId")!);
+                              //Se guarda el ID DEL USUARIO (correo)
+                              prefs.setString("userId", userState.emailController.text);
+                              usuarioProvider.getUser(
+                                   prefs.getString("userId")!);
+                              //Se almacena el ID Variables Usuario
+                              final lastUsuario = dataBase.usuariosBox.query(Usuarios_.correo.equals(prefs.getString("userId")!)).build().findUnique();
+                              if (lastUsuario != null) {
+                                print("NOMBRE USUARIO: ${lastUsuario.nombre}");
+                                print("ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
+                                print("Tamaño VariablesUser: ${dataBase.VariablesUsuarioBox.getAll().length}");
+                                if (lastUsuario.variablesUsuario.target?.id != null) {
+                                  print("Se guarda ID DE VARIABLES USUARIO");
+                                  prefs.setInt("idVariablesUser", lastUsuario.variablesUsuario.target!.id);
+                                }
+                              }
+
                               if (userState.recuerdame == true) {
                                 await userState.setEmail();
                                 //TODO: quitar?
@@ -228,6 +244,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             await userState.setToken(loginResponse.token);
                             final userId = loginResponse.user.email;
 
+                            //Se guarda el ID DEL USUARIO (correo)
                             prefs.setString("userId", userId);
 
                             //User Query
@@ -244,7 +261,19 @@ class _LoginScreenState extends State<LoginScreen> {
                               usuarioProvider.getUser(userId);
                               usuarioProvider.updatePasswordLocal(
                                   userState.passwordController.text);
-                            } else {
+                              //Se almacena el ID Variables Usuario
+                              final lastUsuario = dataBase.usuariosBox.query(Usuarios_.correo.equals(userId)).build().findUnique();
+                              if (lastUsuario != null) {
+                                print("NOMBRE USUARIO: ${lastUsuario.nombre}");
+                                print("ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
+                                print("Tamaño VariablesUser: ${dataBase.VariablesUsuarioBox.getAll().length}");
+                                if (lastUsuario.variablesUsuario.target?.id != null) {
+                                  print("Se guarda ID DE VARIABLES USUARIO");
+                                  prefs.setInt("idVariablesUser", lastUsuario.variablesUsuario.target!.id);
+                                }
+                              }
+                            } 
+                            else {
                               print('Usuario no existente');
                               usuarioProvider.add(
                                 emiUser.nombreUsuario,
@@ -261,7 +290,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                     .idRolFk), //TODO Verificar como es el rol
                               );
                               usuarioProvider.getUser(loginResponse.user.email);
-                              // print("Rol ${loginResponse.user.profile.idRolFk.toString()}");
+                              //Se almacena el ID Variables Usuario
+                              final lastUsuario = dataBase.usuariosBox.query(Usuarios_.correo.equals(userId)).build().findUnique();
+                              if (lastUsuario != null) {
+                                print("NOMBRE USUARIO: ${lastUsuario.nombre}");
+                                print("ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
+                                print("Emprendedores: ${lastUsuario.variablesUsuario.target?.emprendedores ?? 'none'}");
+                                print("Tamaño VariablesUser: ${dataBase.VariablesUsuarioBox.getAll().length}");
+                                if (lastUsuario.variablesUsuario.target?.id != null) {
+                                  print("Se guarda ID DE VARIABLES USUARIO");
+                                  prefs.setInt("idVariablesUser", lastUsuario.variablesUsuario.target!.id);
+                                }
+                              }
                             }
                             if (userState.recuerdame == true) {
                               await userState.setEmail();

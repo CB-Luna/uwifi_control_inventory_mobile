@@ -255,7 +255,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(10, 252808688812742776),
       name: 'Usuarios',
-      lastPropertyId: const IdUid(17, 7181885270107922782),
+      lastPropertyId: const IdUid(18, 4567358900391945362),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -337,7 +337,14 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(82, 4608900919778481553),
-            relationTarget: 'Bitacora')
+            relationTarget: 'Bitacora'),
+        ModelProperty(
+            id: const IdUid(18, 4567358900391945362),
+            name: 'variablesUsuarioId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(84, 5311167113567925142),
+            relationTarget: 'VariablesUsuario')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -1040,7 +1047,9 @@ final _entities = <ModelEntity>[
             flags: 0)
       ],
       relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[])
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'usuarios', srcEntity: 'Usuarios', srcField: '')
+      ])
 ];
 
 /// Open an ObjectBox store with the model declared in this file.
@@ -1064,7 +1073,7 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(29, 7625539946193612618),
-      lastIndexId: const IdUid(83, 7569304066565191687),
+      lastIndexId: const IdUid(84, 5311167113567925142),
       lastRelationId: const IdUid(7, 7628231779967948088),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -1518,7 +1527,7 @@ ModelDefinition getObjectBoxModel() {
     Usuarios: EntityDefinition<Usuarios>(
         model: _entities[4],
         toOneRelations: (Usuarios object) =>
-            [object.statusSync, object.bitacora],
+            [object.statusSync, object.bitacora, object.variablesUsuario],
         toManyRelations: (Usuarios object) => {
               RelInfo<Emprendimientos>.toOneBacklink(22, object.id,
                       (Emprendimientos srcObject) => srcObject.usuarios):
@@ -1539,7 +1548,7 @@ ModelDefinition getObjectBoxModel() {
           final imagenOffset = fbb.writeString(object.imagen);
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(18);
+          fbb.startTable(19);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nombreOffset);
           fbb.addOffset(2, apellidoPOffset);
@@ -1555,6 +1564,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(13, object.statusSync.targetId);
           fbb.addOffset(15, idDBROffset);
           fbb.addInt64(16, object.bitacora.targetId);
+          fbb.addInt64(17, object.variablesUsuario.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -1589,6 +1599,9 @@ ModelDefinition getObjectBoxModel() {
           object.bitacora.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 36, 0);
           object.bitacora.attach(store);
+          object.variablesUsuario.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 38, 0);
+          object.variablesUsuario.attach(store);
           InternalToManyAccess.setRelInfo(
               object.emprendimientos,
               store,
@@ -2354,7 +2367,11 @@ ModelDefinition getObjectBoxModel() {
     VariablesUsuario: EntityDefinition<VariablesUsuario>(
         model: _entities[17],
         toOneRelations: (VariablesUsuario object) => [],
-        toManyRelations: (VariablesUsuario object) => {},
+        toManyRelations: (VariablesUsuario object) => {
+              RelInfo<Usuarios>.toOneBacklink(18, object.id,
+                      (Usuarios srcObject) => srcObject.variablesUsuario):
+                  object.usuarios
+            },
         getId: (VariablesUsuario object) => object.id,
         setId: (VariablesUsuario object, int id) {
           object.id = id;
@@ -2380,7 +2397,12 @@ ModelDefinition getObjectBoxModel() {
                   const fb.BoolReader().vTableGet(buffer, rootOffset, 8, false),
               fechaActualizacion: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0)));
-
+          InternalToManyAccess.setRelInfo(
+              object.usuarios,
+              store,
+              RelInfo<Usuarios>.toOneBacklink(18, object.id,
+                  (Usuarios srcObject) => srcObject.variablesUsuario),
+              store.box<VariablesUsuario>());
           return object;
         })
   };
@@ -2594,6 +2616,11 @@ class Usuarios_ {
   /// see [Usuarios.bitacora]
   static final bitacora =
       QueryRelationToOne<Usuarios, Bitacora>(_entities[4].properties[14]);
+
+  /// see [Usuarios.variablesUsuario]
+  static final variablesUsuario =
+      QueryRelationToOne<Usuarios, VariablesUsuario>(
+          _entities[4].properties[15]);
 }
 
 /// [Ventas] entity fields to define ObjectBox queries.

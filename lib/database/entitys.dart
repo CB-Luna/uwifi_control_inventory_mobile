@@ -1,3 +1,4 @@
+import 'package:bizpro_app/objectbox.g.dart';
 import 'package:intl/intl.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -253,6 +254,7 @@ class Usuarios {
   String? idDBR;
   final statusSync = ToOne<StatusSync>();
   final bitacora = ToOne<Bitacora>();
+  final variablesUsuario = ToOne<VariablesUsuario>();
   @Backlink()
   final emprendimientos = ToMany<Emprendimientos>();
 
@@ -495,7 +497,8 @@ class VariablesUsuario {
   bool emprendedores;
   bool emprendimientos;
   DateTime fechaActualizacion;
-
+  @Backlink()
+  final usuarios = ToMany<Usuarios>();
   VariablesUsuario({
     this.id = 0,
     this.emprendedores = false,
@@ -503,18 +506,6 @@ class VariablesUsuario {
     DateTime? fechaActualizacion,
     }): fechaActualizacion = fechaActualizacion ?? DateTime.now();
 
-  VariablesUsuario copyWith ({
-    int? id,
-    bool? emprendedores,
-    bool? emprendimientos,
-    DateTime? fechaActualizacion
-  }) {
-    return VariablesUsuario(
-      emprendedores: emprendedores ?? this.emprendedores,
-      emprendimientos: emprendimientos ?? this.emprendimientos,
-      fechaActualizacion: fechaActualizacion ?? this.fechaActualizacion
-    );
-  }
   String get fechaActualizacionFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaActualizacion);
 
 }

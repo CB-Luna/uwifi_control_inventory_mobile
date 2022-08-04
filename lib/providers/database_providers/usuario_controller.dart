@@ -70,9 +70,19 @@ class UsuarioController extends ChangeNotifier {
         rol: rol,
         idDBR: idDBR,
         );
-
+    
+    final nuevaVariablesUsuario = VariablesUsuario();
+    nuevoUsuario.variablesUsuario.target = nuevaVariablesUsuario;
     dataBase.usuariosBox.put(nuevoUsuario);
     usuarios.add(nuevoUsuario);
+    
+    final lastUsuario = dataBase.usuariosBox.query(Usuarios_.correo.equals(correo)).build().findUnique();
+    if (lastUsuario != null) {
+      print("NOMBRE USUARIO: ${lastUsuario.nombre}");
+      print("ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
+      print("Emprendedores: ${lastUsuario.variablesUsuario.target?.emprendedores ?? 'none'}");
+      print("Tamaño VariablesUser: ${dataBase.VariablesUsuarioBox.getAll().length}");
+    }
     print('Usuario agregado exitosamente');
     notifyListeners();
   }

@@ -46,6 +46,7 @@ class EmprendimientoController extends ChangeNotifier {
       nuevoEmprendimiento.bitacora.target = nuevaInstruccion;
       dataBase.emprendimientosBox.put(nuevoEmprendimiento);
       emprendimiento = nuevoEmprendimiento;
+      print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
       print('Emprendimiento agregado exitosamente');
       notifyListeners();
   }
