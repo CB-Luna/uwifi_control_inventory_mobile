@@ -18,8 +18,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
 
-  //TODO: cambiar mensaje
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

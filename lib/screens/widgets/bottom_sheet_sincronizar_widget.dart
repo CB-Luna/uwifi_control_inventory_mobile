@@ -1,24 +1,19 @@
-import 'package:bizpro_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:lottie/lottie.dart';
+
 import 'package:bizpro_app/theme/theme.dart';
-
 import 'package:bizpro_app/providers/sync_provider.dart';
-
-
 import 'package:bizpro_app/screens/sync/sincronizacion_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
-
-
 class BottomSheetSincronizarWidget extends StatefulWidget {
-
   final bool isVisible;
-  const BottomSheetSincronizarWidget({Key? key, required this.isVisible}) : super(key: key);
+  const BottomSheetSincronizarWidget({Key? key, required this.isVisible})
+      : super(key: key);
 
   @override
-  _BottomSheetSincronizarWidgetState createState() =>
+  State<BottomSheetSincronizarWidget> createState() =>
       _BottomSheetSincronizarWidgetState();
 }
 
@@ -32,7 +27,7 @@ class _BottomSheetSincronizarWidgetState
       height: 350,
       decoration: BoxDecoration(
         color: AppTheme.of(context).secondaryBackground,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(0),
           bottomRight: Radius.circular(0),
           topLeft: Radius.circular(16),
@@ -40,13 +35,13 @@ class _BottomSheetSincronizarWidgetState
         ),
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
+        padding: const EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(20, 8, 20, 0),
+                padding: const EdgeInsetsDirectional.fromSTEB(20, 8, 20, 0),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
@@ -65,17 +60,14 @@ class _BottomSheetSincronizarWidgetState
                         children: [
                           Expanded(
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 4, 0, 0),
                               child: Text(
                                 '¿Seguro que quieres Sincronizar?',
-                                style: AppTheme.of(context)
-                                    .title2
-                                    .override(
-                                      fontFamily: AppTheme.of(context)
-                                          .title2Family,
-                                      color: AppTheme.of(context)
-                                          .primaryText,
+                                style: AppTheme.of(context).title2.override(
+                                      fontFamily:
+                                          AppTheme.of(context).title2Family,
+                                      color: AppTheme.of(context).primaryText,
                                       fontSize: 19,
                                     ),
                               ),
@@ -88,18 +80,15 @@ class _BottomSheetSincronizarWidgetState
                         children: [
                           Expanded(
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 8, 0, 0),
                               child: Text(
                                 'Toda la informacíón capturada en los emprendimientos se registrarán en la nube (necesitas conexón a internet).',
                                 textAlign: TextAlign.center,
-                                style: AppTheme.of(context)
-                                    .bodyText2
-                                    .override(
-                                      fontFamily: AppTheme.of(context)
-                                          .bodyText2Family,
-                                      color: AppTheme.of(context)
-                                          .secondaryText,
+                                style: AppTheme.of(context).bodyText2.override(
+                                      fontFamily:
+                                          AppTheme.of(context).bodyText2Family,
+                                      color: AppTheme.of(context).secondaryText,
                                       fontWeight: FontWeight.w500,
                                     ),
                               ),
@@ -108,7 +97,8 @@ class _BottomSheetSincronizarWidgetState
                         ],
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -123,7 +113,8 @@ class _BottomSheetSincronizarWidgetState
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 44),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 44),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -136,17 +127,17 @@ class _BottomSheetSincronizarWidgetState
                               options: FFButtonOptions(
                                 width: 150,
                                 height: 50,
-                                color: Color(0xFF8C8C8C),
+                                color: const Color(0xFF8C8C8C),
                                 textStyle: AppTheme.of(context)
                                     .subtitle2
                                     .override(
-                                      fontFamily: AppTheme.of(context)
-                                          .subtitle2Family,
+                                      fontFamily:
+                                          AppTheme.of(context).subtitle2Family,
                                       color: Colors.white,
                                       fontWeight: FontWeight.normal,
                                     ),
                                 elevation: 2,
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.transparent,
                                   width: 1,
                                 ),
@@ -162,7 +153,7 @@ class _BottomSheetSincronizarWidgetState
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          SincronizacionScreen(),
+                                          const SincronizacionScreen(),
                                     ),
                                   );
                                 },
@@ -170,18 +161,16 @@ class _BottomSheetSincronizarWidgetState
                                 options: FFButtonOptions(
                                   width: 150,
                                   height: 50,
-                                  color:
-                                      AppTheme.of(context).secondaryText,
-                                  textStyle: AppTheme.of(context)
-                                      .subtitle2
-                                      .override(
-                                        fontFamily: 'Poppins',
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                  color: AppTheme.of(context).secondaryText,
+                                  textStyle:
+                                      AppTheme.of(context).subtitle2.override(
+                                            fontFamily: 'Poppins',
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                          ),
                                   elevation: 2,
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Colors.transparent,
                                     width: 1,
                                   ),

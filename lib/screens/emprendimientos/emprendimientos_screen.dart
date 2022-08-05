@@ -178,8 +178,8 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                                 .fromSTEB(4, 0, 4, 0),
                                             child: TextFormField(
                                               controller: searchController,
-                                              // onChanged: (value) =>
-                                              //     setState(() {}),
+                                              onChanged: (value) =>
+                                                  setState(() {}),
                                               decoration: InputDecoration(
                                                 labelText: 'Buscar...',
                                                 labelStyle: AppTheme.of(context)

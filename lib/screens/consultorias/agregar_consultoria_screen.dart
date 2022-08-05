@@ -7,25 +7,24 @@ import 'package:bizpro_app/providers/database_providers/consultoria_controller.d
 import 'package:bizpro_app/screens/consultorias/consultoria_creada.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
-
 class AgregarConsultoriaScreen extends StatefulWidget {
   final int idEmprendimiento;
   final String nombreEmprendimiento;
   final String nombreEmprendedor;
 
-  const AgregarConsultoriaScreen({
-    Key? key, 
-    required this.idEmprendimiento, 
-    required this.nombreEmprendimiento, 
-    required this.nombreEmprendedor}) : super(key: key);
+  const AgregarConsultoriaScreen(
+      {Key? key,
+      required this.idEmprendimiento,
+      required this.nombreEmprendimiento,
+      required this.nombreEmprendedor})
+      : super(key: key);
 
   @override
-  _AgregarConsultoriaScreenState createState() =>
+  State<AgregarConsultoriaScreen> createState() =>
       _AgregarConsultoriaScreenState();
 }
 
-class _AgregarConsultoriaScreenState
-    extends State<AgregarConsultoriaScreen> {
+class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
   final consultoriaKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -40,7 +39,7 @@ class _AgregarConsultoriaScreenState
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Color(0xFF008DD4),
+        backgroundColor: const Color(0xFF008DD4),
         automaticallyImplyLeading: true,
         title: Text(
           'Registrar Consultoría',
@@ -50,11 +49,11 @@ class _AgregarConsultoriaScreenState
                 fontSize: 22,
               ),
         ),
-        actions: [],
+        actions: const [],
         centerTitle: true,
         elevation: 4,
       ),
-      backgroundColor: Color(0xFFD9EEF9),
+      backgroundColor: const Color(0xFFD9EEF9),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -65,7 +64,8 @@ class _AgregarConsultoriaScreenState
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(15, 16, 15, 0),
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(15, 16, 15, 0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -204,14 +204,12 @@ class _AgregarConsultoriaScreenState
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Documentos*',
-                              labelStyle:
-                                  AppTheme.of(context).title3.override(
-                                        fontFamily: 'Montserrat',
-                                        color: AppTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                      ),
+                              labelStyle: AppTheme.of(context).title3.override(
+                                    fontFamily: 'Montserrat',
+                                    color: AppTheme.of(context).secondaryText,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.normal,
+                                  ),
                               hintText: 'Ingresar documentos...',
                               enabledBorder: OutlineInputBorder(
                                 borderSide: const BorderSide(
@@ -318,34 +316,34 @@ class _AgregarConsultoriaScreenState
                   FFButtonWidget(
                     onPressed: () async {
                       if (consultoriaProvider.validateForm(consultoriaKey)) {
-                              consultoriaProvider.add(widget.idEmprendimiento);
-                              // emprendimientoProvider.updateEmprendedores(widget.idEmprendimiento, emprendedorProvider.emprendedores[emprendedorProvider.emprendedores.length - 1]); 
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const ConsultoriaCreada(),
+                        consultoriaProvider.add(widget.idEmprendimiento);
+                        // emprendimientoProvider.updateEmprendedores(widget.idEmprendimiento, emprendedorProvider.emprendedores[emprendedorProvider.emprendedores.length - 1]);
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ConsultoriaCreada(),
+                          ),
+                        );
+                      } else {
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: const Text('Campos vacíos'),
+                              content: const Text(
+                                  'Para continuar, debe llenar todos los campos'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: const Text('Bien'),
                                 ),
-                              );
-                            } else {
-                              await showDialog(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: const Text('Campos vacíos'),
-                                    content: const Text(
-                                        'Para continuar, debe llenar todos los campos'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: const Text('Bien'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                              return;
-                            }
+                              ],
+                            );
+                          },
+                        );
+                        return;
+                      }
                     },
                     text: 'Crear',
                     options: FFButtonOptions(
@@ -357,7 +355,7 @@ class _AgregarConsultoriaScreenState
                             color: Colors.white,
                             fontSize: 15,
                           ),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.transparent,
                         width: 1,
                       ),

@@ -247,8 +247,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                               confNuevaContrasenaController.text,
                             );
 
-                            if (res == false)
-                              return; //TODO: redireccionar a login
+                            if (res == false) return;
 
                             await userState.logout();
                           },
