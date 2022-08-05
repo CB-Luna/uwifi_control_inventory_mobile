@@ -21,6 +21,19 @@ String dateTimeFormat(String format, DateTime dateTime) {
   return DateFormat(format).format(dateTime);
 }
 
+String removeDiacritics(String str) {
+  var withDia =
+      'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
+  var withoutDia =
+      'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz';
+
+  for (int i = 0; i < withDia.length; i++) {
+    str = str.replaceAll(withDia[i], withoutDia[i]);
+  }
+
+  return str;
+}
+
 DateTime get getCurrentTimestamp => DateTime.now();
 
 extension DateTimeComparisonOperators on DateTime {

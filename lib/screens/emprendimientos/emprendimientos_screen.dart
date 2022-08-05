@@ -1,3 +1,4 @@
+import 'package:bizpro_app/util/util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -274,24 +275,12 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                   ),
                                   child: InkWell(
                                     onTap: () async {
-                                      await showModalBottomSheet(
-                                        isScrollControlled: true,
-                                        backgroundColor:
-                                            const Color(0xFF3B9FE5),
-                                        context: context,
-                                        builder: (context) {
-                                          return Padding(
-                                            padding: MediaQuery.of(context)
-                                                .viewInsets,
-                                            child: SizedBox(
-                                              height: MediaQuery.of(context)
-                                                  .size
-                                                  .height,
-                                              child:
-                                                  const GridEmpredimientosScreen(),
-                                            ),
-                                          );
-                                        },
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const GridEmprendimientosScreen(),
+                                        ),
                                       );
                                     },
                                     child: Column(
@@ -346,11 +335,15 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                         //TODO: agregar query con el ID correcto
                         List<Emprendimientos> emprendimientos =
                             usuarioProvider.getEmprendimientos();
+
+                        //Busqueda
                         if (searchController.text != '') {
                           emprendimientos.removeWhere((element) {
-                            final tempNombre = element.nombre.toLowerCase();
+                            final tempNombre =
+                                removeDiacritics(element.nombre).toLowerCase();
                             final tempBusqueda =
-                                searchController.text.toLowerCase();
+                                removeDiacritics(searchController.text)
+                                    .toLowerCase();
                             return !tempNombre.contains(tempBusqueda);
                           });
                         }

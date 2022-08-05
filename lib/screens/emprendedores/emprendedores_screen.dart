@@ -1,4 +1,7 @@
+import 'package:bizpro_app/database/entitys.dart';
+import 'package:bizpro_app/screens/emprendedores/agregar_emprendedor_screen.dart';
 import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
+import 'package:bizpro_app/util/util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,12 +25,11 @@ class EmprendedoresScreen extends StatefulWidget {
 }
 
 class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
-  TextEditingController textController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
@@ -57,7 +59,7 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
       backgroundColor: const Color(0xFF2BC1F6),
       floatingActionButton: userState.rol == Rol.administrador
           ? FloatingActionButton(
-              onPressed: () {
+              onPressed: () async {
                 // await Navigator.push(
                 //   context,
                 //   MaterialPageRoute(
@@ -203,8 +205,9 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(4, 0, 4, 0),
                                             child: TextFormField(
-                                              controller: textController,
+                                              controller: searchController,
                                               obscureText: false,
+                                              onChanged: (_) => setState(() {}),
                                               decoration: InputDecoration(
                                                 labelText:
                                                     'Ingresa búsqueda...',
@@ -258,19 +261,7 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                               .fromSTEB(0, 0, 10, 0),
                                           child: CustomButton(
                                             onPressed: () async {
-                                              //TODO: agregar funcionalidad
-                                              // setState(() =>
-                                              //     algoliaSearchResults = null);
-                                              // await ProyectosRecord.search(
-                                              //   term: textController.text,
-                                              //   maxResults: 15,
-                                              // )
-                                              //     .then((r) =>
-                                              //         algoliaSearchResults = r)
-                                              //     .onError((_, __) =>
-                                              //         algoliaSearchResults = [])
-                                              //     .whenComplete(
-                                              //         () => setState(() {}));
+                                              setState(() {});
                                             },
                                             text: '',
                                             icon: const Icon(
@@ -327,9 +318,8 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                                 .viewInsets,
                                             child: Container(
                                               height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  1,
+                                                  .size
+                                                  .height,
                                               //TODO: agregar pantalla
                                               // child: GridEmpredimientosWidget(),
                                             ),
@@ -362,12 +352,27 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 145, 0, 6),
                     child: Builder(
                       builder: (context) {
+                        List<Emprendedores> emprendedores =
+                            emprendedorProvider.emprendedores;
+
+                        //Busqueda
+                        if (searchController.text != '') {
+                          emprendedores.removeWhere((element) {
+                            final tempNombre =
+                                removeDiacritics(element.nombre).toLowerCase();
+                            final tempBusqueda =
+                                removeDiacritics(searchController.text)
+                                    .toLowerCase();
+                            return !tempNombre.contains(tempBusqueda);
+                          });
+                        }
                         return ListView.builder(
                             padding: EdgeInsets.zero,
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
-                            itemCount: emprendedorProvider.emprendedores.length,
-                            itemBuilder: (context, resultadoIndex) {
+                            itemCount: emprendedores.length,
+                            itemBuilder: (context, index) {
+                              final emprendedor = emprendedores[index];
                               return Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     5, 10, 5, 0),
@@ -406,9 +411,8 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                               topLeft: Radius.circular(8),
                                               topRight: Radius.circular(8),
                                             ),
-                                            child: getImage(emprendedorProvider
-                                                .emprendedores[resultadoIndex]
-                                                .imagen)),
+                                            child:
+                                                getImage(emprendedor.imagen)),
                                       ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional
@@ -421,10 +425,7 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                                   const EdgeInsetsDirectional
                                                       .fromSTEB(0, 0, 5, 0),
                                               child: Text(
-                                                emprendedorProvider
-                                                    .emprendedores[
-                                                        resultadoIndex]
-                                                    .nombre,
+                                                emprendedor.nombre,
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: AppTheme.of(context)
@@ -439,9 +440,7 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                               ),
                                             ),
                                             Text(
-                                              emprendedorProvider
-                                                  .emprendedores[resultadoIndex]
-                                                  .apellidos,
+                                              emprendedor.apellidos,
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               style: AppTheme.of(context)
@@ -463,26 +462,23 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Expanded(
-                                                child: Text(
-                                              emprendedorProvider
-                                                      .emprendedores[
-                                                          resultadoIndex]
-                                                      .comunidades
-                                                      .target
-                                                      ?.nombre ??
-                                                  "SIN COMUNIDAD",
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: AppTheme.of(context)
-                                                  .bodyText2
-                                                  .override(
-                                                    fontFamily: 'Poppins',
-                                                    color: Colors.black,
-                                                    fontSize: 12,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
-                                            )),
+                                              child: Text(
+                                                emprendedor.comunidades.target
+                                                        ?.nombre ??
+                                                    "SIN COMUNIDAD",
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: AppTheme.of(context)
+                                                    .bodyText2
+                                                    .override(
+                                                      fontFamily: 'Poppins',
+                                                      color: Colors.black,
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                    ),
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),
