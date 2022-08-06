@@ -2,8 +2,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 Widget? getImage(String? image, {double height = 180}) {
-  if (image == null) {
-    return null;
+  if (image == null || image == '') {
+    return const Image(
+      height: 180,
+      width: double.infinity,
+      image: AssetImage("assets/images/default-user-profile-picture.jpg"),
+      fit: BoxFit.cover,
+    );
   } else if (image.startsWith('http') || image.startsWith('https')) {
     return FadeInImage(
       height: 180,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
 
@@ -156,6 +157,7 @@ class _AgregarJornadaScreenState extends State<AgregarJornadaScreen> {
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                           child: TextFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
                             onChanged: (value) {
                               jornadaProvider.numJornada = value;
                             },
@@ -188,17 +190,20 @@ class _AgregarJornadaScreenState extends State<AgregarJornadaScreen> {
                               filled: true,
                               fillColor: const Color(0xFFF3F2F2),
                             ),
+                            keyboardType: TextInputType.number,
                             style: AppTheme.of(context).title3.override(
                                   fontFamily: 'Poppins',
                                   color: const Color(0xFF060606),
                                   fontSize: 15,
                                   fontWeight: FontWeight.normal,
                                 ),
-                            validator: (val) {
-                              if (val == null || val.isEmpty) {
-                                return 'Para continuar, ingrese el número de jornada.';
-                              }
-                              return null;
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(1),
+                            ],
+                            validator: (value) {
+                              return familiaCharacters.hasMatch(value ?? '')
+                                  ? null
+                                  : 'Para continuar, ingrese el número de jornada';
                             },
                           ),
                         ),

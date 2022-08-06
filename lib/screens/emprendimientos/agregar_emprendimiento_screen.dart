@@ -1,3 +1,4 @@
+import 'package:bizpro_app/helpers/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
@@ -6,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:bizpro_app/providers/database_providers/comunidad_controller.dart';
 import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
-
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimiento_creado.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
@@ -216,6 +216,8 @@ class _AgregarEmprendimientoScreenState
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   5, 0, 5, 10),
                               child: TextFormField(
+                                textCapitalization: TextCapitalization.sentences,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 onChanged: (value) {
                                   emprendimientoProvider.nombre = value;
                                 },
@@ -260,12 +262,10 @@ class _AgregarEmprendimientoScreenState
                                       fontSize: 15,
                                       fontWeight: FontWeight.normal,
                                     ),
-                                validator: (val) {
-                                  if (val == null || val.isEmpty) {
-                                    return 'Para continuar, ingrese el nombre.';
-                                  }
-
-                                  return null;
+                                validator: (value) {
+                                return capitalizadoCharacters.hasMatch(value ?? '')
+                                    ? null
+                                    : 'Para continuar, ingrese el nombre empezando por mayúscula';
                                 },
                               ),
                             ),
@@ -273,6 +273,8 @@ class _AgregarEmprendimientoScreenState
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   5, 0, 5, 10),
                               child: TextFormField(
+                                textCapitalization: TextCapitalization.sentences,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 onChanged: (value) {
                                   emprendimientoProvider.descripcion = value;
                                 },
@@ -318,12 +320,10 @@ class _AgregarEmprendimientoScreenState
                                       fontWeight: FontWeight.normal,
                                     ),
                                 maxLines: 5,
-                                validator: (val) {
-                                  if (val == null || val.isEmpty) {
-                                    return 'Para continuar, ingrese la descripción.';
-                                  }
-
-                                  return null;
+                                validator: (value) {
+                                return capitalizadoCharacters.hasMatch(value ?? '')
+                                    ? null
+                                    : 'Para continuar, ingrese la descripción empezando por mayúscula';
                                 },
                               ),
                             ),
@@ -331,6 +331,7 @@ class _AgregarEmprendimientoScreenState
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   5, 0, 5, 10),
                               child: TextFormField(
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 onChanged: (value) {
                                   comunidadProvider.nombre = value;
                                 },

@@ -1,4 +1,3 @@
-import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/helpers/constants.dart';
-
+import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/providers/sync_provider.dart';
 import 'package:bizpro_app/providers/database_providers/emprendedor_controller.dart';
 
@@ -154,13 +153,6 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                         ],
                       );
                     },
-                    validator: (val) {
-                    if (emprendedorProvider.imagen == null ||
-                        emprendedorProvider.imagen.isEmpty) {
-                      return 'Para continuar, cargue una imagen';
-                    }
-                    return null;
-                  }
                   ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
@@ -214,6 +206,8 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                           child: TextFormField(
+                            textCapitalization: TextCapitalization.words,
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
                             onChanged: (value) {
                               emprendedorProvider.nombre = value;
                             },
@@ -228,7 +222,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal,
                                       ),
-                              hintText: 'Ingresa nombre..',
+                              hintText: 'Ingresa nombre(s)..',
                               enabledBorder: OutlineInputBorder(
                                 borderSide: const BorderSide(
                                   color: Color(0xFF060606),
@@ -255,7 +249,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                             validator: (value) {
                               return nombreCharacters.hasMatch(value ?? '')
                                   ? null
-                                  : 'Para continuar, ingrese el nombre';
+                                  : 'Para continuar, ingrese nombre(s) empezando por mayúscula';
                             },
                           ),
                         ),
@@ -263,6 +257,8 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                           child: TextFormField(
+                            textCapitalization: TextCapitalization.words,
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
                             onChanged: (value) {
                               emprendedorProvider.apellidos = value;
                             },
@@ -304,7 +300,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                             validator: (value) {
                               return nombreCharacters.hasMatch(value ?? '')
                                   ? null
-                                  : 'Para continuar, ingrese los apellidos';
+                                  : 'Para continuar, ingrese los apellidos empezando por mayúscula';
                             },
                           ),
                         ),
@@ -312,6 +308,8 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                           child: TextFormField(
+                            textCapitalization: TextCapitalization.characters,
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
                             onChanged: (value) {
                               emprendedorProvider.curp = value;
                             },
@@ -353,7 +351,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                             validator: (value) {
                               return curpCharacters.hasMatch(value ?? '')
                                   ? null
-                                  : 'Para continuar, ingrese un CURP';
+                                  : 'Para continuar, ingrese un CURP con mayúscula';
                             },
                           ),
                         ),
@@ -361,6 +359,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                           child: TextFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
                             onChanged: (value) {
                               emprendedorProvider.integrantesFamilia = value;
                             },
@@ -400,6 +399,9 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                   fontSize: 15,
                                   fontWeight: FontWeight.normal,
                                 ),
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(2),
+                            ],
                             validator: (value) {
                               return familiaCharacters.hasMatch(value ?? '')
                                   ? null
@@ -407,50 +409,11 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                             },
                           ),
                         ),
-                        // Padding(
-                        //   padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
-                        //   child: TextFormField(
-                        //     obscureText: false,
-                        //     decoration: InputDecoration(
-                        //       labelText: 'Comunidad',
-                        //       labelStyle:
-                        //           AppTheme.of(context).title3.override(
-                        //                 fontFamily: 'Montserrat',
-                        //                 color: AppTheme.of(context)
-                        //                     .secondaryText,
-                        //                 fontSize: 15,
-                        //                 fontWeight: FontWeight.normal,
-                        //               ),
-                        //       hintText: 'Ingrese comunidad...',
-                        //       enabledBorder: OutlineInputBorder(
-                        //         borderSide: BorderSide(
-                        //           color: Color(0xFF060606),
-                        //           width: 1,
-                        //         ),
-                        //         borderRadius: BorderRadius.circular(8),
-                        //       ),
-                        //       focusedBorder: OutlineInputBorder(
-                        //         borderSide: BorderSide(
-                        //           color: Color(0xFF060606),
-                        //           width: 1,
-                        //         ),
-                        //         borderRadius: BorderRadius.circular(8),
-                        //       ),
-                        //       filled: true,
-                        //       fillColor: Color(0xFFF3F2F2),
-                        //     ),
-                        //     style: AppTheme.of(context).title3.override(
-                        //           fontFamily: 'Poppins',
-                        //           color: Color(0xFF060606),
-                        //           fontSize: 15,
-                        //           fontWeight: FontWeight.normal,
-                        //         ),
-                        //   ),
-                        // ),
                         Padding(
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                           child: TextFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
                             onChanged: (value) {
                               emprendedorProvider.telefono = value;
                             },
@@ -503,46 +466,6 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                             },
                           ),
                         ),
-                        // Padding(
-                        //   padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
-                        //   child: TextFormField(
-                        //     obscureText: false,
-                        //     decoration: InputDecoration(
-                        //       labelText: 'Emprendimiento',
-                        //       labelStyle:
-                        //           AppTheme.of(context).title3.override(
-                        //                 fontFamily: 'Montserrat',
-                        //                 color: AppTheme.of(context)
-                        //                     .secondaryText,
-                        //                 fontSize: 15,
-                        //                 fontWeight: FontWeight.normal,
-                        //               ),
-                        //       hintText: 'Ingresa el emprendimiento...',
-                        //       enabledBorder: OutlineInputBorder(
-                        //         borderSide: BorderSide(
-                        //           color: Color(0xFF060606),
-                        //           width: 1,
-                        //         ),
-                        //         borderRadius: BorderRadius.circular(8),
-                        //       ),
-                        //       focusedBorder: OutlineInputBorder(
-                        //         borderSide: BorderSide(
-                        //           color: Color(0xFF060606),
-                        //           width: 1,
-                        //         ),
-                        //         borderRadius: BorderRadius.circular(8),
-                        //       ),
-                        //       filled: true,
-                        //       fillColor: Color(0xFFF3F2F2),
-                        //     ),
-                        //     style: AppTheme.of(context).title3.override(
-                        //           fontFamily: 'Poppins',
-                        //           color: Color(0xFF050000),
-                        //           fontSize: 15,
-                        //           fontWeight: FontWeight.normal,
-                        //         ),
-                        //   ),
-                        // ),
                         Container(
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
@@ -562,12 +485,13 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                           child: TextFormField(
+                            textCapitalization: TextCapitalization.sentences,
                             onChanged: (value) {
                               emprendedorProvider.comentarios = value;
                             },
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Comentarios*',
+                              labelText: 'Comentarios',
                               labelStyle:
                                   AppTheme.of(context).title3.override(
                                         fontFamily: 'Montserrat',
@@ -601,11 +525,6 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                   fontWeight: FontWeight.normal,
                                 ),
                             maxLines: 5,
-                            validator: (value) {
-                              return cualquierCharacters.hasMatch(value ?? '')
-                                  ? null
-                                  : 'Para continuar, ingrese un comentario';
-                            },
                           ),
                         ),
                         Padding(
@@ -638,7 +557,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                         return AlertDialog(
                                           title: const Text('Campos vacíos'),
                                           content: const Text(
-                                              'Para continuar, debe llenar todos los campos e incluír una imagen.'),
+                                              'Para continuar, debe llenar todos los campos solicitados.'),
                                           actions: [
                                             TextButton(
                                               onPressed: () => Navigator.pop(

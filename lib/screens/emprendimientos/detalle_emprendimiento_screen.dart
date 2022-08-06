@@ -364,7 +364,7 @@ class _DetalleEmprendimientoScreenState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(0, 5, 0, 0),
                                         child: Text(
-                                          'Creado por el Promotor',
+                                          'Creado por promotor',
                                           style: AppTheme.of(context)
                                               .bodyText1
                                               .override(
