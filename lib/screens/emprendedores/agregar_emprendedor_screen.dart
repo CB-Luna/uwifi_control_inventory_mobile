@@ -351,7 +351,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                             validator: (value) {
                               return curpCharacters.hasMatch(value ?? '')
                                   ? null
-                                  : 'Para continuar, ingrese un CURP con mayúscula';
+                                  : 'Para continuar, ingrese un CURP válido con mayúsculas';
                             },
                           ),
                         ),

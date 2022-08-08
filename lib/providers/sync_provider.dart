@@ -1,10 +1,13 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:pocketbase/pocketbase.dart';
+import 'package:bizpro_app/main.dart';
+
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/main.dart';
+
 import 'package:bizpro_app/models/response_post_emprendedor.dart';
-import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -12,6 +15,7 @@ import '../objectbox.g.dart';
 
 class SyncProvider extends ChangeNotifier {
 
+  final client = PocketBase('https://pocketbase.cbluna-dev.com');
   bool procesoterminado = false;
   bool procesocargando = false;
 
@@ -90,11 +94,9 @@ class SyncProvider extends ChangeNotifier {
   Future<bool?> syncPostEmprendedores(List<Emprendedores> emprendedores) async {
     for (var i = 0; i < emprendedores.length; i++) {
         try {
-        print("Estoy en El syncPostEmprendedores");
-        var url = Uri.parse('$baseUrl/api/collections/emprendedores/records');
 
-        final bodyMsg = jsonEncode({
-            "nombre_emprendedor": emprendedores[i].nombre,
+        final record = await client.records.create('emprendedores', body: {
+         "nombre_emprendedor": emprendedores[i].nombre,
             "apellidos_emp": emprendedores[i].apellidos,
             "nacimiento": "1995-06-21",
             "curp": emprendedores[i].curp,
@@ -106,45 +108,34 @@ class SyncProvider extends ChangeNotifier {
             "id_status_sync_fk": "HoI36PzYw1wtbO1"
           });
 
-         print("Body Message: $bodyMsg");
-        
-        var response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: bodyMsg,
-        );
+        if (record.id.isNotEmpty) {
+          print("Emprededor created succesfully");
+          String idDBR = record.id;
 
-        print("Respuesta!!!!!!!!!!!!");
+          var updateEmprendedor = dataBase.emprendedoresBox.get(emprendedores[i].id);
+          if (updateEmprendedor != null && idDBR != null) {
+            print("Entro al if de syncPostEmprendedores");
+            print("Previo estado del Emprendedor: ${updateEmprendedor.statusSync.target!.status}");
+            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendedor.statusSync.target!.id)).build().findUnique();
+            if (statusSync != null) {
+              statusSync.status = "HoI36PzYw1wtbO1";
+              dataBase.statusSyncBox.put(statusSync);
+              print("Se hace el conteo de la tabla statusSync");
+              print(dataBase.statusSyncBox.count());
+            }
+            updateEmprendedor.idDBR = idDBR;
+            dataBase.emprendedoresBox.put(updateEmprendedor);
+            print("Actualizacion de estado del Emprendedor");
 
-        print(response.body);
-
-        var responsePostEmprendedor = ResponsePostEmprendedor.fromJson(response.body);
-        String idDBR = responsePostEmprendedor.id;
-
-        var updateEmprendedor = dataBase.emprendedoresBox.get(emprendedores[i].id);
-        if (updateEmprendedor != null && idDBR != null) {
-          print("Entro al if de syncPostEmprendedores");
-          print("Previo estado del Emprendedor: ${updateEmprendedor.statusSync.target!.status}");
-          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendedor.statusSync.target!.id)).build().findUnique();
-          if (statusSync != null) {
-            statusSync.status = "HoI36PzYw1wtbO1";
-            dataBase.statusSyncBox.put(statusSync);
-            print("Se hace el conteo de la tabla statusSync");
-            print(dataBase.statusSyncBox.count());
-          }
-          updateEmprendedor.idDBR = idDBR;
-          dataBase.emprendedoresBox.put(updateEmprendedor);
-          print("Actualizacion de estado del Emprendedor");
-
-          var emprendedoresPrueba = dataBase.emprendedoresBox.getAll();
-          for (var i = 0; i < emprendedoresPrueba.length; i++) {
-          print("Status Emprendedor Prueba: ${emprendedoresPrueba[i].statusSync.target!.status}");  
-          print("IDBR Emprendedor Prueba: ${emprendedoresPrueba[i].idDBR}");
-          }
-          print("Se hace el conteo de la tabla Emprendedores");
-          print(dataBase.emprendedoresBox.count());
+            var emprendedoresPrueba = dataBase.emprendedoresBox.getAll();
+            for (var i = 0; i < emprendedoresPrueba.length; i++) {
+            print("Status Emprendedor Prueba: ${emprendedoresPrueba[i].statusSync.target!.status}");  
+            print("IDBR Emprendedor Prueba: ${emprendedoresPrueba[i].idDBR}");
+            }
+            print("Se hace el conteo de la tabla Emprendedores");
+            print(dataBase.emprendedoresBox.count());
         }
-
+        }
       } catch (e) {
         print('ERROR - function syncPostEmprendedores(): $e');
         return false;
@@ -166,9 +157,7 @@ class SyncProvider extends ChangeNotifier {
 
         try {
 
-        var url = Uri.parse('$baseUrl/api/collections/emprendedores/records');
-
-        final bodyMsg = jsonEncode({
+        final record = await client.records.create('emprendimientos', body: {
             "nombre_emprendedor": emprendedor.nombre,
             "apellidos_emp": emprendedor.apellidos,
             "nacimiento": "1995-06-21", //TODO Validar Formato Nacimiento
@@ -179,45 +168,34 @@ class SyncProvider extends ChangeNotifier {
             "comentarios": emprendedor.comentarios,
             "id_emprendimiento_fk": "",
             "id_status_sync_fk": "HoI36PzYw1wtbO1"
-          });
+      });
 
-        print("Body Message: $bodyMsg");
-        
-        var response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: bodyMsg,
-        );
+        if (record.id.isNotEmpty) {
+          String idDBR = record.id;
+          print("Emprendedor created succesfully");
+          var updateEmprendedor = dataBase.emprendedoresBox.get(emprendedor.id);
+          if (updateEmprendedor != null) {
+            print("Entro al if de syncPostEmprendedor");
+            print("Previo estado del Emprendedor: ${updateEmprendedor.statusSync.target!.status}");
+            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendedor.statusSync.target!.id)).build().findUnique();
+            if (statusSync != null) {
+              statusSync.status = "HoI36PzYw1wtbO1";
+              dataBase.statusSyncBox.put(statusSync);
+              print("Se hace el conteo de la tabla statusSync");
+              print(dataBase.statusSyncBox.count());
+            }
+            updateEmprendedor.idDBR = idDBR;
+            dataBase.emprendedoresBox.put(updateEmprendedor);
+            print("Recuperacion de idDBR del Emprendedor");
 
-        print("Respuesta!!!!!!!!!!!!");
-
-        print(response.body);
-
-        var responsePostEmprendedor = ResponsePostEmprendedor.fromJson(response.body);
-        String idDBR = responsePostEmprendedor.id;
-
-        var updateEmprendedor = dataBase.emprendedoresBox.get(emprendedor.id);
-        if (updateEmprendedor != null && idDBR != null) {
-          print("Entro al if de syncPostEmprendedor");
-          print("Previo estado del Emprendedor: ${updateEmprendedor.statusSync.target!.status}");
-          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendedor.statusSync.target!.id)).build().findUnique();
-          if (statusSync != null) {
-            statusSync.status = "HoI36PzYw1wtbO1";
-            dataBase.statusSyncBox.put(statusSync);
-            print("Se hace el conteo de la tabla statusSync");
-            print(dataBase.statusSyncBox.count());
+            var emprendedoresPrueba = dataBase.emprendedoresBox.getAll();
+            for (var i = 0; i < emprendedoresPrueba.length; i++) {
+            print("Status Emprendedor Prueba: ${emprendedoresPrueba[i].statusSync.target!.status}");  
+            print("IDBR Emprendedor Prueba: ${emprendedoresPrueba[i].idDBR}");
+            }
+            print("Se hace el conteo de la tabla Emprendedores");
+            print(dataBase.emprendedoresBox.count());
           }
-          updateEmprendedor.idDBR = idDBR;
-          dataBase.emprendedoresBox.put(updateEmprendedor);
-          print("Actualizacion de estado del Emprendedor");
-
-          var emprendedoresPrueba = dataBase.emprendedoresBox.getAll();
-          for (var i = 0; i < emprendedoresPrueba.length; i++) {
-          print("Status Emprendedor Prueba: ${emprendedoresPrueba[i].statusSync.target!.status}");  
-          print("IDBR Emprendedor Prueba: ${emprendedoresPrueba[i].idDBR}");
-          }
-          print("Se hace el conteo de la tabla Emprendedores");
-          print(dataBase.emprendedoresBox.count());
         }
 
       } catch (e) {
@@ -244,11 +222,9 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
   for (var i = 0; i < emprendimientos.length; i++) {
       try {
 
-      var url = Uri.parse('$baseUrl/api/collections/emprendimientos/records');
-
       print("ID Promotor: ${emprendimientos[i].usuarios.target!.idDBR}");
 
-      final bodyMsg = jsonEncode({
+      final record = await client.records.create('emprendimientos', body: {
           "nombre_emprendimiento": emprendimientos[i].nombre,
           "descripcion": emprendimientos[i].descripcion,
           "imagen": emprendimientos[i].imagen,
@@ -262,17 +238,14 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
           "id_fase_emp_fk": "shjfgnobnYBQkUo",
           "id_status_sync_fk": "HoI36PzYw1wtbO1",
           "id_emprendedor_fk": emprendimientos[i].emprendedor.target!.idDBR,
-        });
+      });
 
-      var response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: bodyMsg,
-        );
-
-      var updateEmprendimiento = dataBase.emprendimientosBox.get(emprendimientos[i].id);
-      if (updateEmprendimiento != null) {
-        print("Previo estado del Emprendimiento: ${updateEmprendimiento.statusSync.target!.status}");
+      if (record.id.isNotEmpty) {
+        String idDBR = record.id;
+        print("Emprendimiento created succesfully");
+        var updateEmprendimiento = dataBase.emprendimientosBox.get(emprendimientos[i].id);
+        if (updateEmprendimiento != null) {
+          print("Previo estado del Emprendimiento: ${updateEmprendimiento.statusSync.target!.status}");
           final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendimiento.statusSync.target!.id)).build().findUnique();
           if (statusSync != null) {
             statusSync.status = "HoI36PzYw1wtbO1";
@@ -280,12 +253,15 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
             print("Se hace el conteo de la tabla statusSync");
             print(dataBase.statusSyncBox.count());
           }
-        print("Actualizacion de estado del Emprendimiento");
+          updateEmprendimiento.idDBR = idDBR;
+          dataBase.emprendimientosBox.put(updateEmprendimiento);
+          print("Recuperacion de idDBR del Emprendimiento");
 
-        var emprendimientosPrueba = dataBase.emprendimientosBox.getAll();
-        for (var i = 0; i < emprendimientosPrueba.length; i++) {
-        print("Status Emprendimiento Prueba: ${emprendimientosPrueba[i].statusSync.target!.status}");  
-        print("IDBR Emprendimiento Prueba: ${emprendimientosPrueba[i].idDBR}");
+          var emprendimientosPrueba = dataBase.emprendimientosBox.getAll();
+          for (var i = 0; i < emprendimientosPrueba.length; i++) {
+          print("Status Emprendimiento Prueba: ${emprendimientosPrueba[i].statusSync.target!.status}");  
+          print("IDBR Emprendimiento Prueba: ${emprendimientosPrueba[i].idDBR}");
+          }
         }
       }
 
@@ -309,8 +285,8 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
       print("ID Promotor: ${emprendimiento.usuarios.target!.idDBR}");
 
       print("ID Emprendedor: ${emprendimiento.emprendedor.target!.idDBR}");
-      
-      final bodyMsg = jsonEncode({
+
+      final record = await client.records.create('emprendimientos', body: {
           "nombre_emprendimiento": emprendimiento.nombre,
           "descripcion": emprendimiento.descripcion,
           "imagen": emprendimiento.imagen,
@@ -324,32 +300,30 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
           "id_fase_emp_fk": "shjfgnobnYBQkUo",
           "id_status_sync_fk": "HoI36PzYw1wtbO1",
           "id_emprendedor_fk": emprendimiento.emprendedor.target!.idDBR,
-        });
+      });
 
-      var response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: bodyMsg,
-        );
-      print("Se postea emprendimientos");
-      print(response.body);
+      if (record.id.isNotEmpty) {
+        String idDBR = record.id;
+        print("Emprendimiento created succesfully");
+        var updateEmprendimiento = dataBase.emprendimientosBox.get(emprendimiento.id);
+        if (updateEmprendimiento != null) {
+          print("Previo estado del Emprendimiento: ${updateEmprendimiento.statusSync.target!.status}");
+            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendimiento.statusSync.target!.id)).build().findUnique();
+            if (statusSync != null) {
+              statusSync.status = "HoI36PzYw1wtbO1";
+              dataBase.statusSyncBox.put(statusSync);
+              print("Se hace el conteo de la tabla statusSync");
+              print(dataBase.statusSyncBox.count());
+            }
+          updateEmprendimiento.idDBR = idDBR;
+          dataBase.emprendimientosBox.put(updateEmprendimiento);
+          print("Recuperacion de estado del Emprendimiento");
 
-      var updateEmprendimiento = dataBase.emprendimientosBox.get(emprendimiento.id);
-      if (updateEmprendimiento != null) {
-        print("Previo estado del Emprendimiento: ${updateEmprendimiento.statusSync.target!.status}");
-          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendimiento.statusSync.target!.id)).build().findUnique();
-          if (statusSync != null) {
-            statusSync.status = "HoI36PzYw1wtbO1";
-            dataBase.statusSyncBox.put(statusSync);
-            print("Se hace el conteo de la tabla statusSync");
-            print(dataBase.statusSyncBox.count());
+          var emprendimientosPrueba = dataBase.emprendimientosBox.getAll();
+          for (var i = 0; i < emprendimientosPrueba.length; i++) {
+          print("Status Emprendimiento Prueba: ${emprendimientosPrueba[i].statusSync.target!.status}");  
+          print("IDBR Emprendimiento Prueba: ${emprendimientosPrueba[i].idDBR}");
           }
-        print("Actualizacion de estado del Emprendimiento");
-
-        var emprendimientosPrueba = dataBase.emprendimientosBox.getAll();
-        for (var i = 0; i < emprendimientosPrueba.length; i++) {
-        print("Status Emprendimiento Prueba: ${emprendimientosPrueba[i].statusSync.target!.status}");  
-        print("IDBR Emprendimiento Prueba: ${emprendimientosPrueba[i].idDBR}");
         }
       }
       else{
