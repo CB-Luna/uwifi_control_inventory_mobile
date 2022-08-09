@@ -161,6 +161,27 @@ class UserState extends ChangeNotifier {
     }
   }
 
+  static String getRoleAsString(int rol) {
+    switch (rol) {
+      case 0:
+        return 'Emprendedor';
+      case 1:
+        return 'Promotor';
+      case 2:
+        return 'Staff Logistica';
+      case 3:
+        return 'Staff Direccion';
+      case 4:
+        return 'Administrador';
+      case 5:
+        return 'Amigo Del Cambio';
+      case 6:
+        return 'Voluntario Estrategico';
+      default:
+        return 'Rol';
+    }
+  }
+
   @override
   void dispose() {
     emailController.dispose();

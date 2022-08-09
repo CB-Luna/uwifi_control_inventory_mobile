@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/perfil_usuario/device_information_widget.dart';
+import 'package:bizpro_app/screens/perfil_usuario/editar_usuario_screen.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:bizpro_app/screens/widgets/expanded_image_view.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -93,82 +94,68 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 80,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  color: const Color(0x72EEEEEE),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: InkWell(
-                                  onTap: () async {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      const Icon(
-                                        Icons.arrow_back_ios_rounded,
-                                        color: Colors.white,
-                                        size: 16,
-                                      ),
-                                      Text(
-                                        'Atrás',
-                                        style: AppTheme.of(context)
-                                            .bodyText1
-                                            .override(
+                          Container(
+                            width: 80,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: const Color(0x72EEEEEE),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: InkWell(
+                              onTap: () async {
+                                Navigator.pop(context);
+                              },
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  const Icon(
+                                    Icons.arrow_back_ios_rounded,
+                                    color: Colors.white,
+                                    size: 16,
+                                  ),
+                                  Text(
+                                    'Atrás',
+                                    style:
+                                        AppTheme.of(context).bodyText1.override(
                                               fontFamily: 'Poppins',
                                               color: Colors.white,
                                               fontSize: 16,
                                               fontWeight: FontWeight.w300,
                                             ),
-                                      ),
-                                    ],
                                   ),
-                                ),
+                                ],
                               ),
-                            ],
-                          ),
-                          Expanded(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      25, 0, 0, 0),
-                                  child: AutoSizeText(
-                                    'Perfil de ${currentUser.nombre}',
-                                    maxLines: 2,
-                                    style:
-                                        AppTheme.of(context).bodyText1.override(
-                                              fontFamily: 'Poppins',
-                                              color: Colors.white,
-                                              fontSize: 15,
-                                            ),
-                                  ),
-                                ),
-                              ],
                             ),
                           ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                25, 0, 0, 0),
+                            child: AutoSizeText(
+                              'Perfil de ${currentUser.nombre} ${currentUser.apellidoP}',
+                              maxLines: 2,
+                              style: AppTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                  ),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 0, 5, 0),
                             child: InkWell(
                               onTap: () async {
-                                //TODO: agregar pantalla
-                                // await Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) => EditarUsuarioWidget(),
-                                //   ),
-                                // );
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditarUsuarioScreen(
+                                      usuario: currentUser,
+                                    ),
+                                  ),
+                                );
                               },
                               child: const Icon(
                                 Icons.edit_rounded,
@@ -222,25 +209,15 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 0, 2, 0),
-                        child: Text(
-                          currentUser.nombre,
-                          style: AppTheme.of(context).bodyText1.override(
-                                fontFamily: 'Poppins',
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 2, 0),
+                  child: Text(
+                    '${currentUser.nombre} ${currentUser.apellidoP}',
+                    style: AppTheme.of(context).bodyText1.override(
+                          fontFamily: 'Poppins',
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ),
-                    ],
                   ),
                 ),
                 Padding(
@@ -263,18 +240,12 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                       color: const Color(0xFFCBCACA),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          dropDownValue ?? '',
-                          style: AppTheme.of(context).bodyText1.override(
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w500,
-                              ),
-                        ),
-                      ],
+                    child: Text(
+                      dropDownValue ?? '',
+                      style: AppTheme.of(context).bodyText1.override(
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w500,
+                          ),
                     ),
                   ),
                 ),

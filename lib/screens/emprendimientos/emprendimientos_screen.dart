@@ -187,7 +187,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                                     .bodyText2
                                                     .override(
                                                       fontFamily: 'Poppins',
-                                                      color: Colors.white,
+                                                      color: Colors.black,
                                                       fontSize: 13,
                                                       fontWeight:
                                                           FontWeight.normal,
@@ -220,7 +220,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                                   .bodyText1
                                                   .override(
                                                     fontFamily: 'Poppins',
-                                                    color: Colors.white,
+                                                    color: Colors.black,
                                                     fontSize: 13,
                                                     fontWeight:
                                                         FontWeight.normal,
@@ -339,12 +339,19 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                         //Busqueda
                         if (searchController.text != '') {
                           emprendimientos.removeWhere((element) {
-                            final tempNombre =
+                            final nombreEmprendimiento =
                                 removeDiacritics(element.nombre).toLowerCase();
+                            final nombreEmprendedor = removeDiacritics(
+                                    '${element.emprendedor.target?.nombre ?? ''} ${element.emprendedor.target?.apellidos ?? ''}')
+                                .toLowerCase();
                             final tempBusqueda =
                                 removeDiacritics(searchController.text)
                                     .toLowerCase();
-                            return !tempNombre.contains(tempBusqueda);
+                            if (nombreEmprendimiento.contains(tempBusqueda) ||
+                                nombreEmprendedor.contains(tempBusqueda)) {
+                              return false;
+                            }
+                            return true;
                           });
                         }
 
