@@ -38,9 +38,9 @@ class SyncProvider extends ChangeNotifier {
         case "syncAddEmprendimiento":
           print("Entro aqui");
           // final emprendimientoToSync = dataBase.emprendimientosBox.query(Emprendimientos_.bitacora.equals(instruccionesBitacora[i].id)).build().findUnique();
-          final emprendimientoToSync = dataBase.emprendimientosBox.getAll().
-          firstWhere((element) => element.bitacora.single.id == instruccionesBitacora[i].id);
-          if(emprendimientoToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
+          final emprendimientoToSync = getFirstEmprendimiento(dataBase.emprendimientosBox.getAll(), instruccionesBitacora[i].id);
+          if(emprendimientoToSync != null){
+            if(emprendimientoToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
             print("Entro aqui en el if");
             break;
           } else {
@@ -52,11 +52,13 @@ class SyncProvider extends ChangeNotifier {
               await syncPostEmprendedores(emprendedores);
               await syncPostEmprendimiento(emprendimientoToSync);    
             }     
-          }          
+          } 
+          }         
           break;
         case "syncAddEmprendedor":
-          final emprendedorToSync = dataBase.emprendedoresBox.getAll().
-            firstWhere((element) => element.bitacora.single.id == instruccionesBitacora[i].id);
+          print("${dataBase.emprendedoresBox.getAll().length}");
+          final emprendedorToSync = getFirstEmprendedor(dataBase.emprendedoresBox.getAll(), instruccionesBitacora[i].id);
+          if(emprendedorToSync != null){
           var emprendedorPrueba = dataBase.emprendedoresBox.getAll();
           for (var i = 0; i < emprendedorPrueba.length; i++) {
             print("Status Emprendedor Prueba: ${emprendedorPrueba[i].statusSync.target!.status}");  
@@ -70,26 +72,29 @@ class SyncProvider extends ChangeNotifier {
                 await syncPostEmprendedor(emprendedorToSync);  
               }          
           break;
+          }
+          break;
         case "syncUpdateEmprendimiento":
           var bitacoraList = dataBase.bitacoraBox.getAll();
           for (var i = 0; i < bitacoraList.length; i++) {
             print("bitacora ID: ${bitacoraList[i].id}");  
             print("Instrucciones: ${bitacoraList[i].instrucciones}");
             }
-          final emprendimientoToSync = dataBase.emprendimientosBox.getAll().
-            firstWhere((element) => element.bitacora.single.id == instruccionesBitacora[i].id);
-          if(emprendimientoToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
-            print("Entro aqui en el if");
-            break;
-          } else {
-            print("Entro aqui en el else");
-            if (emprendimientoToSync.idDBR != null) {
-              print("Ya ha sido enviado al backend");
-              syncUpdateEmprendimiento(emprendimientoToSync);
+          final emprendimientoToSync = getFirstEmprendimiento(dataBase.emprendimientosBox.getAll(), instruccionesBitacora[i].id);
+          if(emprendimientoToSync != null){
+            if(emprendimientoToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
+              print("Entro aqui en el if");
+              break;
             } else {
-              print("No ha sido enviado al backend");
-            }
-          }             
+              print("Entro aqui en el else");
+              if (emprendimientoToSync.idDBR != null) {
+                print("Ya ha sido enviado al backend");
+                syncUpdateEmprendimiento(emprendimientoToSync);
+              } else {
+                print("No ha sido enviado al backend");
+              }
+            }   
+          }  
           break;
         default:
          break;
@@ -103,6 +108,38 @@ class SyncProvider extends ChangeNotifier {
     dataBase.bitacoraBox.removeAll();
     notifyListeners();
 
+  }
+
+  Emprendedores? getFirstEmprendedor(List<Emprendedores> emprendedores, int idInstruccionesBitacora)
+  {
+    for (var i = 0; i < emprendedores.length; i++) {
+      if (emprendedores[i].bitacora.isEmpty) {
+        
+      } else {
+        for (var j = 0; j < emprendedores[i].bitacora.length; j++) {
+          if (emprendedores[i].bitacora[j].id == idInstruccionesBitacora) {
+            return emprendedores[i];
+          } 
+        }
+      }
+    }
+    return null;
+  }
+
+    Emprendimientos? getFirstEmprendimiento(List<Emprendimientos> emprendimientos, int idInstruccionesBitacora)
+  {
+    for (var i = 0; i < emprendimientos.length; i++) {
+      if (emprendimientos[i].bitacora.isEmpty) {
+        
+      } else {
+        for (var j = 0; j < emprendimientos[i].bitacora.length; j++) {
+          if (emprendimientos[i].bitacora[j].id == idInstruccionesBitacora) {
+            return emprendimientos[i];
+          } 
+        }
+      }
+    }
+    return null;
   }
 
   List<Emprendedores> verificarEstadoEmprendedores(List<Emprendedores> emprendedores) {
