@@ -2,6 +2,7 @@ import 'package:bizpro_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:number_inc_dec/number_inc_dec.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/helpers/constants.dart';
@@ -355,6 +356,56 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                             },
                           ),
                         ),
+
+                        // Padding(
+                        //   padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                        //   child: FormField(builder: (state) {
+                        //   return NumberInputPrefabbed.roundedButtons(
+                        //     numberFieldDecoration: InputDecoration(
+                        //     labelText: 'Integrantes de familia*',
+                        //     labelStyle:
+                        //         AppTheme.of(context).title3.override(
+                        //               fontFamily: 'Montserrat',
+                        //               color: AppTheme.of(context)
+                        //                   .secondaryText,
+                        //               fontSize: 15,
+                        //               fontWeight: FontWeight.normal,
+                        //             ),
+                        //     hintText: 'Ingrese los integrantes...',
+                        //     enabledBorder: OutlineInputBorder(
+                        //       borderSide: const BorderSide(
+                        //         color: Color(0xFF060606),
+                        //         width: 1,
+                        //       ),
+                        //       borderRadius: BorderRadius.circular(8),
+                        //     ),
+                        //     focusedBorder: OutlineInputBorder(
+                        //       borderSide: const BorderSide(
+                        //         color: Color(0xFF060606),
+                        //         width: 1,
+                        //       ),
+                        //       borderRadius: BorderRadius.circular(8),
+                        //     ),
+                        //     filled: true,
+                        //     fillColor: const Color(0xFFF3F2F2),
+                        //       ),
+                        //     controller: emprendedorProvider.integrantesFamilia,
+                        //     incDecBgColor: Colors.blue,
+                        //     buttonArrangement: ButtonArrangement.incRightDecLeft,
+                        //     min: 0,
+                        //     max: 99,
+                        //   );
+                        //   }, 
+                        //   validator: (val) {
+                        //     if (emprendedorProvider.integrantesFamilia.text == "" ||
+                        //         emprendedorProvider.integrantesFamilia.text.isEmpty) {
+                        //       return 'Para continuar, ingrese un número de integrantes [0-99]';
+                        //     }
+                        //     return null;
+                        //   },
+                        //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                        //   ),
+                        // ),
                         Padding(
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),

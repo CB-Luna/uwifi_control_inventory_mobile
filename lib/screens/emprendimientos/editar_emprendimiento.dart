@@ -1,5 +1,9 @@
 import 'dart:io';
 
+import 'package:bizpro_app/helpers/constants.dart';
+import 'package:bizpro_app/providers/database_providers/comunidad_controller.dart';
+import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
+import 'package:bizpro_app/screens/emprendimientos/emprendimiento_actualizado.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +13,6 @@ import 'package:provider/provider.dart';
 
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 class EditarEmprendimientoScreen extends StatefulWidget {
@@ -35,21 +38,23 @@ class _EditarEmprendimientoScreenState
   late TextEditingController nombreController;
   late TextEditingController descController;
   late TextEditingController comunidadController;
-
+  late String newImagen;
   @override
   void initState() {
     super.initState();
-    final comunidad = widget.emprendimiento.comunidades.target?.nombre ?? '';
+    newImagen = widget.emprendimiento.imagen;
     nombreController =
         TextEditingController(text: widget.emprendimiento.nombre);
     descController =
         TextEditingController(text: widget.emprendimiento.descripcion);
-    comunidadController = TextEditingController(text: comunidad);
+    comunidadController = TextEditingController(text: widget.emprendimiento.comunidades.target?.nombre);
   }
 
   @override
   Widget build(BuildContext context) {
-    final usuarioProvider = Provider.of<UsuarioController>(context);
+    final comunidadProvider = Provider.of<ComunidadController>(context);
+    final emprendimientoProvider =
+        Provider.of<EmprendimientoController>(context);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: AppTheme.of(context).primaryBackground,
@@ -211,8 +216,7 @@ class _EditarEmprendimientoScreenState
 
                             setState(() {
                               image = pickedFile;
-                              //TODO: actualizar imagen
-                              // widget.emprendimiento.imagen = image!.path;
+                              newImagen = image!.path;
                             });
                           },
                           child: Container(
@@ -259,6 +263,8 @@ class _EditarEmprendimientoScreenState
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     5, 0, 5, 10),
                                 child: TextFormField(
+                                  textCapitalization: TextCapitalization.sentences,
+                                  autovalidateMode: AutovalidateMode.onUserInteraction,
                                   obscureText: false,
                                   controller: nombreController,
                                   decoration: InputDecoration(
@@ -301,12 +307,19 @@ class _EditarEmprendimientoScreenState
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal,
                                       ),
+                                  validator: (value) {
+                                  return capitalizadoCharacters.hasMatch(value ?? '')
+                                      ? null
+                                      : 'Para continuar, ingrese el nombre empezando por mayúscula';
+                                  },
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     5, 0, 5, 10),
                                 child: TextFormField(
+                                  textCapitalization: TextCapitalization.sentences,
+                                  autovalidateMode: AutovalidateMode.onUserInteraction,
                                   obscureText: false,
                                   controller: descController,
                                   decoration: InputDecoration(
@@ -351,6 +364,11 @@ class _EditarEmprendimientoScreenState
                                         fontWeight: FontWeight.normal,
                                       ),
                                   maxLines: 5,
+                                  validator: (value) {
+                                  return capitalizadoCharacters.hasMatch(value ?? '')
+                                      ? null
+                                      : 'Para continuar, ingrese la descripción empezando por mayúscula';
+                                  },
                                 ),
                               ),
                               Padding(
@@ -399,6 +417,12 @@ class _EditarEmprendimientoScreenState
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal,
                                       ),
+                                  validator: (val) {
+                                    if (val == null || val.isEmpty) {
+                                      return 'Para continuar, ingrese la comunidad.';
+                                    }
+                                    return null;
+                                  }
                                 ),
                               ),
 
@@ -459,7 +483,52 @@ class _EditarEmprendimientoScreenState
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 5, 0, 10),
                                 child: FFButtonWidget(
-                                  onPressed: () {},
+                                  onPressed: () async {
+                                    if (nombreController.text != widget.emprendimiento.nombre || 
+                                        descController.text != widget.emprendimiento.descripcion ||
+                                        comunidadController.text != widget.emprendimiento.comunidades.target!.nombre) {
+                                      if (emprendimientoProvider
+                                          .validateForm(formKey)) {
+                                        print("Se puede actualizar");
+                                        comunidadProvider.update(
+                                          widget.emprendimiento.comunidades.target!.id, 
+                                          comunidadController.text);
+                                        emprendimientoProvider.update(
+                                            widget.emprendimiento.id,
+                                            newImagen,
+                                            nombreController.text,
+                                            descController.text);
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const EmprendimientoActualizado(),
+                                          ),
+                                        );
+                                      } else {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title:
+                                                  const Text('Campos vacíos'),
+                                              content: const Text(
+                                                  'Para continuar, debe llenar todos los campos e incluír una imagen.'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: const Text('Bien'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                        return;
+                                      }
+                                    }
+                                  },
                                   text: 'Actualizar ',
                                   icon: const Icon(
                                     Icons.check,

@@ -220,13 +220,6 @@ final _entities = <ModelEntity>[
             flags: 2080,
             indexId: const IdUid(62, 2735008652274095664)),
         ModelProperty(
-            id: const IdUid(20, 7992450668665361714),
-            name: 'bitacoraId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(79, 8062585399034389472),
-            relationTarget: 'Bitacora'),
-        ModelProperty(
             id: const IdUid(22, 4309447383493916637),
             name: 'usuariosId',
             type: 11,
@@ -238,7 +231,11 @@ final _entities = <ModelEntity>[
         ModelRelation(
             id: const IdUid(5, 2038229905033466972),
             name: 'jornadas',
-            targetId: const IdUid(24, 6358146304075079104))
+            targetId: const IdUid(24, 6358146304075079104)),
+        ModelRelation(
+            id: const IdUid(8, 9183356578860779220),
+            name: 'bitacora',
+            targetId: const IdUid(27, 1774905738150923512))
       ],
       backlinks: <ModelBacklink>[
         ModelBacklink(
@@ -655,7 +652,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(20, 6615538153946220074),
       name: 'Comunidades',
-      lastPropertyId: const IdUid(7, 4568878887845057899),
+      lastPropertyId: const IdUid(9, 805717021218324759),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -674,11 +671,6 @@ final _entities = <ModelEntity>[
             type: 10,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 4090875136723971084),
-            name: 'fechaSync',
-            type: 10,
-            flags: 0),
-        ModelProperty(
             id: const IdUid(5, 5885740297519224064),
             name: 'municipiosId',
             type: 11,
@@ -690,7 +682,19 @@ final _entities = <ModelEntity>[
             name: 'idDBR',
             type: 9,
             flags: 2080,
-            indexId: const IdUid(59, 7369061656734412750))
+            indexId: const IdUid(59, 7369061656734412750)),
+        ModelProperty(
+            id: const IdUid(8, 2953175511506922439),
+            name: 'activo',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 805717021218324759),
+            name: 'statusSyncId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(85, 4197992763805738004),
+            relationTarget: 'StatusSync')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -781,16 +785,14 @@ final _entities = <ModelEntity>[
             name: 'idDBR',
             type: 9,
             flags: 2080,
-            indexId: const IdUid(61, 8815402416282925921)),
-        ModelProperty(
-            id: const IdUid(19, 7899142688428235984),
-            name: 'bitacoraId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(78, 668466277065793709),
-            relationTarget: 'Bitacora')
+            indexId: const IdUid(61, 8815402416282925921))
       ],
-      relations: <ModelRelation>[],
+      relations: <ModelRelation>[
+        ModelRelation(
+            id: const IdUid(9, 6695548577594940433),
+            name: 'bitacora',
+            targetId: const IdUid(27, 1774905738150923512))
+      ],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
       id: const IdUid(22, 334643984474072026),
@@ -971,7 +973,9 @@ final _entities = <ModelEntity>[
         ModelBacklink(
             name: 'consultorias', srcEntity: 'Consultorias', srcField: ''),
         ModelBacklink(name: 'usuarios', srcEntity: 'Usuarios', srcField: ''),
-        ModelBacklink(name: 'jornadas', srcEntity: 'Jornadas', srcField: '')
+        ModelBacklink(name: 'jornadas', srcEntity: 'Jornadas', srcField: ''),
+        ModelBacklink(
+            name: 'comunidades', srcEntity: 'Comunidades', srcField: '')
       ]),
   ModelEntity(
       id: const IdUid(27, 1774905738150923512),
@@ -1073,8 +1077,8 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(29, 7625539946193612618),
-      lastIndexId: const IdUid(84, 5311167113567925142),
-      lastRelationId: const IdUid(7, 7628231779967948088),
+      lastIndexId: const IdUid(85, 4197992763805738004),
+      lastRelationId: const IdUid(9, 6695548577594940433),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
         1366246136666677579,
@@ -1118,7 +1122,9 @@ ModelDefinition getObjectBoxModel() {
         1067877610717947502,
         1990533507654861339,
         2290535798159386957,
-        5140011308328673057
+        5140011308328673057,
+        8062585399034389472,
+        668466277065793709
       ],
       retiredPropertyUids: const [
         7079790605743243388,
@@ -1250,7 +1256,10 @@ ModelDefinition getObjectBoxModel() {
         1388327886429615646,
         3312783263241748230,
         782321710570789969,
-        2948145743703110893
+        2948145743703110893,
+        4090875136723971084,
+        7992450668665361714,
+        7899142688428235984
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -1395,11 +1404,11 @@ ModelDefinition getObjectBoxModel() {
               object.comunidades,
               object.emprendedor,
               object.statusSync,
-              object.bitacora,
               object.usuarios
             ],
         toManyRelations: (Emprendimientos object) => {
               RelInfo<Emprendimientos>.toMany(5, object.id): object.jornadas,
+              RelInfo<Emprendimientos>.toMany(8, object.id): object.bitacora,
               RelInfo<ClasificacionProyecto>.toOneBacklink(
                   6,
                   object.id,
@@ -1441,7 +1450,6 @@ ModelDefinition getObjectBoxModel() {
           fbb.addBool(15, object.activo);
           fbb.addBool(16, object.archivado);
           fbb.addOffset(18, idDBROffset);
-          fbb.addInt64(19, object.bitacora.targetId);
           fbb.addInt64(21, object.usuarios.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
@@ -1478,9 +1486,6 @@ ModelDefinition getObjectBoxModel() {
           object.statusSync.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 32, 0);
           object.statusSync.attach(store);
-          object.bitacora.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 42, 0);
-          object.bitacora.attach(store);
           object.usuarios.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 46, 0);
           object.usuarios.attach(store);
@@ -1488,6 +1493,11 @@ ModelDefinition getObjectBoxModel() {
               object.jornadas,
               store,
               RelInfo<Emprendimientos>.toMany(5, object.id),
+              store.box<Emprendimientos>());
+          InternalToManyAccess.setRelInfo(
+              object.bitacora,
+              store,
+              RelInfo<Emprendimientos>.toMany(8, object.id),
               store.box<Emprendimientos>());
           InternalToManyAccess.setRelInfo(
               object.clasifiProyecto,
@@ -1896,7 +1906,8 @@ ModelDefinition getObjectBoxModel() {
         }),
     Comunidades: EntityDefinition<Comunidades>(
         model: _entities[10],
-        toOneRelations: (Comunidades object) => [object.municipios],
+        toOneRelations: (Comunidades object) =>
+            [object.municipios, object.statusSync],
         toManyRelations: (Comunidades object) => {
               RelInfo<Emprendedores>.toOneBacklink(12, object.id,
                       (Emprendedores srcObject) => srcObject.comunidades):
@@ -1913,13 +1924,14 @@ ModelDefinition getObjectBoxModel() {
           final nombreOffset = fbb.writeString(object.nombre);
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(8);
+          fbb.startTable(10);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nombreOffset);
           fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addInt64(3, object.fechaSync.millisecondsSinceEpoch);
           fbb.addInt64(4, object.municipios.targetId);
           fbb.addOffset(6, idDBROffset);
+          fbb.addBool(7, object.activo);
+          fbb.addInt64(8, object.statusSync.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -1933,13 +1945,16 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 6, ''),
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
-              fechaSync: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0)),
+              activo: const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 18, false),
               idDBR: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 16));
           object.municipios.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
           object.municipios.attach(store);
+          object.statusSync.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0);
+          object.statusSync.attach(store);
           InternalToManyAccess.setRelInfo(
               object.emprendedores,
               store,
@@ -1956,13 +1971,10 @@ ModelDefinition getObjectBoxModel() {
         }),
     Emprendedores: EntityDefinition<Emprendedores>(
         model: _entities[11],
-        toOneRelations: (Emprendedores object) => [
-              object.comunidades,
-              object.statusSync,
-              object.emprendimiento,
-              object.bitacora
-            ],
-        toManyRelations: (Emprendedores object) => {},
+        toOneRelations: (Emprendedores object) =>
+            [object.comunidades, object.statusSync, object.emprendimiento],
+        toManyRelations: (Emprendedores object) =>
+            {RelInfo<Emprendedores>.toMany(9, object.id): object.bitacora},
         getId: (Emprendedores object) => object.id,
         setId: (Emprendedores object, int id) {
           object.id = id;
@@ -1993,7 +2005,6 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(14, imagenOffset);
           fbb.addOffset(15, apellidosOffset);
           fbb.addOffset(17, idDBROffset);
-          fbb.addInt64(18, object.bitacora.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -2030,9 +2041,11 @@ ModelDefinition getObjectBoxModel() {
           object.emprendimiento.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0);
           object.emprendimiento.attach(store);
-          object.bitacora.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 40, 0);
-          object.bitacora.attach(store);
+          InternalToManyAccess.setRelInfo(
+              object.bitacora,
+              store,
+              RelInfo<Emprendedores>.toMany(9, object.id),
+              store.box<Emprendedores>());
           return object;
         }),
     Estados: EntityDefinition<Estados>(
@@ -2210,7 +2223,11 @@ ModelDefinition getObjectBoxModel() {
                       (Usuarios srcObject) => srcObject.statusSync):
                   object.usuarios,
               RelInfo<Jornadas>.toOneBacklink(8, object.id,
-                  (Jornadas srcObject) => srcObject.statusSync): object.jornadas
+                      (Jornadas srcObject) => srcObject.statusSync):
+                  object.jornadas,
+              RelInfo<Comunidades>.toOneBacklink(9, object.id,
+                      (Comunidades srcObject) => srcObject.statusSync):
+                  object.comunidades
             },
         getId: (StatusSync object) => object.id,
         setId: (StatusSync object, int id) {
@@ -2271,17 +2288,21 @@ ModelDefinition getObjectBoxModel() {
               RelInfo<Jornadas>.toOneBacklink(
                   8, object.id, (Jornadas srcObject) => srcObject.statusSync),
               store.box<StatusSync>());
+          InternalToManyAccess.setRelInfo(
+              object.comunidades,
+              store,
+              RelInfo<Comunidades>.toOneBacklink(9, object.id,
+                  (Comunidades srcObject) => srcObject.statusSync),
+              store.box<StatusSync>());
           return object;
         }),
     Bitacora: EntityDefinition<Bitacora>(
         model: _entities[16],
         toOneRelations: (Bitacora object) => [],
         toManyRelations: (Bitacora object) => {
-              RelInfo<Emprendedores>.toOneBacklink(19, object.id,
-                      (Emprendedores srcObject) => srcObject.bitacora):
+              RelInfo<Emprendedores>.toManyBacklink(9, object.id):
                   object.emprendedores,
-              RelInfo<Emprendimientos>.toOneBacklink(20, object.id,
-                      (Emprendimientos srcObject) => srcObject.bitacora):
+              RelInfo<Emprendimientos>.toManyBacklink(8, object.id):
                   object.emprendimientos,
               RelInfo<Tareas>.toOneBacklink(
                       16, object.id, (Tareas srcObject) => srcObject.bitacora):
@@ -2329,14 +2350,12 @@ ModelDefinition getObjectBoxModel() {
           InternalToManyAccess.setRelInfo(
               object.emprendedores,
               store,
-              RelInfo<Emprendedores>.toOneBacklink(19, object.id,
-                  (Emprendedores srcObject) => srcObject.bitacora),
+              RelInfo<Emprendedores>.toManyBacklink(9, object.id),
               store.box<Bitacora>());
           InternalToManyAccess.setRelInfo(
               object.emprendimientos,
               store,
-              RelInfo<Emprendimientos>.toOneBacklink(20, object.id,
-                  (Emprendimientos srcObject) => srcObject.bitacora),
+              RelInfo<Emprendimientos>.toManyBacklink(8, object.id),
               store.box<Bitacora>());
           InternalToManyAccess.setRelInfo(
               object.tareas,
@@ -2543,17 +2562,17 @@ class Emprendimientos_ {
   static final idDBR =
       QueryStringProperty<Emprendimientos>(_entities[3].properties[11]);
 
-  /// see [Emprendimientos.bitacora]
-  static final bitacora = QueryRelationToOne<Emprendimientos, Bitacora>(
-      _entities[3].properties[12]);
-
   /// see [Emprendimientos.usuarios]
   static final usuarios = QueryRelationToOne<Emprendimientos, Usuarios>(
-      _entities[3].properties[13]);
+      _entities[3].properties[12]);
 
   /// see [Emprendimientos.jornadas]
   static final jornadas =
       QueryRelationToMany<Emprendimientos, Jornadas>(_entities[3].relations[0]);
+
+  /// see [Emprendimientos.bitacora]
+  static final bitacora =
+      QueryRelationToMany<Emprendimientos, Bitacora>(_entities[3].relations[1]);
 }
 
 /// [Usuarios] entity fields to define ObjectBox queries.
@@ -2828,17 +2847,21 @@ class Comunidades_ {
   static final fechaRegistro =
       QueryIntegerProperty<Comunidades>(_entities[10].properties[2]);
 
-  /// see [Comunidades.fechaSync]
-  static final fechaSync =
-      QueryIntegerProperty<Comunidades>(_entities[10].properties[3]);
-
   /// see [Comunidades.municipios]
   static final municipios =
-      QueryRelationToOne<Comunidades, Municipios>(_entities[10].properties[4]);
+      QueryRelationToOne<Comunidades, Municipios>(_entities[10].properties[3]);
 
   /// see [Comunidades.idDBR]
   static final idDBR =
-      QueryStringProperty<Comunidades>(_entities[10].properties[5]);
+      QueryStringProperty<Comunidades>(_entities[10].properties[4]);
+
+  /// see [Comunidades.activo]
+  static final activo =
+      QueryBooleanProperty<Comunidades>(_entities[10].properties[5]);
+
+  /// see [Comunidades.statusSync]
+  static final statusSync =
+      QueryRelationToOne<Comunidades, StatusSync>(_entities[10].properties[6]);
 }
 
 /// [Emprendedores] entity fields to define ObjectBox queries.
@@ -2902,7 +2925,7 @@ class Emprendedores_ {
 
   /// see [Emprendedores.bitacora]
   static final bitacora =
-      QueryRelationToOne<Emprendedores, Bitacora>(_entities[11].properties[14]);
+      QueryRelationToMany<Emprendedores, Bitacora>(_entities[11].relations[0]);
 }
 
 /// [Estados] entity fields to define ObjectBox queries.

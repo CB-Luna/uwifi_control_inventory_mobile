@@ -9,6 +9,7 @@ class EmprendedorController extends ChangeNotifier {
   GlobalKey<FormState> emprendedorFormKey = GlobalKey<FormState>();
 
   //Emprendedor
+  // TextEditingController integrantesFamilia = TextEditingController();
   String imagen = '';
   String nombre = '';
   String apellidos = '';
@@ -31,6 +32,7 @@ class EmprendedorController extends ChangeNotifier {
     nacimiento = null;
     curp = '';
     integrantesFamilia = '';
+    // integrantesFamilia.clear();
     telefono = '';
     comentarios = '';
     notifyListeners();
@@ -54,7 +56,7 @@ class EmprendedorController extends ChangeNotifier {
         final nuevaInstruccion = Bitacora(instrucciones: 'syncAddEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
         nuevoEmprendedor.comunidades.target = emprendimiento.comunidades.target;
         nuevoEmprendedor.statusSync.target = nuevoSync;
-        nuevoEmprendedor.bitacora.target = nuevaInstruccion;
+        nuevoEmprendedor.bitacora.add(nuevaInstruccion);
         emprendimiento.emprendedor.target = nuevoEmprendedor;
         dataBase.emprendimientosBox.put(emprendimiento);
         // dataBase.emprendedoresBox.put(nuevoEmprendedor);

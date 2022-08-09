@@ -33,6 +33,16 @@ class ComunidadController extends ChangeNotifier {
       notifyListeners();
   }
 
+  void update(int id, String newNombre) {
+    var updateComunidad = dataBase.comunidadesBox.get(id);
+    if (updateComunidad != null) {
+      updateComunidad.nombre = newNombre;
+      dataBase.comunidadesBox.put(updateComunidad);
+      print('Comunidad actualizada exitosamente');
+    }
+    notifyListeners();
+  }
+
   void remove(Comunidades comunidad) {
     dataBase.comunidadesBox.remove(comunidad.id);
     comunidades.remove(comunidad);

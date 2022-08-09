@@ -19,7 +19,7 @@ class Emprendimientos {
   final comunidades = ToOne<Comunidades>();
   final emprendedor = ToOne<Emprendedores>();
   final statusSync = ToOne<StatusSync>();
-  final bitacora = ToOne<Bitacora>();
+  final bitacora = ToMany<Bitacora>();
   @Backlink()
   final clasifiProyecto = ToMany<ClasificacionProyecto>();
   @Backlink()
@@ -95,7 +95,7 @@ class Emprendedores {
   final comunidades = ToOne<Comunidades>();
   final emprendimiento = ToOne<Emprendimientos>();
   final statusSync = ToOne<StatusSync>();
-  final bitacora = ToOne<Bitacora>();
+  final bitacora = ToMany<Bitacora>();
 
   Emprendedores({
     this.id = 0,
@@ -393,10 +393,11 @@ class Comunidades {
   int id;
   String nombre;
   DateTime fechaRegistro;
-  DateTime fechaSync;
+  bool activo;
   @Unique()
   String? idDBR;
   final municipios = ToOne<Municipios>();
+  final statusSync = ToOne<StatusSync>();
   @Backlink()
   final emprendedores = ToMany<Emprendedores>();
   @Backlink()
@@ -406,12 +407,11 @@ class Comunidades {
     this.id = 0,
     required this.nombre,
     DateTime? fechaRegistro,
-    DateTime? fechaSync,
+    this.activo = true,
     this.idDBR,
-    }): fechaRegistro = fechaRegistro ?? DateTime.now(), fechaSync = fechaSync ?? DateTime.now();
+    }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-  String get fechaSyncFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaSync);
 
 }
 
@@ -481,6 +481,8 @@ class StatusSync {
   final usuarios = ToMany<Usuarios>();
   @Backlink()
   final jornadas = ToMany<Jornadas>();
+  @Backlink()
+  final comunidades = ToMany<Comunidades>();
   StatusSync({
     this.id = 0,
     this.status = "0E3hoVIByUxMUMZ", //M__
