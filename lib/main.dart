@@ -1,3 +1,4 @@
+import 'package:bizpro_app/providers/catalog_provider.dart';
 import 'package:bizpro_app/providers/sync_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -59,6 +60,10 @@ void main() async {
         ),
         ChangeNotifierProvider<SyncProvider>(
           create: (context) => SyncProvider(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<CatalogProvider>(
+          create: (context) => CatalogProvider(),
           lazy: false,
         ),
         ChangeNotifierProvider(

@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:pocketbase/pocketbase.dart';
 import 'package:bizpro_app/main.dart';
 
 import 'package:bizpro_app/database/entitys.dart';
@@ -14,8 +13,6 @@ import 'package:http/http.dart' as http;
 import '../objectbox.g.dart';
 
 class SyncProvider extends ChangeNotifier {
-
-  final client = PocketBase('https://pocketbase.cbluna-dev.com');
   bool procesoterminado = false;
   bool procesocargando = false;
 
@@ -45,7 +42,7 @@ class SyncProvider extends ChangeNotifier {
             break;
           } else {
             print("Entro aqui en el else");
-            if (dataBase.VariablesUsuarioBox.get(prefs.getInt("idVariablesUser")!)!.emprendedores) { //Validar que ya se haya sync emprendedores 
+            if (dataBase.variablesUsuarioBox.get(prefs.getInt("idVariablesUser")!)!.emprendedores) { //Validar que ya se haya sync emprendedores 
               await syncPostEmprendimiento(emprendimientoToSync);
             } else {
               final emprendedores = verificarEstadoEmprendedores(dataBase.emprendedoresBox.getAll());
@@ -203,10 +200,10 @@ class SyncProvider extends ChangeNotifier {
       }
       
     }
-    final updateVariableUser = dataBase.VariablesUsuarioBox.get(prefs.getInt("idVariablesUser")!);
+    final updateVariableUser = dataBase.variablesUsuarioBox.get(prefs.getInt("idVariablesUser")!);
     if (updateVariableUser != null) {
       updateVariableUser.emprendedores = true;
-      dataBase.VariablesUsuarioBox.put(updateVariableUser);
+      dataBase.variablesUsuarioBox.put(updateVariableUser);
     }
     
     return true;
@@ -291,7 +288,7 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
           "imagen": emprendimientos[i].imagen,
           "activo": emprendimientos[i].activo,
           "archivado": emprendimientos[i].archivado,
-          "id_comunidad_fk": "rIBCo4NNt1ddTxe",
+          "id_comunidad_fk": emprendimientos[i].comunidades.target!.idDBR,
           "id_promotor_fk": emprendimientos[i].usuarios.target!.idDBR,
           "id_prioridad_fk": "yuEVuBv9rxLM4cR",
           "id_clasificacion_emp_fk": "N2fgbFPCkb8PwnO",
@@ -353,7 +350,7 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
           "imagen": emprendimiento.imagen,
           "activo": emprendimiento.activo,
           "archivado": emprendimiento.archivado,
-          "id_comunidad_fk": "rIBCo4NNt1ddTxe",
+          "id_comunidad_fk": emprendimiento.comunidades.target!.idDBR,
           "id_promotor_fk": emprendimiento.usuarios.target!.idDBR,
           "id_prioridad_fk": "yuEVuBv9rxLM4cR",
           "id_clasificacion_emp_fk": "N2fgbFPCkb8PwnO",
@@ -414,7 +411,7 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
           "imagen": emprendimiento.imagen,
           "activo": emprendimiento.activo,
           "archivado": emprendimiento.archivado,
-          "id_comunidad_fk": "rIBCo4NNt1ddTxe",
+          "id_comunidad_fk": emprendimiento.comunidades.target!.idDBR,
           "id_promotor_fk": emprendimiento.usuarios.target!.idDBR,
           "id_prioridad_fk": "yuEVuBv9rxLM4cR",
           "id_clasificacion_emp_fk": "N2fgbFPCkb8PwnO",

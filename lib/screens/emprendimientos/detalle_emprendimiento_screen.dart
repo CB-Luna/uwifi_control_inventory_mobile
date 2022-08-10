@@ -932,12 +932,16 @@ class _DetalleEmprendimientoScreenState
                               onTap: () async {
                                 await Navigator.push(
                                   context,
+                                  // MaterialPageRoute(
+                                  //   builder: (context) => AgregarJornadaScreen(
+                                  //     idEmprendimiento:
+                                  //         widget.emprendimiento.id,
+                                  //     nombreEmprendimiento:
+                                  //         widget.emprendimiento.nombre,
+                                  //   ),
+                                  // ),
                                   MaterialPageRoute(
-                                    builder: (context) => AgregarJornadaScreen(
-                                      idEmprendimiento:
-                                          widget.emprendimiento.id,
-                                      nombreEmprendimiento:
-                                          widget.emprendimiento.nombre,
+                                    builder: (context) => const AgregarJornadaScreen(
                                     ),
                                   ),
                                 );

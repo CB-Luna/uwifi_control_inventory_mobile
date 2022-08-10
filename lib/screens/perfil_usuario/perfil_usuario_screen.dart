@@ -1,14 +1,20 @@
-import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bizpro_app/main.dart';
+import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
+
+import 'package:bizpro_app/providers/catalog_provider.dart';
 import 'package:bizpro_app/database/entitys.dart';
+
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/perfil_usuario/device_information_widget.dart';
 import 'package:bizpro_app/screens/perfil_usuario/editar_usuario_screen.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:bizpro_app/screens/widgets/expanded_image_view.dart';
+import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:bizpro_app/theme/theme.dart';
-import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:provider/provider.dart';
+
 
 class PerfilUsuarioScreen extends StatefulWidget {
   const PerfilUsuarioScreen({Key? key}) : super(key: key);
@@ -24,7 +30,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
   @override
   Widget build(BuildContext context) {
     final usuarioProvider = Provider.of<UsuarioController>(context);
-
+    final catalogosProvider = Provider.of<CatalogProvider>(context);
     if (usuarioProvider.usuarioCurrent == null) {
       return const Scaffold(
         body: Center(
@@ -289,6 +295,39 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: DeviceInformationWidget(),
+                  ),
+                ),
+
+                Padding(
+                  padding:
+                    const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 44),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      // syncProvider.procesoCargando(true);
+                      // syncProvider.procesoTerminado(false);
+                      if (dataBase.estadosBox.isEmpty() || 
+                          dataBase.municipiosBox.isEmpty() || dataBase.comunidadesBox.isEmpty()) {
+                          await catalogosProvider.getCatalogos();
+                      }     
+                    },
+                    text: 'Descargar Catálogos',
+                    options: FFButtonOptions(
+                      width: 150,
+                      height: 50,
+                      color: AppTheme.of(context).secondaryText,
+                      textStyle:
+                          AppTheme.of(context).subtitle2.override(
+                                fontFamily: 'Poppins',
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                      elevation: 2,
+                      borderSide: const BorderSide(
+                        color: Colors.transparent,
+                        width: 1,
+                      ),
+                    ),
                   ),
                 ),
               ],

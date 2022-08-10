@@ -420,10 +420,11 @@ class Municipios {
   int id;
   String nombre;
   DateTime fechaRegistro;
-  DateTime fechaSync;
+  bool activo;
   @Unique()
   String? idDBR;
   final estados = ToOne<Estados>();
+  final statusSync = ToOne<StatusSync>();
   @Backlink()
   final comunidades = ToMany<Comunidades>();
 
@@ -431,12 +432,11 @@ class Municipios {
     this.id = 0,
     required this.nombre,
     DateTime? fechaRegistro,
-    DateTime? fechaSync,
+    this.activo = true,
     this.idDBR,
-    }): fechaRegistro = fechaRegistro ?? DateTime.now(), fechaSync = fechaSync ?? DateTime.now();
+    }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-  String get fechaSyncFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaSync);
 
 }
 
@@ -445,9 +445,10 @@ class Estados {
   int id;
   String nombre;
   DateTime fechaRegistro;
-  DateTime fechaSync;
+  bool activo;
   @Unique()
   String? idDBR;
+  final statusSync = ToOne<StatusSync>();
   @Backlink()
   final municipios = ToMany<Municipios>();
 
@@ -455,12 +456,11 @@ class Estados {
     this.id = 0,
     required this.nombre,
     DateTime? fechaRegistro,
-    DateTime? fechaSync,
+    this.activo = true,
     this.idDBR,
-    }): fechaRegistro = fechaRegistro ?? DateTime.now(), fechaSync = fechaSync ?? DateTime.now();
+    }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-  String get fechaSyncFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaSync);
 
 }
 
@@ -483,6 +483,10 @@ class StatusSync {
   final jornadas = ToMany<Jornadas>();
   @Backlink()
   final comunidades = ToMany<Comunidades>();
+  @Backlink()
+  final municipios = ToMany<Municipios>();
+  @Backlink()
+  final estados = ToMany<Estados>();
   StatusSync({
     this.id = 0,
     this.status = "0E3hoVIByUxMUMZ", //M__

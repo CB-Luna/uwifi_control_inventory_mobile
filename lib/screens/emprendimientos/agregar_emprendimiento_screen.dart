@@ -1,4 +1,8 @@
 import 'package:bizpro_app/helpers/constants.dart';
+import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/objectbox.g.dart';
+import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
@@ -26,6 +30,17 @@ class _AgregarEmprendimientoScreenState
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
   XFile? image;
+  List<String> listComunidades = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      listComunidades = [];
+      dataBase.comunidadesBox.getAll().forEach((element) {listComunidades.add(element.nombre);});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -327,62 +342,70 @@ class _AgregarEmprendimientoScreenState
                                 },
                               ),
                             ),
-                            Padding(
+                            FormField(builder: (state) {
+                            return Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  5, 0, 5, 10),
-                              child: TextFormField(
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
-                                onChanged: (value) {
-                                  comunidadProvider.nombre = value;
+                                   5, 0, 5, 10),
+                              child: GestureDetector(
+                                onTap: () {
+                                    setState(() {
+                                      if (listComunidades.isEmpty) {
+                                        snackbarKey.currentState
+                                        ?.showSnackBar(const SnackBar(
+                                          content: Text(
+                                              "Debes descargar los catálogos desde la sección de tu perfil"),
+                                        ));
+                                      }
+                                    });
                                 },
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  labelText: 'Comunidad*',
-                                  labelStyle:
-                                      AppTheme.of(context).title3.override(
-                                            fontFamily: 'Montserrat',
-                                            color: const Color(0xFF4672FF),
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                  hintText: 'Ingresa comunidad...',
-                                  hintStyle:
-                                      AppTheme.of(context).title3.override(
-                                            fontFamily: 'Poppins',
-                                            color: const Color(0xFF4672FF),
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Color(0xFF221573),
-                                      width: 1.5,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
+                                child: DropDown(
+                                  initialOption: listComunidades.isEmpty ? null : listComunidades.first,
+                                  options: listComunidades,
+                                  onChanged: (val) => setState((){
+                                    if (listComunidades.isEmpty) {
+                                      snackbarKey.currentState
+                                      ?.showSnackBar(const SnackBar(
+                                        content: Text(
+                                            "Debes descargar los catálogos desde la sección de tu perfil"),
+                                      ));
+                                    }
+                                    else{
+                                      comunidadProvider.nombre = val!;
+                                    }
+                                    
+                                    }),
+                                  width: double.infinity,
+                                  height: 50,
+                                  textStyle: AppTheme.of(context).title3.override(
+                                        fontFamily: 'Poppins',
+                                        color: const Color(0xFF221573),
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                  hintText: 'Seleccione una comunidad*',
+                                  icon: const Icon(
+                                    Icons.keyboard_arrow_down_rounded,
+                                    color: Color(0xFF221573),
+                                    size: 30,
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Color(0xFF221573),
-                                      width: 1.5,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  filled: true,
-                                  fillColor: const Color(0x49FFFFFF),
+                                  fillColor: Colors.white,
+                                  elevation: 2,
+                                  borderColor: const Color(0xFF221573),
+                                  borderWidth: 2,
+                                  borderRadius: 8,
+                                  margin: const EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                                  hidesUnderline: true,
                                 ),
-                                style: AppTheme.of(context).title3.override(
-                                      fontFamily: 'Poppins',
-                                      color: const Color(0xFF221573),
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                validator: (val) {
-                                  if (val == null || val.isEmpty) {
-                                    return 'Para continuar, ingrese la comunidad.';
-                                  }
-                                  return null;
-                                },
                               ),
+                            );
+                            }, 
+                            validator: (val) {
+                                if (comunidadProvider.nombre == "" ||
+                                    comunidadProvider.nombre.isEmpty) {
+                                  return 'Para continuar, seleccione la comunidad.';
+                                }
+                                return null;
+                              },
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
@@ -393,15 +416,18 @@ class _AgregarEmprendimientoScreenState
                                 children: [
                                   FFButtonWidget(
                                     onPressed: () async {
+                                      print(comunidadProvider.nombre);
                                       if (emprendimientoProvider
                                           .validateForm(formKey)) {
-                                        comunidadProvider.add();
-                                        emprendimientoProvider.add(
-                                            comunidadProvider
-                                                .comunidades.last.id);
-                                        usuarioProvider.addEmprendimiento(
-                                            emprendimientoProvider
-                                                .emprendimiento!);
+                                        // comunidadProvider.add();
+                                        
+                                        final idComunidad = dataBase.comunidadesBox.query(Comunidades_.nombre.equals(comunidadProvider.nombre)).build().findFirst()?.id;
+                                        if (idComunidad != null) {
+                                          emprendimientoProvider.add(idComunidad);
+                                          usuarioProvider.addEmprendimiento(
+                                              emprendimientoProvider
+                                                  .emprendimiento!);
+                                        }
                                         await Navigator.push(
                                           context,
                                           MaterialPageRoute(

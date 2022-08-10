@@ -1,10 +1,14 @@
 import 'dart:io';
 
 import 'package:bizpro_app/helpers/constants.dart';
+import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/objectbox.g.dart';
 import 'package:bizpro_app/providers/database_providers/comunidad_controller.dart';
 import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimiento_actualizado.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
+import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -34,6 +38,7 @@ class _EditarEmprendimientoScreenState
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
   XFile? image;
+  List<String> listComunidades = [];
 
   late TextEditingController nombreController;
   late TextEditingController descController;
@@ -48,11 +53,12 @@ class _EditarEmprendimientoScreenState
     descController =
         TextEditingController(text: widget.emprendimiento.descripcion);
     comunidadController = TextEditingController(text: widget.emprendimiento.comunidades.target?.nombre);
+    listComunidades = [];
+    dataBase.comunidadesBox.getAll().forEach((element) {listComunidades.add(element.nombre);});
   }
 
   @override
   Widget build(BuildContext context) {
-    final comunidadProvider = Provider.of<ComunidadController>(context);
     final emprendimientoProvider =
         Provider.of<EmprendimientoController>(context);
     return Scaffold(
@@ -371,60 +377,57 @@ class _EditarEmprendimientoScreenState
                                   },
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    5, 0, 5, 10),
-                                child: TextFormField(
-                                  obscureText: false,
-                                  controller: comunidadController,
-                                  decoration: InputDecoration(
-                                    labelText: 'Comunidad*',
-                                    labelStyle:
-                                        AppTheme.of(context).title3.override(
-                                              fontFamily: 'Montserrat',
-                                              color: const Color(0xFF4672FF),
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                    hintText: 'Ingresa comunidad...',
-                                    hintStyle:
-                                        AppTheme.of(context).title3.override(
-                                              fontFamily: 'Poppins',
-                                              color: const Color(0xFF4672FF),
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0xFF221573),
-                                        width: 1.5,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
+                              FormField(builder: (state) {
+                                return Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      5, 0, 5, 10),
+                                  child: DropDown(
+                                    initialOption: comunidadController.text,
+                                    options: listComunidades,
+                                    onChanged: (val) => setState((){
+                                      if (listComunidades.isEmpty) {
+                                        snackbarKey.currentState
+                                        ?.showSnackBar(const SnackBar(
+                                          content: Text(
+                                              "Debes descargar los catálogos desde la sección de tu perfil"),
+                                        ));
+                                      }
+                                      else{
+                                        comunidadController.text = val!;
+                                      }
+                                      }),
+                                    width: double.infinity,
+                                    height: 50,
+                                    textStyle: AppTheme.of(context).title3.override(
+                                          fontFamily: 'Poppins',
+                                          color: const Color(0xFF221573),
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                    hintText: 'Seleccione una comunidad*',
+                                    icon: const Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      color: Color(0xFF221573),
+                                      size: 30,
                                     ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0xFF221573),
-                                        width: 1.5,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    filled: true,
-                                    fillColor: const Color(0x49FFFFFF),
+                                    fillColor: Colors.white,
+                                    elevation: 2,
+                                    borderColor: const Color(0xFF221573),
+                                    borderWidth: 2,
+                                    borderRadius: 8,
+                                    margin: const EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                                    hidesUnderline: true,
                                   ),
-                                  style: AppTheme.of(context).title3.override(
-                                        fontFamily: 'Poppins',
-                                        color: const Color(0xFF221573),
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                  validator: (val) {
-                                    if (val == null || val.isEmpty) {
-                                      return 'Para continuar, ingrese la comunidad.';
-                                    }
-                                    return null;
-                                  }
-                                ),
-                              ),
+                                );
+                            }, 
+                            validator: (val) {
+                                if (comunidadController.text == "" ||
+                                    comunidadController.text.isEmpty) {
+                                  return 'Para continuar, seleccione la comunidad.';
+                                }
+                                return null;
+                              },
+                            ),
 
                               // Padding(
                               //   padding:
@@ -490,14 +493,16 @@ class _EditarEmprendimientoScreenState
                                       if (emprendimientoProvider
                                           .validateForm(formKey)) {
                                         print("Se puede actualizar");
-                                        comunidadProvider.update(
-                                          widget.emprendimiento.comunidades.target!.id, 
-                                          comunidadController.text);
-                                        emprendimientoProvider.update(
-                                            widget.emprendimiento.id,
-                                            newImagen,
-                                            nombreController.text,
-                                            descController.text);
+                                        final idComunidad = dataBase.comunidadesBox.query(Comunidades_.nombre.equals(comunidadController.text)).build().findFirst()?.id;
+                                        if (idComunidad != null) {
+                                          emprendimientoProvider.update(
+                                              widget.emprendimiento.id,
+                                              newImagen,
+                                              nombreController.text,
+                                              descController.text,
+                                              idComunidad
+                                              );
+                                        }
                                         await Navigator.push(
                                           context,
                                           MaterialPageRoute(

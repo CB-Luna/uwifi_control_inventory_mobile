@@ -1,428 +1,745 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-import 'package:bizpro_app/theme/theme.dart';
-
-import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:bizpro_app/screens/jornadas/jornada_creada.dart';
-import 'package:bizpro_app/providers/database_providers/jornada_controller.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:bizpro_app/theme/theme.dart';
+import 'package:bizpro_app/util/util.dart';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AgregarJornadaScreen extends StatefulWidget {
-  final int idEmprendimiento;
-  final String nombreEmprendimiento;
-
-  const AgregarJornadaScreen(
-      {Key? key,
-      required this.idEmprendimiento,
-      required this.nombreEmprendimiento})
-      : super(key: key);
+  const AgregarJornadaScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _AgregarJornadaScreenState createState() => _AgregarJornadaScreenState();
 }
 
 class _AgregarJornadaScreenState extends State<AgregarJornadaScreen> {
+  DateTime datePicked1 = DateTime.now();
+  TextEditingController textController1 = TextEditingController();
+  TextEditingController textController2 = TextEditingController();
+  TextEditingController textController3 = TextEditingController();
+  TextEditingController textController4 = TextEditingController();
+  List<String> checkboxGroupValue = [];
+  DateTime datePicked2 = DateTime.now();
+  final formKey1 = GlobalKey<FormState>();
+  final formKey4 = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final jornadaKey = GlobalKey<FormState>();
-  String _selectedDate = '';
-  String _dateCount = '';
-  String _range = '';
-  String _rangeCount = '';
-  DateTime? selectedDate;
-  DateTime dateNow = DateTime.now();
-  TextEditingController textControllerFecha = TextEditingController();
+  final formKey5 = GlobalKey<FormState>();
+  final formKey6 = GlobalKey<FormState>();
+  final formKey2 = GlobalKey<FormState>();
+  final formKey3 = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-  }
-
-  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-    setState(() {
-      if (args.value is PickerDateRange) {
-        _range = '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
-            // ignore: lines_longer_than_80_chars
-            ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
-      } else if (args.value is DateTime) {
-        selectedDate = args.value;
-      } else if (args.value is List<DateTime>) {
-        _dateCount = args.value.length.toString();
-      } else {
-        _rangeCount = args.value.length.toString();
-      }
-    });
+    textController1 = TextEditingController();
+    textController2 = TextEditingController();
+    textController4 = TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   Widget build(BuildContext context) {
-    final jornadaProvider = Provider.of<JornadaController>(context);
-    return Scaffold(
-      key: scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF008DD4),
-        automaticallyImplyLeading: true,
-        title: Text(
-          'Registrar Jornada',
-          style: AppTheme.of(context).bodyText1.override(
-                fontFamily: 'Poppins',
-                color: Colors.white,
-                fontSize: 22,
-              ),
-        ),
-        actions: [],
-        centerTitle: true,
-        elevation: 4,
-      ),
-      backgroundColor: const Color(0xFFD9EEF9),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: SingleChildScrollView(
-            child: Form(
-              key: jornadaKey,
+        return Scaffold(
+          key: scaffoldKey,
+          backgroundColor: Colors.white,
+          body: GestureDetector(
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(20, 15, 20, 0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Registro de Jornadas',
-                          style: AppTheme.of(context).bodyText1.override(
-                                fontFamily: 'Poppins',
-                                color: const Color(0xFF0D0E0F),
-                                fontSize: 16,
-                              ),
+                  Stack(
+                    children: [
+                      Image.asset(
+                        "assets/images/bglogin2.png",
+                        width: double.infinity,
+                        height: 200,
+                        fit: BoxFit.cover,
+                      ),
+                      Container(
+                        width: double.infinity,
+                        height: 200,
+                        decoration: BoxDecoration(
+                          color: Color(0x51000000),
                         ),
-                      ],
-                    ),
+                      ),
+                      Align(
+                        alignment: AlignmentDirectional(0, 0),
+                        child: Container(
+                          width: double.infinity,
+                          height: 200,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Color(0x0014181B),
+                                AppTheme.of(context).secondaryBackground
+                              ],
+                              stops: [0, 1],
+                              begin: AlignmentDirectional(0, -1),
+                              end: AlignmentDirectional(0, 1),
+                            ),
+                          ),
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(16, 45, 16, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 10),
+                                      child: Container(
+                                        width: 80,
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                          color: AppTheme.of(context)
+                                              .secondaryText,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: InkWell(
+                                          onTap: () async {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Icon(
+                                                Icons.arrow_back_ios_rounded,
+                                                color: Colors.white,
+                                                size: 16,
+                                              ),
+                                              Text(
+                                                'Atrás',
+                                                style:
+                                                    AppTheme.of(context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily:
+                                                              AppTheme.of(
+                                                                      context)
+                                                                  .bodyText1Family,
+                                                          color: Colors.white,
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.w300,
+                                                        ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  "SIN TEXTO",
+                                  maxLines: 1,
+                                  style: AppTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: AppTheme.of(context)
+                                            .subtitle2Family,
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(15, 16, 15, 0),
+                  SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
                           padding:
-                              const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
-                          child: TextFormField(
-                            readOnly: true,
-                            enabled: false,
-                            initialValue: widget.nombreEmprendimiento,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelText: 'Emprendimiento',
-                              labelStyle: AppTheme.of(context).title3.override(
-                                    fontFamily: 'Montserrat',
-                                    color: AppTheme.of(context).secondaryText,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              filled: true,
-                              fillColor: Colors.white,
-                            ),
-                            style: AppTheme.of(context).title3.override(
-                                  fontFamily: 'Poppins',
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
-                          child: TextFormField(
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
-                            onChanged: (value) {
-                              jornadaProvider.numJornada = value;
-                            },
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelText: 'Número de jornada*',
-                              labelStyle:
-                                  AppTheme.of(context).title3.override(
-                                        fontFamily: 'Montserrat',
-                                        color: AppTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
+                              EdgeInsetsDirectional.fromSTEB(15, 16, 15, 0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Form(
+                                key: formKey4,
+                                autovalidateMode: AutovalidateMode.always,
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      5, 0, 5, 10),
+                                  child: TextFormField(
+                                    controller: textController1,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      labelText: 'Número de jornada*',
+                                      labelStyle: AppTheme.of(context)
+                                          .title3
+                                          .override(
+                                            fontFamily: 'Montserrat',
+                                            color: AppTheme.of(context)
+                                                .secondaryText,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      hintText: 'Ingresa jornada...',
+                                      hintStyle: AppTheme.of(context)
+                                          .title3
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            color: AppTheme.of(context)
+                                                .secondaryText,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: AppTheme.of(context)
+                                              .primaryText,
+                                          width: 1.5,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                              hintText: 'Ingresa el número de jornada...',
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0xFF060606),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0xFF060606),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              filled: true,
-                              fillColor: const Color(0xFFF3F2F2),
-                            ),
-                            keyboardType: TextInputType.number,
-                            style: AppTheme.of(context).title3.override(
-                                  fontFamily: 'Poppins',
-                                  color: const Color(0xFF060606),
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(1),
-                            ],
-                            validator: (value) {
-                              return familiaCharacters.hasMatch(value ?? '')
-                                  ? null
-                                  : 'Para continuar, ingrese el número de jornada';
-                            },
-                          ),
-                        ),
-                        // Row(
-                        //   mainAxisSize: MainAxisSize.max,
-                        //   children: [
-                        //     Expanded(
-                        //       child: Checkbox(
-                        //         value: false,
-                        //         onChanged: (value) {
-                        //           value = value;
-                        //         },
-                        //         activeColor:
-                        //             AppTheme.of(context).primaryColor,
-                        //         checkColor: Colors.white,
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
-                          child: TextFormField(
-                            controller: textControllerFecha,
-                            obscureText: false,
-                            focusNode: FocusNode(), //Only tap event available
-                            enableInteractiveSelection:
-                                false, //Disable on change event
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              labelText: 'Próxima visita',
-                              labelStyle: AppTheme.of(context).title3.override(
-                                    fontFamily: 'Montserrat',
-                                    color: AppTheme.of(context).secondaryText,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                              hintText:
-                                  'Selecciona fecha de la próxima visita...',
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0xFF060606),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: const Color(0xFF060606),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              filled: true,
-                              fillColor: const Color(0xFFF3F2F2),
-                            ),
-                            style: AppTheme.of(context).title3.override(
-                                  fontFamily: 'Poppins',
-                                  color: const Color(0xFF060606),
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                            validator: (value) {
-                              return fechaCharacters.hasMatch(value ?? '')
-                                  ? null
-                                  : 'Para continuar, ingrese una fecha dd/MM/yyyy';
-                            },
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (_) {
-                                  return AlertDialog(
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(32.0)),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: AppTheme.of(context)
+                                              .primaryText,
+                                          width: 1.5,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.white,
                                     ),
-                                    clipBehavior: Clip.antiAlias,
-                                    contentPadding: const EdgeInsets.all(0),
-                                    content: SizedBox(
-                                      width: 400,
-                                      height: 400,
+                                    style: AppTheme.of(context)
+                                        .title3
+                                        .override(
+                                          fontFamily: 'Poppins',
+                                          color: AppTheme.of(context)
+                                              .primaryText,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                    validator: (val) {
+                                      if (val == null || val.isEmpty) {
+                                        return 'Field is required';
+                                      }
+
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Form(
+                                key: formKey1,
+                                autovalidateMode: AutovalidateMode.always,
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      5, 0, 5, 10),
+                                  child: TextFormField(
+                                    controller: textController2,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      labelText: 'Emprendedor*',
+                                      labelStyle: AppTheme.of(context)
+                                          .title3
+                                          .override(
+                                            fontFamily: 'Montserrat',
+                                            color: AppTheme.of(context)
+                                                .secondaryText,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      hintText: 'Ingresa emprendedor...',
+                                      hintStyle: AppTheme.of(context)
+                                          .title3
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            color: AppTheme.of(context)
+                                                .secondaryText,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: AppTheme.of(context)
+                                              .primaryText,
+                                          width: 1.5,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: AppTheme.of(context)
+                                              .primaryText,
+                                          width: 1.5,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                    ),
+                                    style: AppTheme.of(context)
+                                        .title3
+                                        .override(
+                                          fontFamily: 'Poppins',
+                                          color: AppTheme.of(context)
+                                              .primaryText,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                    validator: (val) {
+                                      if (val == null || val.isEmpty) {
+                                        return 'Field is required';
+                                      }
+
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Form(
+                                key: formKey5,
+                                autovalidateMode: AutovalidateMode.always,
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      5, 0, 5, 10),
+                                  child: TextFormField(
+                                    controller: textController3,
+                                    readOnly: true,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      labelText: 'Emprendimiento',
+                                      labelStyle: AppTheme.of(context)
+                                          .title3
+                                          .override(
+                                            fontFamily: 'Montserrat',
+                                            color: AppTheme.of(context)
+                                                .secondaryText,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      hintText: 'Ingresa emprendimiento...',
+                                      hintStyle: AppTheme.of(context)
+                                          .title3
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            color: AppTheme.of(context)
+                                                .secondaryText,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: AppTheme.of(context)
+                                              .primaryText,
+                                          width: 1.5,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: AppTheme.of(context)
+                                              .primaryText,
+                                          width: 1.5,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                    ),
+                                    style: AppTheme.of(context)
+                                        .title3
+                                        .override(
+                                          fontFamily: 'Poppins',
+                                          color: AppTheme.of(context)
+                                              .primaryText,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                    validator: (val) {
+                                      if (val == null || val.isEmpty) {
+                                        return 'Field is required';
+                                      }
+
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Form(
+                                key: formKey6,
+                                autovalidateMode: AutovalidateMode.always,
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      5, 0, 5, 10),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      // await DatePicker.showDatePicker(
+                                      //   context,
+                                      //   showTitleActions: true,
+                                      //   onConfirm: (date) {
+                                      //     setState(() => datePicked1 = date);
+                                      //   },
+                                      //   currentTime: getCurrentTimestamp,
+                                      //   minTime: getCurrentTimestamp,
+                                      // );
+                                    },
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 60,
+                                      decoration: BoxDecoration(
+                                        color: AppTheme.of(context)
+                                            .secondaryBackground,
+                                        borderRadius: BorderRadius.circular(12),
+                                        border: Border.all(
+                                          color: AppTheme.of(context)
+                                              .primaryText,
+                                          width: 1.5,
+                                        ),
+                                      ),
                                       child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
+                                        mainAxisSize: MainAxisSize.max,
                                         children: [
-                                          Text(
-                                            "Seleccione una fecha disponible",
-                                            style: AppTheme.of(context)
-                                                .title3
-                                                .override(
-                                                  fontFamily: 'Poppins',
-                                                  color:
-                                                      const Color(0xFF060606),
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.normal,
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(10, 0, 0, 0),
+                                                child: Text(
+                                                  'Fecha registro*',
+                                                  style: AppTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily:
+                                                            AppTheme.of(
+                                                                    context)
+                                                                .bodyText1Family,
+                                                        color:
+                                                            Color(0xFF5B6570),
+                                                        fontSize: 11,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
                                                 ),
-                                          ),
-                                          SfDateRangePicker(
-                                            showNavigationArrow: true,
-                                            onSelectionChanged:
-                                                _onSelectionChanged,
-                                            initialSelectedDate: dateNow
-                                                .add(const Duration(days: 1)),
-                                            enablePastDates: false,
-                                            maxDate: dateNow
-                                                .add(const Duration(days: 100)),
-                                            selectionMode:
-                                                DateRangePickerSelectionMode
-                                                    .single,
-                                            selectableDayPredicate:
-                                                (DateTime dateTime) {
-                                              return dateTime.weekday == 6 ||
-                                                      dateTime.weekday == 7
-                                                  ? false
-                                                  : true;
-                                            },
-                                          ),
-                                          FFButtonWidget(
-                                            onPressed: () {
-                                              if (selectedDate != null) {
-                                                jornadaProvider.proximaVisita =
-                                                    selectedDate!;
-                                                textControllerFecha.text =
-                                                    DateFormat("dd/MM/yyyy")
-                                                        .format(selectedDate!);
-                                                Navigator.of(context).pop();
-                                              }
-                                            },
-                                            text: 'Aceptar',
-                                            options: FFButtonOptions(
-                                              width: 150,
-                                              height: 40,
-                                              color: AppTheme.of(context)
-                                                  .primaryColor,
-                                              textStyle: AppTheme.of(context)
-                                                  .subtitle2
-                                                  .override(
-                                                    fontFamily: 'Poppins',
-                                                    color: Colors.white,
-                                                    fontSize: 15,
-                                                  ),
-                                              borderSide: const BorderSide(
-                                                color: Colors.transparent,
-                                                width: 1,
                                               ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(12, 6, 0, 0),
+                                                child: Text(
+                                                  dateTimeFormat(
+                                                      'yMMMd', datePicked1),
+                                                  style: AppTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily:
+                                                            AppTheme.of(
+                                                                    context)
+                                                                .bodyText1Family,
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
                                     ),
-                                  );
-                                },
-                              );
-                            },
+                                  ),
+                                ),
+                              ),
+                              Form(
+                                key: formKey2,
+                                autovalidateMode: AutovalidateMode.always,
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      5, 0, 5, 10),
+                                  child: TextFormField(
+                                    controller: textController4,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      labelText: 'Registrar Tarea*',
+                                      labelStyle: AppTheme.of(context)
+                                          .title3
+                                          .override(
+                                            fontFamily: 'Montserrat',
+                                            color: AppTheme.of(context)
+                                                .secondaryText,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      hintText: 'Registro de tarea...',
+                                      hintStyle: AppTheme.of(context)
+                                          .title3
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            color: AppTheme.of(context)
+                                                .secondaryText,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: AppTheme.of(context)
+                                              .primaryText,
+                                          width: 1.5,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: AppTheme.of(context)
+                                              .primaryText,
+                                          width: 1.5,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                    ),
+                                    style: AppTheme.of(context)
+                                        .title3
+                                        .override(
+                                          fontFamily: 'Poppins',
+                                          color: AppTheme.of(context)
+                                              .primaryText,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                    maxLines: 2,
+                                    validator: (val) {
+                                      if (val == null || val.isEmpty) {
+                                        return 'Field is required';
+                                      }
+
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  // Expanded(
+                                  //   child: FlutterFlowCheckboxGroup(
+                                  //     initiallySelected:
+                                  //         checkboxGroupValues ??= [],
+                                  //     options: ['¿Tarea Completada?'].toList(),
+                                  //     onChanged: (val) => setState(
+                                  //         () => checkboxGroupValues = val),
+                                  //     activeColor: AppTheme.of(context)
+                                  //         .primaryColor,
+                                  //     checkColor: Colors.white,
+                                  //     checkboxBorderColor: Color(0xFF95A1AC),
+                                  //     textStyle: AppTheme.of(context)
+                                  //         .bodyText1
+                                  //         .override(
+                                  //           fontFamily:
+                                  //               AppTheme.of(context)
+                                  //                   .bodyText1Family,
+                                  //           fontWeight: FontWeight.w500,
+                                  //         ),
+                                  //   ),
+                                  // ),
+                                ],
+                              ),
+                              Form(
+                                key: formKey3,
+                                autovalidateMode: AutovalidateMode.always,
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      5, 0, 5, 10),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      // await DatePicker.showDatePicker(
+                                      //   context,
+                                      //   showTitleActions: true,
+                                      //   onConfirm: (date) {
+                                      //     setState(() => datePicked2 = date);
+                                      //   },
+                                      //   currentTime: getCurrentTimestamp,
+                                      //   minTime: getCurrentTimestamp,
+                                      // );
+                                    },
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 60,
+                                      decoration: BoxDecoration(
+                                        color: AppTheme.of(context)
+                                            .secondaryBackground,
+                                        borderRadius: BorderRadius.circular(12),
+                                        border: Border.all(
+                                          color: AppTheme.of(context)
+                                              .primaryText,
+                                          width: 1.5,
+                                        ),
+                                      ),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(10, 0, 0, 0),
+                                                child: Text(
+                                                  'Fecha de revisión*',
+                                                  style: AppTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily:
+                                                            AppTheme.of(
+                                                                    context)
+                                                                .bodyText1Family,
+                                                        color:
+                                                            AppTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                        fontSize: 11,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(12, 6, 0, 0),
+                                                child: Text(
+                                                  dateTimeFormat(
+                                                      'yMMMd', datePicked2),
+                                                  style: AppTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily:
+                                                            AppTheme.of(
+                                                                    context)
+                                                                .bodyText1Family,
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
                         FFButtonWidget(
                           onPressed: () async {
-                            if (jornadaProvider.validateForm(jornadaKey)) {
-                              jornadaProvider.add(widget.idEmprendimiento);
-                              // emprendimientoProvider.updateEmprendedores(widget.idEmprendimiento, emprendedorProvider.emprendedores[emprendedorProvider.emprendedores.length - 1]); 
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const JornadaCreada(),
-                                ),
-                              );
-                            } else {
-                              await showDialog(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: const Text('Campos vacíos'),
-                                    content: const Text(
-                                        'Para continuar, debe llenar todos los campos'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: const Text('Bien'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
+                            if (formKey4.currentState == null ||
+                                !formKey4.currentState!.validate()) {
                               return;
                             }
+
+                            if (formKey1.currentState == null ||
+                                !formKey1.currentState!.validate()) {
+                              return;
+                            }
+
+                            if (formKey5.currentState == null ||
+                                !formKey5.currentState!.validate()) {
+                              return;
+                            }
+
+                            if (formKey6.currentState == null ||
+                                !formKey6.currentState!.validate()) {
+                              return;
+                            }
+
+                            if (datePicked1 == null) {
+                              return;
+                            }
+
+                            if (formKey2.currentState == null ||
+                                !formKey2.currentState!.validate()) {
+                              return;
+                            }
+
+                            if (formKey3.currentState == null ||
+                                !formKey3.currentState!.validate()) {
+                              return;
+                            }
+
+                            if (datePicked2 == null) {
+                              return;
+                            }
+
+                            // final jornadasCreateData = createJornadasRecordData(
+                            //   emprendedor: textController2.text,
+                            //   emprendimiento: textController3?.text ?? '',
+                            //   fecha: datePicked1,
+                            //   fecharevision: datePicked2,
+                            //   tarea: textController4.text,
+                            //   refemprendimiento:
+                            //       registrarJornadaProyectosRecord.reference,
+                            //   numerojornada: int.parse(textController1.text),
+                            // );
+                            // await JornadasRecord.collection
+                            //     .doc()
+                            //     .set(jornadasCreateData);
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => JornadaCreada(),
+                              ),
+                            );
                           },
-                          text: 'Agregar Jornada',
-                          icon: const Icon(
-                            Icons.person,
-                            color: Colors.white,
+                          text: 'Crear',
+                          icon: Icon(
+                            Icons.check_rounded,
                             size: 15,
                           ),
                           options: FFButtonOptions(
-                            width: 290,
-                            height: 50,
-                            color: const Color(0xFF2CC3F4),
-                            textStyle: AppTheme.of(context).title3.override(
-                                  fontFamily: 'Poppins',
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w300,
-                                ),
-                            elevation: 3,
-                            borderSide: const BorderSide(
-                              color: Color(0xFF2CC3F4),
-                              width: 0,
+                            width: 130,
+                            height: 40,
+                            color: AppTheme.of(context).secondaryText,
+                            textStyle:
+                                AppTheme.of(context).subtitle2.override(
+                                      fontFamily: AppTheme.of(context)
+                                          .subtitle2Family,
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                    ),
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),
@@ -434,8 +751,6 @@ class _AgregarJornadaScreenState extends State<AgregarJornadaScreen> {
               ),
             ),
           ),
-        ),
-      ),
-    );
+        );
   }
 }

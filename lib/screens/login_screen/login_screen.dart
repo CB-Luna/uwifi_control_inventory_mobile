@@ -195,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (lastUsuario != null) {
                                 print("NOMBRE USUARIO: ${lastUsuario.nombre}");
                                 print("ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
-                                print("Tamaño VariablesUser: ${dataBase.VariablesUsuarioBox.getAll().length}");
+                                print("Tamaño VariablesUser: ${dataBase.variablesUsuarioBox.getAll().length}");
                                 if (lastUsuario.variablesUsuario.target?.id != null) {
                                   print("Se guarda ID DE VARIABLES USUARIO");
                                   prefs.setInt("idVariablesUser", lastUsuario.variablesUsuario.target!.id);
@@ -266,7 +266,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (lastUsuario != null) {
                                 print("NOMBRE USUARIO: ${lastUsuario.nombre}");
                                 print("ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
-                                print("Tamaño VariablesUser: ${dataBase.VariablesUsuarioBox.getAll().length}");
+                                print("Tamaño VariablesUser: ${dataBase.variablesUsuarioBox.getAll().length}");
                                 if (lastUsuario.variablesUsuario.target?.id != null) {
                                   print("Se guarda ID DE VARIABLES USUARIO");
                                   prefs.setInt("idVariablesUser", lastUsuario.variablesUsuario.target!.id);
@@ -296,7 +296,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 print("NOMBRE USUARIO: ${lastUsuario.nombre}");
                                 print("ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
                                 print("Emprendedores: ${lastUsuario.variablesUsuario.target?.emprendedores ?? 'none'}");
-                                print("Tamaño VariablesUser: ${dataBase.VariablesUsuarioBox.getAll().length}");
+                                print("Tamaño VariablesUser: ${dataBase.variablesUsuarioBox.getAll().length}");
                                 if (lastUsuario.variablesUsuario.target?.id != null) {
                                   print("Se guarda ID DE VARIABLES USUARIO");
                                   prefs.setInt("idVariablesUser", lastUsuario.variablesUsuario.target!.id);

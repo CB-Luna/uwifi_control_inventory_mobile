@@ -797,7 +797,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(22, 334643984474072026),
       name: 'Estados',
-      lastPropertyId: const IdUid(6, 1340243202863340307),
+      lastPropertyId: const IdUid(8, 7648666853331914628),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -816,16 +816,23 @@ final _entities = <ModelEntity>[
             type: 10,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 3895257262356450605),
-            name: 'fechaSync',
-            type: 10,
-            flags: 0),
-        ModelProperty(
             id: const IdUid(6, 1340243202863340307),
             name: 'idDBR',
             type: 9,
             flags: 2080,
-            indexId: const IdUid(64, 5835974261382713960))
+            indexId: const IdUid(64, 5835974261382713960)),
+        ModelProperty(
+            id: const IdUid(7, 3354600507596039521),
+            name: 'activo',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 7648666853331914628),
+            name: 'statusSyncId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(86, 3278468930080545812),
+            relationTarget: 'StatusSync')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -834,7 +841,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(23, 6229275484692578053),
       name: 'Municipios',
-      lastPropertyId: const IdUid(7, 5403234117840867506),
+      lastPropertyId: const IdUid(9, 4936784167570705480),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -853,11 +860,6 @@ final _entities = <ModelEntity>[
             type: 10,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 2584782002890659583),
-            name: 'fechaSync',
-            type: 10,
-            flags: 0),
-        ModelProperty(
             id: const IdUid(5, 3651614083986583572),
             name: 'estadosId',
             type: 11,
@@ -869,7 +871,19 @@ final _entities = <ModelEntity>[
             name: 'idDBR',
             type: 9,
             flags: 2080,
-            indexId: const IdUid(66, 2437097551889800455))
+            indexId: const IdUid(66, 2437097551889800455)),
+        ModelProperty(
+            id: const IdUid(8, 7402881280207170997),
+            name: 'activo',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 4936784167570705480),
+            name: 'statusSyncId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(87, 6478200980709363370),
+            relationTarget: 'StatusSync')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -975,7 +989,10 @@ final _entities = <ModelEntity>[
         ModelBacklink(name: 'usuarios', srcEntity: 'Usuarios', srcField: ''),
         ModelBacklink(name: 'jornadas', srcEntity: 'Jornadas', srcField: ''),
         ModelBacklink(
-            name: 'comunidades', srcEntity: 'Comunidades', srcField: '')
+            name: 'comunidades', srcEntity: 'Comunidades', srcField: ''),
+        ModelBacklink(
+            name: 'municipios', srcEntity: 'Municipios', srcField: ''),
+        ModelBacklink(name: 'estados', srcEntity: 'Estados', srcField: '')
       ]),
   ModelEntity(
       id: const IdUid(27, 1774905738150923512),
@@ -1077,7 +1094,7 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(29, 7625539946193612618),
-      lastIndexId: const IdUid(85, 4197992763805738004),
+      lastIndexId: const IdUid(87, 6478200980709363370),
       lastRelationId: const IdUid(9, 6695548577594940433),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -1259,7 +1276,9 @@ ModelDefinition getObjectBoxModel() {
         2948145743703110893,
         4090875136723971084,
         7992450668665361714,
-        7899142688428235984
+        7899142688428235984,
+        3895257262356450605,
+        2584782002890659583
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -2050,7 +2069,7 @@ ModelDefinition getObjectBoxModel() {
         }),
     Estados: EntityDefinition<Estados>(
         model: _entities[12],
-        toOneRelations: (Estados object) => [],
+        toOneRelations: (Estados object) => [object.statusSync],
         toManyRelations: (Estados object) => {
               RelInfo<Municipios>.toOneBacklink(5, object.id,
                       (Municipios srcObject) => srcObject.estados):
@@ -2064,12 +2083,13 @@ ModelDefinition getObjectBoxModel() {
           final nombreOffset = fbb.writeString(object.nombre);
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(7);
+          fbb.startTable(9);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nombreOffset);
           fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addInt64(3, object.fechaSync.millisecondsSinceEpoch);
           fbb.addOffset(5, idDBROffset);
+          fbb.addBool(6, object.activo);
+          fbb.addInt64(7, object.statusSync.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -2083,10 +2103,13 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 6, ''),
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
-              fechaSync: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0)),
+              activo: const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 16, false),
               idDBR: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 14));
+          object.statusSync.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
+          object.statusSync.attach(store);
           InternalToManyAccess.setRelInfo(
               object.municipios,
               store,
@@ -2097,7 +2120,8 @@ ModelDefinition getObjectBoxModel() {
         }),
     Municipios: EntityDefinition<Municipios>(
         model: _entities[13],
-        toOneRelations: (Municipios object) => [object.estados],
+        toOneRelations: (Municipios object) =>
+            [object.estados, object.statusSync],
         toManyRelations: (Municipios object) => {
               RelInfo<Comunidades>.toOneBacklink(5, object.id,
                       (Comunidades srcObject) => srcObject.municipios):
@@ -2111,13 +2135,14 @@ ModelDefinition getObjectBoxModel() {
           final nombreOffset = fbb.writeString(object.nombre);
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(8);
+          fbb.startTable(10);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nombreOffset);
           fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
-          fbb.addInt64(3, object.fechaSync.millisecondsSinceEpoch);
           fbb.addInt64(4, object.estados.targetId);
           fbb.addOffset(6, idDBROffset);
+          fbb.addBool(7, object.activo);
+          fbb.addInt64(8, object.statusSync.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -2131,13 +2156,16 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 6, ''),
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
-              fechaSync: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0)),
+              activo: const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 18, false),
               idDBR: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 16));
           object.estados.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
           object.estados.attach(store);
+          object.statusSync.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0);
+          object.statusSync.attach(store);
           InternalToManyAccess.setRelInfo(
               object.comunidades,
               store,
@@ -2227,7 +2255,12 @@ ModelDefinition getObjectBoxModel() {
                   object.jornadas,
               RelInfo<Comunidades>.toOneBacklink(9, object.id,
                       (Comunidades srcObject) => srcObject.statusSync):
-                  object.comunidades
+                  object.comunidades,
+              RelInfo<Municipios>.toOneBacklink(9, object.id,
+                      (Municipios srcObject) => srcObject.statusSync):
+                  object.municipios,
+              RelInfo<Estados>.toOneBacklink(8, object.id,
+                  (Estados srcObject) => srcObject.statusSync): object.estados
             },
         getId: (StatusSync object) => object.id,
         setId: (StatusSync object, int id) {
@@ -2293,6 +2326,18 @@ ModelDefinition getObjectBoxModel() {
               store,
               RelInfo<Comunidades>.toOneBacklink(9, object.id,
                   (Comunidades srcObject) => srcObject.statusSync),
+              store.box<StatusSync>());
+          InternalToManyAccess.setRelInfo(
+              object.municipios,
+              store,
+              RelInfo<Municipios>.toOneBacklink(
+                  9, object.id, (Municipios srcObject) => srcObject.statusSync),
+              store.box<StatusSync>());
+          InternalToManyAccess.setRelInfo(
+              object.estados,
+              store,
+              RelInfo<Estados>.toOneBacklink(
+                  8, object.id, (Estados srcObject) => srcObject.statusSync),
               store.box<StatusSync>());
           return object;
         }),
@@ -2941,13 +2986,17 @@ class Estados_ {
   static final fechaRegistro =
       QueryIntegerProperty<Estados>(_entities[12].properties[2]);
 
-  /// see [Estados.fechaSync]
-  static final fechaSync =
-      QueryIntegerProperty<Estados>(_entities[12].properties[3]);
-
   /// see [Estados.idDBR]
   static final idDBR =
-      QueryStringProperty<Estados>(_entities[12].properties[4]);
+      QueryStringProperty<Estados>(_entities[12].properties[3]);
+
+  /// see [Estados.activo]
+  static final activo =
+      QueryBooleanProperty<Estados>(_entities[12].properties[4]);
+
+  /// see [Estados.statusSync]
+  static final statusSync =
+      QueryRelationToOne<Estados, StatusSync>(_entities[12].properties[5]);
 }
 
 /// [Municipios] entity fields to define ObjectBox queries.
@@ -2964,17 +3013,21 @@ class Municipios_ {
   static final fechaRegistro =
       QueryIntegerProperty<Municipios>(_entities[13].properties[2]);
 
-  /// see [Municipios.fechaSync]
-  static final fechaSync =
-      QueryIntegerProperty<Municipios>(_entities[13].properties[3]);
-
   /// see [Municipios.estados]
   static final estados =
-      QueryRelationToOne<Municipios, Estados>(_entities[13].properties[4]);
+      QueryRelationToOne<Municipios, Estados>(_entities[13].properties[3]);
 
   /// see [Municipios.idDBR]
   static final idDBR =
-      QueryStringProperty<Municipios>(_entities[13].properties[5]);
+      QueryStringProperty<Municipios>(_entities[13].properties[4]);
+
+  /// see [Municipios.activo]
+  static final activo =
+      QueryBooleanProperty<Municipios>(_entities[13].properties[5]);
+
+  /// see [Municipios.statusSync]
+  static final statusSync =
+      QueryRelationToOne<Municipios, StatusSync>(_entities[13].properties[6]);
 }
 
 /// [Jornadas] entity fields to define ObjectBox queries.

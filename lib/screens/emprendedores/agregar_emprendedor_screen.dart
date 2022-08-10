@@ -589,10 +589,10 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                 onPressed: () async {
                                   if (emprendedorProvider.validateForm(emprendedorKey)) {
                                     emprendedorProvider.add(widget.idEmprendimiento);
-                                    final updateVariableUser = dataBase.VariablesUsuarioBox.get(prefs.getInt("idVariablesUser")!);
+                                    final updateVariableUser = dataBase.variablesUsuarioBox.get(prefs.getInt("idVariablesUser")!);
                                     if (updateVariableUser != null) {
                                       updateVariableUser.emprendedores = false;
-                                      dataBase.VariablesUsuarioBox.put(updateVariableUser);
+                                      dataBase.variablesUsuarioBox.put(updateVariableUser);
                                     }
                                     await Navigator.push(
                                       context,

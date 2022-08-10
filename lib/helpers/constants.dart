@@ -1,6 +1,9 @@
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:pocketbase/pocketbase.dart';
 
 const String baseUrl = 'https://pocketbase.cbluna-dev.com';
+
+final client = PocketBase(baseUrl);
 
 final nombreCharacters = RegExp(r'^(([A-Z]{1}|[ÁÉÍÓÚÑ]{1})[a-zá-ÿ]+[ ]?)+$');
 final curpCharacters = RegExp(r'^([A-Z]{4}[0-9]{6}[HM]{1}[A-Z]{2}[BCDFGHJKLMNPQRSTVWXYZ]{3}([A-Z]{2})?([0-9]{2})?)$');
