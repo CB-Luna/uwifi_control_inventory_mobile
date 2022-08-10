@@ -402,7 +402,13 @@ class _AgregarEmprendimientoScreenState
                             validator: (val) {
                                 if (comunidadProvider.nombre == "" ||
                                     comunidadProvider.nombre.isEmpty) {
+                                  if (listComunidades.isNotEmpty) {
+                                    comunidadProvider.nombre = listComunidades.first;
+                                  }
+                                  else
+                                  {
                                   return 'Para continuar, seleccione la comunidad.';
+                                  }
                                 }
                                 return null;
                               },
