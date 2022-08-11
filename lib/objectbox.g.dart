@@ -893,7 +893,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(24, 6358146304075079104),
       name: 'Jornadas',
-      lastPropertyId: const IdUid(11, 5028158787265648369),
+      lastPropertyId: const IdUid(12, 8889235360537659107),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -905,11 +905,6 @@ final _entities = <ModelEntity>[
             id: const IdUid(2, 498346413789251837),
             name: 'numJornada',
             type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 5582579692261011195),
-            name: 'proximaVisita',
-            type: 10,
             flags: 0),
         ModelProperty(
             id: const IdUid(4, 3362702631639476479),
@@ -944,14 +939,17 @@ final _entities = <ModelEntity>[
             flags: 2080,
             indexId: const IdUid(65, 2011636909834464311)),
         ModelProperty(
-            id: const IdUid(11, 5028158787265648369),
-            name: 'bitacoraId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(80, 360897725695503763),
-            relationTarget: 'Bitacora')
+            id: const IdUid(12, 8889235360537659107),
+            name: 'fechaRevision',
+            type: 10,
+            flags: 0)
       ],
-      relations: <ModelRelation>[],
+      relations: <ModelRelation>[
+        ModelRelation(
+            id: const IdUid(10, 4246279541821576094),
+            name: 'bitacora',
+            targetId: const IdUid(27, 1774905738150923512))
+      ],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
       id: const IdUid(26, 6276906075580230896),
@@ -1095,7 +1093,7 @@ ModelDefinition getObjectBoxModel() {
       entities: _entities,
       lastEntityId: const IdUid(29, 7625539946193612618),
       lastIndexId: const IdUid(87, 6478200980709363370),
-      lastRelationId: const IdUid(9, 6695548577594940433),
+      lastRelationId: const IdUid(10, 4246279541821576094),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
         1366246136666677579,
@@ -1141,7 +1139,8 @@ ModelDefinition getObjectBoxModel() {
         2290535798159386957,
         5140011308328673057,
         8062585399034389472,
-        668466277065793709
+        668466277065793709,
+        360897725695503763
       ],
       retiredPropertyUids: const [
         7079790605743243388,
@@ -1278,7 +1277,9 @@ ModelDefinition getObjectBoxModel() {
         7992450668665361714,
         7899142688428235984,
         3895257262356450605,
-        2584782002890659583
+        2584782002890659583,
+        5582579692261011195,
+        5028158787265648369
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -2176,13 +2177,10 @@ ModelDefinition getObjectBoxModel() {
         }),
     Jornadas: EntityDefinition<Jornadas>(
         model: _entities[14],
-        toOneRelations: (Jornadas object) => [
-              object.emprendimiento,
-              object.tarea,
-              object.statusSync,
-              object.bitacora
-            ],
-        toManyRelations: (Jornadas object) => {},
+        toOneRelations: (Jornadas object) =>
+            [object.emprendimiento, object.tarea, object.statusSync],
+        toManyRelations: (Jornadas object) =>
+            {RelInfo<Jornadas>.toMany(10, object.id): object.bitacora},
         getId: (Jornadas object) => object.id,
         setId: (Jornadas object, int id) {
           object.id = id;
@@ -2191,16 +2189,15 @@ ModelDefinition getObjectBoxModel() {
           final numJornadaOffset = fbb.writeString(object.numJornada);
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(12);
+          fbb.startTable(13);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, numJornadaOffset);
-          fbb.addInt64(2, object.proximaVisita.millisecondsSinceEpoch);
           fbb.addInt64(3, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addInt64(5, object.emprendimiento.targetId);
           fbb.addInt64(6, object.tarea.targetId);
           fbb.addInt64(7, object.statusSync.targetId);
           fbb.addOffset(9, idDBROffset);
-          fbb.addInt64(10, object.bitacora.targetId);
+          fbb.addInt64(11, object.fechaRevision.millisecondsSinceEpoch);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -2212,8 +2209,8 @@ ModelDefinition getObjectBoxModel() {
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
               numJornada: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 6, ''),
-              proximaVisita: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
+              fechaRevision: DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0)),
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true)
@@ -2227,9 +2224,8 @@ ModelDefinition getObjectBoxModel() {
           object.statusSync.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
           object.statusSync.attach(store);
-          object.bitacora.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
-          object.bitacora.attach(store);
+          InternalToManyAccess.setRelInfo(object.bitacora, store,
+              RelInfo<Jornadas>.toMany(10, object.id), store.box<Jornadas>());
           return object;
         }),
     StatusSync: EntityDefinition<StatusSync>(
@@ -2357,8 +2353,7 @@ ModelDefinition getObjectBoxModel() {
                   object.consultorias,
               RelInfo<Usuarios>.toOneBacklink(17, object.id,
                   (Usuarios srcObject) => srcObject.bitacora): object.usuarios,
-              RelInfo<Jornadas>.toOneBacklink(11, object.id,
-                  (Jornadas srcObject) => srcObject.bitacora): object.jornadas
+              RelInfo<Jornadas>.toManyBacklink(10, object.id): object.jornadas
             },
         getId: (Bitacora object) => object.id,
         setId: (Bitacora object, int id) {
@@ -2423,8 +2418,7 @@ ModelDefinition getObjectBoxModel() {
           InternalToManyAccess.setRelInfo(
               object.jornadas,
               store,
-              RelInfo<Jornadas>.toOneBacklink(
-                  11, object.id, (Jornadas srcObject) => srcObject.bitacora),
+              RelInfo<Jornadas>.toManyBacklink(10, object.id),
               store.box<Bitacora>());
           return object;
         }),
@@ -3039,33 +3033,33 @@ class Jornadas_ {
   static final numJornada =
       QueryStringProperty<Jornadas>(_entities[14].properties[1]);
 
-  /// see [Jornadas.proximaVisita]
-  static final proximaVisita =
-      QueryIntegerProperty<Jornadas>(_entities[14].properties[2]);
-
   /// see [Jornadas.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<Jornadas>(_entities[14].properties[3]);
+      QueryIntegerProperty<Jornadas>(_entities[14].properties[2]);
 
   /// see [Jornadas.emprendimiento]
   static final emprendimiento = QueryRelationToOne<Jornadas, Emprendimientos>(
-      _entities[14].properties[4]);
+      _entities[14].properties[3]);
 
   /// see [Jornadas.tarea]
   static final tarea =
-      QueryRelationToOne<Jornadas, Tareas>(_entities[14].properties[5]);
+      QueryRelationToOne<Jornadas, Tareas>(_entities[14].properties[4]);
 
   /// see [Jornadas.statusSync]
   static final statusSync =
-      QueryRelationToOne<Jornadas, StatusSync>(_entities[14].properties[6]);
+      QueryRelationToOne<Jornadas, StatusSync>(_entities[14].properties[5]);
 
   /// see [Jornadas.idDBR]
   static final idDBR =
-      QueryStringProperty<Jornadas>(_entities[14].properties[7]);
+      QueryStringProperty<Jornadas>(_entities[14].properties[6]);
+
+  /// see [Jornadas.fechaRevision]
+  static final fechaRevision =
+      QueryIntegerProperty<Jornadas>(_entities[14].properties[7]);
 
   /// see [Jornadas.bitacora]
   static final bitacora =
-      QueryRelationToOne<Jornadas, Bitacora>(_entities[14].properties[8]);
+      QueryRelationToMany<Jornadas, Bitacora>(_entities[14].relations[0]);
 }
 
 /// [StatusSync] entity fields to define ObjectBox queries.

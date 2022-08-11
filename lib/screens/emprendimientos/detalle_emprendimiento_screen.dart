@@ -1,22 +1,24 @@
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
+import 'package:bizpro_app/theme/theme.dart';
+import 'package:bizpro_app/database/entitys.dart';
+import 'package:bizpro_app/helpers/globals.dart';
+
+import 'package:expandable/expandable.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:bizpro_app/util/flutter_flow_util.dart';
+
 import 'package:bizpro_app/screens/widgets/pdf/api/pdf_invoice_api.dart';
 import 'package:bizpro_app/screens/widgets/pdf/models/customer.dart';
 import 'package:bizpro_app/screens/widgets/pdf/models/invoice.dart';
 import 'package:bizpro_app/screens/widgets/pdf/models/supplier.dart';
-import 'package:flutter/material.dart';
-import 'dart:io';
-import 'package:expandable/expandable.dart';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
-
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/consultorias/agregar_consultoria_screen.dart';
 import 'package:bizpro_app/screens/emprendedores/agregar_emprendedor_screen.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada_screen.dart';
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:bizpro_app/screens/emprendimientos/editar_emprendimiento.dart';
 
 class DetalleEmprendimientoScreen extends StatefulWidget {
@@ -626,7 +628,7 @@ class _DetalleEmprendimientoScreenState
                                                               .fromSTEB(
                                                           16, 0, 16, 5),
                                                   child: Text(
-                                                    'Próxima visita: ${dateTimeFormat('dd/MM/yyyy', jornada.proximaVisita)}',
+                                                    'Próxima visita: ${dateTimeFormat('dd/MM/yyyy', jornada.fechaRevision)}',
                                                     maxLines: 1,
                                                     style: AppTheme.of(context)
                                                         .bodyText2
@@ -930,21 +932,36 @@ class _DetalleEmprendimientoScreenState
                           children: [
                             InkWell(
                               onTap: () async {
-                                await Navigator.push(
+                                if (widget.emprendimiento.jornadas.isNotEmpty) {
+                                  final int numJornada = int.parse(widget.emprendimiento.jornadas.last.numJornada);
+                                if (numJornada < 4) {
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => AgregarJornadaScreen(
+                                        emprendimiento: widget.emprendimiento,
+                                      ),
+                                    ),
+                                  );
+                                } 
+                                else{
+                                  snackbarKey.currentState
+                                      ?.showSnackBar(const SnackBar(
+                                    content: Text(
+                                        "No se pueden registrar más de 4 jornadas"),
+                                  ));
+                                }
+                                }
+                                else {
+                                  await Navigator.push(
                                   context,
-                                  // MaterialPageRoute(
-                                  //   builder: (context) => AgregarJornadaScreen(
-                                  //     idEmprendimiento:
-                                  //         widget.emprendimiento.id,
-                                  //     nombreEmprendimiento:
-                                  //         widget.emprendimiento.nombre,
-                                  //   ),
-                                  // ),
                                   MaterialPageRoute(
-                                    builder: (context) => const AgregarJornadaScreen(
+                                    builder: (context) => AgregarJornadaScreen(
+                                      emprendimiento: widget.emprendimiento,
                                     ),
                                   ),
                                 );
+                                }
                               },
                               child: const Icon(
                                 Icons.folder_rounded,
@@ -968,21 +985,35 @@ class _DetalleEmprendimientoScreenState
                           children: [
                             InkWell(
                               onTap: () async {
-                                await Navigator.push(
+                                if (widget.emprendimiento.jornadas.isNotEmpty) {
+                                  final int numJornada = int.parse(widget.emprendimiento.jornadas.last.numJornada);
+                                if (numJornada == 4) {
+                                  await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        AgregarConsultoriaScreen(
-                                      idEmprendimiento:
-                                          widget.emprendimiento.id,
-                                      nombreEmprendimiento:
-                                          widget.emprendimiento.nombre,
-                                      nombreEmprendedor: widget.emprendimiento
-                                              .emprendedor.target?.nombre ??
-                                          "SIN EMPRENDEDOR",
+                                      builder: (context) =>
+                                          AgregarConsultoriaScreen(
+                                        emprendimiento: widget.emprendimiento,
+                                      ),
                                     ),
-                                  ),
-                                );
+                                  );
+                                } 
+                                else{
+                                  snackbarKey.currentState
+                                      ?.showSnackBar(const SnackBar(
+                                    content: Text(
+                                        "Necesitas tener 4 jornadas registradas"),
+                                  ));
+                                }
+                                }
+                                else {
+                                  snackbarKey.currentState
+                                      ?.showSnackBar(const SnackBar(
+                                    content: Text(
+                                        "Necesitas tener 4 jornadas registradas"),
+                                  ));
+                                }
+                                
                               },
                               child: const Icon(
                                 Icons.work_outlined,

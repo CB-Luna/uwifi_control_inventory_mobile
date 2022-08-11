@@ -37,8 +37,8 @@ class Emprendimientos {
     required this.nombre,
     required this.descripcion,
     DateTime? fechaRegistro,
-    required this.activo,
-    required this.archivado,
+    this.activo = true,
+    this.archivado = false,
     this.idDBR,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
@@ -186,18 +186,18 @@ class EstadoEmp {
 class Jornadas {
   int id;
   String numJornada;
-  DateTime proximaVisita;
+  DateTime fechaRevision;
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
   final emprendimiento = ToOne<Emprendimientos>();
   final tarea = ToOne<Tareas>();
   final statusSync = ToOne<StatusSync>();
-  final bitacora = ToOne<Bitacora>();
+  final bitacora = ToMany<Bitacora>();
   Jornadas({
     this.id = 0,
     required this.numJornada,
-    required this.proximaVisita,
+    required this.fechaRevision,
     DateTime? fechaRegistro,
     this.idDBR,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
