@@ -155,7 +155,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                     15, 0, 0, 0),
                                 child: Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.75,
+                                      MediaQuery.of(context).size.width * 0.70,
                                   height: 50,
                                   decoration: BoxDecoration(
                                     color: const Color(0x49FFFFFF),
@@ -433,7 +433,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                               16, 0, 16, 5),
                                       child: Text(
                                         emprendimiento
-                                                .comunidades.target?.nombre
+                                                .comunidad.target?.nombre
                                                 .toString() ??
                                             'NONE',
                                         maxLines: 1,

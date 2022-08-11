@@ -8,7 +8,7 @@ class ConsultoriaController extends ChangeNotifier {
   GlobalKey<FormState> consultoriaFormKey = GlobalKey<FormState>();
 
   //Consultorias
-  String documentos = ""; //TODO preguntar que es un arraystring
+  List<String> documentos = []; //TODO preguntar que es un arraystring
 
   bool validateForm(GlobalKey<FormState> consultoriaKey) {
     return consultoriaKey.currentState!.validate() ? true : false;
@@ -17,7 +17,7 @@ class ConsultoriaController extends ChangeNotifier {
 
   void clearInformation()
   {
-    documentos = '';
+    documentos.clear();
     notifyListeners();
   }
 

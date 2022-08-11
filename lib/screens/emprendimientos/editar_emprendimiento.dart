@@ -52,7 +52,7 @@ class _EditarEmprendimientoScreenState
         TextEditingController(text: widget.emprendimiento.nombre);
     descController =
         TextEditingController(text: widget.emprendimiento.descripcion);
-    comunidadController = TextEditingController(text: widget.emprendimiento.comunidades.target?.nombre);
+    comunidadController = TextEditingController(text: widget.emprendimiento.comunidad.target?.nombre);
     listComunidades = [];
     dataBase.comunidadesBox.getAll().forEach((element) {listComunidades.add(element.nombre);});
   }
@@ -489,7 +489,7 @@ class _EditarEmprendimientoScreenState
                                   onPressed: () async {
                                     if (nombreController.text != widget.emprendimiento.nombre || 
                                         descController.text != widget.emprendimiento.descripcion ||
-                                        comunidadController.text != widget.emprendimiento.comunidades.target!.nombre) {
+                                        comunidadController.text != widget.emprendimiento.comunidad.target!.nombre) {
                                       if (emprendimientoProvider
                                           .validateForm(formKey)) {
                                         print("Se puede actualizar");

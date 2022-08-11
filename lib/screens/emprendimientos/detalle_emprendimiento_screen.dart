@@ -932,10 +932,29 @@ class _DetalleEmprendimientoScreenState
                           children: [
                             InkWell(
                               onTap: () async {
-                                if (widget.emprendimiento.jornadas.isNotEmpty) {
+                                if (widget.emprendimiento.emprendedor.target != null) {
+                                  if (widget.emprendimiento.jornadas.isNotEmpty) {
                                   final int numJornada = int.parse(widget.emprendimiento.jornadas.last.numJornada);
-                                if (numJornada < 4) {
-                                  await Navigator.push(
+                                  if (numJornada < 4) {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => AgregarJornadaScreen(
+                                          emprendimiento: widget.emprendimiento,
+                                        ),
+                                      ),
+                                    );
+                                  } 
+                                  else{
+                                    snackbarKey.currentState
+                                        ?.showSnackBar(const SnackBar(
+                                      content: Text(
+                                          "No se pueden registrar más de 4 jornadas"),
+                                    ));
+                                  }
+                                  }
+                                  else {
+                                    await Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => AgregarJornadaScreen(
@@ -943,24 +962,13 @@ class _DetalleEmprendimientoScreenState
                                       ),
                                     ),
                                   );
-                                } 
-                                else{
+                                  }
+                                } else {
                                   snackbarKey.currentState
-                                      ?.showSnackBar(const SnackBar(
-                                    content: Text(
-                                        "No se pueden registrar más de 4 jornadas"),
-                                  ));
-                                }
-                                }
-                                else {
-                                  await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AgregarJornadaScreen(
-                                      emprendimiento: widget.emprendimiento,
-                                    ),
-                                  ),
-                                );
+                                        ?.showSnackBar(const SnackBar(
+                                      content: Text(
+                                          "Necesitas registrar un emprendedor a este emprendimiento"),
+                                    ));
                                 }
                               },
                               child: const Icon(

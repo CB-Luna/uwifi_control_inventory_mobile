@@ -280,7 +280,7 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
   for (var i = 0; i < emprendimientos.length; i++) {
       try {
 
-      print("ID Promotor: ${emprendimientos[i].usuarios.target!.idDBR}");
+      print("ID Promotor: ${emprendimientos[i].usuario.target!.idDBR}");
 
       final record = await client.records.create('emprendimientos', body: {
           "nombre_emprendimiento": emprendimientos[i].nombre,
@@ -288,8 +288,8 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
           "imagen": emprendimientos[i].imagen,
           "activo": emprendimientos[i].activo,
           "archivado": emprendimientos[i].archivado,
-          "id_comunidad_fk": emprendimientos[i].comunidades.target!.idDBR,
-          "id_promotor_fk": emprendimientos[i].usuarios.target!.idDBR,
+          "id_comunidad_fk": emprendimientos[i].comunidad.target!.idDBR,
+          "id_promotor_fk": emprendimientos[i].usuario.target!.idDBR,
           "id_prioridad_fk": "yuEVuBv9rxLM4cR",
           "id_clasificacion_emp_fk": "N2fgbFPCkb8PwnO",
           "id_proveedor_fk": "",
@@ -340,7 +340,7 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
 
       var url = Uri.parse('$baseUrl/api/collections/emprendimientos/records');
 
-      print("ID Promotor: ${emprendimiento.usuarios.target!.idDBR}");
+      print("ID Promotor: ${emprendimiento.usuario.target!.idDBR}");
 
       print("ID Emprendedor: ${emprendimiento.emprendedor.target!.idDBR}");
 
@@ -350,8 +350,8 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
           "imagen": emprendimiento.imagen,
           "activo": emprendimiento.activo,
           "archivado": emprendimiento.archivado,
-          "id_comunidad_fk": emprendimiento.comunidades.target!.idDBR,
-          "id_promotor_fk": emprendimiento.usuarios.target!.idDBR,
+          "id_comunidad_fk": emprendimiento.comunidad.target!.idDBR,
+          "id_promotor_fk": emprendimiento.usuario.target!.idDBR,
           "id_prioridad_fk": "yuEVuBv9rxLM4cR",
           "id_clasificacion_emp_fk": "N2fgbFPCkb8PwnO",
           "id_proveedor_fk": "",
@@ -401,7 +401,7 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
 
     print("Estoy en El syncUpdateEmprendimiento");
     try {
-      print("ID Promotor: ${emprendimiento.usuarios.target!.idDBR}");
+      print("ID Promotor: ${emprendimiento.usuario.target!.idDBR}");
 
       print("ID Emprendedor: ${emprendimiento.emprendedor.target!.idDBR}");
 
@@ -411,8 +411,8 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
           "imagen": emprendimiento.imagen,
           "activo": emprendimiento.activo,
           "archivado": emprendimiento.archivado,
-          "id_comunidad_fk": emprendimiento.comunidades.target!.idDBR,
-          "id_promotor_fk": emprendimiento.usuarios.target!.idDBR,
+          "id_comunidad_fk": emprendimiento.comunidad.target!.idDBR,
+          "id_promotor_fk": emprendimiento.usuario.target!.idDBR,
           "id_prioridad_fk": "yuEVuBv9rxLM4cR",
           "id_clasificacion_emp_fk": "N2fgbFPCkb8PwnO",
           "id_proveedor_fk": "",

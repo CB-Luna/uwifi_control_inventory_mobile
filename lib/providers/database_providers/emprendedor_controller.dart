@@ -54,7 +54,7 @@ class EmprendedorController extends ChangeNotifier {
       if (emprendimiento != null) {
         final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
         final nuevaInstruccion = Bitacora(instrucciones: 'syncAddEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-        nuevoEmprendedor.comunidades.target = emprendimiento.comunidades.target;
+        nuevoEmprendedor.comunidades.target = emprendimiento.comunidad.target;
         nuevoEmprendedor.statusSync.target = nuevoSync;
         nuevoEmprendedor.bitacora.add(nuevaInstruccion);
         emprendimiento.emprendedor.target = nuevoEmprendedor;
