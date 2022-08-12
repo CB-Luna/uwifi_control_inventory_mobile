@@ -53,7 +53,7 @@ class _DropDownState extends State<DropDown> {
 
   @override
   Widget build(BuildContext context) {
-    final dropdownWidget = DropdownButton<String>(
+    var dropdownWidget = DropdownButton<String>(
       value: effectiveOptions.contains(dropDownValue) ? dropDownValue : null,
       hint: widget.hintText != null
           ? Text(widget.hintText!, style: widget.textStyle)
@@ -77,7 +77,7 @@ class _DropDownState extends State<DropDown> {
       dropdownColor: widget.fillColor,
       focusColor: Colors.transparent,
     );
-    final childWidget = DecoratedBox(
+    var childWidget = DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(widget.borderRadius ?? 28),
         border: Border.all(

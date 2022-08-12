@@ -206,11 +206,11 @@ class Jornadas {
 @Entity()
 class Tareas {
   int id;
-  String? tarea;
-  String? descripcion;
-  String? observacion;
-  int? porcentaje;
-  DateTime? fechaRevision;
+  String tarea;
+  String descripcion;
+  String observacion;
+  int porcentaje;
+  DateTime fechaRevision;
   DateTime fechaRegistro;
   List<String>? imagenes;
   @Unique()
@@ -221,11 +221,11 @@ class Tareas {
   final bitacora = ToOne<Bitacora>();
   Tareas({
     this.id = 0,
-    this.tarea,
-    this.descripcion,
-    this.observacion,
-    this.porcentaje,
-    this.fechaRevision,
+    required this.tarea,
+    required this.descripcion,
+    required this.observacion,
+    required this.porcentaje,
+    required this.fechaRevision,
     DateTime? fechaRegistro,
     this.imagenes,
     this.idDBR,

@@ -43,11 +43,11 @@ class SyncProvider extends ChangeNotifier {
           } else {
             print("Entro aqui en el else");
             if (dataBase.variablesUsuarioBox.get(prefs.getInt("idVariablesUser")!)!.emprendedores) { //Validar que ya se haya sync emprendedores 
-              await syncPostEmprendimiento(emprendimientoToSync);
+              await syncAddEmprendimiento(emprendimientoToSync);
             } else {
               final emprendedores = verificarEstadoEmprendedores(dataBase.emprendedoresBox.getAll());
-              await syncPostEmprendedores(emprendedores);
-              await syncPostEmprendimiento(emprendimientoToSync);    
+              await syncAddEmprendedores(emprendedores);
+              await syncAddEmprendimiento(emprendimientoToSync);    
             }     
           } 
           }         
@@ -66,7 +66,7 @@ class SyncProvider extends ChangeNotifier {
             if(emprendedorToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") { 
               break;
             } else {
-                await syncPostEmprendedor(emprendedorToSync);  
+                await syncAddEmprendedor(emprendedorToSync);  
               }          
           break;
           }
@@ -92,6 +92,34 @@ class SyncProvider extends ChangeNotifier {
               }
             }   
           }  
+          break;
+        case "syncAddJornada1":
+          print("Entro aqui");
+          final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
+          if(jornadaToSync != null){
+            if(jornadaToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
+            print("Entro aqui en el if");
+            break;
+          } else {
+            print("Entro aqui en el else");
+            
+            await syncAddJornada(jornadaToSync);
+          } 
+          }         
+          break;
+        case "syncAddJornada2":
+          print("Entro aqui");
+          final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
+          if(jornadaToSync != null){
+            if(jornadaToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
+            print("Entro aqui en el if");
+            break;
+          } else {
+            print("Entro aqui en el else");
+            
+            await syncAddJornada(jornadaToSync);
+          } 
+          }         
           break;
         default:
          break;
@@ -123,7 +151,7 @@ class SyncProvider extends ChangeNotifier {
     return null;
   }
 
-    Emprendimientos? getFirstEmprendimiento(List<Emprendimientos> emprendimientos, int idInstruccionesBitacora)
+  Emprendimientos? getFirstEmprendimiento(List<Emprendimientos> emprendimientos, int idInstruccionesBitacora)
   {
     for (var i = 0; i < emprendimientos.length; i++) {
       if (emprendimientos[i].bitacora.isEmpty) {
@@ -138,6 +166,104 @@ class SyncProvider extends ChangeNotifier {
     }
     return null;
   }
+  Jornadas? getFirstJornada(List<Jornadas> jornadas, int idInstruccionesBitacora)
+  {
+    for (var i = 0; i < jornadas.length; i++) {
+      if (jornadas[i].bitacora.isEmpty) {
+
+      } else {
+        for (var j = 0; j < jornadas[i].bitacora.length; j++) {
+          if (jornadas[i].bitacora[j].id == idInstruccionesBitacora) {
+            return jornadas[i];
+          } 
+        }
+      }
+    }
+    return null;
+  }
+
+  Future<bool?> syncAddJornada(Jornadas jornada) async {
+    print("Estoy en syncAddJornada");
+        final tareaToSync = dataBase.tareasBox.query(Tareas_.id.equals(jornada.tarea.target!.id)).build().findUnique();
+        try {
+        //Primero creamos la tarea asociada a la jornada
+        if (tareaToSync != null) {  
+          print("Datos");
+          print(tareaToSync.tarea);
+          print(tareaToSync.descripcion);
+          print(tareaToSync.fechaRevision.toUtc().toString());
+          print(tareaToSync.observacion);
+          print(tareaToSync.porcentaje.toString());
+          final recordTarea = await client.records.create('tareas', body: {
+            "tarea": tareaToSync.tarea,
+            "descripcion": tareaToSync.descripcion,
+            "observacion": tareaToSync.observacion,
+            "porcentaje": tareaToSync.porcentaje,
+            "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
+            "id_status_sync_fk": "HoI36PzYw1wtbO1"
+          });
+          if (recordTarea.id.isNotEmpty) {
+          //Se actualiza el estado de la tarea
+          String idDBRTarea = recordTarea.id;
+          final statusSyncTarea = dataBase.statusSyncBox.query(StatusSync_.id.equals(tareaToSync.statusSync.target!.id)).build().findUnique();
+          if (statusSyncTarea != null) {
+            statusSyncTarea.status = "HoI36PzYw1wtbO1";
+            dataBase.statusSyncBox.put(statusSyncTarea);
+            print("Se hace el conteo de la tabla statusSync");
+            print(dataBase.statusSyncBox.count());
+            print("Actualizacion de estado de la Tarea");
+          }
+          //Se recupera el idDBR de la tarea
+          final updateTarea = dataBase.tareasBox.query(Tareas_.id.equals(tareaToSync.id)).build().findUnique();
+          if (updateTarea != null) {
+            updateTarea.idDBR = idDBRTarea;
+            dataBase.tareasBox.put(updateTarea);
+            print("Se recupera el idDBR de la Tarea");
+          }
+          }
+          //Segundo creamos la jornada  
+          print("Datos");
+          print(jornada.numJornada);
+          print(recordTarea.id);
+          print(jornada.fechaRevision.toUtc().toString());
+          print("Nombre Emp ${jornada.emprendimiento.target?.nombre}");
+          print("IdDBR Emprendimiento ${jornada.emprendimiento.target?.idDBR}");
+          final recordJornada = await client.records.create('jornadas', body: {
+            "num_jornada": jornada.numJornada,
+            "id_tarea_fk": recordTarea.id,
+            "proxima_visita": jornada.fechaRevision.toUtc().toString(),
+            "id_emprendimiento_fk": jornada.emprendimiento.target!.idDBR,
+            "id_status_sync_fk": "HoI36PzYw1wtbO1",
+          });
+
+          if (recordJornada.id.isNotEmpty) {
+            //Se actualiza el estado de la jornada
+            String idDBRJornada = recordJornada.id;
+            final statusSyncJornada = dataBase.statusSyncBox.query(StatusSync_.id.equals(jornada.statusSync.target!.id)).build().findUnique();
+            if (statusSyncJornada != null) {
+              statusSyncJornada.status = "HoI36PzYw1wtbO1";
+              dataBase.statusSyncBox.put(statusSyncJornada);
+              print("Se hace el conteo de la tabla statusSync");
+              print(dataBase.statusSyncBox.count());
+              print("Actualizacion de estado de la Jornada");
+            }
+            //Se recupera el idDBR de la jornada
+            final updateJornada = dataBase.jornadasBox.query(Jornadas_.id.equals(jornada.id)).build().findUnique();
+            if (updateJornada != null) {
+              updateJornada.idDBR = idDBRJornada;
+              dataBase.jornadasBox.put(updateJornada);
+              print("Se recupera el idDBR de la jornada");
+            }
+          }
+          return true;
+      }
+      } catch (e) {
+        print('ERROR - function syncAddJornada(): $e');
+        return false;
+      }
+    
+    return null;
+}
 
   List<Emprendedores> verificarEstadoEmprendedores(List<Emprendedores> emprendedores) {
   final List<Emprendedores> emprendedoresToSync = [];
@@ -149,7 +275,7 @@ class SyncProvider extends ChangeNotifier {
   return emprendedoresToSync;
 }
 
-  Future<bool?> syncPostEmprendedores(List<Emprendedores> emprendedores) async {
+  Future<bool?> syncAddEmprendedores(List<Emprendedores> emprendedores) async {
     for (var i = 0; i < emprendedores.length; i++) {
         try {
 
@@ -172,7 +298,7 @@ class SyncProvider extends ChangeNotifier {
 
           var updateEmprendedor = dataBase.emprendedoresBox.get(emprendedores[i].id);
           if (updateEmprendedor != null && idDBR != null) {
-            print("Entro al if de syncPostEmprendedores");
+            print("Entro al if de syncAddEmprendedores");
             print("Previo estado del Emprendedor: ${updateEmprendedor.statusSync.target!.status}");
             final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendedor.statusSync.target!.id)).build().findUnique();
             if (statusSync != null) {
@@ -195,7 +321,7 @@ class SyncProvider extends ChangeNotifier {
         }
         }
       } catch (e) {
-        print('ERROR - function syncPostEmprendedores(): $e');
+        print('ERROR - function syncAddEmprendedores(): $e');
         return false;
       }
       
@@ -209,9 +335,9 @@ class SyncProvider extends ChangeNotifier {
     return true;
 }
 
-  Future<bool?> syncPostEmprendedor(Emprendedores emprendedor) async {
+  Future<bool?> syncAddEmprendedor(Emprendedores emprendedor) async {
 
-        print("Estoy en El syncPostEmprendedor");
+        print("Estoy en El syncAddEmprendedor");
 
         try {
 
@@ -233,7 +359,7 @@ class SyncProvider extends ChangeNotifier {
           print("Emprendedor created succesfully");
           var updateEmprendedor = dataBase.emprendedoresBox.get(emprendedor.id);
           if (updateEmprendedor != null) {
-            print("Entro al if de syncPostEmprendedor");
+            print("Entro al if de syncAddEmprendedor");
             print("Previo estado del Emprendedor: ${updateEmprendedor.statusSync.target!.status}");
             final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendedor.statusSync.target!.id)).build().findUnique();
             if (statusSync != null) {
@@ -257,7 +383,7 @@ class SyncProvider extends ChangeNotifier {
         }
 
       } catch (e) {
-        print('ERROR - function syncPostEmprendedor(): $e');
+        print('ERROR - function syncAddEmprendedor(): $e');
         return false;
       }
 
@@ -275,8 +401,8 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
   return emprendimientosToSync;
 }
 
-  Future<bool?> syncPostEmprendimientos(List<Emprendimientos> emprendimientos) async {
-    print("Estoy en El syncPostEmprendimientos");
+  Future<bool?> syncAddEmprendimientos(List<Emprendimientos> emprendimientos) async {
+    print("Estoy en El syncAddEmprendimientos");
   for (var i = 0; i < emprendimientos.length; i++) {
       try {
 
@@ -324,7 +450,7 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
       }
 
     } catch (e) {
-      print('ERROR - function syncPostEmprendimientos(): $e');
+      print('ERROR - function syncAddEmprendimientos(): $e');
       return false;
     }
     
@@ -333,9 +459,9 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
 
 }
 
-  Future<bool?> syncPostEmprendimiento(Emprendimientos emprendimiento) async {
+  Future<bool?> syncAddEmprendimiento(Emprendimientos emprendimiento) async {
 
-    print("Estoy en El syncPostEmprendimiento");
+    print("Estoy en El syncAddEmprendimiento");
       try {
 
       var url = Uri.parse('$baseUrl/api/collections/emprendimientos/records');
@@ -390,7 +516,7 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
       return true;
 
     } catch (e) {
-      print('ERROR - function syncPostEmprendimiento(): $e');
+      print('ERROR - function syncAddEmprendimiento(): $e');
       return false;
     }
 
@@ -438,7 +564,7 @@ List<Emprendimientos> verificarEstadoEmprendimientos(List<Emprendimientos> empre
       return true;
 
     } catch (e) {
-      print('ERROR - function syncPostEmprendimiento(): $e');
+      print('ERROR - function syncUpdateEmprendimiento(): $e');
       return false;
     }
 

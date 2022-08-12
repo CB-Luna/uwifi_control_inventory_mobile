@@ -1,58 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/database/entitys.dart';
-class ComunidadController extends ChangeNotifier {
+class LocalidadController extends ChangeNotifier {
 
-  List<Comunidades> comunidades = [];
+  // List<Comunidades> comunidades = [];
 
-  GlobalKey<FormState> comunidadFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> localidadFormKey = GlobalKey<FormState>();
  
-  //Comunidad
-  String nombre = '';
+  //Localidad
+  String nombreComunidad = '';
+  String nombreMunicipio = '';
+  String nombreEstado = '';
 
   TextEditingController textControllerNombre = TextEditingController();
 
   bool validateForm() {
-    return comunidadFormKey.currentState!.validate() ? true : false;
+    return localidadFormKey.currentState!.validate() ? true : false;
   }
 
 
   void clearInformation()
   {
-    nombre = '';
+    nombreComunidad = '';
+    nombreMunicipio = '';
+    nombreEstado = '';
+  }
+
+  void changeComunidad(String nuevaComunidad) {
+    nombreComunidad = nuevaComunidad;
     notifyListeners();
   }
 
-  void add() {
-    final nuevaComunidad = Comunidades(
-      nombre: nombre, 
-      );
-      dataBase.comunidadesBox.put(nuevaComunidad);
-      comunidades.add(nuevaComunidad);
-      print('Comunidad agregada exitosamente');
-      notifyListeners();
+  void changeMunicipio(String nuevoMunicipio) {
+    nombreMunicipio = nuevoMunicipio;
+    notifyListeners();
   }
-
-  void update(int id, String newNombre) {
-    var updateComunidad = dataBase.comunidadesBox.get(id);
-    if (updateComunidad != null) {
-      updateComunidad.nombre = newNombre;
-      dataBase.comunidadesBox.put(updateComunidad);
-      print('Comunidad actualizada exitosamente');
-    }
+  
+  void changeEstado(String nuevoEstado) {
+    nombreEstado = nuevoEstado;
     notifyListeners();
   }
 
-  void remove(Comunidades comunidad) {
-    dataBase.comunidadesBox.remove(comunidad.id);
-    comunidades.remove(comunidad);
-
-    notifyListeners(); 
-  }
-
-  getAll() {
-    comunidades = dataBase.comunidadesBox.getAll();
-    notifyListeners();
-  }
   
 }

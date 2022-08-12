@@ -12,13 +12,15 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 
+import 'package:bizpro_app/screens/jornadas/agregar_jornada2_screen.dart';
+import 'package:bizpro_app/screens/jornadas/agregar_jornada1_screen.dart';
+import 'package:bizpro_app/screens/jornadas/agregar_jornada3_screen.dart';
 import 'package:bizpro_app/screens/widgets/pdf/api/pdf_invoice_api.dart';
 import 'package:bizpro_app/screens/widgets/pdf/models/customer.dart';
 import 'package:bizpro_app/screens/widgets/pdf/models/invoice.dart';
 import 'package:bizpro_app/screens/widgets/pdf/models/supplier.dart';
 import 'package:bizpro_app/screens/consultorias/agregar_consultoria_screen.dart';
 import 'package:bizpro_app/screens/emprendedores/agregar_emprendedor_screen.dart';
-import 'package:bizpro_app/screens/jornadas/agregar_jornada_screen.dart';
 import 'package:bizpro_app/screens/emprendimientos/editar_emprendimiento.dart';
 
 class DetalleEmprendimientoScreen extends StatefulWidget {
@@ -936,14 +938,39 @@ class _DetalleEmprendimientoScreenState
                                   if (widget.emprendimiento.jornadas.isNotEmpty) {
                                   final int numJornada = int.parse(widget.emprendimiento.jornadas.last.numJornada);
                                   if (numJornada < 4) {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => AgregarJornadaScreen(
-                                          emprendimiento: widget.emprendimiento,
-                                        ),
-                                      ),
-                                    );
+                                    switch (numJornada) {
+                                      case 1:
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => AgregarJornada2Screen(
+                                              emprendimiento: widget.emprendimiento,
+                                            ),
+                                          ),
+                                        );
+                                        break;
+                                      case 2:
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => AgregarJornada3Screen(
+                                              emprendimiento: widget.emprendimiento,
+                                            ),
+                                          ),
+                                        );
+                                        break;
+                                      case 3:
+                                        // await Navigator.push(
+                                        //   context,
+                                        //   MaterialPageRoute(
+                                        //     builder: (context) => AgregarJornada3Screen(
+                                        //       emprendimiento: widget.emprendimiento,
+                                        //     ),
+                                        //   ),
+                                        // );
+                                        break;
+                                      default:
+                                    }
                                   } 
                                   else{
                                     snackbarKey.currentState
@@ -957,7 +984,7 @@ class _DetalleEmprendimientoScreenState
                                     await Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => AgregarJornadaScreen(
+                                      builder: (context) => AgregarJornada1Screen(
                                         emprendimiento: widget.emprendimiento,
                                       ),
                                     ),

@@ -11,6 +11,9 @@ class JornadaController extends ChangeNotifier {
   //Jornada
   String numJornada = '';
   DateTime? fechaRevision = DateTime.now();
+  String tarea = "";
+  String obervacion = "";
+  String imagen = "";
 
   bool validateForm(GlobalKey<FormState> jornadaKey) {
     return jornadaKey.currentState!.validate() ? true : false;
@@ -21,26 +24,70 @@ class JornadaController extends ChangeNotifier {
   {
     numJornada = '';
     fechaRevision = null;
-    notifyListeners();
+    tarea = "";
   }
 
-  void add(int idEmprendimiento) {
+
+  void addJornada1(int idEmprendimiento) {
     final nuevaJornada = Jornadas(
       numJornada: numJornada,
       fechaRevision: fechaRevision!,
       );
-      final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
-      if (emprendimiento != null) {
-        final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
-        final nuevaInstruccion = Bitacora(instrucciones: 'syncAddJornada', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-        nuevaJornada.statusSync.target = nuevoSync;
-        nuevaJornada.bitacora.add(nuevaInstruccion);
-        emprendimiento.jornadas.add(nuevaJornada);
-        emprendimiento.jornadas.applyToDb();
-        jornadas.add(nuevaJornada);
-        print('Jornada agregada exitosamente');
-        notifyListeners();
-      }
+    final nuevaTarea = Tareas(
+      tarea: tarea,
+      descripcion: "Creación Jornada 1",
+      observacion: "Se crea la jornada 1",
+      porcentaje: 1,
+      fechaRevision: fechaRevision!);
+    final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
+    nuevaTarea.statusSync.target = nuevoSyncTarea;
+    final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
+    if (emprendimiento != null) {
+      final nuevoSyncJornada = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Jornada 1
+      final nuevaInstruccion = Bitacora(instrucciones: 'syncAddJornada1', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      nuevaJornada.statusSync.target = nuevoSyncJornada;
+      nuevaJornada.tarea.target = nuevaTarea;
+      nuevaJornada.emprendimiento.target = emprendimiento;
+      nuevaJornada.bitacora.add(nuevaInstruccion);
+      //Indispensable para que se muestre en la lista de jornadas
+      emprendimiento.jornadas.add(nuevaJornada);
+      dataBase.emprendimientosBox.put(emprendimiento);
+      jornadas.add(nuevaJornada);
+      print('Jornada 1 agregada exitosamente');
+      clearInformation(); //Se limpia infoirmación para usar el mismo controller en otro registro
+      notifyListeners();
+    }
+  }
+  void addJornada2(int idEmprendimiento) {
+    final nuevaJornada = Jornadas(
+      numJornada: numJornada,
+      fechaRevision: fechaRevision!,
+      );
+    final nuevaTarea = Tareas(
+      tarea: tarea, 
+      descripcion: "Creación Jornada 2", 
+      observacion: obervacion, 
+      porcentaje: 1, 
+      fechaRevision: fechaRevision!,
+      );
+    final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
+    nuevaTarea.statusSync.target = nuevoSyncTarea;
+    final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
+    if (emprendimiento != null) {
+      final nuevoSyncJornada = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Jornada 2
+      final nuevaInstruccion = Bitacora(instrucciones: 'syncAddJornada2', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      nuevaJornada.statusSync.target = nuevoSyncJornada;
+      nuevaJornada.tarea.target = nuevaTarea;
+      nuevaJornada.emprendimiento.target = emprendimiento;
+      nuevaJornada.bitacora.add(nuevaInstruccion);
+      //Indispensable para que se muestre en la lista de jornadas
+      emprendimiento.jornadas.add(nuevaJornada);
+      dataBase.emprendimientosBox.put(emprendimiento);
+      jornadas.add(nuevaJornada);
+      print('Jornada 2 agregada exitosamente');
+      clearInformation(); //Se limpia infoirmación para usar el mismo controller en otro registro
+      notifyListeners();
+    }
   }
 
   void remove(Jornadas jornada) {

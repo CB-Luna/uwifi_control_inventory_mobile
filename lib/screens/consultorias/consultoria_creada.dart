@@ -36,7 +36,7 @@ class _ConsultoriaCreadaState extends State<ConsultoriaCreada> {
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                     child: Text(
-                      'Consultoria\nCreada!',
+                      '¡Consultoria\nCreada!',
                       textAlign: TextAlign.center,
                       style: AppTheme.of(context).bodyText1.override(
                             fontFamily: 'Poppins',

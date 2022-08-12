@@ -2317,12 +2317,8 @@ ModelDefinition getObjectBoxModel() {
           object.id = id;
         },
         objectToFB: (Tareas object, fb.Builder fbb) {
-          final descripcionOffset = object.descripcion == null
-              ? null
-              : fbb.writeString(object.descripcion!);
-          final observacionOffset = object.observacion == null
-              ? null
-              : fbb.writeString(object.observacion!);
+          final descripcionOffset = fbb.writeString(object.descripcion);
+          final observacionOffset = fbb.writeString(object.observacion);
           final imagenesOffset = object.imagenes == null
               ? null
               : fbb.writeList(object.imagenes!
@@ -2330,14 +2326,13 @@ ModelDefinition getObjectBoxModel() {
                   .toList(growable: false));
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          final tareaOffset =
-              object.tarea == null ? null : fbb.writeString(object.tarea!);
+          final tareaOffset = fbb.writeString(object.tarea);
           fbb.startTable(18);
           fbb.addInt64(0, object.id);
           fbb.addOffset(2, descripcionOffset);
           fbb.addOffset(3, observacionOffset);
           fbb.addInt64(4, object.porcentaje);
-          fbb.addInt64(5, object.fechaRevision?.millisecondsSinceEpoch);
+          fbb.addInt64(5, object.fechaRevision.millisecondsSinceEpoch);
           fbb.addOffset(6, imagenesOffset);
           fbb.addInt64(7, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addInt64(10, object.jornada.targetId);
@@ -2352,26 +2347,23 @@ ModelDefinition getObjectBoxModel() {
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-          final fechaRevisionValue =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 14);
+
           final object = Tareas(
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
               tarea: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 36),
+                  .vTableGet(buffer, rootOffset, 36, ''),
               descripcion: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 8),
+                  .vTableGet(buffer, rootOffset, 8, ''),
               observacion: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 10),
-              porcentaje: const fb.Int64Reader()
-                  .vTableGetNullable(buffer, rootOffset, 12),
-              fechaRevision: fechaRevisionValue == null
-                  ? null
-                  : DateTime.fromMillisecondsSinceEpoch(fechaRevisionValue),
+                  .vTableGet(buffer, rootOffset, 10, ''),
+              porcentaje:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0),
+              fechaRevision: DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0)),
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0)),
-              imagenes:
-                  const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
-                      .vTableGetNullable(buffer, rootOffset, 16),
+              imagenes: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
+                  .vTableGetNullable(buffer, rootOffset, 16),
               idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 32));
           object.jornada.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
