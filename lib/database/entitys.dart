@@ -27,7 +27,7 @@ class Emprendimientos {
   @Backlink()
   final ventas = ToMany<Ventas>();
   @Backlink()
-  final prodEmprendi = ToMany<ProdEmprendi>();
+  final productosEmp = ToMany<ProductosEmp>();
   @Backlink()
   final consultorias = ToMany<Consultorias>();
   
@@ -384,7 +384,7 @@ class Vendidos {
   @Unique()
   String? idDBR;
   final ventas = ToOne<Ventas>();
-  final prodEmprendi = ToOne<ProdEmprendi>();
+  final productoEmp = ToOne<ProductosEmp>();
   Vendidos({
     this.id = 0,
     required this.cantVendida,
@@ -400,7 +400,7 @@ class Vendidos {
 }
 
 @Entity()
-class ProdEmprendi {
+class ProductosEmp {
   int id;
   String nombre;
   String descripcion;
@@ -408,14 +408,16 @@ class ProdEmprendi {
   int costo;
   int precioVenta;
   DateTime fechaRegistro;
-  DateTime fechaSync;
+  bool archivado;
   @Unique()
   String? idDBR;
+  final statusSync = ToOne<StatusSync>();
   final emprendimientos = ToOne<Emprendimientos>();
+  final familiaInversion = ToOne<FamiliaInversion>();
   @Backlink()
   final vendidos = ToMany<Vendidos>();
 
-  ProdEmprendi({
+  ProductosEmp({
     this.id = 0,
     required this.nombre,
     required this.descripcion,
@@ -423,14 +425,37 @@ class ProdEmprendi {
     required this.costo,
     required this.precioVenta,
     DateTime? fechaRegistro,
-    DateTime? fechaSync,
+    this.archivado = false,
     this.idDBR,
-    }): fechaRegistro = fechaRegistro ?? DateTime.now(), fechaSync = fechaSync ?? DateTime.now();
+    }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-  String get fechaSyncFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaSync);
 
 }
+
+@Entity()
+class FamiliaInversion {
+  int id;
+  String nombre;
+  DateTime fechaRegistro;
+  bool activo;
+  @Unique()
+  String? idDBR;
+  final statusSync = ToOne<StatusSync>();
+
+  FamiliaInversion({
+    this.id = 0,
+    required this.nombre,
+    DateTime? fechaRegistro,
+    this.activo = true,
+    this.idDBR,
+    }): fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+
+}
+
+
 
 @Entity()
 class Consultorias {
@@ -710,11 +735,15 @@ class StatusSync {
   @Backlink()
   final estados = ToMany<Estados>();
   @Backlink()
-  final clasificacionEmp = ToMany<ClasificacionEmp>();
+  final clasificacionesEmp = ToMany<ClasificacionEmp>();
   @Backlink()
   final fasesEmp = ToMany<FasesEmp>();
   @Backlink()
-  final prioridadEmp = ToMany<PrioridadEmp>();
+  final prioridadesEmp = ToMany<PrioridadEmp>();
+  @Backlink()
+  final productosEmp = ToMany<ProductosEmp>();
+  @Backlink()
+  final familiasInversion = ToMany<FamiliaInversion>();
   StatusSync({
     this.id = 0,
     this.status = "0E3hoVIByUxMUMZ", //M__

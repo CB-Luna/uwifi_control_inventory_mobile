@@ -17,6 +17,8 @@ class ObjectBoxDatabase {
   late final Box<Municipios> municipiosBox;
   late final Box<Comunidades> comunidadesBox;
   late final Box<Tareas> tareasBox;
+  late final Box<ClasificacionEmp> clasificacionesEmpBox;
+  late final Box<FamiliaInversion> familiaInversionBox;
 
   ObjectBoxDatabase._create(this.store) {
     // Add any additional setup code, e.g. build queries.
@@ -32,6 +34,8 @@ class ObjectBoxDatabase {
     municipiosBox = Box<Municipios>(store);
     comunidadesBox = Box<Comunidades>(store);
     tareasBox = Box<Tareas>(store);
+    clasificacionesEmpBox = Box<ClasificacionEmp>(store);
+    familiaInversionBox = Box<FamiliaInversion>(store);
   }
 
   /// Create an instance of ObjectBox to use throughout the app.

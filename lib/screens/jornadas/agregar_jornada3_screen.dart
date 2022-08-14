@@ -1,6 +1,10 @@
 import 'dart:io';
+import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/objectbox.g.dart';
+import 'package:bizpro_app/screens/jornadas/jornada_creada.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_drop_down.dart';
+import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,7 +14,6 @@ import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 
 import 'package:bizpro_app/providers/database_providers/jornada_controller.dart';
-import 'package:bizpro_app/screens/jornadas/jornada_creada.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_checkbox_group.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
@@ -36,11 +39,21 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   XFile? image;
+  String tipoProyecto = "";
+  String proyecto = "";
+  List<String> listTipoProyecto = [];
+  List<String> listProyectos = [];
 
   @override
   void initState() {
     super.initState();
     fechaRevision = TextEditingController();
+    tipoProyecto = "";
+    proyecto = "";
+    listTipoProyecto= [];
+    listProyectos = [];
+    dataBase.clasificacionesEmpBox.getAll().forEach((element) {listTipoProyecto.add(element.clasificacion);});
+    dataBase.familiaInversionBox.getAll().forEach((element) {listProyectos.add(element.nombre);});
   }
 
   @override
@@ -695,69 +708,105 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                   },
                               ),
                             ),
-                            Padding(
+                            FormField(builder: (state) {
+                            return Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  5, 0, 5, 10),
-                              child: FlutterFlowDropDown(
-                                options: const ['Option 1'],
-                                onChanged: (val) =>
-                                    setState(() {}),
+                                   5, 0, 5, 10),
+                              child: DropDown(
+                                options: listTipoProyecto,
+                                onChanged: (val) => setState((){
+                                  if (listTipoProyecto.isEmpty) {
+                                    snackbarKey.currentState
+                                    ?.showSnackBar(const SnackBar(
+                                      content: Text(
+                                          "Debes descargar los catálogos desde la sección de tu perfil"),
+                                    ));
+                                  }
+                                  else{
+                                    tipoProyecto = val!;
+                                  }
+                                  }),
                                 width: double.infinity,
-                                height: 60,
-                                textStyle: AppTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily:
-                                          AppTheme.of(context)
-                                              .bodyText1Family,
-                                      color: AppTheme.of(context)
-                                          .primaryText,
+                                height: 50,
+                                textStyle: AppTheme.of(context).title3.override(
+                                      fontFamily: 'Poppins',
+                                      color: const Color(0xFF221573),
                                       fontSize: 15,
                                       fontWeight: FontWeight.normal,
                                     ),
-                                hintText: 'Tipo de Proyecto*',
+                                hintText: 'Tipo de proyecto*',
+                                icon: const Icon(
+                                  Icons.keyboard_arrow_down_rounded,
+                                  color: Color(0xFF221573),
+                                  size: 30,
+                                ),
                                 fillColor: Colors.white,
                                 elevation: 2,
-                                borderColor: AppTheme.of(context)
-                                    .primaryText,
-                                borderWidth: 1.5,
-                                borderRadius: 12,
-                                margin: const EdgeInsetsDirectional.fromSTEB(
-                                    12, 4, 12, 4),
+                                borderColor: const Color(0xFF221573),
+                                borderWidth: 2,
+                                borderRadius: 8,
+                                margin: const EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
                                 hidesUnderline: true,
                               ),
+                            );
+                            }, 
+                            validator: (val) {
+                                if (tipoProyecto == "" ||
+                                    tipoProyecto.isEmpty) {
+                                  return 'Para continuar, seleccione un tipo de proyecto.';
+                                }
+                                return null;
+                              },
                             ),
-                            Padding(
+                            FormField(builder: (state) {
+                            return Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  5, 0, 5, 10),
-                              child: FlutterFlowDropDown(
-                                options: const ['Option 1'],
-                                onChanged: (val) =>
-                                    setState(() {}),
+                                   5, 0, 5, 10),
+                              child: DropDown(
+                                options: listProyectos,
+                                onChanged: (val) => setState((){
+                                  if (listProyectos.isEmpty) {
+                                    snackbarKey.currentState
+                                    ?.showSnackBar(const SnackBar(
+                                      content: Text(
+                                          "Debes descargar los catálogos desde la sección de tu perfil"),
+                                    ));
+                                  }
+                                  else{
+                                    proyecto = val!;
+                                  }
+                                  }),
                                 width: double.infinity,
-                                height: 60,
-                                textStyle: AppTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily:
-                                          AppTheme.of(context)
-                                              .bodyText1Family,
-                                      color: AppTheme.of(context)
-                                          .primaryText,
+                                height: 50,
+                                textStyle: AppTheme.of(context).title3.override(
+                                      fontFamily: 'Poppins',
+                                      color: const Color(0xFF221573),
                                       fontSize: 15,
                                       fontWeight: FontWeight.normal,
                                     ),
                                 hintText: 'Proyecto*',
+                                icon: const Icon(
+                                  Icons.keyboard_arrow_down_rounded,
+                                  color: Color(0xFF221573),
+                                  size: 30,
+                                ),
                                 fillColor: Colors.white,
                                 elevation: 2,
-                                borderColor: AppTheme.of(context)
-                                    .primaryText,
-                                borderWidth: 1.5,
-                                borderRadius: 12,
-                                margin: const EdgeInsetsDirectional.fromSTEB(
-                                    12, 4, 12, 4),
+                                borderColor: const Color(0xFF221573),
+                                borderWidth: 2,
+                                borderRadius: 8,
+                                margin: const EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
                                 hidesUnderline: true,
                               ),
+                            );
+                            }, 
+                            validator: (val) {
+                                if ( proyecto == "" ||
+                                    proyecto.isEmpty) {
+                                  return 'Para continuar, seleccione un proyecto.';
+                                }
+                                return null;
+                              },
                             ),
                             Padding(
                               padding:
@@ -766,6 +815,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                 textCapitalization: TextCapitalization.sentences,
                                 autovalidateMode: AutovalidateMode.onUserInteraction,
                                 onChanged: (value) {
+                                  jornadaProvider.descripcion = value;
                                 },
                                 obscureText: false,
                                 decoration: InputDecoration(
@@ -834,16 +884,19 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                           onPressed: () async {
                             if (jornadaProvider
                                 .validateForm(formKey)) {
-                              // comunidadProvider.add();
-                              // print("Fecha revision ${jornadaProvider.fechaRevision}");
-                              // print("Tarea ${jornadaProvider.tarea}");
-                              // jornadaProvider.addJornada2(widget.emprendimiento.id);
-                              // await Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) => const JornadaCreada(),
-                              //   ),
-                              // );
+                              print("Fecha revision ${jornadaProvider.fechaRevision}");
+                              print("Tarea ${jornadaProvider.tarea}");
+                              final idTipoProyecto = dataBase.clasificacionesEmpBox.query(ClasificacionEmp_.clasificacion.equals(tipoProyecto)).build().findFirst()?.id;
+                              final idProyecto = dataBase.familiaInversionBox.query(FamiliaInversion_.nombre.equals(proyecto)).build().findFirst()?.id;
+                              if (idTipoProyecto != null  && idProyecto != null) {
+                                jornadaProvider.addJornada3(widget.emprendimiento.id, idTipoProyecto, idProyecto);
+                                await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const JornadaCreada(),
+                                ),
+                              );
+                              }
                             } else {
                               await showDialog(
                                 context: context,

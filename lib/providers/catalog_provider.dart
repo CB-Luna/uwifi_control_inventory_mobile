@@ -1,16 +1,13 @@
-import 'package:bizpro_app/models/get_comunidades.dart';
 import 'package:flutter/material.dart';
-import 'package:pocketbase/pocketbase.dart';
 import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/models/get_clasificacion_emp.dart';
+import 'package:bizpro_app/models/get_comunidades.dart';
+import 'package:bizpro_app/models/get_familia_inversion.dart';
+
 import 'package:bizpro_app/models/get_estados.dart';
 import 'package:bizpro_app/models/get_municipios.dart';
-
-
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/helpers/globals.dart';
-
-import 'package:bizpro_app/models/response_post_emprendedor.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -36,6 +33,8 @@ class CatalogProvider extends ChangeNotifier {
     await getEstados();
     await getMunicipios();
     await getComunidades();
+    await getClasificacionesEmp();
+    await getFamiliaInversion();
   }
 
   Future<void> getEstados() async {
@@ -128,6 +127,64 @@ class CatalogProvider extends ChangeNotifier {
         if (record.id.isNotEmpty) {
           print('Comunidad actualizada en el backend exitosamente');
         }
+        }
+      }
+    }
+    notifyListeners();
+  }
+
+  Future<void> getClasificacionesEmp() async {
+    final records = await client.records.
+      getFullList('clasificaciones_emp', batch: 200, sort: '-created');
+
+    print("****Informacion clasificaciones_emp****");
+    for (var i = 0; i < records.length; i++) {
+      final clasificacionEmpResponse = getClasificacionEmpFromMap(records[i].toString());
+      if (clasificacionEmpResponse.id.isNotEmpty) {
+      final nuevaClasificacionEmp = ClasificacionEmp(
+      clasificacion: clasificacionEmpResponse.clasificacion,
+      activo: clasificacionEmpResponse.activo,
+      idDBR: clasificacionEmpResponse.id,
+      );
+      final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
+      nuevaClasificacionEmp.statusSync.target = nuevoSync;
+      dataBase.clasificacionesEmpBox.put(nuevaClasificacionEmp);
+      print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
+      print('Clasificacion Emp agregado exitosamente');
+      final record = await client.records.update('clasificaciones_emp', clasificacionEmpResponse.id, body: {
+        'id_status_sync_fk': 'HoI36PzYw1wtbO1',
+      });
+      if (record.id.isNotEmpty) {
+          print('Clasificacion Emp actualizado en el backend exitosamente');
+        }
+      }
+    }
+    notifyListeners();
+  }
+
+  Future<void> getFamiliaInversion() async {
+    final records = await client.records.
+      getFullList('familia_inversion', batch: 200, sort: '-created');
+
+    print("****Informacion familia_inversion****");
+    for (var i = 0; i < records.length; i++) {
+      final familiaInversionResponse = getFamiliaInversionFromMap(records[i].toString());
+      if (familiaInversionResponse.id.isNotEmpty) {
+      final nuevaFamiliaInversion = FamiliaInversion(
+      nombre: familiaInversionResponse.nombreFamiliaInver,
+      activo: familiaInversionResponse.activo,
+      idDBR: familiaInversionResponse.id,
+      );
+      final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
+      nuevaFamiliaInversion.statusSync.target = nuevoSync;
+      dataBase.familiaInversionBox.put(nuevaFamiliaInversion);
+      print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
+      print('Familia Inversion agregada exitosamente');
+      final record = await client.records.update('familia_inversion', familiaInversionResponse.id, body: {
+        'id_status_sync_fk': 'HoI36PzYw1wtbO1',
+      });
+      if (record.id.isNotEmpty) {
+          print('Familia Inversion actualizada en el backend exitosamente');
         }
       }
     }

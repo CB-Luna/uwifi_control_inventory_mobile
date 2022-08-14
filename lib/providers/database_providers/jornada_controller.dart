@@ -1,4 +1,5 @@
 import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -13,6 +14,7 @@ class JornadaController extends ChangeNotifier {
   DateTime? fechaRevision = DateTime.now();
   String tarea = "";
   String obervacion = "";
+  String descripcion = "";
   String imagen = "";
 
   bool validateForm(GlobalKey<FormState> jornadaKey) {
@@ -54,7 +56,7 @@ class JornadaController extends ChangeNotifier {
       dataBase.emprendimientosBox.put(emprendimiento);
       jornadas.add(nuevaJornada);
       print('Jornada 1 agregada exitosamente');
-      clearInformation(); //Se limpia infoirmación para usar el mismo controller en otro registro
+      clearInformation(); //Se limpia información para usar el mismo controller en otro registro
       notifyListeners();
     }
   }
@@ -85,7 +87,50 @@ class JornadaController extends ChangeNotifier {
       dataBase.emprendimientosBox.put(emprendimiento);
       jornadas.add(nuevaJornada);
       print('Jornada 2 agregada exitosamente');
-      clearInformation(); //Se limpia infoirmación para usar el mismo controller en otro registro
+      clearInformation(); //Se limpia información para usar el mismo controller en otro registro
+      notifyListeners();
+    }
+  }
+
+  void addJornada3(int idEmprendimiento, int idClasificacionEmp, int idFamiliaInversion) {
+    final nuevaJornada = Jornadas(
+      numJornada: numJornada,
+      fechaRevision: fechaRevision!,
+      );
+    final nuevaTarea = Tareas(
+      tarea: tarea, 
+      descripcion: descripcion, 
+      observacion: obervacion, 
+      porcentaje: 1, 
+      fechaRevision: fechaRevision!,
+      );
+    final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
+    nuevaTarea.statusSync.target = nuevoSyncTarea;
+    final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
+    //Se recupera el tipo proyecto y proyecto
+    final clasificacionEmp = dataBase.clasificacionesEmpBox.get(idClasificacionEmp);
+    final familiaInversion = dataBase.familiaInversionBox.get(idFamiliaInversion);
+    if (emprendimiento != null) {
+      final nuevoSyncJornada = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Jornada 3
+      final nuevaInstruccion = Bitacora(instrucciones: 'syncAddJornada3', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      nuevaJornada.statusSync.target = nuevoSyncJornada;
+      nuevaJornada.tarea.target = nuevaTarea;
+      nuevaJornada.emprendimiento.target = emprendimiento;
+      nuevaJornada.bitacora.add(nuevaInstruccion);
+      //Indispensable para que se muestre en la lista de jornadas
+      emprendimiento.jornadas.add(nuevaJornada);
+      //Se asigna una clasificacionEmp(Tipo Proyecto) al emprendimiento
+      emprendimiento.clasificacionEmp.target = clasificacionEmp;
+      // Se actualiza el estado del emprendimiento porque se cambia su clasificacionEmp
+      final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(emprendimiento.statusSync.target!.id)).build().findUnique();
+      if (statusSync != null) {
+        statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del emprendimiento
+        dataBase.statusSyncBox.put(statusSync);
+      }
+      dataBase.emprendimientosBox.put(emprendimiento);
+      jornadas.add(nuevaJornada);
+      print('Jornada 3 agregada exitosamente');
+      clearInformation(); //Se limpia información para usar el mismo controller en otro registro
       notifyListeners();
     }
   }

@@ -38,11 +38,16 @@ class _EditarEmprendimientoScreenState
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
   XFile? image;
+  String nombreComunidad = "";
+  String nombreMunicipio= "";
+  String nombreEstado = "";
   List<String> listComunidades = [];
+  List<String> listMunicipios = [];
+  List<String> listEstados = [];
 
   late TextEditingController nombreController;
   late TextEditingController descController;
-  late TextEditingController comunidadController;
+
   late String newImagen;
   @override
   void initState() {
@@ -52,9 +57,23 @@ class _EditarEmprendimientoScreenState
         TextEditingController(text: widget.emprendimiento.nombre);
     descController =
         TextEditingController(text: widget.emprendimiento.descripcion);
-    comunidadController = TextEditingController(text: widget.emprendimiento.comunidad.target?.nombre);
+    nombreComunidad = widget.emprendimiento.comunidad.target!.nombre;
+    nombreMunicipio = widget.emprendimiento.comunidad.target!.municipios.target!.nombre;
+    nombreEstado = widget.emprendimiento.comunidad.target!.municipios.target!.estados.target!.nombre;
     listComunidades = [];
-    dataBase.comunidadesBox.getAll().forEach((element) {listComunidades.add(element.nombre);});
+    listMunicipios = [];
+    listEstados = [];
+    dataBase.estadosBox.getAll().forEach((element) {listEstados.add(element.nombre);});
+    dataBase.municipiosBox.getAll().forEach((element) {
+    if (element.estados.target?.nombre == nombreEstado) {
+      listMunicipios.add(element.nombre);
+    }                                    
+    });
+    dataBase.comunidadesBox.getAll().forEach((element) {
+      if (element.municipios.target?.nombre == nombreMunicipio) {
+        listComunidades.add(element.nombre);
+      }                                    
+    });
   }
 
   @override
@@ -382,19 +401,20 @@ class _EditarEmprendimientoScreenState
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       5, 0, 5, 10),
                                   child: DropDown(
-                                    initialOption: comunidadController.text,
-                                    options: listComunidades,
+                                    initialOption: nombreEstado,
+                                    options: listEstados,
                                     onChanged: (val) => setState((){
-                                      if (listComunidades.isEmpty) {
-                                        snackbarKey.currentState
-                                        ?.showSnackBar(const SnackBar(
-                                          content: Text(
-                                              "Debes descargar los catálogos desde la sección de tu perfil"),
-                                        ));
-                                      }
-                                      else{
-                                        comunidadController.text = val!;
-                                      }
+                                        listMunicipios.clear();
+                                        listComunidades.clear();
+                                        nombreEstado = val!;
+                                        dataBase.municipiosBox.getAll().forEach((element) {
+                                          if (element.estados.target?.nombre == nombreEstado) {
+                                            listMunicipios.add(element.nombre);
+                                          }                                    
+                                          });
+                                        print("Entro a con estados");
+                                      print("Estado: $nombreEstado");
+                                      
                                       }),
                                     width: double.infinity,
                                     height: 50,
@@ -404,7 +424,7 @@ class _EditarEmprendimientoScreenState
                                           fontSize: 15,
                                           fontWeight: FontWeight.normal,
                                         ),
-                                    hintText: 'Seleccione una comunidad*',
+                                    hintText: 'Seleccione un estado*',
                                     icon: const Icon(
                                       Icons.keyboard_arrow_down_rounded,
                                       color: Color(0xFF221573),
@@ -419,15 +439,125 @@ class _EditarEmprendimientoScreenState
                                     hidesUnderline: true,
                                   ),
                                 );
-                            }, 
-                            validator: (val) {
-                                if (comunidadController.text == "" ||
-                                    comunidadController.text.isEmpty) {
-                                  return 'Para continuar, seleccione la comunidad.';
-                                }
-                                return null;
-                              },
-                            ),
+                                }, 
+                                validator: (val) {
+                                    if (nombreEstado == "" ||
+                                        nombreEstado.isEmpty) {
+                                      return 'Para continuar, seleccione un estado.';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                FormField(builder: (state) {
+                                  return Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        5, 0, 5, 10),
+                                    child: DropDown(
+                                      initialOption: nombreMunicipio,
+                                      options: (nombreEstado == "" || listMunicipios.isEmpty) ? ["Sin municipios"] : listMunicipios,
+                                      onChanged: (val) => setState((){
+                                        if (val == "Sin municipios") {
+                                          snackbarKey.currentState
+                                          ?.showSnackBar(const SnackBar(
+                                            content: Text(
+                                                "Debes seleccionar un estado para seleccionar un municipio"),
+                                          ));
+                                        } else {
+                                          listComunidades.clear();
+                                          nombreMunicipio = val!;
+                                          dataBase.comunidadesBox.getAll().forEach((element) {
+                                            if (element.municipios.target?.nombre == nombreMunicipio) {
+                                              listComunidades.add(element.nombre);
+                                            }                                    
+                                          });
+                                          print("Entro a con municipios");
+                                        }
+                                        print("Municipio: $nombreMunicipio");
+                                      }),
+                                      width: double.infinity,
+                                      height: 50,
+                                      textStyle: AppTheme.of(context).title3.override(
+                                            fontFamily: 'Poppins',
+                                            color: const Color(0xFF221573),
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      hintText: 'Seleccione un municipio*',
+                                      icon: const Icon(
+                                        Icons.keyboard_arrow_down_rounded,
+                                        color: Color(0xFF221573),
+                                        size: 30,
+                                      ),
+                                      fillColor: Colors.white,
+                                      elevation: 2,
+                                      borderColor: const Color(0xFF221573),
+                                      borderWidth: 2,
+                                      borderRadius: 8,
+                                      margin: const EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                                      hidesUnderline: true,
+                                    ),
+                                  );
+                                }, 
+                                validator: (val) {
+                                    if (nombreMunicipio == "" ||
+                                        nombreMunicipio.isEmpty) {
+                                      return 'Para continuar, seleccione un municipio.';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                FormField(builder: (state) {
+                                  return Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        5, 0, 5, 10),
+                                    child: DropDown(
+                                      initialOption: nombreComunidad,
+                                      options: (nombreMunicipio == "" || listComunidades.isEmpty) ? ["Sin comunidades"] : listComunidades,
+                                      onChanged: (val) => setState((){
+                                          if (val == "Sin comunidades") {
+                                            snackbarKey.currentState
+                                            ?.showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "Debes seleccionar un municipio para seleccionar una comunidad"),
+                                            ));
+                                          } else {
+                                            nombreComunidad = val!;
+                                            print("Entro a con comunidades");
+                                          }
+                                          print("Comunidad: $nombreComunidad");
+                                        }),
+                                      width: double.infinity,
+                                      height: 50,
+                                      textStyle: AppTheme.of(context).title3.override(
+                                            fontFamily: 'Poppins',
+                                            color: const Color(0xFF221573),
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      hintText: 'Seleccione una comunidad*',
+                                      icon: const Icon(
+                                        Icons.keyboard_arrow_down_rounded,
+                                        color: Color(0xFF221573),
+                                        size: 30,
+                                      ),
+                                      fillColor: Colors.white,
+                                      elevation: 2,
+                                      borderColor: const Color(0xFF221573),
+                                      borderWidth: 2,
+                                      borderRadius: 8,
+                                      margin: const EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                                      hidesUnderline: true,
+                                    ),
+                                  );
+                                  }, 
+                                  validator: (val) {
+                                      if (nombreComunidad == "" ||
+                                          nombreComunidad.isEmpty) {
+                                        return 'Para continuar, seleccione una comunidad.';
+                                      }
+                                      return null;
+                                    },
+                                ),
 
                               // Padding(
                               //   padding:
@@ -489,27 +619,35 @@ class _EditarEmprendimientoScreenState
                                   onPressed: () async {
                                     if (nombreController.text != widget.emprendimiento.nombre || 
                                         descController.text != widget.emprendimiento.descripcion ||
-                                        comunidadController.text != widget.emprendimiento.comunidad.target!.nombre) {
+                                        nombreComunidad != widget.emprendimiento.comunidad.target!.nombre ||
+                                        nombreMunicipio != widget.emprendimiento.comunidad.target!.municipios.target!.nombre ||
+                                        nombreEstado != widget.emprendimiento.comunidad.target!.municipios.target!.estados.target!.nombre) {
                                       if (emprendimientoProvider
                                           .validateForm(formKey)) {
                                         print("Se puede actualizar");
-                                        final idComunidad = dataBase.comunidadesBox.query(Comunidades_.nombre.equals(comunidadController.text)).build().findFirst()?.id;
-                                        if (idComunidad != null) {
-                                          emprendimientoProvider.update(
+                                        final idEstado = dataBase.estadosBox.query(Estados_.nombre.equals(nombreEstado)).build().findFirst()?.id;
+                                        if (idEstado != null) {
+                                          final idMunicipio = dataBase.municipiosBox.query(Municipios_.estados.equals(idEstado).and(Municipios_.nombre.equals(nombreMunicipio))).build().findFirst()?.id;
+                                          if (idMunicipio != null) {
+                                            final idComunidad = dataBase.comunidadesBox.query(Comunidades_.municipios.equals(idMunicipio).and(Comunidades_.nombre.equals(nombreComunidad))).build().findFirst()?.id;
+                                            if (idComunidad != null) {
+                                              emprendimientoProvider.update(
                                               widget.emprendimiento.id,
                                               newImagen,
                                               nombreController.text,
                                               descController.text,
                                               idComunidad
                                               );
+                                              await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const EmprendimientoActualizado(),
+                                              ),
+                                            );
+                                            }
+                                          }
                                         }
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const EmprendimientoActualizado(),
-                                          ),
-                                        );
                                       } else {
                                         await showDialog(
                                           context: context,
@@ -532,7 +670,7 @@ class _EditarEmprendimientoScreenState
                                         );
                                         return;
                                       }
-                                    }
+                                      } 
                                   },
                                   text: 'Actualizar ',
                                   icon: const Icon(
