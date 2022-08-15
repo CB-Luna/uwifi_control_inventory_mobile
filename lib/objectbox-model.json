@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "8:804684152773215409",
-      "lastPropertyId": "26:3911938135844163773",
+      "lastPropertyId": "27:4661688415424027549",
       "name": "Emprendimientos",
       "properties": [
         {
@@ -92,12 +92,12 @@
           "relationTarget": "PrioridadEmp"
         },
         {
-          "id": "26:3911938135844163773",
-          "name": "clasificacionEmpId",
+          "id": "27:4661688415424027549",
+          "name": "catalogoProyectoId",
           "type": 11,
           "flags": 520,
-          "indexId": "111:7510634053082529540",
-          "relationTarget": "ClasificacionEmp"
+          "indexId": "135:3071001570087288716",
+          "relationTarget": "CatalogoProyecto"
         }
       ],
       "relations": [
@@ -1099,9 +1099,9 @@
       ],
       "relations": [
         {
-          "id": "12:8472678273863104956",
-          "name": "emprendimientos",
-          "targetId": "8:804684152773215409"
+          "id": "21:6897781984287572779",
+          "name": "categoriasProyecto",
+          "targetId": "44:7028042862098546470"
         }
       ]
     },
@@ -1583,7 +1583,7 @@
     },
     {
       "id": "43:8172937846526815489",
-      "lastPropertyId": "12:449037016119055988",
+      "lastPropertyId": "13:770565802267609172",
       "name": "ProductosEmp",
       "properties": [
         {
@@ -1657,14 +1657,131 @@
           "flags": 520,
           "indexId": "130:4686570526947596743",
           "relationTarget": "FamiliaInversion"
+        },
+        {
+          "id": "13:770565802267609172",
+          "name": "unidadMedidaId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "136:1962134460049855123",
+          "relationTarget": "UnidadMedida"
         }
       ],
-      "relations": []
+      "relations": [
+        {
+          "id": "22:7809991115224388687",
+          "name": "bitacora",
+          "targetId": "27:1774905738150923512"
+        }
+      ]
+    },
+    {
+      "id": "44:7028042862098546470",
+      "lastPropertyId": "6:2446617551955001742",
+      "name": "CatalogoProyecto",
+      "properties": [
+        {
+          "id": "1:2320402032859380061",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5836263409631228918",
+          "name": "nombre",
+          "type": 9
+        },
+        {
+          "id": "3:2962342881882180254",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "4:7173197756596644756",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "132:6485836029384457432"
+        },
+        {
+          "id": "5:7758743809194774648",
+          "name": "clasificacionEmpId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "133:2390143391685661460",
+          "relationTarget": "ClasificacionEmp"
+        },
+        {
+          "id": "6:2446617551955001742",
+          "name": "statusSyncId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "134:5205191834236384758",
+          "relationTarget": "StatusSync"
+        }
+      ],
+      "relations": [
+        {
+          "id": "20:1112665914041550299",
+          "name": "emprendimientos",
+          "targetId": "8:804684152773215409"
+        }
+      ]
+    },
+    {
+      "id": "45:7727246235344048855",
+      "lastPropertyId": "6:5402279733305696715",
+      "name": "UnidadMedida",
+      "properties": [
+        {
+          "id": "1:6552210119824315394",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6031532578549188804",
+          "name": "unidadMedida",
+          "type": 9
+        },
+        {
+          "id": "3:2602374307196861226",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "4:3793969537050688732",
+          "name": "activo",
+          "type": 1
+        },
+        {
+          "id": "5:2515638413658999127",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "137:2091809350828315876"
+        },
+        {
+          "id": "6:5402279733305696715",
+          "name": "statusSyncId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "138:6686263885413674781",
+          "relationTarget": "StatusSync"
+        }
+      ],
+      "relations": [
+        {
+          "id": "23:6114299832999780262",
+          "name": "productosEmp",
+          "targetId": "43:8172937846526815489"
+        }
+      ]
     }
   ],
-  "lastEntityId": "43:8172937846526815489",
-  "lastIndexId": "131:6863462231464342610",
-  "lastRelationId": "19:803629559452567645",
+  "lastEntityId": "45:7727246235344048855",
+  "lastIndexId": "138:6686263885413674781",
+  "lastRelationId": "23:6114299832999780262",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
@@ -1721,7 +1838,8 @@
     7003598226496598726,
     8154602671126157109,
     7569304066565191687,
-    5035905392252920596
+    5035905392252920596,
+    7510634053082529540
   ],
   "retiredPropertyUids": [
     7079790605743243388,
@@ -1892,14 +2010,16 @@
     3603888931156625013,
     3770705136894608488,
     1431194771886016233,
-    6126515006975107011
+    6126515006975107011,
+    3911938135844163773
   ],
   "retiredRelationUids": [
     1226469011453769556,
     4334679211015697719,
     658993855133497141,
     7628231779967948088,
-    7335578884425240534
+    7335578884425240534,
+    8472678273863104956
   ],
   "version": 1
 }

@@ -31,6 +31,7 @@ class JornadaController extends ChangeNotifier {
 
 
   void addJornada1(int idEmprendimiento) {
+    print("Numero jornada: $numJornada");
     final nuevaJornada = Jornadas(
       numJornada: numJornada,
       fechaRevision: fechaRevision!,
@@ -59,8 +60,10 @@ class JornadaController extends ChangeNotifier {
       clearInformation(); //Se limpia información para usar el mismo controller en otro registro
       notifyListeners();
     }
+    print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
   }
   void addJornada2(int idEmprendimiento) {
+    print("Numero jornada: $numJornada");
     final nuevaJornada = Jornadas(
       numJornada: numJornada,
       fechaRevision: fechaRevision!,
@@ -90,9 +93,11 @@ class JornadaController extends ChangeNotifier {
       clearInformation(); //Se limpia información para usar el mismo controller en otro registro
       notifyListeners();
     }
+    print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
   }
 
-  void addJornada3(int idEmprendimiento, int idClasificacionEmp, int idFamiliaInversion) {
+  void addJornada3(int idEmprendimiento, int idCatalogoProyecto) {
+    print("Numero jornada: $numJornada");
     final nuevaJornada = Jornadas(
       numJornada: numJornada,
       fechaRevision: fechaRevision!,
@@ -108,8 +113,7 @@ class JornadaController extends ChangeNotifier {
     nuevaTarea.statusSync.target = nuevoSyncTarea;
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     //Se recupera el tipo proyecto y proyecto
-    final clasificacionEmp = dataBase.clasificacionesEmpBox.get(idClasificacionEmp);
-    final familiaInversion = dataBase.familiaInversionBox.get(idFamiliaInversion);
+    final catalogoProyecto = dataBase.catalogoProyectoBox.get(idCatalogoProyecto);
     if (emprendimiento != null) {
       final nuevoSyncJornada = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Jornada 3
       final nuevaInstruccion = Bitacora(instrucciones: 'syncAddJornada3', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
@@ -117,22 +121,24 @@ class JornadaController extends ChangeNotifier {
       nuevaJornada.tarea.target = nuevaTarea;
       nuevaJornada.emprendimiento.target = emprendimiento;
       nuevaJornada.bitacora.add(nuevaInstruccion);
+      //Se asigna una catalogoProyecto(Proyecto) al emprendimiento, como por default catalogoProuyecto ya tiene un clasificacion emprendimiento
+      emprendimiento.catalogoProyecto.target = catalogoProyecto;
       //Indispensable para que se muestre en la lista de jornadas
       emprendimiento.jornadas.add(nuevaJornada);
-      //Se asigna una clasificacionEmp(Tipo Proyecto) al emprendimiento
-      emprendimiento.clasificacionEmp.target = clasificacionEmp;
+      dataBase.emprendimientosBox.put(emprendimiento);
+      jornadas.add(nuevaJornada);
+      print('Jornada 3 agregada exitosamente');
+      
       // Se actualiza el estado del emprendimiento porque se cambia su clasificacionEmp
       final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(emprendimiento.statusSync.target!.id)).build().findUnique();
       if (statusSync != null) {
         statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del emprendimiento
         dataBase.statusSyncBox.put(statusSync);
       }
-      dataBase.emprendimientosBox.put(emprendimiento);
-      jornadas.add(nuevaJornada);
-      print('Jornada 3 agregada exitosamente');
       clearInformation(); //Se limpia información para usar el mismo controller en otro registro
       notifyListeners();
     }
+    print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
   }
 
   void remove(Jornadas jornada) {

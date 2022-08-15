@@ -1,4 +1,3 @@
-import 'package:bizpro_app/objectbox.g.dart';
 import 'package:intl/intl.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -16,7 +15,7 @@ class Emprendimientos {
   final comunidad = ToOne<Comunidades>();
   final usuario = ToOne<Usuarios>(); //Promotor en Diagrama E-R
   final prioridadEmp = ToOne<PrioridadEmp>();
-  final clasificacionEmp = ToOne<ClasificacionEmp>();
+  final catalogoProyecto = ToOne<CatalogoProyecto>();
   final proveedores = ToMany<Proveedores>();
   final jornadas = ToMany<Jornadas>();
   final emprendedor = ToOne<Emprendedores>();
@@ -65,6 +64,8 @@ class Bitacora{
   final usuarios = ToMany<Usuarios>();
   @Backlink()
   final jornadas = ToMany<Jornadas>();
+  @Backlink()
+  final productosEmp = ToMany<ProductosEmp>();
   
   Bitacora({
     this.id = 0,
@@ -123,7 +124,7 @@ class ClasificacionEmp {
   bool activo;
   @Unique()
   String? idDBR;
-  final emprendimientos = ToMany<Emprendimientos>();
+  final categoriasProyecto = ToMany<CatalogoProyecto>();
   final statusSync = ToOne<StatusSync>();
   
   ClasificacionEmp({
@@ -131,6 +132,27 @@ class ClasificacionEmp {
     required this.clasificacion,
     DateTime? fechaRegistro,
     this.activo = true,
+    this.idDBR,
+    }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+}
+
+@Entity()
+class CatalogoProyecto {
+  int id;
+  String nombre;
+  DateTime fechaRegistro;
+  @Unique()
+  String? idDBR;
+  final emprendimientos = ToMany<Emprendimientos>();
+  final clasificacionEmp = ToOne<ClasificacionEmp>();
+  final statusSync = ToOne<StatusSync>();
+  
+  CatalogoProyecto({
+    this.id = 0,
+    required this.nombre,
+    DateTime? fechaRegistro,
     this.idDBR,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
@@ -414,6 +436,8 @@ class ProductosEmp {
   final statusSync = ToOne<StatusSync>();
   final emprendimientos = ToOne<Emprendimientos>();
   final familiaInversion = ToOne<FamiliaInversion>();
+  final unidadMedida = ToOne<UnidadMedida>();
+  final bitacora = ToMany<Bitacora>();
   @Backlink()
   final vendidos = ToMany<Vendidos>();
 
@@ -644,6 +668,29 @@ class Proveedores {
 }
 
 @Entity()
+class UnidadMedida {
+  int id;
+  String unidadMedida;
+  DateTime fechaRegistro;
+  bool activo;
+  @Unique()
+  String? idDBR;
+  final statusSync = ToOne<StatusSync>();
+  final productosEmp = ToMany<ProductosEmp>();
+
+  UnidadMedida({
+    this.id = 0,
+    required this.unidadMedida,
+    DateTime? fechaRegistro,
+    this.activo = true,
+    this.idDBR,
+    }): fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+
+}
+
+@Entity()
 class Bancos {
   int id;
   String banco;
@@ -744,6 +791,8 @@ class StatusSync {
   final productosEmp = ToMany<ProductosEmp>();
   @Backlink()
   final familiasInversion = ToMany<FamiliaInversion>();
+  @Backlink()
+  final unidadesMedida = ToMany<UnidadMedida>();
   StatusSync({
     this.id = 0,
     this.status = "0E3hoVIByUxMUMZ", //M__

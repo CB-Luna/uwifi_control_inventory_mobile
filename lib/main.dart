@@ -1,4 +1,5 @@
 import 'package:bizpro_app/providers/catalog_provider.dart';
+import 'package:bizpro_app/providers/database_providers/inversion_sugerida_controller.dart';
 import 'package:bizpro_app/providers/sync_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -14,7 +15,6 @@ import 'providers/database_providers/consultoria_controller.dart';
 import 'providers/database_providers/emprendedor_controller.dart';
 import 'providers/database_providers/emprendimiento_controller.dart';
 import 'providers/database_providers/usuario_controller.dart';
-import 'providers/database_providers/comunidad_controller.dart';
 import 'providers/database_providers/jornada_controller.dart';
 
 import 'package:bizpro_app/screens/screens.dart';
@@ -42,10 +42,6 @@ void main() async {
               UsuarioController(email: prefs.getString("userId")),
           lazy: false,
         ),
-        ChangeNotifierProvider<LocalidadController>(
-          create: (context) => LocalidadController(),
-          lazy: false,
-        ),
         ChangeNotifierProvider<EmprendedorController>(
           create: (context) => EmprendedorController(),
           lazy: false,
@@ -56,6 +52,10 @@ void main() async {
         ),
         ChangeNotifierProvider<ConsultoriaController>(
           create: (context) => ConsultoriaController(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<InversionSugeridaController>(
+          create: (context) => InversionSugeridaController(),
           lazy: false,
         ),
         ChangeNotifierProvider<SyncProvider>(

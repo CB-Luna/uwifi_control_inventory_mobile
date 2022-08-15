@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bizpro_app/screens/inversiones/inversion.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -545,7 +546,7 @@ class _DetalleEmprendimientoScreenState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(15, 10, 15, 0),
                                         child: InkWell(
-                                          onTap: () {
+                                          onTap: () async {
                                             // await Navigator
                                             //     .push(
                                             //   context,
@@ -559,6 +560,18 @@ class _DetalleEmprendimientoScreenState
                                             //     ),
                                             //   ),
                                             // );
+                                            print("Hola");
+                                            if (jornada.numJornada == "3") {
+                                                await Navigator
+                                                  .push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder:
+                                                      (context) =>
+                                                          InversionScreen(emprendimiento: widget.emprendimiento),
+                                                ),
+                                              );
+                                            }
                                           },
                                           child: Container(
                                             width: double.infinity,

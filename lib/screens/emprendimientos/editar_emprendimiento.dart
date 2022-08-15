@@ -4,7 +4,6 @@ import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
-import 'package:bizpro_app/providers/database_providers/comunidad_controller.dart';
 import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimiento_actualizado.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';

@@ -39,27 +39,24 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   XFile? image;
-  String tipoProyecto = "";
   String proyecto = "";
-  List<String> listTipoProyecto = [];
-  List<String> listProyectos = [];
+  TextEditingController tipoProyecto = TextEditingController();
+  
 
   @override
   void initState() {
     super.initState();
     fechaRevision = TextEditingController();
-    tipoProyecto = "";
+    tipoProyecto = TextEditingController();
     proyecto = "";
-    listTipoProyecto= [];
-    listProyectos = [];
-    dataBase.clasificacionesEmpBox.getAll().forEach((element) {listTipoProyecto.add(element.clasificacion);});
-    dataBase.familiaInversionBox.getAll().forEach((element) {listProyectos.add(element.nombre);});
+    // dataBase.clasificacionesEmpBox.getAll().forEach((element) {listTipoProyecto.add(element.clasificacion);});
   }
 
   @override
   Widget build(BuildContext context) {
     final jornadaProvider = Provider.of<JornadaController>(context);
     String emprendedor = "";
+    List<String> listProyectos = [];
     if (widget.emprendimiento.emprendedor.target != null) {
       emprendedor =
           "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
@@ -70,6 +67,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
     else {
       jornadaProvider.numJornada = (int.parse(widget.emprendimiento.jornadas.last.numJornada) + 1).toString();
     }
+    dataBase.catalogoProyectoBox.getAll().forEach((element) {listProyectos.add(element.nombre);});
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
@@ -713,56 +711,6 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                    5, 0, 5, 10),
                               child: DropDown(
-                                options: listTipoProyecto,
-                                onChanged: (val) => setState((){
-                                  if (listTipoProyecto.isEmpty) {
-                                    snackbarKey.currentState
-                                    ?.showSnackBar(const SnackBar(
-                                      content: Text(
-                                          "Debes descargar los catálogos desde la sección de tu perfil"),
-                                    ));
-                                  }
-                                  else{
-                                    tipoProyecto = val!;
-                                  }
-                                  }),
-                                width: double.infinity,
-                                height: 50,
-                                textStyle: AppTheme.of(context).title3.override(
-                                      fontFamily: 'Poppins',
-                                      color: const Color(0xFF221573),
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                hintText: 'Tipo de proyecto*',
-                                icon: const Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  color: Color(0xFF221573),
-                                  size: 30,
-                                ),
-                                fillColor: Colors.white,
-                                elevation: 2,
-                                borderColor: const Color(0xFF221573),
-                                borderWidth: 2,
-                                borderRadius: 8,
-                                margin: const EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                                hidesUnderline: true,
-                              ),
-                            );
-                            }, 
-                            validator: (val) {
-                                if (tipoProyecto == "" ||
-                                    tipoProyecto.isEmpty) {
-                                  return 'Para continuar, seleccione un tipo de proyecto.';
-                                }
-                                return null;
-                              },
-                            ),
-                            FormField(builder: (state) {
-                            return Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                   5, 0, 5, 10),
-                              child: DropDown(
                                 options: listProyectos,
                                 onChanged: (val) => setState((){
                                   if (listProyectos.isEmpty) {
@@ -774,6 +722,8 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                   }
                                   else{
                                     proyecto = val!;
+                                    final catalogoProyecto = dataBase.catalogoProyectoBox.getAll().firstWhere((element) => element.nombre == proyecto);
+                                    tipoProyecto.text = catalogoProyecto.clasificacionEmp.target!.clasificacion;
                                   }
                                   }),
                                 width: double.infinity,
@@ -807,6 +757,66 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                 }
                                 return null;
                               },
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                              child: TextFormField(
+                                enabled: false,
+                                readOnly: true,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                controller: tipoProyecto,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  labelText: 'Tipo de proyecto*',
+                                  labelStyle: AppTheme.of(context)
+                                      .title3
+                                      .override(
+                                        fontFamily: 'Montserrat',
+                                        color: AppTheme.of(context)
+                                            .secondaryText,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                  hintStyle: AppTheme.of(context)
+                                      .title3
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        color: AppTheme.of(context)
+                                            .secondaryText,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: AppTheme.of(context)
+                                          .primaryText,
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: AppTheme.of(context)
+                                          .primaryText,
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                ),
+                                style: AppTheme.of(context)
+                                    .title3
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: AppTheme.of(context)
+                                          .primaryText,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                maxLines: 1,
+                              ),
                             ),
                             Padding(
                               padding:
@@ -886,17 +896,16 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                 .validateForm(formKey)) {
                               print("Fecha revision ${jornadaProvider.fechaRevision}");
                               print("Tarea ${jornadaProvider.tarea}");
-                              final idTipoProyecto = dataBase.clasificacionesEmpBox.query(ClasificacionEmp_.clasificacion.equals(tipoProyecto)).build().findFirst()?.id;
-                              final idProyecto = dataBase.familiaInversionBox.query(FamiliaInversion_.nombre.equals(proyecto)).build().findFirst()?.id;
-                              if (idTipoProyecto != null  && idProyecto != null) {
-                                jornadaProvider.addJornada3(widget.emprendimiento.id, idTipoProyecto, idProyecto);
-                                await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const JornadaCreada(),
-                                ),
-                              );
-                              }
+                              // final idProyecto = dataBase.catalogoProyectoBox.query(CatalogoProyecto_.nombre.equals(proyecto)).build().findFirst()?.id;
+                              // if (idProyecto != null) {
+                              //   jornadaProvider.addJornada3(widget.emprendimiento.id, idProyecto);
+                              //   await Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => const JornadaCreada(),
+                              //   ),
+                              // );
+                              // }
                             } else {
                               await showDialog(
                                 context: context,

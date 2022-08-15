@@ -1,3 +1,5 @@
+import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
+import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:pocketbase/pocketbase.dart';
 
@@ -19,3 +21,85 @@ var telefonoFormat = MaskTextInputFormatter(
       filter: {'#': RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy,
     );
+
+//Animations
+
+final animationsMap = {
+    'containerOnPageLoadAnimation1': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      duration: 600,
+      delay: 80,
+      hideBeforeAnimating: false,
+      fadeIn: true,
+      initialState: AnimationState(
+        offset: const Offset(0, 69),
+        opacity: 0,
+      ),
+      finalState: AnimationState(
+        offset: const Offset(0, 0),
+        opacity: 1,
+      ),
+    ),
+    'rowOnPageLoadAnimation1': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      duration: 600,
+      hideBeforeAnimating: false,
+      fadeIn: true,
+      initialState: AnimationState(
+        offset: const Offset(0, 30),
+        scale: 0.4,
+        opacity: 0,
+      ),
+      finalState: AnimationState(
+        offset: const Offset(0, 0),
+        scale: 1,
+        opacity: 1,
+      ),
+    ),
+    'containerOnPageLoadAnimation2': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      duration: 600,
+      delay: 80,
+      hideBeforeAnimating: false,
+      fadeIn: true,
+      initialState: AnimationState(
+        offset: const Offset(0, 69),
+        opacity: 0,
+      ),
+      finalState: AnimationState(
+        offset: const Offset(0, 0),
+        opacity: 1,
+      ),
+    ),
+    'rowOnPageLoadAnimation2': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      duration: 600,
+      hideBeforeAnimating: false,
+      fadeIn: true,
+      initialState: AnimationState(
+        offset: const Offset(0, 30),
+        scale: 0.4,
+        opacity: 0,
+      ),
+      finalState: AnimationState(
+        offset: const Offset(0, 0),
+        scale: 1,
+        opacity: 1,
+      ),
+    ),
+    'containerOnPageLoadAnimation3': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      duration: 600,
+      delay: 80,
+      hideBeforeAnimating: false,
+      fadeIn: true,
+      initialState: AnimationState(
+        offset: const Offset(0, 69),
+        opacity: 0,
+      ),
+      finalState: AnimationState(
+        offset: const Offset(0, 0),
+        opacity: 1,
+      ),
+    ),
+  };

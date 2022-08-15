@@ -296,11 +296,11 @@ class SyncProvider extends ChangeNotifier {
           }
           }
 
-          //Segundo actualizamos la clasificacionEmp del emprendimiento
+          //Segundo actualizamos el catalogoProyecto del emprendimiento
           final emprendimiento = dataBase.emprendimientosBox.query(Emprendimientos_.id.equals(jornada.emprendimiento.target!.id)).build().findUnique();
           if (emprendimiento != null) {
             final record = await client.records.update('emprendimientos', emprendimiento.idDBR.toString(), body: {
-              "id_clasificacion_emp_fk": emprendimiento.clasificacionEmp.target!.idDBR,
+              "id_nombre_proyecto_fk": emprendimiento.catalogoProyecto.target!.idDBR,
               "id_status_sync_fk": "HoI36PzYw1wtbO1",
             }); 
             if (record.id.isNotEmpty) {
@@ -418,7 +418,7 @@ class SyncProvider extends ChangeNotifier {
             "id_comunidad_fk": emprendimientoToSync.comunidad.target!.idDBR,
             "id_promotor_fk": emprendimientoToSync.usuario.target!.idDBR,
             "id_prioridad_fk": "yuEVuBv9rxLM4cR",
-            "id_clasificacion_emp_fk": "ZhmtzZNd02vhlZY",
+            "id_nombre_proyecto_fk": "xXVloemN098DiKW",
             "id_proveedor_fk": "",
             "id_fase_emp_fk": "shjfgnobnYBQkUo",
             "id_status_sync_fk": "HoI36PzYw1wtbO1",
@@ -483,7 +483,7 @@ return true;
           "id_comunidad_fk": emprendimiento.comunidad.target!.idDBR,
           "id_promotor_fk": emprendimiento.usuario.target!.idDBR,
           "id_prioridad_fk": "yuEVuBv9rxLM4cR",
-          "id_clasificacion_emp_fk": "N2fgbFPCkb8PwnO",
+          "id_nombre_proyecto_fk": "xXVloemN098DiKW",
           "id_proveedor_fk": "",
           "id_fase_emp_fk": "shjfgnobnYBQkUo",
           "id_status_sync_fk": "HoI36PzYw1wtbO1",

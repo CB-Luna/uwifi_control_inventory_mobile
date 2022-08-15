@@ -1,3 +1,5 @@
+import 'package:bizpro_app/models/get_catalogos_proyectos.dart';
+import 'package:bizpro_app/models/get_unidades_medida.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/models/get_clasificacion_emp.dart';
@@ -34,7 +36,10 @@ class CatalogProvider extends ChangeNotifier {
     await getMunicipios();
     await getComunidades();
     await getClasificacionesEmp();
+    await getCatalogosProyectos();
     await getFamiliaInversion();
+    await getUnidadMedida();
+    
   }
 
   Future<void> getEstados() async {
@@ -185,6 +190,69 @@ class CatalogProvider extends ChangeNotifier {
       });
       if (record.id.isNotEmpty) {
           print('Familia Inversion actualizada en el backend exitosamente');
+        }
+      }
+    }
+    notifyListeners();
+  }
+
+  Future<void> getUnidadMedida() async {
+    final records = await client.records.
+      getFullList('und_medida', batch: 200, sort: '-created');
+
+    print("****Informacion und_medida****");
+    for (var i = 0; i < records.length; i++) {
+      final unidadMedidaResponse = getUnidadesMedidaFromMap(records[i].toString());
+      if (unidadMedidaResponse.id.isNotEmpty) {
+      final nuevaUnidadMedida = UnidadMedida(
+      unidadMedida: unidadMedidaResponse.unidadMedida,
+      activo: unidadMedidaResponse.activo,
+      idDBR: unidadMedidaResponse.id,
+      );
+      final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
+      nuevaUnidadMedida.statusSync.target = nuevoSync;
+      dataBase.unidadesMedidaBox.put(nuevaUnidadMedida);
+      print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
+      print('Unidad Medida agregada exitosamente');
+      final record = await client.records.update('und_medida', unidadMedidaResponse.id, body: {
+        'id_status_sync_fk': 'HoI36PzYw1wtbO1',
+      });
+      if (record.id.isNotEmpty) {
+          print('Unidad Medida actualizada en el backend exitosamente');
+        }
+      }
+    }
+    notifyListeners();
+  }
+
+
+  Future<void> getCatalogosProyectos() async {
+    final records = await client.records.
+      getFullList('cat_proyecto', batch: 200, sort: '-created');
+
+    print("****Informacion catalogos proyectos****");
+    for (var i = 0; i < records.length; i++) {
+      print(records[i]);
+      final catalogoProyectoResponse = getCatalogoProyectosFromMap(records[i].toString());
+      if (catalogoProyectoResponse.id.isNotEmpty) {
+      final nuevoCatalogoProyecto = CatalogoProyecto(
+      nombre: catalogoProyectoResponse.nombreProyecto,
+      idDBR: catalogoProyectoResponse.id,
+      );
+      final clasificacionEmp = dataBase.clasificacionesEmpBox.query(ClasificacionEmp_.idDBR.equals(catalogoProyectoResponse.idClasificacionEmprendimiento)).build().findUnique();
+      if (clasificacionEmp != null) {
+        final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
+        nuevoCatalogoProyecto.statusSync.target = nuevoSync;
+        nuevoCatalogoProyecto.clasificacionEmp.target = clasificacionEmp;
+        dataBase.catalogoProyectoBox.put(nuevoCatalogoProyecto);
+        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
+        print('Catalogo Proyecto agregado exitosamente');
+        final record = await client.records.update('cat_proyecto', catalogoProyectoResponse.id, body: {
+          'id_status_sync_fk': 'HoI36PzYw1wtbO1',
+        });
+        if (record.id.isNotEmpty) {
+          print('Catalogo Proyecto actualizado en el backend exitosamente');
+        }
         }
       }
     }
