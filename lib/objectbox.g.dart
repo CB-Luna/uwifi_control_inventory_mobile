@@ -1589,7 +1589,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(43, 8172937846526815489),
       name: 'ProductosEmp',
-      lastPropertyId: const IdUid(13, 770565802267609172),
+      lastPropertyId: const IdUid(14, 4723303053259007258),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1665,7 +1665,12 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(136, 1962134460049855123),
-            relationTarget: 'UnidadMedida')
+            relationTarget: 'UnidadMedida'),
+        ModelProperty(
+            id: const IdUid(14, 4723303053259007258),
+            name: 'cantidad',
+            type: 6,
+            flags: 0)
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -3784,7 +3789,7 @@ ModelDefinition getObjectBoxModel() {
           final imagenOffset = fbb.writeString(object.imagen);
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(14);
+          fbb.startTable(15);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nombreOffset);
           fbb.addOffset(2, descripcionOffset);
@@ -3798,6 +3803,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(10, object.emprendimientos.targetId);
           fbb.addInt64(11, object.familiaInversion.targetId);
           fbb.addInt64(12, object.unidadMedida.targetId);
+          fbb.addInt64(13, object.cantidad);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -3817,12 +3823,13 @@ ModelDefinition getObjectBoxModel() {
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0),
               precioVenta:
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0),
+              cantidad:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0),
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0)),
               archivado: const fb.BoolReader()
                   .vTableGet(buffer, rootOffset, 18, false),
-              idDBR: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 20));
+              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 20));
           object.statusSync.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
           object.statusSync.attach(store);
@@ -4972,6 +4979,10 @@ class ProductosEmp_ {
   /// see [ProductosEmp.unidadMedida]
   static final unidadMedida = QueryRelationToOne<ProductosEmp, UnidadMedida>(
       _entities[27].properties[12]);
+
+  /// see [ProductosEmp.cantidad]
+  static final cantidad =
+      QueryIntegerProperty<ProductosEmp>(_entities[27].properties[13]);
 
   /// see [ProductosEmp.bitacora]
   static final bitacora =

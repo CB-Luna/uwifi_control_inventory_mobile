@@ -429,6 +429,7 @@ class ProductosEmp {
   String imagen;
   int costo;
   int precioVenta;
+  int cantidad;
   DateTime fechaRegistro;
   bool archivado;
   @Unique()
@@ -448,6 +449,7 @@ class ProductosEmp {
     required this.imagen,
     required this.costo,
     required this.precioVenta,
+    required this.cantidad,
     DateTime? fechaRegistro,
     this.archivado = false,
     this.idDBR,

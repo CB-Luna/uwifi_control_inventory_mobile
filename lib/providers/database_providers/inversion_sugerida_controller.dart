@@ -15,6 +15,7 @@ class InversionSugeridaController extends ChangeNotifier {
   String descripcion = '';
   int costo = 0;
   int precioVenta = 0;
+  int cantidad = 0;
 
   TextEditingController textControllerImagen = TextEditingController();
   TextEditingController textControllerNombre = TextEditingController();
@@ -32,23 +33,27 @@ class InversionSugeridaController extends ChangeNotifier {
     descripcion = '';
     costo = 0;
     precioVenta = 0;
+    cantidad = 0;
     notifyListeners();
   }
 
-  void add(int idEmprendimiento) {
+  void add(int idEmprendimiento, int idFamilia) {
     final nuevoProductoEmp = ProductosEmp(
       nombre: nombre,
       descripcion: descripcion,
       imagen: imagen,
       costo: costo,
       precioVenta: precioVenta,
+      cantidad: cantidad,
       );
       final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
-      if (emprendimiento != null) {
+      final familia = dataBase.familiaInversionBox.get(idFamilia);
+      if (emprendimiento != null && familia != null) {
         final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
         final nuevaInstruccion = Bitacora(instrucciones: 'syncAddInversionSugerida', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
         nuevoProductoEmp.statusSync.target = nuevoSync;
         nuevoProductoEmp.emprendimientos.target = emprendimiento;
+        nuevoProductoEmp.familiaInversion.target = familia;
         nuevoProductoEmp.bitacora.add(nuevaInstruccion);
         emprendimiento.productosEmp.add(nuevoProductoEmp);
         dataBase.emprendimientosBox.put(emprendimiento);

@@ -21,34 +21,30 @@ import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 
-class AgregarJornada3Screen extends StatefulWidget {
+class AgregarJornada4Screen extends StatefulWidget {
   final Emprendimientos emprendimiento;
   
-  const AgregarJornada3Screen({
+  const AgregarJornada4Screen({
     Key? key, required this.emprendimiento,
   }) : super(key: key);
 
 
   @override
-  _AgregarJornada3ScreenState createState() => _AgregarJornada3ScreenState();
+  _AgregarJornada4ScreenState createState() => _AgregarJornada4ScreenState();
 }
 
-class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
+class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
   TextEditingController fechaRevision = TextEditingController();
   List<String> checkboxGroupValues = [];
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   XFile? image;
-  String proyecto = "";
-  TextEditingController tipoProyecto = TextEditingController();
   
 
   @override
   void initState() {
     super.initState();
     fechaRevision = TextEditingController();
-    tipoProyecto = TextEditingController();
-    proyecto = "";
     // dataBase.clasificacionesEmpBox.getAll().forEach((element) {listTipoProyecto.add(element.clasificacion);});
   }
 
@@ -56,7 +52,6 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
   Widget build(BuildContext context) {
     final jornadaProvider = Provider.of<JornadaController>(context);
     String emprendedor = "";
-    List<String> listProyectos = [];
     if (widget.emprendimiento.emprendedor.target != null) {
       emprendedor =
           "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
@@ -67,7 +62,6 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
     else {
       jornadaProvider.numJornada = (int.parse(widget.emprendimiento.jornadas.last.numJornada) + 1).toString();
     }
-    dataBase.catalogoProyectoBox.getAll().forEach((element) {listProyectos.add(element.nombre);});
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
@@ -325,17 +319,17 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  5, 0, 5, 10),
+                              padding:
+                                  const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                               child: TextFormField(
                                 textCapitalization: TextCapitalization.sentences,
                                 autovalidateMode: AutovalidateMode.onUserInteraction,
                                 onChanged: (value) {
-                                  jornadaProvider.tarea = value;
+                                  jornadaProvider.observacion = value;
                                 },
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  labelText: 'Registrar Tarea*',
+                                  labelText: 'Comentarios*',
                                   labelStyle: AppTheme.of(context)
                                       .title3
                                       .override(
@@ -345,7 +339,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal,
                                       ),
-                                  hintText: 'Registro de tarea...',
+                                  hintText: 'Ingresa comentarios...',
                                   hintStyle: AppTheme.of(context)
                                       .title3
                                       .override(
@@ -383,42 +377,12 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                       fontSize: 15,
                                       fontWeight: FontWeight.normal,
                                     ),
-                                maxLines: 2,
+                                maxLines: 3,
                                 validator: (value) {
-                                return capitalizadoCharacters.hasMatch(value ?? '')
-                                    ? null
-                                    : 'Para continuar, ingrese la tarea empezando por mayúscula';
-                                },
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  5, 0, 5, 10),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: FlutterFlowCheckboxGroup(
-                                      initiallySelected:
-                                          checkboxGroupValues,
-                                      options: ['¿Tarea Completada?'].toList(),
-                                      onChanged: (val) => setState(
-                                          () => checkboxGroupValues = val),
-                                      activeColor: AppTheme.of(context)
-                                          .primaryColor,
-                                      checkColor: Colors.white,
-                                      checkboxBorderColor: const Color(0xFF95A1AC),
-                                      textStyle: AppTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily:
-                                                AppTheme.of(context)
-                                                    .bodyText1Family,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                    ),
-                                  ),
-                                ],
+                                  return capitalizadoCharacters.hasMatch(value ?? '')
+                                      ? null
+                                      : 'Para continuar, ingrese los comentarios empezando por mayúscula';
+                                  },
                               ),
                             ),
                             FormField(builder: (state){
@@ -553,338 +517,10 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                             validator: (val) {
                               if (jornadaProvider.imagen == null ||
                                   jornadaProvider.imagen.isEmpty) {
-                                return 'Para continuar, cargue una imagen';
+                                return 'Para continuar, cargue una imagen del convenio';
                               }
                               return null;
-                            }),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  5, 0, 5, 10),
-                              child: TextFormField(
-                                controller: fechaRevision,
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
-                                onTap: () async {
-                                  await DatePicker.showDatePicker(
-                                    context,
-                                    showTitleActions: true,
-                                    onConfirm: (date) {
-                                      setState(() {
-                                        jornadaProvider.fechaRevision = date;
-                                        fechaRevision.text = dateTimeFormat('yMMMd', date);
-                                      });
-                                    },
-                                    currentTime: getCurrentTimestamp,
-                                    minTime: getCurrentTimestamp,
-                                  );
-                                  
-                                },
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  labelText: 'Fecha de revisión*',
-                                  labelStyle: AppTheme.of(context)
-                                      .title3
-                                      .override(
-                                        fontFamily: 'Montserrat',
-                                        color: AppTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                  hintText: 'Ingresa fecha de revisión...',
-                                  hintStyle: AppTheme.of(context)
-                                      .title3
-                                      .override(
-                                        fontFamily: 'Poppins',
-                                        color: AppTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppTheme.of(context)
-                                          .primaryText,
-                                      width: 1.5,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppTheme.of(context)
-                                          .primaryText,
-                                      width: 1.5,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                ),
-                                keyboardType: TextInputType.none,
-                                showCursor: false,
-                                style: AppTheme.of(context)
-                                    .title3
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      color: AppTheme.of(context)
-                                          .primaryText,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Para continuar, ingrese la fecha de revisión';
-                                  }
-                
-                                  return null;
-                                }
-                              ),
-                            ),                         
-                            Padding(
-                              padding:
-                                  const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
-                              child: TextFormField(
-                                textCapitalization: TextCapitalization.sentences,
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
-                                onChanged: (value) {
-                                  jornadaProvider.observacion = value;
-                                },
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  labelText: 'Comentarios*',
-                                  labelStyle: AppTheme.of(context)
-                                      .title3
-                                      .override(
-                                        fontFamily: 'Montserrat',
-                                        color: AppTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                  hintText: 'Ingresa comentarios...',
-                                  hintStyle: AppTheme.of(context)
-                                      .title3
-                                      .override(
-                                        fontFamily: 'Poppins',
-                                        color: AppTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppTheme.of(context)
-                                          .primaryText,
-                                      width: 1.5,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppTheme.of(context)
-                                          .primaryText,
-                                      width: 1.5,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                ),
-                                style: AppTheme.of(context)
-                                    .title3
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      color: AppTheme.of(context)
-                                          .primaryText,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                maxLines: 3,
-                                validator: (value) {
-                                  return capitalizadoCharacters.hasMatch(value ?? '')
-                                      ? null
-                                      : 'Para continuar, ingrese los comentarios empezando por mayúscula';
-                                  },
-                              ),
-                            ),
-                            FormField(builder: (state) {
-                            return Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                   5, 0, 5, 10),
-                              child: DropDown(
-                                options: listProyectos,
-                                onChanged: (val) => setState((){
-                                  if (listProyectos.isEmpty) {
-                                    snackbarKey.currentState
-                                    ?.showSnackBar(const SnackBar(
-                                      content: Text(
-                                          "Debes descargar los catálogos desde la sección de tu perfil"),
-                                    ));
-                                  }
-                                  else{
-                                    proyecto = val!;
-                                    final catalogoProyecto = dataBase.catalogoProyectoBox.getAll().firstWhere((element) => element.nombre == proyecto);
-                                    tipoProyecto.text = catalogoProyecto.clasificacionEmp.target!.clasificacion;
-                                  }
-                                  }),
-                                width: double.infinity,
-                                height: 50,
-                                textStyle: AppTheme.of(context).title3.override(
-                                      fontFamily: 'Poppins',
-                                      color: const Color(0xFF221573),
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                hintText: 'Proyecto*',
-                                icon: const Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  color: Color(0xFF221573),
-                                  size: 30,
-                                ),
-                                fillColor: Colors.white,
-                                elevation: 2,
-                                borderColor: const Color(0xFF221573),
-                                borderWidth: 2,
-                                borderRadius: 8,
-                                margin: const EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                                hidesUnderline: true,
-                              ),
-                            );
-                            }, 
-                            validator: (val) {
-                                if ( proyecto == "" ||
-                                    proyecto.isEmpty) {
-                                  return 'Para continuar, seleccione un proyecto.';
-                                }
-                                return null;
-                              },
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
-                              child: TextFormField(
-                                enabled: false,
-                                readOnly: true,
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
-                                controller: tipoProyecto,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  labelText: 'Tipo de proyecto*',
-                                  labelStyle: AppTheme.of(context)
-                                      .title3
-                                      .override(
-                                        fontFamily: 'Montserrat',
-                                        color: AppTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                  hintStyle: AppTheme.of(context)
-                                      .title3
-                                      .override(
-                                        fontFamily: 'Poppins',
-                                        color: AppTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppTheme.of(context)
-                                          .primaryText,
-                                      width: 1.5,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppTheme.of(context)
-                                          .primaryText,
-                                      width: 1.5,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                ),
-                                style: AppTheme.of(context)
-                                    .title3
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      color: AppTheme.of(context)
-                                          .primaryText,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                maxLines: 1,
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
-                              child: TextFormField(
-                                textCapitalization: TextCapitalization.sentences,
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
-                                onChanged: (value) {
-                                  jornadaProvider.descripcion = value;
-                                },
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  labelText: 'Descripción*',
-                                  labelStyle: AppTheme.of(context)
-                                      .title3
-                                      .override(
-                                        fontFamily: 'Montserrat',
-                                        color: AppTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                  hintText: 'Descripción...',
-                                  hintStyle: AppTheme.of(context)
-                                      .title3
-                                      .override(
-                                        fontFamily: 'Poppins',
-                                        color: AppTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppTheme.of(context)
-                                          .primaryText,
-                                      width: 1.5,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppTheme.of(context)
-                                          .primaryText,
-                                      width: 1.5,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                ),
-                                style: AppTheme.of(context)
-                                    .title3
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      color: AppTheme.of(context)
-                                          .primaryText,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                maxLines: 3,
-                                validator: (value) {
-                                  return capitalizadoCharacters.hasMatch(value ?? '')
-                                      ? null
-                                      : 'Para continuar, ingrese la descripción empezando por mayúscula';
-                                  },
-                              ),
-                            ),
+                            }),            
                           ],
                         ),
                       ),
@@ -897,16 +533,12 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                               print("Fecha revision ${jornadaProvider.fechaRevision}");
                               print("Tarea ${jornadaProvider.tarea}");
                             
-                              final idProyecto = dataBase.catalogoProyectoBox.query(CatalogoProyecto_.nombre.equals(proyecto)).build().findFirst()?.id;
-                              if (idProyecto != null) {
-                                jornadaProvider.addJornada3(widget.emprendimiento.id, idProyecto);
+                                jornadaProvider.addJornada4(widget.emprendimiento.id);
                                 await Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => const JornadaCreada(),
-                                ),
-                              );
-                              }
+                                ));
                             } else {
                               await showDialog(
                                 context: context,
@@ -915,7 +547,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                     title:
                                         const Text('Campos vacíos'),
                                     content: const Text(
-                                        'Para continuar, debe llenar los campos solicitados e incluir una imagen del análisis financiero.'),
+                                        'Para continuar, debe llenar los campos solicitados e incluir una imagen del convenio.'),
                                     actions: [
                                       TextButton(
                                         onPressed: () =>

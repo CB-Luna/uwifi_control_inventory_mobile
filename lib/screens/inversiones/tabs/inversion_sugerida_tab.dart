@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bizpro_app/screens/inversiones/agregar_inversion_sugerida_screen.dart';
 import 'package:bizpro_app/util/util.dart';
 import 'package:flutter/material.dart';
 
@@ -386,15 +387,15 @@ with TickerProviderStateMixin {
                         FFButtonWidget(
                           onPressed:
                               () async {
-                            // await Navigator
-                            //     .push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder:
-                            //         (context) =>
-                            //             RegistrarInversionSugeridaWidget(),
-                            //   ),
-                            // );
+                            await Navigator
+                                .push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) =>
+                                        AgregarInversionSugeridaScreen(emprendimiento: widget.emprendimiento,),
+                              ),
+                            );
                           },
                           text: 'Inversión',
                           icon: const Icon(
@@ -508,7 +509,7 @@ with TickerProviderStateMixin {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  index.toString(),
+                                                  (index + 1).toString(),
                                                   style: AppTheme.of(context).bodyText1.override(
                                                         fontFamily: AppTheme.of(context).bodyText1Family,
                                                         fontSize: 20,
@@ -545,7 +546,7 @@ with TickerProviderStateMixin {
                                                           ),
                                                     ),
                                                     Text(
-                                                      'Und: 1',
+                                                      'Und: ${productoEmp.cantidad}',
                                                       style: AppTheme.of(context).subtitle1.override(
                                                             fontFamily: AppTheme.of(context).subtitle1Family,
                                                             color: AppTheme.of(context).primaryText,
@@ -554,7 +555,7 @@ with TickerProviderStateMixin {
                                                           ),
                                                     ),
                                                     Text(
-                                                      "\$ ${productoEmp.costo}",
+                                                      "\$ ${productoEmp.costo * productoEmp.cantidad}",
                                                       textAlign: TextAlign.end,
                                                       style: AppTheme.of(context).subtitle2.override(
                                                             fontFamily: AppTheme.of(context).subtitle2Family,
@@ -571,7 +572,7 @@ with TickerProviderStateMixin {
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                         children: [
                                                           Text(
-                                                              productoEmp.familiaInversion.target!.nombre,
+                                                              productoEmp.familiaInversion.target?.nombre  ?? "SIN FAMILIA",
                                                               style: AppTheme.of(context).bodyText1.override(
                                                               fontFamily: AppTheme.of(context).bodyText1Family,
                                                               color: AppTheme.of(context).secondaryText,

@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:bizpro_app/screens/inversiones/inversion.dart';
+import 'package:bizpro_app/screens/jornadas/agregar_jornada4_screen.dart';
+import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -560,22 +562,22 @@ class _DetalleEmprendimientoScreenState
                                             //     ),
                                             //   ),
                                             // );
-                                            print("Hola");
-                                            if (jornada.numJornada == "3") {
-                                                await Navigator
-                                                  .push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder:
-                                                      (context) =>
-                                                          InversionScreen(emprendimiento: widget.emprendimiento),
-                                                ),
-                                              );
-                                            }
+                                            // print("Hola");
+                                            // if (jornada.numJornada == "3") {
+                                            //     await Navigator
+                                            //       .push(
+                                            //     context,
+                                            //     MaterialPageRoute(
+                                            //       builder:
+                                            //           (context) =>
+                                            //               InversionScreen(emprendimiento: widget.emprendimiento),
+                                            //     ),
+                                            //   );
+                                            // }
                                           },
                                           child: Container(
                                             width: double.infinity,
-                                            height: 100,
+                                            height: jornada.numJornada == "3" ? 130 : 100,
                                             decoration: BoxDecoration(
                                               color: const Color(0xFF1F68CB),
                                               boxShadow: const [
@@ -656,6 +658,54 @@ class _DetalleEmprendimientoScreenState
                                                         ),
                                                   ),
                                                 ),
+                                                jornada.numJornada == "3" ?
+                                                FFButtonWidget(
+                                                          onPressed:
+                                                              () async {
+                                                            await Navigator
+                                                                .push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        InversionScreen(emprendimiento: widget.emprendimiento),
+                                                              ),
+                                                            );
+                                                          },
+                                                          text: 'Inversión',
+                                                          options:
+                                                              FFButtonOptions(
+                                                            width: 150,
+                                                            height: 35,
+                                                            color: AppTheme
+                                                                    .of(context)
+                                                                .secondaryText,
+                                                            textStyle:
+                                                                AppTheme.of(
+                                                                        context)
+                                                                    .subtitle2
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          AppTheme.of(context).subtitle2Family,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          15,
+                                                                    ),
+                                                            borderSide:
+                                                                const BorderSide(
+                                                              color: Colors
+                                                                  .transparent,
+                                                              width: 1,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8),
+                                                          ),
+                                                        )
+                                                :
+                                                Container(),
                                               ],
                                             ),
                                           ),
@@ -973,14 +1023,14 @@ class _DetalleEmprendimientoScreenState
                                         );
                                         break;
                                       case 3:
-                                        // await Navigator.push(
-                                        //   context,
-                                        //   MaterialPageRoute(
-                                        //     builder: (context) => AgregarJornada3Screen(
-                                        //       emprendimiento: widget.emprendimiento,
-                                        //     ),
-                                        //   ),
-                                        // );
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => AgregarJornada4Screen(
+                                              emprendimiento: widget.emprendimiento,
+                                            ),
+                                          ),
+                                        );
                                         break;
                                       default:
                                     }

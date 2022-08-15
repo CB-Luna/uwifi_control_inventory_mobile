@@ -498,7 +498,7 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                                 textCapitalization: TextCapitalization.sentences,
                                 autovalidateMode: AutovalidateMode.onUserInteraction,
                                 onChanged: (value) {
-                                  jornadaProvider.obervacion = value;
+                                  jornadaProvider.observacion = value;
                                 },
                                 obscureText: false,
                                 decoration: InputDecoration(

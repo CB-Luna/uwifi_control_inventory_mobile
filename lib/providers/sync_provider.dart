@@ -80,7 +80,7 @@ class SyncProvider extends ChangeNotifier {
           } else {
             print("Entro aqui en el else");
             
-            await syncAddJornada1y2(jornadaToSync);
+            await syncAddJornada12y4(jornadaToSync);
           } 
           }         
           break;
@@ -94,7 +94,7 @@ class SyncProvider extends ChangeNotifier {
           } else {
             print("Entro aqui en el else");
             
-            await syncAddJornada1y2(jornadaToSync);
+            await syncAddJornada12y4(jornadaToSync);
           } 
           }         
           break;
@@ -109,6 +109,20 @@ class SyncProvider extends ChangeNotifier {
             print("Entro aqui en el else");
             
             await syncAddJornada3(jornadaToSync);
+          } 
+          }         
+          break;
+        case "syncAddJornada4":
+          print("Entro aqui");
+          final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
+          if(jornadaToSync != null){
+            if(jornadaToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
+            print("Entro aqui en el if");
+            break;
+          } else {
+            print("Entro aqui en el else");
+            
+            await syncAddJornada12y4(jornadaToSync);
           } 
           }         
           break;
@@ -173,8 +187,8 @@ class SyncProvider extends ChangeNotifier {
     return null;
   }
 
-  Future<bool?> syncAddJornada1y2(Jornadas jornada) async {
-    print("Estoy en syncAddJornada1y2");
+  Future<bool?> syncAddJornada12y4(Jornadas jornada) async {
+    print("Estoy en syncAddJornada12y4");
         final tareaToSync = dataBase.tareasBox.query(Tareas_.id.equals(jornada.tarea.target!.id)).build().findUnique();
         try {
         //Primero creamos la tarea asociada a la jornada
@@ -249,7 +263,7 @@ class SyncProvider extends ChangeNotifier {
           return true;
       }
       } catch (e) {
-        print('ERROR - function syncAddJornada1y2(): $e');
+        print('ERROR - function syncAddJornada12y4(): $e');
         return false;
       }
     

@@ -1583,7 +1583,7 @@
     },
     {
       "id": "43:8172937846526815489",
-      "lastPropertyId": "13:770565802267609172",
+      "lastPropertyId": "14:4723303053259007258",
       "name": "ProductosEmp",
       "properties": [
         {
@@ -1665,6 +1665,11 @@
           "flags": 520,
           "indexId": "136:1962134460049855123",
           "relationTarget": "UnidadMedida"
+        },
+        {
+          "id": "14:4723303053259007258",
+          "name": "cantidad",
+          "type": 6
         }
       ],
       "relations": [

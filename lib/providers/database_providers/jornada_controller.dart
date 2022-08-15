@@ -13,7 +13,7 @@ class JornadaController extends ChangeNotifier {
   String numJornada = '';
   DateTime? fechaRevision = DateTime.now();
   String tarea = "";
-  String obervacion = "";
+  String observacion = "";
   String descripcion = "";
   String imagen = "";
 
@@ -27,6 +27,9 @@ class JornadaController extends ChangeNotifier {
     numJornada = '';
     fechaRevision = null;
     tarea = "";
+    observacion = "";
+    descripcion = "";
+    imagen = "";
   }
 
 
@@ -71,7 +74,7 @@ class JornadaController extends ChangeNotifier {
     final nuevaTarea = Tareas(
       tarea: tarea, 
       descripcion: "Creación Jornada 2", 
-      observacion: obervacion, 
+      observacion: observacion, 
       porcentaje: 1, 
       fechaRevision: fechaRevision!,
       );
@@ -105,7 +108,7 @@ class JornadaController extends ChangeNotifier {
     final nuevaTarea = Tareas(
       tarea: tarea, 
       descripcion: descripcion, 
-      observacion: obervacion, 
+      observacion: observacion, 
       porcentaje: 1, 
       fechaRevision: fechaRevision!,
       );
@@ -135,6 +138,39 @@ class JornadaController extends ChangeNotifier {
         statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del emprendimiento
         dataBase.statusSyncBox.put(statusSync);
       }
+      clearInformation(); //Se limpia información para usar el mismo controller en otro registro
+      notifyListeners();
+    }
+    print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
+  }
+
+  void addJornada4(int idEmprendimiento) {
+    print("Numero jornada: $numJornada");
+    final nuevaJornada = Jornadas(
+      numJornada: numJornada,
+      fechaRevision: fechaRevision!,
+      );
+    final nuevaTarea = Tareas(
+      tarea: "Creación Jornada 4",
+      descripcion: "Creación Jornada 4",
+      observacion: observacion,
+      porcentaje: 1,
+      fechaRevision: fechaRevision!);
+    final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
+    nuevaTarea.statusSync.target = nuevoSyncTarea;
+    final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
+    if (emprendimiento != null) {
+      final nuevoSyncJornada = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Jornada 1
+      final nuevaInstruccion = Bitacora(instrucciones: 'syncAddJornada4', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      nuevaJornada.statusSync.target = nuevoSyncJornada;
+      nuevaJornada.tarea.target = nuevaTarea;
+      nuevaJornada.emprendimiento.target = emprendimiento;
+      nuevaJornada.bitacora.add(nuevaInstruccion);
+      //Indispensable para que se muestre en la lista de jornadas
+      emprendimiento.jornadas.add(nuevaJornada);
+      dataBase.emprendimientosBox.put(emprendimiento);
+      jornadas.add(nuevaJornada);
+      print('Jornada 4 agregada exitosamente');
       clearInformation(); //Se limpia información para usar el mismo controller en otro registro
       notifyListeners();
     }
