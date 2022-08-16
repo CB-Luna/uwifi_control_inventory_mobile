@@ -431,7 +431,7 @@ class ProductosEmp {
   String nombre;
   String descripcion;
   String imagen;
-  int costo;
+  double costo;
   int precioVenta;
   int cantidad;
   DateTime fechaRegistro;
@@ -471,7 +471,7 @@ class ProductosCot {
   String nombre;
   String descripcion;
   String imagen;
-  int costo;
+  double costo;
   int precioVenta;
   int cantidad;
   DateTime fechaRegistro;

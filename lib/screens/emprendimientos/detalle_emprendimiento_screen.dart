@@ -1009,6 +1009,7 @@ class _DetalleEmprendimientoScreenState
                                           MaterialPageRoute(
                                             builder: (context) => AgregarJornada2Screen(
                                               emprendimiento: widget.emprendimiento,
+                                              numJornada: numJornada + 1,
                                             ),
                                           ),
                                         );
@@ -1019,6 +1020,7 @@ class _DetalleEmprendimientoScreenState
                                           MaterialPageRoute(
                                             builder: (context) => AgregarJornada3Screen(
                                               emprendimiento: widget.emprendimiento,
+                                              numJornada: numJornada + 1,
                                             ),
                                           ),
                                         );
@@ -1029,6 +1031,7 @@ class _DetalleEmprendimientoScreenState
                                           MaterialPageRoute(
                                             builder: (context) => AgregarJornada4Screen(
                                               emprendimiento: widget.emprendimiento,
+                                              numJornada: numJornada + 1,
                                             ),
                                           ),
                                         );
@@ -1050,6 +1053,7 @@ class _DetalleEmprendimientoScreenState
                                     MaterialPageRoute(
                                       builder: (context) => AgregarJornada1Screen(
                                         emprendimiento: widget.emprendimiento,
+                                        numJornada: 1,
                                       ),
                                     ),
                                   );

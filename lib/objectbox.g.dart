@@ -1621,7 +1621,7 @@ final _entities = <ModelEntity>[
         ModelProperty(
             id: const IdUid(5, 3433062347635299317),
             name: 'costo',
-            type: 6,
+            type: 8,
             flags: 0),
         ModelProperty(
             id: const IdUid(6, 5798532042156117000),
@@ -1817,7 +1817,7 @@ final _entities = <ModelEntity>[
         ModelProperty(
             id: const IdUid(5, 5628367501338126181),
             name: 'costo',
-            type: 6,
+            type: 8,
             flags: 0),
         ModelProperty(
             id: const IdUid(6, 1436917224247812157),
@@ -3929,7 +3929,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(1, nombreOffset);
           fbb.addOffset(2, descripcionOffset);
           fbb.addOffset(3, imagenOffset);
-          fbb.addInt64(4, object.costo);
+          fbb.addFloat64(4, object.costo);
           fbb.addInt64(5, object.precioVenta);
           fbb.addInt64(6, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addBool(7, object.archivado);
@@ -3956,7 +3956,7 @@ ModelDefinition getObjectBoxModel() {
               imagen: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 10, ''),
               costo:
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0),
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0),
               precioVenta:
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0),
               cantidad:
@@ -4116,7 +4116,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(1, nombreOffset);
           fbb.addOffset(2, descripcionOffset);
           fbb.addOffset(3, imagenOffset);
-          fbb.addInt64(4, object.costo);
+          fbb.addFloat64(4, object.costo);
           fbb.addInt64(5, object.precioVenta);
           fbb.addInt64(6, object.cantidad);
           fbb.addInt64(7, object.fechaRegistro.millisecondsSinceEpoch);
@@ -4143,7 +4143,7 @@ ModelDefinition getObjectBoxModel() {
               imagen: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 10, ''),
               costo:
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0),
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0),
               precioVenta:
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0),
               cantidad:
@@ -5164,7 +5164,7 @@ class ProductosEmp_ {
 
   /// see [ProductosEmp.costo]
   static final costo =
-      QueryIntegerProperty<ProductosEmp>(_entities[27].properties[4]);
+      QueryDoubleProperty<ProductosEmp>(_entities[27].properties[4]);
 
   /// see [ProductosEmp.precioVenta]
   static final precioVenta =
@@ -5297,7 +5297,7 @@ class ProductosCot_ {
 
   /// see [ProductosCot.costo]
   static final costo =
-      QueryIntegerProperty<ProductosCot>(_entities[30].properties[4]);
+      QueryDoubleProperty<ProductosCot>(_entities[30].properties[4]);
 
   /// see [ProductosCot.precioVenta]
   static final precioVenta =

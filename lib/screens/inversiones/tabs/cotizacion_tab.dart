@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bizpro_app/screens/inversiones/agregar_cotizacion_screen.dart';
 import 'package:bizpro_app/screens/inversiones/agregar_inversion_sugerida_screen.dart';
 import 'package:bizpro_app/util/util.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final List<ProductosCot> productosCot = [];
-    int totalProyecto = 0;
+    double totalProyecto = 0;
     widget.emprendimiento.productosCot.forEach((element) {
       productosCot.add(element);
       totalProyecto += (element.costo * element.cantidad); 
@@ -393,7 +394,7 @@ with TickerProviderStateMixin {
                               MaterialPageRoute(
                                 builder:
                                     (context) =>
-                                        AgregarInversionSugeridaScreen(emprendimiento: widget.emprendimiento,),
+                                        AgregarCotizacionScreen(emprendimiento: widget.emprendimiento,),
                               ),
                             );
                           },

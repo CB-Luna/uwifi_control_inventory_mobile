@@ -10,7 +10,7 @@ class JornadaController extends ChangeNotifier {
   GlobalKey<FormState> jornadaFormKey = GlobalKey<FormState>();
 
   //Jornada
-  String numJornada = '';
+  // String numJornada = '';
   DateTime? fechaRevision = DateTime.now();
   String tarea = "";
   String observacion = "";
@@ -24,7 +24,7 @@ class JornadaController extends ChangeNotifier {
 
   void clearInformation()
   {
-    numJornada = '';
+    // numJornada = '';
     fechaRevision = null;
     tarea = "";
     observacion = "";
@@ -33,10 +33,10 @@ class JornadaController extends ChangeNotifier {
   }
 
 
-  void addJornada1(int idEmprendimiento) {
+  void addJornada1(int idEmprendimiento, int numJornada) {
     print("Numero jornada: $numJornada");
     final nuevaJornada = Jornadas(
-      numJornada: numJornada,
+      numJornada: numJornada.toString(),
       fechaRevision: fechaRevision!,
       );
     final nuevaTarea = Tareas(
@@ -65,10 +65,10 @@ class JornadaController extends ChangeNotifier {
     }
     print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
   }
-  void addJornada2(int idEmprendimiento) {
+  void addJornada2(int idEmprendimiento, int numJornada) {
     print("Numero jornada: $numJornada");
     final nuevaJornada = Jornadas(
-      numJornada: numJornada,
+      numJornada: numJornada.toString(),
       fechaRevision: fechaRevision!,
       );
     final nuevaTarea = Tareas(
@@ -99,10 +99,10 @@ class JornadaController extends ChangeNotifier {
     print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
   }
 
-  void addJornada3(int idEmprendimiento, int idCatalogoProyecto) {
+  void addJornada3(int idEmprendimiento, int idCatalogoProyecto, int numJornada) {
     print("Numero jornada: $numJornada");
     final nuevaJornada = Jornadas(
-      numJornada: numJornada,
+      numJornada: numJornada.toString(),
       fechaRevision: fechaRevision!,
       );
     final nuevaTarea = Tareas(
@@ -144,10 +144,10 @@ class JornadaController extends ChangeNotifier {
     print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
   }
 
-  void addJornada4(int idEmprendimiento) {
+  void addJornada4(int idEmprendimiento, int numJornada) {
     print("Numero jornada: $numJornada");
     final nuevaJornada = Jornadas(
-      numJornada: numJornada,
+      numJornada: numJornada.toString(),
       fechaRevision: DateTime.now(),
       );
     final nuevaTarea = Tareas(

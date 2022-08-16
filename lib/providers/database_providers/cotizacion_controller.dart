@@ -7,23 +7,23 @@ class CotizacionController extends ChangeNotifier {
 
   List<ProductosCot> productosCot= [];
 
-  GlobalKey<FormState> productoEmpFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> productoCotFormKey = GlobalKey<FormState>();
  
-  //ProductoEmp
+  //ProductoCot
   String imagen = '';
   String nombre = '';
   String descripcion = '';
-  int costo = 0;
+  String costo = '';
   int precioVenta = 0;
-  int cantidad = 0;
+  String cantidad = '';
   String proveedor = '';
 
   TextEditingController textControllerImagen = TextEditingController();
   TextEditingController textControllerNombre = TextEditingController();
   TextEditingController textControllerDescripcion = TextEditingController();
 
-  bool validateForm(GlobalKey<FormState> productoEmpKey) {
-    return productoEmpKey.currentState!.validate() ? true : false;
+  bool validateForm(GlobalKey<FormState> productoCotKey) {
+    return productoCotKey.currentState!.validate() ? true : false;
   }
 
 
@@ -32,9 +32,9 @@ class CotizacionController extends ChangeNotifier {
     imagen = '';
     nombre = '';
     descripcion = '';
-    costo = 0;
+    costo = '';
     precioVenta = 0;
-    cantidad = 0;
+    cantidad = '';
     proveedor = '';
     notifyListeners();
   }
@@ -44,9 +44,9 @@ class CotizacionController extends ChangeNotifier {
       nombre: nombre,
       descripcion: descripcion,
       imagen: imagen,
-      costo: costo,
+      costo: double.parse(costo),
       precioVenta: precioVenta,
-      cantidad: cantidad,
+      cantidad: int.parse(cantidad),
       proveedor: proveedor,
       );
       final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
@@ -68,8 +68,8 @@ class CotizacionController extends ChangeNotifier {
       }
   }
 
-  void remove(ProductosEmp productosEmp) {
-    dataBase.productosEmpBox.remove(productosEmp.id); //Se elimina de bitacora la instruccion creada anteriormente
+  void remove(ProductosCot productosCot) {
+    dataBase.productosCotBox.remove(productosCot.id); //Se elimina de bitacora la instruccion creada anteriormente
     notifyListeners(); 
   }
 

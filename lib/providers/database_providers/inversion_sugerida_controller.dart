@@ -13,9 +13,9 @@ class InversionSugeridaController extends ChangeNotifier {
   String imagen = '';
   String nombre = '';
   String descripcion = '';
-  int costo = 0;
+  String costo = '';
   int precioVenta = 0;
-  int cantidad = 0;
+  String cantidad = '';
   String proveedor = '';
 
   TextEditingController textControllerImagen = TextEditingController();
@@ -32,9 +32,9 @@ class InversionSugeridaController extends ChangeNotifier {
     imagen = '';
     nombre = '';
     descripcion = '';
-    costo = 0;
+    costo = '';
     precioVenta = 0;
-    cantidad = 0;
+    cantidad = '';
     proveedor = '';
     notifyListeners();
   }
@@ -44,9 +44,9 @@ class InversionSugeridaController extends ChangeNotifier {
       nombre: nombre,
       descripcion: descripcion,
       imagen: imagen,
-      costo: costo,
+      costo: double.parse(costo),
       precioVenta: precioVenta,
-      cantidad: cantidad,
+      cantidad: int.parse(cantidad),
       proveedor: proveedor,
       );
       final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);

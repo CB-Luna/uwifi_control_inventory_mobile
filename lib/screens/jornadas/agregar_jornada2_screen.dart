@@ -19,9 +19,12 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class AgregarJornada2Screen extends StatefulWidget {
   final Emprendimientos emprendimiento;
+  final int numJornada;
   
   const AgregarJornada2Screen({
-    Key? key, required this.emprendimiento,
+    Key? key, 
+    required this.emprendimiento, 
+    required this.numJornada,
   }) : super(key: key);
 
 
@@ -50,12 +53,12 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
       emprendedor =
           "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
     }
-    if (widget.emprendimiento.jornadas.isEmpty) {
-      jornadaProvider.numJornada = "1";
-    }
-    else {
-      jornadaProvider.numJornada = (int.parse(widget.emprendimiento.jornadas.last.numJornada) + 1).toString();
-    }
+    // if (widget.emprendimiento.jornadas.isEmpty) {
+    //   jornadaProvider.numJornada = "1";
+    // }
+    // else {
+    //   jornadaProvider.numJornada = (int.parse(widget.emprendimiento.jornadas.last.numJornada) + 1).toString();
+    // }
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
@@ -218,7 +221,7 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                                       padding: const EdgeInsetsDirectional.fromSTEB(
                                           10, 5, 0, 0),
                                       child: Text(
-                                        "Jornada ${jornadaProvider.numJornada}",
+                                        "Jornada ${widget.numJornada}",
                                         style: AppTheme.of(context)
                                             .bodyText1
                                             .override(
@@ -706,7 +709,7 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                               // comunidadProvider.add();
                               print("Fecha revision ${jornadaProvider.fechaRevision}");
                               print("Tarea ${jornadaProvider.tarea}");
-                              jornadaProvider.addJornada2(widget.emprendimiento.id);
+                              jornadaProvider.addJornada2(widget.emprendimiento.id, widget.numJornada);
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(

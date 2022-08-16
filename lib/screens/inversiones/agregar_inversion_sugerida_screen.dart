@@ -531,7 +531,7 @@ class _AgregarInversionSugeridaScreenState
                                       child: TextFormField(
                                         autovalidateMode: AutovalidateMode.onUserInteraction,
                                         onChanged: (value) {
-                                          inversionSProvider.cantidad = int.parse(value);
+                                          inversionSProvider.cantidad = value;
                                         },
                                         obscureText: false,
                                         decoration: InputDecoration(
@@ -600,7 +600,7 @@ class _AgregarInversionSugeridaScreenState
                                       child: TextFormField(
                                         autovalidateMode: AutovalidateMode.onUserInteraction,
                                         onChanged: (value) {
-                                          inversionSProvider.costo = int.parse(value);
+                                          inversionSProvider.costo = value;
                                         },
                                         obscureText: false,
                                         decoration: InputDecoration(
@@ -643,7 +643,7 @@ class _AgregarInversionSugeridaScreenState
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
-                                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                        keyboardType: TextInputType.number,
                                         style: AppTheme.of(context)
                                             .title3
                                             .override(
@@ -671,6 +671,7 @@ class _AgregarInversionSugeridaScreenState
                                     const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                                 child: FFButtonWidget(
                                   onPressed: () async {
+                                    print("Desde inversion");
                                     if (inversionSProvider
                                   .validateForm(formKey)) {
                                       // comunidadProvider.add();

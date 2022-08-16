@@ -23,9 +23,12 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class AgregarJornada3Screen extends StatefulWidget {
   final Emprendimientos emprendimiento;
+  final int numJornada;
   
   const AgregarJornada3Screen({
-    Key? key, required this.emprendimiento,
+    Key? key, 
+    required this.emprendimiento, 
+    required this.numJornada,
   }) : super(key: key);
 
 
@@ -57,17 +60,18 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
     final jornadaProvider = Provider.of<JornadaController>(context);
     String emprendedor = "";
     List<String> listProyectos = [];
+    dataBase.catalogoProyectoBox.getAll().forEach((element) {listProyectos.add(element.nombre);});
     if (widget.emprendimiento.emprendedor.target != null) {
       emprendedor =
           "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
     }
-    if (widget.emprendimiento.jornadas.isEmpty) {
-      jornadaProvider.numJornada = "1";
-    }
-    else {
-      jornadaProvider.numJornada = (int.parse(widget.emprendimiento.jornadas.last.numJornada) + 1).toString();
-    }
-    dataBase.catalogoProyectoBox.getAll().forEach((element) {listProyectos.add(element.nombre);});
+    // if (widget.emprendimiento.jornadas.isEmpty) {
+    //   jornadaProvider.numJornada = "1";
+    // }
+    // else {
+    //   jornadaProvider.numJornada = (int.parse(widget.emprendimiento.jornadas.last.numJornada) + 1).toString();
+    // }
+    // print("Antes del return: ${jornadaProvider.numJornada}");
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
@@ -230,7 +234,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                       padding: const EdgeInsetsDirectional.fromSTEB(
                                           10, 5, 0, 0),
                                       child: Text(
-                                        "Jornada ${jornadaProvider.numJornada}",
+                                        "Jornada ${widget.numJornada}",
                                         style: AppTheme.of(context)
                                             .bodyText1
                                             .override(
@@ -896,10 +900,10 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                 .validateForm(formKey)) {
                               print("Fecha revision ${jornadaProvider.fechaRevision}");
                               print("Tarea ${jornadaProvider.tarea}");
-                            
+                              print("Jorndada ${widget.numJornada}");
                               final idProyecto = dataBase.catalogoProyectoBox.query(CatalogoProyecto_.nombre.equals(proyecto)).build().findFirst()?.id;
                               if (idProyecto != null) {
-                                jornadaProvider.addJornada3(widget.emprendimiento.id, idProyecto);
+                                jornadaProvider.addJornada3(widget.emprendimiento.id, idProyecto, widget.numJornada);
                                 await Navigator.push(
                                 context,
                                 MaterialPageRoute(

@@ -44,8 +44,7 @@ class CatalogProvider extends ChangeNotifier {
 
   Future<void> getEstados() async {
     final records = await client.records.
-      getFullList('estados', batch: 200, sort: '-created');
-
+      getFullList('estados', batch: 200, sort: '+nombre_estado');
     print("*****Informacion estados*****");
     for (var i = 0; i < records.length; i++) {
       final estadoResponse = getEstadosFromMap(records[i].toString());
@@ -74,7 +73,7 @@ class CatalogProvider extends ChangeNotifier {
 
   Future<void> getMunicipios() async {
     final records = await client.records.
-      getFullList('municipios', batch: 200, sort: '-created');
+      getFullList('municipios', batch: 200, sort: '+nombre_municipio');
 
     print("*****Informacion municipios****");
     for (var i = 0; i < records.length; i++) {
@@ -107,7 +106,7 @@ class CatalogProvider extends ChangeNotifier {
 
   Future<void> getComunidades() async {
     final records = await client.records.
-      getFullList('comunidades', batch: 200, sort: '-created');
+      getFullList('comunidades', batch: 200, sort: '+nombre_comunidad');
 
     print("****Informacion comunidades****");
     for (var i = 0; i < records.length; i++) {
@@ -140,7 +139,7 @@ class CatalogProvider extends ChangeNotifier {
 
   Future<void> getClasificacionesEmp() async {
     final records = await client.records.
-      getFullList('clasificaciones_emp', batch: 200, sort: '-created');
+      getFullList('clasificaciones_emp', batch: 200, sort: '+clasificacion');
 
     print("****Informacion clasificaciones_emp****");
     for (var i = 0; i < records.length; i++) {
@@ -169,7 +168,7 @@ class CatalogProvider extends ChangeNotifier {
 
   Future<void> getFamiliaInversion() async {
     final records = await client.records.
-      getFullList('familia_inversion', batch: 200, sort: '-created');
+      getFullList('familia_inversion', batch: 200, sort: '+nombre_familia_inver');
 
     print("****Informacion familia_inversion****");
     for (var i = 0; i < records.length; i++) {
@@ -198,7 +197,7 @@ class CatalogProvider extends ChangeNotifier {
 
   Future<void> getUnidadMedida() async {
     final records = await client.records.
-      getFullList('und_medida', batch: 200, sort: '-created');
+      getFullList('und_medida', batch: 200, sort: '+unidad_medida');
 
     print("****Informacion und_medida****");
     for (var i = 0; i < records.length; i++) {
@@ -228,7 +227,7 @@ class CatalogProvider extends ChangeNotifier {
 
   Future<void> getCatalogosProyectos() async {
     final records = await client.records.
-      getFullList('cat_proyecto', batch: 200, sort: '-created');
+      getFullList('cat_proyecto', batch: 200, sort: '+nombre_proyecto');
 
     print("****Informacion catalogos proyectos****");
     for (var i = 0; i < records.length; i++) {

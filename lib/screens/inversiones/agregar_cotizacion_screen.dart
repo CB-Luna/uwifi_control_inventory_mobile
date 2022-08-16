@@ -6,14 +6,11 @@ import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:bizpro_app/providers/database_providers/cotizacion_controller.dart';
-import 'package:bizpro_app/providers/database_providers/inversion_sugerida_controller.dart';
-import 'package:bizpro_app/screens/inversiones/inversion_sugerida_creada.dart';
+import 'package:bizpro_app/screens/inversiones/cotizacion_creada.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
 
-import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_drop_down.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -45,7 +42,7 @@ class _AgregarCotizacionScreenState
 
   @override
   Widget build(BuildContext context) {
-    final inversionSProvider = Provider.of<CotizacionController>(context);
+    final inversionCProvider = Provider.of<CotizacionController>(context);
     List<String> listFamilias = [];
     List<String> listUnidadesMedida = [];
     dataBase.familiaInversionBox.getAll().forEach((element) {listFamilias.add(element.nombre);});
@@ -131,7 +128,7 @@ class _AgregarCotizacionScreenState
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Inversión Sugerida',
+                              'Cotización',
                               style: AppTheme.of(context)
                                   .bodyText1
                                   .override(
@@ -214,7 +211,7 @@ class _AgregarCotizacionScreenState
                                         textCapitalization: TextCapitalization.sentences,
                                         autovalidateMode: AutovalidateMode.onUserInteraction,
                                         onChanged: (value) {
-                                          inversionSProvider.nombre = value;
+                                          inversionCProvider.nombre = value;
                                         },
                                         obscureText: false,
                                         decoration: InputDecoration(
@@ -281,7 +278,7 @@ class _AgregarCotizacionScreenState
                                         textCapitalization: TextCapitalization.sentences,
                                         autovalidateMode: AutovalidateMode.onUserInteraction,
                                         onChanged: (value) {
-                                          inversionSProvider.descripcion = value;
+                                          inversionCProvider.descripcion = value;
                                         },
                                         obscureText: false,
                                         decoration: InputDecoration(
@@ -348,7 +345,7 @@ class _AgregarCotizacionScreenState
                                         textCapitalization: TextCapitalization.sentences,
                                         autovalidateMode: AutovalidateMode.onUserInteraction,
                                         onChanged: (value) {
-                                          inversionSProvider.proveedor = value;
+                                          inversionCProvider.proveedor = value;
                                          
                                         },
                                         obscureText: false,
@@ -533,7 +530,7 @@ class _AgregarCotizacionScreenState
                                       child: TextFormField(
                                         autovalidateMode: AutovalidateMode.onUserInteraction,
                                         onChanged: (value) {
-                                          inversionSProvider.cantidad = int.parse(value);
+                                          inversionCProvider.cantidad = value;
                                         },
                                         obscureText: false,
                                         decoration: InputDecoration(
@@ -602,7 +599,7 @@ class _AgregarCotizacionScreenState
                                       child: TextFormField(
                                         autovalidateMode: AutovalidateMode.onUserInteraction,
                                         onChanged: (value) {
-                                          inversionSProvider.costo = int.parse(value);
+                                            inversionCProvider.costo = value; 
                                         },
                                         obscureText: false,
                                         decoration: InputDecoration(
@@ -645,7 +642,7 @@ class _AgregarCotizacionScreenState
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
-                                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                        keyboardType: TextInputType.number,
                                         style: AppTheme.of(context)
                                             .title3
                                             .override(
@@ -673,16 +670,17 @@ class _AgregarCotizacionScreenState
                                     const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    if (inversionSProvider
+                                    print("Desde cotizacion");
+                                    if (inversionCProvider
                                   .validateForm(formKey)) {
-                                      // comunidadProvider.add();
+                                      // comunidadProvider.add();  
                                       final idFamiliaInversion = dataBase.familiaInversionBox.query(FamiliaInversion_.nombre.equals(familia)).build().findFirst()?.id;
                                       if (idFamiliaInversion != null) {
-                                        inversionSProvider.add(widget.emprendimiento.id, idFamiliaInversion);
+                                        inversionCProvider.add(widget.emprendimiento.id, idFamiliaInversion);
                                           await Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => const InversionSugeridaCreada(),
+                                            builder: (context) => const CotizacionCreada(),
                                           ),
                                         );
                                       }

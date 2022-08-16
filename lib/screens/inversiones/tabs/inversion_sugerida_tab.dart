@@ -36,7 +36,7 @@ with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final List<ProductosEmp> productosEmp = [];
-    int totalProyecto = 0;
+    double totalProyecto = 0;
     widget.emprendimiento.productosEmp.forEach((element) {
       productosEmp.add(element);
       totalProyecto += (element.costo * element.cantidad); 
