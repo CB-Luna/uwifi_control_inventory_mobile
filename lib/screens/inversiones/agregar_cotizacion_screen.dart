@@ -5,6 +5,7 @@ import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
+import 'package:bizpro_app/providers/database_providers/cotizacion_controller.dart';
 import 'package:bizpro_app/providers/database_providers/inversion_sugerida_controller.dart';
 import 'package:bizpro_app/screens/inversiones/inversion_sugerida_creada.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
@@ -18,18 +19,18 @@ import 'package:provider/provider.dart';
 
 
 
-class AgregarInversionSugeridaScreen extends StatefulWidget {
+class AgregarCotizacionScreen extends StatefulWidget {
   final Emprendimientos emprendimiento;
 
-  const AgregarInversionSugeridaScreen({Key? key, required this.emprendimiento}) : super(key: key);
+  const AgregarCotizacionScreen({Key? key, required this.emprendimiento}) : super(key: key);
 
   @override
-  _AgregarInversionSugeridaScreenState createState() =>
-      _AgregarInversionSugeridaScreenState();
+  _AgregarCotizacionScreenState createState() =>
+      _AgregarCotizacionScreenState();
 }
 
-class _AgregarInversionSugeridaScreenState
-    extends State<AgregarInversionSugeridaScreen> {
+class _AgregarCotizacionScreenState
+    extends State<AgregarCotizacionScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
   String familia = "";
@@ -44,7 +45,7 @@ class _AgregarInversionSugeridaScreenState
 
   @override
   Widget build(BuildContext context) {
-    final inversionSProvider = Provider.of<InversionSugeridaController>(context);
+    final inversionSProvider = Provider.of<CotizacionController>(context);
     List<String> listFamilias = [];
     List<String> listUnidadesMedida = [];
     dataBase.familiaInversionBox.getAll().forEach((element) {listFamilias.add(element.nombre);});
@@ -347,6 +348,7 @@ class _AgregarInversionSugeridaScreenState
                                         textCapitalization: TextCapitalization.sentences,
                                         autovalidateMode: AutovalidateMode.onUserInteraction,
                                         onChanged: (value) {
+                                          inversionSProvider.proveedor = value;
                                          
                                         },
                                         obscureText: false,
@@ -414,7 +416,7 @@ class _AgregarInversionSugeridaScreenState
                                         textCapitalization: TextCapitalization.sentences,
                                         autovalidateMode: AutovalidateMode.onUserInteraction,
                                         onChanged: (value) {
-                                          inversionSProvider.proveedor = value;
+                                         
                                         },
                                         obscureText: false,
                                         decoration: InputDecoration(

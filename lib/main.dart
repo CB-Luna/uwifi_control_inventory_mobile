@@ -1,4 +1,5 @@
 import 'package:bizpro_app/providers/catalog_provider.dart';
+import 'package:bizpro_app/providers/database_providers/cotizacion_controller.dart';
 import 'package:bizpro_app/providers/database_providers/inversion_sugerida_controller.dart';
 import 'package:bizpro_app/providers/sync_provider.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +57,10 @@ void main() async {
         ),
         ChangeNotifierProvider<InversionSugeridaController>(
           create: (context) => InversionSugeridaController(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<CotizacionController>(
+          create: (context) => CotizacionController(),
           lazy: false,
         ),
         ChangeNotifierProvider<SyncProvider>(

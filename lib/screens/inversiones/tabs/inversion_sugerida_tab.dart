@@ -39,7 +39,7 @@ with TickerProviderStateMixin {
     int totalProyecto = 0;
     widget.emprendimiento.productosEmp.forEach((element) {
       productosEmp.add(element);
-      totalProyecto += element.costo; 
+      totalProyecto += (element.costo * element.cantidad); 
     });
     return Align(
       alignment: const AlignmentDirectional(0, 0),
@@ -604,7 +604,7 @@ with TickerProviderStateMixin {
                                                           ),
                                                     ),
                                                     Text(
-                                                      "Proveedor Sugerido",
+                                                      productoEmp.proveedor,
                                                       style: AppTheme.of(context).bodyText1.override(
                                                             fontFamily: AppTheme.of(context).bodyText1Family,
                                                             color: AppTheme.of(context).secondaryText,

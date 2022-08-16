@@ -148,18 +148,20 @@ class JornadaController extends ChangeNotifier {
     print("Numero jornada: $numJornada");
     final nuevaJornada = Jornadas(
       numJornada: numJornada,
-      fechaRevision: fechaRevision!,
+      fechaRevision: DateTime.now(),
       );
     final nuevaTarea = Tareas(
       tarea: "Creación Jornada 4",
       descripcion: "Creación Jornada 4",
-      observacion: observacion,
+      observacion: "observacion",
       porcentaje: 1,
-      fechaRevision: fechaRevision!);
+      fechaRevision: DateTime.now());
+      print("Entro aca");
     final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
     nuevaTarea.statusSync.target = nuevoSyncTarea;
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     if (emprendimiento != null) {
+      print("Entro aca");
       final nuevoSyncJornada = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Jornada 1
       final nuevaInstruccion = Bitacora(instrucciones: 'syncAddJornada4', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       nuevaJornada.statusSync.target = nuevoSyncJornada;

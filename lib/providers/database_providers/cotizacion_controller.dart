@@ -3,9 +3,9 @@ import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/database/entitys.dart';
 
-class InversionSugeridaController extends ChangeNotifier {
+class CotizacionController extends ChangeNotifier {
 
-  List<ProductosEmp> productosEmp= [];
+  List<ProductosCot> productosCot= [];
 
   GlobalKey<FormState> productoEmpFormKey = GlobalKey<FormState>();
  
@@ -40,7 +40,7 @@ class InversionSugeridaController extends ChangeNotifier {
   }
 
   void add(int idEmprendimiento, int idFamilia) {
-    final nuevoProductoEmp = ProductosEmp(
+    final nuevoProductoCot = ProductosCot(
       nombre: nombre,
       descripcion: descripcion,
       imagen: imagen,
@@ -54,15 +54,15 @@ class InversionSugeridaController extends ChangeNotifier {
       if (emprendimiento != null && familia != null) {
         final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
         final nuevaInstruccion = Bitacora(instrucciones: 'syncAddCotizacion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-        nuevoProductoEmp.statusSync.target = nuevoSync;
-        nuevoProductoEmp.emprendimientos.target = emprendimiento;
-        nuevoProductoEmp.familiaInversion.target = familia;
-        nuevoProductoEmp.bitacora.add(nuevaInstruccion);
-        emprendimiento.productosEmp.add(nuevoProductoEmp);
+        nuevoProductoCot.statusSync.target = nuevoSync;
+        nuevoProductoCot.emprendimientos.target = emprendimiento;
+        nuevoProductoCot.familiaInversion.target = familia;
+        nuevoProductoCot.bitacora.add(nuevaInstruccion);
+        emprendimiento.productosCot.add(nuevoProductoCot);
         dataBase.emprendimientosBox.put(emprendimiento);
         // dataBase.emprendedoresBox.put(nuevoEmprendedor);
-        productosEmp.add(nuevoProductoEmp);
-        print('ProductoEmp agregado exitosamente');
+        productosCot.add(nuevoProductoCot);
+        print('ProductoCot agregado exitosamente');
         clearInformation();
         notifyListeners();
       }

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bizpro_app/screens/inversiones/tabs/cotizacion_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
@@ -152,7 +153,7 @@ class _InversionScreenState extends State<InversionScreen>
                                   child: TabBarView(
                                     children: [
                                       InversionSugeridaTab(emprendimiento: widget.emprendimiento),
-                                      InversionSugeridaTab(emprendimiento: widget.emprendimiento),
+                                      CotizacionTab(emprendimiento: widget.emprendimiento),
                                     ],
                                   ),
                                 ),

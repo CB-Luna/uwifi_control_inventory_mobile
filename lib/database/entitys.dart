@@ -28,6 +28,8 @@ class Emprendimientos {
   @Backlink()
   final productosEmp = ToMany<ProductosEmp>();
   @Backlink()
+  final productosCot = ToMany<ProductosCot>();
+  @Backlink()
   final consultorias = ToMany<Consultorias>();
   
   Emprendimientos({
@@ -66,6 +68,8 @@ class Bitacora{
   final jornadas = ToMany<Jornadas>();
   @Backlink()
   final productosEmp = ToMany<ProductosEmp>();
+  @Backlink()
+  final productosCot = ToMany<ProductosCot>();
   
   Bitacora({
     this.id = 0,
@@ -432,6 +436,7 @@ class ProductosEmp {
   int cantidad;
   DateTime fechaRegistro;
   bool archivado;
+  String proveedor;
   @Unique()
   String? idDBR;
   final statusSync = ToOne<StatusSync>();
@@ -452,7 +457,46 @@ class ProductosEmp {
     required this.cantidad,
     DateTime? fechaRegistro,
     this.archivado = false,
+    required this.proveedor,
     this.idDBR,
+    }): fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+
+}
+
+@Entity()
+class ProductosCot {
+  int id;
+  String nombre;
+  String descripcion;
+  String imagen;
+  int costo;
+  int precioVenta;
+  int cantidad;
+  DateTime fechaRegistro;
+  bool archivado;
+  String proveedor;
+  @Unique()
+  String? idDBR;
+  final statusSync = ToOne<StatusSync>();
+  final emprendimientos = ToOne<Emprendimientos>();
+  final familiaInversion = ToOne<FamiliaInversion>();
+  final unidadMedida = ToOne<UnidadMedida>();
+  final bitacora = ToMany<Bitacora>();
+
+  ProductosCot({
+    this.id = 0,
+    required this.nombre,
+    required this.descripcion,
+    required this.imagen,
+    required this.costo,
+    required this.precioVenta,
+    required this.cantidad,
+    DateTime? fechaRegistro,
+    this.archivado = false,
+    this.idDBR,
+    required this.proveedor,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -791,6 +835,8 @@ class StatusSync {
   final prioridadesEmp = ToMany<PrioridadEmp>();
   @Backlink()
   final productosEmp = ToMany<ProductosEmp>();
+  @Backlink()
+  final productosCot = ToMany<ProductosCot>();
   @Backlink()
   final familiasInversion = ToMany<FamiliaInversion>();
   @Backlink()

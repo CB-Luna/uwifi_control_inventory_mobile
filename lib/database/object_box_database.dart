@@ -21,6 +21,7 @@ class ObjectBoxDatabase {
   late final Box<FamiliaInversion> familiaInversionBox;
   late final Box<CatalogoProyecto> catalogoProyectoBox;
   late final Box<ProductosEmp> productosEmpBox;
+  late final Box<ProductosCot> productosCotBox;
   late final Box<UnidadMedida> unidadesMedidaBox;
 
   ObjectBoxDatabase._create(this.store) {
@@ -41,6 +42,7 @@ class ObjectBoxDatabase {
     familiaInversionBox = Box<FamiliaInversion>(store);
     catalogoProyectoBox = Box<CatalogoProyecto>(store);
     productosEmpBox = Box<ProductosEmp>(store);
+    productosCotBox = Box<ProductosCot>(store);
     unidadesMedidaBox = Box<UnidadMedida>(store);
   }
 

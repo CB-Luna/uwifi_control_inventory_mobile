@@ -1000,6 +1000,7 @@ class _DetalleEmprendimientoScreenState
                                 if (widget.emprendimiento.emprendedor.target != null) {
                                   if (widget.emprendimiento.jornadas.isNotEmpty) {
                                   final int numJornada = int.parse(widget.emprendimiento.jornadas.last.numJornada);
+                                  print(numJornada);
                                   if (numJornada < 4) {
                                     switch (numJornada) {
                                       case 1:
