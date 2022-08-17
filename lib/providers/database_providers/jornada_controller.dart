@@ -117,7 +117,7 @@ class JornadaController extends ChangeNotifier {
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     //Se recupera el tipo proyecto y proyecto
     final catalogoProyecto = dataBase.catalogoProyectoBox.get(idCatalogoProyecto);
-    if (emprendimiento != null) {
+    if (emprendimiento != null && catalogoProyecto != null) {
       final nuevoSyncJornada = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Jornada 3
       final nuevaInstruccion = Bitacora(instrucciones: 'syncAddJornada3', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       nuevaJornada.statusSync.target = nuevoSyncJornada;
@@ -153,7 +153,7 @@ class JornadaController extends ChangeNotifier {
     final nuevaTarea = Tareas(
       tarea: "Creación Jornada 4",
       descripcion: "Creación Jornada 4",
-      observacion: "observacion",
+      observacion: observacion,
       porcentaje: 1,
       fechaRevision: DateTime.now());
       print("Entro aca");

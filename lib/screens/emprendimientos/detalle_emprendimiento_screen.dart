@@ -163,12 +163,12 @@ class _DetalleEmprendimientoScreenState
                         final dueDate = date.add(Duration(days: 7));
 
                         final invoice = Invoice(
-                          supplier: Supplier(
+                          supplier: const Supplier(
                             name: 'Sarah Field',
                             address: 'Sarah Street 9, Beijing, China',
                             paymentInfo: 'https://paypal.me/sarahfieldzz',
                           ),
-                          customer: Customer(
+                          customer: const Customer(
                             name: 'Apple Inc.',
                             address: 'Apple Street, Cupertino, CA 95014',
                           ),
@@ -577,7 +577,7 @@ class _DetalleEmprendimientoScreenState
                                           },
                                           child: Container(
                                             width: double.infinity,
-                                            height: jornada.numJornada == "3" ? 130 : 100,
+                                            height: 100,
                                             decoration: BoxDecoration(
                                               color: const Color(0xFF1F68CB),
                                               boxShadow: const [
@@ -658,54 +658,6 @@ class _DetalleEmprendimientoScreenState
                                                         ),
                                                   ),
                                                 ),
-                                                jornada.numJornada == "3" ?
-                                                FFButtonWidget(
-                                                          onPressed:
-                                                              () async {
-                                                            await Navigator
-                                                                .push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        InversionScreen(emprendimiento: widget.emprendimiento),
-                                                              ),
-                                                            );
-                                                          },
-                                                          text: 'Inversión',
-                                                          options:
-                                                              FFButtonOptions(
-                                                            width: 150,
-                                                            height: 35,
-                                                            color: AppTheme
-                                                                    .of(context)
-                                                                .secondaryText,
-                                                            textStyle:
-                                                                AppTheme.of(
-                                                                        context)
-                                                                    .subtitle2
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          AppTheme.of(context).subtitle2Family,
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          15,
-                                                                    ),
-                                                            borderSide:
-                                                                const BorderSide(
-                                                              color: Colors
-                                                                  .transparent,
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8),
-                                                          ),
-                                                        )
-                                                :
-                                                Container(),
                                               ],
                                             ),
                                           ),
@@ -1091,15 +1043,30 @@ class _DetalleEmprendimientoScreenState
                                 if (widget.emprendimiento.jornadas.isNotEmpty) {
                                   final int numJornada = int.parse(widget.emprendimiento.jornadas.last.numJornada);
                                 if (numJornada == 4) {
-                                  await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          AgregarConsultoriaScreen(
-                                        emprendimiento: widget.emprendimiento,
+                                  if (widget.emprendimiento.consultorias.isNotEmpty) {
+                                    final int numConsultoria = widget.emprendimiento.consultorias.toList().length;
+                                    await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            AgregarConsultoriaScreen(
+                                          emprendimiento: widget.emprendimiento, 
+                                          numConsultoria: numConsultoria + 1,
+                                        ),
                                       ),
-                                    ),
-                                  );
+                                    );
+                                  } else {
+                                    await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            AgregarConsultoriaScreen(
+                                          emprendimiento: widget.emprendimiento, 
+                                          numConsultoria: 1,
+                                        ),
+                                      ),
+                                    );
+                                  }
                                 } 
                                 else{
                                   snackbarKey.currentState
@@ -1139,17 +1106,14 @@ class _DetalleEmprendimientoScreenState
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             InkWell(
-                              onTap: () {
-                                // await Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) =>
-                                //         InversionWidget(
-                                //       infoEmprendimiento:
-                                //           widget.proyectoDocRef,
-                                //     ),
-                                //   ),
-                                // );
+                              onTap: () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        InversionScreen(emprendimiento: widget.emprendimiento),
+                                  ),
+                                );
                               },
                               child: const Icon(
                                 Icons.stacked_line_chart_rounded,

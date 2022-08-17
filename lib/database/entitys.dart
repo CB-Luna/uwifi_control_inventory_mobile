@@ -531,20 +531,19 @@ class FamiliaInversion {
 class Consultorias {
   int id;
   DateTime fechaRegistro;
-  List<String> documentos; //TODO preguntar que es un arraystring
+  List<String>? documentos; //TODO preguntar que es un arraystring
   @Unique()
   String? idDBR;
   final emprendimiento = ToOne<Emprendimientos>();
   final areaCirculo = ToOne<AreaCirculo>();
   final ambitoConsultoria = ToOne<AmbitoConsultoria>();
   final statusSync = ToOne<StatusSync>();
-  final bitacora = ToOne<Bitacora>();
-  @Backlink()
-  final tareas = ToMany<Tareas>();
+  final bitacora = ToMany<Bitacora>();
+  final tarea = ToOne<Tareas>();
   Consultorias({
     this.id = 0,
     DateTime? fechaRegistro,
-    required this.documentos,
+    this.documentos,
     this.idDBR,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 

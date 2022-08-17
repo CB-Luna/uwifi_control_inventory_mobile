@@ -126,6 +126,20 @@ class SyncProvider extends ChangeNotifier {
           } 
           }         
           break;
+        case "syncAddConsultoria":
+          print("Entro aqui");
+          final consultoriaToSync = getFirstConsultoria(dataBase.consultoriasBox.getAll(), instruccionesBitacora[i].id);
+          if(consultoriaToSync != null){
+            if(consultoriaToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
+            print("Entro aqui en el if");
+            break;
+          } else {
+            print("Entro aqui en el else");
+            
+            await syncAddConsultoria(consultoriaToSync);
+          } 
+          }         
+          break;
         default:
          break;
       }
@@ -180,6 +194,21 @@ class SyncProvider extends ChangeNotifier {
         for (var j = 0; j < jornadas[i].bitacora.length; j++) {
           if (jornadas[i].bitacora[j].id == idInstruccionesBitacora) {
             return jornadas[i];
+          } 
+        }
+      }
+    }
+    return null;
+  }
+  Consultorias? getFirstConsultoria(List<Consultorias> consultorias, int idInstruccionesBitacora)
+  {
+    for (var i = 0; i < consultorias.length; i++) {
+      if (consultorias[i].bitacora.isEmpty) {
+
+      } else {
+        for (var j = 0; j < consultorias[i].bitacora.length; j++) {
+          if (consultorias[i].bitacora[j].id == idInstruccionesBitacora) {
+            return consultorias[i];
           } 
         }
       }
@@ -367,7 +396,100 @@ class SyncProvider extends ChangeNotifier {
           return true;
       }
       } catch (e) {
-        print('ERROR - function syncAddJornada(): $e');
+        print('ERROR - function syncAddJornada3(): $e');
+        return false;
+      }
+    
+    return null;
+}
+//TODO Preguntar como asociamos las tareas con la consultoria en el backedn, y cambiar la relación
+  Future<bool?> syncAddConsultoria(Consultorias consultoria) async {
+    print("Estoy en syncAddConsultoria");
+        final tareaToSync = dataBase.tareasBox.query(Tareas_.id.equals(consultoria.tarea.target!.id)).build().findUnique();
+        try {
+        //Primero creamos las tareas asociadas a la consultoria
+        if (tareaToSync != null) {  
+          print("Datos");
+          print(tareaToSync.tarea);
+          print(tareaToSync.descripcion);
+          print(tareaToSync.fechaRevision.toUtc().toString());
+          print(tareaToSync.observacion);
+          print(tareaToSync.porcentaje.toString());
+          final recordTarea = await client.records.create('tareas', body: {
+            "tarea": tareaToSync.tarea,
+            "descripcion": tareaToSync.descripcion,
+            "observacion": tareaToSync.observacion,
+            "porcentaje": tareaToSync.porcentaje,
+            "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
+            "id_status_sync_fk": "HoI36PzYw1wtbO1"
+          });
+          if (recordTarea.id.isNotEmpty) {
+          //Se actualiza el estado de la tarea
+          String idDBRTarea = recordTarea.id;
+          final statusSyncTarea = dataBase.statusSyncBox.query(StatusSync_.id.equals(tareaToSync.statusSync.target!.id)).build().findUnique();
+          if (statusSyncTarea != null) {
+            statusSyncTarea.status = "HoI36PzYw1wtbO1";
+            dataBase.statusSyncBox.put(statusSyncTarea);
+            print("Se hace el conteo de la tabla statusSync");
+            print(dataBase.statusSyncBox.count());
+            print("Actualizacion de estado de la Tarea");
+          }
+          //Se recupera el idDBR de la tarea
+          final updateTarea = dataBase.tareasBox.query(Tareas_.id.equals(tareaToSync.id)).build().findUnique();
+          if (updateTarea != null) {
+            updateTarea.idDBR = idDBRTarea;
+            dataBase.tareasBox.put(updateTarea);
+            print("Se recupera el idDBR de la Tarea");
+          }
+          }
+
+          //Segundo actualizamos el ambito de la consultoria
+          //   final record = await client.records.update('emprendimientos', consultoria.idDBR.toString(), body: {
+          //     "id_nombre_proyecto_fk": consultoria.catalogoProyecto.target!.idDBR,
+          //     "id_status_sync_fk": "HoI36PzYw1wtbO1",
+          //   }); 
+          //   if (record.id.isNotEmpty) {
+          //   print("Consultoria updated succesfully");
+          //   var updateEmprendimiento = dataBase.emprendimientosBox.get(consultoria.id);
+          //   if (updateEmprendimiento != null) {
+          //     final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendimiento.statusSync.target!.id)).build().findUnique();
+          //     if (statusSync != null) {
+          //       statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
+          //       dataBase.statusSyncBox.put(statusSync);
+          //   }
+          // }
+          // }
+
+          //Tercero creamos la consultoria
+          final recordConsultoria = await client.records.create('consultorias', body: {
+            "id_emprendimiento_fk": consultoria.emprendimiento.target!.idDBR,
+            "id_tarea_fk": recordTarea.id,
+            "id_status_sync_fk": "HoI36PzYw1wtbO1",
+          });
+
+          if (recordConsultoria.id.isNotEmpty) {
+            //Se actualiza el estado de la consultoria
+            String idDBRConsultoria = recordConsultoria.id;
+            final statusSyncConsultoria = dataBase.statusSyncBox.query(StatusSync_.id.equals(consultoria.statusSync.target!.id)).build().findUnique();
+            if (statusSyncConsultoria != null) {
+              statusSyncConsultoria.status = "HoI36PzYw1wtbO1";
+              dataBase.statusSyncBox.put(statusSyncConsultoria);
+              print("Se hace el conteo de la tabla statusSync");
+              print(dataBase.statusSyncBox.count());
+              print("Actualizacion de estado de la Consultoria");
+            }
+            //Se recupera el idDBR de la consultoria
+            final updateConsultoria = dataBase.consultoriasBox.query(Consultorias_.id.equals(consultoria.id)).build().findUnique();
+            if (updateConsultoria != null) {
+              updateConsultoria.idDBR = idDBRConsultoria;
+              dataBase.consultoriasBox.put(updateConsultoria);
+              print("Se recupera el idDBR de la consultoria");
+            }
+          }
+          return true;
+      }
+      } catch (e) {
+        print('ERROR - function syncAddConsultoria(): $e');
         return false;
       }
     

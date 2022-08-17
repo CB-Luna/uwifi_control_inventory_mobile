@@ -296,7 +296,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(12, 5075853906068129300),
       name: 'Consultorias',
-      lastPropertyId: const IdUid(13, 5759260250882224252),
+      lastPropertyId: const IdUid(14, 9041506210264243534),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -335,13 +335,6 @@ final _entities = <ModelEntity>[
             flags: 2080,
             indexId: const IdUid(60, 7031508221537022440)),
         ModelProperty(
-            id: const IdUid(11, 4915654780717530161),
-            name: 'bitacoraId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(77, 8309315416341765269),
-            relationTarget: 'Bitacora'),
-        ModelProperty(
             id: const IdUid(12, 5823608424634900217),
             name: 'areaCirculoId',
             type: 11,
@@ -354,12 +347,22 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(100, 8661572209442876177),
-            relationTarget: 'AmbitoConsultoria')
+            relationTarget: 'AmbitoConsultoria'),
+        ModelProperty(
+            id: const IdUid(14, 9041506210264243534),
+            name: 'tareaId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(144, 8396189901550464501),
+            relationTarget: 'Tareas')
       ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[
-        ModelBacklink(name: 'tareas', srcEntity: 'Tareas', srcField: '')
-      ]),
+      relations: <ModelRelation>[
+        ModelRelation(
+            id: const IdUid(25, 650409796119095799),
+            name: 'bitacora',
+            targetId: const IdUid(27, 1774905738150923512))
+      ],
+      backlinks: <ModelBacklink>[]),
   ModelEntity(
       id: const IdUid(14, 4450301343199944733),
       name: 'Vendidos',
@@ -1909,8 +1912,8 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(46, 8904698342427392465),
-      lastIndexId: const IdUid(143, 3316376086092469001),
-      lastRelationId: const IdUid(24, 7320385007667993449),
+      lastIndexId: const IdUid(144, 8396189901550464501),
+      lastRelationId: const IdUid(25, 650409796119095799),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
         1366246136666677579,
@@ -1966,7 +1969,8 @@ ModelDefinition getObjectBoxModel() {
         8154602671126157109,
         7569304066565191687,
         5035905392252920596,
-        7510634053082529540
+        7510634053082529540,
+        8309315416341765269
       ],
       retiredPropertyUids: const [
         7079790605743243388,
@@ -2138,7 +2142,8 @@ ModelDefinition getObjectBoxModel() {
         3770705136894608488,
         1431194771886016233,
         6126515006975107011,
-        3911938135844163773
+        3911938135844163773,
+        4915654780717530161
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -2436,33 +2441,34 @@ ModelDefinition getObjectBoxModel() {
         toOneRelations: (Consultorias object) => [
               object.emprendimiento,
               object.statusSync,
-              object.bitacora,
               object.areaCirculo,
-              object.ambitoConsultoria
+              object.ambitoConsultoria,
+              object.tarea
             ],
-        toManyRelations: (Consultorias object) => {
-              RelInfo<Tareas>.toOneBacklink(12, object.id,
-                  (Tareas srcObject) => srcObject.consultoria): object.tareas
-            },
+        toManyRelations: (Consultorias object) =>
+            {RelInfo<Consultorias>.toMany(25, object.id): object.bitacora},
         getId: (Consultorias object) => object.id,
         setId: (Consultorias object, int id) {
           object.id = id;
         },
         objectToFB: (Consultorias object, fb.Builder fbb) {
-          final documentosOffset = fbb.writeList(
-              object.documentos.map(fbb.writeString).toList(growable: false));
+          final documentosOffset = object.documentos == null
+              ? null
+              : fbb.writeList(object.documentos!
+                  .map(fbb.writeString)
+                  .toList(growable: false));
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(14);
+          fbb.startTable(15);
           fbb.addInt64(0, object.id);
           fbb.addOffset(2, documentosOffset);
           fbb.addInt64(3, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addInt64(6, object.emprendimiento.targetId);
           fbb.addInt64(7, object.statusSync.targetId);
           fbb.addOffset(9, idDBROffset);
-          fbb.addInt64(10, object.bitacora.targetId);
           fbb.addInt64(11, object.areaCirculo.targetId);
           fbb.addInt64(12, object.ambitoConsultoria.targetId);
+          fbb.addInt64(13, object.tarea.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -2477,7 +2483,7 @@ ModelDefinition getObjectBoxModel() {
               documentos: const fb.ListReader<String>(
                       fb.StringReader(asciiOptimization: true),
                       lazy: false)
-                  .vTableGet(buffer, rootOffset, 8, []),
+                  .vTableGetNullable(buffer, rootOffset, 8),
               idDBR: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 22));
           object.emprendimiento.targetId =
@@ -2486,20 +2492,19 @@ ModelDefinition getObjectBoxModel() {
           object.statusSync.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
           object.statusSync.attach(store);
-          object.bitacora.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
-          object.bitacora.attach(store);
           object.areaCirculo.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0);
           object.areaCirculo.attach(store);
           object.ambitoConsultoria.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0);
           object.ambitoConsultoria.attach(store);
+          object.tarea.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0);
+          object.tarea.attach(store);
           InternalToManyAccess.setRelInfo(
-              object.tareas,
+              object.bitacora,
               store,
-              RelInfo<Tareas>.toOneBacklink(
-                  12, object.id, (Tareas srcObject) => srcObject.consultoria),
+              RelInfo<Consultorias>.toMany(25, object.id),
               store.box<Consultorias>());
           return object;
         }),
@@ -3118,8 +3123,7 @@ ModelDefinition getObjectBoxModel() {
               RelInfo<Tareas>.toOneBacklink(
                       16, object.id, (Tareas srcObject) => srcObject.bitacora):
                   object.tareas,
-              RelInfo<Consultorias>.toOneBacklink(11, object.id,
-                      (Consultorias srcObject) => srcObject.bitacora):
+              RelInfo<Consultorias>.toManyBacklink(25, object.id):
                   object.consultorias,
               RelInfo<Usuarios>.toOneBacklink(17, object.id,
                   (Usuarios srcObject) => srcObject.bitacora): object.usuarios,
@@ -3180,8 +3184,7 @@ ModelDefinition getObjectBoxModel() {
           InternalToManyAccess.setRelInfo(
               object.consultorias,
               store,
-              RelInfo<Consultorias>.toOneBacklink(11, object.id,
-                  (Consultorias srcObject) => srcObject.bitacora),
+              RelInfo<Consultorias>.toManyBacklink(25, object.id),
               store.box<Bitacora>());
           InternalToManyAccess.setRelInfo(
               object.usuarios,
@@ -4384,18 +4387,22 @@ class Consultorias_ {
   static final idDBR =
       QueryStringProperty<Consultorias>(_entities[3].properties[5]);
 
-  /// see [Consultorias.bitacora]
-  static final bitacora =
-      QueryRelationToOne<Consultorias, Bitacora>(_entities[3].properties[6]);
-
   /// see [Consultorias.areaCirculo]
   static final areaCirculo =
-      QueryRelationToOne<Consultorias, AreaCirculo>(_entities[3].properties[7]);
+      QueryRelationToOne<Consultorias, AreaCirculo>(_entities[3].properties[6]);
 
   /// see [Consultorias.ambitoConsultoria]
   static final ambitoConsultoria =
       QueryRelationToOne<Consultorias, AmbitoConsultoria>(
-          _entities[3].properties[8]);
+          _entities[3].properties[7]);
+
+  /// see [Consultorias.tarea]
+  static final tarea =
+      QueryRelationToOne<Consultorias, Tareas>(_entities[3].properties[8]);
+
+  /// see [Consultorias.bitacora]
+  static final bitacora =
+      QueryRelationToMany<Consultorias, Bitacora>(_entities[3].relations[0]);
 }
 
 /// [Vendidos] entity fields to define ObjectBox queries.
