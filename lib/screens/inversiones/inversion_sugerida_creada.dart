@@ -36,7 +36,7 @@ class _InversionSugeridaCreadaState extends State<InversionSugeridaCreada> {
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                     child: Text(
-                      'Inversión\nCreada!',
+                      '¡Inversión\nCreada!',
                       textAlign: TextAlign.center,
                       style: AppTheme.of(context).bodyText1.override(
                             fontFamily: 'Poppins',

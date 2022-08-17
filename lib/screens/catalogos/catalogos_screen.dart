@@ -1,42 +1,37 @@
 import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:lottie/lottie.dart';
-
+import 'package:bizpro_app/providers/catalog_provider.dart';
+import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
 import 'package:bizpro_app/providers/sync_provider.dart';
 
-import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
-class SincronizacionScreen extends StatefulWidget {
-  const SincronizacionScreen({Key? key}) : super(key: key);
+class CatalogosScreen extends StatefulWidget {
+  const CatalogosScreen({Key? key}) : super(key: key);
 
   @override
-  State<SincronizacionScreen> createState() => _SincronizacionScreenState();
+  State<CatalogosScreen> createState() => _CatalogosScreenState();
 }
 
-class _SincronizacionScreenState extends State<SincronizacionScreen> {
+class _CatalogosScreenState extends State<CatalogosScreen> {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      setState(() {
-        context.read<SyncProvider>().executeInstrucciones(dataBase.bitacoraBox
-            .getAll()
-            .toList()
-            .where((element) => element.usuario == prefs.getString("userId")!)
-            .toList());
+      setState(()  {
+        context.read<CatalogProvider>().getCatalogos();
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final syncProvider = Provider.of<SyncProvider>(context);
+    final catalogoProvider = Provider.of< CatalogProvider>(context);
     return Scaffold(
       backgroundColor: const Color(0xFFDDEEF8),
       body: GestureDetector(
@@ -73,7 +68,7 @@ class _SincronizacionScreenState extends State<SincronizacionScreen> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 40, 0, 0),
                             child: Text(
-                              'Sincronizando!',
+                              '¡Catálogos descargados!',
                               textAlign: TextAlign.center,
                               style: AppTheme.of(context).bodyText1.override(
                                     fontFamily:
@@ -87,9 +82,9 @@ class _SincronizacionScreenState extends State<SincronizacionScreen> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 10, 0, 0),
                             child: Text(
-                              'Los datos de los emprendimientos se\nestán sincronizando, por favor, no apague\nla conexión Wi-Fi o datos móviles hasta \nque se complete el proceso.',
+                              'Los catálogos de la aplicación se\nestán descargando, por favor, no apague\nla conexión Wi-Fi o datos móviles hasta \nque se complete el proceso.\nEl proceso puede tardar algunos minutos.',
                               textAlign: TextAlign.center,
-                              maxLines: 4,
+                              maxLines: 5,
                               style: AppTheme.of(context).bodyText1.override(
                                     fontFamily:
                                         AppTheme.of(context).bodyText1Family,
@@ -99,11 +94,11 @@ class _SincronizacionScreenState extends State<SincronizacionScreen> {
                                   ),
                             ),
                           ),
-                          syncProvider.procesocargando
+                          catalogoProvider.procesocargando
                               ? Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 70, 0, 0),
-                                child: getProgressIndicatorAnimated("Sincronizando..."),
+                                child: getProgressIndicatorAnimated("Descargando..."),
                               )
                               : Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
@@ -118,7 +113,7 @@ class _SincronizacionScreenState extends State<SincronizacionScreen> {
                                   ),
                                 ),
                           Visibility(
-                            visible: syncProvider.procesoterminado,
+                            visible: catalogoProvider.procesoterminado,
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 100, 0, 0),
@@ -131,7 +126,7 @@ class _SincronizacionScreenState extends State<SincronizacionScreen> {
                                           const EmprendimientosScreen(),
                                     ),
                                   );
-                                  syncProvider.procesoTerminado(false);
+                                  catalogoProvider.procesoTerminado(false);
                                 },
                                 text: 'Listo',
                                 options: FFButtonOptions(

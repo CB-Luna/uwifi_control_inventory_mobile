@@ -58,6 +58,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 builder: (_, AsyncSnapshot<List> snapshot) {
                   if (!snapshot.hasData) {
                     return Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
                       color: Colors.transparent,
                       child: Builder(
                         builder: (context) => Image.asset(

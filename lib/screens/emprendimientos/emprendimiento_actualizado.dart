@@ -34,7 +34,7 @@ class _EmprendimientoActualizadoState extends State<EmprendimientoActualizado> {
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                     child: Text(
-                      'Emprendimiento\nActualizado!',
+                      '¡Emprendimiento\nActualizado!',
                       textAlign: TextAlign.center,
                       style: AppTheme.of(context).bodyText1.override(
                             fontFamily: 'Poppins',

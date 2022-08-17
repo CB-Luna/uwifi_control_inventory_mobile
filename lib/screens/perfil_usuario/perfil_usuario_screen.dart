@@ -1,4 +1,5 @@
 import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/screens/catalogos/catalogos_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -303,12 +304,15 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                     const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 44),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      // syncProvider.procesoCargando(true);
-                      // syncProvider.procesoTerminado(false);
-                      if (dataBase.estadosBox.isEmpty() || 
-                          dataBase.municipiosBox.isEmpty() || dataBase.comunidadesBox.isEmpty()) {
-                          await catalogosProvider.getCatalogos();
-                      }     
+                      catalogosProvider.procesoCargando(true);
+                      catalogosProvider.procesoTerminado(false);
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              const CatalogosScreen(),
+                        ),
+                      );  
                     },
                     text: 'Descargar Catálogos',
                     options: FFButtonOptions(

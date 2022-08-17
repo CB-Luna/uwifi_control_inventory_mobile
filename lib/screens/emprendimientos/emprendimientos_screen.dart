@@ -155,7 +155,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                     15, 0, 0, 0),
                                 child: Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.70,
+                                      MediaQuery.of(context).size.width * 0.65,
                                   height: 50,
                                   decoration: BoxDecoration(
                                     color: const Color(0x49FFFFFF),

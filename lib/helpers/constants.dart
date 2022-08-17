@@ -1,7 +1,9 @@
-import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
 import 'package:flutter/material.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:pocketbase/pocketbase.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
 
 const String baseUrl = 'https://pocketbase.cbluna-dev.com';
 
@@ -23,6 +25,42 @@ var telefonoFormat = MaskTextInputFormatter(
     );
 
 //Animations
+
+Column getProgressIndicatorAnimated(String message) {
+  return Column(
+    mainAxisSize: MainAxisSize.max,
+    children: [
+      SpinKitCircle(
+        size: 200,
+        itemBuilder: (context, index) {
+          final colors = [
+            const Color(0xFF221573),
+            const Color(0xffB6D9F9)
+          ];
+          final color = colors[index % colors.length];
+          return DecoratedBox(
+            decoration:
+                BoxDecoration(color: color, shape: BoxShape.rectangle),
+          );
+        },
+      ),
+      const SizedBox(height: 25,),
+      SizedBox(
+        child: DefaultTextStyle(
+          style: const TextStyle(
+            fontFamily: 'Work Sans',
+            color: Color(0xFF040404),
+            fontSize: 20,
+          ),
+          child:
+              AnimatedTextKit(repeatForever: true, animatedTexts: [
+            FadeAnimatedText(message),
+          ]),
+        ),
+      ),
+    ],
+  );
+}
 
 final animationsMap = {
     'containerOnPageLoadAnimation1': AnimationInfo(
