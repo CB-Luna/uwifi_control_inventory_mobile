@@ -92,7 +92,7 @@ class Emprendedores {
   DateTime nacimiento;
   String curp;
   String integrantesFamilia; //TODO preguntar por el tipo array
-  String telefono;
+  String? telefono;
   String comentarios;
   DateTime fechaRegistro;
   @Unique()
@@ -110,7 +110,7 @@ class Emprendedores {
     required this.nacimiento,
     required this.curp,
     required this.integrantesFamilia,
-    required this.telefono,
+    this.telefono,
     required this.comentarios,
     DateTime? fechaRegistro,
     this.idDBR,

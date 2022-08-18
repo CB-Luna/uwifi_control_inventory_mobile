@@ -332,7 +332,6 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                                       });
                                     },
                                     currentTime: getCurrentTimestamp,
-                                    minTime: getCurrentTimestamp,
                                   );
                                   
                                 },

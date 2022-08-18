@@ -2712,7 +2712,9 @@ ModelDefinition getObjectBoxModel() {
           final curpOffset = fbb.writeString(object.curp);
           final integrantesFamiliaOffset =
               fbb.writeString(object.integrantesFamilia);
-          final telefonoOffset = fbb.writeString(object.telefono);
+          final telefonoOffset = object.telefono == null
+              ? null
+              : fbb.writeString(object.telefono!);
           final comentariosOffset = fbb.writeString(object.comentarios);
           final imagenOffset = fbb.writeString(object.imagen);
           final apellidosOffset = fbb.writeString(object.apellidos);
@@ -2755,7 +2757,7 @@ ModelDefinition getObjectBoxModel() {
               integrantesFamilia: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 16, ''),
               telefono: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 18, ''),
+                  .vTableGetNullable(buffer, rootOffset, 18),
               comentarios:
                   const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0)),

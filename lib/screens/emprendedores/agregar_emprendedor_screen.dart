@@ -684,7 +684,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                   },
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    labelText: 'Numero telefónico*',
+                                    labelText: 'Numero telefónico',
                                     labelStyle:
                                         AppTheme.of(context).title3.override(
                                               fontFamily: 'Montserrat',
@@ -728,13 +728,6 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                     LengthLimitingTextInputFormatter(12),
                                     telefonoFormat
                                   ],
-                                  validator: (value) {
-                                    return (telefonoCharacters
-                                                .hasMatch(value ?? '') &&
-                                            value?.length == 12)
-                                        ? null
-                                        : 'Para continuar, ingrese un número telefónico';
-                                  },
                                 ),
                               ),
                               Padding(

@@ -328,7 +328,7 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                                       });
                                     },
                                     currentTime: getCurrentTimestamp,
-                                    minTime: getCurrentTimestamp,
+                                    // minTime: getCurrentTimestamp.subtract(const Duration(days: 7)),
                                   );
                                   
                                 },
