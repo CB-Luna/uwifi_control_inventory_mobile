@@ -562,7 +562,8 @@ class _EditarEmprendimientoScreenState
                                     0, 5, 0, 10),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    if (nombreController.text != widget.emprendimiento.nombre || 
+                                    if (newImagen != widget.emprendimiento.imagen ||
+                                        nombreController.text != widget.emprendimiento.nombre || 
                                         descController.text != widget.emprendimiento.descripcion ||
                                         nombreComunidad != widget.emprendimiento.comunidad.target!.nombre ||
                                         nombreMunicipio != widget.emprendimiento.comunidad.target!.municipios.target!.nombre ||

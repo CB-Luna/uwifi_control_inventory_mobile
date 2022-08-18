@@ -1,4 +1,5 @@
 import 'package:bizpro_app/database/entitys.dart';
+import 'package:bizpro_app/screens/emprendedores/detalle_emprendedor_screen.dart';
 import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
 import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
 import 'package:bizpro_app/util/util.dart';
@@ -394,14 +395,14 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       InkWell(
-                                        onTap: () {
-                                          // await Navigator.push(
-                                          //   context,
-                                          //   MaterialPageRoute(
-                                          //     builder: (context) =>
-                                          //         DetallesEmprendedorWidget(),
-                                          //   ),
-                                          // );
+                                        onTap: () async {
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DetallesEmprendedorScreen(emprendedor: emprendedor),
+                                            ),
+                                          );
                                         },
                                         child: ClipRRect(
                                             borderRadius:
@@ -463,7 +464,7 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                           children: [
                                             Expanded(
                                               child: Text(
-                                                emprendedor.comunidades.target
+                                                emprendedor.comunidad.target
                                                         ?.nombre ??
                                                     "SIN COMUNIDAD",
                                                 maxLines: 1,

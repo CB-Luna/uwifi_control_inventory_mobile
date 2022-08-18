@@ -1,3 +1,4 @@
+import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/helpers/globals.dart';
@@ -56,9 +57,10 @@ class EmprendedorController extends ChangeNotifier {
         final nuevaInstruccion = Bitacora(instrucciones: 'syncAddEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
         final comunidad = dataBase.comunidadesBox.get(idComunidad);
         if (comunidad != null) {
-          nuevoEmprendedor.comunidades.target = comunidad;
+          nuevoEmprendedor.comunidad.target = comunidad;
           nuevoEmprendedor.statusSync.target = nuevoSync;
           nuevoEmprendedor.bitacora.add(nuevaInstruccion);
+          nuevoEmprendedor.emprendimiento.target = emprendimiento;
           emprendimiento.emprendedor.target = nuevoEmprendedor;
           dataBase.emprendimientosBox.put(emprendimiento);
           // dataBase.emprendedoresBox.put(nuevoEmprendedor);
@@ -70,6 +72,32 @@ class EmprendedorController extends ChangeNotifier {
 
       // dataBase.emprendedoresBox.put(nuevoEmprendedor);
       // emprendedores.add(nuevoEmprendedor);
+  }
+
+  void update(int id, String newImagen, String newNombre, String newApellidos, String newCurp, 
+  String newIntegrantesFamilia, String newTelefono, String newComentarios, int idComunidad) {
+    var updateEmprendedor = dataBase.emprendedoresBox.get(id);
+    final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+    if (updateEmprendedor != null) {
+      updateEmprendedor.imagen = newImagen;
+      updateEmprendedor.nombre = newNombre;
+      updateEmprendedor.apellidos = newApellidos;
+      updateEmprendedor.curp = newCurp;
+      updateEmprendedor.integrantesFamilia = newIntegrantesFamilia;
+      updateEmprendedor.telefono =  newTelefono;
+      updateEmprendedor.comentarios =  newComentarios;
+      updateEmprendedor.comunidad.target = dataBase.comunidadesBox.get(idComunidad);
+      final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendedor.statusSync.target!.id)).build().findUnique();
+      if (statusSync != null) {
+        statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del emprendedor
+        dataBase.statusSyncBox.put(statusSync);
+      }
+      updateEmprendedor.bitacora.add(nuevaInstruccion);
+      dataBase.emprendedoresBox.put(updateEmprendedor);
+      print('Emprendimiento actualizado exitosamente');
+
+    }
+    notifyListeners();
   }
 
   void remove(Emprendedores emprendedor) {

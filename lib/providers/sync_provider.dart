@@ -1,16 +1,10 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
-
+import '../objectbox.g.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/helpers/globals.dart';
 
-import 'package:bizpro_app/models/response_post_emprendedor.dart';
 
-import 'package:http/http.dart' as http;
-
-import '../objectbox.g.dart';
 
 class SyncProvider extends ChangeNotifier {
   bool procesoterminado = false;
@@ -64,6 +58,23 @@ class SyncProvider extends ChangeNotifier {
               if (emprendimientoToSync.idDBR != null) {
                 print("Ya ha sido enviado al backend");
                 syncUpdateEmprendimiento(emprendimientoToSync);
+              } else {
+                print("No ha sido enviado al backend");
+              }
+            }   
+          }  
+          break;
+        case "syncUpdateEmprendedor":
+          final emprendedorToSync = getFirstEmprendedor(dataBase.emprendedoresBox.getAll(), instruccionesBitacora[i].id);
+          if(emprendedorToSync != null){
+            if(emprendedorToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
+              print("Entro aqui en el if");
+              break;
+            } else {
+              print("Entro aqui en el else");
+              if (emprendedorToSync.idDBR != null) {
+                print("Ya ha sido enviado al backend");
+                syncUpdateEmprendedor(emprendedorToSync);
               } else {
                 print("No ha sido enviado al backend");
               }
@@ -507,7 +518,7 @@ class SyncProvider extends ChangeNotifier {
           "nacimiento": "1995-06-21", //TODO Validar Formato Nacimiento
           "curp": emprendedor.curp,
           "integrantes_familia": int.parse(emprendedor.integrantesFamilia),
-          "id_comunidad_fk": emprendedor.comunidades.target!.idDBR,
+          "id_comunidad_fk": emprendedor.comunidad.target!.idDBR,
           "telefono": emprendedor.telefono,
           "comentarios": emprendedor.comentarios,
           "id_emprendimiento_fk": "",
@@ -705,6 +716,49 @@ return true;
     }
 
   } 
+
+  Future<bool?> syncUpdateEmprendedor(Emprendedores emprendedor) async {
+
+    print("Estoy en El syncUpdateEmprendedor");
+    try {
+      print("ID Emprendedor: ${emprendedor.idDBR}");
+
+      final record = await client.records.update('emprendedores', emprendedor.idDBR.toString(), body: {
+          "nombre_emprendedor": emprendedor.nombre,
+          "apellidos_emp": emprendedor.apellidos,
+          "nacimiento": "1995-06-21", //TODO Validar Formato Nacimiento
+          "curp": emprendedor.curp,
+          "integrantes_familia": int.parse(emprendedor.integrantesFamilia),
+          "id_comunidad_fk": emprendedor.comunidad.target!.idDBR,
+          "telefono": emprendedor.telefono,
+          "comentarios": emprendedor.comentarios,
+          "id_status_sync_fk": "HoI36PzYw1wtbO1",
+      }); 
+
+      if (record.id.isNotEmpty) {
+        print("Emprendedor updated succesfully");
+        var updateEmprendedor = dataBase.emprendedoresBox.get(emprendedor.id);
+        if (updateEmprendedor  != null) {
+          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendedor.statusSync.target!.id)).build().findUnique();
+          if (statusSync != null) {
+            statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendedor
+            dataBase.statusSyncBox.put(statusSync);
+          }
+        }
+      }
+      else{
+        return false;
+      }
+      return true;
+
+    } catch (e) {
+      print('ERROR - function syncUpdateEmprendedor(): $e');
+      return false;
+    }
+
+  } 
+
+
 void deleteBitacora() {
   dataBase.bitacoraBox.removeAll();
   notifyListeners();

@@ -97,7 +97,7 @@ class Emprendedores {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
-  final comunidades = ToOne<Comunidades>();
+  final comunidad = ToOne<Comunidades>();
   final emprendimiento = ToOne<Emprendimientos>();
   final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
