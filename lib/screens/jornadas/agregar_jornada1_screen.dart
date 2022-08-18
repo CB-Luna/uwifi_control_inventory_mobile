@@ -298,7 +298,7 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white,
+                                  fillColor: const Color(0x49FFFFFF),
                                 ),
                                 style: AppTheme.of(context)
                                     .title3
@@ -371,7 +371,7 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white,
+                                  fillColor: const Color(0x49FFFFFF),
                                 ),
                                 keyboardType: TextInputType.none,
                                 showCursor: false,
@@ -441,7 +441,7 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white,
+                                  fillColor: const Color(0x49FFFFFF),
                                 ),
                                 style: AppTheme.of(context)
                                     .title3

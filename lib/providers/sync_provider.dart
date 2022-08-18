@@ -507,7 +507,7 @@ class SyncProvider extends ChangeNotifier {
           "nacimiento": "1995-06-21", //TODO Validar Formato Nacimiento
           "curp": emprendedor.curp,
           "integrantes_familia": int.parse(emprendedor.integrantesFamilia),
-          "id_comunidad_fk": "dQq9FeC0o16Cdn9",
+          "id_comunidad_fk": emprendedor.comunidades.target!.idDBR,
           "telefono": emprendedor.telefono,
           "comentarios": emprendedor.comentarios,
           "id_emprendimiento_fk": "",

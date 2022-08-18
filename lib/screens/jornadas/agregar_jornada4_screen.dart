@@ -308,7 +308,7 @@ class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white,
+                                  fillColor: const Color(0x49FFFFFF),
                                 ),
                                 style: AppTheme.of(context)
                                     .title3
@@ -369,7 +369,7 @@ class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white,
+                                  fillColor: const Color(0x49FFFFFF),
                                 ),
                                 style: AppTheme.of(context)
                                     .title3

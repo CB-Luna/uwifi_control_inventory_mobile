@@ -1,5 +1,5 @@
 import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/screens/emprendedores/agregar_emprendedor_screen.dart';
+import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
 import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
 import 'package:bizpro_app/util/util.dart';
 import 'package:flutter/material.dart';

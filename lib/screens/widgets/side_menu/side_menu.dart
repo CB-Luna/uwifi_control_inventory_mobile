@@ -2,6 +2,7 @@ import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
+import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
 import 'package:bizpro_app/screens/sync/sincronizacion_screen.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_sincronizar_widget.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';

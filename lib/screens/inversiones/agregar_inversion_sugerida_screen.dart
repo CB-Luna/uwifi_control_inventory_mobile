@@ -188,7 +188,7 @@ class _AgregarInversionSugeridaScreenState
                                             color: Color(0xFF221573),
                                             size: 30,
                                           ),
-                                          fillColor: Colors.white,
+                                          fillColor: const Color(0x49FFFFFF),
                                           elevation: 2,
                                           borderColor: const Color(0xFF221573),
                                           borderWidth: 2,
@@ -254,7 +254,7 @@ class _AgregarInversionSugeridaScreenState
                                             borderRadius: BorderRadius.circular(12),
                                           ),
                                           filled: true,
-                                          fillColor: Colors.white,
+                                          fillColor: const Color(0x49FFFFFF),
                                         ),
                                         style: AppTheme.of(context)
                                             .title3
@@ -321,7 +321,7 @@ class _AgregarInversionSugeridaScreenState
                                             borderRadius: BorderRadius.circular(12),
                                           ),
                                           filled: true,
-                                          fillColor: Colors.white,
+                                          fillColor: const Color(0x49FFFFFF),
                                         ),
                                         style: AppTheme.of(context)
                                             .title3
@@ -388,7 +388,7 @@ class _AgregarInversionSugeridaScreenState
                                             borderRadius: BorderRadius.circular(12),
                                           ),
                                           filled: true,
-                                          fillColor: Colors.white,
+                                          fillColor: const Color(0x49FFFFFF),
                                         ),
                                         style: AppTheme.of(context)
                                             .title3
@@ -455,7 +455,7 @@ class _AgregarInversionSugeridaScreenState
                                             borderRadius: BorderRadius.circular(12),
                                           ),
                                           filled: true,
-                                          fillColor: Colors.white,
+                                          fillColor: const Color(0x49FFFFFF),
                                         ),
                                         style: AppTheme.of(context)
                                             .title3
@@ -507,7 +507,7 @@ class _AgregarInversionSugeridaScreenState
                                             color: Color(0xFF221573),
                                             size: 30,
                                           ),
-                                          fillColor: Colors.white,
+                                          fillColor: const Color(0x49FFFFFF),
                                           elevation: 2,
                                           borderColor: const Color(0xFF221573),
                                           borderWidth: 2,
@@ -572,7 +572,7 @@ class _AgregarInversionSugeridaScreenState
                                             borderRadius: BorderRadius.circular(12),
                                           ),
                                           filled: true,
-                                          fillColor: Colors.white,
+                                          fillColor: const Color(0x49FFFFFF),
                                         ),
                                         keyboardType: TextInputType.number,
                                         style: AppTheme.of(context)
@@ -641,7 +641,7 @@ class _AgregarInversionSugeridaScreenState
                                             borderRadius: BorderRadius.circular(12),
                                           ),
                                           filled: true,
-                                          fillColor: Colors.white,
+                                          fillColor: const Color(0x49FFFFFF),
                                         ),
                                         keyboardType: TextInputType.number,
                                         style: AppTheme.of(context)

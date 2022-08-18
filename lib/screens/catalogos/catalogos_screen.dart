@@ -68,7 +68,7 @@ class _CatalogosScreenState extends State<CatalogosScreen> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 40, 0, 0),
                             child: Text(
-                              '¡Catálogos descargados!',
+                              '¡Descargando catálogos!',
                               textAlign: TextAlign.center,
                               style: AppTheme.of(context).bodyText1.override(
                                     fontFamily:

@@ -73,7 +73,7 @@ class _SincronizacionScreenState extends State<SincronizacionScreen> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 40, 0, 0),
                             child: Text(
-                              'Sincronizando!',
+                              '¡Sincronizando!',
                               textAlign: TextAlign.center,
                               style: AppTheme.of(context).bodyText1.override(
                                     fontFamily:

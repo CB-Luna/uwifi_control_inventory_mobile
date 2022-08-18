@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bizpro_app/screens/emprendedores/agregar_emprendedor_screen.dart';
 import 'package:bizpro_app/screens/inversiones/inversion.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada4_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
@@ -23,7 +24,6 @@ import 'package:bizpro_app/screens/widgets/pdf/models/customer.dart';
 import 'package:bizpro_app/screens/widgets/pdf/models/invoice.dart';
 import 'package:bizpro_app/screens/widgets/pdf/models/supplier.dart';
 import 'package:bizpro_app/screens/consultorias/agregar_consultoria_screen.dart';
-import 'package:bizpro_app/screens/emprendedores/agregar_emprendedor_screen.dart';
 import 'package:bizpro_app/screens/emprendimientos/editar_emprendimiento.dart';
 
 class DetalleEmprendimientoScreen extends StatefulWidget {
@@ -412,6 +412,7 @@ class _DetalleEmprendimientoScreenState
                                               .bodyText1
                                               .override(
                                                 fontFamily: 'Poppins',
+                                                color: Colors.black,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                         ),

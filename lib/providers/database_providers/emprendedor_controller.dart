@@ -38,7 +38,7 @@ class EmprendedorController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void add(int idEmprendimiento) {
+  void add(int idEmprendimiento, int idComunidad) {
     final nuevoEmprendedor = Emprendedores(
       imagen: imagen,
       nombre: nombre, 
@@ -54,15 +54,18 @@ class EmprendedorController extends ChangeNotifier {
       if (emprendimiento != null) {
         final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
         final nuevaInstruccion = Bitacora(instrucciones: 'syncAddEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-        nuevoEmprendedor.comunidades.target = emprendimiento.comunidad.target;
-        nuevoEmprendedor.statusSync.target = nuevoSync;
-        nuevoEmprendedor.bitacora.add(nuevaInstruccion);
-        emprendimiento.emprendedor.target = nuevoEmprendedor;
-        dataBase.emprendimientosBox.put(emprendimiento);
-        // dataBase.emprendedoresBox.put(nuevoEmprendedor);
-        emprendedores.add(nuevoEmprendedor);
-        print('Emprendedor agregado exitosamente');
-        notifyListeners();
+        final comunidad = dataBase.comunidadesBox.get(idComunidad);
+        if (comunidad != null) {
+          nuevoEmprendedor.comunidades.target = comunidad;
+          nuevoEmprendedor.statusSync.target = nuevoSync;
+          nuevoEmprendedor.bitacora.add(nuevaInstruccion);
+          emprendimiento.emprendedor.target = nuevoEmprendedor;
+          dataBase.emprendimientosBox.put(emprendimiento);
+          // dataBase.emprendedoresBox.put(nuevoEmprendedor);
+          emprendedores.add(nuevoEmprendedor);
+          print('Emprendedor agregado exitosamente');
+          notifyListeners();
+        }
       }
 
       // dataBase.emprendedoresBox.put(nuevoEmprendedor);

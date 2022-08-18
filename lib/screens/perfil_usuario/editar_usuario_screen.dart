@@ -31,7 +31,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
   @override
   void initState() {
     super.initState();
-    textController = TextEditingController(text: widget.usuario.nombre);
+    textController = TextEditingController(text: "${widget.usuario.nombre} ${widget.usuario.apellidoP} ${widget.usuario.apellidoM}");
   }
 
   @override
@@ -55,7 +55,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                 image: DecorationImage(
                   fit: BoxFit.cover,
                   image: Image.asset(
-                    'assets/images/mesgbluegradient.jpeg',
+                    'assets/images/bglogin2.png',
                   ).image,
                 ),
               ),
@@ -66,7 +66,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.8,
                 decoration: const BoxDecoration(
-                  color: Color(0xFFF5F5F5),
+                  color: Color(0x554672FF),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(0),
                     bottomRight: Radius.circular(0),
@@ -86,7 +86,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                     width: MediaQuery.of(context).size.width,
                     height: 60,
                     decoration: BoxDecoration(
-                      color: const Color(0x49EEEEEE),
+                      color: const Color(0x554672FF),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Padding(
@@ -103,7 +103,8 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                 width: 80,
                                 height: 40,
                                 decoration: BoxDecoration(
-                                  color: const Color(0x72EEEEEE),
+                                  color: AppTheme.of(context)
+                                      .secondaryText,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: InkWell(
@@ -125,8 +126,9 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                         style: AppTheme.of(context)
                                             .bodyText1
                                             .override(
-                                              fontFamily: AppTheme.of(context)
-                                                  .bodyText1Family,
+                                              fontFamily:
+                                                  AppTheme.of(context)
+                                                      .bodyText1Family,
                                               color: Colors.white,
                                               fontSize: 16,
                                               fontWeight: FontWeight.w300,
@@ -139,19 +141,29 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                             ],
                           ),
                           Expanded(
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  25, 0, 0, 0),
-                              child: AutoSizeText(
-                                'Perfil de ${'${widget.usuario.nombre} ${widget.usuario.apellidoP}'}',
-                                maxLines: 2,
-                                style: AppTheme.of(context).bodyText1.override(
-                                      fontFamily:
-                                          AppTheme.of(context).bodyText1Family,
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                    ),
-                              ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      25, 0, 0, 0),
+                                  child: AutoSizeText(
+                                    'Perfil de ${widget.usuario.nombre} ${widget.usuario.apellidoP}',
+                                    maxLines: 2,
+                                    style: AppTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily:
+                                            AppTheme.of(context)
+                                                .bodyText1Family,
+                                        color: AppTheme.of(context)
+                                            .primaryText,
+                                        fontSize: 15,
+                                      ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -284,21 +296,21 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                     text: 'Agregar Foto',
                     icon: const Icon(
                       Icons.add_a_photo,
-                      color: Color(0xFF3883E7),
+                      color: Color(0xFF221573),
                       size: 15,
                     ),
                     options: ButtonOptions(
                       width: 150,
                       height: 30,
-                      color: const Color(0x00FFFFFF),
+                      color: Colors.white,
                       textStyle: AppTheme.of(context).subtitle2.override(
                             fontFamily: AppTheme.of(context).subtitle2Family,
-                            color: const Color(0xFF3883E7),
+                            color: const Color(0xFF221573),
                             fontSize: 10,
                             fontWeight: FontWeight.w500,
                           ),
                       borderSide: const BorderSide(
-                        color: Color(0xFF3883E7),
+                        color: Color(0xFF221573),
                         width: 2,
                       ),
                       borderRadius: BorderRadius.circular(8),
@@ -341,7 +353,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                         ),
                       ),
                       filled: true,
-                      fillColor: Color(0x653B9FE5),
+                      fillColor: Colors.white,
                     ),
                     style: AppTheme.of(context).bodyText1,
                   ),
@@ -352,7 +364,6 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                     widget.usuario.correo,
                     style: AppTheme.of(context).bodyText1.override(
                           fontFamily: AppTheme.of(context).bodyText1Family,
-                          color: const Color(0xFF5D6061),
                           fontSize: 15,
                           fontWeight: FontWeight.w500,
                         ),
@@ -364,7 +375,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                     width: 150,
                     height: 30,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFCBCACA),
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Center(
@@ -395,21 +406,21 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                     text: 'Guardar cambios',
                     icon: const Icon(
                       Icons.check_rounded,
-                      color: Color(0xFF3883E7),
+                      color: Color(0xFF221573),
                       size: 15,
                     ),
                     options: ButtonOptions(
                       width: 225,
                       height: 45,
-                      color: const Color(0x00FFFFFF),
+                      color: Colors.white,
                       textStyle: AppTheme.of(context).subtitle2.override(
                             fontFamily: AppTheme.of(context).subtitle2Family,
-                            color: const Color(0xFF3883E7),
+                            color: const Color(0xFF221573),
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
                           ),
                       borderSide: const BorderSide(
-                        color: Color(0xFF3883E7),
+                        color: Color(0xFF221573),
                         width: 2,
                       ),
                       borderRadius: BorderRadius.circular(8),

@@ -299,7 +299,7 @@ class _GridEmprendimientosScreenState extends State<GridEmprendimientosScreen> {
                                             ),
                                             child: getImage(
                                               emprendimiento.imagen,
-                                              height: 180,
+                                              height: 155,
                                             ),
                                           ),
                                         ),
@@ -324,7 +324,7 @@ class _GridEmprendimientosScreenState extends State<GridEmprendimientosScreen> {
                                             emprendimiento.comunidad.target?.nombre ??
                                                 '',
                                             overflow: TextOverflow.ellipsis,
-                                            maxLines: 2,
+                                            maxLines: 1,
                                             style:
                                                 AppTheme.of(context).bodyText2.override(
                                                       fontFamily: 'Poppins',

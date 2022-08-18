@@ -557,60 +557,6 @@ class _EditarEmprendimientoScreenState
                                       return null;
                                     },
                                 ),
-
-                              // Padding(
-                              //   padding:
-                              //       EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
-                              //   child: StreamBuilder<List<EmprendedoresRecord>>(
-                              //     stream: queryEmprendedoresRecord(),
-                              //     builder: (context, snapshot) {
-                              //       // Customize what your widget looks like when it's loading.
-                              //       if (!snapshot.hasData) {
-                              //         return Center(
-                              //           child: SizedBox(
-                              //             width: 50,
-                              //             height: 50,
-                              //             child: SpinKitRipple(
-                              //               color: AppTheme.of(context)
-                              //                   .primaryColor,
-                              //               size: 50,
-                              //             ),
-                              //           ),
-                              //         );
-                              //       }
-                              //       List<EmprendedoresRecord>
-                              //           dropDownEmprendedoresRecordList =
-                              //           snapshot.data;
-                              //       return FlutterFlowDropDown(
-                              //         options: dropDownEmprendedoresRecordList
-                              //             .map((e) => e.nombre)
-                              //             .toList()
-                              //             .toList(),
-                              //         onChanged: (val) =>
-                              //             setState(() => dropDownValue2 = val),
-                              //         width: MediaQuery.of(context).size.width,
-                              //         height: 55,
-                              //         textStyle: AppTheme.of(context)
-                              //             .bodyText1
-                              //             .override(
-                              //               fontFamily: 'Poppins',
-                              //               color: Colors.black,
-                              //               fontSize: 15,
-                              //               fontWeight: FontWeight.normal,
-                              //             ),
-                              //         hintText: 'Emprendedor...',
-                              //         fillColor: Colors.white,
-                              //         elevation: 2,
-                              //         borderColor: Colors.transparent,
-                              //         borderWidth: 0,
-                              //         borderRadius: 8,
-                              //         margin: EdgeInsetsDirectional.fromSTEB(
-                              //             12, 4, 12, 4),
-                              //         hidesUnderline: true,
-                              //       );
-                              //     },
-                              //   ),
-                              // ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 5, 0, 10),

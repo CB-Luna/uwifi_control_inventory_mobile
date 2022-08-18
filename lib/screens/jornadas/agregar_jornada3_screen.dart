@@ -315,7 +315,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white,
+                                  fillColor: const Color(0x49FFFFFF),
                                 ),
                                 style: AppTheme.of(context)
                                     .title3
@@ -376,7 +376,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white,
+                                  fillColor: const Color(0x49FFFFFF),
                                 ),
                                 style: AppTheme.of(context)
                                     .title3
@@ -621,7 +621,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white,
+                                  fillColor: const Color(0x49FFFFFF),
                                 ),
                                 keyboardType: TextInputType.none,
                                 showCursor: false,
@@ -691,7 +691,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white,
+                                  fillColor: const Color(0x49FFFFFF),
                                 ),
                                 style: AppTheme.of(context)
                                     .title3
@@ -744,7 +744,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                   color: Color(0xFF221573),
                                   size: 30,
                                 ),
-                                fillColor: Colors.white,
+                                fillColor: const Color(0x49FFFFFF),
                                 elevation: 2,
                                 borderColor: const Color(0xFF221573),
                                 borderWidth: 2,
@@ -808,7 +808,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white,
+                                  fillColor: const Color(0x49FFFFFF),
                                 ),
                                 style: AppTheme.of(context)
                                     .title3
@@ -870,7 +870,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   filled: true,
-                                  fillColor: Colors.white,
+                                  fillColor: const Color(0x49FFFFFF),
                                 ),
                                 style: AppTheme.of(context)
                                     .title3
