@@ -12,6 +12,7 @@ class JornadaController extends ChangeNotifier {
   //Jornada
   // String numJornada = '';
   DateTime? fechaRevision = DateTime.now();
+  DateTime? fechaRegistro = DateTime.now();
   String tarea = "";
   String observacion = "";
   String descripcion = "";
@@ -26,6 +27,7 @@ class JornadaController extends ChangeNotifier {
   {
     // numJornada = '';
     fechaRevision = null;
+    fechaRegistro = null;
     tarea = "";
     observacion = "";
     descripcion = "";
@@ -37,14 +39,16 @@ class JornadaController extends ChangeNotifier {
     print("Numero jornada: $numJornada");
     final nuevaJornada = Jornadas(
       numJornada: numJornada.toString(),
-      fechaRevision: fechaRevision!,
+      fechaRevision: fechaRevision ?? DateTime.now(),
+      fechaRegistro: fechaRegistro,
       );
     final nuevaTarea = Tareas(
       tarea: tarea,
       descripcion: "Creación Jornada 1",
       observacion: "Se crea la jornada 1",
       porcentaje: 1,
-      fechaRevision: fechaRevision!);
+      fechaRevision: fechaRevision ?? DateTime.now(),
+      fechaRegistro: fechaRegistro);
     final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
     nuevaTarea.statusSync.target = nuevoSyncTarea;
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
@@ -69,14 +73,16 @@ class JornadaController extends ChangeNotifier {
     print("Numero jornada: $numJornada");
     final nuevaJornada = Jornadas(
       numJornada: numJornada.toString(),
-      fechaRevision: fechaRevision!,
+      fechaRevision: fechaRevision ?? DateTime.now(),
+      fechaRegistro: fechaRegistro,
       );
     final nuevaTarea = Tareas(
       tarea: tarea, 
       descripcion: "Creación Jornada 2", 
-      observacion: observacion, 
+      observacion: (observacion == "" || observacion.isEmpty) ? "Comentarios Jornada 2" : observacion, 
       porcentaje: 1, 
-      fechaRevision: fechaRevision!,
+      fechaRevision: fechaRevision ?? DateTime.now(),
+      fechaRegistro: fechaRegistro,
       );
     final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
     nuevaTarea.statusSync.target = nuevoSyncTarea;
@@ -103,14 +109,16 @@ class JornadaController extends ChangeNotifier {
     print("Numero jornada: $numJornada");
     final nuevaJornada = Jornadas(
       numJornada: numJornada.toString(),
-      fechaRevision: fechaRevision!,
+      fechaRevision: fechaRevision ?? DateTime.now(),
+      fechaRegistro: fechaRegistro,
       );
     final nuevaTarea = Tareas(
       tarea: tarea, 
       descripcion: descripcion, 
-      observacion: observacion, 
+      observacion: (observacion == "" || observacion.isEmpty) ? "Comentarios Jornada 3" : observacion, 
       porcentaje: 1, 
-      fechaRevision: fechaRevision!,
+      fechaRevision: fechaRevision ?? DateTime.now(),
+      fechaRegistro: fechaRegistro,
       );
     final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
     nuevaTarea.statusSync.target = nuevoSyncTarea;
@@ -148,14 +156,17 @@ class JornadaController extends ChangeNotifier {
     print("Numero jornada: $numJornada");
     final nuevaJornada = Jornadas(
       numJornada: numJornada.toString(),
-      fechaRevision: DateTime.now(),
+      fechaRevision: fechaRevision ?? DateTime.now(),
+      fechaRegistro: fechaRegistro,
       );
     final nuevaTarea = Tareas(
       tarea: "Creación Jornada 4",
       descripcion: "Creación Jornada 4",
-      observacion: observacion,
+      observacion: (observacion == "" || observacion.isEmpty) ? "Comentarios Jornada 4" : observacion,
       porcentaje: 1,
-      fechaRevision: DateTime.now());
+      fechaRevision: fechaRevision ?? DateTime.now(),
+      fechaRegistro: fechaRegistro,
+      );
       print("Entro aca");
     final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
     nuevaTarea.statusSync.target = nuevoSyncTarea;

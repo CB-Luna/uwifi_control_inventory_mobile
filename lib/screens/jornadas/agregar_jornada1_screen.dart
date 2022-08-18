@@ -31,6 +31,7 @@ class AgregarJornada1Screen extends StatefulWidget {
 
 class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
   TextEditingController fechaRevision = TextEditingController();
+  TextEditingController fechaRegistro = TextEditingController();
   List<String> checkboxGroupValues = [];
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -39,6 +40,7 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
   void initState() {
     super.initState();
     fechaRevision = TextEditingController();
+    fechaRegistro = TextEditingController();
   }
 
   @override
@@ -257,11 +259,26 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   5, 0, 5, 10),
                               child: TextFormField(
-                                readOnly: true,
-                                initialValue: dateTimeFormat('yMMMd', DateTime.now()),
+                                controller: fechaRegistro,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                onTap: () async {
+                                  await DatePicker.showDatePicker(
+                                    context,
+                                    showTitleActions: true,
+                                    onConfirm: (date) {
+                                      setState(() {
+                                        jornadaProvider.fechaRegistro = date;
+                                        fechaRegistro.text = dateTimeFormat('yMMMd', date);
+                                      });
+                                    },
+                                    currentTime: getCurrentTimestamp,
+                                    // minTime: getCurrentTimestamp.subtract(const Duration(days: 7)),
+                                  );
+                                  
+                                },
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  labelText: 'Fecha registro',
+                                  labelText: 'Fecha de registro*',
                                   labelStyle: AppTheme.of(context)
                                       .title3
                                       .override(
@@ -300,6 +317,8 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                                   filled: true,
                                   fillColor: const Color(0x49FFFFFF),
                                 ),
+                                keyboardType: TextInputType.none,
+                                showCursor: false,
                                 style: AppTheme.of(context)
                                     .title3
                                     .override(
@@ -309,6 +328,13 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                                       fontSize: 15,
                                       fontWeight: FontWeight.normal,
                                     ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Para continuar, ingrese la fecha de registro';
+                                  }
+                
+                                  return null;
+                                }
                               ),
                             ),
                             Padding(

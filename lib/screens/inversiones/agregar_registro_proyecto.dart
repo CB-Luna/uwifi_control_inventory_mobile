@@ -1,33 +1,33 @@
-import 'dart:ffi';
-
+import 'package:bizpro_app/main.dart';
+import 'package:provider/provider.dart';
+import 'package:bizpro_app/objectbox.g.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/objectbox.g.dart';
-import 'package:bizpro_app/providers/database_providers/cotizacion_controller.dart';
-import 'package:bizpro_app/screens/inversiones/cotizacion_creada.dart';
+
+import 'package:bizpro_app/providers/database_providers/registro_controller.dart';
+import 'package:bizpro_app/screens/inversiones/inversion_sugerida_creada.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
 
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:provider/provider.dart';
 
 
 
-class AgregarCotizacionScreen extends StatefulWidget {
+
+class AgregarRegistroProyectoSreen extends StatefulWidget {
   final Emprendimientos emprendimiento;
 
-  const AgregarCotizacionScreen({Key? key, required this.emprendimiento}) : super(key: key);
+  const AgregarRegistroProyectoSreen({Key? key, required this.emprendimiento}) : super(key: key);
 
   @override
-  _AgregarCotizacionScreenState createState() =>
-      _AgregarCotizacionScreenState();
+  _AgregarRegistroProyectoSreenState createState() =>
+      _AgregarRegistroProyectoSreenState();
 }
 
-class _AgregarCotizacionScreenState
-    extends State<AgregarCotizacionScreen> {
+class _AgregarRegistroProyectoSreenState
+    extends State<AgregarRegistroProyectoSreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
   String familia = "";
@@ -42,7 +42,7 @@ class _AgregarCotizacionScreenState
 
   @override
   Widget build(BuildContext context) {
-    final inversionCProvider = Provider.of<CotizacionController>(context);
+    final registroController = Provider.of<RegistroController>(context);
     List<String> listFamilias = [];
     List<String> listUnidadesMedida = [];
     dataBase.familiaInversionBox.getAll().forEach((element) {listFamilias.add(element.nombre);});
@@ -128,7 +128,7 @@ class _AgregarCotizacionScreenState
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Cotización',
+                              'Inversión Sugerida',
                               style: AppTheme.of(context)
                                   .bodyText1
                                   .override(
@@ -211,7 +211,7 @@ class _AgregarCotizacionScreenState
                                         textCapitalization: TextCapitalization.sentences,
                                         autovalidateMode: AutovalidateMode.onUserInteraction,
                                         onChanged: (value) {
-                                          inversionCProvider.nombre = value;
+                                          registroController.nombre = value;
                                         },
                                         obscureText: false,
                                         decoration: InputDecoration(
@@ -278,7 +278,7 @@ class _AgregarCotizacionScreenState
                                         textCapitalization: TextCapitalization.sentences,
                                         autovalidateMode: AutovalidateMode.onUserInteraction,
                                         onChanged: (value) {
-                                          inversionCProvider.descripcion = value;
+                                          registroController.descripcion = value;
                                         },
                                         obscureText: false,
                                         decoration: InputDecoration(
@@ -345,7 +345,6 @@ class _AgregarCotizacionScreenState
                                         textCapitalization: TextCapitalization.sentences,
                                         autovalidateMode: AutovalidateMode.onUserInteraction,
                                         onChanged: (value) {
-                                          inversionCProvider.proveedor = value;
                                          
                                         },
                                         obscureText: false,
@@ -413,7 +412,7 @@ class _AgregarCotizacionScreenState
                                         textCapitalization: TextCapitalization.sentences,
                                         autovalidateMode: AutovalidateMode.onUserInteraction,
                                         onChanged: (value) {
-                                         
+                                          registroController.proveedor = value;
                                         },
                                         obscureText: false,
                                         decoration: InputDecoration(
@@ -530,7 +529,7 @@ class _AgregarCotizacionScreenState
                                       child: TextFormField(
                                         autovalidateMode: AutovalidateMode.onUserInteraction,
                                         onChanged: (value) {
-                                          inversionCProvider.cantidad = value;
+                                          registroController.cantidad = value;
                                         },
                                         obscureText: false,
                                         decoration: InputDecoration(
@@ -599,7 +598,7 @@ class _AgregarCotizacionScreenState
                                       child: TextFormField(
                                         autovalidateMode: AutovalidateMode.onUserInteraction,
                                         onChanged: (value) {
-                                            inversionCProvider.costo = value; 
+                                          registroController.costo = value;
                                         },
                                         obscureText: false,
                                         decoration: InputDecoration(
@@ -670,19 +669,19 @@ class _AgregarCotizacionScreenState
                                     const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    print("Desde cotizacion");
-                                    if (inversionCProvider
+                                    print("Desde registro");
+                                    if (registroController
                                   .validateForm(formKey)) {
-                                      // comunidadProvider.add();  
+                                      // comunidadProvider.add();
                                       final idFamiliaInversion = dataBase.familiaInversionBox.query(FamiliaInversion_.nombre.equals(familia)).build().findFirst()?.id;
                                       if (idFamiliaInversion != null) {
-                                        inversionCProvider.add(widget.emprendimiento.id, idFamiliaInversion);
-                                          await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => const CotizacionCreada(),
-                                          ),
-                                        );
+                                        registroController.add(widget.emprendimiento.id, idFamiliaInversion);
+                                        Navigator.pop(context);
+                                        snackbarKey.currentState
+                                        ?.showSnackBar(const SnackBar(
+                                          content: Text(
+                                              "¡Registro agregado éxitosamente!"),
+                                        ));
                                       }
                                     } else {
                                       await showDialog(

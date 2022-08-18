@@ -1,7 +1,10 @@
 import 'dart:io';
+import 'package:badges/badges.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
+import 'package:bizpro_app/providers/database_providers/registro_controller.dart';
+import 'package:bizpro_app/screens/inversiones/agregar_registro_proyecto.dart';
 import 'package:bizpro_app/screens/jornadas/jornada_creada.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
@@ -38,40 +41,39 @@ class AgregarJornada3Screen extends StatefulWidget {
 
 class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
   TextEditingController fechaRevision = TextEditingController();
+  TextEditingController fechaRegistro = TextEditingController();
   List<String> checkboxGroupValues = [];
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   XFile? image;
+  String tipoProyecto = "";
   String proyecto = "";
-  TextEditingController tipoProyecto = TextEditingController();
-  
+  String emprendedor = "";
+  List<String> listTipoProyecto = [];
+  List<String> listProyectos = [];
 
   @override
   void initState() {
     super.initState();
     fechaRevision = TextEditingController();
-    tipoProyecto = TextEditingController();
+    fechaRegistro = TextEditingController();
+    tipoProyecto = "";
     proyecto = "";
+    listProyectos = [];
+    listTipoProyecto = [];
     // dataBase.clasificacionesEmpBox.getAll().forEach((element) {listTipoProyecto.add(element.clasificacion);});
+    dataBase.clasificacionesEmpBox.getAll().forEach((element) {listTipoProyecto.add(element.clasificacion);});
+    emprendedor = "";
+    if (widget.emprendimiento.emprendedor.target != null) {
+      emprendedor =
+          "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final jornadaProvider = Provider.of<JornadaController>(context);
-    String emprendedor = "";
-    List<String> listProyectos = [];
-    dataBase.catalogoProyectoBox.getAll().forEach((element) {listProyectos.add(element.nombre);});
-    if (widget.emprendimiento.emprendedor.target != null) {
-      emprendedor =
-          "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
-    }
-    // if (widget.emprendimiento.jornadas.isEmpty) {
-    //   jornadaProvider.numJornada = "1";
-    // }
-    // else {
-    //   jornadaProvider.numJornada = (int.parse(widget.emprendimiento.jornadas.last.numJornada) + 1).toString();
-    // }
-    // print("Antes del return: ${jornadaProvider.numJornada}");
+    final registroController = Provider.of<RegistroController>(context);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
@@ -274,11 +276,26 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   5, 0, 5, 10),
                               child: TextFormField(
-                                readOnly: true,
-                                initialValue: dateTimeFormat('yMMMd', DateTime.now()),
+                                controller: fechaRegistro,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                onTap: () async {
+                                  await DatePicker.showDatePicker(
+                                    context,
+                                    showTitleActions: true,
+                                    onConfirm: (date) {
+                                      setState(() {
+                                        jornadaProvider.fechaRegistro = date;
+                                        fechaRegistro.text = dateTimeFormat('yMMMd', date);
+                                      });
+                                    },
+                                    currentTime: getCurrentTimestamp,
+                                    // minTime: getCurrentTimestamp.subtract(const Duration(days: 7)),
+                                  );
+                                  
+                                },
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  labelText: 'Fecha registro',
+                                  labelText: 'Fecha de registro*',
                                   labelStyle: AppTheme.of(context)
                                       .title3
                                       .override(
@@ -317,6 +334,8 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                   filled: true,
                                   fillColor: const Color(0x49FFFFFF),
                                 ),
+                                keyboardType: TextInputType.none,
+                                showCursor: false,
                                 style: AppTheme.of(context)
                                     .title3
                                     .override(
@@ -326,6 +345,13 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                       fontSize: 15,
                                       fontWeight: FontWeight.normal,
                                     ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Para continuar, ingrese la fecha de registro';
+                                  }
+                
+                                  return null;
+                                }
                               ),
                             ),
                             Padding(
@@ -524,13 +550,13 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                             jornadaProvider.imagen = image!.path;
                                           });
                                       },
-                                      text: 'Foto',
+                                      text: 'Análisis Financiero',
                                       icon: const Icon(
                                         Icons.add_a_photo,
                                         size: 15,
                                       ),
                                       options: FFButtonOptions(
-                                        width: 130,
+                                        width: 160,
                                         height: 40,
                                         color: AppTheme.of(context)
                                             .secondaryText,
@@ -578,7 +604,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                       });
                                     },
                                     currentTime: getCurrentTimestamp,
-                                    minTime: getCurrentTimestamp,
+                                    // minTime: getCurrentTimestamp,
                                   );
                                   
                                 },
@@ -654,7 +680,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                 },
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  labelText: 'Comentarios*',
+                                  labelText: 'Comentarios',
                                   labelStyle: AppTheme.of(context)
                                       .title3
                                       .override(
@@ -703,11 +729,6 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                       fontWeight: FontWeight.normal,
                                     ),
                                 maxLines: 3,
-                                validator: (value) {
-                                  return capitalizadoCharacters.hasMatch(value ?? '')
-                                      ? null
-                                      : 'Para continuar, ingrese los comentarios empezando por mayúscula';
-                                  },
                               ),
                             ),
                             FormField(builder: (state) {
@@ -715,9 +736,9 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                    5, 0, 5, 10),
                               child: DropDown(
-                                options: listProyectos,
+                                options: listTipoProyecto,
                                 onChanged: (val) => setState((){
-                                  if (listProyectos.isEmpty) {
+                                  if (listTipoProyecto.isEmpty) {
                                     snackbarKey.currentState
                                     ?.showSnackBar(const SnackBar(
                                       content: Text(
@@ -725,10 +746,70 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                     ));
                                   }
                                   else{
+                                    listProyectos.clear();
+                                    tipoProyecto = val!;
+                                    dataBase.catalogoProyectoBox.getAll().forEach((element) {
+                                      if (element.clasificacionEmp.target!.clasificacion == tipoProyecto) {
+                                        listProyectos.add(element.nombre);
+                                      }                                    
+                                      });
+                                      print("Entro a tipo proyecto");
+                                    }
+                                    print("Tipo Proyecto: $tipoProyecto");
+                                    print("List proyectos: ${listProyectos.length}");
+
+                                  }),
+                                width: double.infinity,
+                                height: 50,
+                                textStyle: AppTheme.of(context).title3.override(
+                                      fontFamily: 'Poppins',
+                                      color: const Color(0xFF221573),
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                hintText: 'Tipo proyecto*',
+                                icon: const Icon(
+                                  Icons.keyboard_arrow_down_rounded,
+                                  color: Color(0xFF221573),
+                                  size: 30,
+                                ),
+                                fillColor: Colors.white,
+                                elevation: 2,
+                                borderColor: const Color(0xFF221573),
+                                borderWidth: 2,
+                                borderRadius: 8,
+                                margin: const EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                                hidesUnderline: true,
+                              ),
+                            );
+                            }, 
+                            validator: (val) {
+                                if ( tipoProyecto == "" ||
+                                    tipoProyecto.isEmpty) {
+                                  return 'Para continuar, seleccione un tipo de proyecto.';
+                                }
+                                return null;
+                              },
+                            ),
+                            FormField(builder: (state) {
+                            return Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                   5, 0, 5, 10),
+                              child: DropDown(
+                                options: (tipoProyecto == "" || listProyectos.isEmpty) ? ["Sin proyectos"] : listProyectos,
+                                onChanged: (val) => setState((){
+                                  if (val == "Sin proyectos") {
+                                    snackbarKey.currentState
+                                    ?.showSnackBar(const SnackBar(
+                                      content: Text(
+                                          "Debes seleccionar un tipo de proyecto para seleccionar un proyecto"),
+                                    ));
+                                  } else {
                                     proyecto = val!;
-                                    final catalogoProyecto = dataBase.catalogoProyectoBox.getAll().firstWhere((element) => element.nombre == proyecto);
-                                    tipoProyecto.text = catalogoProyecto.clasificacionEmp.target!.clasificacion;
+                                    print("Entro a proyectos");
                                   }
+                                  print("Proyecto: $proyecto");
+
                                   }),
                                 width: double.infinity,
                                 height: 50,
@@ -744,7 +825,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                   color: Color(0xFF221573),
                                   size: 30,
                                 ),
-                                fillColor: const Color(0x49FFFFFF),
+                                fillColor: Colors.white,
                                 elevation: 2,
                                 borderColor: const Color(0xFF221573),
                                 borderWidth: 2,
@@ -761,66 +842,6 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                 }
                                 return null;
                               },
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
-                              child: TextFormField(
-                                enabled: false,
-                                readOnly: true,
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
-                                controller: tipoProyecto,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  labelText: 'Tipo de proyecto*',
-                                  labelStyle: AppTheme.of(context)
-                                      .title3
-                                      .override(
-                                        fontFamily: 'Montserrat',
-                                        color: AppTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                  hintStyle: AppTheme.of(context)
-                                      .title3
-                                      .override(
-                                        fontFamily: 'Poppins',
-                                        color: AppTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppTheme.of(context)
-                                          .primaryText,
-                                      width: 1.5,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppTheme.of(context)
-                                          .primaryText,
-                                      width: 1.5,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  filled: true,
-                                  fillColor: const Color(0x49FFFFFF),
-                                ),
-                                style: AppTheme.of(context)
-                                    .title3
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      color: AppTheme.of(context)
-                                          .primaryText,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                maxLines: 1,
-                              ),
                             ),
                             Padding(
                               padding:
@@ -887,6 +908,46 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                       ? null
                                       : 'Para continuar, ingrese la descripción empezando por mayúscula';
                                   },
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                              child: Badge(
+                                badgeContent: Text(registroController.productosEmp.length.toString(), style: const TextStyle(color: Colors.white)),
+                                showBadge: registroController.productosEmp.isEmpty ? false : true,
+                                badgeColor: const Color(0xFFD20030),
+                                position: BadgePosition.topEnd(),
+                                elevation: 4,
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            AgregarRegistroProyectoSreen(emprendimiento: widget.emprendimiento,),
+                                      ),
+                                    );
+                                  },
+                                  text: 'Agregar Registro',
+                                  options: FFButtonOptions(
+                                    width: 150,
+                                    height: 50,
+                                    color: AppTheme.of(context).secondaryText,
+                                    textStyle:
+                                        AppTheme.of(context).subtitle2.override(
+                                              fontFamily: 'Poppins',
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                    elevation: 2,
+                                    borderSide: const BorderSide(
+                                      color: Colors.transparent,
+                                      width: 1,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ],

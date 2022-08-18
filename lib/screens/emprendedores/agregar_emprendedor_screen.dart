@@ -741,7 +741,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                   },
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    labelText: 'Comentarios*',
+                                    labelText: 'Comentarios',
                                     labelStyle: AppTheme.of(context)
                                         .title3
                                         .override(

@@ -1,20 +1,15 @@
 import 'dart:io';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/objectbox.g.dart';
-import 'package:bizpro_app/screens/jornadas/jornada_creada.dart';
-import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
-import 'package:bizpro_app/screens/widgets/drop_down.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/helpers/constants.dart';
+
+import 'package:bizpro_app/screens/jornadas/jornada_creada.dart';
+import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
+import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
 
 import 'package:bizpro_app/providers/database_providers/jornada_controller.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_checkbox_group.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 import 'package:bizpro_app/util/flutter_flow_util.dart';
@@ -37,7 +32,7 @@ class AgregarJornada4Screen extends StatefulWidget {
 }
 
 class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
-  TextEditingController fechaRevision = TextEditingController();
+  TextEditingController fechaRegistro = TextEditingController();
   List<String> checkboxGroupValues = [];
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -47,7 +42,7 @@ class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
   @override
   void initState() {
     super.initState();
-    fechaRevision = TextEditingController();
+    fechaRegistro = TextEditingController();
     // dataBase.clasificacionesEmpBox.getAll().forEach((element) {listTipoProyecto.add(element.clasificacion);});
   }
 
@@ -267,11 +262,26 @@ class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   5, 0, 5, 10),
                               child: TextFormField(
-                                readOnly: true,
-                                initialValue: dateTimeFormat('yMMMd', DateTime.now()),
+                                controller: fechaRegistro,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                onTap: () async {
+                                  await DatePicker.showDatePicker(
+                                    context,
+                                    showTitleActions: true,
+                                    onConfirm: (date) {
+                                      setState(() {
+                                        jornadaProvider.fechaRegistro = date;
+                                        fechaRegistro.text = dateTimeFormat('yMMMd', date);
+                                      });
+                                    },
+                                    currentTime: getCurrentTimestamp,
+                                    // minTime: getCurrentTimestamp.subtract(const Duration(days: 7)),
+                                  );
+                                  
+                                },
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  labelText: 'Fecha registro',
+                                  labelText: 'Fecha de registro*',
                                   labelStyle: AppTheme.of(context)
                                       .title3
                                       .override(
@@ -310,6 +320,8 @@ class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
                                   filled: true,
                                   fillColor: const Color(0x49FFFFFF),
                                 ),
+                                keyboardType: TextInputType.none,
+                                showCursor: false,
                                 style: AppTheme.of(context)
                                     .title3
                                     .override(
@@ -319,6 +331,13 @@ class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
                                       fontSize: 15,
                                       fontWeight: FontWeight.normal,
                                     ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Para continuar, ingrese la fecha de registro';
+                                  }
+                
+                                  return null;
+                                }
                               ),
                             ),
                             Padding(
@@ -332,7 +351,7 @@ class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
                                 },
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  labelText: 'Comentarios*',
+                                  labelText: 'Comentarios',
                                   labelStyle: AppTheme.of(context)
                                       .title3
                                       .override(
@@ -381,11 +400,6 @@ class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
                                       fontWeight: FontWeight.normal,
                                     ),
                                 maxLines: 3,
-                                validator: (value) {
-                                  return capitalizadoCharacters.hasMatch(value ?? '')
-                                      ? null
-                                      : 'Para continuar, ingrese los comentarios empezando por mayúscula';
-                                  },
                               ),
                             ),
                             FormField(builder: (state){
@@ -487,7 +501,7 @@ class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
                                             jornadaProvider.imagen = image!.path;
                                           });
                                       },
-                                      text: 'Foto',
+                                      text: 'Convenio',
                                       icon: const Icon(
                                         Icons.add_a_photo,
                                         size: 15,

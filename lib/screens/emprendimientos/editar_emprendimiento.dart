@@ -642,51 +642,6 @@ class _EditarEmprendimientoScreenState
                                   ),
                                 ),
                               ),
-                              // Padding(
-                              //   padding: const EdgeInsetsDirectional.fromSTEB(
-                              //       0, 5, 0, 10),
-                              //   child: Row(
-                              //     mainAxisSize: MainAxisSize.max,
-                              //     mainAxisAlignment: MainAxisAlignment.center,
-                              //     children: [
-                              //       FFButtonWidget(
-                              //         onPressed: () async {
-                              //           usuarioProvider.removeEmprendimiento(
-                              //               widget.emprendimiento);
-                              //           await Navigator.push(
-                              //             context,
-                              //             MaterialPageRoute(
-                              //               builder: (context) =>
-                              //                   const EmprendimientosScreen(),
-                              //             ),
-                              //           );
-                              //         },
-                              //         text: 'Eliminar Emprendimiento',
-                              //         options: FFButtonOptions(
-                              //           width: 290,
-                              //           height: 50,
-                              //           color: const Color.fromARGB(
-                              //               242, 213, 35, 35),
-                              //           textStyle: AppTheme.of(context)
-                              //               .title3
-                              //               .override(
-                              //                 fontFamily: 'Montserrat',
-                              //                 color: Colors.white,
-                              //                 fontSize: 16,
-                              //                 fontWeight: FontWeight.w300,
-                              //               ),
-                              //           elevation: 3,
-                              //           borderSide: const BorderSide(
-                              //             color:
-                              //                 Color.fromARGB(242, 213, 35, 35),
-                              //             width: 0,
-                              //           ),
-                              //           borderRadius: BorderRadius.circular(8),
-                              //         ),
-                              //       ),
-                              //     ],
-                              //   ),
-                              // ),
                             ],
                           ),
                         ),

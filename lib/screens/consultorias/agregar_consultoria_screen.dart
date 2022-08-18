@@ -290,7 +290,7 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                   color: Color(0xFF221573),
                                   size: 30,
                                 ),
-                                fillColor: const Color(0x49FFFFFF),
+                                fillColor: Colors.white,
                                 elevation: 2,
                                 borderColor: const Color(0xFF221573),
                                 borderWidth: 2,
@@ -340,7 +340,7 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                   color: Color(0xFF221573),
                                   size: 30,
                                 ),
-                                fillColor: const Color(0x49FFFFFF),
+                                fillColor: Colors.white,
                                 elevation: 2,
                                 borderColor: const Color(0xFF221573),
                                 borderWidth: 2,
@@ -442,7 +442,7 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                         });
                                       },
                                       currentTime: getCurrentTimestamp,
-                                      minTime: getCurrentTimestamp,
+                                      // minTime: getCurrentTimestamp,
                                     );
                                     
                                   },
