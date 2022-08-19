@@ -498,10 +498,12 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                                   Expanded(
                                     child: FlutterFlowCheckboxGroup(
                                       initiallySelected:
-                                          checkboxGroupValues,
-                                      options: ['¿Tarea Completada?'].toList(),
+                                          !jornadaProvider.activo,
+                                      options: '¿Tarea Completada?',
                                       onChanged: (val) => setState(
-                                          () => checkboxGroupValues = val),
+                                          () {
+                                            jornadaProvider.activo = val;
+                                            }),
                                       activeColor: AppTheme.of(context)
                                           .primaryColor,
                                       checkColor: Colors.white,

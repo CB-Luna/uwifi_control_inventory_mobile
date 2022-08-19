@@ -236,6 +236,7 @@ class Tareas {
   String descripcion;
   String observacion;
   int porcentaje;
+  bool activo;
   DateTime fechaRevision;
   DateTime fechaRegistro;
   List<String>? imagenes;
@@ -251,6 +252,7 @@ class Tareas {
     required this.descripcion,
     required this.observacion,
     required this.porcentaje,
+    this.activo = true,
     required this.fechaRevision,
     DateTime? fechaRegistro,
     this.imagenes,

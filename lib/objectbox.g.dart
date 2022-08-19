@@ -417,7 +417,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(19, 2491530739310255510),
       name: 'Tareas',
-      lastPropertyId: const IdUid(17, 3679854591609531040),
+      lastPropertyId: const IdUid(18, 7293987934442232642),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -493,6 +493,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(17, 3679854591609531040),
             name: 'tarea',
             type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(18, 7293987934442232642),
+            name: 'activo',
+            type: 1,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -2583,7 +2588,7 @@ ModelDefinition getObjectBoxModel() {
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
           final tareaOffset = fbb.writeString(object.tarea);
-          fbb.startTable(18);
+          fbb.startTable(19);
           fbb.addInt64(0, object.id);
           fbb.addOffset(2, descripcionOffset);
           fbb.addOffset(3, observacionOffset);
@@ -2597,6 +2602,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(14, idDBROffset);
           fbb.addInt64(15, object.bitacora.targetId);
           fbb.addOffset(16, tareaOffset);
+          fbb.addBool(17, object.activo);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -2614,12 +2620,13 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 10, ''),
               porcentaje:
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0),
+              activo: const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 38, false),
               fechaRevision: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0)),
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0)),
-              imagenes: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
-                  .vTableGetNullable(buffer, rootOffset, 16),
+              imagenes: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGetNullable(buffer, rootOffset, 16),
               idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 32));
           object.jornada.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
@@ -4494,6 +4501,10 @@ class Tareas_ {
 
   /// see [Tareas.tarea]
   static final tarea = QueryStringProperty<Tareas>(_entities[5].properties[12]);
+
+  /// see [Tareas.activo]
+  static final activo =
+      QueryBooleanProperty<Tareas>(_entities[5].properties[13]);
 }
 
 /// [Comunidades] entity fields to define ObjectBox queries.

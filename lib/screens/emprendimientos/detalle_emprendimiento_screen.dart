@@ -17,7 +17,6 @@ import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada2_screen.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada1_screen.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada3_screen.dart';
-import 'package:bizpro_app/screens/emprendedores/agregar_emprendedor_screen.dart';
 import 'package:bizpro_app/screens/inversiones/inversion.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada4_screen.dart';
 import 'package:bizpro_app/screens/widgets/pdf/api/pdf_invoice_api.dart';

@@ -138,6 +138,23 @@ class SyncProvider extends ChangeNotifier {
           } 
           }         
           break;
+        case "syncUpdateJornada1":
+          final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
+          if(jornadaToSync != null){
+            if(jornadaToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
+              print("Entro aqui en el if");
+              break;
+            } else {
+              print("Entro aqui en el else");
+              if (jornadaToSync.idDBR != null) {
+                print("Ya ha sido enviado al backend");
+                syncUpdateJornada1(jornadaToSync);
+              } else {
+                print("No ha sido enviado al backend");
+              }
+            }   
+          }  
+          break;
         case "syncAddConsultoria":
           print("Entro aqui");
           final consultoriaToSync = getFirstConsultoria(dataBase.consultoriasBox.getAll(), instruccionesBitacora[i].id);
@@ -414,7 +431,8 @@ class SyncProvider extends ChangeNotifier {
     
     return null;
 }
-//TODO Preguntar como asociamos las tareas con la consultoria en el backedn, y cambiar la relación
+
+
   Future<bool?> syncAddConsultoria(Consultorias consultoria) async {
     print("Estoy en syncAddConsultoria");
     List<String> listIdTareas = [];
@@ -755,6 +773,61 @@ return true;
 
     } catch (e) {
       print('ERROR - function syncUpdateEmprendedor(): $e');
+      return false;
+    }
+
+  } 
+
+  Future<bool?> syncUpdateJornada1(Jornadas jornada) async {
+    print("Estoy en El syncUpdatJornada1");
+    try {
+      //Primero actualizamos la tarea
+      final updateTarea = dataBase.tareasBox.get(jornada.tarea.target!.id);
+      if (updateTarea != null) {
+        final recordTarea = await client.records.update('tareas', updateTarea.idDBR.toString(), body: {
+        "tarea": updateTarea.tarea,
+        "fecha_revision": updateTarea.fechaRevision.toUtc().toString(),
+        "id_status_sync_fk": "HoI36PzYw1wtbO1"
+        });
+        if (recordTarea.id.isNotEmpty) {
+          print("Tarea updated succesfully");
+          var updateTarea = dataBase.tareasBox.get(jornada.tarea.target!.id);
+          if (updateTarea  != null) {
+            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateTarea.statusSync.target!.id)).build().findUnique();
+            if (statusSync != null) {
+              statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendedor
+              dataBase.statusSyncBox.put(statusSync);
+            }
+          }
+        }
+        //Segundo actualizamos la jornada
+        final recordJornada = await client.records.update('jornadas', jornada.idDBR.toString(), body: {
+            "proxima_visita": jornada.fechaRevision.toUtc().toString(),
+            "id_status_sync_fk": "HoI36PzYw1wtbO1",
+        }); 
+
+        if (recordJornada.id.isNotEmpty) {
+          print("Jornada updated succesfully");
+          var updateJornada = dataBase.jornadasBox.get(jornada.id);
+          if (updateJornada  != null) {
+            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateJornada.statusSync.target!.id)).build().findUnique();
+            if (statusSync != null) {
+              statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendedor
+              dataBase.statusSyncBox.put(statusSync);
+            }
+          }
+        }
+        else{
+          return false;
+        }
+      }
+      else{
+        return false;
+      }
+      return true;
+
+    } catch (e) {
+      print('ERROR - function syncUpdateJornada1(): $e');
       return false;
     }
 

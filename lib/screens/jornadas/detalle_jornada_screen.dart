@@ -1,13 +1,16 @@
 import 'dart:io';
-
+import 'package:bizpro_app/helpers/globals.dart';
+import 'package:flutter/material.dart';
+import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
+
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bizpro_app/screens/jornadas/editar_jornada1_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_carousel.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:bizpro_app/theme/theme.dart';
 
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/material.dart';
+
 
 class DetalleJornadaScreen extends StatefulWidget {
   final Jornadas jornada;
@@ -174,17 +177,41 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                           borderRadius:
                                               BorderRadius.circular(10),
                                         ),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: const [
-                                            Icon(
-                                              Icons.edit_rounded,
-                                              color: Colors.white,
-                                              size: 20,
-                                            ),
-                                          ],
+                                        child: InkWell(
+                                          onTap: () async {
+                                            if (widget.jornada.tarea.target!.activo) {
+                                              switch (widget.jornada.numJornada) {
+                                                case "1":
+                                                  await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) => EditarJornada1Screen(
+                                                          jornada: widget.jornada)),
+                                                  );
+                                                  break;
+                                                default:
+                                                  break;
+                                              }
+                                            } else {
+                                              snackbarKey.currentState
+                                              ?.showSnackBar(const SnackBar(
+                                                content: Text(
+                                                  "La jornada ya ha sido registrada, ya no se puede editar."),
+                                              ));
+                                            }
+                                          },
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: const [
+                                              Icon(
+                                                Icons.edit_rounded,
+                                                color: Colors.white,
+                                                size: 20,
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -234,7 +261,7 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 5, 0, 0),
                                 child: Text(
-                                  widget.jornada.emprendimiento.target?.nombre ?? "SIN EMPRENDIMIENTO",
+                                  "Eprendimiento",
                                   style: AppTheme.of(context)
                                       .bodyText1
                                       .override(
@@ -249,7 +276,7 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 5, 0, 0),
                                 child: AutoSizeText(
-                                  'Detalle',
+                                  widget.jornada.emprendimiento.target?.nombre ?? "SIN EMPRENDIMIENTO",
                                   textAlign: TextAlign.start,
                                   maxLines: 4,
                                   style: AppTheme.of(context)

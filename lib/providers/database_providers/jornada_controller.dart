@@ -17,6 +17,7 @@ class JornadaController extends ChangeNotifier {
   String observacion = "";
   String descripcion = "";
   String imagen = "";
+  bool activo = true;
 
   bool validateForm(GlobalKey<FormState> jornadaKey) {
     return jornadaKey.currentState!.validate() ? true : false;
@@ -32,6 +33,7 @@ class JornadaController extends ChangeNotifier {
     observacion = "";
     descripcion = "";
     imagen = "";
+    activo = true;
   }
 
 
@@ -47,6 +49,7 @@ class JornadaController extends ChangeNotifier {
       descripcion: "Creación Jornada 1",
       observacion: "Se crea la jornada 1",
       porcentaje: 1,
+      activo: activo,
       fechaRevision: fechaRevision ?? DateTime.now(),
       fechaRegistro: fechaRegistro);
     final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
@@ -69,6 +72,39 @@ class JornadaController extends ChangeNotifier {
     }
     print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
   }
+
+  void updateJornada1(int id, DateTime newFechaRegistro, DateTime newFechaRevision, String newTarea, bool newActivo, int idTarea) {
+    var updateTarea  = dataBase.tareasBox.get(idTarea);
+    if (updateTarea != null) {
+      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateJornada1', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      updateTarea.fechaRegistro = newFechaRegistro;
+      updateTarea.fechaRevision = newFechaRevision;
+      updateTarea.tarea = newTarea;
+      updateTarea.activo = newActivo;
+      final statusSyncTarea = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateTarea.statusSync.target!.id)).build().findUnique();
+      if (statusSyncTarea != null) {
+          statusSyncTarea.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la tarea
+          dataBase.statusSyncBox.put(statusSyncTarea);
+        }
+      dataBase.tareasBox.put(updateTarea);
+      var updateJornada = dataBase.jornadasBox.get(id);
+      if (updateJornada !=  null) {
+        updateJornada.fechaRegistro = newFechaRegistro;
+        updateJornada.fechaRevision = newFechaRevision;
+        final statusSyncJornada = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateJornada.statusSync.target!.id)).build().findUnique();
+        if (statusSyncJornada != null) {
+          statusSyncJornada.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la jornada
+          dataBase.statusSyncBox.put(statusSyncJornada);
+        }
+        updateJornada.bitacora.add(nuevaInstruccion);
+        dataBase.jornadasBox.put(updateJornada);
+        print('Jornada actualizada exitosamente');
+      }
+    }
+    notifyListeners();
+  }
+
+
   void addJornada2(int idEmprendimiento, int numJornada) {
     print("Numero jornada: $numJornada");
     final nuevaJornada = Jornadas(
@@ -81,6 +117,7 @@ class JornadaController extends ChangeNotifier {
       descripcion: "Creación Jornada 2", 
       observacion: (observacion == "" || observacion.isEmpty) ? "Comentarios Jornada 2" : observacion, 
       porcentaje: 1, 
+      activo: activo,
       fechaRevision: fechaRevision ?? DateTime.now(),
       fechaRegistro: fechaRegistro,
       );
@@ -117,6 +154,7 @@ class JornadaController extends ChangeNotifier {
       descripcion: descripcion, 
       observacion: (observacion == "" || observacion.isEmpty) ? "Comentarios Jornada 3" : observacion, 
       porcentaje: 1, 
+      activo: activo,
       fechaRevision: fechaRevision ?? DateTime.now(),
       fechaRegistro: fechaRegistro,
       );
@@ -164,6 +202,7 @@ class JornadaController extends ChangeNotifier {
       descripcion: "Creación Jornada 4",
       observacion: (observacion == "" || observacion.isEmpty) ? "Comentarios Jornada 4" : observacion,
       porcentaje: 1,
+      activo: false,
       fechaRevision: fechaRevision ?? DateTime.now(),
       fechaRegistro: fechaRegistro,
       );

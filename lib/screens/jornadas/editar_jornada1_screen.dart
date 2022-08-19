@@ -6,7 +6,7 @@ import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 
 import 'package:bizpro_app/providers/database_providers/jornada_controller.dart';
-import 'package:bizpro_app/screens/jornadas/jornada_creada.dart';
+import 'package:bizpro_app/screens/jornadas/jornada1_actualizada.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_checkbox_group.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
@@ -14,48 +14,48 @@ import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 
-class AgregarJornada1Screen extends StatefulWidget {
-  final Emprendimientos emprendimiento;
-  final int numJornada;
+class EditarJornada1Screen extends StatefulWidget {
+  final Jornadas jornada;
   
-  const AgregarJornada1Screen({
+  const EditarJornada1Screen({
     Key? key, 
-    required this.emprendimiento, 
-    required this.numJornada,
+    required this.jornada,
   }) : super(key: key);
 
 
   @override
-  _AgregarJornada1ScreenState createState() => _AgregarJornada1ScreenState();
+  _EditarJornada1ScreenState createState() => _EditarJornada1ScreenState();
 }
 
-class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
-  TextEditingController fechaRevision = TextEditingController();
-  TextEditingController fechaRegistro = TextEditingController();
+class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  late DateTime fechaRegistro;
+  late DateTime fechaRevision;
+  late TextEditingController fechaRegistroText;
+  late TextEditingController fechaRevisionText;
+  late TextEditingController tareaController;
+  late bool activoController;
 
   @override
   void initState() {
     super.initState();
-    fechaRevision = TextEditingController();
-    fechaRegistro = TextEditingController();
+    fechaRevision = widget.jornada.fechaRevision;
+    fechaRegistro = widget.jornada.fechaRegistro;
+    fechaRevisionText = TextEditingController(text: dateTimeFormat('yMMMd', widget.jornada.fechaRevision));
+    fechaRegistroText = TextEditingController(text: dateTimeFormat('yMMMd', widget.jornada.fechaRegistro));
+    tareaController = TextEditingController(text: widget.jornada.tarea.target!.tarea);
+    activoController = widget.jornada.tarea.target!.activo;
   }
 
   @override
   Widget build(BuildContext context) {
     final jornadaProvider = Provider.of<JornadaController>(context);
     String emprendedor = "";
-    if (widget.emprendimiento.emprendedor.target != null) {
+    if (widget.jornada.emprendimiento.target!.emprendedor.target != null) {
       emprendedor =
-          "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
+          "${widget.jornada.emprendimiento.target!.emprendedor.target!.nombre} ${widget.jornada.emprendimiento.target!.emprendedor.target!.apellidos}";
     }
-    // if (widget.emprendimiento.jornadas.isEmpty) {
-    //   jornadaProvider.numJornada = "1";
-    // }
-    // else {
-    //   jornadaProvider.numJornada = (int.parse(widget.emprendimiento.jornadas.last.numJornada) + 1).toString();
-    // }
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
@@ -72,7 +72,7 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                   height: 200,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: FileImage(File(widget.emprendimiento.imagen)),
+                      image: FileImage(File(widget.jornada.emprendimiento.target!.imagen)),
                       fit: BoxFit.cover,
                       filterQuality: FilterQuality.high,
                     ),
@@ -168,7 +168,7 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                               ],
                             ),
                             Text(
-                              widget.emprendimiento.nombre,
+                              widget.jornada.emprendimiento.target!.nombre,
                               maxLines: 1,
                               style: AppTheme.of(context)
                                   .subtitle2
@@ -218,7 +218,7 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                                       padding: const EdgeInsetsDirectional.fromSTEB(
                                           10, 5, 0, 0),
                                       child: Text(
-                                        "Jornada ${widget.numJornada}",
+                                        "Jornada ${widget.jornada.numJornada}",
                                         style: AppTheme.of(context)
                                             .bodyText1
                                             .override(
@@ -245,7 +245,7 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                                       padding: const EdgeInsetsDirectional.fromSTEB(
                                           10, 5, 0, 5),
                                       child: Text(
-                                        widget.emprendimiento.nombre,
+                                        widget.jornada.emprendimiento.target!.nombre,
                                         style: AppTheme.of(context)
                                             .bodyText1,
                                       ),
@@ -258,7 +258,7 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   5, 0, 5, 10),
                               child: TextFormField(
-                                controller: fechaRegistro,
+                                controller: fechaRegistroText,
                                 autovalidateMode: AutovalidateMode.onUserInteraction,
                                 onTap: () async {
                                   await DatePicker.showDatePicker(
@@ -266,8 +266,8 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                                     showTitleActions: true,
                                     onConfirm: (date) {
                                       setState(() {
-                                        jornadaProvider.fechaRegistro = date;
-                                        fechaRegistro.text = dateTimeFormat('yMMMd', date);
+                                        fechaRegistro = date;
+                                        fechaRegistroText.text = dateTimeFormat('yMMMd', date);
                                       });
                                     },
                                     currentTime: getCurrentTimestamp,
@@ -340,7 +340,7 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   5, 0, 5, 10),
                               child: TextFormField(
-                                controller: fechaRevision,
+                                controller: fechaRevisionText,
                                 autovalidateMode: AutovalidateMode.onUserInteraction,
                                 onTap: () async {
                                   await DatePicker.showDatePicker(
@@ -348,8 +348,8 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                                     showTitleActions: true,
                                     onConfirm: (date) {
                                       setState(() {
-                                        jornadaProvider.fechaRevision = date;
-                                        fechaRevision.text = dateTimeFormat('yMMMd', date);
+                                        fechaRevision = date;
+                                        fechaRevisionText.text = dateTimeFormat('yMMMd', date);
                                       });
                                     },
                                     currentTime: getCurrentTimestamp,
@@ -422,11 +422,9 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   5, 0, 5, 10),
                               child: TextFormField(
+                                controller: tareaController,
                                 textCapitalization: TextCapitalization.sentences,
                                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                                onChanged: (value) {
-                                  jornadaProvider.tarea = value;
-                                },
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   labelText: 'Registrar Tarea*',
@@ -494,13 +492,13 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                                   Expanded(
                                     child: FlutterFlowCheckboxGroup(
                                       initiallySelected:
-                                          !jornadaProvider.activo,
+                                          !activoController,
                                       options: '¿Tarea Completada?',
                                       onChanged: (val) => setState(
                                           () {
                                             print(val);
-                                            jornadaProvider.activo = val;
-                                            print(jornadaProvider.activo);
+                                            activoController = val;
+                                            print(activoController);
                                             }),
                                       activeColor: AppTheme.of(context)
                                           .primaryColor,
@@ -528,16 +526,26 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                           onPressed: () async {
                             if (jornadaProvider
                                 .validateForm(formKey)) {
-                              // comunidadProvider.add();
-                              print("Fecha revision ${jornadaProvider.fechaRevision}");
-                              print("Tarea ${jornadaProvider.tarea}");
-                              jornadaProvider.addJornada1(widget.emprendimiento.id, widget.numJornada);
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const JornadaCreada(),
-                                ),
-                              );
+                              if (fechaRegistro != widget.jornada.fechaRegistro ||
+                                  fechaRevision != widget.jornada.fechaRevision || 
+                                  tareaController.text != widget.jornada.tarea.target!.tarea ||
+                                  activoController != widget.jornada.tarea.target!.activo
+                                  ) {
+                                  jornadaProvider.updateJornada1(
+                                    widget.jornada.id, 
+                                    fechaRegistro,
+                                    fechaRevision,
+                                    tareaController.text,
+                                    activoController,
+                                    widget.jornada.tarea.target!.id
+                                    );
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const Jornada1Actualizada(),
+                                    ),
+                                  );
+                              }
                             } else {
                               await showDialog(
                                 context: context,
@@ -561,7 +569,7 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                               return;
                             }
                           },
-                          text: 'Crear',
+                          text: 'Actualizar',
                           icon: const Icon(
                             Icons.check_rounded,
                             size: 15,
