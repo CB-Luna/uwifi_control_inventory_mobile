@@ -347,20 +347,17 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(100, 8661572209442876177),
-            relationTarget: 'AmbitoConsultoria'),
-        ModelProperty(
-            id: const IdUid(14, 9041506210264243534),
-            name: 'tareaId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(144, 8396189901550464501),
-            relationTarget: 'Tareas')
+            relationTarget: 'AmbitoConsultoria')
       ],
       relations: <ModelRelation>[
         ModelRelation(
             id: const IdUid(25, 650409796119095799),
             name: 'bitacora',
-            targetId: const IdUid(27, 1774905738150923512))
+            targetId: const IdUid(27, 1774905738150923512)),
+        ModelRelation(
+            id: const IdUid(26, 2137414110899067316),
+            name: 'tareas',
+            targetId: const IdUid(19, 2491530739310255510))
       ],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
@@ -1913,7 +1910,7 @@ ModelDefinition getObjectBoxModel() {
       entities: _entities,
       lastEntityId: const IdUid(46, 8904698342427392465),
       lastIndexId: const IdUid(145, 4680505657145532033),
-      lastRelationId: const IdUid(25, 650409796119095799),
+      lastRelationId: const IdUid(26, 2137414110899067316),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
         1366246136666677579,
@@ -1971,7 +1968,8 @@ ModelDefinition getObjectBoxModel() {
         5035905392252920596,
         7510634053082529540,
         8309315416341765269,
-        1728042511720879376
+        1728042511720879376,
+        8396189901550464501
       ],
       retiredPropertyUids: const [
         7079790605743243388,
@@ -2145,7 +2143,8 @@ ModelDefinition getObjectBoxModel() {
         6126515006975107011,
         3911938135844163773,
         4915654780717530161,
-        8381385900840453390
+        8381385900840453390,
+        9041506210264243534
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -2444,11 +2443,12 @@ ModelDefinition getObjectBoxModel() {
               object.emprendimiento,
               object.statusSync,
               object.areaCirculo,
-              object.ambitoConsultoria,
-              object.tarea
+              object.ambitoConsultoria
             ],
-        toManyRelations: (Consultorias object) =>
-            {RelInfo<Consultorias>.toMany(25, object.id): object.bitacora},
+        toManyRelations: (Consultorias object) => {
+              RelInfo<Consultorias>.toMany(25, object.id): object.bitacora,
+              RelInfo<Consultorias>.toMany(26, object.id): object.tareas
+            },
         getId: (Consultorias object) => object.id,
         setId: (Consultorias object, int id) {
           object.id = id;
@@ -2470,7 +2470,6 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(9, idDBROffset);
           fbb.addInt64(11, object.areaCirculo.targetId);
           fbb.addInt64(12, object.ambitoConsultoria.targetId);
-          fbb.addInt64(13, object.tarea.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -2500,13 +2499,15 @@ ModelDefinition getObjectBoxModel() {
           object.ambitoConsultoria.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0);
           object.ambitoConsultoria.attach(store);
-          object.tarea.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0);
-          object.tarea.attach(store);
           InternalToManyAccess.setRelInfo(
               object.bitacora,
               store,
               RelInfo<Consultorias>.toMany(25, object.id),
+              store.box<Consultorias>());
+          InternalToManyAccess.setRelInfo(
+              object.tareas,
+              store,
+              RelInfo<Consultorias>.toMany(26, object.id),
               store.box<Consultorias>());
           return object;
         }),
@@ -4400,13 +4401,13 @@ class Consultorias_ {
       QueryRelationToOne<Consultorias, AmbitoConsultoria>(
           _entities[3].properties[7]);
 
-  /// see [Consultorias.tarea]
-  static final tarea =
-      QueryRelationToOne<Consultorias, Tareas>(_entities[3].properties[8]);
-
   /// see [Consultorias.bitacora]
   static final bitacora =
       QueryRelationToMany<Consultorias, Bitacora>(_entities[3].relations[0]);
+
+  /// see [Consultorias.tareas]
+  static final tareas =
+      QueryRelationToMany<Consultorias, Tareas>(_entities[3].relations[1]);
 }
 
 /// [Vendidos] entity fields to define ObjectBox queries.

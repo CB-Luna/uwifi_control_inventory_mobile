@@ -2,6 +2,8 @@ import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
+import 'package:bizpro_app/providers/database_providers/emprendedor_controller.dart';
+import 'package:bizpro_app/screens/emprendedores/agregar_emprendedor_screen.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -56,6 +58,8 @@ class _AgregarEmprendimientoScreenState
   Widget build(BuildContext context) {
     final emprendimientoProvider =
         Provider.of<EmprendimientoController>(context);
+    final emprendedorProvider =
+        Provider.of<EmprendedorController>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
     return Scaffold(
       key: scaffoldKey,
@@ -520,6 +524,55 @@ class _AgregarEmprendimientoScreenState
                               },
                             ),
                             Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  FFButtonWidget(
+                                      onPressed: () async {
+                                        if (emprendedorProvider.asociado) {
+                                          snackbarKey.currentState
+                                            ?.showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "Ya se ha asociado un emprendedor, no puedes agregar más."),
+                                            ));
+                                        } else {
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const AgregarEmprendedorScreen(),
+                                            ),
+                                          ); 
+                                        }
+                                      },
+                                      text: emprendedorProvider.asociado ? 'Emprendedor Asociado' : 'Asociar Emprendedor',
+                                      options: FFButtonOptions(
+                                        width: 160,
+                                        height: 50,
+                                        color: emprendedorProvider.asociado ? 
+                                        AppTheme.of(context).grayIcon
+                                        :
+                                        AppTheme.of(context).secondaryText,
+                                        textStyle:
+                                            AppTheme.of(context).subtitle2.override(
+                                                  fontFamily: 'Poppins',
+                                                  color: Colors.white,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                        elevation: 2,
+                                        borderSide: const BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1,
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
+                            Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 5, 0, 0),
                               child: Row(
@@ -529,7 +582,7 @@ class _AgregarEmprendimientoScreenState
                                   FFButtonWidget(
                                     onPressed: () async {
                                       if (emprendimientoProvider
-                                          .validateForm(formKey)) {
+                                          .validateForm(formKey) && emprendedorProvider.asociado) {
                                         // comunidadProvider.add();
                                         final idEstado = dataBase.estadosBox.query(Estados_.nombre.equals(nombreEstado)).build().findFirst()?.id;
                                         if (idEstado != null) {
@@ -541,6 +594,9 @@ class _AgregarEmprendimientoScreenState
                                               usuarioProvider.addEmprendimiento(
                                                   emprendimientoProvider
                                                       .emprendimiento!);
+                                              if (emprendimientoProvider.idEmprendimiento !=  null) {
+                                                emprendedorProvider.add(emprendimientoProvider.idEmprendimiento!, idComunidad);
+                                              }
                                               await Navigator.push(
                                               context,
                                               MaterialPageRoute(
@@ -559,7 +615,7 @@ class _AgregarEmprendimientoScreenState
                                               title:
                                                   const Text('Campos vacíos'),
                                               content: const Text(
-                                                  'Para continuar, debe llenar todos los campos e incluír una imagen.'),
+                                                  'Para continuar, debe llenar todos los campos, asociar un emprendedor e incluír una imagen.'),
                                               actions: [
                                                 TextButton(
                                                   onPressed: () =>

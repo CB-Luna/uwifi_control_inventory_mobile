@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bizpro_app/screens/consultorias/detalle_consultoria_screen.dart';
 import 'package:bizpro_app/screens/jornadas/detalle_jornada_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -721,20 +722,17 @@ class _DetalleEmprendimientoScreenState
                                                 padding: const EdgeInsetsDirectional
                                                     .fromSTEB(15, 10, 15, 0),
                                                 child: InkWell(
-                                                  onTap: () {
-                                                    // await Navigator
-                                                    //     .push(
-                                                    //   context,
-                                                    //   MaterialPageRoute(
-                                                    //     builder:
-                                                    //         (context) =>
-                                                    //             DetalleJornadaWidget(
-                                                    //       proyectoDocRef:
-                                                    //           listViewConsultoriasRecord
-                                                    //               .refemprendimiento,
-                                                    //     ),
-                                                    //   ),
-                                                    // );
+                                                  onTap: () async {
+                                                    await Navigator
+                                                        .push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder:
+                                                            (context) =>
+                                                                DetalleConsultoriaScreen(consultoria: consultoria, numConsultoria:(index + 1).toString(),
+                                                        ),
+                                                      ),
+                                                    );
                                                   },
                                                   child: Container(
                                                     width: double.infinity,
@@ -767,7 +765,7 @@ class _DetalleEmprendimientoScreenState
                                                                         .fromSTEB(
                                                                     0, 5, 0, 0),
                                                             child: Text(
-                                                              'Consultoría No. ${consultoria.id}',
+                                                              'Consultoría No. ${index + 1}',
                                                               maxLines: 1,
                                                               style: AppTheme.of(
                                                                       context)
@@ -889,50 +887,6 @@ class _DetalleEmprendimientoScreenState
                             children: [
                               InkWell(
                                 onTap: () async {
-                                  if (widget.emprendimiento.emprendedor.target ==
-                                      null) {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            AgregarEmprendedorScreen(
-                                          idEmprendimiento:
-                                              widget.emprendimiento.id,
-                                          nombreEmprendimiento:
-                                              widget.emprendimiento.nombre,
-                                        ),
-                                      ),
-                                    );
-                                  } else {
-                                    snackbarKey.currentState
-                                        ?.showSnackBar(const SnackBar(
-                                      content: Text(
-                                          "Ya hay un emprendedor registrado a este emprendimiento"),
-                                    ));
-                                  }
-                                },
-                                child: const Icon(
-                                  Icons.groups_sharp,
-                                  color: Colors.white,
-                                  size: 24,
-                                ),
-                              ),
-                              Text(
-                                'Emprendedores',
-                                style: AppTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      color: Colors.white,
-                                      fontSize: 8,
-                                    ),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                onTap: () async {
                                   if (widget.emprendimiento.emprendedor.target != null) {
                                     if (widget.emprendimiento.jornadas.isNotEmpty) {
                                     final int numJornada = int.parse(widget.emprendimiento.jornadas.last.numJornada);
@@ -1002,8 +956,9 @@ class _DetalleEmprendimientoScreenState
                                       ));
                                   }
                                 },
-                                child: const Icon(
-                                  Icons.folder_rounded,
+                                child: const FaIcon(
+                                  FontAwesomeIcons
+                                      .calendarCheck,
                                   color: Colors.white,
                                   size: 24,
                                 ),
@@ -1070,7 +1025,7 @@ class _DetalleEmprendimientoScreenState
                                   
                                 },
                                 child: const Icon(
-                                  Icons.work_outlined,
+                                  Icons.folder_rounded,
                                   color: Colors.white,
                                   size: 24,
                                 ),
@@ -1126,6 +1081,30 @@ class _DetalleEmprendimientoScreenState
                               ),
                               Text(
                                 'Ventas',
+                                style: AppTheme.of(context).bodyText1.override(
+                                      fontFamily: 'Poppins',
+                                      color: Colors.white,
+                                      fontSize: 8,
+                                    ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                },
+                                child: const FaIcon(
+                                  FontAwesomeIcons
+                                      .productHunt,
+                                  color: Colors.white,
+                                  size: 24,
+                                ),
+                              ),
+                              Text(
+                                'Productos',
                                 style: AppTheme.of(context).bodyText1.override(
                                       fontFamily: 'Poppins',
                                       color: Colors.white,

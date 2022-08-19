@@ -34,7 +34,7 @@ class _EmprendimientoCreadoState extends State<EmprendimientoCreado> {
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                     child: Text(
-                      '¡Emprendimiento\nCreado!',
+                      '¡Emprendimiento y\nEmprendedor\nCreados!',
                       textAlign: TextAlign.center,
                       style: AppTheme.of(context).bodyText1.override(
                             fontFamily: 'Poppins',
@@ -46,7 +46,7 @@ class _EmprendimientoCreadoState extends State<EmprendimientoCreado> {
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                     child: Text(
-                      'Listo, el emprendimiento se agregará a tu\nlista de emprendimientos.',
+                      'Listo, el emprendimiento y el emprendedor\nse agregarán a tus listas respectivas.',
                       textAlign: TextAlign.center,
                       style: AppTheme.of(context).bodyText1.override(
                             fontFamily: 'Poppins',

@@ -7,7 +7,7 @@ import 'package:bizpro_app/database/entitys.dart';
 class EmprendimientoController extends ChangeNotifier {
 
   Emprendimientos? emprendimiento;
-
+  int? idEmprendimiento;
   GlobalKey<FormState> emprendimientoFormKey = GlobalKey<FormState>();
  
   //Emprendimiento
@@ -29,6 +29,8 @@ class EmprendimientoController extends ChangeNotifier {
     imagen = '';
     nombre = '';
     descripcion = '';
+    idEmprendimiento =  null;
+    emprendimiento = null;
     notifyListeners();
   }
 
@@ -47,7 +49,8 @@ class EmprendimientoController extends ChangeNotifier {
         nuevoEmprendimiento.comunidad.target = comunidad;
         nuevoEmprendimiento.statusSync.target = nuevoSync;
         nuevoEmprendimiento.bitacora.add(nuevaInstruccion);
-        dataBase.emprendimientosBox.put(nuevoEmprendimiento);
+        //Agregamos el emprendimiento en objectBox y recuperamos el Id
+        idEmprendimiento = dataBase.emprendimientosBox.put(nuevoEmprendimiento);
         emprendimiento = nuevoEmprendimiento;
         print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
         print('Emprendimiento agregado exitosamente');

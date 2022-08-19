@@ -6,6 +6,7 @@ import 'package:bizpro_app/database/entitys.dart';
 class EmprendedorController extends ChangeNotifier {
 
   List<Emprendedores> emprendedores = [];
+  Emprendedores? emprendedor; 
 
   GlobalKey<FormState> emprendedorFormKey = GlobalKey<FormState>();
 
@@ -20,6 +21,8 @@ class EmprendedorController extends ChangeNotifier {
   String telefono = '';
   String comentarios = '';
 
+  bool asociado =  false;
+
   bool validateForm(GlobalKey<FormState> emprendedorKey) {
     return emprendedorKey.currentState!.validate() ? true : false;
   }
@@ -31,6 +34,7 @@ class EmprendedorController extends ChangeNotifier {
     nombre = '';
     apellidos = '';
     nacimiento = null;
+    emprendedor = null;
     curp = '';
     integrantesFamilia = '';
     // integrantesFamilia.clear();
@@ -38,6 +42,23 @@ class EmprendedorController extends ChangeNotifier {
     comentarios = '';
     notifyListeners();
   }
+
+  void addTemporaly() {
+  emprendedor = Emprendedores(
+    imagen: imagen,
+    nombre: nombre, 
+    apellidos: apellidos,
+    nacimiento: nacimiento!, 
+    curp: curp, 
+    integrantesFamilia: integrantesFamilia, 
+    telefono: telefono, 
+    comentarios: comentarios,  
+  );
+  emprendedores.add(emprendedor!);
+  asociado = true;
+  print('Emprendedor temporal guardado éxitosamente');
+  notifyListeners();
+}
 
   void add(int idEmprendimiento, int idComunidad) {
     final nuevoEmprendedor = Emprendedores(

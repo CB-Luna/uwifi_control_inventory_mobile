@@ -539,7 +539,7 @@ class Consultorias {
   final ambitoConsultoria = ToOne<AmbitoConsultoria>();
   final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
-  final tarea = ToOne<Tareas>();
+  final tareas = ToMany<Tareas>();
   Consultorias({
     this.id = 0,
     DateTime? fechaRegistro,

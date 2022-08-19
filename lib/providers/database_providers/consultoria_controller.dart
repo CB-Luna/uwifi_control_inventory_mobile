@@ -45,7 +45,7 @@ class ConsultoriaController extends ChangeNotifier {
       //Se asigna un ambito y un area del circulo a la nuevaConsultoria
       nuevaConsultoria.ambitoConsultoria.target = ambito;
       nuevaConsultoria.areaCirculo.target = areaCirculo;
-      nuevaConsultoria.tarea.target = nuevaTarea;
+      nuevaConsultoria.tareas.add(nuevaTarea);
       nuevaConsultoria.emprendimiento.target = emprendimiento;
       nuevaConsultoria.bitacora.add(nuevaInstruccion);
       //Indispensable para que se muestre en la lista de consultorias
