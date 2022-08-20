@@ -7,14 +7,14 @@ import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 
-class Jornada1Actualizada extends StatefulWidget {
-  const Jornada1Actualizada({Key? key}) : super(key: key);
+class JornadaActualizada extends StatefulWidget {
+  const JornadaActualizada({Key? key}) : super(key: key);
 
   @override
-  State<Jornada1Actualizada> createState() => _Jornada1ActualizadaState();
+  State<JornadaActualizada> createState() => _JornadaActualizadaState();
 }
 
-class _Jornada1ActualizadaState extends State<Jornada1Actualizada> {
+class _JornadaActualizadaState extends State<JornadaActualizada> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -36,7 +36,7 @@ class _Jornada1ActualizadaState extends State<Jornada1Actualizada> {
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                     child: Text(
-                      '¡Jornada 1\nActualizada!',
+                      '¡Jornada\nActualizada!',
                       textAlign: TextAlign.center,
                       style: AppTheme.of(context).bodyText1.override(
                             fontFamily: 'Poppins',

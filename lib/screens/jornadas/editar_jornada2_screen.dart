@@ -1,12 +1,15 @@
 import 'dart:io';
+import 'package:bizpro_app/screens/jornadas/jornada_actualizada.dart';
+import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
+import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 
 import 'package:bizpro_app/providers/database_providers/jornada_controller.dart';
-import 'package:bizpro_app/screens/jornadas/jornada_actualizada.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_checkbox_group.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
@@ -14,20 +17,21 @@ import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 
-class EditarJornada1Screen extends StatefulWidget {
+class EditarJornada2Screen extends StatefulWidget {
   final Jornadas jornada;
   
-  const EditarJornada1Screen({
+  const EditarJornada2Screen({
     Key? key, 
     required this.jornada,
   }) : super(key: key);
 
 
   @override
-  _EditarJornada1ScreenState createState() => _EditarJornada1ScreenState();
+  _EditarJornada2ScreenState createState() => _EditarJornada2ScreenState();
 }
 
-class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
+class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
+  List<String> checkboxGroupValues = [];
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late DateTime fechaRegistro;
@@ -35,7 +39,9 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
   late TextEditingController fechaRegistroText;
   late TextEditingController fechaRevisionText;
   late TextEditingController tareaController;
+  late TextEditingController comentariosController;
   late bool activoController;
+  XFile? image;
 
   @override
   void initState() {
@@ -45,6 +51,7 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
     fechaRevisionText = TextEditingController(text: dateTimeFormat('yMMMd', widget.jornada.fechaRevision));
     fechaRegistroText = TextEditingController(text: dateTimeFormat('yMMMd', widget.jornada.fechaRegistro));
     tareaController = TextEditingController(text: widget.jornada.tarea.target!.tarea);
+    comentariosController = TextEditingController(text: widget.jornada.tarea.target!.observacion);
     activoController = widget.jornada.tarea.target!.activo;
   }
 
@@ -517,6 +524,202 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
                                 ],
                               ),
                             ),
+                            Padding(
+                              padding:
+                                  const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                              child: TextFormField(
+                                controller: comentariosController,
+                                textCapitalization: TextCapitalization.sentences,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  labelText: 'Comentarios',
+                                  labelStyle: AppTheme.of(context)
+                                      .title3
+                                      .override(
+                                        fontFamily: 'Montserrat',
+                                        color: AppTheme.of(context)
+                                            .secondaryText,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                  hintText: 'Ingresa comentarios...',
+                                  hintStyle: AppTheme.of(context)
+                                      .title3
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        color: AppTheme.of(context)
+                                            .secondaryText,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: AppTheme.of(context)
+                                          .primaryText,
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: AppTheme.of(context)
+                                          .primaryText,
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  filled: true,
+                                  fillColor: const Color(0x49FFFFFF),
+                                ),
+                                style: AppTheme.of(context)
+                                    .title3
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: AppTheme.of(context)
+                                          .primaryText,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                maxLines: 3,
+                              ),
+                            ),
+                            FormField(builder: (state){
+                              return Padding(
+                                padding:
+                                    const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: AppTheme.of(context)
+                                            .primaryText,
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(
+                                          width: 1.5,
+                                        ),
+                                      ),
+                                      child: InkWell(
+                                        onTap: () async {
+                                          await Navigator.push(
+                                            context,
+                                            PageTransition(
+                                              type: PageTransitionType.fade,
+                                              child:
+                                                  FlutterFlowExpandedImageView(
+                                                image: image == null ? Image.network(
+                                                  'https://picsum.photos/seed/836/600',
+                                                  fit: BoxFit.contain,
+                                                ) 
+                                                :
+                                                Image.file(
+                                                  File(image!.path),
+                                                  fit: BoxFit.contain,
+                                                ),
+                                                allowRotation: false,
+                                                tag: 'imageTag2',
+                                                useHeroAnimation: true,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        child: Hero(
+                                          tag: 'imageTag2',
+                                          transitionOnUserGestures: true,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            child: image == null ?Image.network(
+                                              'https://picsum.photos/seed/836/600',
+                                              width: 170,
+                                              height: 120,
+                                              fit: BoxFit.cover,
+                                            )
+                                            :
+                                            Image.file(
+                                              File(image!.path),
+                                              width: 170,
+                                              height: 120,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    FFButtonWidget(
+                                      onPressed: () async {
+                                        String? option = await showModalBottomSheet(
+                                            context: context,
+                                            builder: (_) => const CustomBottomSheet(),
+                                          );
+                              
+                                          if (option == null) return;
+                              
+                                          final picker = ImagePicker();
+                              
+                                          late final XFile? pickedFile;
+                              
+                                          if (option == 'camera') {
+                                            pickedFile = await picker.pickImage(
+                                              source: ImageSource.camera,
+                                              imageQuality: 100,
+                                            );
+                                          } else {
+                                            pickedFile = await picker.pickImage(
+                                              source: ImageSource.gallery,
+                                              imageQuality: 100,
+                                            );
+                                          }
+                              
+                                          if (pickedFile == null) {
+                                            return;
+                                          }
+                              
+                                          setState(() {
+                                            image = pickedFile;
+                                          });
+                                      },
+                                      text: 'Círculo Empresa',
+                                      icon: const Icon(
+                                        Icons.add_a_photo,
+                                        size: 15,
+                                      ),
+                                      options: FFButtonOptions(
+                                        width: 140,
+                                        height: 40,
+                                        color: AppTheme.of(context)
+                                            .secondaryText,
+                                        textStyle: AppTheme.of(context)
+                                            .subtitle2
+                                            .override(
+                                              fontFamily:
+                                                  AppTheme.of(context)
+                                                      .subtitle2Family,
+                                              color: Colors.white,
+                                              fontSize: 15,
+                                            ),
+                                        borderSide: const BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                            // validator: (val) {
+                            //   if (jornadaProvider.imagen == null ||
+                            //       jornadaProvider.imagen.isEmpty) {
+                            //     return 'Para continuar, cargue el circulo de la empresa';
+                            //   }
+                            //   return null;
+                            // }
+                            )
                           ],
                         ),
                       ),
@@ -529,13 +732,15 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
                               if (fechaRegistro != widget.jornada.fechaRegistro ||
                                   fechaRevision != widget.jornada.fechaRevision || 
                                   tareaController.text != widget.jornada.tarea.target!.tarea ||
+                                  comentariosController.text != widget.jornada.tarea.target!.observacion ||
                                   activoController != widget.jornada.tarea.target!.activo
                                   ) {
-                                  jornadaProvider.updateJornada1(
+                                  jornadaProvider.updateJornada2(
                                     widget.jornada.id, 
                                     fechaRegistro,
                                     fechaRevision,
                                     tareaController.text,
+                                    comentariosController.text,
                                     activoController,
                                     widget.jornada.tarea.target!.id
                                     );
