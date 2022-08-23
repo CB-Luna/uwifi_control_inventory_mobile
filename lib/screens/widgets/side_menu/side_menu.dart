@@ -171,22 +171,6 @@ class SideMenu extends StatelessWidget {
                       },
                     ),
 
-                    // if (userState.rol == Rol.administrador)
-                    CustomMenuItem(
-                      label: 'Promotores',
-                      iconData: Icons.work,
-                      onTap: () async {
-                        //TODO: agregar pantalla
-                        // await Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) =>
-                        //         ListaPromotoresWidget(),
-                        //   ),
-                        // );
-                      },
-                    ),
-
                     CustomMenuItem(
                       label: 'Sincronizar',
                       iconData: Icons.sync_rounded,

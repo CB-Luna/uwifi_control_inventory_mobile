@@ -57,26 +57,7 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
     return Scaffold(
       key: scaffoldKey,
       drawer: const SideMenu(),
-      backgroundColor: const Color(0xFF2BC1F6),
-      floatingActionButton: userState.rol == Rol.administrador
-          ? FloatingActionButton(
-              onPressed: () async {
-                // await Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => AgregarEmprendedorScreen(),
-                //   ),
-                // );
-              },
-              backgroundColor: const Color(0xFF006AFF),
-              elevation: 8,
-              child: const Icon(
-                Icons.add,
-                color: Colors.white,
-                size: 24,
-              ),
-            )
-          : null,
+      backgroundColor: Colors.white,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Stack(

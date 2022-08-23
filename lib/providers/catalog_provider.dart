@@ -1,18 +1,19 @@
-import 'package:bizpro_app/models/get_ambito_consultoria.dart';
-import 'package:bizpro_app/models/get_area_circulo.dart';
-import 'package:bizpro_app/models/get_catalogos_proyectos.dart';
-import 'package:bizpro_app/models/get_unidades_medida.dart';
-import 'package:bizpro_app/util/util.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/database/entitys.dart';
+import 'package:bizpro_app/helpers/constants.dart';
+
 import 'package:bizpro_app/models/get_clasificacion_emp.dart';
 import 'package:bizpro_app/models/get_comunidades.dart';
 import 'package:bizpro_app/models/get_familia_inversion.dart';
-
+import 'package:bizpro_app/models/get_ambito_consultoria.dart';
+import 'package:bizpro_app/models/get_area_circulo.dart';
+import 'package:bizpro_app/models/get_catalogos_proyectos.dart';
+import 'package:bizpro_app/models/get_roles.dart';
+import 'package:bizpro_app/models/get_unidades_medida.dart';
 import 'package:bizpro_app/models/get_estados.dart';
 import 'package:bizpro_app/models/get_municipios.dart';
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/helpers/constants.dart';
+import 'package:bizpro_app/util/util.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -38,6 +39,7 @@ class CatalogProvider extends ChangeNotifier {
     await getEstados();
     await getMunicipios();
     await getComunidades();
+    await getRoles();
     await getClasificacionesEmp();
     await getCatalogosProyectos();
     await getFamiliaInversion();
@@ -168,6 +170,41 @@ class CatalogProvider extends ChangeNotifier {
       notifyListeners();
       }
     }
+  Future<void> getRoles() async {
+    if (dataBase.rolesBox.isEmpty()) {
+      final records = await client.records.
+      getFullList('roles', batch: 200, sort: '+rol');
+      final List<GetRoles> listRoles = [];
+      for (var element in records) {
+        listRoles.add(getRolesFromMap(element.toString()));
+      }
+      
+      listRoles.sort((a, b) => removeDiacritics(a.rol).compareTo(removeDiacritics(b.rol)));
+
+      print("*****Informacion roles*****");
+      for (var i = 0; i < listRoles.length; i++) {
+        if (listRoles[i].id.isNotEmpty) {
+        final nuevoRol = Roles(
+        rol: listRoles[i].rol,
+        idDBR: listRoles[i].id,
+        );
+        final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
+        nuevoRol.statusSync.target = nuevoSync;
+        dataBase.rolesBox.put(nuevoRol);
+        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
+        print('Rol agregado exitosamente');
+        final record = await client.records.update('roles', listRoles[i].id, body: {
+          'id_status_sync_fk': 'HoI36PzYw1wtbO1',
+        });
+        if (record.id.isNotEmpty) {
+            print('Rol actualizado en el backend exitosamente');
+          }
+
+        }
+      }
+      notifyListeners();
+      }
+  }
 
   Future<void> getClasificacionesEmp() async {
     if (dataBase.clasificacionesEmpBox.isEmpty()) {

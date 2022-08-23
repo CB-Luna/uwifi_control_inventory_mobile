@@ -201,19 +201,22 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                               ),
                             ],
                           ),
-                          Text(
-                            'Consultoría No. ${widget.numConsultoria}',
-                            maxLines: 1,
-                            style: AppTheme.of(context)
-                                .subtitle2
-                                .override(
-                                  fontFamily:
-                                      AppTheme.of(context)
-                                          .subtitle2Family,
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                ),
-                          ),
+                          Container(
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF4672FF),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Text(
+                                'Consultoría No. ${widget.numConsultoria}',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTheme.of(context).subtitle2.override(
+                                      fontFamily: 'Poppins',
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                    ),
+                              ),
+                            ),
                         ],
                       ),
                     ),

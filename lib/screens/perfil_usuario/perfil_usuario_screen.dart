@@ -25,7 +25,15 @@ class PerfilUsuarioScreen extends StatefulWidget {
 class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
   String? dropDownValue = '';
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  List<String> listRoles = [];
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    listRoles = [];
+    dataBase.rolesBox.getAll().forEach((element) {listRoles.add(element.rol);});
+  }
   @override
   Widget build(BuildContext context) {
     final usuarioProvider = Provider.of<UsuarioController>(context);
@@ -329,15 +337,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0, 25, 0, 0),
                   child: FlutterFlowDropDown(
-                    options: const [
-                      'Emprendedor',
-                      'Promotor',
-                      'Staff logística',
-                      'Staff dirección',
-                      'Amigo del cambio',
-                      'Voluntario estratégico',
-                      'Administrador'
-                    ],
+                    options: listRoles,
                     onChanged: (val) => setState(() => dropDownValue = val),
                     width: 280,
                     height: 50,
@@ -367,41 +367,6 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: DeviceInformationWidget(),
-                  ),
-                ),
-                Padding(
-                  padding:
-                    const EdgeInsetsDirectional.fromSTEB(0, 44, 0, 44),
-                  child: FFButtonWidget(
-                    onPressed: () async {
-                      catalogosProvider.procesoCargando(true);
-                      catalogosProvider.procesoTerminado(false);
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              const CatalogosScreen(),
-                        ),
-                      );
-                    },
-                    text: 'Descargar Catálogos',
-                    options: FFButtonOptions(
-                      width: 150,
-                      height: 50,
-                      color: AppTheme.of(context).secondaryText,
-                      textStyle:
-                          AppTheme.of(context).subtitle2.override(
-                                fontFamily: 'Poppins',
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
-                      elevation: 2,
-                      borderSide: const BorderSide(
-                        color: Colors.transparent,
-                        width: 1,
-                      ),
-                    ),
                   ),
                 ),
               ],

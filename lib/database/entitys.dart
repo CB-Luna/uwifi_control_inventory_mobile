@@ -329,6 +329,7 @@ class Usuarios {
   final bitacora = ToOne<Bitacora>();
   final documentos = ToMany<Documentos>();
   final variablesUsuario = ToOne<VariablesUsuario>(); //Importante para evaluar la sincronizacion
+  final roles = ToOne<Roles>();
   @Backlink()
   final emprendimientos = ToMany<Emprendimientos>();
 

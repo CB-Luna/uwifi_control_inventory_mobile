@@ -108,12 +108,14 @@ class _SincronizacionScreenState extends State<SincronizacionScreen> {
                               : Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 70, 0, 0),
-                                  child: Image.asset(
-                                    'assets/images/progress_ready.png',
-                                    width: 250,
-                                    height: 180,
-                                    fit: BoxFit.cover,
-                                  ),
+                                  child: Lottie.asset(
+                                      'assets/lottie_animations/elemento-creado.json',
+                                      width: 250,
+                                      height: 180,
+                                      fit: BoxFit.cover,
+                                      repeat: false,
+                                      animate: true,
+                                    ),
                                 ),
                           Visibility(
                             visible: syncProvider.procesoterminado,

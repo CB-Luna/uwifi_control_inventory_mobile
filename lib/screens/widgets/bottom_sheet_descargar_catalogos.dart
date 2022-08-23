@@ -63,6 +63,7 @@ class _BottomSheetDescargarCatalogosState
                                   0, 4, 0, 0),
                               child: Text(
                                 'Advertencia: Necesitas descargar los catálogos para llenar algunos formularios.',
+                                textAlign: TextAlign.center,
                                 style: AppTheme.of(context).title2.override(
                                       fontFamily:
                                           AppTheme.of(context).title2Family,
@@ -73,6 +74,21 @@ class _BottomSheetDescargarCatalogosState
                             ),
                           ),
                         ],
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const[
+                            Icon(
+                              Icons.warning_amber_outlined,
+                              size: 80,
+                              color: Color(0xFF221573),
+                            ),
+                          ],
+                        ),
                       ),
                       Row(
                         mainAxisSize: MainAxisSize.max,
@@ -95,22 +111,6 @@ class _BottomSheetDescargarCatalogosState
                           ),
                         ],
                       ),
-                      // Padding(
-                      //   padding:
-                      //       const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                      //   child: Row(
-                      //     mainAxisSize: MainAxisSize.max,
-                      //     mainAxisAlignment: MainAxisAlignment.center,
-                      //     children: [
-                      //       Lottie.asset(
-                      //         'assets/lottie_animations/animation_640_l4j11ef8.gif',
-                      //         height: 100,
-                      //         fit: BoxFit.cover,
-                      //         animate: true,
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
                       Padding(
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 44),

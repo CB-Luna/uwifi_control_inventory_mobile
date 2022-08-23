@@ -171,15 +171,21 @@ class _EditarEmprendimientoScreenState
                 top: 100,
                 child: Align(
                   alignment: Alignment.topCenter,
-                  child: Text(
-                    widget.emprendimiento.nombre,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTheme.of(context).subtitle2.override(
-                          fontFamily: 'Poppins',
-                          color: Colors.white,
-                          fontSize: 18,
-                        ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF4672FF),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      widget.emprendimiento.nombre,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTheme.of(context).subtitle2.override(
+                            fontFamily: 'Poppins',
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
+                    ),
                   ),
                 ),
               ),

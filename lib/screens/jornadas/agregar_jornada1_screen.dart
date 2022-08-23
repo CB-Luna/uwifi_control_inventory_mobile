@@ -167,17 +167,21 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                                 ),
                               ],
                             ),
-                            Text(
-                              widget.emprendimiento.nombre,
-                              maxLines: 1,
-                              style: AppTheme.of(context)
-                                  .subtitle2
-                                  .override(
-                                    fontFamily: AppTheme.of(context)
-                                        .subtitle2Family,
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                  ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF4672FF),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Text(
+                                widget.emprendimiento.nombre,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTheme.of(context).subtitle2.override(
+                                      fontFamily: 'Poppins',
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                    ),
+                              ),
                             ),
                           ],
                         ),
@@ -483,40 +487,6 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                                     ? null
                                     : 'Para continuar, ingrese la tarea empezando por mayúscula';
                                 },
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  5, 0, 5, 10),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: FlutterFlowCheckboxGroup(
-                                      initiallySelected:
-                                          !jornadaProvider.activo,
-                                      options: '¿Tarea Completada?',
-                                      onChanged: (val) => setState(
-                                          () {
-                                            print(val);
-                                            jornadaProvider.activo = val;
-                                            print(jornadaProvider.activo);
-                                            }),
-                                      activeColor: AppTheme.of(context)
-                                          .primaryColor,
-                                      checkColor: Colors.white,
-                                      checkboxBorderColor: const Color(0xFF95A1AC),
-                                      textStyle: AppTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily:
-                                                AppTheme.of(context)
-                                                    .bodyText1Family,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                    ),
-                                  ),
-                                ],
                               ),
                             ),
                           ],

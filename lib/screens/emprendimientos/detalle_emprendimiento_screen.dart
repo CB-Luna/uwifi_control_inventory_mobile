@@ -282,15 +282,21 @@ class _DetalleEmprendimientoScreenState
                           top: 100,
                           child: Align(
                             alignment: Alignment.topCenter,
-                            child: Text(
-                              widget.emprendimiento.nombre,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTheme.of(context).subtitle2.override(
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                  ),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF4672FF),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Text(
+                                widget.emprendimiento.nombre,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTheme.of(context).subtitle2.override(
+                                      fontFamily: 'Poppins',
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                    ),
+                              ),
                             ),
                           ),
                         ),
@@ -616,7 +622,7 @@ class _DetalleEmprendimientoScreenState
                                                             .bodyText2
                                                             .override(
                                                               fontFamily: 'Poppins',
-                                                              color: Colors.black,
+                                                              color: Colors.white,
                                                               fontSize: 13,
                                                               fontWeight:
                                                                   FontWeight.normal,
@@ -635,7 +641,7 @@ class _DetalleEmprendimientoScreenState
                                                             .bodyText2
                                                             .override(
                                                               fontFamily: 'Poppins',
-                                                              color: Colors.black,
+                                                              color: Colors.white,
                                                               fontSize: 13,
                                                               fontWeight:
                                                                   FontWeight.normal,
@@ -797,7 +803,7 @@ class _DetalleEmprendimientoScreenState
                                                                       fontFamily:
                                                                           'Poppins',
                                                                       color: Colors
-                                                                          .black,
+                                                                          .white,
                                                                       fontSize: 13,
                                                                       fontWeight:
                                                                           FontWeight
@@ -820,7 +826,7 @@ class _DetalleEmprendimientoScreenState
                                                                       fontFamily:
                                                                           'Poppins',
                                                                       color: Colors
-                                                                          .black,
+                                                                          .white,
                                                                       fontSize: 13,
                                                                       fontWeight:
                                                                           FontWeight
