@@ -108,13 +108,11 @@ class _SincronizacionScreenState extends State<SincronizacionScreen> {
                               : Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 70, 0, 0),
-                                  child: Lottie.asset(
-                                    'assets/lottie_animations/23719-reach-circle-progress.json',
+                                  child: Image.asset(
+                                    'assets/images/progress_ready.png',
                                     width: 250,
                                     height: 180,
                                     fit: BoxFit.cover,
-                                    repeat: false,
-                                    animate: true,
                                   ),
                                 ),
                           Visibility(

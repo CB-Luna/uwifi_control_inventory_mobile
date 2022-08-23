@@ -7,6 +7,7 @@ import 'package:bizpro_app/database/entitys.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bizpro_app/screens/jornadas/editar_jornada1_screen.dart';
 import 'package:bizpro_app/screens/jornadas/editar_jornada2_screen.dart';
+import 'package:bizpro_app/screens/jornadas/editar_jornada3_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_carousel.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
@@ -187,7 +188,9 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) => EditarJornada1Screen(
-                                                          jornada: widget.jornada)),
+                                                          jornada: widget.jornada
+                                                          ),
+                                                        ),
                                                   );
                                                   break;
                                                 case "2":
@@ -195,7 +198,19 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) => EditarJornada2Screen(
-                                                          jornada: widget.jornada)),
+                                                          jornada: widget.jornada
+                                                          ),
+                                                        ),
+                                                  );
+                                                  break;
+                                                case "3":
+                                                  await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) => EditarJornada3Screen(
+                                                          jornada: widget.jornada
+                                                          ),
+                                                        ),
                                                   );
                                                   break;
                                                 default:

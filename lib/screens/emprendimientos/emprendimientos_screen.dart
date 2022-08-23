@@ -1,6 +1,8 @@
-import 'package:bizpro_app/util/util.dart';
+import 'package:bizpro_app/screens/widgets/bottom_sheet_descargar_catalogos.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/util/util.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:bizpro_app/helpers/globals.dart';
@@ -25,6 +27,7 @@ class EmprendimientosScreen extends StatefulWidget {
 class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
   TextEditingController searchController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  List<String> listAreaCirculo = [];
 
   @override
   void initState() {
@@ -32,6 +35,8 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
         getInfo();
+        listAreaCirculo = [];
+        dataBase.areaCirculoBox.getAll().forEach((element) {listAreaCirculo.add(element.nombreArea);});
       });
     });
   }
@@ -57,12 +62,30 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
       floatingActionButton: userState.rol == Rol.administrador
           ? FloatingActionButton(
               onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AgregarEmprendimientoScreen(),
-                  ),
-                );
+                if (listAreaCirculo.isNotEmpty) {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AgregarEmprendimientoScreen(),
+                    ),
+                  );
+                } else {
+                  await showModalBottomSheet(
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    context: context,
+                    builder: (context) {
+                      return Padding(
+                        padding: MediaQuery.of(context).viewInsets,
+                        child: SizedBox(
+                          height:
+                              MediaQuery.of(context).size.height * 0.45,
+                          child: const BottomSheetDescargarCatalogos(),
+                        ),
+                      );
+                    },
+                  );
+                }
               },
               backgroundColor: const Color(0xFF4672FF),
               elevation: 8,

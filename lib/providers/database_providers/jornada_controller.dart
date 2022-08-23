@@ -222,6 +222,54 @@ class JornadaController extends ChangeNotifier {
     print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
   }
 
+  void updateJornada3(int id, int idEmprendimiento, DateTime newFechaRegistro, String newTarea, bool newActivo, DateTime newFechaRevision, 
+    String newComentarios, int newIdProyecto, String newDescripcion, int idTarea) {
+    var updateTarea  = dataBase.tareasBox.get(idTarea);
+    if (updateTarea != null) {
+      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateJornada3', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      updateTarea.fechaRegistro = newFechaRegistro;
+      updateTarea.fechaRevision = newFechaRevision;
+      updateTarea.tarea = newTarea;
+      updateTarea.observacion = newComentarios;
+      updateTarea.descripcion = newDescripcion;
+      updateTarea.activo = newActivo;
+      final statusSyncTarea = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateTarea.statusSync.target!.id)).build().findUnique();
+      if (statusSyncTarea != null) {
+        statusSyncTarea.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la tarea
+        dataBase.statusSyncBox.put(statusSyncTarea);
+      }
+      dataBase.tareasBox.put(updateTarea);
+      var updateJornada = dataBase.jornadasBox.get(id);
+      if (updateJornada !=  null) {
+        updateJornada.fechaRegistro = newFechaRegistro;
+        updateJornada.fechaRevision = newFechaRevision;
+        final statusSyncJornada = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateJornada.statusSync.target!.id)).build().findUnique();
+        if (statusSyncJornada != null) {
+          statusSyncJornada.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la jornada
+          dataBase.statusSyncBox.put(statusSyncJornada);
+        }
+        dataBase.jornadasBox.put(updateJornada);
+        final updateEmprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
+        final updateCatalogoProyecto = dataBase.catalogoProyectoBox.get(newIdProyecto);
+        if (updateEmprendimiento != null && updateCatalogoProyecto != null) {
+          //Se actualiza un catalogoProyecto(Proyecto) al emprendimiento, como por default catalogoProuyecto ya tiene un clasificacion emprendimiento
+          updateEmprendimiento.catalogoProyecto.target = updateCatalogoProyecto;
+          //Indispensable para que se muestre en la lista de jornadas
+          dataBase.emprendimientosBox.put(updateEmprendimiento);
+          // Se actualiza el estado del emprendimiento porque se cambia su clasificacionEmp
+          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendimiento.statusSync.target!.id)).build().findUnique();
+          if (statusSync != null) {
+            statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del emprendimiento
+            dataBase.statusSyncBox.put(statusSync);
+          }
+          updateJornada.bitacora.add(nuevaInstruccion);
+          notifyListeners();
+          print('Jornada 3 actualizada exitosamente');
+        }
+      }
+    }
+  }
+
   void addJornada4(int idEmprendimiento, int numJornada) {
     print("Numero jornada: $numJornada");
     final nuevaJornada = Jornadas(
@@ -243,6 +291,21 @@ class JornadaController extends ChangeNotifier {
     nuevaTarea.statusSync.target = nuevoSyncTarea;
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     if (emprendimiento != null) {
+      // Se actualiza el estado activo de las tareas de las jornadas anteriores
+      jornadas = emprendimiento.jornadas.toList();
+      for (var i = 0; i < jornadas.length; i++) {
+        var updateTarea = jornadas[i].tarea.target;
+        if (updateTarea != null) {
+          updateTarea.activo = false;
+          final statusSyncTarea = dataBase.statusSyncBox.query(StatusSync_.id.equals(jornadas[i].tarea.target!.statusSync.target!.id)).build().findUnique();
+          if (statusSyncTarea != null) {
+              statusSyncTarea.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la tarea
+              dataBase.statusSyncBox.put(statusSyncTarea);
+            }
+          dataBase.tareasBox.put(updateTarea);
+        }
+        print('Tarea de jornada ${i + 1} actualizada exitosamente');
+      }
       print("Entro aca");
       final nuevoSyncJornada = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Jornada 1
       final nuevaInstruccion = Bitacora(instrucciones: 'syncAddJornada4', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora

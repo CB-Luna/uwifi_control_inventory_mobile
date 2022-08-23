@@ -40,6 +40,7 @@ class EmprendedorController extends ChangeNotifier {
     // integrantesFamilia.clear();
     telefono = '';
     comentarios = '';
+    asociado = false;
     notifyListeners();
   }
 
@@ -48,7 +49,7 @@ class EmprendedorController extends ChangeNotifier {
     imagen: imagen,
     nombre: nombre, 
     apellidos: apellidos,
-    nacimiento: nacimiento!, 
+    nacimiento: nacimiento?? DateTime.parse("2000-02-27 13:27:00"), 
     curp: curp, 
     integrantesFamilia: integrantesFamilia, 
     telefono: telefono, 
@@ -65,7 +66,7 @@ class EmprendedorController extends ChangeNotifier {
       imagen: imagen,
       nombre: nombre, 
       apellidos: apellidos,
-      nacimiento: nacimiento!, 
+      nacimiento: nacimiento?? DateTime.parse("2000-02-27 13:27:00"), 
       curp: curp, 
       integrantesFamilia: integrantesFamilia, 
       telefono: telefono, 
@@ -87,6 +88,7 @@ class EmprendedorController extends ChangeNotifier {
           // dataBase.emprendedoresBox.put(nuevoEmprendedor);
           emprendedores.add(nuevoEmprendedor);
           print('Emprendedor agregado exitosamente');
+          clearInformation();
           notifyListeners();
         }
       }

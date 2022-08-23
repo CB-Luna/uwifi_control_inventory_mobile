@@ -1,10 +1,17 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/theme/theme.dart';
+import 'package:bizpro_app/util/util.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bizpro_app/screens/consultorias/agregar_tarea_consultoria_screen.dart';
+import 'package:bizpro_app/screens/consultorias/editar_consultoria_screen.dart';
+import 'package:bizpro_app/screens/consultorias/editar_tarea_consultoria_screen.dart';
+import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
+import 'package:bizpro_app/screens/widgets/flutter_flow_carousel.dart';
+import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+
 
 class DetalleConsultoriaScreen extends StatefulWidget {
   final Consultorias consultoria;
@@ -22,11 +29,42 @@ class DetalleConsultoriaScreen extends StatefulWidget {
       _DetalleConsultoriaScreenState();
 }
 
-class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen> {
+class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
+    with TickerProviderStateMixin {
+  final animationsMap = {
+    'containerOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      duration: 600,
+      hideBeforeAnimating: false,
+      fadeIn: true,
+      initialState: AnimationState(
+        offset: const Offset(0, 70),
+        scale: 1,
+        opacity: 0,
+      ),
+      finalState: AnimationState(
+        offset: const Offset(0, 0),
+        scale: 1,
+        opacity: 1,
+      ),
+    ),
+  };
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
+  void initState() {
+    super.initState();
+    startPageLoadAnimations(
+      animationsMap.values
+          .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
+      this,
+    );
+  }
+  @override
   Widget build(BuildContext context) {
+    List<Tareas> tareas = [];
+    tareas = widget.consultoria.tareas.toList();
+    print("Tareas: ${tareas.length}");
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: AppTheme.of(context).primaryBackground,
@@ -128,26 +166,36 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen> {
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 0, 0, 10),
-                                child: Container(
-                                  width: 45,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: AppTheme.of(context)
-                                        .secondaryText,
-                                    borderRadius:
-                                        BorderRadius.circular(10),
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: const [
-                                      Icon(
-                                        Icons.edit_rounded,
-                                        color: Colors.white,
-                                        size: 20,
+                                child: InkWell(
+                                  onTap: () async {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            EditarConsultoriaScreen(consultoria: widget.consultoria, numConsultoria: widget.numConsultoria,),
                                       ),
-                                    ],
+                                    );
+                                  },
+                                  child: Container(
+                                    width: 45,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: AppTheme.of(context)
+                                          .secondaryText,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: const [
+                                        Icon(
+                                          Icons.edit_rounded,
+                                          color: Colors.white,
+                                          size: 20,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -292,7 +340,7 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 5, 0, 0),
                               child: Text(
-                                'Siguiente visita',
+                                'Fecha de registro',
                                 style: AppTheme.of(context)
                                     .bodyText1
                                     .override(
@@ -307,7 +355,7 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 5, 0, 5),
                               child: AutoSizeText(
-                                DateTime.now().toString(),
+                                dateTimeFormat('dd/MM/yyyy', widget.consultoria.fechaRegistro),
                                 textAlign: TextAlign.start,
                                 maxLines: 1,
                                 style: AppTheme.of(context)
@@ -320,6 +368,173 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen> {
                                       fontWeight: FontWeight.normal,
                                     ),
                               ),
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => AgregarTareaConsultoriaScreen(
+                                            consultoria: widget.consultoria, 
+                                            numConsultoria: widget.numConsultoria, 
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    text: '+ Tarea',
+                                    options: FFButtonOptions(
+                                      width: 100,
+                                      height: 40,
+                                      color: AppTheme.of(context).secondaryText,
+                                      textStyle:
+                                          AppTheme.of(context).subtitle2.override(
+                                                fontFamily: AppTheme.of(context)
+                                                    .subtitle2Family,
+                                                color: Colors.white,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                      borderSide: const BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                              ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  primary: false,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: tareas.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 12),
+                                      child: InkWell(
+                                        onTap: () async {
+                                          await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditarTareaConsultoriaScreen(
+                                                  consultoria: widget.consultoria, 
+                                                  tarea: tareas[index],
+                                                  numTarea: index + 1,
+                                                ),
+                                          ),
+                                        );
+                                        },
+                                        child: Container(
+                                          width: double.infinity,
+                                          height: 120,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                blurRadius: 4,
+                                                color: Color(0x2B202529),
+                                                offset: Offset(0, 2),
+                                              )
+                                            ],
+                                            borderRadius: BorderRadius.circular(12),
+                                          ),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                                    8, 0, 0, 0),
+                                                child: Row(
+                                                  mainAxisSize: MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Expanded(
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional.fromSTEB(
+                                                                8, 0, 0, 4),
+                                                        child: Column(
+                                                          mainAxisSize: MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment.center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment.start,
+                                                          children: [
+                                                            Padding(
+                                                              padding: const EdgeInsetsDirectional
+                                                                  .fromSTEB(0, 10, 0, 0),
+                                                              child: AutoSizeText(
+                                                                tareas[index].tarea,
+                                                                maxLines: 2,
+                                                                style: AppTheme.of(
+                                                                        context)
+                                                                    .subtitle1
+                                                                    .override(
+                                                                      fontFamily: 'Outfit',
+                                                                      color: AppTheme
+                                                                              .of(context)
+                                                                          .primaryText,
+                                                                      fontSize: 20,
+                                                                      fontWeight:
+                                                                          FontWeight.w500,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional.fromSTEB(
+                                                              0, 10, 10, 0),
+                                                      child: Container(
+                                                        width: MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.4,
+                                                        height: 100,
+                                                        decoration: BoxDecoration(
+                                                          color: const Color(0xFFEEEEEE),
+                                                          borderRadius:
+                                                              BorderRadius.circular(5),
+                                                        ),
+                                                        child: SizedBox(
+                                                          width: 180,
+                                                          height: 100,
+                                                          child:
+                                                            FlutterFlowCarousel(
+                                                            width: 180,
+                                                            height: 100,
+                                                            listaImagenes:
+                                                                tareas[index].imagenes ?? [],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ).animated([
+                                          animationsMap['containerOnPageLoadAnimation']!
+                                        ]),
+                                      ),
+                                    );
+                                  },
                             ),
                           ],
                         ),

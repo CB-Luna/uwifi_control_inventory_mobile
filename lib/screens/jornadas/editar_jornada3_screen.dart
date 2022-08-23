@@ -5,6 +5,7 @@ import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 
 import 'package:bizpro_app/screens/inversiones/agregar_registro_proyecto.dart';
+import 'package:bizpro_app/screens/jornadas/jornada_actualizada.dart';
 import 'package:bizpro_app/screens/jornadas/jornada_creada.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
@@ -442,11 +443,13 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                   Expanded(
                                     child: FlutterFlowCheckboxGroup(
                                       initiallySelected:
-                                          !jornadaProvider.activo,
+                                          !activoController,
                                       options: '¿Tarea Completada?',
                                       onChanged: (val) => setState(
                                           () {
-                                            jornadaProvider.activo = val;
+                                            print(val);
+                                            activoController = val;
+                                            print(activoController);
                                             }),
                                       activeColor: AppTheme.of(context)
                                           .primaryColor,
@@ -594,13 +597,14 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                 ),
                               );
                             },
-                            validator: (val) {
-                              if (jornadaProvider.imagen == null ||
-                                  jornadaProvider.imagen.isEmpty) {
-                                return 'Para continuar, cargue una imagen';
-                              }
-                              return null;
-                            }),
+                            // validator: (val) {
+                            //   if (jornadaProvider.imagen == null ||
+                            //       jornadaProvider.imagen.isEmpty) {
+                            //     return 'Para continuar, cargue una imagen';
+                            //   }
+                            //   return null;
+                            // }
+                            ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   5, 0, 5, 10),
@@ -748,6 +752,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                    5, 0, 5, 10),
                               child: DropDown(
+                                initialOption: tipoProyecto,
                                 options: listTipoProyecto,
                                 onChanged: (val) => setState((){
                                   if (listTipoProyecto.isEmpty) {
@@ -808,6 +813,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                    5, 0, 5, 10),
                               child: DropDown(
+                                initialOption: proyecto,
                                 options: (tipoProyecto == "" || listProyectos.isEmpty) ? ["Sin proyectos"] : listProyectos,
                                 onChanged: (val) => setState((){
                                   if (val == "Sin proyectos") {
@@ -859,11 +865,9 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                               padding:
                                   const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                               child: TextFormField(
+                                controller: descController,
                                 textCapitalization: TextCapitalization.sentences,
                                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                                onChanged: (value) {
-                                  jornadaProvider.descripcion = value;
-                                },
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   labelText: 'Descripción*',
@@ -933,13 +937,13 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                 elevation: 4,
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            AgregarRegistroProyectoSreen(emprendimiento: widget.jornada.emprendimiento.target!,),
-                                      ),
-                                    );
+                                    // await Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //     builder: (context) =>
+                                    //         AgregarRegistroProyectoSreen(emprendimiento: widget.jornada.emprendimiento.target!,),
+                                    //   ),
+                                    // );
                                   },
                                   text: 'Agregar Registro',
                                   options: FFButtonOptions(
@@ -971,18 +975,41 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                           onPressed: () async {
                             if (jornadaProvider
                                 .validateForm(formKey)) {
-                              print("Fecha revision ${jornadaProvider.fechaRevision}");
-                              print("Tarea ${jornadaProvider.tarea}");
-                              final idProyecto = dataBase.catalogoProyectoBox.query(CatalogoProyecto_.nombre.equals(proyecto)).build().findFirst()?.id;
-                              if (idProyecto != null) {
-                                // jornadaProvider.addJornada3(widget.emprendimiento.id, idProyecto, widget.numJornada);
-                                await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const JornadaCreada(),
-                                ),
-                              );
-                              }
+                                  print("Se puede actualizar");
+                                if (fechaRegistro != widget.jornada.fechaRegistro ||
+                                    tareaController.text != widget.jornada.tarea.target!.tarea ||
+                                    activoController != widget.jornada.tarea.target!.activo ||
+                                    fechaRevision != widget.jornada.fechaRevision || 
+                                    comentariosController.text != widget.jornada.tarea.target!.observacion ||
+                                    tipoProyecto != widget.jornada.emprendimiento.target!.catalogoProyecto.target!.clasificacionEmp.target!.clasificacion ||
+                                    proyecto != widget.jornada.emprendimiento.target!.catalogoProyecto.target!.nombre ||
+                                    descController.text != widget.jornada.tarea.target!.descripcion 
+                                    ) {
+                                      final idTipoProyecto = dataBase.clasificacionesEmpBox.query(ClasificacionEmp_.clasificacion.equals(tipoProyecto)).build().findFirst()?.id;
+                                      if (idTipoProyecto != null) {
+                                        final idProyecto = dataBase.catalogoProyectoBox.query(CatalogoProyecto_.clasificacionEmp.equals(idTipoProyecto).and(CatalogoProyecto_.nombre.equals(proyecto))).build().findFirst()?.id;
+                                        if (idProyecto != null) {
+                                          jornadaProvider.updateJornada3(
+                                          widget.jornada.id, 
+                                          widget.jornada.emprendimiento.target!.id,
+                                          fechaRegistro,
+                                          tareaController.text,
+                                          activoController,
+                                          fechaRevision,
+                                          comentariosController.text,
+                                          idProyecto,
+                                          descController.text,
+                                          widget.jornada.tarea.target!.id
+                                          );
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => const JornadaActualizada(),
+                                          ),
+                                        );
+                                        }
+                                      }  
+                                }
                             } else {
                               await showDialog(
                                 context: context,
@@ -1006,7 +1033,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                               return;
                             }
                           },
-                          text: 'Crear',
+                          text: 'Actualizar',
                           icon: const Icon(
                             Icons.check_rounded,
                             size: 15,

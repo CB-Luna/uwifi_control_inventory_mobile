@@ -483,13 +483,6 @@ final _entities = <ModelEntity>[
             flags: 2080,
             indexId: const IdUid(69, 2233256601077182610)),
         ModelProperty(
-            id: const IdUid(16, 5688593427736897311),
-            name: 'bitacoraId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(81, 2386897909389581505),
-            relationTarget: 'Bitacora'),
-        ModelProperty(
             id: const IdUid(17, 3679854591609531040),
             name: 'tarea',
             type: 9,
@@ -500,7 +493,12 @@ final _entities = <ModelEntity>[
             type: 1,
             flags: 0)
       ],
-      relations: <ModelRelation>[],
+      relations: <ModelRelation>[
+        ModelRelation(
+            id: const IdUid(27, 6651921256699348419),
+            name: 'bitacora',
+            targetId: const IdUid(27, 1774905738150923512))
+      ],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
       id: const IdUid(20, 6615538153946220074),
@@ -1915,7 +1913,7 @@ ModelDefinition getObjectBoxModel() {
       entities: _entities,
       lastEntityId: const IdUid(46, 8904698342427392465),
       lastIndexId: const IdUid(145, 4680505657145532033),
-      lastRelationId: const IdUid(26, 2137414110899067316),
+      lastRelationId: const IdUid(27, 6651921256699348419),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
         1366246136666677579,
@@ -1974,7 +1972,8 @@ ModelDefinition getObjectBoxModel() {
         7510634053082529540,
         8309315416341765269,
         1728042511720879376,
-        8396189901550464501
+        8396189901550464501,
+        2386897909389581505
       ],
       retiredPropertyUids: const [
         7079790605743243388,
@@ -2149,7 +2148,8 @@ ModelDefinition getObjectBoxModel() {
         3911938135844163773,
         4915654780717530161,
         8381385900840453390,
-        9041506210264243534
+        9041506210264243534,
+        5688593427736897311
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -2566,13 +2566,10 @@ ModelDefinition getObjectBoxModel() {
         }),
     Tareas: EntityDefinition<Tareas>(
         model: _entities[5],
-        toOneRelations: (Tareas object) => [
-              object.jornada,
-              object.consultoria,
-              object.statusSync,
-              object.bitacora
-            ],
-        toManyRelations: (Tareas object) => {},
+        toOneRelations: (Tareas object) =>
+            [object.jornada, object.consultoria, object.statusSync],
+        toManyRelations: (Tareas object) =>
+            {RelInfo<Tareas>.toMany(27, object.id): object.bitacora},
         getId: (Tareas object) => object.id,
         setId: (Tareas object, int id) {
           object.id = id;
@@ -2600,7 +2597,6 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(11, object.consultoria.targetId);
           fbb.addInt64(12, object.statusSync.targetId);
           fbb.addOffset(14, idDBROffset);
-          fbb.addInt64(15, object.bitacora.targetId);
           fbb.addOffset(16, tareaOffset);
           fbb.addBool(17, object.activo);
           fbb.finish(fbb.endTable());
@@ -2637,9 +2633,8 @@ ModelDefinition getObjectBoxModel() {
           object.statusSync.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0);
           object.statusSync.attach(store);
-          object.bitacora.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 34, 0);
-          object.bitacora.attach(store);
+          InternalToManyAccess.setRelInfo(object.bitacora, store,
+              RelInfo<Tareas>.toMany(27, object.id), store.box<Tareas>());
           return object;
         }),
     Comunidades: EntityDefinition<Comunidades>(
@@ -3132,9 +3127,7 @@ ModelDefinition getObjectBoxModel() {
                   object.emprendedores,
               RelInfo<Emprendimientos>.toManyBacklink(8, object.id):
                   object.emprendimientos,
-              RelInfo<Tareas>.toOneBacklink(
-                      16, object.id, (Tareas srcObject) => srcObject.bitacora):
-                  object.tareas,
+              RelInfo<Tareas>.toManyBacklink(27, object.id): object.tareas,
               RelInfo<Consultorias>.toManyBacklink(25, object.id):
                   object.consultorias,
               RelInfo<Usuarios>.toOneBacklink(17, object.id,
@@ -3190,8 +3183,7 @@ ModelDefinition getObjectBoxModel() {
           InternalToManyAccess.setRelInfo(
               object.tareas,
               store,
-              RelInfo<Tareas>.toOneBacklink(
-                  16, object.id, (Tareas srcObject) => srcObject.bitacora),
+              RelInfo<Tareas>.toManyBacklink(27, object.id),
               store.box<Bitacora>());
           InternalToManyAccess.setRelInfo(
               object.consultorias,
@@ -4495,16 +4487,16 @@ class Tareas_ {
   /// see [Tareas.idDBR]
   static final idDBR = QueryStringProperty<Tareas>(_entities[5].properties[10]);
 
-  /// see [Tareas.bitacora]
-  static final bitacora =
-      QueryRelationToOne<Tareas, Bitacora>(_entities[5].properties[11]);
-
   /// see [Tareas.tarea]
-  static final tarea = QueryStringProperty<Tareas>(_entities[5].properties[12]);
+  static final tarea = QueryStringProperty<Tareas>(_entities[5].properties[11]);
 
   /// see [Tareas.activo]
   static final activo =
-      QueryBooleanProperty<Tareas>(_entities[5].properties[13]);
+      QueryBooleanProperty<Tareas>(_entities[5].properties[12]);
+
+  /// see [Tareas.bitacora]
+  static final bitacora =
+      QueryRelationToMany<Tareas, Bitacora>(_entities[5].relations[0]);
 }
 
 /// [Comunidades] entity fields to define ObjectBox queries.

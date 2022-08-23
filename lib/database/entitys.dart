@@ -245,7 +245,7 @@ class Tareas {
   final jornada = ToOne<Jornadas>();
   final consultoria = ToOne<Consultorias>();
   final statusSync = ToOne<StatusSync>();
-  final bitacora = ToOne<Bitacora>();
+  final bitacora = ToMany<Bitacora>();
   Tareas({
     this.id = 0,
     required this.tarea,

@@ -3,25 +3,24 @@ import 'package:provider/provider.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/providers/sync_provider.dart';
-import 'package:bizpro_app/screens/sync/sincronizacion_screen.dart';
+import 'package:bizpro_app/providers/catalog_provider.dart';
+import 'package:bizpro_app/screens/catalogos/catalogos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
-class BottomSheetSincronizarWidget extends StatefulWidget {
-  final bool isVisible;
-  const BottomSheetSincronizarWidget({Key? key, required this.isVisible})
+class BottomSheetDescargarCatalogos extends StatefulWidget {
+  const BottomSheetDescargarCatalogos({Key? key})
       : super(key: key);
 
   @override
-  State<BottomSheetSincronizarWidget> createState() =>
-      _BottomSheetSincronizarWidgetState();
+  State<BottomSheetDescargarCatalogos> createState() =>
+      _BottomSheetDescargarCatalogosState();
 }
 
-class _BottomSheetSincronizarWidgetState
-    extends State<BottomSheetSincronizarWidget> {
+class _BottomSheetDescargarCatalogosState
+    extends State<BottomSheetDescargarCatalogos> {
   @override
   Widget build(BuildContext context) {
-    final syncProvider = Provider.of<SyncProvider>(context);
+    final catalogoProvider = Provider.of<CatalogProvider>(context);
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 350,
@@ -63,7 +62,7 @@ class _BottomSheetSincronizarWidgetState
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 4, 0, 0),
                               child: Text(
-                                '¿Seguro que quieres Sincronizar?',
+                                'Advertencia: Necesitas descargar los catálogos para llenar algunos formularios.',
                                 style: AppTheme.of(context).title2.override(
                                       fontFamily:
                                           AppTheme.of(context).title2Family,
@@ -83,7 +82,7 @@ class _BottomSheetSincronizarWidgetState
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 8, 0, 0),
                               child: Text(
-                                'Toda la información capturada en los emprendimientos se registrarán en la nube (necesitas conexón a internet).',
+                                'Algunos campos en el llenado de los formularios se encuentra vacío, debe de descargar esta información faltante que se encuentra en Internet.',
                                 textAlign: TextAlign.center,
                                 style: AppTheme.of(context).bodyText2.override(
                                       fontFamily:
@@ -96,22 +95,22 @@ class _BottomSheetSincronizarWidgetState
                           ),
                         ],
                       ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Lottie.asset(
-                              'assets/lottie_animations/lf30_editor_uguzblhq.json',
-                              height: 100,
-                              fit: BoxFit.cover,
-                              animate: true,
-                            ),
-                          ],
-                        ),
-                      ),
+                      // Padding(
+                      //   padding:
+                      //       const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                      //   child: Row(
+                      //     mainAxisSize: MainAxisSize.max,
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     children: [
+                      //       Lottie.asset(
+                      //         'assets/lottie_animations/animation_640_l4j11ef8.gif',
+                      //         height: 100,
+                      //         fit: BoxFit.cover,
+                      //         animate: true,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       Padding(
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 44),
@@ -143,37 +142,34 @@ class _BottomSheetSincronizarWidgetState
                                 ),
                               ),
                             ),
-                            Visibility(
-                              visible: widget.isVisible,
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  syncProvider.procesoCargando(true);
-                                  syncProvider.procesoTerminado(false);
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const SincronizacionScreen(),
-                                    ),
-                                  );
-                                },
-                                text: 'SINCRONIZAR',
-                                options: FFButtonOptions(
-                                  width: 150,
-                                  height: 50,
-                                  color: AppTheme.of(context).secondaryText,
-                                  textStyle:
-                                    AppTheme.of(context).subtitle2.override(
-                                      fontFamily: 'Poppins',
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  elevation: 2,
-                                  borderSide: const BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                            FFButtonWidget(
+                              onPressed: () async {
+                                catalogoProvider.procesoCargando(true);
+                                catalogoProvider.procesoTerminado(false);
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const CatalogosScreen(),
                                   ),
+                                );
+                              },
+                              text: 'DESCARGAR',
+                              options: FFButtonOptions(
+                                width: 150,
+                                height: 50,
+                                color: AppTheme.of(context).secondaryText,
+                                textStyle:
+                                    AppTheme.of(context).subtitle2.override(
+                                          fontFamily: 'Poppins',
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                elevation: 2,
+                                borderSide: const BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1,
                                 ),
                               ),
                             ),

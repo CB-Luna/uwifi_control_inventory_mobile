@@ -610,7 +610,7 @@ class _DetalleEmprendimientoScreenState
                                                                   .fromSTEB(
                                                               16, 0, 16, 5),
                                                       child: Text(
-                                                        'Fecha de registro: ${dateTimeFormat('dd/MM/yyyy', jornada.fechaRegistro)}',
+                                                        'Emprendedor: ${jornada.emprendimiento.target?.emprendedor.target?.nombre ?? "Sin Emprendedor"}',
                                                         maxLines: 1,
                                                         style: AppTheme.of(context)
                                                             .bodyText2

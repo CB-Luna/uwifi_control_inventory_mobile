@@ -1,4 +1,5 @@
 import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -11,6 +12,9 @@ class ConsultoriaController extends ChangeNotifier {
   //Consultorias
   DateTime? fechaRevision = DateTime.now();
   String tarea = "";
+  String observacion = "";
+  String descripcion = "";
+  bool activo = true;
 
   bool validateForm(GlobalKey<FormState> consultoriaKey) {
     return consultoriaKey.currentState!.validate() ? true : false;
@@ -20,7 +24,10 @@ class ConsultoriaController extends ChangeNotifier {
   void clearInformation()
   {
     tarea = "";
+    observacion = "";
+    descripcion = "";
     fechaRevision =  null;
+    activo = true;
     notifyListeners();
   }
 
@@ -55,6 +62,71 @@ class ConsultoriaController extends ChangeNotifier {
       print('Consultoria agregada exitosamente');
       clearInformation(); //Se limpia información para usar el mismo controller en otro registro
       notifyListeners();
+    }
+  }
+
+  void updateConsultoria(int id, int idAmbito, int idAreaCirculo) {
+    var updateConsultoria = dataBase.consultoriasBox.get(id);
+      if (updateConsultoria !=  null) {
+        final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+        final nuevoAmbito = dataBase.ambitoConsultoriaBox.get(idAmbito);
+        final nuevaAreaCirculo = dataBase.areaCirculoBox.get(idAreaCirculo);
+        updateConsultoria.ambitoConsultoria.target = nuevoAmbito;
+        updateConsultoria.areaCirculo.target = nuevaAreaCirculo;
+        final statusSyncConsultoria = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateConsultoria.statusSync.target!.id)).build().findUnique();
+        if (statusSyncConsultoria != null) {
+          statusSyncConsultoria.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la consultoria
+          dataBase.statusSyncBox.put(statusSyncConsultoria);
+        }
+        updateConsultoria.bitacora.add(nuevaInstruccion);
+        dataBase.consultoriasBox.put(updateConsultoria);
+        print('Consultoria actualizada exitosamente');
+      }
+  }
+
+  void addTareaConsultoria(int idConsultoria) {
+    final nuevaTarea = Tareas(
+    tarea: tarea,
+    descripcion: descripcion,
+    observacion: (observacion == "" || observacion.isEmpty) ? "Comentarios Consultoría" : observacion,
+    porcentaje: 1,
+    activo: activo,
+    fechaRevision: fechaRevision!);
+    final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
+    nuevaTarea.statusSync.target = nuevoSyncTarea;
+    // final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
+    final updateConsultoria = dataBase.consultoriasBox.get(idConsultoria);
+    if (updateConsultoria != null) {
+      final nuevaInstruccion = Bitacora(instrucciones: 'syncAddTareaConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      //Se agrega una nueva Tarea a la consultoria
+      updateConsultoria.tareas.add(nuevaTarea);
+      dataBase.consultoriasBox.put(updateConsultoria);
+      consultorias.add(updateConsultoria);
+      nuevaTarea.bitacora.add(nuevaInstruccion);
+      print('Consultoria actualizada exitosamente');
+      clearInformation(); //Se limpia información para usar el mismo controller en otro registro
+      notifyListeners();
+    }
+  }
+
+  void updateTareaConsultoria(int idTarea, String newTarea, DateTime newFechaRevision, String newComentarios, String newDescripcion, bool newActivo) {
+    var updateTarea  = dataBase.tareasBox.get(idTarea);
+    if (updateTarea != null) {
+      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateTareaConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      updateTarea.fechaRevision = newFechaRevision;
+      updateTarea.tarea = newTarea;
+      updateTarea.observacion = newComentarios;
+      updateTarea.descripcion = newDescripcion;
+      updateTarea.activo = newActivo;
+      final statusSyncTarea = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateTarea.statusSync.target!.id)).build().findUnique();
+      if (statusSyncTarea != null) {
+        statusSyncTarea.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la tarea
+        dataBase.statusSyncBox.put(statusSyncTarea);
+      }
+      updateTarea.bitacora.add(nuevaInstruccion);
+      dataBase.tareasBox.put(updateTarea);
+      notifyListeners();
+      print('Tarea Consultoria actualizada exitosamente');
     }
   }
 
