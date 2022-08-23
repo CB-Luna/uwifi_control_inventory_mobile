@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'package:bizpro_app/screens/consultorias/detalle_consultoria_screen.dart';
-import 'package:bizpro_app/screens/jornadas/detalle_jornada_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,16 +11,13 @@ import 'package:expandable/expandable.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
-
+import 'package:bizpro_app/screens/consultorias/detalle_consultoria_screen.dart';
+import 'package:bizpro_app/screens/jornadas/detalle_jornada_screen.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada2_screen.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada1_screen.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada3_screen.dart';
 import 'package:bizpro_app/screens/inversiones/inversion.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada4_screen.dart';
-import 'package:bizpro_app/screens/widgets/pdf/api/pdf_invoice_api.dart';
-import 'package:bizpro_app/screens/widgets/pdf/models/customer.dart';
-import 'package:bizpro_app/screens/widgets/pdf/models/invoice.dart';
-import 'package:bizpro_app/screens/widgets/pdf/models/supplier.dart';
 import 'package:bizpro_app/screens/consultorias/agregar_consultoria_screen.dart';
 import 'package:bizpro_app/screens/emprendimientos/editar_emprendimiento.dart';
 
@@ -161,81 +156,7 @@ class _DetalleEmprendimientoScreenState
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: InkWell(
-                                    onTap: () async {
-                                    final date = DateTime.now();
-                                    final dueDate = date.add(Duration(days: 7));
-                  
-                                    final invoice = Invoice(
-                                      supplier: const Supplier(
-                                        name: 'Sarah Field',
-                                        address: 'Sarah Street 9, Beijing, China',
-                                        paymentInfo: 'https://paypal.me/sarahfieldzz',
-                                      ),
-                                      customer: const Customer(
-                                        name: 'Apple Inc.',
-                                        address: 'Apple Street, Cupertino, CA 95014',
-                                      ),
-                                      info: InvoiceInfo(
-                                        date: date,
-                                        dueDate: dueDate,
-                                        description: 'My description...',
-                                        number: '${DateTime.now().year}-9999',
-                                      ),
-                                      items: [
-                                        InvoiceItem(
-                                          description: 'Coffee',
-                                          date: DateTime.now(),
-                                          quantity: 3,
-                                          vat: 0.19,
-                                          unitPrice: 5.99,
-                                        ),
-                                        InvoiceItem(
-                                          description: 'Water',
-                                          date: DateTime.now(),
-                                          quantity: 8,
-                                          vat: 0.19,
-                                          unitPrice: 0.99,
-                                        ),
-                                        InvoiceItem(
-                                          description: 'Orange',
-                                          date: DateTime.now(),
-                                          quantity: 3,
-                                          vat: 0.19,
-                                          unitPrice: 2.99,
-                                        ),
-                                        InvoiceItem(
-                                          description: 'Apple',
-                                          date: DateTime.now(),
-                                          quantity: 8,
-                                          vat: 0.19,
-                                          unitPrice: 3.99,
-                                        ),
-                                        InvoiceItem(
-                                          description: 'Mango',
-                                          date: DateTime.now(),
-                                          quantity: 1,
-                                          vat: 0.19,
-                                          unitPrice: 1.59,
-                                        ),
-                                        InvoiceItem(
-                                          description: 'Blue Berries',
-                                          date: DateTime.now(),
-                                          quantity: 5,
-                                          vat: 0.19,
-                                          unitPrice: 0.99,
-                                        ),
-                                        InvoiceItem(
-                                          description: 'Lemon',
-                                          date: DateTime.now(),
-                                          quantity: 4,
-                                          vat: 0.19,
-                                          unitPrice: 1.29,
-                                        ),
-                                      ],
-                                    );
-                                    final pdfFile = await PdfInvoiceApi.generate(invoice);
-                  
-                                    // PdfApi.openFile(pdfFile);
+                                    onTap: () async {                          
                                     },
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,

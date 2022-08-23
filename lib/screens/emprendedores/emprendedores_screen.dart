@@ -1,20 +1,24 @@
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/screens/emprendedores/detalle_emprendedor_screen.dart';
-import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
-import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
-import 'package:bizpro_app/util/util.dart';
 import 'package:flutter/material.dart';
+import 'package:bizpro_app/main.dart';
 import 'package:provider/provider.dart';
+import 'package:bizpro_app/database/entitys.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'package:bizpro_app/util/util.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/providers/user_provider.dart';
 import 'package:bizpro_app/providers/database_providers/emprendedor_controller.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/helpers/globals.dart';
-
+import 'package:bizpro_app/screens/emprendedores/detalle_emprendedor_screen.dart';
+import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
 import 'package:bizpro_app/screens/widgets/custom_button.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:bizpro_app/screens/widgets/side_menu/side_menu.dart';
+import 'package:bizpro_app/screens/widgets/pdf/api/pdf_api.dart';
+import 'package:bizpro_app/screens/widgets/pdf/api/pdf_invoice_emprendedor.dart';
+import 'package:bizpro_app/screens/widgets/pdf/models/emprendedor_invoice.dart';
+import 'package:bizpro_app/screens/widgets/pdf/models/invoice_info.dart';
 
 class EmprendedoresScreen extends StatefulWidget {
   const EmprendedoresScreen({
@@ -28,6 +32,7 @@ class EmprendedoresScreen extends StatefulWidget {
 class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
   TextEditingController searchController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  List<Emprendedores> emprendedoresPDF = [];
 
   @override
   void initState() {
@@ -35,6 +40,8 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
         getInfo();
+        emprendedoresPDF = [];
+        emprendedoresPDF = dataBase.emprendedoresBox.getAll();
       });
     });
   }
@@ -49,11 +56,11 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
   Widget build(BuildContext context) {
     final UserState userState = Provider.of<UserState>(context);
     final emprendedorProvider = Provider.of<EmprendedorController>(context);
-
+    final usuarioProvider = Provider.of<UsuarioController>(context);
+    final Usuarios currentUser = usuarioProvider.usuarioCurrent!;
     //TODO: almacenar imagen?
     const String currentUserPhoto =
         'assets/images/default-user-profile-picture.jpg';
-
     return Scaffold(
       key: scaffoldKey,
       drawer: const SideMenu(),
@@ -164,7 +171,7 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                     15, 0, 0, 0),
                                 child: Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.75,
+                                      MediaQuery.of(context).size.width * 0.65,
                                   height: 50,
                                   decoration: BoxDecoration(
                                     color: const Color(0x49FFFFFF),
@@ -318,6 +325,63 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                           Icons.grid_view,
                                           color: Colors.white,
                                           size: 32,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    10, 0, 0, 0),
+                                child: Container(
+                                  width: 45,
+                                  height: 45,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF4672FF),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      print("Length emprendedores: ${emprendedoresPDF.length}");
+                                      final date = DateTime.now();
+                                      final invoice = EmprendedorInvoice(
+                                        info: InvoiceInfo(
+                                          usuario: '${currentUser.nombre} ${currentUser.apellidoP}',
+                                          fecha: date,
+                                          titulo: 'Emprendedores',
+                                          descripcion: 'En la siguiente tabla se muestran todos los emprendedores creados hasta el momento.',
+                                        ),
+                                        items: [
+                                          for (var emp in emprendedoresPDF)
+                                            EmprendedorItem(
+                                              id: emp.id,
+                                              nombre: emp.nombre,
+                                              apellidos: emp.apellidos,
+                                              curp: emp.curp,
+                                              integrantesFamilia: emp.integrantesFamilia,
+                                              comunidad: emp.comunidad.target!.nombre,
+                                              telefono: emp.telefono ?? "",
+                                              emprendimiento: emp.emprendimiento.target!.nombre,
+                                              comentarios: emp.comentarios,
+                                              usuario: "${emp.emprendimiento.target!.usuario.target!.nombre} ${emp.emprendimiento.target!.usuario.target!.apellidoP}",
+                                              fechaRegistro: emp.fechaRegistro,
+                                            ),
+                                        ],
+                                      );
+                                      final pdfFile = await PdfInvoiceEmprendedor.generate(invoice);
+                    
+                                      PdfApi.openFile(pdfFile);
+                                    },
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: const [
+                                        FaIcon(
+                                          FontAwesomeIcons.fileArrowDown,
+                                          color: Colors.white,
+                                          size: 25,
                                         ),
                                       ],
                                     ),

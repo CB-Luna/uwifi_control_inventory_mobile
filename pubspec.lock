@@ -64,6 +64,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
+  better_open_file:
+    dependency: "direct main"
+    description:
+      name: better_open_file
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.6.3"
   boolean_selector:
     dependency: transitive
     description:

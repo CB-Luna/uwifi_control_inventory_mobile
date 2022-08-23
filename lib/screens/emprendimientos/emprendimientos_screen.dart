@@ -1,4 +1,3 @@
-import 'package:bizpro_app/screens/widgets/bottom_sheet_descargar_catalogos.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/main.dart';
@@ -9,10 +8,14 @@ import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/providers/providers.dart';
 import 'package:bizpro_app/screens/emprendimientos/grid_emprendimientos_screen.dart';
-import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
+import 'package:bizpro_app/screens/widgets/bottom_sheet_descargar_catalogos.dart';
+import 'package:bizpro_app/screens/widgets/pdf/api/pdf_api.dart';
+import 'package:bizpro_app/screens/widgets/pdf/api/pdf_invoice_emprendimiento.dart';
+import 'package:bizpro_app/screens/widgets/pdf/models/emprendimiento_invoice.dart';
+import 'package:bizpro_app/screens/widgets/pdf/models/invoice_info.dart';
 import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
 import 'package:bizpro_app/screens/widgets/side_menu/side_menu.dart';
 import 'package:bizpro_app/screens/emprendimientos/agregar_emprendimiento_screen.dart';
@@ -28,6 +31,8 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
   TextEditingController searchController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   List<String> listAreaCirculo = [];
+  List<Emprendimientos> emprendimientos = [];
+  List<Emprendimientos> emprendimientosPDF = [];
 
   @override
   void initState() {
@@ -36,7 +41,9 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
       setState(() {
         getInfo();
         listAreaCirculo = [];
+        emprendimientosPDF = [];
         dataBase.areaCirculoBox.getAll().forEach((element) {listAreaCirculo.add(element.nombreArea);});
+        emprendimientosPDF = dataBase.emprendimientosBox.getAll();
       });
     });
   }
@@ -51,10 +58,10 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
   @override
   Widget build(BuildContext context) {
     final usuarioProvider = Provider.of<UsuarioController>(context);
-    final emprendimientoProvider =
-        Provider.of<EmprendimientoController>(context);
+    final Usuarios currentUser = usuarioProvider.usuarioCurrent!;
     final UserState userState = Provider.of<UserState>(context);
-
+    emprendimientos = [];
+    emprendimientos = usuarioProvider.getEmprendimientos();
     return Scaffold(
       key: scaffoldKey,
       drawer: const SideMenu(),
@@ -331,17 +338,43 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                     color: const Color(0xFF4672FF),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: const [
-                                      FaIcon(
-                                        FontAwesomeIcons.fileArrowDown,
-                                        color: Colors.white,
-                                        size: 25,
-                                      ),
-                                    ],
+                                  child: InkWell(
+                                    onTap: () async {
+                                      final date = DateTime.now();
+                                      final invoice = EmprendimientoInvoice(
+                                        info: InvoiceInfo(
+                                          usuario: '${currentUser.nombre} ${currentUser.apellidoP}',
+                                          fecha: date,
+                                          titulo: 'Emprendimientos',
+                                          descripcion: 'En la siguiente tabla se muestran todos los emprendimientos creados hasta el momento.',
+                                        ),
+                                        items: [
+                                          for (var emp in emprendimientos)
+                                            EmprendimientoItem(
+                                              emprendedor: "${emp.emprendedor.target!.nombre} ${emp.emprendedor.target!.apellidos}",
+                                              emprendimiento: emp.nombre,
+                                              comunidad: emp.comunidad.target!.nombre,
+                                              tipoProyecto: emp.catalogoProyecto.target != null ? emp.catalogoProyecto.target!.clasificacionEmp.target!.clasificacion : "",
+                                              fase: "Fase 1",
+                                            ),
+                                        ],
+                                      );
+                                      final pdfFile = await PdfInvoiceEmprendimiento.generate(invoice);
+                    
+                                      PdfApi.openFile(pdfFile);
+                                    },
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: const [
+                                        FaIcon(
+                                          FontAwesomeIcons.fileArrowDown,
+                                          color: Colors.white,
+                                          size: 25,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -355,10 +388,6 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 145, 0, 6),
                     child: Builder(
                       builder: (context) {
-                        //TODO: agregar query con el ID correcto
-                        List<Emprendimientos> emprendimientos =
-                            usuarioProvider.getEmprendimientos();
-
                         //Busqueda
                         if (searchController.text != '') {
                           emprendimientos.removeWhere((element) {
