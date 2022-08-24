@@ -65,6 +65,23 @@ class SyncProvider extends ChangeNotifier {
             }   
           }  
           break;
+        case "syncUpdateNameEmprendimiento":
+          final emprendimientoToSync = getFirstEmprendimiento(dataBase.emprendimientosBox.getAll(), instruccionesBitacora[i].id);
+          if(emprendimientoToSync != null){
+            if(emprendimientoToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
+              print("Entro aqui en el if");
+              break;
+            } else {
+              print("Entro aqui en el else");
+              if (emprendimientoToSync.idDBR != null) {
+                print("Ya ha sido enviado al backend");
+                syncUpdateNameEmprendimiento(emprendimientoToSync);
+              } else {
+                print("No ha sido enviado al backend");
+              }
+            }   
+          }  
+          break;
         case "syncUpdateEmprendedor":
           final emprendedorToSync = getFirstEmprendedor(dataBase.emprendedoresBox.getAll(), instruccionesBitacora[i].id);
           if(emprendedorToSync != null){
@@ -894,6 +911,39 @@ return true;
 
     } catch (e) {
       print('ERROR - function syncUpdateEmprendimiento(): $e');
+      return false;
+    }
+
+  } 
+
+  Future<bool?> syncUpdateNameEmprendimiento(Emprendimientos emprendimiento) async {
+
+    print("Estoy en El syncUpdateNameEmprendimiento");
+    try {
+
+      final record = await client.records.update('emprendimientos', emprendimiento.idDBR.toString(), body: {
+        "nombre_emprendimiento": emprendimiento.nombre,
+        "id_status_sync_fk": "HoI36PzYw1wtbO1",
+      }); 
+
+      if (record.id.isNotEmpty) {
+        print("Emprendimiento updated succesfully");
+        var updateEmprendimiento = dataBase.emprendimientosBox.get(emprendimiento.id);
+        if (updateEmprendimiento  != null) {
+          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendimiento.statusSync.target!.id)).build().findUnique();
+          if (statusSync != null) {
+            statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
+            dataBase.statusSyncBox.put(statusSync);
+          }
+        }
+      }
+      else{
+        return false;
+      }
+      return true;
+
+    } catch (e) {
+      print('ERROR - function syncUpdateNameEmprendimiento(): $e');
       return false;
     }
 

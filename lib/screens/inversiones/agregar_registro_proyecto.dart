@@ -349,7 +349,7 @@ class _AgregarRegistroProyectoSreenState
                                         },
                                         obscureText: false,
                                         decoration: InputDecoration(
-                                          labelText: 'Marca sugerida*',
+                                          labelText: 'Marca sugerida',
                                           labelStyle: AppTheme.of(context)
                                               .title3
                                               .override(
@@ -416,7 +416,7 @@ class _AgregarRegistroProyectoSreenState
                                         },
                                         obscureText: false,
                                         decoration: InputDecoration(
-                                          labelText: 'Proveedor sugerido*',
+                                          labelText: 'Proveedor sugerido',
                                           labelStyle: AppTheme.of(context)
                                               .title3
                                               .override(
@@ -602,7 +602,7 @@ class _AgregarRegistroProyectoSreenState
                                         },
                                         obscureText: false,
                                         decoration: InputDecoration(
-                                          labelText: 'Costo sugerido*',
+                                          labelText: 'Costo estimado*',
                                           labelStyle: AppTheme.of(context)
                                               .title3
                                               .override(

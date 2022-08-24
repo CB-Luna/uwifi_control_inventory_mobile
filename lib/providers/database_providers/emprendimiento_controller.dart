@@ -79,6 +79,23 @@ class EmprendimientoController extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateName(int id, String newNombre) {
+    var updateEmprendimiento = dataBase.emprendimientosBox.get(id);
+    final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateNameEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+    if (updateEmprendimiento != null) {
+      updateEmprendimiento.nombre = newNombre;
+      final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendimiento.statusSync.target!.id)).build().findUnique();
+      if (statusSync != null) {
+        statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del emprendimiento
+        dataBase.statusSyncBox.put(statusSync);
+      }
+      updateEmprendimiento.bitacora.add(nuevaInstruccion);
+      dataBase.emprendimientosBox.put(updateEmprendimiento);
+      print('Nombre de Emprendimiento actualizado exitosamente');
+    }
+    notifyListeners();
+  }
+
   void updateEmprendedores(int idEmprendimiento, Emprendedores emprendedor) {
     emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     emprendimiento!.emprendedor.target = emprendedor;

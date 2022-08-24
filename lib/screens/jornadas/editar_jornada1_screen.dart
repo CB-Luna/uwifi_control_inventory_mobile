@@ -6,6 +6,7 @@ import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 
 import 'package:bizpro_app/providers/database_providers/jornada_controller.dart';
+import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
 import 'package:bizpro_app/screens/jornadas/jornada_actualizada.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_checkbox_group.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
@@ -35,6 +36,7 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
   late TextEditingController fechaRegistroText;
   late TextEditingController fechaRevisionText;
   late TextEditingController tareaController;
+  late TextEditingController nombreController;
   late bool activoController;
 
   @override
@@ -46,11 +48,15 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
     fechaRegistroText = TextEditingController(text: dateTimeFormat('yMMMd', widget.jornada.fechaRegistro));
     tareaController = TextEditingController(text: widget.jornada.tarea.target!.tarea);
     activoController = widget.jornada.tarea.target!.activo;
+    nombreController =
+        TextEditingController(text: widget.jornada.emprendimiento.target!.nombre);
   }
 
   @override
   Widget build(BuildContext context) {
     final jornadaProvider = Provider.of<JornadaController>(context);
+    final emprendimientoProvider =
+        Provider.of<EmprendimientoController>(context);
     String emprendedor = "";
     if (widget.jornada.emprendimiento.target!.emprendedor.target != null) {
       emprendedor =
@@ -256,6 +262,61 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
                                     ),
                                   ],
                                 ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  5, 0, 5, 10),
+                              child: TextFormField(
+                                textCapitalization: TextCapitalization.sentences,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                obscureText: false,
+                                controller: nombreController,
+                                decoration: InputDecoration(
+                                  labelText: 'Nombre de emprendimiento',
+                                  labelStyle:
+                                      AppTheme.of(context).title3.override(
+                                            fontFamily: 'Montserrat',
+                                            color: const Color(0xFF4672FF),
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                  hintText: 'Ingresa el nombre...',
+                                  hintStyle:
+                                      AppTheme.of(context).title3.override(
+                                            fontFamily: 'Poppins',
+                                            color: const Color(0xFF4672FF),
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Color(0xFF221573),
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Color(0xFF221573),
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  filled: true,
+                                  fillColor: const Color(0x49FFFFFF),
+                                ),
+                                style: AppTheme.of(context).title3.override(
+                                      fontFamily: 'Poppins',
+                                      color: const Color(0xFF221573),
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                validator: (value) {
+                                return capitalizadoCharacters.hasMatch(value ?? '')
+                                    ? null
+                                    : 'Para continuar, ingrese el nombre empezando por mayúscula';
+                                },
                               ),
                             ),
                             Padding(
@@ -533,8 +594,12 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
                               if (fechaRegistro != widget.jornada.fechaRegistro ||
                                   fechaRevision != widget.jornada.fechaRevision || 
                                   tareaController.text != widget.jornada.tarea.target!.tarea ||
-                                  activoController != widget.jornada.tarea.target!.activo
+                                  activoController != widget.jornada.tarea.target!.activo  ||
+                                  nombreController.text != widget.jornada.emprendimiento.target!.nombre
                                   ) {
+                                  if (nombreController.text != widget.jornada.emprendimiento.target!.nombre) {
+                                    emprendimientoProvider.updateName(widget.jornada.emprendimiento.target!.id, nombreController.text);
+                                  }
                                   jornadaProvider.updateJornada1(
                                     widget.jornada.id, 
                                     fechaRegistro,

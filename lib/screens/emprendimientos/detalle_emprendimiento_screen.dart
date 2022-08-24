@@ -986,7 +986,7 @@ class _DetalleEmprendimientoScreenState
                                   );
                                 },
                                 child: const Icon(
-                                  Icons.stacked_line_chart_rounded,
+                                  Icons.attach_money_rounded,
                                   color: Colors.white,
                                   size: 24,
                                 ),
@@ -1006,7 +1006,7 @@ class _DetalleEmprendimientoScreenState
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const Icon(
-                                Icons.attach_money_rounded,
+                                Icons.stacked_line_chart_rounded,
                                 color: Colors.white,
                                 size: 24,
                               ),
