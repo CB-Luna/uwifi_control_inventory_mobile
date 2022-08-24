@@ -48,9 +48,6 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
   @override
   void initState() {
     super.initState();
-    print(widget.jornada.tarea.target!.image.target?.imagenes ?? "MI LOKO NO HAY NADA");
-    print(dataBase.imagenesBox.getAll().length);
-    print(widget.jornada.tarea.target!.image.target?.imagenes.isEmpty);
     newCirculoEmpresa = widget.jornada.tarea.target!.image.target?.imagenes ?? "NO FILE";
     fechaRevision = widget.jornada.fechaRevision;
     fechaRegistro = widget.jornada.fechaRegistro;
@@ -59,8 +56,6 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
     tareaController = TextEditingController(text: widget.jornada.tarea.target!.tarea);
     comentariosController = TextEditingController(text: widget.jornada.tarea.target!.observacion);
     activoController = widget.jornada.tarea.target!.activo;
-    print("Imagen emprendimiento ${widget.jornada.emprendimiento.target!.imagen}");
-    print("Imagen circulo Empresa $newCirculoEmpresa");
   }
 
   @override

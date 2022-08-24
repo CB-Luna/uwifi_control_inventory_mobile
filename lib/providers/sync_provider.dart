@@ -397,6 +397,13 @@ class SyncProvider extends ChangeNotifier {
             print("Se recupera el idDBR de la Tarea");
           }
           }
+          // if (jornada.numJornada == "2") {
+          //   print("Lo que se mandan al backends en image: ${tareaToSync.image.target!.imagenes}");
+          //   //Luego se mandan las imagenes al backend
+          //   await client.records.create('image_test', body: {
+          //     "image": tareaToSync.image.target!.imagenes,
+          //   });
+          // }
           //Segundo creamos la jornada  
           print("Datos");
           print(jornada.numJornada);
@@ -480,7 +487,10 @@ class SyncProvider extends ChangeNotifier {
             print("Se recupera el idDBR de la Tarea");
           }
           }
-
+          //Luego se mandan las imagenes al backend
+          // await client.records.create('image_test', body: {
+          //   "image": tareaToSync.image.target!.imagenes,
+          // });
           //Segundo actualizamos el catalogoProyecto del emprendimiento
           final emprendimiento = dataBase.emprendimientosBox.query(Emprendimientos_.id.equals(jornada.emprendimiento.target!.id)).build().findUnique();
           if (emprendimiento != null) {

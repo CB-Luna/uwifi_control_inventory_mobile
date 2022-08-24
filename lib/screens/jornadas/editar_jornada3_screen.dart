@@ -1,21 +1,19 @@
 import 'dart:io';
-import 'package:badges/badges.dart';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/objectbox.g.dart';
-
-import 'package:bizpro_app/screens/inversiones/agregar_registro_proyecto.dart';
-import 'package:bizpro_app/screens/jornadas/jornada_actualizada.dart';
-import 'package:bizpro_app/screens/jornadas/jornada_creada.dart';
-import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
-import 'package:bizpro_app/screens/widgets/drop_down.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
+import 'package:badges/badges.dart';
+import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/objectbox.g.dart';
+
+import 'package:bizpro_app/screens/jornadas/jornada_actualizada.dart';
+import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
+import 'package:bizpro_app/screens/widgets/drop_down.dart';
+import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
 
 import 'package:bizpro_app/providers/database_providers/jornada_controller.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_checkbox_group.dart';
@@ -50,6 +48,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
   late TextEditingController comentariosController;
   late TextEditingController descController;
   late bool activoController;
+  late String newAnalisisFinanciero;
   XFile? image;
   String tipoProyecto = "";
   String proyecto = "";
@@ -60,6 +59,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
   @override
   void initState() {
     super.initState();
+    newAnalisisFinanciero = widget.jornada.tarea.target!.image.target?.imagenes ?? "NO FILE";
     fechaRevision = widget.jornada.fechaRevision;
     fechaRegistro = widget.jornada.fechaRegistro;
     fechaRevisionText = TextEditingController(text: dateTimeFormat('yMMMd', widget.jornada.fechaRevision));
@@ -498,13 +498,13 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                               type: PageTransitionType.fade,
                                               child:
                                                   FlutterFlowExpandedImageView(
-                                                image: image == null ? Image.network(
+                                                image: newAnalisisFinanciero == null ? Image.network(
                                                   'https://picsum.photos/seed/836/600',
                                                   fit: BoxFit.contain,
                                                 ) 
                                                 :
                                                 Image.file(
-                                                  File(image!.path),
+                                                  File(newAnalisisFinanciero),
                                                   fit: BoxFit.contain,
                                                 ),
                                                 allowRotation: false,
@@ -520,7 +520,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                           child: ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(8),
-                                            child: image == null ?Image.network(
+                                            child: newAnalisisFinanciero == null ?Image.network(
                                               'https://picsum.photos/seed/836/600',
                                               width: 170,
                                               height: 120,
@@ -528,7 +528,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                             )
                                             :
                                             Image.file(
-                                              File(image!.path),
+                                              File(newAnalisisFinanciero),
                                               width: 170,
                                               height: 120,
                                               fit: BoxFit.cover,
@@ -568,7 +568,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                               
                                           setState(() {
                                             image = pickedFile;
-                                            jornadaProvider.imagen = image!.path;
+                                            newAnalisisFinanciero = image!.path;
                                           });
                                       },
                                       text: 'Análisis Financiero',
@@ -987,7 +987,8 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                     comentariosController.text != widget.jornada.tarea.target!.observacion ||
                                     tipoProyecto != widget.jornada.emprendimiento.target!.catalogoProyecto.target!.clasificacionEmp.target!.clasificacion ||
                                     proyecto != widget.jornada.emprendimiento.target!.catalogoProyecto.target!.nombre ||
-                                    descController.text != widget.jornada.tarea.target!.descripcion 
+                                    descController.text != widget.jornada.tarea.target!.descripcion  ||
+                                    newAnalisisFinanciero != widget.jornada.tarea.target!.image.target?.imagenes
                                     ) {
                                       final idTipoProyecto = dataBase.clasificacionesEmpBox.query(ClasificacionEmp_.clasificacion.equals(tipoProyecto)).build().findFirst()?.id;
                                       if (idTipoProyecto != null) {
@@ -1001,6 +1002,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                           activoController,
                                           fechaRevision,
                                           comentariosController.text,
+                                          newAnalisisFinanciero,
                                           idProyecto,
                                           descController.text,
                                           widget.jornada.tarea.target!.id
