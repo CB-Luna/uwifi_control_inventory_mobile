@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/screens/jornadas/jornada_actualizada.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
@@ -41,11 +42,16 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
   late TextEditingController tareaController;
   late TextEditingController comentariosController;
   late bool activoController;
+  late String newCirculoEmpresa;
   XFile? image;
 
   @override
   void initState() {
     super.initState();
+    print(widget.jornada.tarea.target!.image.target?.imagenes ?? "MI LOKO NO HAY NADA");
+    print(dataBase.imagenesBox.getAll().length);
+    print(widget.jornada.tarea.target!.image.target?.imagenes.isEmpty);
+    newCirculoEmpresa = widget.jornada.tarea.target!.image.target?.imagenes ?? "NO FILE";
     fechaRevision = widget.jornada.fechaRevision;
     fechaRegistro = widget.jornada.fechaRegistro;
     fechaRevisionText = TextEditingController(text: dateTimeFormat('yMMMd', widget.jornada.fechaRevision));
@@ -53,6 +59,8 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
     tareaController = TextEditingController(text: widget.jornada.tarea.target!.tarea);
     comentariosController = TextEditingController(text: widget.jornada.tarea.target!.observacion);
     activoController = widget.jornada.tarea.target!.activo;
+    print("Imagen emprendimiento ${widget.jornada.emprendimiento.target!.imagen}");
+    print("Imagen circulo Empresa $newCirculoEmpresa");
   }
 
   @override
@@ -614,13 +622,13 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                               type: PageTransitionType.fade,
                                               child:
                                                   FlutterFlowExpandedImageView(
-                                                image: image == null ? Image.network(
+                                                image: newCirculoEmpresa == null ? Image.network(
                                                   'https://picsum.photos/seed/836/600',
                                                   fit: BoxFit.contain,
                                                 ) 
                                                 :
                                                 Image.file(
-                                                  File(image!.path),
+                                                  File(newCirculoEmpresa),
                                                   fit: BoxFit.contain,
                                                 ),
                                                 allowRotation: false,
@@ -636,7 +644,7 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                           child: ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(8),
-                                            child: image == null ?Image.network(
+                                            child: newCirculoEmpresa == null ?Image.network(
                                               'https://picsum.photos/seed/836/600',
                                               width: 170,
                                               height: 120,
@@ -644,7 +652,7 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                             )
                                             :
                                             Image.file(
-                                              File(image!.path),
+                                              File(newCirculoEmpresa),
                                               width: 170,
                                               height: 120,
                                               fit: BoxFit.cover,
@@ -684,6 +692,7 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                               
                                           setState(() {
                                             image = pickedFile;
+                                            newCirculoEmpresa = image!.path;
                                           });
                                       },
                                       text: 'Círculo Empresa',
@@ -737,7 +746,8 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                   fechaRevision != widget.jornada.fechaRevision || 
                                   tareaController.text != widget.jornada.tarea.target!.tarea ||
                                   comentariosController.text != widget.jornada.tarea.target!.observacion ||
-                                  activoController != widget.jornada.tarea.target!.activo
+                                  activoController != widget.jornada.tarea.target!.activo ||
+                                  newCirculoEmpresa != widget.jornada.tarea.target!.image.target!.imagenes
                                   ) {
                                   jornadaProvider.updateJornada2(
                                     widget.jornada.id, 
@@ -745,6 +755,7 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                     fechaRevision,
                                     tareaController.text,
                                     comentariosController.text,
+                                    newCirculoEmpresa,
                                     activoController,
                                     widget.jornada.tarea.target!.id
                                     );

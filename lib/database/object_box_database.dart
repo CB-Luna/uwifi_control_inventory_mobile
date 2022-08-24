@@ -11,6 +11,7 @@ class ObjectBoxDatabase {
   late final Box<Jornadas> jornadasBox;
   late final Box<Consultorias> consultoriasBox;
   late final Box<Bitacora> bitacoraBox;
+  late final Box<Imagenes> imagenesBox;
   late final Box<StatusSync> statusSyncBox;
   late final Box<VariablesUsuario> variablesUsuarioBox;
   late final Box<Estados> estadosBox;
@@ -35,6 +36,7 @@ class ObjectBoxDatabase {
     jornadasBox = Box<Jornadas>(store);
     consultoriasBox = Box<Consultorias>(store);
     bitacoraBox = Box<Bitacora>(store);
+    imagenesBox = Box<Imagenes>(store);
     statusSyncBox = Box<StatusSync>(store);
     variablesUsuarioBox = Box<VariablesUsuario>(store);
     estadosBox = Box<Estados>(store);

@@ -51,6 +51,7 @@ class _EditarEmprendimientoScreenState
   @override
   void initState() {
     super.initState();
+    print("hola");
     newImagen = widget.emprendimiento.imagen;
     nombreController =
         TextEditingController(text: widget.emprendimiento.nombre);

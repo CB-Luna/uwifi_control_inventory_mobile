@@ -246,6 +246,7 @@ class Tareas {
   final consultoria = ToOne<Consultorias>();
   final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
+  final image = ToOne<Imagenes>();
   Tareas({
     this.id = 0,
     required this.tarea,
@@ -869,5 +870,21 @@ class VariablesUsuario {
     }): fechaActualizacion = fechaActualizacion ?? DateTime.now();
 
   String get fechaActualizacionFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaActualizacion);
+
+}
+
+@Entity()
+class Imagenes {
+  int id;
+  String imagenes;
+  DateTime fechaRegistro;
+  final tareas = ToMany<Tareas>();
+  Imagenes({
+    this.id = 0,
+    required this.imagenes,
+    DateTime? fechaRegistro,
+    }): fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
 
 }
