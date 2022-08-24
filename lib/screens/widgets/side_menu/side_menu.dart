@@ -179,6 +179,7 @@ class SideMenu extends StatelessWidget {
                         final connectivityResult =
                               await (Connectivity().checkConnectivity());
                         final bitacora = dataBase.bitacoraBox.getAll().toList();
+                        print("Tamaño bitacora: ${bitacora.length}");
                         await showModalBottomSheet(
                           isScrollControlled: true,
                           backgroundColor: Colors.transparent,

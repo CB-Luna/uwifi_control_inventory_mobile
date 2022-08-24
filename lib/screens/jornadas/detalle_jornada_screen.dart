@@ -247,7 +247,7 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Text(
-                                    'Jornada No. ${widget.jornada.numJornada}',
+                                    widget.jornada.emprendimiento.target?.nombre ?? "SIN EMPRENDIMIENTO",
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: AppTheme.of(context).subtitle2.override(
@@ -410,44 +410,6 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                     ),
                   ],
                 ),
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        // await Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => AgregarActividadWidget(),
-                        //   ),
-                        // );
-                      },
-                      text: '+ Tarea',
-                      options: FFButtonOptions(
-                        width: 100,
-                        height: 40,
-                        color: AppTheme.of(context).secondaryText,
-                        textStyle:
-                            AppTheme.of(context).subtitle2.override(
-                                  fontFamily: AppTheme.of(context)
-                                      .subtitle2Family,
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                        borderSide: const BorderSide(
-                          color: Colors.transparent,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                  ),
-                ],
               ),
                 ListView.builder(
                     padding: EdgeInsets.zero,

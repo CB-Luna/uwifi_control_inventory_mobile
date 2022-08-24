@@ -64,6 +64,7 @@ class _BottomSheetSincronizarWidgetState
                                   0, 4, 0, 0),
                               child: Text(
                                 '¿Seguro que quieres Sincronizar?',
+                                textAlign: TextAlign.center,
                                 style: AppTheme.of(context).title2.override(
                                       fontFamily:
                                           AppTheme.of(context).title2Family,

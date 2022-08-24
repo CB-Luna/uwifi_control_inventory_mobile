@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -802,6 +803,10 @@ class _DetalleEmprendimientoScreenState
                       decoration: BoxDecoration(
                         color: const Color(0xCF4672FF),
                         borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: Colors.white,
+                          width: 1.5,
+                        ),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,

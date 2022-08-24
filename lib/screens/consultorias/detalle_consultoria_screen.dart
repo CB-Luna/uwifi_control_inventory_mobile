@@ -207,7 +207,7 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Text(
-                                'Consultoría No. ${widget.numConsultoria}',
+                                widget.consultoria.emprendimiento.target?.nombre ?? "SIN EMPRENDIMIENTO",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: AppTheme.of(context).subtitle2.override(

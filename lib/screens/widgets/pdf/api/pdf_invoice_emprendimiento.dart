@@ -120,6 +120,7 @@ class PdfInvoiceEmprendimiento {
       headerStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
       headerDecoration: BoxDecoration(color: PdfColors.grey300),
       cellHeight: 30,
+      cellStyle: TextStyle(fontWeight: FontWeight.normal, fontSize: 10),
       cellAlignments: {
         0: Alignment.centerLeft,
         1: Alignment.centerLeft,
