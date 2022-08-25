@@ -59,7 +59,7 @@ class ConsultoriaController extends ChangeNotifier {
       emprendimiento.consultorias.add(nuevaConsultoria);
       dataBase.emprendimientosBox.put(emprendimiento);
       consultorias.add(nuevaConsultoria);
-      print('Consultoria agregada exitosamente');
+      // print('Consultoria agregada exitosamente');
       clearInformation(); //Se limpia información para usar el mismo controller en otro registro
       notifyListeners();
     }
@@ -80,7 +80,7 @@ class ConsultoriaController extends ChangeNotifier {
         }
         updateConsultoria.bitacora.add(nuevaInstruccion);
         dataBase.consultoriasBox.put(updateConsultoria);
-        print('Consultoria actualizada exitosamente');
+        // print('Consultoria actualizada exitosamente');
       }
   }
 
@@ -103,7 +103,7 @@ class ConsultoriaController extends ChangeNotifier {
       dataBase.consultoriasBox.put(updateConsultoria);
       consultorias.add(updateConsultoria);
       nuevaTarea.bitacora.add(nuevaInstruccion);
-      print('Consultoria actualizada exitosamente');
+      // print('Consultoria actualizada exitosamente');
       clearInformation(); //Se limpia información para usar el mismo controller en otro registro
       notifyListeners();
     }
@@ -126,7 +126,7 @@ class ConsultoriaController extends ChangeNotifier {
       updateTarea.bitacora.add(nuevaInstruccion);
       dataBase.tareasBox.put(updateTarea);
       notifyListeners();
-      print('Tarea Consultoria actualizada exitosamente');
+      // print('Tarea Consultoria actualizada exitosamente');
     }
   }
 

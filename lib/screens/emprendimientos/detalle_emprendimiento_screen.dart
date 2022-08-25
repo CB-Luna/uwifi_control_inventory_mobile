@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -48,13 +47,13 @@ class _DetalleEmprendimientoScreenState
           "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
     }
     final List<Jornadas> jornadas = [];
-    widget.emprendimiento.jornadas.forEach((element) {
+    for (var element in widget.emprendimiento.jornadas) {
       jornadas.add(element);
-    });
+    }
     final List<Consultorias> consultorias = [];
-    widget.emprendimiento.consultorias.forEach((element) {
+    for (var element in widget.emprendimiento.consultorias) {
       consultorias.add(element);
-    });
+    }
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
@@ -821,7 +820,7 @@ class _DetalleEmprendimientoScreenState
                                   if (widget.emprendimiento.emprendedor.target != null) {
                                     if (widget.emprendimiento.jornadas.isNotEmpty) {
                                     final int numJornada = int.parse(widget.emprendimiento.jornadas.last.numJornada);
-                                    print(numJornada);
+                                    // print(numJornada);
                                     if (numJornada < 4) {
                                       switch (numJornada) {
                                         case 1:

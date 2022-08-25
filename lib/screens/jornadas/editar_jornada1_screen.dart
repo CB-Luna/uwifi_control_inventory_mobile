@@ -25,10 +25,10 @@ class EditarJornada1Screen extends StatefulWidget {
 
 
   @override
-  _EditarJornada1ScreenState createState() => _EditarJornada1ScreenState();
+  EditarJornada1ScreenState createState() => EditarJornada1ScreenState();
 }
 
-class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
+class EditarJornada1ScreenState extends State<EditarJornada1Screen> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late DateTime fechaRegistro;
@@ -561,9 +561,9 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
                                       options: '¿Tarea Completada?',
                                       onChanged: (val) => setState(
                                           () {
-                                            print(val);
+                                            // print(val);
                                             activoController = val;
-                                            print(activoController);
+                                            // print(activoController);
                                             }),
                                       activeColor: AppTheme.of(context)
                                           .primaryColor,

@@ -52,8 +52,8 @@ class EmprendimientoController extends ChangeNotifier {
         //Agregamos el emprendimiento en objectBox y recuperamos el Id
         idEmprendimiento = dataBase.emprendimientosBox.put(nuevoEmprendimiento);
         emprendimiento = nuevoEmprendimiento;
-        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-        print('Emprendimiento agregado exitosamente');
+        // print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
+        // print('Emprendimiento agregado exitosamente');
         notifyListeners();
       }
   }
@@ -73,7 +73,7 @@ class EmprendimientoController extends ChangeNotifier {
       }
       updateEmprendimiento.bitacora.add(nuevaInstruccion);
       dataBase.emprendimientosBox.put(updateEmprendimiento);
-      print('Emprendimiento actualizado exitosamente');
+      // print('Emprendimiento actualizado exitosamente');
 
     }
     notifyListeners();
@@ -91,7 +91,7 @@ class EmprendimientoController extends ChangeNotifier {
       }
       updateEmprendimiento.bitacora.add(nuevaInstruccion);
       dataBase.emprendimientosBox.put(updateEmprendimiento);
-      print('Nombre de Emprendimiento actualizado exitosamente');
+      // print('Nombre de Emprendimiento actualizado exitosamente');
     }
     notifyListeners();
   }

@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/screens/jornadas/jornada_actualizada.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
@@ -28,10 +27,10 @@ class EditarJornada2Screen extends StatefulWidget {
 
 
   @override
-  _EditarJornada2ScreenState createState() => _EditarJornada2ScreenState();
+  EditarJornada2ScreenState createState() => EditarJornada2ScreenState();
 }
 
-class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
+class EditarJornada2ScreenState extends State<EditarJornada2Screen> {
   List<String> checkboxGroupValues = [];
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -510,9 +509,9 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                       options: '¿Tarea Completada?',
                                       onChanged: (val) => setState(
                                           () {
-                                            print(val);
+                                            // print(val);
                                             activoController = val;
-                                            print(activoController);
+                                            // print(activoController);
                                             }),
                                       activeColor: AppTheme.of(context)
                                           .primaryColor,

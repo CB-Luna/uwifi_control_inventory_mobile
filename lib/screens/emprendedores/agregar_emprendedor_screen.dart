@@ -6,7 +6,6 @@ import 'package:bizpro_app/theme/theme.dart';
 
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/providers/database_providers/emprendedor_controller.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
@@ -18,11 +17,11 @@ class AgregarEmprendedorScreen extends StatefulWidget {
     : super(key: key);
 
   @override
-  _AgregarEmprendedorScreenState createState() =>
-      _AgregarEmprendedorScreenState();
+  AgregarEmprendedorScreenState createState() =>
+      AgregarEmprendedorScreenState();
 }
 
-class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
+class AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final emprendedorKey = GlobalKey<FormState>();
   XFile? image;

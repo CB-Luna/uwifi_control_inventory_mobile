@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/database/entitys.dart';
 
 class RegistroController extends ChangeNotifier {
@@ -63,7 +62,7 @@ class RegistroController extends ChangeNotifier {
         // emprendimiento.productosEmp.add(nuevoProductoEmp);
         // dataBase.emprendimientosBox.put(emprendimiento);
         productosEmp.add(nuevoProductoEmp);
-        print('Registro agregado exitosamente');
+        // print('Registro agregado exitosamente');
         clearInformation();
         notifyListeners();
       }

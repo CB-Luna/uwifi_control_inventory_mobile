@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:bizpro_app/screens/inversiones/tabs/cotizacion_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -17,10 +16,10 @@ class InversionScreen extends StatefulWidget {
 
 
   @override
-  _InversionScreenState createState() => _InversionScreenState();
+  InversionScreenState createState() => InversionScreenState();
 }
 
-class _InversionScreenState extends State<InversionScreen>
+class InversionScreenState extends State<InversionScreen>
     with TickerProviderStateMixin {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 

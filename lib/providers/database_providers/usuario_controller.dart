@@ -2,7 +2,6 @@ import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/database/entitys.dart';
-import 'package:objectbox/objectbox.dart';
 
 class UsuarioController extends ChangeNotifier {
   List<Usuarios> usuarios = [];
@@ -24,14 +23,14 @@ class UsuarioController extends ChangeNotifier {
   int? currentUserId;
 
   UsuarioController({String? email}) {
-    print("El email es: $email");
-    print("Currentuser: $currentUser");
+    // print("El email es: $email");
+    // print("Currentuser: $currentUser");
     if (email != null) {
       final query =
           dataBase.usuariosBox.query(Usuarios_.correo.equals(email)).build();
       currentUser = currentUser;
       usuarioCurrent = query.findFirst();
-      print(usuarioCurrent?.nombre ?? "SIN NOMBRE");
+      // print(usuarioCurrent?.nombre ?? "SIN NOMBRE");
     }
   }
 
@@ -78,12 +77,12 @@ class UsuarioController extends ChangeNotifier {
     
     final lastUsuario = dataBase.usuariosBox.query(Usuarios_.correo.equals(correo)).build().findUnique();
     if (lastUsuario != null) {
-      print("NOMBRE USUARIO: ${lastUsuario.nombre}");
-      print("ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
-      print("Emprendedores: ${lastUsuario.variablesUsuario.target?.emprendedores ?? 'none'}");
-      print("Tamaño VariablesUser: ${dataBase.variablesUsuarioBox.getAll().length}");
+      // print("NOMBRE USUARIO: ${lastUsuario.nombre}");
+      // print("ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
+      // print("Emprendedores: ${lastUsuario.variablesUsuario.target?.emprendedores ?? 'none'}");
+      // print("Tamaño VariablesUser: ${dataBase.variablesUsuarioBox.getAll().length}");
     }
-    print('Usuario agregado exitosamente');
+    // print('Usuario agregado exitosamente');
     notifyListeners();
   }
 
@@ -127,7 +126,7 @@ class UsuarioController extends ChangeNotifier {
       if (usuarios[i].correo == email) {
         currentUserId = usuarios[i].id;
         currentUser = email;
-        print('ID Usuario recuperado exitosamente');
+        // print('ID Usuario recuperado exitosamente');
       }
     }
     getUser(email);
@@ -158,23 +157,22 @@ class UsuarioController extends ChangeNotifier {
   void addEmprendimiento(Emprendimientos emprendimiento) {
     usuarioCurrent!.emprendimientos.add(emprendimiento);
     usuarioCurrent!.emprendimientos.applyToDb();
-    print('Emprendimiento modificado exitosamente');
+    // print('Emprendimiento modificado exitosamente');
     notifyListeners();
   }
 
   void removeEmprendimiento(Emprendimientos emprendimiento) {
     usuarioCurrent!.emprendimientos.remove(emprendimiento);
     usuarioCurrent!.emprendimientos.applyToDb();
-    print('Emprendimiento actualizado exitosamente');
+    // print('Emprendimiento actualizado exitosamente');
     notifyListeners();
   }
 
   List<Emprendimientos> getEmprendimientos() {
     final List<Emprendimientos> emprendimientos = [];
     if (usuarioCurrent != null) {
-        usuarioCurrent!.emprendimientos.forEach((element) {
-        emprendimientos.add(element);
-      });
+        for (var element in usuarioCurrent!.emprendimientos) {
+      }
     }
     return emprendimientos;
   }

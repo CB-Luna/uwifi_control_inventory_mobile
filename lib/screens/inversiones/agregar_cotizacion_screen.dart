@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
@@ -22,11 +20,11 @@ class AgregarCotizacionScreen extends StatefulWidget {
   const AgregarCotizacionScreen({Key? key, required this.emprendimiento}) : super(key: key);
 
   @override
-  _AgregarCotizacionScreenState createState() =>
-      _AgregarCotizacionScreenState();
+  AgregarCotizacionScreenState createState() =>
+      AgregarCotizacionScreenState();
 }
 
-class _AgregarCotizacionScreenState
+class AgregarCotizacionScreenState
     extends State<AgregarCotizacionScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
@@ -670,7 +668,7 @@ class _AgregarCotizacionScreenState
                                     const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    print("Desde cotizacion");
+                                    // print("Desde cotizacion");
                                     if (inversionCProvider
                                   .validateForm(formKey)) {
                                       // comunidadProvider.add();  

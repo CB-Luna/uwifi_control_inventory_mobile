@@ -185,7 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (usuarioProvider.validateUserOffline(
                                 userState.emailController.text,
                                 userState.passwordController.text)) {
-                              print('Usuario ya existente');
+                              // print('Usuario ya existente');
                               //Se guarda el ID DEL USUARIO (correo)
                               prefs.setString("userId", userState.emailController.text);
                               usuarioProvider.getUser(
@@ -193,11 +193,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               //Se almacena el ID Variables Usuario
                               final lastUsuario = dataBase.usuariosBox.query(Usuarios_.correo.equals(prefs.getString("userId")!)).build().findUnique();
                               if (lastUsuario != null) {
-                                print("NOMBRE USUARIO: ${lastUsuario.nombre}");
-                                print("ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
-                                print("Tamaño VariablesUser: ${dataBase.variablesUsuarioBox.getAll().length}");
+                                // print("NOMBRE USUARIO: ${lastUsuario.nombre}");
+                                // print("ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
+                                // print("Tamaño VariablesUser: ${dataBase.variablesUsuarioBox.getAll().length}");
                                 if (lastUsuario.variablesUsuario.target?.id != null) {
-                                  print("Se guarda ID DE VARIABLES USUARIO");
+                                  // print("Se guarda ID DE VARIABLES USUARIO");
                                   prefs.setInt("idVariablesUser", lastUsuario.variablesUsuario.target!.id);
                                 }
                               }
@@ -222,7 +222,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               );
                             } else {
-                              print('Usuario no existente');
+                              // print('Usuario no existente');
                               snackbarKey.currentState
                                   ?.showSnackBar(const SnackBar(
                                 content: Text(
@@ -230,7 +230,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ));
 
                               //TODO Verificar como es el rol
-                              // print("Rol ${loginResponse.user.profile.idRolFk.toString()}");
+                              // // print("Rol ${loginResponse.user.profile.idRolFk.toString()}");
                             }
                           } else {
                             //Proceso online
@@ -257,24 +257,24 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (emiUser == null) return;
 
                             if (usuarioProvider.validateUser(userId)) {
-                              print('Usuario ya existente');
+                              // print('Usuario ya existente');
                               usuarioProvider.getUser(userId);
                               usuarioProvider.updatePasswordLocal(
                                   userState.passwordController.text);
                               //Se almacena el ID Variables Usuario
                               final lastUsuario = dataBase.usuariosBox.query(Usuarios_.correo.equals(userId)).build().findUnique();
                               if (lastUsuario != null) {
-                                print("NOMBRE USUARIO: ${lastUsuario.nombre}");
-                                print("ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
-                                print("Tamaño VariablesUser: ${dataBase.variablesUsuarioBox.getAll().length}");
+                                // print("NOMBRE USUARIO: ${lastUsuario.nombre}");
+                                // print("ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
+                                // print("Tamaño VariablesUser: ${dataBase.variablesUsuarioBox.getAll().length}");
                                 if (lastUsuario.variablesUsuario.target?.id != null) {
-                                  print("Se guarda ID DE VARIABLES USUARIO");
+                                  // print("Se guarda ID DE VARIABLES USUARIO");
                                   prefs.setInt("idVariablesUser", lastUsuario.variablesUsuario.target!.id);
                                 }
                               }
                             } 
                             else {
-                              print('Usuario no existente');
+                              // print('Usuario no existente');
                               usuarioProvider.add(
                                 emiUser.nombreUsuario,
                                 emiUser.apellidoP,
@@ -293,12 +293,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               //Se almacena el ID Variables Usuario
                               final lastUsuario = dataBase.usuariosBox.query(Usuarios_.correo.equals(userId)).build().findUnique();
                               if (lastUsuario != null) {
-                                print("NOMBRE USUARIO: ${lastUsuario.nombre}");
-                                print("ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
-                                print("Emprendedores: ${lastUsuario.variablesUsuario.target?.emprendedores ?? 'none'}");
-                                print("Tamaño VariablesUser: ${dataBase.variablesUsuarioBox.getAll().length}");
+                                // print("NOMBRE USUARIO: ${lastUsuario.nombre}");
+                                // print("ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
+                                // print("Emprendedores: ${lastUsuario.variablesUsuario.target?.emprendedores ?? 'none'}");
+                                // print("Tamaño VariablesUser: ${dataBase.variablesUsuarioBox.getAll().length}");
                                 if (lastUsuario.variablesUsuario.target?.id != null) {
-                                  print("Se guarda ID DE VARIABLES USUARIO");
+                                  // print("Se guarda ID DE VARIABLES USUARIO");
                                   prefs.setInt("idVariablesUser", lastUsuario.variablesUsuario.target!.id);
                                 }
                               }

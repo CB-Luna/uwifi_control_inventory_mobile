@@ -62,7 +62,7 @@ class CotizacionController extends ChangeNotifier {
         dataBase.emprendimientosBox.put(emprendimiento);
         // dataBase.emprendedoresBox.put(nuevoEmprendedor);
         productosCot.add(nuevoProductoCot);
-        print('ProductoCot agregado exitosamente');
+        // print('ProductoCot agregado exitosamente');
         clearInformation();
         notifyListeners();
       }

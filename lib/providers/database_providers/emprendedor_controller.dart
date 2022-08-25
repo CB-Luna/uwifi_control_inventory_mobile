@@ -57,7 +57,7 @@ class EmprendedorController extends ChangeNotifier {
   );
   emprendedores.add(emprendedor!);
   asociado = true;
-  print('Emprendedor temporal guardado éxitosamente');
+  // print('Emprendedor temporal guardado éxitosamente');
   notifyListeners();
 }
 
@@ -87,7 +87,7 @@ class EmprendedorController extends ChangeNotifier {
           dataBase.emprendimientosBox.put(emprendimiento);
           // dataBase.emprendedoresBox.put(nuevoEmprendedor);
           emprendedores.add(nuevoEmprendedor);
-          print('Emprendedor agregado exitosamente');
+          // print('Emprendedor agregado exitosamente');
           clearInformation();
           notifyListeners();
         }
@@ -117,7 +117,7 @@ class EmprendedorController extends ChangeNotifier {
       }
       updateEmprendedor.bitacora.add(nuevaInstruccion);
       dataBase.emprendedoresBox.put(updateEmprendedor);
-      print('Emprendimiento actualizado exitosamente');
+      // print('Emprendimiento actualizado exitosamente');
 
     }
     notifyListeners();
@@ -136,11 +136,11 @@ class EmprendedorController extends ChangeNotifier {
 
   void getEmprendedoresActualUser(List<Emprendimientos> emprendimientos) {
     emprendedores = [];
-    emprendimientos.forEach((element) {
+    for (var element in emprendimientos) {
       if (element.emprendedor.target != null) {
         emprendedores.add(element.emprendedor.target!);
       }
-    });
+    }
   }
 
   void getEmprendedoresByEmprendimiento(Emprendimientos emprendimiento) {

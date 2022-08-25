@@ -28,10 +28,10 @@ class EditarTareaConsultoriaScreen extends StatefulWidget {
 
 
   @override
-  _EditarTareaConsultoriaScreenState createState() => _EditarTareaConsultoriaScreenState();
+  EditarTareaConsultoriaScreenState createState() => EditarTareaConsultoriaScreenState();
 }
 
-class _EditarTareaConsultoriaScreenState extends State<EditarTareaConsultoriaScreen> {
+class EditarTareaConsultoriaScreenState extends State<EditarTareaConsultoriaScreen> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late DateTime fechaRevision;
@@ -547,9 +547,9 @@ class _EditarTareaConsultoriaScreenState extends State<EditarTareaConsultoriaScr
                                       options: '¿Tarea Completada?',
                                       onChanged: (val) => setState(
                                           () {
-                                            print(val);
+                                            // print(val);
                                             activoController = val;
-                                            print(activoController);
+                                            // print(activoController);
                                             }),
                                       activeColor: AppTheme.of(context)
                                           .primaryColor,
@@ -578,8 +578,8 @@ class _EditarTareaConsultoriaScreenState extends State<EditarTareaConsultoriaScr
                             if (consultoriaProvider
                                 .validateForm(formKey)) {
                               // comunidadProvider.add();
-                              print("Fecha revision ${consultoriaProvider.fechaRevision}");
-                              print("Tarea ${consultoriaProvider.tarea}");
+                              // print("Fecha revision ${consultoriaProvider.fechaRevision}");
+                              // print("Tarea ${consultoriaProvider.tarea}");
                               if (tareaController.text != widget.tarea.tarea ||
                                   fechaRevision != widget.tarea.fechaRevision ||
                                   comentariosController.text != widget.tarea.observacion ||

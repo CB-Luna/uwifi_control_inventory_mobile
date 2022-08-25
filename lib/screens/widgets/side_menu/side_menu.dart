@@ -1,9 +1,6 @@
-import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
-import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
-import 'package:bizpro_app/screens/sync/sincronizacion_screen.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_sincronizar_widget.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
@@ -32,8 +29,6 @@ class SideMenu extends StatelessWidget {
         ),
       );
     }
-
-    final Usuarios currentUser = usuarioProvider.usuarioCurrent!;
 
     return SafeArea(
       child: SizedBox(
@@ -179,7 +174,7 @@ class SideMenu extends StatelessWidget {
                         final connectivityResult =
                               await (Connectivity().checkConnectivity());
                         final bitacora = dataBase.bitacoraBox.getAll().toList();
-                        print("Tamaño bitacora: ${bitacora.length}");
+                        // print("Tamaño bitacora: ${bitacora.length}");
                         await showModalBottomSheet(
                           isScrollControlled: true,
                           backgroundColor: Colors.transparent,
@@ -191,9 +186,9 @@ class SideMenu extends StatelessWidget {
                                 height:
                                     MediaQuery.of(context).size.height * 0.45,
                                 child: connectivityResult == ConnectivityResult.none || bitacora.isEmpty ?
-                                  BottomSheetSincronizarWidget(isVisible: false,)
+                                  const BottomSheetSincronizarWidget(isVisible: false,)
                                   :
-                                  BottomSheetSincronizarWidget(isVisible: true,),
+                                  const BottomSheetSincronizarWidget(isVisible: true,),
                               ),
                             );
                           },

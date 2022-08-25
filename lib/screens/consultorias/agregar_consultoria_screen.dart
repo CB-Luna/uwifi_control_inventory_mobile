@@ -29,10 +29,10 @@ class AgregarConsultoriaScreen extends StatefulWidget {
 
 
   @override
-  _AgregarConsultoriaScreenState createState() => _AgregarConsultoriaScreenState();
+  AgregarConsultoriaScreenState createState() => AgregarConsultoriaScreenState();
 }
 
-class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
+class AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
   TextEditingController fechaRevision = TextEditingController();
   List<String> checkboxGroupValues = [];
   final formKey = GlobalKey<FormState>();
@@ -521,8 +521,8 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                             if (consultoriaProvider
                                 .validateForm(formKey)) {
                               // comunidadProvider.add();
-                              print("Fecha revision ${consultoriaProvider.fechaRevision}");
-                              print("Tarea ${consultoriaProvider.tarea}");
+                              // print("Fecha revision ${consultoriaProvider.fechaRevision}");
+                              // print("Tarea ${consultoriaProvider.tarea}");
                               final idAmbito = dataBase.ambitoConsultoriaBox.query(AmbitoConsultoria_.nombreAmbito.equals(ambito)).build().findFirst()?.id;
                               final idAreaCirculo = dataBase.areaCirculoBox.query(AreaCirculo_.nombreArea.equals(areaCirculo)).build().findFirst()?.id;
                               if (idAmbito != null && idAreaCirculo != null) {

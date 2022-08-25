@@ -5,7 +5,6 @@ import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/providers/user_provider.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/custom_button.dart';
-import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';

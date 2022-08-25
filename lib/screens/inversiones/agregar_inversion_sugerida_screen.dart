@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
@@ -11,8 +9,6 @@ import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
 
-import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_drop_down.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -24,11 +20,11 @@ class AgregarInversionSugeridaScreen extends StatefulWidget {
   const AgregarInversionSugeridaScreen({Key? key, required this.emprendimiento}) : super(key: key);
 
   @override
-  _AgregarInversionSugeridaScreenState createState() =>
-      _AgregarInversionSugeridaScreenState();
+  AgregarInversionSugeridaScreenState createState() =>
+      AgregarInversionSugeridaScreenState();
 }
 
-class _AgregarInversionSugeridaScreenState
+class AgregarInversionSugeridaScreenState
     extends State<AgregarInversionSugeridaScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
@@ -671,7 +667,7 @@ class _AgregarInversionSugeridaScreenState
                                     const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    print("Desde inversion");
+                                    // print("Desde inversion");
                                     if (inversionSProvider
                                   .validateForm(formKey)) {
                                       // comunidadProvider.add();

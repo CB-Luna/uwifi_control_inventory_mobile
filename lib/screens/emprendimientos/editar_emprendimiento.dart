@@ -51,7 +51,7 @@ class _EditarEmprendimientoScreenState
   @override
   void initState() {
     super.initState();
-    print("hola");
+    // print("hola");
     newImagen = widget.emprendimiento.imagen;
     nombreController =
         TextEditingController(text: widget.emprendimiento.nombre);
@@ -418,8 +418,8 @@ class _EditarEmprendimientoScreenState
                                             listMunicipios.add(element.nombre);
                                           }                                    
                                           });
-                                        print("Entro a con estados");
-                                      print("Estado: $nombreEstado");
+                                        // print("Entro a con estados");
+                                      // print("Estado: $nombreEstado");
                                       
                                       }),
                                     width: double.infinity,
@@ -476,9 +476,9 @@ class _EditarEmprendimientoScreenState
                                               listComunidades.add(element.nombre);
                                             }                                    
                                           });
-                                          print("Entro a con municipios");
+                                          // print("Entro a con municipios");
                                         }
-                                        print("Municipio: $nombreMunicipio");
+                                        // print("Municipio: $nombreMunicipio");
                                       }),
                                       width: double.infinity,
                                       height: 50,
@@ -528,9 +528,9 @@ class _EditarEmprendimientoScreenState
                                             ));
                                           } else {
                                             nombreComunidad = val!;
-                                            print("Entro a con comunidades");
+                                            // print("Entro a con comunidades");
                                           }
-                                          print("Comunidad: $nombreComunidad");
+                                          // print("Comunidad: $nombreComunidad");
                                         }),
                                       width: double.infinity,
                                       height: 50,
@@ -577,7 +577,7 @@ class _EditarEmprendimientoScreenState
                                         nombreEstado != widget.emprendimiento.comunidad.target!.municipios.target!.estados.target!.nombre) {
                                       if (emprendimientoProvider
                                           .validateForm(formKey)) {
-                                        print("Se puede actualizar");
+                                        // print("Se puede actualizar");
                                         final idEstado = dataBase.estadosBox.query(Estados_.nombre.equals(nombreEstado)).build().findFirst()?.id;
                                         if (idEstado != null) {
                                           final idMunicipio = dataBase.municipiosBox.query(Municipios_.estados.equals(idEstado).and(Municipios_.nombre.equals(nombreMunicipio))).build().findFirst()?.id;

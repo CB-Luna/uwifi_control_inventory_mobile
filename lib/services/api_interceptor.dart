@@ -16,7 +16,7 @@ class ApiInterceptor implements InterceptorContract {
     try {
       data.headers["Authorization"] = 'User $token';
     } catch (e) {
-      print(e);
+      // print(e);
     }
     return data;
   }

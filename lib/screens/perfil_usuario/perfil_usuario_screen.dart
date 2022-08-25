@@ -1,8 +1,5 @@
 import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/providers/catalog_provider.dart';
-import 'package:bizpro_app/screens/catalogos/catalogos_screen.dart';
 import 'package:bizpro_app/screens/perfil_usuario/device_information_widget.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -19,10 +16,10 @@ class PerfilUsuarioScreen extends StatefulWidget {
   const PerfilUsuarioScreen({Key? key}) : super(key: key);
 
   @override
-  _PerfilUsuarioScreenState createState() => _PerfilUsuarioScreenState();
+  PerfilUsuarioScreenState createState() => PerfilUsuarioScreenState();
 }
 
-class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
+class PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
   String? dropDownValue = '';
   final scaffoldKey = GlobalKey<ScaffoldState>();
   List<String> listRoles = [];
@@ -37,7 +34,6 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
   @override
   Widget build(BuildContext context) {
     final usuarioProvider = Provider.of<UsuarioController>(context);
-    final catalogosProvider = Provider.of<CatalogProvider>(context);
     if (usuarioProvider.usuarioCurrent == null) {
       return const Scaffold(
         body: Center(

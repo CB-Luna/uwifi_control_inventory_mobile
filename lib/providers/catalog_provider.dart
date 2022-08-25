@@ -15,8 +15,6 @@ import 'package:bizpro_app/models/get_estados.dart';
 import 'package:bizpro_app/models/get_municipios.dart';
 import 'package:bizpro_app/util/util.dart';
 
-import 'package:http/http.dart' as http;
-
 import '../objectbox.g.dart';
 
 class CatalogProvider extends ChangeNotifier {
@@ -46,7 +44,7 @@ class CatalogProvider extends ChangeNotifier {
     await getUnidadMedida();
     await getAmbitoConsultoria();
     await getAreaCirculo();
-    print("Proceso terminado");
+    // print("Proceso terminado");
     procesoterminado = true;
     procesocargando = false;
     notifyListeners();
@@ -64,7 +62,7 @@ class CatalogProvider extends ChangeNotifier {
       
       listEstados.sort((a, b) => removeDiacritics(a.nombreEstado).compareTo(removeDiacritics(b.nombreEstado)));
 
-      print("*****Informacion estados*****");
+      // print("*****Informacion estados*****");
       for (var i = 0; i < listEstados.length; i++) {
         if (listEstados[i].id.isNotEmpty) {
         final nuevoEstado = Estados(
@@ -75,13 +73,13 @@ class CatalogProvider extends ChangeNotifier {
         final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
         nuevoEstado.statusSync.target = nuevoSync;
         dataBase.estadosBox.put(nuevoEstado);
-        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-        print('Estado agregado exitosamente');
+        // print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
+        // print('Estado agregado exitosamente');
         final record = await client.records.update('estados', listEstados[i].id, body: {
           'id_status_sync_fk': 'HoI36PzYw1wtbO1',
         });
         if (record.id.isNotEmpty) {
-            print('Estado actualizado en el backend exitosamente');
+            // print('Estado actualizado en el backend exitosamente');
           }
 
         }
@@ -101,7 +99,7 @@ class CatalogProvider extends ChangeNotifier {
 
       listMunicipios.sort((a, b) => removeDiacritics(a.nombreMunicipio).compareTo(removeDiacritics(b.nombreMunicipio)));
 
-      print("*****Informacion municipios****");
+      // print("*****Informacion municipios****");
       for (var i = 0; i < listMunicipios.length; i++) {
         if (listMunicipios[i].id.isNotEmpty) {
         final nuevoMunicipio = Municipios(
@@ -115,13 +113,13 @@ class CatalogProvider extends ChangeNotifier {
           nuevoMunicipio.statusSync.target = nuevoSync;
           nuevoMunicipio.estados.target = estado;
           dataBase.municipiosBox.put(nuevoMunicipio);
-          print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-          print('Municipio agregado exitosamente');
+          // print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
+          // print('Municipio agregado exitosamente');
           final record = await client.records.update('municipios', listMunicipios[i].id, body: {
             'id_status_sync_fk': 'HoI36PzYw1wtbO1',
           });
           if (record.id.isNotEmpty) {
-            print('Municipio actualizado en el backend exitosamente');
+            // print('Municipio actualizado en el backend exitosamente');
           }
           }
         }
@@ -142,7 +140,7 @@ class CatalogProvider extends ChangeNotifier {
 
       listComunidades.sort((a, b) => removeDiacritics(a.nombreComunidad).compareTo(removeDiacritics(b.nombreComunidad)));
 
-      print("****Informacion comunidades****");
+      // print("****Informacion comunidades****");
       for (var i = 0; i < records.length; i++) {
         if (listComunidades[i].id.isNotEmpty) {
         final nuevaComunidad = Comunidades(
@@ -156,13 +154,13 @@ class CatalogProvider extends ChangeNotifier {
           nuevaComunidad.statusSync.target = nuevoSync;
           nuevaComunidad.municipios.target = municipio;
           dataBase.comunidadesBox.put(nuevaComunidad);
-          print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-          print('Comunidad agregada exitosamente');
+          // print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
+          // print('Comunidad agregada exitosamente');
           final record = await client.records.update('comunidades', listComunidades[i].id, body: {
             'id_status_sync_fk': 'HoI36PzYw1wtbO1',
           });
           if (record.id.isNotEmpty) {
-            print('Comunidad actualizada en el backend exitosamente');
+            // print('Comunidad actualizada en el backend exitosamente');
           }
           }
         }
@@ -181,7 +179,7 @@ class CatalogProvider extends ChangeNotifier {
       
       listRoles.sort((a, b) => removeDiacritics(a.rol).compareTo(removeDiacritics(b.rol)));
 
-      print("*****Informacion roles*****");
+      // print("*****Informacion roles*****");
       for (var i = 0; i < listRoles.length; i++) {
         if (listRoles[i].id.isNotEmpty) {
         final nuevoRol = Roles(
@@ -191,13 +189,13 @@ class CatalogProvider extends ChangeNotifier {
         final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
         nuevoRol.statusSync.target = nuevoSync;
         dataBase.rolesBox.put(nuevoRol);
-        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-        print('Rol agregado exitosamente');
+        // print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
+        // print('Rol agregado exitosamente');
         final record = await client.records.update('roles', listRoles[i].id, body: {
           'id_status_sync_fk': 'HoI36PzYw1wtbO1',
         });
         if (record.id.isNotEmpty) {
-            print('Rol actualizado en el backend exitosamente');
+            // print('Rol actualizado en el backend exitosamente');
           }
 
         }
@@ -217,7 +215,7 @@ class CatalogProvider extends ChangeNotifier {
 
       listClasificacionEmp.sort((a, b) => removeDiacritics(a.clasificacion).compareTo(removeDiacritics(b.clasificacion)));
 
-      print("****Informacion clasificaciones_emp****");
+      // print("****Informacion clasificaciones_emp****");
       for (var i = 0; i < listClasificacionEmp.length; i++) {
         if (listClasificacionEmp[i].id.isNotEmpty) {
         final nuevaClasificacionEmp = ClasificacionEmp(
@@ -228,13 +226,13 @@ class CatalogProvider extends ChangeNotifier {
         final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
         nuevaClasificacionEmp.statusSync.target = nuevoSync;
         dataBase.clasificacionesEmpBox.put(nuevaClasificacionEmp);
-        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-        print('Clasificacion Emp agregado exitosamente');
+        // print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
+        // print('Clasificacion Emp agregado exitosamente');
         final record = await client.records.update('clasificaciones_emp', listClasificacionEmp[i].id, body: {
           'id_status_sync_fk': 'HoI36PzYw1wtbO1',
         });
         if (record.id.isNotEmpty) {
-            print('Clasificacion Emp actualizado en el backend exitosamente');
+            // print('Clasificacion Emp actualizado en el backend exitosamente');
           }
         }
       }
@@ -253,7 +251,7 @@ class CatalogProvider extends ChangeNotifier {
 
       listFamiliaInversion.sort((a, b) => removeDiacritics(a.nombreFamiliaInver).compareTo(removeDiacritics(b.nombreFamiliaInver)));
 
-      print("****Informacion familia_inversion****");
+      // print("****Informacion familia_inversion****");
       for (var i = 0; i < listFamiliaInversion.length; i++) {
         if (listFamiliaInversion[i].id.isNotEmpty) {
         final nuevaFamiliaInversion = FamiliaInversion(
@@ -264,13 +262,13 @@ class CatalogProvider extends ChangeNotifier {
         final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
         nuevaFamiliaInversion.statusSync.target = nuevoSync;
         dataBase.familiaInversionBox.put(nuevaFamiliaInversion);
-        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-        print('Familia Inversion agregada exitosamente');
+        // print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
+        // print('Familia Inversion agregada exitosamente');
         final record = await client.records.update('familia_inversion', listFamiliaInversion[i].id, body: {
           'id_status_sync_fk': 'HoI36PzYw1wtbO1',
         });
         if (record.id.isNotEmpty) {
-            print('Familia Inversion actualizada en el backend exitosamente');
+            // print('Familia Inversion actualizada en el backend exitosamente');
           }
         }
       }
@@ -289,7 +287,7 @@ class CatalogProvider extends ChangeNotifier {
 
       listUnidadMedida.sort((a, b) => removeDiacritics(a.unidadMedida).compareTo(removeDiacritics(b.unidadMedida)));
 
-      print("****Informacion und_medida****");
+      // print("****Informacion und_medida****");
       for (var i = 0; i < listUnidadMedida.length; i++) {
         if (listUnidadMedida[i].id.isNotEmpty) {
         final nuevaUnidadMedida = UnidadMedida(
@@ -300,13 +298,13 @@ class CatalogProvider extends ChangeNotifier {
         final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
         nuevaUnidadMedida.statusSync.target = nuevoSync;
         dataBase.unidadesMedidaBox.put(nuevaUnidadMedida);
-        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-        print('Unidad Medida agregada exitosamente');
+        // print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
+        // print('Unidad Medida agregada exitosamente');
         final record = await client.records.update('und_medida', listUnidadMedida[i].id, body: {
           'id_status_sync_fk': 'HoI36PzYw1wtbO1',
         });
         if (record.id.isNotEmpty) {
-            print('Unidad Medida actualizada en el backend exitosamente');
+            // print('Unidad Medida actualizada en el backend exitosamente');
           }
         }
       }
@@ -325,9 +323,9 @@ class CatalogProvider extends ChangeNotifier {
       }
 
       listCatalogoProyecto.sort((a, b) => removeDiacritics(a.nombreProyecto).compareTo(removeDiacritics(b.nombreProyecto)));
-      print("****Informacion catalogos proyectos****");
+      // print("****Informacion catalogos proyectos****");
       for (var i = 0; i < records.length; i++) {
-        print(records[i]);
+        // print(records[i]);
         if (listCatalogoProyecto[i].id.isNotEmpty) {
         final nuevoCatalogoProyecto = CatalogoProyecto(
         nombre: listCatalogoProyecto[i].nombreProyecto,
@@ -339,13 +337,13 @@ class CatalogProvider extends ChangeNotifier {
           nuevoCatalogoProyecto.statusSync.target = nuevoSync;
           nuevoCatalogoProyecto.clasificacionEmp.target = clasificacionEmp;
           dataBase.catalogoProyectoBox.put(nuevoCatalogoProyecto);
-          print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-          print('Catalogo Proyecto agregado exitosamente');
+          // print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
+          // print('Catalogo Proyecto agregado exitosamente');
           final record = await client.records.update('cat_proyecto', listCatalogoProyecto[i].id, body: {
             'id_status_sync_fk': 'HoI36PzYw1wtbO1',
           });
           if (record.id.isNotEmpty) {
-            print('Catalogo Proyecto actualizado en el backend exitosamente');
+            // print('Catalogo Proyecto actualizado en el backend exitosamente');
           }
           }
         }
@@ -363,9 +361,9 @@ class CatalogProvider extends ChangeNotifier {
         listAmbitoConsultoria.add(getAmbitoConsultoriaFromMap(element.toString()));
       }
       listAmbitoConsultoria.sort((a, b) => removeDiacritics(a.nombreAmbito).compareTo(removeDiacritics(b.nombreAmbito)));
-      print("****Informacion ambito consultoria****");
+      // print("****Informacion ambito consultoria****");
       for (var i = 0; i < records.length; i++) {
-        print(records[i]);
+        // print(records[i]);
         if (listAmbitoConsultoria[i].id.isNotEmpty) {
         final nuevoAmbitoConsultoria = AmbitoConsultoria(
         nombreAmbito: listAmbitoConsultoria[i].nombreAmbito,
@@ -374,13 +372,13 @@ class CatalogProvider extends ChangeNotifier {
         final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
         nuevoAmbitoConsultoria.statusSync.target = nuevoSync;
         dataBase.ambitoConsultoriaBox.put(nuevoAmbitoConsultoria);
-        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-        print('Ambito Consultoria agregado exitosamente');
+        // print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
+        // print('Ambito Consultoria agregado exitosamente');
         final record = await client.records.update('ambito_consultoria', listAmbitoConsultoria[i].id, body: {
           'id_status_sync_fk': 'HoI36PzYw1wtbO1',
         });
         if (record.id.isNotEmpty) {
-            print('Ambito Consultoria actualizado en el backend exitosamente');
+            // print('Ambito Consultoria actualizado en el backend exitosamente');
           }
         }
       }
@@ -397,9 +395,9 @@ class CatalogProvider extends ChangeNotifier {
         listAreaCirculo.add(getAreaCirculoFromMap(element.toString()));
       }
       listAreaCirculo.sort((a, b) => removeDiacritics(a.nombreArea).compareTo(removeDiacritics(b.nombreArea)));
-      print("****Informacion area circulo****");
+      // print("****Informacion area circulo****");
       for (var i = 0; i < records.length; i++) {
-        print(records[i]);
+        // print(records[i]);
         if (listAreaCirculo[i].id.isNotEmpty) {
         final nuevaAreaCirculo = AreaCirculo(
         nombreArea: listAreaCirculo[i].nombreArea,
@@ -408,13 +406,13 @@ class CatalogProvider extends ChangeNotifier {
         final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
         nuevaAreaCirculo.statusSync.target = nuevoSync;
         dataBase.areaCirculoBox.put(nuevaAreaCirculo);
-        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-        print('Area circulo agregado exitosamente');
+        // print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
+        // print('Area circulo agregado exitosamente');
         final record = await client.records.update('area_circulo', listAreaCirculo[i].id, body: {
           'id_status_sync_fk': 'HoI36PzYw1wtbO1',
         });
         if (record.id.isNotEmpty) {
-            print('Area circulo actualizado en el backend exitosamente');
+            // print('Area circulo actualizado en el backend exitosamente');
           }
         }
       }
