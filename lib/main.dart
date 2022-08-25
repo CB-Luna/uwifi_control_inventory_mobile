@@ -32,7 +32,7 @@ void main() async {
   //Esconder Navigation Bar
   SystemChrome.setEnabledSystemUIMode(
     SystemUiMode.manual, 
-    overlays: [ SystemUiOverlay.top ]);
+    overlays: [SystemUiOverlay.top]);
   dataBase = await ObjectBoxDatabase.create();
   GoogleFonts.config.allowRuntimeFetching = false;
   await initGlobals();
