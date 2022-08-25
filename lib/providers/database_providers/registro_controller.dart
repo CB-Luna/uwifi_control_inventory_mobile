@@ -17,6 +17,7 @@ class RegistroController extends ChangeNotifier {
   int precioVenta = 0;
   String cantidad = '';
   String proveedor = '';
+  String familia = '';
 
   TextEditingController textControllerImagen = TextEditingController();
   TextEditingController textControllerNombre = TextEditingController();
@@ -36,6 +37,7 @@ class RegistroController extends ChangeNotifier {
     precioVenta = 0;
     cantidad = '';
     proveedor = '';
+    familia = '';
     notifyListeners();
   }
 

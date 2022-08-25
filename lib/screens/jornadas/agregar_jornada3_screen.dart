@@ -6,6 +6,7 @@ import 'package:bizpro_app/objectbox.g.dart';
 import 'package:bizpro_app/providers/database_providers/registro_controller.dart';
 import 'package:bizpro_app/screens/inversiones/agregar_registro_proyecto.dart';
 import 'package:bizpro_app/screens/jornadas/jornada_creada.dart';
+import 'package:bizpro_app/screens/jornadas/registros/detalle_registro_jornada_screen.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
@@ -884,45 +885,71 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                   },
                               ),
                             ),
-                            Padding(
-                              padding:
-                                const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
-                              child: Badge(
-                                badgeContent: Text(registroController.productosEmp.length.toString(), style: const TextStyle(color: Colors.white)),
-                                showBadge: registroController.productosEmp.isEmpty ? false : true,
-                                badgeColor: const Color(0xFFD20030),
-                                position: BadgePosition.topEnd(),
-                                elevation: 4,
-                                child: FFButtonWidget(
-                                  onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            AgregarRegistroProyectoSreen(emprendimiento: widget.emprendimiento,),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding:
+                                    const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                                  child: Badge(
+                                    badgeContent: Text(registroController.productosEmp.length.toString(), style: const TextStyle(color: Colors.white)),
+                                    showBadge: registroController.productosEmp.isEmpty ? false : true,
+                                    badgeColor: const Color(0xFFD20030),
+                                    position: BadgePosition.topEnd(),
+                                    elevation: 4,
+                                    child: FFButtonWidget(
+                                      onPressed: () async {
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                AgregarRegistroProyectoSreen(emprendimiento: widget.emprendimiento,),
+                                          ),
+                                        );
+                                      },
+                                      text: 'Agregar Registro',
+                                      options: FFButtonOptions(
+                                        width: 150,
+                                        height: 50,
+                                        color: AppTheme.of(context).secondaryText,
+                                        textStyle:
+                                            AppTheme.of(context).subtitle2.override(
+                                                  fontFamily: 'Poppins',
+                                                  color: Colors.white,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                        elevation: 2,
+                                        borderSide: const BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1,
+                                        ),
                                       ),
-                                    );
-                                  },
-                                  text: 'Agregar Registro',
-                                  options: FFButtonOptions(
-                                    width: 150,
-                                    height: 50,
-                                    color: AppTheme.of(context).secondaryText,
-                                    textStyle:
-                                        AppTheme.of(context).subtitle2.override(
-                                              fontFamily: 'Poppins',
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                    elevation: 2,
-                                    borderSide: const BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1,
                                     ),
                                   ),
                                 ),
-                              ),
+                                Padding(
+                                  padding:
+                                    const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                DetalleRegistroJornadaScreen(emprendimiento: widget.emprendimiento,),
+                                          ),
+                                        );
+                                    },
+                                    child: const Icon(
+                                            Icons.mode_edit_outline,
+                                            color: Colors.black,
+                                            size: 20,
+                                          ),
+                                  )
+                                ),
+                              ],
                             ),
                           ],
                         ),
