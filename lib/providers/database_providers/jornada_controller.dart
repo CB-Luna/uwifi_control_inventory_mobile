@@ -302,7 +302,9 @@ class JornadaController extends ChangeNotifier {
       );
       print("Entro aca");
     final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
+    final nuevasImagenesTarea = Imagenes(imagenes: imagen); //Se crea el objeto imagenes para la Tarea
     nuevaTarea.statusSync.target = nuevoSyncTarea;
+    nuevaTarea.image.target = nuevasImagenesTarea;
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     if (emprendimiento != null) {
       // Se actualiza el estado activo de las tareas de las jornadas anteriores

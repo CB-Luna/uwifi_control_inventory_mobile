@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +29,10 @@ DeepLinkBloc bloc = DeepLinkBloc();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  //Esconder Navigation Bar
+  SystemChrome.setEnabledSystemUIMode(
+    SystemUiMode.manual, 
+    overlays: [ SystemUiOverlay.top ]);
   dataBase = await ObjectBoxDatabase.create();
   GoogleFonts.config.allowRuntimeFetching = false;
   await initGlobals();

@@ -483,6 +483,7 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                         ),
                                       ),
                                     ),
+                                    tareas[listViewIndex].image.target != null ?
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
@@ -501,16 +502,17 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                         child: SizedBox(
                                           width: 180,
                                           height: 100,
-                                          child:
-                                            FlutterFlowCarousel(
+                                          child: FlutterFlowCarousel(
                                             width: 180,
                                             height: 100,
                                             listaImagenes:
-                                                tareas[listViewIndex].imagenes ?? [],
-                                          ),
+                                              [tareas[listViewIndex].image.target!.imagenes] 
+                                          )
                                         ),
                                       ),
-                                    ),
+                                    )
+                                    :
+                                    Container(),
                                   ],
                                 ),
                               ),
