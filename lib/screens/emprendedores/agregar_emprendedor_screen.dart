@@ -216,7 +216,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     5, 0, 5, 10),
                                 child: TextFormField(
-                                  textCapitalization: TextCapitalization.sentences,
+                                  textCapitalization: TextCapitalization.words,
                                   autovalidateMode: AutovalidateMode.onUserInteraction,
                                   onChanged: (value) {
                                     emprendedorProvider.nombre = value;
@@ -273,7 +273,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     5, 0, 5, 10),
                                 child: TextFormField(
-                                  textCapitalization: TextCapitalization.sentences,
+                                  textCapitalization: TextCapitalization.words,
                                   autovalidateMode: AutovalidateMode.onUserInteraction,
                                   onChanged: (value) {
                                     emprendedorProvider.apellidos = value;

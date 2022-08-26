@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
@@ -110,6 +112,7 @@ class SideMenu extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
+                            currentUser.image.target?.imagenes == null ?
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   10, 0, 5, 0),
@@ -120,8 +123,41 @@ class SideMenu extends StatelessWidget {
                                 decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
                                 ),
-                                child: Image.asset(
-                                  currentUserPhoto,
+                                child: Container(
+                                  color: Colors.blue,
+                                  child: Center(
+                                    child: Text(
+                                      "${currentUser.nombre.substring(0,1)} ${currentUser.apellidoP.substring(0,1)}",
+                                    style: AppTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily:
+                                                    AppTheme.of(context)
+                                                        .bodyText1Family,
+                                                color: Colors.white,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w300,
+                                              ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                            :
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  10, 0, 5, 0),
+                              child: Container(
+                                width: 40,
+                                height: 40,
+                                clipBehavior: Clip.antiAlias,
+                                decoration: BoxDecoration(
+                                    color: const Color(0x00EEEEEE),
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: FileImage(File(currentUser.image.target!.imagenes))
+                                    ),
+                                    shape: BoxShape.circle,
                                 ),
                               ),
                             ),

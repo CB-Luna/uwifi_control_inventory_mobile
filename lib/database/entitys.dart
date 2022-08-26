@@ -327,10 +327,11 @@ class Usuarios {
   @Unique()
   String? idDBR;
   final statusSync = ToOne<StatusSync>();
-  final bitacora = ToOne<Bitacora>();
+  final bitacora = ToMany<Bitacora>();
   final documentos = ToMany<Documentos>();
   final variablesUsuario = ToOne<VariablesUsuario>(); //Importante para evaluar la sincronizacion
   final roles = ToOne<Roles>();
+  final image = ToOne<Imagenes>();
   @Backlink()
   final emprendimientos = ToMany<Emprendimientos>();
 
@@ -879,6 +880,7 @@ class Imagenes {
   String imagenes;
   DateTime fechaRegistro;
   final tareas = ToMany<Tareas>();
+  final usuarios = ToMany<Usuarios>();
   Imagenes({
     this.id = 0,
     required this.imagenes,

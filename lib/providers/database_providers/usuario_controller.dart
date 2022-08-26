@@ -1,8 +1,8 @@
+import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/database/entitys.dart';
-import 'package:objectbox/objectbox.dart';
 
 class UsuarioController extends ChangeNotifier {
   List<Usuarios> usuarios = [];
@@ -37,8 +37,8 @@ class UsuarioController extends ChangeNotifier {
 
   GlobalKey<FormState> usuarioFormKey = GlobalKey<FormState>();
 
-  bool validateForm() {
-    return usuarioFormKey.currentState!.validate() ? true : false;
+  bool validateForm(GlobalKey<FormState> usuarioKey) {
+    return usuarioKey.currentState!.validate() ? true : false;
   }
 
   void clearInformation() {
@@ -84,6 +84,41 @@ class UsuarioController extends ChangeNotifier {
       print("Tamaño VariablesUser: ${dataBase.variablesUsuarioBox.getAll().length}");
     }
     print('Usuario agregado exitosamente');
+    notifyListeners();
+  }
+
+void update(int id, String? newfotoPerfil, String newNombre, String newApellidoP, String newApellidoM, String newTelefono) {
+    var updateUsuario = dataBase.usuariosBox.get(id);
+    if (updateUsuario != null) {
+      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateUsuario', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      updateUsuario.nombre = newNombre;
+      updateUsuario.apellidoP = newApellidoP;
+      updateUsuario.apellidoM = newApellidoM;
+      updateUsuario.telefono = newTelefono;
+      final imagenUsuario = dataBase.imagenesBox.query(Imagenes_.id.equals(updateUsuario.image.target?.id ?? -1)).build().findUnique();
+      if (newfotoPerfil != null) {
+        if (imagenUsuario != null) {
+          imagenUsuario.imagenes = newfotoPerfil; //Se actualiza la imagen del usuario
+          dataBase.imagenesBox.put(imagenUsuario);
+        }
+        else {
+          final nuevaImagenUsuario = Imagenes(imagenes: newfotoPerfil); //Se crea el objeto imagenes para el Usuario
+          updateUsuario.image.target = nuevaImagenUsuario;
+        }
+      }
+      final statusSyncUsuario = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateUsuario.statusSync.target?.id ?? -1)).build().findUnique();
+      if (statusSyncUsuario != null) {
+        statusSyncUsuario.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del usuario
+        dataBase.statusSyncBox.put(statusSyncUsuario);
+      } 
+      else {
+        final nuevoSyncUsuario = StatusSync(); //Se crea el objeto estatus por dedault //M__ para Usuario
+        updateUsuario.statusSync.target = nuevoSyncUsuario;
+      }
+      updateUsuario.bitacora.add(nuevaInstruccion);
+      dataBase.usuariosBox.put(updateUsuario);
+      print('Usuario actualizado exitosamente');
+    }
     notifyListeners();
   }
 

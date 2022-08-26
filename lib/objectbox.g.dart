@@ -135,7 +135,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(10, 252808688812742776),
       name: 'Usuarios',
-      lastPropertyId: const IdUid(20, 4207552670152335906),
+      lastPropertyId: const IdUid(21, 4594205475808180169),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -212,13 +212,6 @@ final _entities = <ModelEntity>[
             flags: 2080,
             indexId: const IdUid(70, 177953814522194844)),
         ModelProperty(
-            id: const IdUid(17, 7181885270107922782),
-            name: 'bitacoraId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(82, 4608900919778481553),
-            relationTarget: 'Bitacora'),
-        ModelProperty(
             id: const IdUid(18, 4567358900391945362),
             name: 'variablesUsuarioId',
             type: 11,
@@ -236,13 +229,24 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(147, 6162710869800712054),
-            relationTarget: 'Roles')
+            relationTarget: 'Roles'),
+        ModelProperty(
+            id: const IdUid(21, 4594205475808180169),
+            name: 'imageId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(148, 915767699699149923),
+            relationTarget: 'Imagenes')
       ],
       relations: <ModelRelation>[
         ModelRelation(
             id: const IdUid(19, 803629559452567645),
             name: 'documentos',
-            targetId: const IdUid(35, 416402482060153165))
+            targetId: const IdUid(35, 416402482060153165)),
+        ModelRelation(
+            id: const IdUid(30, 6849141679018238392),
+            name: 'bitacora',
+            targetId: const IdUid(27, 1774905738150923512))
       ],
       backlinks: <ModelBacklink>[
         ModelBacklink(
@@ -1929,7 +1933,11 @@ final _entities = <ModelEntity>[
         ModelRelation(
             id: const IdUid(28, 68666458468522626),
             name: 'tareas',
-            targetId: const IdUid(19, 2491530739310255510))
+            targetId: const IdUid(19, 2491530739310255510)),
+        ModelRelation(
+            id: const IdUid(29, 795186633578779297),
+            name: 'usuarios',
+            targetId: const IdUid(10, 252808688812742776))
       ],
       backlinks: <ModelBacklink>[])
 ];
@@ -1955,8 +1963,8 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(47, 4406411524870188538),
-      lastIndexId: const IdUid(147, 6162710869800712054),
-      lastRelationId: const IdUid(28, 68666458468522626),
+      lastIndexId: const IdUid(148, 915767699699149923),
+      lastRelationId: const IdUid(30, 6849141679018238392),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
         1366246136666677579,
@@ -2016,7 +2024,8 @@ ModelDefinition getObjectBoxModel() {
         8309315416341765269,
         1728042511720879376,
         8396189901550464501,
-        2386897909389581505
+        2386897909389581505,
+        4608900919778481553
       ],
       retiredPropertyUids: const [
         7079790605743243388,
@@ -2193,7 +2202,8 @@ ModelDefinition getObjectBoxModel() {
         8381385900840453390,
         9041506210264243534,
         5688593427736897311,
-        4321064732987742364
+        4321064732987742364,
+        7181885270107922782
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -2353,12 +2363,13 @@ ModelDefinition getObjectBoxModel() {
         model: _entities[1],
         toOneRelations: (Usuarios object) => [
               object.statusSync,
-              object.bitacora,
               object.variablesUsuario,
-              object.roles
+              object.roles,
+              object.image
             ],
         toManyRelations: (Usuarios object) => {
               RelInfo<Usuarios>.toMany(19, object.id): object.documentos,
+              RelInfo<Usuarios>.toMany(30, object.id): object.bitacora,
               RelInfo<Emprendimientos>.toOneBacklink(24, object.id,
                       (Emprendimientos srcObject) => srcObject.usuario):
                   object.emprendimientos
@@ -2378,7 +2389,7 @@ ModelDefinition getObjectBoxModel() {
           final imagenOffset = fbb.writeString(object.imagen);
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(21);
+          fbb.startTable(22);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nombreOffset);
           fbb.addOffset(2, apellidoPOffset);
@@ -2393,10 +2404,10 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(11, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addInt64(13, object.statusSync.targetId);
           fbb.addOffset(15, idDBROffset);
-          fbb.addInt64(16, object.bitacora.targetId);
           fbb.addInt64(17, object.variablesUsuario.targetId);
           fbb.addBool(18, object.archivado);
           fbb.addInt64(19, object.roles.targetId);
+          fbb.addInt64(20, object.image.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -2429,17 +2440,19 @@ ModelDefinition getObjectBoxModel() {
           object.statusSync.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0);
           object.statusSync.attach(store);
-          object.bitacora.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 36, 0);
-          object.bitacora.attach(store);
           object.variablesUsuario.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 38, 0);
           object.variablesUsuario.attach(store);
           object.roles.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 42, 0);
           object.roles.attach(store);
+          object.image.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 44, 0);
+          object.image.attach(store);
           InternalToManyAccess.setRelInfo(object.documentos, store,
               RelInfo<Usuarios>.toMany(19, object.id), store.box<Usuarios>());
+          InternalToManyAccess.setRelInfo(object.bitacora, store,
+              RelInfo<Usuarios>.toMany(30, object.id), store.box<Usuarios>());
           InternalToManyAccess.setRelInfo(
               object.emprendimientos,
               store,
@@ -3190,8 +3203,7 @@ ModelDefinition getObjectBoxModel() {
               RelInfo<Tareas>.toManyBacklink(27, object.id): object.tareas,
               RelInfo<Consultorias>.toManyBacklink(25, object.id):
                   object.consultorias,
-              RelInfo<Usuarios>.toOneBacklink(17, object.id,
-                  (Usuarios srcObject) => srcObject.bitacora): object.usuarios,
+              RelInfo<Usuarios>.toManyBacklink(30, object.id): object.usuarios,
               RelInfo<Jornadas>.toManyBacklink(10, object.id): object.jornadas,
               RelInfo<ProductosEmp>.toManyBacklink(22, object.id):
                   object.productosEmp,
@@ -3253,8 +3265,7 @@ ModelDefinition getObjectBoxModel() {
           InternalToManyAccess.setRelInfo(
               object.usuarios,
               store,
-              RelInfo<Usuarios>.toOneBacklink(
-                  17, object.id, (Usuarios srcObject) => srcObject.bitacora),
+              RelInfo<Usuarios>.toManyBacklink(30, object.id),
               store.box<Bitacora>());
           InternalToManyAccess.setRelInfo(
               object.jornadas,
@@ -4243,8 +4254,10 @@ ModelDefinition getObjectBoxModel() {
     Imagenes: EntityDefinition<Imagenes>(
         model: _entities[31],
         toOneRelations: (Imagenes object) => [],
-        toManyRelations: (Imagenes object) =>
-            {RelInfo<Imagenes>.toMany(28, object.id): object.tareas},
+        toManyRelations: (Imagenes object) => {
+              RelInfo<Imagenes>.toMany(28, object.id): object.tareas,
+              RelInfo<Imagenes>.toMany(29, object.id): object.usuarios
+            },
         getId: (Imagenes object) => object.id,
         setId: (Imagenes object, int id) {
           object.id = id;
@@ -4270,6 +4283,8 @@ ModelDefinition getObjectBoxModel() {
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)));
           InternalToManyAccess.setRelInfo(object.tareas, store,
               RelInfo<Imagenes>.toMany(28, object.id), store.box<Imagenes>());
+          InternalToManyAccess.setRelInfo(object.usuarios, store,
+              RelInfo<Imagenes>.toMany(29, object.id), store.box<Imagenes>());
           return object;
         })
   };
@@ -4406,26 +4421,30 @@ class Usuarios_ {
   static final idDBR =
       QueryStringProperty<Usuarios>(_entities[1].properties[13]);
 
-  /// see [Usuarios.bitacora]
-  static final bitacora =
-      QueryRelationToOne<Usuarios, Bitacora>(_entities[1].properties[14]);
-
   /// see [Usuarios.variablesUsuario]
   static final variablesUsuario =
       QueryRelationToOne<Usuarios, VariablesUsuario>(
-          _entities[1].properties[15]);
+          _entities[1].properties[14]);
 
   /// see [Usuarios.archivado]
   static final archivado =
-      QueryBooleanProperty<Usuarios>(_entities[1].properties[16]);
+      QueryBooleanProperty<Usuarios>(_entities[1].properties[15]);
 
   /// see [Usuarios.roles]
   static final roles =
-      QueryRelationToOne<Usuarios, Roles>(_entities[1].properties[17]);
+      QueryRelationToOne<Usuarios, Roles>(_entities[1].properties[16]);
+
+  /// see [Usuarios.image]
+  static final image =
+      QueryRelationToOne<Usuarios, Imagenes>(_entities[1].properties[17]);
 
   /// see [Usuarios.documentos]
   static final documentos =
       QueryRelationToMany<Usuarios, Documentos>(_entities[1].relations[0]);
+
+  /// see [Usuarios.bitacora]
+  static final bitacora =
+      QueryRelationToMany<Usuarios, Bitacora>(_entities[1].relations[1]);
 }
 
 /// [Ventas] entity fields to define ObjectBox queries.
@@ -5477,4 +5496,8 @@ class Imagenes_ {
   /// see [Imagenes.tareas]
   static final tareas =
       QueryRelationToMany<Imagenes, Tareas>(_entities[31].relations[0]);
+
+  /// see [Imagenes.usuarios]
+  static final usuarios =
+      QueryRelationToMany<Imagenes, Usuarios>(_entities[31].relations[1]);
 }

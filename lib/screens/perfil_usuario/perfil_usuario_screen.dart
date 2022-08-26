@@ -1,8 +1,8 @@
+import 'dart:io';
+
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/providers/catalog_provider.dart';
-import 'package:bizpro_app/screens/catalogos/catalogos_screen.dart';
 import 'package:bizpro_app/screens/perfil_usuario/device_information_widget.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -53,7 +53,6 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
         'assets/images/default-user-profile-picture.jpg';
         
     return Scaffold(
-      
       key: scaffoldKey,
       backgroundColor: AppTheme.of(context).primaryBackground,
       body: GestureDetector(
@@ -216,6 +215,38 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                     ),
                   ),
                 ),
+                currentUser.image.target?.imagenes == null ?
+                Padding(
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
+                  child: Container(
+                    width: 200,
+                    height: 200,
+                    clipBehavior: Clip.antiAlias,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: Container(
+                      color: Colors.blue,
+                      child: Center(
+                        child: Text(
+                          "${currentUser.nombre.substring(0,1)} ${currentUser.apellidoP.substring(0,1)}",
+                        style: AppTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily:
+                                        AppTheme.of(context)
+                                            .bodyText1Family,
+                                    color: Colors.white,
+                                    fontSize: 70,
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+                :
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
                     child: InkWell(
@@ -225,19 +256,19 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                           PageTransition(
                             type: PageTransitionType.fade,
                             child: FlutterFlowExpandedImageView(
-                              image: Image.asset(
-                                currentUserPhoto,
+                              image: Image.file(
+                                File(currentUser.image.target!.imagenes),
                                 fit: BoxFit.contain,
                               ),
                               allowRotation: false,
-                              tag: currentUserPhoto,
+                              tag: currentUser.nombre,
                               useHeroAnimation: true,
                             ),
                           ),
                         );
                       },
                       child: Hero(
-                        tag: currentUserPhoto,
+                        tag: currentUser.nombre,
                         transitionOnUserGestures: true,
                         child: Container(
                           width: 200,
@@ -247,8 +278,9 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                             shape: BoxShape.circle,
                           ),
                           child: //TODO: manejar imagen de red
-                          Image.asset(
-                            currentUserPhoto,
+                          Image.file(
+                            File(currentUser.image.target!.imagenes),
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
