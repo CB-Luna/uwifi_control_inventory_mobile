@@ -31,6 +31,8 @@ class Emprendimientos {
   final productosCot = ToMany<ProductosCot>();
   @Backlink()
   final consultorias = ToMany<Consultorias>();
+  @Backlink()
+  final inversiones = ToMany<Inversiones>();
   
   Emprendimientos({
     this.id = 0,
@@ -40,6 +42,73 @@ class Emprendimientos {
     this.activo = true,
     DateTime? fechaRegistro,
     this.archivado = false,
+    this.idDBR,
+    }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+
+}
+
+@Entity()
+class ProdSolicitado {
+  int id;
+  int idInversion;
+  String producto;
+  String marcaSugerida;
+  String descripcion;
+  String proveedorSugerido;
+  int cantidad;
+  double costoEstimado;
+  DateTime fechaRegistro;
+  @Unique()
+  String? idDBR;
+  final inversiones = ToMany<Inversiones>();
+  final statusSync = ToOne<StatusSync>();
+  final bitacora = ToMany<Bitacora>();
+
+  ProdSolicitado({
+    this.id = 0,
+    required this.idInversion,
+    required this.producto,
+    required this.marcaSugerida,
+    required this.descripcion,
+    required this.proveedorSugerido,
+    required this.cantidad,
+    required this.costoEstimado,
+    DateTime? fechaRegistro,
+    this.idDBR,
+    }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+
+}
+
+@Entity()
+class Inversiones {
+  int id;
+  DateTime? fechaCompra;
+  int porcentajePago;
+  double montoPagar;
+  double saldo;
+  double totalInversion;
+  bool inversionRecibida;
+  DateTime fechaRegistro;
+  @Unique()
+  String? idDBR;
+  final statusSync = ToOne<StatusSync>();
+  final bitacora = ToMany<Bitacora>();
+  final emprendimiento = ToOne<Emprendimientos>();
+  final prodSolicitado = ToOne<ProdSolicitado>();
+  
+  Inversiones({
+    this.id = 0,
+    this.fechaCompra,
+    this.porcentajePago = 0,
+    this.montoPagar = 0.0,
+    this.saldo = 0.0,
+    this.totalInversion = 0.0,
+    this.inversionRecibida = false,
+    DateTime? fechaRegistro,
     this.idDBR,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
@@ -70,6 +139,10 @@ class Bitacora{
   final productosEmp = ToMany<ProductosEmp>();
   @Backlink()
   final productosCot = ToMany<ProductosCot>();
+  @Backlink()
+  final inversiones = ToMany<Inversiones>();
+  @Backlink()
+  final prodSolicitados = ToMany<ProdSolicitado>();
   
   Bitacora({
     this.id = 0,
@@ -843,6 +916,10 @@ class StatusSync {
   final familiasInversion = ToMany<FamiliaInversion>();
   @Backlink()
   final unidadesMedida = ToMany<UnidadMedida>();
+  @Backlink()
+  final inversiones = ToMany<Inversiones>();
+  @Backlink()
+  final prodSolicitado= ToMany<ProdSolicitado>();
   StatusSync({
     this.id = 0,
     this.status = "0E3hoVIByUxMUMZ", //M__
