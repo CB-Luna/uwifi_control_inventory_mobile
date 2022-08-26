@@ -321,7 +321,6 @@ class Usuarios {
   String correo;
   String password;
   String imagen;
-  int rol; //TODO, apuntar este rol a la tabla de roles
   DateTime fechaRegistro;
   bool archivado;
   @Unique()
@@ -330,7 +329,7 @@ class Usuarios {
   final bitacora = ToMany<Bitacora>();
   final documentos = ToMany<Documentos>();
   final variablesUsuario = ToOne<VariablesUsuario>(); //Importante para evaluar la sincronizacion
-  final roles = ToOne<Roles>();
+  final rol = ToOne<Roles>();
   final image = ToOne<Imagenes>();
   @Backlink()
   final emprendimientos = ToMany<Emprendimientos>();
@@ -347,7 +346,6 @@ class Usuarios {
     required this.correo,
     required this.password,
     required this.imagen,
-    required this.rol,
     DateTime? fechaRegistro,
     this.archivado = false,
     this.idDBR,

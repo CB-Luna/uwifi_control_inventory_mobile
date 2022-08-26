@@ -18,7 +18,6 @@ class UsuarioController extends ChangeNotifier {
   String correo = '';
   String password = '';
   String imagen = '';
-  int? rol;
 
   String? currentUser;
   int? currentUserId;
@@ -54,9 +53,10 @@ class UsuarioController extends ChangeNotifier {
       String celular,
       String correo,
       String password,
-      String imagen,
+      String avatar,
       String idDBR,
-      int rol) {
+      String rolIdDBR,
+      ) {
     final nuevoUsuario = Usuarios(
         nombre: nombre,
         apellidoP: apellidoP,
@@ -66,28 +66,35 @@ class UsuarioController extends ChangeNotifier {
         celular: celular,
         correo: correo,
         password: password,
-        imagen: imagen,
-        rol: rol,
+        imagen: avatar,
         idDBR: idDBR,
         );
-    
-    final nuevaVariablesUsuario = VariablesUsuario();
-    nuevoUsuario.variablesUsuario.target = nuevaVariablesUsuario;
-    dataBase.usuariosBox.put(nuevoUsuario);
-    usuarios.add(nuevoUsuario);
-    
-    final lastUsuario = dataBase.usuariosBox.query(Usuarios_.correo.equals(correo)).build().findUnique();
-    if (lastUsuario != null) {
-      print("NOMBRE USUARIO: ${lastUsuario.nombre}");
-      print("ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
-      print("Emprendedores: ${lastUsuario.variablesUsuario.target?.emprendedores ?? 'none'}");
-      print("Tamaño VariablesUser: ${dataBase.variablesUsuarioBox.getAll().length}");
+    final nuevoSyncUsuario = StatusSync(); //Se crea el objeto estatus por dedault //M__ para Usuario
+    final nuevaImagenUsuario = Imagenes(imagenes: avatar); //Se crea el objeto imagenes para el Usuario
+    final nuevoRol = dataBase.rolesBox.query(Roles_.idDBR.equals(rolIdDBR)).build().findUnique(); //Se recupera el rol del Usuario
+    if (nuevoRol != null) {
+      nuevoUsuario.statusSync.target = nuevoSyncUsuario;
+      nuevoUsuario.image.target = nuevaImagenUsuario;
+      nuevoUsuario.rol.target = nuevoRol;
+      //TODO: Verifcar si se ocupa esta tabla
+      final nuevaVariablesUsuario = VariablesUsuario();
+      nuevoUsuario.variablesUsuario.target = nuevaVariablesUsuario;
+
+      dataBase.usuariosBox.put(nuevoUsuario);
+      usuarios.add(nuevoUsuario);
+      final lastUsuario = dataBase.usuariosBox.query(Usuarios_.correo.equals(correo)).build().findUnique();
+      if (lastUsuario != null) {
+        print("NOMBRE USUARIO: ${lastUsuario.nombre}");
+        print("ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
+        print("Emprendedores: ${lastUsuario.variablesUsuario.target?.emprendedores ?? 'none'}");
+        print("Tamaño VariablesUser: ${dataBase.variablesUsuarioBox.getAll().length}");
+      }
+      print('Usuario agregado exitosamente');
+      notifyListeners();
     }
-    print('Usuario agregado exitosamente');
-    notifyListeners();
   }
 
-void update(int id, String? newfotoPerfil, String newNombre, String newApellidoP, String newApellidoM, String newTelefono) {
+void update(int id, int newIdRol, String newfotoPerfil, String newNombre, String newApellidoP, String newApellidoM, String newTelefono) {
     var updateUsuario = dataBase.usuariosBox.get(id);
     if (updateUsuario != null) {
       final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateUsuario', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
@@ -95,39 +102,26 @@ void update(int id, String? newfotoPerfil, String newNombre, String newApellidoP
       updateUsuario.apellidoP = newApellidoP;
       updateUsuario.apellidoM = newApellidoM;
       updateUsuario.telefono = newTelefono;
-      final imagenUsuario = dataBase.imagenesBox.query(Imagenes_.id.equals(updateUsuario.image.target?.id ?? -1)).build().findUnique();
-      if (newfotoPerfil != null) {
-        if (imagenUsuario != null) {
-          imagenUsuario.imagenes = newfotoPerfil; //Se actualiza la imagen del usuario
-          dataBase.imagenesBox.put(imagenUsuario);
-        }
-        else {
-          final nuevaImagenUsuario = Imagenes(imagenes: newfotoPerfil); //Se crea el objeto imagenes para el Usuario
-          updateUsuario.image.target = nuevaImagenUsuario;
-        }
+      final updateRol = dataBase.rolesBox.get(newIdRol);
+      if (updateRol != null) {
+        updateUsuario.rol.target = updateRol; //Se actualiza el rol del Usuario
+      }
+      final updateImagenUsuario = dataBase.imagenesBox.query(Imagenes_.id.equals(updateUsuario.image.target?.id ?? -1)).build().findUnique();
+      if (updateImagenUsuario != null) {
+        updateImagenUsuario.imagenes = newfotoPerfil; //Se actualiza la imagen del usuario
+        dataBase.imagenesBox.put(updateImagenUsuario);
       }
       final statusSyncUsuario = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateUsuario.statusSync.target?.id ?? -1)).build().findUnique();
       if (statusSyncUsuario != null) {
         statusSyncUsuario.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del usuario
         dataBase.statusSyncBox.put(statusSyncUsuario);
       } 
-      else {
-        final nuevoSyncUsuario = StatusSync(); //Se crea el objeto estatus por dedault //M__ para Usuario
-        updateUsuario.statusSync.target = nuevoSyncUsuario;
-      }
       updateUsuario.bitacora.add(nuevaInstruccion);
       dataBase.usuariosBox.put(updateUsuario);
       print('Usuario actualizado exitosamente');
     }
     notifyListeners();
   }
-
-  // void remove(Usuarios usuario) {
-  //   dataBase.usuariosBox.remove(usuario.id);
-  //   usuarios.remove(usuario);
-
-  //   notifyListeners();
-  // }
 
   getAll() {
     usuarios = dataBase.usuariosBox.getAll();

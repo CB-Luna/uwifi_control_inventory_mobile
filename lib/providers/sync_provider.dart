@@ -268,6 +268,23 @@ class SyncProvider extends ChangeNotifier {
             }   
           }
           break;
+        case "syncUpdateUsuario":
+          final usuarioToSync = getFirstUsuario(dataBase.usuariosBox.getAll(), instruccionesBitacora[i].id);
+          if(usuarioToSync != null){
+            if(usuarioToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
+              print("Entro aqui en el if");
+              break;
+            } else {
+              print("Entro aqui en el else");
+              if (usuarioToSync.idDBR != null) {
+                print("Ya ha sido enviado al backend");
+                syncUpdateUsuario(usuarioToSync);
+              } else {
+                print("No ha sido enviado al backend");
+              }
+            }   
+          }
+          break;
         default:
          break;
       }
@@ -280,6 +297,22 @@ class SyncProvider extends ChangeNotifier {
     dataBase.bitacoraBox.removeAll();
     notifyListeners();
 
+  }
+
+  Usuarios? getFirstUsuario(List<Usuarios> usuarios, int idInstruccionesBitacora)
+  {
+    for (var i = 0; i < usuarios.length; i++) {
+      if (usuarios[i].bitacora.isEmpty) {
+        
+      } else {
+        for (var j = 0; j < usuarios[i].bitacora.length; j++) {
+          if (usuarios[i].bitacora[j].id == idInstruccionesBitacora) {
+            return usuarios[i];
+          } 
+        }
+      }
+    }
+    return null;
   }
 
   Emprendedores? getFirstEmprendedor(List<Emprendedores> emprendedores, int idInstruccionesBitacora)
@@ -1237,6 +1270,42 @@ return true;
 
   } 
 
+  Future<bool?> syncUpdateUsuario(Usuarios usuario) async {
+    print("Estoy en El syncUpdateUsuario");
+    try {
+
+      final record = await client.records.update('emi_users', usuario.idDBR.toString(), body: {
+        "nombre_usuario": usuario.nombre,
+        "apellido_p": usuario.apellidoP,
+        "apellido_m": usuario.apellidoM,
+        "telefono": usuario.telefono,
+        "id_rol_fk": usuario.rol.target!.idDBR,
+        "avatar": usuario.image.target?.imagenes,
+        "id_status_sync_fk": "HoI36PzYw1wtbO1"
+      }); 
+
+      if (record.id.isNotEmpty) {
+        print("usuario updated succesfully");
+        var updateUsuario = dataBase.usuariosBox.get(usuario.id);
+        if (updateUsuario  != null) {
+          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateUsuario.statusSync.target!.id)).build().findUnique();
+          if (statusSync != null) {
+            statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
+            dataBase.statusSyncBox.put(statusSync);
+          }
+        }
+      }
+      else{
+        return false;
+      }
+      return true;
+
+    } catch (e) {
+      print('ERROR - function syncUpdateUsuario(): $e');
+      return false;
+    }
+
+  } 
 void deleteBitacora() {
   dataBase.bitacoraBox.removeAll();
   notifyListeners();

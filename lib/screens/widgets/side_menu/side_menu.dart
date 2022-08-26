@@ -4,8 +4,6 @@ import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
-import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
-import 'package:bizpro_app/screens/sync/sincronizacion_screen.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_sincronizar_widget.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
@@ -112,7 +110,7 @@ class SideMenu extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            currentUser.image.target?.imagenes == null ?
+                            currentUser.image.target?.imagenes == "" ?
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   10, 0, 5, 0),
@@ -135,7 +133,7 @@ class SideMenu extends StatelessWidget {
                                                     AppTheme.of(context)
                                                         .bodyText1Family,
                                                 color: Colors.white,
-                                                fontSize: 15,
+                                                fontSize: 14,
                                                 fontWeight: FontWeight.w300,
                                               ),
                                     ),

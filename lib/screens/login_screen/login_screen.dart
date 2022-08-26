@@ -11,7 +11,7 @@ import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/services/auth_service.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-
+import 'package:bizpro_app/providers/catalog_provider.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/util/custom_functions.dart';
@@ -36,6 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final UserState userState = Provider.of<UserState>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
+    final catalogoProvider = Provider.of<CatalogProvider>(context);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: const Color(0xFFCAEFFE),
@@ -275,6 +276,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             } 
                             else {
                               print('Usuario no existente');
+                              if (dataBase.catalogoProyectoBox.isEmpty()) {
+                                await catalogoProvider.getRoles();
+                              }
                               usuarioProvider.add(
                                 emiUser.nombreUsuario,
                                 emiUser.apellidoP,
@@ -286,8 +290,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 userState.passwordController.text,
                                 emiUser.avatar ?? "",
                                 idDBR ?? "",
-                                userState.getRole(emiUser
-                                    .idRolFk), //TODO Verificar como es el rol
+                                emiUser.idRolFk,
                               );
                               usuarioProvider.getUser(loginResponse.user.email);
                               //Se almacena el ID Variables Usuario

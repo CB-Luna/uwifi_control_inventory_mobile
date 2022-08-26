@@ -1,6 +1,11 @@
 import 'dart:io';
 
 import 'package:bizpro_app/helpers/constants.dart';
+import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/objectbox.g.dart';
+import 'package:bizpro_app/screens/widgets/drop_down.dart';
+import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:bizpro_app/util/custom_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,7 +13,6 @@ import 'package:provider/provider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
-import 'package:bizpro_app/providers/user_provider.dart';
 import 'package:bizpro_app/screens/perfil_usuario/usuario_actualizado.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/custom_button.dart';
@@ -35,13 +39,18 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
   late TextEditingController telefonoController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
-  late String? fotoPerfil;
+  late String fotoPerfil;
   XFile? image;
+  String rolUsuario = "";
+  List<String> listRoles = [];
 
   @override
   void initState() {
     super.initState();
-    fotoPerfil = widget.usuario.image.target?.imagenes;
+    rolUsuario = widget.usuario.rol.target!.rol;
+    listRoles = [];
+    dataBase.rolesBox.getAll().forEach((element) {listRoles.add(element.rol);});
+    fotoPerfil = widget.usuario.image.target?.imagenes ?? "";
     nombreController = TextEditingController(text: widget.usuario.nombre);
     apellidoPController = TextEditingController(text: widget.usuario.apellidoP);
     apellidoMController = TextEditingController(text: widget.usuario.apellidoM);
@@ -191,7 +200,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      fotoPerfil == null ?
+                      fotoPerfil == "" ?
                       Padding(
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
@@ -237,7 +246,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                             color: const Color(0x00EEEEEE),
                             image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: FileImage(File(fotoPerfil!))
+                              image: FileImage(File(fotoPerfil))
                             ),
                             shape: BoxShape.circle,
                           ),
@@ -327,39 +336,41 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                         child: Text(
-                          'Nombre(s)',
+                          widget.usuario.correo,
                           style: AppTheme.of(context).bodyText1.override(
                                 fontFamily: AppTheme.of(context).bodyText1Family,
+                                fontSize: 15,
                                 fontWeight: FontWeight.w500,
                               ),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(35, 0, 35, 0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(35, 20, 35, 0),
                         child: TextFormField(
                           textCapitalization: TextCapitalization.words,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           controller: nombreController,
-                          decoration: const InputDecoration(
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
+                          decoration: InputDecoration(
+                            labelText: "Nombre(s)",
+                            labelStyle: AppTheme.of(context).bodyText1.override(
+                                  fontFamily: 'Poppins',
+                                  color: const Color(0xFF221573),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color(0xFF221573),
+                                width: 2,
                               ),
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
+                              borderRadius: BorderRadius.circular(12),
                             ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color(0xFF221573),
+                                width: 2,
                               ),
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
+                              borderRadius: BorderRadius.circular(12),
                             ),
                             filled: true,
                             fillColor: Colors.white,
@@ -373,41 +384,32 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                        child: Text(
-                          'Apellido Paterno',
-                          style: AppTheme.of(context).bodyText1.override(
-                                fontFamily: AppTheme.of(context).bodyText1Family,
-                                fontWeight: FontWeight.w500,
-                              ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(35, 0, 35, 0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(35, 20, 35, 0),
                         child: TextFormField(
                           textCapitalization: TextCapitalization.words,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           controller: apellidoPController,
-                          decoration: const InputDecoration(
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
+                          decoration: InputDecoration(
+                            labelText: "Apellido Paterno",
+                            labelStyle: AppTheme.of(context).bodyText1.override(
+                                  fontFamily: 'Poppins',
+                                  color: const Color(0xFF221573),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color(0xFF221573),
+                                width: 2,
                               ),
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
+                              borderRadius: BorderRadius.circular(12),
                             ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color(0xFF221573),
+                                width: 2,
                               ),
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
+                              borderRadius: BorderRadius.circular(12),
                             ),
                             filled: true,
                             fillColor: Colors.white,
@@ -421,41 +423,32 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                        child: Text(
-                          'Apellido Materno',
-                          style: AppTheme.of(context).bodyText1.override(
-                                fontFamily: AppTheme.of(context).bodyText1Family,
-                                fontWeight: FontWeight.w500,
-                              ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(35, 0, 35, 0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(35, 20, 35, 0),
                         child: TextFormField(
                           textCapitalization: TextCapitalization.words,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           controller: apellidoMController,
-                          decoration: const InputDecoration(
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
+                          decoration: InputDecoration(
+                            labelText: "Apellido Materno",
+                            labelStyle: AppTheme.of(context).bodyText1.override(
+                                  fontFamily: 'Poppins',
+                                  color: const Color(0xFF221573),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color(0xFF221573),
+                                width: 2,
                               ),
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
+                              borderRadius: BorderRadius.circular(12),
                             ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color(0xFF221573),
+                                width: 2,
                               ),
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
+                              borderRadius: BorderRadius.circular(12),
                             ),
                             filled: true,
                             fillColor: Colors.white,
@@ -464,40 +457,31 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                        child: Text(
-                          'Teléfono',
-                          style: AppTheme.of(context).bodyText1.override(
-                                fontFamily: AppTheme.of(context).bodyText1Family,
-                                fontWeight: FontWeight.w500,
-                              ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(35, 0, 35, 0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(35, 20, 35, 0),
                         child: TextFormField(
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           controller: telefonoController,
-                          decoration: const InputDecoration(
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
+                          decoration: InputDecoration(
+                            labelText: "Teléfono",
+                            labelStyle: AppTheme.of(context).bodyText1.override(
+                                  fontFamily: 'Poppins',
+                                  color: const Color(0xFF221573),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color(0xFF221573),
+                                width: 2,
                               ),
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
+                              borderRadius: BorderRadius.circular(12),
                             ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color(0xFF221573),
+                                width: 2,
                               ),
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
+                              borderRadius: BorderRadius.circular(12),
                             ),
                             filled: true,
                             fillColor: Colors.white,
@@ -510,102 +494,122 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                        child: Text(
-                          widget.usuario.correo,
-                          style: AppTheme.of(context).bodyText1.override(
-                                fontFamily: AppTheme.of(context).bodyText1Family,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                              ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-                        child: Container(
-                          width: 150,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Center(
-                            child: Text(
-                              UserState.getRoleAsString(widget.usuario.rol),
-                              style: AppTheme.of(context).bodyText1,
+                      FormField(builder: (state) {
+                        return Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              35, 20, 35, 0),
+                          child: DropDown(
+                            initialOption: rolUsuario,
+                            options: listRoles,
+                            onChanged: (val) => setState((){
+                                rolUsuario = val!;
+                              }),
+                            width: double.infinity,
+                            height: 50,
+                            textStyle: AppTheme.of(context).title3.override(
+                                  fontFamily: 'Poppins',
+                                  color: const Color(0xFF221573),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                            hintText: 'Seleccione un rol',
+                            icon: const Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              color: Color(0xFF221573),
+                              size: 30,
                             ),
+                            fillColor: Colors.white,
+                            elevation: 2,
+                            borderColor: const Color(0xFF221573),
+                            borderWidth: 2,
+                            borderRadius: 8,
+                            margin: const EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                            hidesUnderline: true,
                           ),
-                        ),
+                        );
+                        }, 
+                        validator: (val) {
+                            if (rolUsuario == "" ||
+                                rolUsuario.isEmpty) {
+                              return 'Para continuar, seleccione un rol.';
+                            }
+                            return null;
+                        },
                       ),
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
-                        child: CustomButton(
+                        child: FFButtonWidget(
                           onPressed: () async {
-                            if (usuarioProvider.validateForm(formKey)) {
-                              if (nombreController.text != widget.usuario.nombre ||
-                                  apellidoPController.text != widget.usuario.apellidoP || 
-                                  apellidoMController.text != widget.usuario.apellidoM ||
-                                  telefonoController.text != widget.usuario.telefono ||
-                                  fotoPerfil != widget.usuario.image.target?.imagenes
-                                  ) {
-                                  usuarioProvider.update(
-                                    widget.usuario.id,
-                                    fotoPerfil,
-                                    nombreController.text,
-                                    apellidoPController.text,
-                                    apellidoMController.text,
-                                    telefonoController.text,
+                            if (nombreController.text != widget.usuario.nombre ||
+                                apellidoPController.text != widget.usuario.apellidoP || 
+                                apellidoMController.text != widget.usuario.apellidoM ||
+                                telefonoController.text != widget.usuario.telefono ||
+                                fotoPerfil != widget.usuario.image.target?.imagenes ||
+                                rolUsuario != widget.usuario.rol.target!.rol
+                                ) {
+                                if (usuarioProvider.validateForm(formKey)) {
+                                  final idRol = dataBase.rolesBox.query(Roles_.rol.equals(rolUsuario)).build().findFirst()?.id;
+                                  if (idRol != null) {
+                                    usuarioProvider.update(
+                                      widget.usuario.id,
+                                      idRol,
+                                      fotoPerfil,
+                                      nombreController.text,
+                                      apellidoPController.text,
+                                      apellidoMController.text,
+                                      telefonoController.text,
+                                      );
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const UsuarioActualizado(),
+                                      ),
                                     );
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const UsuarioActualizado(),
-                                    ),
-                                  );
-                              }
-                            } else {
-                              await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title:
-                                          const Text('Campos vacíos'),
-                                      content: const Text(
-                                          'Para continuar, debe llenar los campos solicitados.'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(
-                                                  alertDialogContext),
-                                          child: const Text('Bien'),
-                                        ),
-                                      ],
+                                  }
+                                } else {
+                                  await showDialog(
+                                      context: context,
+                                      builder: (alertDialogContext) {
+                                        return AlertDialog(
+                                          title:
+                                              const Text('Campos vacíos'),
+                                          content: const Text(
+                                              'Para continuar, debe llenar los campos solicitados.'),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(
+                                                      alertDialogContext),
+                                              child: const Text('Bien'),
+                                            ),
+                                          ],
+                                        );
+                                      },
                                     );
-                                  },
-                                );
-                              return;
+                                  return;
+                                }
                             }
                           },
                           text: 'Guardar cambios',
                           icon: const Icon(
                             Icons.check_rounded,
-                            color: Color(0xFF221573),
                             size: 15,
                           ),
-                          options: ButtonOptions(
-                            width: 225,
-                            height: 45,
-                            color: Colors.white,
-                            textStyle: AppTheme.of(context).subtitle2.override(
-                                  fontFamily: AppTheme.of(context).subtitle2Family,
-                                  color: const Color(0xFF221573),
+                          options: FFButtonOptions(
+                            width: 160,
+                            height: 40,
+                            color: AppTheme.of(context).secondaryText,
+                            textStyle: AppTheme.of(context)
+                                .subtitle2
+                                .override(
+                                  fontFamily: AppTheme.of(context)
+                                      .subtitle2Family,
+                                  color: Colors.white,
                                   fontSize: 15,
-                                  fontWeight: FontWeight.w500,
                                 ),
                             borderSide: const BorderSide(
-                              color: Color(0xFF221573),
-                              width: 2,
+                              color: Colors.transparent,
+                              width: 1,
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),

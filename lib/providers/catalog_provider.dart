@@ -39,7 +39,6 @@ class CatalogProvider extends ChangeNotifier {
     await getEstados();
     await getMunicipios();
     await getComunidades();
-    await getRoles();
     await getClasificacionesEmp();
     await getCatalogosProyectos();
     await getFamiliaInversion();
@@ -421,5 +420,7 @@ class CatalogProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  
 
 }

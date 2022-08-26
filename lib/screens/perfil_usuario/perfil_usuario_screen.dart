@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/providers/catalog_provider.dart';
 import 'package:bizpro_app/screens/perfil_usuario/device_information_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -37,7 +36,6 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
   @override
   Widget build(BuildContext context) {
     final usuarioProvider = Provider.of<UsuarioController>(context);
-    final catalogosProvider = Provider.of<CatalogProvider>(context);
     if (usuarioProvider.usuarioCurrent == null) {
       return const Scaffold(
         body: Center(
@@ -215,7 +213,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                     ),
                   ),
                 ),
-                currentUser.image.target?.imagenes == null ?
+                currentUser.image.target?.imagenes == "" ?
                 Padding(
                   padding:
                       const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
@@ -324,7 +322,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                   child: Container(
                     width: 150,
                     height: 30,
@@ -350,7 +348,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                               ),
                             ),
                             Text(
-                              dropDownValue!,
+                              currentUser.rol.target!.rol,
                               style: AppTheme.of(context)
                                   .bodyText1
                                   .override(
@@ -364,35 +362,6 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                         ),
                       ],
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 25, 0, 0),
-                  child: FlutterFlowDropDown(
-                    options: listRoles,
-                    onChanged: (val) => setState(() => dropDownValue = val),
-                    width: 280,
-                    height: 50,
-                    textStyle: AppTheme.of(context).bodyText1.override(
-                          fontFamily:
-                              AppTheme.of(context).bodyText1Family,
-                          color: AppTheme.of(context).primaryText,
-                          fontSize: 15,
-                          fontWeight: FontWeight.normal,
-                        ),
-                    hintText: 'Tipo de usuario...',
-                    icon: Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      color: AppTheme.of(context).secondaryText,
-                      size: 30,
-                    ),
-                    fillColor: Colors.white,
-                    elevation: 2,
-                    borderColor: AppTheme.of(context).primaryText,
-                    borderWidth: 1.5,
-                    borderRadius: 8,
-                    margin: const EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                    hidesUnderline: true,
                   ),
                 ),
                 const Flexible(
