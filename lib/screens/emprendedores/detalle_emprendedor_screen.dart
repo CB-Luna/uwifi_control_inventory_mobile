@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:page_transition/page_transition.dart';
-
-import 'package:bizpro_app/screens/widgets/bottom_sheet_eliminar_emprendedor_widget.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
 
 class DetallesEmprendedorScreen extends StatefulWidget {
@@ -161,58 +159,6 @@ class DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 10, 0),
-                                  child: Container(
-                                    width: 45,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      color: AppTheme.of(context)
-                                          .secondaryText,
-                                      borderRadius:
-                                          BorderRadius.circular(10),
-                                    ),
-                                    child: InkWell(
-                                      onTap: () async {
-                                        await showModalBottomSheet(
-                                          isScrollControlled: true,
-                                          backgroundColor:
-                                              Colors.transparent,
-                                          context: context,
-                                          builder: (context) {
-                                            return Padding(
-                                              padding:
-                                                  MediaQuery.of(context)
-                                                      .viewInsets,
-                                              child: SizedBox(
-                                                height:
-                                                    MediaQuery.of(context)
-                                                            .size
-                                                            .height *
-                                                        0.45,
-                                                child:
-                                                    const BottomSheetEliminarEmprendedor(),
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      },
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: const [
-                                          Icon(
-                                            Icons.delete_rounded,
-                                            color: Colors.white,
-                                            size: 20,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
                                 InkWell(
                                   onTap: () async {
                                     await Navigator.push(
