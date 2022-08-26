@@ -10,6 +10,7 @@ import 'package:bizpro_app/screens/jornadas/editar_jornada2_screen.dart';
 import 'package:bizpro_app/screens/jornadas/editar_jornada3_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_carousel.dart';
+import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 
 
@@ -22,10 +23,10 @@ class DetalleJornadaScreen extends StatefulWidget {
 
 
   @override
-  DetalleJornadaScreenState createState() => DetalleJornadaScreenState();
+  _DetalleJornadaScreenState createState() => _DetalleJornadaScreenState();
 }
 
-class DetalleJornadaScreenState extends State<DetalleJornadaScreen>
+class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
     with TickerProviderStateMixin {
   final animationsMap = {
     'containerOnPageLoadAnimation': AnimationInfo(

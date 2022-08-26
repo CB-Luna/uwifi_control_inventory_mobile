@@ -49,7 +49,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
   }
 
   getInfo() {
-    // print("PREFERS: ${prefs.getString("userId")}");
+    print("PREFERS: ${prefs.getString("userId")}");
     context
         .read<UsuarioController>()
         .getUser(prefs.getString("userId") ?? "NONE");
@@ -407,6 +407,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                           });
                         }
 
+                        List<String> emprendedores = [];
                         return ListView.builder(
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,

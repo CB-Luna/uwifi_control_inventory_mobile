@@ -25,11 +25,11 @@ class DetalleConsultoriaScreen extends StatefulWidget {
 
 
   @override
-  DetalleConsultoriaScreenState createState() =>
-      DetalleConsultoriaScreenState();
+  _DetalleConsultoriaScreenState createState() =>
+      _DetalleConsultoriaScreenState();
 }
 
-class DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
+class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
     with TickerProviderStateMixin {
   final animationsMap = {
     'containerOnPageLoadAnimation': AnimationInfo(
@@ -64,7 +64,7 @@ class DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
   Widget build(BuildContext context) {
     List<Tareas> tareas = [];
     tareas = widget.consultoria.tareas.toList();
-    // print("Tareas: ${tareas.length}");
+    print("Tareas: ${tareas.length}");
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: AppTheme.of(context).primaryBackground,

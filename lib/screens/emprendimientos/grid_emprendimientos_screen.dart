@@ -1,6 +1,8 @@
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
+import 'package:bizpro_app/screens/widgets/custom_button.dart';
+import 'package:bizpro_app/screens/widgets/flutter_icon_button.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/util/util.dart';

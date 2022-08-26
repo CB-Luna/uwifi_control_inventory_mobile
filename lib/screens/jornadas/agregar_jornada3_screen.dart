@@ -18,6 +18,7 @@ import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 
 import 'package:bizpro_app/providers/database_providers/jornada_controller.dart';
+import 'package:bizpro_app/screens/widgets/flutter_flow_checkbox_group.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 import 'package:bizpro_app/util/flutter_flow_util.dart';
@@ -36,10 +37,10 @@ class AgregarJornada3Screen extends StatefulWidget {
 
 
   @override
-  AgregarJornada3ScreenState createState() => AgregarJornada3ScreenState();
+  _AgregarJornada3ScreenState createState() => _AgregarJornada3ScreenState();
 }
 
-class AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
+class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
   TextEditingController fechaRevision = TextEditingController();
   TextEditingController fechaRegistro = TextEditingController();
   List<String> checkboxGroupValues = [];
@@ -555,7 +556,8 @@ class AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                               );
                             },
                             validator: (val) {
-                              if (jornadaProvider.imagen.isEmpty) {
+                              if (jornadaProvider.imagen == null ||
+                                  jornadaProvider.imagen.isEmpty) {
                                 return 'Para continuar, cargue una imagen';
                               }
                               return null;
@@ -726,10 +728,10 @@ class AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                         listProyectos.add(element.nombre);
                                       }                                    
                                       });
-                                      // print("Entro a tipo proyecto");
+                                      print("Entro a tipo proyecto");
                                     }
-                                    // print("Tipo Proyecto: $tipoProyecto");
-                                    // print("List proyectos: ${listProyectos.length}");
+                                    print("Tipo Proyecto: $tipoProyecto");
+                                    print("List proyectos: ${listProyectos.length}");
 
                                   }),
                                 width: double.infinity,
@@ -779,9 +781,9 @@ class AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                     ));
                                   } else {
                                     proyecto = val!;
-                                    // print("Entro a proyectos");
+                                    print("Entro a proyectos");
                                   }
-                                  // print("Proyecto: $proyecto");
+                                  print("Proyecto: $proyecto");
 
                                   }),
                                 width: double.infinity,
@@ -958,9 +960,9 @@ class AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                           onPressed: () async {
                             if (jornadaProvider
                                 .validateForm(formKey)) {
-                              // print("Fecha revision ${jornadaProvider.fechaRevision}");
-                              // print("Tarea ${jornadaProvider.tarea}");
-                              // print("Jorndada ${widget.numJornada}");
+                              print("Fecha revision ${jornadaProvider.fechaRevision}");
+                              print("Tarea ${jornadaProvider.tarea}");
+                              print("Jorndada ${widget.numJornada}");
                               final idProyecto = dataBase.catalogoProyectoBox.query(CatalogoProyecto_.nombre.equals(proyecto)).build().findFirst()?.id;
                               if (idProyecto != null) {
                                 jornadaProvider.addJornada3(widget.emprendimiento.id, idProyecto, widget.numJornada);

@@ -25,10 +25,10 @@ class AgregarJornada1Screen extends StatefulWidget {
 
 
   @override
-  AgregarJornada1ScreenState createState() => AgregarJornada1ScreenState();
+  _AgregarJornada1ScreenState createState() => _AgregarJornada1ScreenState();
 }
 
-class AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
+class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
   TextEditingController fechaRevision = TextEditingController();
   TextEditingController fechaRegistro = TextEditingController();
   late TextEditingController nombreController;
@@ -552,8 +552,8 @@ class AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                             if (jornadaProvider
                                 .validateForm(formKey)) {
                               // comunidadProvider.add();
-                              // print("Fecha revision ${jornadaProvider.fechaRevision}");
-                              // print("Tarea ${jornadaProvider.tarea}");
+                              print("Fecha revision ${jornadaProvider.fechaRevision}");
+                              print("Tarea ${jornadaProvider.tarea}");
                               if (nombreController.text != widget.emprendimiento.nombre) {
                                 emprendimientoProvider.updateName(widget.emprendimiento.id, nombreController.text);
                               }

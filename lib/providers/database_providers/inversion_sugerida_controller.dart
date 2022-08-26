@@ -62,7 +62,7 @@ class InversionSugeridaController extends ChangeNotifier {
         dataBase.emprendimientosBox.put(emprendimiento);
         // dataBase.emprendedoresBox.put(nuevoEmprendedor);
         productosEmp.add(nuevoProductoEmp);
-        // print('ProductoEmp agregado exitosamente');
+        print('ProductoEmp agregado exitosamente');
         clearInformation();
         notifyListeners();
       }

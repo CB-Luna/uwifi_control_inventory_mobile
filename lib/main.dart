@@ -99,13 +99,13 @@ class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  State<MyApp> createState() => MyAppState();
+  State<MyApp> createState() => _MyAppState();
 
-  static MyAppState of(BuildContext context) =>
-      context.findAncestorStateOfType<MyAppState>()!;
+  static _MyAppState of(BuildContext context) =>
+      context.findAncestorStateOfType<_MyAppState>()!;
 }
 
-class MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> {
   Locale _locale = const Locale('es');
   final ThemeMode _themeMode = ThemeMode.system;
 

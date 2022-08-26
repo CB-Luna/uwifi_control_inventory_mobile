@@ -28,10 +28,10 @@ class AgregarJornada4Screen extends StatefulWidget {
 
 
   @override
-  AgregarJornada4ScreenState createState() => AgregarJornada4ScreenState();
+  _AgregarJornada4ScreenState createState() => _AgregarJornada4ScreenState();
 }
 
-class AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
+class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
   TextEditingController fechaRegistro = TextEditingController();
   List<String> checkboxGroupValues = [];
   final formKey = GlobalKey<FormState>();
@@ -536,7 +536,8 @@ class AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
                               );
                             },
                             validator: (val) {
-                              if (jornadaProvider.imagen.isEmpty) {
+                              if (jornadaProvider.imagen == null ||
+                                  jornadaProvider.imagen.isEmpty) {
                                 return 'Para continuar, cargue una imagen del convenio';
                               }
                               return null;
@@ -550,8 +551,8 @@ class AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
                           onPressed: () async {
                             if (jornadaProvider
                                 .validateForm(formKey)) {
-                              // print("Fecha revision ${jornadaProvider.fechaRevision}");
-                              // print("Tarea ${jornadaProvider.tarea}");
+                              print("Fecha revision ${jornadaProvider.fechaRevision}");
+                              print("Tarea ${jornadaProvider.tarea}");
                                 jornadaProvider.addJornada4(widget.emprendimiento.id, widget.numJornada);
                                 await Navigator.push(
                                 context,

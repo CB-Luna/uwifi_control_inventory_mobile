@@ -15,11 +15,11 @@ class DetallesEmprendedorScreen extends StatefulWidget {
 
 
   @override
-  DetallesEmprendedorScreenState createState() =>
-      DetallesEmprendedorScreenState();
+  _DetallesEmprendedorScreenState createState() =>
+      _DetallesEmprendedorScreenState();
 }
 
-class DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
+class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -28,7 +28,7 @@ class DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
     if (widget.emprendedor.emprendimiento.target != null) {
       emprendimientos.add(widget.emprendedor.emprendimiento.target!);
     }
-    // print(emprendimientos.length);
+    print(emprendimientos.length);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,

@@ -25,10 +25,10 @@ class EditarConsultoriaScreen extends StatefulWidget {
 
 
   @override
-  EditarConsultoriaScreenState createState() => EditarConsultoriaScreenState();
+  _EditarConsultoriaScreenState createState() => _EditarConsultoriaScreenState();
 }
 
-class EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
+class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   String ambito = "";
@@ -370,8 +370,8 @@ class EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                             if (consultoriaProvider
                                 .validateForm(formKey)) {
                               // comunidadProvider.add();
-                              // print("Fecha revision ${consultoriaProvider.fechaRevision}");
-                              // print("Tarea ${consultoriaProvider.tarea}");
+                              print("Fecha revision ${consultoriaProvider.fechaRevision}");
+                              print("Tarea ${consultoriaProvider.tarea}");
                               final idAmbito = dataBase.ambitoConsultoriaBox.query(AmbitoConsultoria_.nombreAmbito.equals(ambito)).build().findFirst()?.id;
                               final idAreaCirculo = dataBase.areaCirculoBox.query(AreaCirculo_.nombreArea.equals(areaCirculo)).build().findFirst()?.id;
                               if (ambito != widget.consultoria.ambitoConsultoria.target!.nombreAmbito ||

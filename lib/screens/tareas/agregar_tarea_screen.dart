@@ -4,6 +4,9 @@ import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 
 class AgregarTareaScreen extends StatefulWidget {
   const AgregarTareaScreen({
@@ -11,10 +14,10 @@ class AgregarTareaScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  AgregarTareaScreenState createState() => AgregarTareaScreenState();
+  _AgregarTareaScreenState createState() => _AgregarTareaScreenState();
 }
 
-class AgregarTareaScreenState extends State<AgregarTareaScreen> {
+class _AgregarTareaScreenState extends State<AgregarTareaScreen> {
   DateTime datePicked = DateTime.now();
   String dropDownValue = "";
   TextEditingController textController1 = TextEditingController();
@@ -67,29 +70,29 @@ class AgregarTareaScreenState extends State<AgregarTareaScreen> {
                   Container(
                     width: double.infinity,
                     height: 200,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: Color(0x51000000),
                     ),
                   ),
                   Align(
-                    alignment: const AlignmentDirectional(0, 0),
+                    alignment: AlignmentDirectional(0, 0),
                     child: Container(
                       width: double.infinity,
                       height: 200,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            const Color(0x0014181B),
+                            Color(0x0014181B),
                             AppTheme.of(context).secondaryBackground
                           ],
-                          stops: const [0, 1],
-                          begin: const AlignmentDirectional(0, -1),
-                          end: const AlignmentDirectional(0, 1),
+                          stops: [0, 1],
+                          begin: AlignmentDirectional(0, -1),
+                          end: AlignmentDirectional(0, 1),
                         ),
                       ),
                       child: Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(16, 45, 16, 0),
+                            EdgeInsetsDirectional.fromSTEB(16, 45, 16, 0),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
@@ -119,7 +122,7 @@ class AgregarTareaScreenState extends State<AgregarTareaScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          const Icon(
+                                          Icon(
                                             Icons.arrow_back_ios_rounded,
                                             color: Colors.white,
                                             size: 16,
@@ -170,7 +173,7 @@ class AgregarTareaScreenState extends State<AgregarTareaScreen> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(15, 16, 15, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(15, 16, 15, 0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -181,7 +184,7 @@ class AgregarTareaScreenState extends State<AgregarTareaScreen> {
                           autovalidateMode: AutovalidateMode.always,
                           child: Padding(
                             padding:
-                                const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                                EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                             child: TextFormField(
                               controller: textController1,
                               obscureText: false,
@@ -242,7 +245,7 @@ class AgregarTareaScreenState extends State<AgregarTareaScreen> {
                           autovalidateMode: AutovalidateMode.always,
                           child: Padding(
                             padding:
-                                const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                                EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                             child: TextFormField(
                               controller: textController2,
                               obscureText: false,
@@ -303,7 +306,7 @@ class AgregarTareaScreenState extends State<AgregarTareaScreen> {
                           autovalidateMode: AutovalidateMode.always,
                           child: Padding(
                             padding:
-                                const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                                EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                             child: TextFormField(
                               controller: textController3,
                               obscureText: false,
@@ -364,7 +367,7 @@ class AgregarTareaScreenState extends State<AgregarTareaScreen> {
                           autovalidateMode: AutovalidateMode.always,
                           child: Padding(
                             padding:
-                                const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                                EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                             child: TextFormField(
                               controller: textController4,
                               obscureText: false,
@@ -425,7 +428,7 @@ class AgregarTareaScreenState extends State<AgregarTareaScreen> {
                           autovalidateMode: AutovalidateMode.always,
                           child: Padding(
                             padding:
-                                const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                                EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                             child: TextFormField(
                               controller: textController5,
                               obscureText: false,
@@ -486,7 +489,7 @@ class AgregarTareaScreenState extends State<AgregarTareaScreen> {
                           autovalidateMode: AutovalidateMode.always,
                           child: Padding(
                             padding:
-                                const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
+                                EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
                             child: FlutterFlowDropDown(
                               options: const ['100%', '75%', '50%', '25%'],
                               onChanged: (val) =>
@@ -509,7 +512,7 @@ class AgregarTareaScreenState extends State<AgregarTareaScreen> {
                                   AppTheme.of(context).primaryText,
                               borderWidth: 1.5,
                               borderRadius: 12,
-                              margin: const EdgeInsetsDirectional.fromSTEB(
+                              margin: EdgeInsetsDirectional.fromSTEB(
                                   12, 4, 12, 4),
                               hidesUnderline: true,
                             ),
@@ -519,7 +522,7 @@ class AgregarTareaScreenState extends State<AgregarTareaScreen> {
                           key: formKey5,
                           autovalidateMode: AutovalidateMode.always,
                           child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 5, 10, 5, 10),
                             child: TextFormField(
                               controller: textController6,
@@ -582,7 +585,7 @@ class AgregarTareaScreenState extends State<AgregarTareaScreen> {
                           autovalidateMode: AutovalidateMode.always,
                           child: Padding(
                             padding:
-                                const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                                EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                             child: InkWell(
                               onTap: () async {
                                 await DatePicker.showDatePicker(
@@ -615,7 +618,7 @@ class AgregarTareaScreenState extends State<AgregarTareaScreen> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsetsDirectional
+                                          padding: EdgeInsetsDirectional
                                               .fromSTEB(10, 0, 0, 0),
                                           child: Text(
                                             'fecha de próxima revisión*',
@@ -628,7 +631,7 @@ class AgregarTareaScreenState extends State<AgregarTareaScreen> {
                                                                   context)
                                                               .bodyText1Family,
                                                       color:
-                                                          const Color(0xFF5B6570),
+                                                          Color(0xFF5B6570),
                                                       fontSize: 11,
                                                       fontWeight:
                                                           FontWeight.normal,
@@ -641,7 +644,7 @@ class AgregarTareaScreenState extends State<AgregarTareaScreen> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsetsDirectional
+                                          padding: EdgeInsetsDirectional
                                               .fromSTEB(12, 6, 0, 0),
                                           child: Text(
                                             dateTimeFormat(
@@ -670,7 +673,7 @@ class AgregarTareaScreenState extends State<AgregarTareaScreen> {
                         ),
                         Padding(
                           padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                              EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -692,7 +695,7 @@ class AgregarTareaScreenState extends State<AgregarTareaScreen> {
                                         ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
                                         0, 5, 0, 0),
                                     child: InkWell(
                                       onTap: () async {
@@ -730,7 +733,7 @@ class AgregarTareaScreenState extends State<AgregarTareaScreen> {
                                             // ),
                                             Align(
                                               alignment:
-                                                  const AlignmentDirectional(
+                                                  AlignmentDirectional(
                                                       0, 0),
                                               child: Row(
                                                 mainAxisSize:
@@ -768,13 +771,13 @@ class AgregarTareaScreenState extends State<AgregarTareaScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                     child: FFButtonWidget(
                       onPressed: () {
-                        // print('Button pressed ...');
+                        print('Button pressed ...');
                       },
                       text: 'Crear',
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.check_rounded,
                         size: 15,
                       ),
@@ -789,7 +792,7 @@ class AgregarTareaScreenState extends State<AgregarTareaScreen> {
                                   color: Colors.white,
                                   fontSize: 15,
                                 ),
-                        borderSide: const BorderSide(
+                        borderSide: BorderSide(
                           color: Colors.transparent,
                           width: 1,
                         ),

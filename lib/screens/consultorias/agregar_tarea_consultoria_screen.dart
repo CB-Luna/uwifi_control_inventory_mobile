@@ -26,10 +26,10 @@ class AgregarTareaConsultoriaScreen extends StatefulWidget {
 
 
   @override
-  AgregarTareaConsultoriaScreenState createState() => AgregarTareaConsultoriaScreenState();
+  _AgregarTareaConsultoriaScreenState createState() => _AgregarTareaConsultoriaScreenState();
 }
 
-class AgregarTareaConsultoriaScreenState extends State<AgregarTareaConsultoriaScreen> {
+class _AgregarTareaConsultoriaScreenState extends State<AgregarTareaConsultoriaScreen> {
   TextEditingController fechaRevision = TextEditingController();
   List<String> checkboxGroupValues = [];
   final formKey = GlobalKey<FormState>();
@@ -571,8 +571,8 @@ class AgregarTareaConsultoriaScreenState extends State<AgregarTareaConsultoriaSc
                             if (consultoriaProvider
                                 .validateForm(formKey)) {
                               // comunidadProvider.add();
-                                // print("Fecha revision ${consultoriaProvider.fechaRevision}");
-                                // print("Tarea ${consultoriaProvider.tarea}");
+                                print("Fecha revision ${consultoriaProvider.fechaRevision}");
+                                print("Tarea ${consultoriaProvider.tarea}");
                                 consultoriaProvider.addTareaConsultoria(widget.consultoria.id);
                                 await Navigator.push(
                                   context,

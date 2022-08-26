@@ -451,9 +451,9 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                       options: '¿Tarea Completada?',
                                       onChanged: (val) => setState(
                                           () {
-                                            // print(val);
+                                            print(val);
                                             activoController = val;
-                                            // print(activoController);
+                                            print(activoController);
                                             }),
                                       activeColor: AppTheme.of(context)
                                           .primaryColor,
@@ -774,10 +774,10 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                         listProyectos.add(element.nombre);
                                       }                                    
                                       });
-                                      // print("Entro a tipo proyecto");
+                                      print("Entro a tipo proyecto");
                                     }
-                                    // print("Tipo Proyecto: $tipoProyecto");
-                                    // print("List proyectos: ${listProyectos.length}");
+                                    print("Tipo Proyecto: $tipoProyecto");
+                                    print("List proyectos: ${listProyectos.length}");
 
                                   }),
                                 width: double.infinity,
@@ -828,9 +828,9 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                     ));
                                   } else {
                                     proyecto = val!;
-                                    // print("Entro a proyectos");
+                                    print("Entro a proyectos");
                                   }
-                                  // print("Proyecto: $proyecto");
+                                  print("Proyecto: $proyecto");
 
                                   }),
                                 width: double.infinity,
@@ -979,7 +979,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                           onPressed: () async {
                             if (jornadaProvider
                                 .validateForm(formKey)) {
-                                  // print("Se puede actualizar");
+                                  print("Se puede actualizar");
                                 if (fechaRegistro != widget.jornada.fechaRegistro ||
                                     tareaController.text != widget.jornada.tarea.target!.tarea ||
                                     activoController != widget.jornada.tarea.target!.activo ||

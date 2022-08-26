@@ -226,7 +226,8 @@ class _AgregarEmprendimientoScreenState
                           ],
                         );
                       }, validator: (val) {
-                        if (emprendimientoProvider.imagen.isEmpty) {
+                        if (emprendimientoProvider.imagen == null ||
+                            emprendimientoProvider.imagen.isEmpty) {
                           return 'Para continuar, cargue una imagen';
                         }
                         return null;
@@ -377,9 +378,9 @@ class _AgregarEmprendimientoScreenState
                                         listMunicipios.add(element.nombre);
                                       }                                    
                                       });
-                                    // print("Entro a con estados");
+                                    print("Entro a con estados");
                                   }
-                                  // print("Estado: $nombreEstado");
+                                  print("Estado: $nombreEstado");
                                   
                                   }),
                                 width: double.infinity,
@@ -435,9 +436,9 @@ class _AgregarEmprendimientoScreenState
                                         listComunidades.add(element.nombre);
                                       }                                    
                                     });
-                                    // print("Entro a con municipios");
+                                    print("Entro a con municipios");
                                   }
-                                  // print("Municipio: $nombreMunicipio");
+                                  print("Municipio: $nombreMunicipio");
                                 }),
                                 width: double.infinity,
                                 height: 50,
@@ -486,9 +487,9 @@ class _AgregarEmprendimientoScreenState
                                       ));
                                     } else {
                                       nombreComunidad = val!;
-                                      // print("Entro a con comunidades");
+                                      print("Entro a con comunidades");
                                     }
-                                    // print("Comunidad: $nombreComunidad");
+                                    print("Comunidad: $nombreComunidad");
                                   }),
                                 width: double.infinity,
                                 height: 50,

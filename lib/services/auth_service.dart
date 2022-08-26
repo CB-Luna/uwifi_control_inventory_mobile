@@ -48,25 +48,25 @@ abstract class AuthService {
   static Future<String?> userEMIByID(String idUser) async {
     try {
 
-      // print("User ID: $idUser");
+      print("User ID: $idUser");
       var url = Uri.parse("https://pocketbase.cbluna-dev.com/api/collections/emi_users/records/?filter=(user='$idUser')");
 
       var response = await get(url);
 
-      // print(response.body);
+      print(response.body);
 
       final reverseUserEMIById = EmiUserById.fromJson(
           response.body);
 
-      // print("Resultado del userEMIByID: ${reverseUserEMIById.items?[0].id}");
+      print("Resultado del userEMIByID: ${reverseUserEMIById.items?[0].id}");
 
       if (reverseUserEMIById.items == null) {
-        // print('Items not Found');
+        print('Items not Found');
       } else {
         return reverseUserEMIById.items?[0].id;
       }
     } catch (e) {
-      // print('ERROR - function userEMIByID(): $e');
+      print('ERROR - function userEMIByID(): $e');
       return null;
     }
     return null;

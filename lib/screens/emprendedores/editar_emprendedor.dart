@@ -25,11 +25,11 @@ class EditarEmprendedor extends StatefulWidget {
     : super(key: key);
 
   @override
-  EditarEmprendedorState createState() =>
-      EditarEmprendedorState();
+  _EditarEmprendedorState createState() =>
+      _EditarEmprendedorState();
 }
 
-class EditarEmprendedorState extends State<EditarEmprendedor> {
+class _EditarEmprendedorState extends State<EditarEmprendedor> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final emprendedorKey = GlobalKey<FormState>();
   XFile? image;
@@ -563,9 +563,9 @@ class EditarEmprendedorState extends State<EditarEmprendedor> {
                                           listMunicipios.add(element.nombre);
                                         }                                    
                                         });
-                                      // print("Entro a con estados");
+                                      print("Entro a con estados");
                                     }
-                                    // print("Estado: $nombreEstado");
+                                    print("Estado: $nombreEstado");
                                     
                                     }),
                                   width: double.infinity,
@@ -622,9 +622,9 @@ class EditarEmprendedorState extends State<EditarEmprendedor> {
                                           listComunidades.add(element.nombre);
                                         }                                    
                                       });
-                                      // print("Entro a con municipios");
+                                      print("Entro a con municipios");
                                     }
-                                    // print("Municipio: $nombreMunicipio");
+                                    print("Municipio: $nombreMunicipio");
                                   }),
                                   width: double.infinity,
                                   height: 50,
@@ -674,9 +674,9 @@ class EditarEmprendedorState extends State<EditarEmprendedor> {
                                         ));
                                       } else {
                                         nombreComunidad = val!;
-                                        // print("Entro a con comunidades");
+                                        print("Entro a con comunidades");
                                       }
-                                      // print("Comunidad: $nombreComunidad");
+                                      print("Comunidad: $nombreComunidad");
                                     }),
                                   width: double.infinity,
                                   height: 50,

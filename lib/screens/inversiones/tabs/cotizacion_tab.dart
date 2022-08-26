@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:bizpro_app/screens/inversiones/agregar_cotizacion_screen.dart';
+import 'package:bizpro_app/screens/inversiones/agregar_inversion_sugerida_screen.dart';
 import 'package:bizpro_app/util/util.dart';
 import 'package:flutter/material.dart';
 
@@ -37,10 +38,10 @@ with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final List<ProductosCot> productosCot = [];
     double totalProyecto = 0;
-    for (var element in widget.emprendimiento.productosCot) {
+    widget.emprendimiento.productosCot.forEach((element) {
       productosCot.add(element);
       totalProyecto += (element.costo * element.cantidad); 
-    }
+    });
     return Align(
       alignment: const AlignmentDirectional(0, 0),
       child: Column(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/database/entitys.dart';
 class LocalidadController extends ChangeNotifier {
 
   // List<Comunidades> comunidades = [];

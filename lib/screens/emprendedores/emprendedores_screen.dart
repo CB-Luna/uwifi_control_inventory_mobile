@@ -6,8 +6,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:bizpro_app/util/util.dart';
 import 'package:bizpro_app/theme/theme.dart';
+import 'package:bizpro_app/providers/user_provider.dart';
 import 'package:bizpro_app/providers/database_providers/emprendedor_controller.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
+import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/screens/emprendedores/detalle_emprendedor_screen.dart';
 import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
 import 'package:bizpro_app/screens/widgets/custom_button.dart';
@@ -45,13 +47,14 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
   }
 
   getInfo() {
-    // print("PREFERS: ${prefs.getString("userId")}");
+    print("PREFERS: ${prefs.getString("userId")}");
     context.read<EmprendedorController>().getEmprendedoresActualUser(
         context.read<UsuarioController>().getEmprendimientos());
   }
 
   @override
   Widget build(BuildContext context) {
+    final UserState userState = Provider.of<UserState>(context);
     final emprendedorProvider = Provider.of<EmprendedorController>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
     final Usuarios currentUser = usuarioProvider.usuarioCurrent!;
@@ -340,7 +343,7 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                   ),
                                   child: InkWell(
                                     onTap: () async {
-                                      // print("Length emprendedores: ${emprendedoresPDF.length}");
+                                      print("Length emprendedores: ${emprendedoresPDF.length}");
                                       final date = DateTime.now();
                                       final invoice = EmprendedorInvoice(
                                         info: InvoiceInfo(

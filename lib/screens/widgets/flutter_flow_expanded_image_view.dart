@@ -22,7 +22,7 @@ class FlutterFlowExpandedImageView extends StatelessWidget {
       child: SafeArea(
         child: Stack(
           children: [
-            SizedBox(
+            Container(
               height: screenSize.height,
               width: screenSize.width,
               child: PhotoView.customChild(

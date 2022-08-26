@@ -1,13 +1,18 @@
+import 'dart:ffi';
+
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:bizpro_app/providers/database_providers/inversion_sugerida_controller.dart';
+import 'package:bizpro_app/screens/inversiones/inversion_sugerida_creada.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
 
+import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
+import 'package:bizpro_app/screens/widgets/flutter_flow_drop_down.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -22,11 +27,11 @@ class EditarDetalleRegistroJornada extends StatefulWidget {
     }) : super(key: key);
 
   @override
-  EditarDetalleRegistroJornadaState createState() =>
-      EditarDetalleRegistroJornadaState();
+  _EditarDetalleRegistroJornadaState createState() =>
+      _EditarDetalleRegistroJornadaState();
 }
 
-class EditarDetalleRegistroJornadaState
+class _EditarDetalleRegistroJornadaState
     extends State<EditarDetalleRegistroJornada> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
@@ -669,7 +674,7 @@ class EditarDetalleRegistroJornadaState
                                     const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    // print("Desde inversion");
+                                    print("Desde inversion");
                                     if (inversionSProvider
                                   .validateForm(formKey)) {
                                       // comunidadProvider.add();

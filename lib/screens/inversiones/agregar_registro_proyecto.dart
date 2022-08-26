@@ -6,6 +6,7 @@ import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 
 import 'package:bizpro_app/providers/database_providers/registro_controller.dart';
+import 'package:bizpro_app/screens/inversiones/inversion_sugerida_creada.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -21,11 +22,11 @@ class AgregarRegistroProyectoSreen extends StatefulWidget {
   const AgregarRegistroProyectoSreen({Key? key, required this.emprendimiento}) : super(key: key);
 
   @override
-  AgregarRegistroProyectoSreenState createState() =>
-      AgregarRegistroProyectoSreenState();
+  _AgregarRegistroProyectoSreenState createState() =>
+      _AgregarRegistroProyectoSreenState();
 }
 
-class AgregarRegistroProyectoSreenState
+class _AgregarRegistroProyectoSreenState
     extends State<AgregarRegistroProyectoSreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
@@ -668,7 +669,7 @@ class AgregarRegistroProyectoSreenState
                                     const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    // print("Desde registro");
+                                    print("Desde registro");
                                     if (registroController
                                   .validateForm(formKey)) {
                                       // comunidadProvider.add();

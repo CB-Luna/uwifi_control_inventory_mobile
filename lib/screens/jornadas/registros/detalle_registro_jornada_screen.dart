@@ -17,11 +17,11 @@ class DetalleRegistroJornadaScreen extends StatefulWidget {
 
 
   @override
-  DetalleRegistroJornadaScreenState createState() =>
-      DetalleRegistroJornadaScreenState();
+  _DetalleRegistroJornadaScreenState createState() =>
+      _DetalleRegistroJornadaScreenState();
 }
 
-class DetalleRegistroJornadaScreenState
+class _DetalleRegistroJornadaScreenState
     extends State<DetalleRegistroJornadaScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   List<ProductosEmp> listRegistros = [];
@@ -513,7 +513,7 @@ class DetalleRegistroJornadaScreenState
                                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                                     0, 5, 0, 5),
                                                 child: AutoSizeText(
-                                                  "\$listRegistros[index].costo.toString()",
+                                                  listRegistros[index].costo.toString(),
                                                   textAlign: TextAlign.start,
                                                   maxLines: 1,
                                                   style: AppTheme.of(context)

@@ -17,10 +17,10 @@ class FlutterFlowCarousel extends StatefulWidget {
   final List<String> listaImagenes;
 
   @override
-  FlutterFlowCarouselState createState() => FlutterFlowCarouselState();
+  _FlutterFlowCarouselState createState() => _FlutterFlowCarouselState();
 }
 
-class FlutterFlowCarouselState extends State<FlutterFlowCarousel> {
+class _FlutterFlowCarouselState extends State<FlutterFlowCarousel> {
   @override
   Widget build(BuildContext context) {
     return CarouselSlider(

@@ -37,10 +37,10 @@ with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final List<ProductosEmp> productosEmp = [];
     double totalProyecto = 0;
-    for (var element in widget.emprendimiento.productosEmp) {
+    widget.emprendimiento.productosEmp.forEach((element) {
       productosEmp.add(element);
       totalProyecto += (element.costo * element.cantidad); 
-    }
+    });
     return Align(
       alignment: const AlignmentDirectional(0, 0),
       child: Column(

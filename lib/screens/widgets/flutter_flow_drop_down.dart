@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 class FlutterFlowDropDown extends StatefulWidget {
   const FlutterFlowDropDown({
@@ -93,7 +94,7 @@ class _FlutterFlowDropDownState extends State<FlutterFlowDropDown> {
       ),
     );
     if (widget.height != null || widget.width != null) {
-      return SizedBox(
+      return Container(
         width: widget.width,
         height: widget.height,
         child: childWidget,

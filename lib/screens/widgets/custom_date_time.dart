@@ -2,6 +2,7 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -18,6 +19,10 @@ class CustomDateTime extends StatefulWidget {
 }
 
 class CustomDateTimeState extends State<CustomDateTime> {
+  String _selectedDate = '';
+  String _dateCount = '';
+  String _range = '';
+  String _rangeCount = '';
   DateTime? selectedDate;
   DateTime dateNow = DateTime.now();
   String formattedDate = '';
@@ -42,7 +47,7 @@ class CustomDateTimeState extends State<CustomDateTime> {
         hintText: 'Selecciona fecha de la próxima visita...',
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(
-            color: Color(0xFF060606),
+            color: const Color(0xFF060606),
             width: 1,
           ),
           borderRadius: BorderRadius.circular(8),
@@ -144,10 +149,15 @@ class CustomDateTimeState extends State<CustomDateTime> {
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     setState(() {
       if (args.value is PickerDateRange) {
+        _range = '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
+            // ignore: lines_longer_than_80_chars
+            ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
       } else if (args.value is DateTime) {
         selectedDate = args.value;
       } else if (args.value is List<DateTime>) {
+        _dateCount = args.value.length.toString();
       } else {
+        _rangeCount = args.value.length.toString();
       }
     });
   }

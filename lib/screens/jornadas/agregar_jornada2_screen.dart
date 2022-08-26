@@ -10,6 +10,7 @@ import 'package:bizpro_app/helpers/constants.dart';
 
 import 'package:bizpro_app/providers/database_providers/jornada_controller.dart';
 import 'package:bizpro_app/screens/jornadas/jornada_creada.dart';
+import 'package:bizpro_app/screens/widgets/flutter_flow_checkbox_group.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 import 'package:bizpro_app/util/flutter_flow_util.dart';
@@ -28,10 +29,10 @@ class AgregarJornada2Screen extends StatefulWidget {
 
 
   @override
-  AgregarJornada2ScreenState createState() => AgregarJornada2ScreenState();
+  _AgregarJornada2ScreenState createState() => _AgregarJornada2ScreenState();
 }
 
-class AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
+class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
   TextEditingController fechaRevision = TextEditingController();
   TextEditingController fechaRegistro = TextEditingController();
   List<String> checkboxGroupValues = [];
@@ -684,7 +685,8 @@ class AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                               );
                             },
                             validator: (val) {
-                              if (jornadaProvider.imagen.isEmpty) {
+                              if (jornadaProvider.imagen == null ||
+                                  jornadaProvider.imagen.isEmpty) {
                                 return 'Para continuar, cargue el circulo de la empresa';
                               }
                               return null;
@@ -699,8 +701,8 @@ class AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                             if (jornadaProvider
                                 .validateForm(formKey)) {
                               // comunidadProvider.add();
-                              // print("Fecha revision ${jornadaProvider.fechaRevision}");
-                              // print("Tarea ${jornadaProvider.tarea}");
+                              print("Fecha revision ${jornadaProvider.fechaRevision}");
+                              print("Tarea ${jornadaProvider.tarea}");
                               jornadaProvider.addJornada2(widget.emprendimiento.id, widget.numJornada);
                               await Navigator.push(
                                 context,

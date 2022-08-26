@@ -130,7 +130,7 @@ class PdfInvoiceEmprendedor {
       data: data,
       border: null,
       headerStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 5),
-      headerDecoration: const BoxDecoration(color: PdfColors.grey300),
+      headerDecoration: BoxDecoration(color: PdfColors.grey300),
       cellHeight: 30,
       cellStyle: TextStyle(fontWeight: FontWeight.normal, fontSize: 5),
       cellAlignments: {
