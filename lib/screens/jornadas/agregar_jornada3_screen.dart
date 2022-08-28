@@ -3,10 +3,10 @@ import 'package:badges/badges.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
-import 'package:bizpro_app/providers/database_providers/registro_controller.dart';
-import 'package:bizpro_app/screens/inversiones/agregar_registro_proyecto.dart';
+import 'package:bizpro_app/providers/database_providers/registro_jornada_controller.dart';
 import 'package:bizpro_app/screens/jornadas/jornada_creada.dart';
-import 'package:bizpro_app/screens/jornadas/registros/detalle_registro_jornada_screen.dart';
+import 'package:bizpro_app/screens/jornadas/registros/agregar_registro_jornada_screen.dart';
+import 'package:bizpro_app/screens/jornadas/registros/registro_jornada_screen.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
@@ -18,7 +18,7 @@ import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 
 import 'package:bizpro_app/providers/database_providers/jornada_controller.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_checkbox_group.dart';
+import 'package:bizpro_app/providers/database_providers/inversion_jornada_controller.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 import 'package:bizpro_app/util/flutter_flow_util.dart';
@@ -74,7 +74,9 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
   @override
   Widget build(BuildContext context) {
     final jornadaProvider = Provider.of<JornadaController>(context);
-    final registroController = Provider.of<RegistroController>(context);
+    final inversionJornadaProvider = Provider.of<InversionJornadaController>(context);
+    final registroJornadaController = Provider.of<RegistroJornadaController>(context);
+    String totalProductos = registroJornadaController.productosSolicitados.length.toString();
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
@@ -151,6 +153,8 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                     ),
                                     child: InkWell(
                                       onTap: () async {
+                                        inversionJornadaProvider.clearInformation();
+                                        registroJornadaController.clearInformation();
                                         Navigator.pop(context);
                                       },
                                       child: Row(
@@ -893,18 +897,21 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                   padding:
                                     const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                                   child: Badge(
-                                    badgeContent: Text(registroController.productosEmp.length.toString(), style: const TextStyle(color: Colors.white)),
-                                    showBadge: registroController.productosEmp.isEmpty ? false : true,
+                                    badgeContent: Text(totalProductos, style: const TextStyle(color: Colors.white)),
+                                    showBadge: true,
                                     badgeColor: const Color(0xFFD20030),
                                     position: BadgePosition.topEnd(),
                                     elevation: 4,
                                     child: FFButtonWidget(
                                       onPressed: () async {
+                                        if (inversionJornadaProvider.inversion == null) {
+                                          inversionJornadaProvider.addTemporal(widget.emprendimiento.id);
+                                        }
                                         await Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                AgregarRegistroProyectoSreen(emprendimiento: widget.emprendimiento,),
+                                                RegistroJornadaScreen(emprendimiento: widget.emprendimiento),
                                           ),
                                         );
                                       },
@@ -929,26 +936,6 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding:
-                                    const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
-                                  child: InkWell(
-                                    onTap: () async {
-                                      await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                DetalleRegistroJornadaScreen(emprendimiento: widget.emprendimiento,),
-                                          ),
-                                        );
-                                    },
-                                    child: const Icon(
-                                            Icons.mode_edit_outline,
-                                            color: Colors.black,
-                                            size: 20,
-                                          ),
-                                  )
-                                ),
                               ],
                             ),
                           ],
@@ -959,12 +946,13 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                         child: FFButtonWidget(
                           onPressed: () async {
                             if (jornadaProvider
-                                .validateForm(formKey)) {
+                                .validateForm(formKey) && totalProductos != "0") {
                               print("Fecha revision ${jornadaProvider.fechaRevision}");
                               print("Tarea ${jornadaProvider.tarea}");
                               print("Jorndada ${widget.numJornada}");
                               final idProyecto = dataBase.catalogoProyectoBox.query(CatalogoProyecto_.nombre.equals(proyecto)).build().findFirst()?.id;
                               if (idProyecto != null) {
+                                registroJornadaController.add(widget.emprendimiento.id, inversionJornadaProvider.add(widget.emprendimiento.id));
                                 jornadaProvider.addJornada3(widget.emprendimiento.id, idProyecto, widget.numJornada);
                                 await Navigator.push(
                                 context,
@@ -981,7 +969,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                     title:
                                         const Text('Campos vacíos'),
                                     content: const Text(
-                                        'Para continuar, debe llenar los campos solicitados e incluir una imagen del análisis financiero.'),
+                                        'Para continuar, debe llenar los campos solicitados, agregar un registro e incluir una imagen del análisis financiero.'),
                                     actions: [
                                       TextButton(
                                         onPressed: () =>

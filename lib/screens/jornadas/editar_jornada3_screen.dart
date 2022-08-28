@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bizpro_app/screens/jornadas/registros/editar_registro_jornada.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,7 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart
 import 'package:bizpro_app/providers/database_providers/jornada_controller.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_checkbox_group.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-
+import 'package:bizpro_app/screens/jornadas/registros/registro_jornada_screen.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
@@ -55,6 +56,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
   String emprendedor = "";
   List<String> listTipoProyecto = [];
   List<String> listProyectos = [];
+  Inversiones? inversion;
 
   @override
   void initState() {
@@ -77,7 +79,8 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
     dataBase.catalogoProyectoBox.getAll().forEach((element) {
     if (element.clasificacionEmp.target?.clasificacion == tipoProyecto) {
       listProyectos.add(element.nombre);
-    }                                    
+    }         
+    inversion = dataBase.inversionesBox.get(widget.jornada.emprendimiento.target?.idInversionJornada ?? -1);                           
     });
   }
 
@@ -930,45 +933,54 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                   },
                               ),
                             ),
-                            Padding(
-                              padding:
-                                const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
-                              child: Badge(
-                                badgeContent: const Text("3", style: TextStyle(color: Colors.white)),
-                                showBadge: true,
-                                badgeColor: const Color(0xFFD20030),
-                                position: BadgePosition.topEnd(),
-                                elevation: 4,
-                                child: FFButtonWidget(
-                                  onPressed: () async {
-                                    // await Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //     builder: (context) =>
-                                    //         AgregarRegistroProyectoSreen(emprendimiento: widget.jornada.emprendimiento.target!,),
-                                    //   ),
-                                    // );
-                                  },
-                                  text: 'Agregar Registro',
-                                  options: FFButtonOptions(
-                                    width: 150,
-                                    height: 50,
-                                    color: AppTheme.of(context).secondaryText,
-                                    textStyle:
-                                        AppTheme.of(context).subtitle2.override(
-                                              fontFamily: 'Poppins',
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600,
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding:
+                                    const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                                  child: Badge(
+                                    badgeContent: Text(inversion != null ? inversion!.prodSolicitado.length.toString() : "0", style: TextStyle(color: Colors.white)),
+                                    showBadge: true,
+                                    badgeColor: const Color(0xFFD20030),
+                                    position: BadgePosition.topEnd(),
+                                    elevation: 4,
+                                    child: FFButtonWidget(
+                                      onPressed: () async {
+                                        //TODO: Tendra su propio aparatdo de actualizar
+                                          if (inversion != null) {
+                                            await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  EditarRegistroJornadaScreen(inversion: inversion!),
                                             ),
-                                    elevation: 2,
-                                    borderSide: const BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1,
+                                          );
+                                        }
+                                      },
+                                      text: 'Agregar Registro',
+                                      options: FFButtonOptions(
+                                        width: 150,
+                                        height: 50,
+                                        color: AppTheme.of(context).secondaryText,
+                                        textStyle:
+                                            AppTheme.of(context).subtitle2.override(
+                                                  fontFamily: 'Poppins',
+                                                  color: Colors.white,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                        elevation: 2,
+                                        borderSide: const BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
                           ],
                         ),

@@ -1,14 +1,10 @@
 import 'dart:ffi';
 
-import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/models/temporals/productos_solicitados_temporal.dart';
 import 'package:bizpro_app/objectbox.g.dart';
-import 'package:bizpro_app/providers/database_providers/inversion_sugerida_controller.dart';
 import 'package:bizpro_app/providers/database_providers/registro_jornada_controller.dart';
-import 'package:bizpro_app/screens/inversiones/inversion_sugerida_creada.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -18,49 +14,34 @@ import 'package:provider/provider.dart';
 
 
 
-class EditarDetalleRegistroJornada extends StatefulWidget {
-  final ProductosSolicitadosTemporal productoSol;
+class AgregarRegistroJornadaScreen extends StatefulWidget {
 
-  const EditarDetalleRegistroJornada({
+  const AgregarRegistroJornadaScreen({
     Key? key, 
-    required this.productoSol,
     }) : super(key: key);
 
   @override
-  _EditarDetalleRegistroJornadaState createState() =>
-      _EditarDetalleRegistroJornadaState();
+  _AgregarRegistroJornadaScreenState createState() =>
+      _AgregarRegistroJornadaScreenState();
 }
 
-class _EditarDetalleRegistroJornadaState
-    extends State<EditarDetalleRegistroJornada> {
+class _AgregarRegistroJornadaScreenState
+    extends State<AgregarRegistroJornadaScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
-  String newFamilia = "";
-  String newUnidadMedida = "";
-  late TextEditingController productoController;
-  late TextEditingController descripcionController;
-  late TextEditingController marcaController;
-  late TextEditingController proveedorController;
-  late TextEditingController costoController;
-  late TextEditingController cantidadController;
+  String familia = "";
+  String unidadMedida = "";
 
   @override
   void initState() {
     super.initState();
-    newFamilia = widget.productoSol.familiaProd;
-    newUnidadMedida = widget.productoSol.unidadMedida;
-    productoController = TextEditingController(text: widget.productoSol.producto);
-    descripcionController = TextEditingController(text: widget.productoSol.descripcion);
-    marcaController = TextEditingController(text: widget.productoSol.marcaSugerida);
-    proveedorController = TextEditingController(text: widget.productoSol.proveedorSugerido);
-    costoController = TextEditingController(text: widget.productoSol.costoEstimado.toString());
-    cantidadController = TextEditingController(text: widget.productoSol.cantidad.toString());
+    familia = "";
+    unidadMedida = "";
   }
 
   @override
   Widget build(BuildContext context) {
-    final inversionSProvider = Provider.of<InversionSugeridaController>(context);
-    final registroJornadaProvider = Provider.of<RegistroJornadaController>(context);
+    final registroJornadaController = Provider.of<RegistroJornadaController>(context);
     List<String> listFamilias = [];
     List<String> listUnidadesMedida = [];
     dataBase.familiaProductosBox.getAll().forEach((element) {listFamilias.add(element.nombre);});
@@ -177,7 +158,6 @@ class _EditarDetalleRegistroJornadaState
                                         padding: const EdgeInsetsDirectional.fromSTEB(
                                             5, 0, 5, 10),
                                         child: DropDown(
-                                          initialOption: newFamilia,
                                           options: listFamilias,
                                           onChanged: (val) => setState((){
                                             if (listFamilias.isEmpty) {
@@ -188,7 +168,7 @@ class _EditarDetalleRegistroJornadaState
                                               ));
                                             }
                                             else{
-                                              newFamilia = val!;
+                                              familia = val!;
                                             }
                                             }),
                                           width: double.infinity,
@@ -216,8 +196,8 @@ class _EditarDetalleRegistroJornadaState
                                       );
                                       }, 
                                       validator: (val) {
-                                          if ( newFamilia == "" ||
-                                              newFamilia.isEmpty) {
+                                          if ( familia == "" ||
+                                              familia.isEmpty) {
                                             return 'Para continuar, seleccione una familia.';
                                           }
                                           return null;
@@ -227,9 +207,11 @@ class _EditarDetalleRegistroJornadaState
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                                       child: TextFormField(
-                                        controller: productoController,
                                         textCapitalization: TextCapitalization.sentences,
                                         autovalidateMode: AutovalidateMode.onUserInteraction,
+                                        onChanged: (value) {
+                                          registroJornadaController.producto = value;
+                                        },
                                         obscureText: false,
                                         decoration: InputDecoration(
                                           labelText: 'Producto*',
@@ -292,9 +274,11 @@ class _EditarDetalleRegistroJornadaState
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                                       child: TextFormField(
-                                        controller: descripcionController,
                                         textCapitalization: TextCapitalization.sentences,
                                         autovalidateMode: AutovalidateMode.onUserInteraction,
+                                        onChanged: (value) {
+                                          registroJornadaController.descripcion = value;
+                                        },
                                         obscureText: false,
                                         decoration: InputDecoration(
                                           labelText: 'Descripción*',
@@ -357,9 +341,11 @@ class _EditarDetalleRegistroJornadaState
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                                       child: TextFormField(
-                                        controller: marcaController,
                                         textCapitalization: TextCapitalization.sentences,
                                         autovalidateMode: AutovalidateMode.onUserInteraction,
+                                        onChanged: (value) {
+                                          registroJornadaController.marcaSugerida = value;
+                                        },
                                         obscureText: false,
                                         decoration: InputDecoration(
                                           labelText: 'Marca sugerida',
@@ -417,9 +403,11 @@ class _EditarDetalleRegistroJornadaState
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                                       child: TextFormField(
-                                        controller: proveedorController,
                                         textCapitalization: TextCapitalization.sentences,
                                         autovalidateMode: AutovalidateMode.onUserInteraction,
+                                        onChanged: (value) {
+                                          registroJornadaController.proveedorSugerido = value;
+                                        },
                                         obscureText: false,
                                         decoration: InputDecoration(
                                           labelText: 'Proveedor sugerido',
@@ -479,7 +467,6 @@ class _EditarDetalleRegistroJornadaState
                                         padding: const EdgeInsetsDirectional.fromSTEB(
                                             5, 0, 5, 10),
                                         child: DropDown(
-                                          initialOption: newUnidadMedida,
                                           options: listUnidadesMedida,
                                           onChanged: (val) => setState((){
                                             if (listUnidadesMedida.isEmpty) {
@@ -490,7 +477,7 @@ class _EditarDetalleRegistroJornadaState
                                               ));
                                             }
                                             else{
-                                              newUnidadMedida = val!;
+                                              unidadMedida = val!;
                                             }
                                             }),
                                           width: double.infinity,
@@ -518,8 +505,8 @@ class _EditarDetalleRegistroJornadaState
                                       );
                                       }, 
                                       validator: (val) {
-                                          if ( newUnidadMedida == "" ||
-                                              newUnidadMedida.isEmpty) {
+                                          if ( unidadMedida == "" ||
+                                              unidadMedida.isEmpty) {
                                             return 'Para continuar, seleccione una unidad de medida.';
                                           }
                                           return null;
@@ -529,8 +516,10 @@ class _EditarDetalleRegistroJornadaState
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                                       child: TextFormField(
-                                        controller: cantidadController,
                                         autovalidateMode: AutovalidateMode.onUserInteraction,
+                                        onChanged: (value) {
+                                          registroJornadaController.cantidad = value;
+                                        },
                                         obscureText: false,
                                         decoration: InputDecoration(
                                           labelText: 'Cantidad*',
@@ -596,11 +585,13 @@ class _EditarDetalleRegistroJornadaState
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
                                       child: TextFormField(
-                                        controller: costoController,
                                         autovalidateMode: AutovalidateMode.onUserInteraction,
+                                        onChanged: (value) {
+                                          registroJornadaController.costoEstimado = value;
+                                        },
                                         obscureText: false,
                                         decoration: InputDecoration(
-                                          labelText: 'Costo sugerido*',
+                                          labelText: 'Costo estimado*',
                                           labelStyle: AppTheme.of(context)
                                               .title3
                                               .override(
@@ -667,42 +658,19 @@ class _EditarDetalleRegistroJornadaState
                                     const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    print("Desde inversion");
-                                    if (inversionSProvider
+                                    print("Desde registro");
+                                    if (registroJornadaController
                                   .validateForm(formKey)) {
-                                      if (productoController.text != widget.productoSol.producto ||
-                                          marcaController.text != widget.productoSol.marcaSugerida || 
-                                          descripcionController.text != widget.productoSol.descripcion ||
-                                          productoController.text != widget.productoSol.producto ||
-                                          costoController.text != widget.productoSol.costoEstimado.toString() ||
-                                          cantidadController.text != widget.productoSol.cantidad.toString() ||
-                                          newFamilia != widget.productoSol.familiaProd ||
-                                          newUnidadMedida != widget.productoSol.unidadMedida
-                                          ) {
-                                          final newIdFamiliaProd = dataBase.familiaProductosBox.query(FamiliaProd_.nombre.equals(newFamilia)).build().findFirst()?.id;
-                                          final newIdUnidadMedida = dataBase.unidadesMedidaBox.query(UnidadMedida_.unidadMedida.equals(newUnidadMedida)).build().findFirst()?.id;
-                                          if (newIdFamiliaProd != null && newIdUnidadMedida != null) {
-                                            registroJornadaProvider.updateTemporal(
-                                              widget.productoSol.id, 
-                                              productoController.text, 
-                                              marcaController.text, 
-                                              descripcionController.text,
-                                              productoController.text,
-                                              costoController.text,
-                                              cantidadController.text,
-                                              newIdFamiliaProd,
-                                              newFamilia,
-                                              newIdUnidadMedida,
-                                              newUnidadMedida,
-                                              widget.productoSol.fechaRegistro,
-                                              );
-                                            Navigator.pop(context);
-                                            snackbarKey.currentState
-                                            ?.showSnackBar(const SnackBar(
-                                              content: Text(
-                                                  "¡Registro actualizado éxitosamente!"),
-                                            ));
-                                          }
+                                      final idFamiliaProd = dataBase.familiaProductosBox.query(FamiliaProd_.nombre.equals(familia)).build().findFirst()?.id;
+                                      final idUnidadMedida = dataBase.unidadesMedidaBox.query(UnidadMedida_.unidadMedida.equals(unidadMedida)).build().findFirst()?.id;
+                                      if (idFamiliaProd != null && idUnidadMedida != null) {
+                                        registroJornadaController.addTemporal(idFamiliaProd, familia, idUnidadMedida, unidadMedida);
+                                        Navigator.pop(context);
+                                        snackbarKey.currentState
+                                        ?.showSnackBar(const SnackBar(
+                                          content: Text(
+                                              "¡Registro agregado éxitosamente!"),
+                                        ));
                                       }
                                     } else {
                                       await showDialog(
@@ -727,7 +695,7 @@ class _EditarDetalleRegistroJornadaState
                                       return;
                                     }
                                   },
-                                  text: 'Actualizar',
+                                  text: 'Agregar',
                                   icon: const Icon(
                                     Icons.check_rounded,
                                     color: Colors.white,

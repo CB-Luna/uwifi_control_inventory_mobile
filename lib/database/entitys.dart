@@ -4,6 +4,7 @@ import 'package:objectbox/objectbox.dart';
 @Entity()
 class Emprendimientos {
   int id;
+  int? idInversionJornada;
   String imagen;
   String nombre;
   String descripcion;
@@ -36,6 +37,7 @@ class Emprendimientos {
   
   Emprendimientos({
     this.id = 0,
+    this.idInversionJornada,
     required this.imagen,
     required this.nombre,
     required this.descripcion,
@@ -54,15 +56,17 @@ class ProdSolicitado {
   int id;
   int idInversion;
   String producto;
-  String marcaSugerida;
+  String? marcaSugerida;
   String descripcion;
-  String proveedorSugerido;
+  String? proveedorSugerido;
   int cantidad;
-  double costoEstimado;
+  double? costoEstimado;
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
-  final inversiones = ToMany<Inversiones>();
+  final familiaProducto = ToOne<FamiliaProd>();
+  final unidadMedida = ToOne<UnidadMedida>();
+  final inversiones = ToOne<Inversiones>();
   final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
 
@@ -70,11 +74,11 @@ class ProdSolicitado {
     this.id = 0,
     required this.idInversion,
     required this.producto,
-    required this.marcaSugerida,
+    this.marcaSugerida,
     required this.descripcion,
-    required this.proveedorSugerido,
+    this.proveedorSugerido,
     required this.cantidad,
-    required this.costoEstimado,
+    this.costoEstimado,
     DateTime? fechaRegistro,
     this.idDBR,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
@@ -98,7 +102,7 @@ class Inversiones {
   final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
   final emprendimiento = ToOne<Emprendimientos>();
-  final prodSolicitado = ToOne<ProdSolicitado>();
+  final prodSolicitado = ToMany<ProdSolicitado>();
   
   Inversiones({
     this.id = 0,
@@ -590,6 +594,28 @@ class FamiliaInversion {
   final statusSync = ToOne<StatusSync>();
 
   FamiliaInversion({
+    this.id = 0,
+    required this.nombre,
+    DateTime? fechaRegistro,
+    this.activo = true,
+    this.idDBR,
+    }): fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+
+}
+
+@Entity()
+class FamiliaProd {
+  int id;
+  String nombre;
+  DateTime fechaRegistro;
+  bool activo;
+  @Unique()
+  String? idDBR;
+  final statusSync = ToOne<StatusSync>();
+
+  FamiliaProd({
     this.id = 0,
     required this.nombre,
     DateTime? fechaRegistro,

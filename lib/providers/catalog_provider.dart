@@ -1,3 +1,4 @@
+import 'package:bizpro_app/models/get_familia_productos.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -42,6 +43,7 @@ class CatalogProvider extends ChangeNotifier {
     await getClasificacionesEmp();
     await getCatalogosProyectos();
     await getFamiliaInversion();
+    await getFamiliaProd();
     await getUnidadMedida();
     await getAmbitoConsultoria();
     await getAreaCirculo();
@@ -271,6 +273,42 @@ class CatalogProvider extends ChangeNotifier {
         if (record.id.isNotEmpty) {
             print('Familia Inversion actualizada en el backend exitosamente');
           }
+        }
+      }
+      notifyListeners();
+      }
+  }
+
+  Future<void> getFamiliaProd() async {
+    if (dataBase.familiaProductosBox.isEmpty()) {
+      final records = await client.records.
+      getFullList('familia_prod', batch: 200, sort: '+nombre_tipo_prod');
+      final List<GetFamiliaProductos> listFamiliaProductos = [];
+      for (var element in records) {
+        listFamiliaProductos.add(getFamiliaProductosFromMap(element.toString()));
+      }
+
+      listFamiliaProductos.sort((a, b) => removeDiacritics(a.nombreTipoProd).compareTo(removeDiacritics(b.nombreTipoProd)));
+
+      print("****Informacion familia_productos****");
+      for (var i = 0; i < listFamiliaProductos.length; i++) {
+        if (listFamiliaProductos[i].id.isNotEmpty) {
+        final nuevaFamiliaProductos = FamiliaProd(
+        nombre: listFamiliaProductos[i].nombreTipoProd,
+        activo: listFamiliaProductos[i].activo,
+        idDBR: listFamiliaProductos[i].id,
+        );
+        final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
+        nuevaFamiliaProductos.statusSync.target = nuevoSync;
+        dataBase.familiaProductosBox.put(nuevaFamiliaProductos);
+        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
+        print('Familia Productos agregada exitosamente');
+        // final record = await client.records.update('familia_prod', listFamiliaProductos[i].id, body: {
+        //   'id_status_sync_fk': 'HoI36PzYw1wtbO1',
+        // });
+        // if (record.id.isNotEmpty) {
+        //     print('Familia productos actualizada en el backend exitosamente');
+        //   }
         }
       }
       notifyListeners();

@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "8:804684152773215409",
-      "lastPropertyId": "27:4661688415424027549",
+      "lastPropertyId": "28:8555609759623119270",
       "name": "Emprendimientos",
       "properties": [
         {
@@ -98,6 +98,11 @@
           "flags": 520,
           "indexId": "135:3071001570087288716",
           "relationTarget": "CatalogoProyecto"
+        },
+        {
+          "id": "28:8555609759623119270",
+          "name": "idInversionJornada",
+          "type": 6
         }
       ],
       "relations": [
@@ -1948,11 +1953,237 @@
           "targetId": "10:252808688812742776"
         }
       ]
+    },
+    {
+      "id": "48:5212286852224162052",
+      "lastPropertyId": "12:8160792045369167469",
+      "name": "Inversiones",
+      "properties": [
+        {
+          "id": "1:4138129769667715666",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8167911247644741740",
+          "name": "fechaCompra",
+          "type": 10
+        },
+        {
+          "id": "3:3130190475947679170",
+          "name": "porcentajePago",
+          "type": 6
+        },
+        {
+          "id": "4:8854015765007058080",
+          "name": "montoPagar",
+          "type": 8
+        },
+        {
+          "id": "5:1340449646880882038",
+          "name": "saldo",
+          "type": 8
+        },
+        {
+          "id": "6:8691913441763965844",
+          "name": "totalInversion",
+          "type": 8
+        },
+        {
+          "id": "7:5889902574621776672",
+          "name": "inversionRecibida",
+          "type": 1
+        },
+        {
+          "id": "8:7569582722522307025",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "9:3303189776667867823",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "150:4857149374716539822"
+        },
+        {
+          "id": "10:5717982191828585500",
+          "name": "statusSyncId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "151:6819357173724328820",
+          "relationTarget": "StatusSync"
+        },
+        {
+          "id": "11:6159336605849364287",
+          "name": "emprendimientoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "152:7486967127840588613",
+          "relationTarget": "Emprendimientos"
+        }
+      ],
+      "relations": [
+        {
+          "id": "31:1862902552288384803",
+          "name": "bitacora",
+          "targetId": "27:1774905738150923512"
+        },
+        {
+          "id": "34:1844994221846500557",
+          "name": "prodSolicitado",
+          "targetId": "49:100215042722630549"
+        }
+      ]
+    },
+    {
+      "id": "49:100215042722630549",
+      "lastPropertyId": "14:900705157350773814",
+      "name": "ProdSolicitado",
+      "properties": [
+        {
+          "id": "1:3046162981313169219",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8828754073992079976",
+          "name": "idInversion",
+          "type": 6
+        },
+        {
+          "id": "3:6256994399710891559",
+          "name": "producto",
+          "type": 9
+        },
+        {
+          "id": "4:509082260407869804",
+          "name": "marcaSugerida",
+          "type": 9
+        },
+        {
+          "id": "5:7687625504079176559",
+          "name": "descripcion",
+          "type": 9
+        },
+        {
+          "id": "6:3848426801060822468",
+          "name": "proveedorSugerido",
+          "type": 9
+        },
+        {
+          "id": "7:3653683242709456146",
+          "name": "cantidad",
+          "type": 6
+        },
+        {
+          "id": "8:4180733650669661655",
+          "name": "costoEstimado",
+          "type": 8
+        },
+        {
+          "id": "9:5483311360990604043",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "10:6397496033575130961",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "154:7137789280571665448"
+        },
+        {
+          "id": "11:5402067026758483430",
+          "name": "statusSyncId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "155:3255239488718953367",
+          "relationTarget": "StatusSync"
+        },
+        {
+          "id": "12:5232955354127678356",
+          "name": "inversionesId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "156:8251082717356223611",
+          "relationTarget": "Inversiones"
+        },
+        {
+          "id": "13:7425711578863477823",
+          "name": "familiaProductoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "159:3029635981322260859",
+          "relationTarget": "FamiliaProd"
+        },
+        {
+          "id": "14:900705157350773814",
+          "name": "unidadMedidaId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "160:6457619861549834438",
+          "relationTarget": "UnidadMedida"
+        }
+      ],
+      "relations": [
+        {
+          "id": "33:490303849537468796",
+          "name": "bitacora",
+          "targetId": "27:1774905738150923512"
+        }
+      ]
+    },
+    {
+      "id": "50:6250629756136671550",
+      "lastPropertyId": "6:4558674622852289053",
+      "name": "FamiliaProd",
+      "properties": [
+        {
+          "id": "1:5624992512158933426",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4506279727422550847",
+          "name": "nombre",
+          "type": 9
+        },
+        {
+          "id": "3:4450405447758241168",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "4:2418703915789470072",
+          "name": "activo",
+          "type": 1
+        },
+        {
+          "id": "5:1964545965879321706",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "157:1410418525930076625"
+        },
+        {
+          "id": "6:4558674622852289053",
+          "name": "statusSyncId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "158:3515742937905774685",
+          "relationTarget": "StatusSync"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "47:4406411524870188538",
-  "lastIndexId": "149:9045688124770187728",
-  "lastRelationId": "30:6849141679018238392",
+  "lastEntityId": "50:6250629756136671550",
+  "lastIndexId": "160:6457619861549834438",
+  "lastRelationId": "34:1844994221846500557",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
@@ -2016,7 +2247,8 @@
     8396189901550464501,
     2386897909389581505,
     4608900919778481553,
-    6162710869800712054
+    6162710869800712054,
+    5632813823143218712
   ],
   "retiredPropertyUids": [
     7079790605743243388,
@@ -2196,7 +2428,8 @@
     4321064732987742364,
     7181885270107922782,
     2009950526621565134,
-    4207552670152335906
+    4207552670152335906,
+    8160792045369167469
   ],
   "retiredRelationUids": [
     1226469011453769556,
@@ -2204,7 +2437,8 @@
     658993855133497141,
     7628231779967948088,
     7335578884425240534,
-    8472678273863104956
+    8472678273863104956,
+    7210017988446897791
   ],
   "version": 1
 }
