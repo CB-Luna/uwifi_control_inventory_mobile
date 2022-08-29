@@ -642,6 +642,9 @@ class _AgregarRegistroProyectoSreenState
                                           fillColor: const Color(0x49FFFFFF),
                                         ),
                                         keyboardType: TextInputType.number,
+                                        inputFormatters: [
+                                          currencyFormat
+                                        ],
                                         style: AppTheme.of(context)
                                             .title3
                                             .override(

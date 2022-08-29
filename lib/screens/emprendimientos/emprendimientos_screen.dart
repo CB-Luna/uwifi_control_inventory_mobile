@@ -404,8 +404,6 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                             return true;
                           });
                         }
-
-                        List<String> emprendedores = [];
                         return ListView.builder(
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,

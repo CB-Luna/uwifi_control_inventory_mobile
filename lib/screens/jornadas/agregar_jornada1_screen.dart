@@ -40,6 +40,7 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
     super.initState();
     fechaRevision = TextEditingController();
     fechaRegistro = TextEditingController();
+    fechaRegistro.text = dateTimeFormat('yMMMd', DateTime.now());
     nombreController =
         TextEditingController(text: widget.emprendimiento.nombre);
   }

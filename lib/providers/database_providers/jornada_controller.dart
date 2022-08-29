@@ -296,7 +296,7 @@ class JornadaController extends ChangeNotifier {
       descripcion: "Creación Jornada 4",
       observacion: (observacion == "" || observacion.isEmpty) ? "Comentarios Jornada 4" : observacion,
       porcentaje: 1,
-      activo: false,
+      activo: activo,
       fechaRevision: fechaRevision ?? DateTime.now(),
       fechaRegistro: fechaRegistro,
       );
@@ -338,6 +338,40 @@ class JornadaController extends ChangeNotifier {
       notifyListeners();
     }
     print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
+  }
+
+  void updateJornada4(int id, DateTime newFechaRegistro, String newComentarios, String newImagen, bool newActivo, int idTarea) {
+    var updateTarea  = dataBase.tareasBox.get(idTarea);
+    if (updateTarea != null) {
+      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateJornada4', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      updateTarea.fechaRegistro = newFechaRegistro;
+      updateTarea.observacion = newComentarios;
+      updateTarea.activo = newActivo;
+      final imagenTarea = dataBase.imagenesBox.query(Imagenes_.id.equals(updateTarea.image.target!.id)).build().findUnique();
+      if (imagenTarea != null) {
+          imagenTarea.imagenes = newImagen; //Se actualiza la imagen de la tarea
+          dataBase.imagenesBox.put(imagenTarea);
+        }
+      final statusSyncTarea = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateTarea.statusSync.target!.id)).build().findUnique();
+      if (statusSyncTarea != null) {
+          statusSyncTarea.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la tarea
+          dataBase.statusSyncBox.put(statusSyncTarea);
+        }
+      dataBase.tareasBox.put(updateTarea);
+      var updateJornada = dataBase.jornadasBox.get(id);
+      if (updateJornada !=  null) {
+        updateJornada.fechaRegistro = newFechaRegistro;
+        final statusSyncJornada = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateJornada.statusSync.target!.id)).build().findUnique();
+        if (statusSyncJornada != null) {
+          statusSyncJornada.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la jornada
+          dataBase.statusSyncBox.put(statusSyncJornada);
+        }
+        updateJornada.bitacora.add(nuevaInstruccion);
+        dataBase.jornadasBox.put(updateJornada);
+        print('Jornada actualizada exitosamente');
+      }
+    }
+    notifyListeners();
   }
 
   void remove(Jornadas jornada) {

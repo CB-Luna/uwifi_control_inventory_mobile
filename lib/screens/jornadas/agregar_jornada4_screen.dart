@@ -43,6 +43,7 @@ class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
   void initState() {
     super.initState();
     fechaRegistro = TextEditingController();
+    fechaRegistro.text = dateTimeFormat('yMMMd', DateTime.now());
     // dataBase.clasificacionesEmpBox.getAll().forEach((element) {listTipoProyecto.add(element.clasificacion);});
   }
 

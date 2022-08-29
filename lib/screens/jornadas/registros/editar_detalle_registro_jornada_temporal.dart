@@ -53,12 +53,13 @@ class _EditarDetalleRegistroJornadaTemporalState
     descripcionController = TextEditingController(text: widget.productoSol.descripcion);
     marcaController = TextEditingController(text: widget.productoSol.marcaSugerida);
     proveedorController = TextEditingController(text: widget.productoSol.proveedorSugerido);
-    costoController = TextEditingController(text: widget.productoSol.costoEstimado.toString());
+    costoController = TextEditingController(text: currencyFormat.format(widget.productoSol.costoEstimado?.toStringAsFixed(2) ?? ""));
     cantidadController = TextEditingController(text: widget.productoSol.cantidad.toString());
   }
 
   @override
   Widget build(BuildContext context) {
+    print(widget.productoSol.costoEstimado.toString());
     final inversionSProvider = Provider.of<InversionSugeridaController>(context);
     final registroJornadaProvider = Provider.of<RegistroJornadaController>(context);
     List<String> listFamilias = [];
@@ -640,6 +641,9 @@ class _EditarDetalleRegistroJornadaTemporalState
                                           fillColor: const Color(0x49FFFFFF),
                                         ),
                                         keyboardType: TextInputType.number,
+                                         inputFormatters: [
+                                          currencyFormat
+                                        ],
                                         style: AppTheme.of(context)
                                             .title3
                                             .override(
@@ -674,7 +678,7 @@ class _EditarDetalleRegistroJornadaTemporalState
                                           marcaController.text != widget.productoSol.marcaSugerida || 
                                           descripcionController.text != widget.productoSol.descripcion ||
                                           proveedorController.text != widget.productoSol.proveedorSugerido ||
-                                          costoController.text != widget.productoSol.costoEstimado.toString() ||
+                                          costoController.text != widget.productoSol.costoEstimado?.toStringAsFixed(2) ||
                                           cantidadController.text != widget.productoSol.cantidad.toString() ||
                                           newFamilia != widget.productoSol.familiaProd ||
                                           newUnidadMedida != widget.productoSol.unidadMedida
@@ -688,7 +692,7 @@ class _EditarDetalleRegistroJornadaTemporalState
                                               marcaController.text, 
                                               descripcionController.text,
                                               proveedorController.text,
-                                              costoController.text,
+                                              costoController.text.substring(1),
                                               cantidadController.text,
                                               newIdFamiliaProd,
                                               newFamilia,

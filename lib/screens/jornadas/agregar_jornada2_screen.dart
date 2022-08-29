@@ -45,6 +45,7 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
     super.initState();
     fechaRevision = TextEditingController();
     fechaRegistro = TextEditingController();
+    fechaRegistro.text = dateTimeFormat('yMMMd', DateTime.now());
   }
 
   @override

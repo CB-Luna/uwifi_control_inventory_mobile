@@ -587,7 +587,8 @@ class _AgregarRegistroJornadaTemporalState
                                       child: TextFormField(
                                         autovalidateMode: AutovalidateMode.onUserInteraction,
                                         onChanged: (value) {
-                                          registroJornadaController.costoEstimado = value;
+                                          registroJornadaController.costoEstimado = 
+                                            currencyFormat.getUnformattedValue().toStringAsFixed(2);
                                         },
                                         obscureText: false,
                                         decoration: InputDecoration(
@@ -631,6 +632,9 @@ class _AgregarRegistroJornadaTemporalState
                                           fillColor: const Color(0x49FFFFFF),
                                         ),
                                         keyboardType: TextInputType.number,
+                                         inputFormatters: [
+                                          currencyFormat
+                                        ],
                                         style: AppTheme.of(context)
                                             .title3
                                             .override(
@@ -659,6 +663,8 @@ class _AgregarRegistroJornadaTemporalState
                                 child: FFButtonWidget(
                                   onPressed: () async {
                                     print("Desde registro");
+                                    print(registroJornadaController.costoEstimado);
+                                    print(currencyFormat.format(registroJornadaController.costoEstimado));
                                     if (registroJornadaController
                                   .validateForm(formKey)) {
                                       final idFamiliaProd = dataBase.familiaProductosBox.query(FamiliaProd_.nombre.equals(familia)).build().findFirst()?.id;

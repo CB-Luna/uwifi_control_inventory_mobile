@@ -1,3 +1,4 @@
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -23,6 +24,10 @@ var telefonoFormat = MaskTextInputFormatter(
       filter: {'#': RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy,
     );
+var currencyFormat = CurrencyTextInputFormatter(
+  symbol: '\$',
+  name: 'MXN"'
+);
 
 //Animations
 

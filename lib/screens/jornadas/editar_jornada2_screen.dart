@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/screens/jornadas/jornada_actualizada.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
@@ -23,7 +23,7 @@ class EditarJornada2Screen extends StatefulWidget {
   
   const EditarJornada2Screen({
     Key? key, 
-    required this.jornada,
+    required this.jornada, 
   }) : super(key: key);
 
 
@@ -44,10 +44,12 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
   late bool activoController;
   late String newCirculoEmpresa;
   XFile? image;
+  Jornadas? jornada1;
 
   @override
   void initState() {
     super.initState();
+    jornada1 = null;
     newCirculoEmpresa = widget.jornada.tarea.target!.image.target?.imagenes ?? "NO FILE";
     fechaRevision = widget.jornada.fechaRevision;
     fechaRegistro = widget.jornada.fechaRegistro;
@@ -510,9 +512,30 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                       options: '¿Tarea Completada?',
                                       onChanged: (val) => setState(
                                           () {
-                                            print(val);
-                                            activoController = val;
-                                            print(activoController);
+                                            Emprendimientos emprendimiento = widget.jornada.emprendimiento.target!;
+                                            List<Jornadas> listJornadas = emprendimiento.jornadas.toList();
+                                            for (var i = 0; i < listJornadas.length; i++) {
+                                              switch (listJornadas[i].numJornada) {
+                                                case "1":
+                                                  jornada1 = listJornadas[i];
+                                                  break;
+                                                default:
+                                                  break;
+                                              }
+                                            }
+                                            if (jornada1 != null) {
+                                              if (jornada1!.tarea.target!.activo == false) {
+                                                print(val);
+                                                activoController = val;
+                                                print(activoController);
+                                              } else {
+                                                snackbarKey.currentState
+                                                ?.showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      "No puedes completar esta tarea si tienes tareas previas activas."),
+                                                ));
+                                              }
+                                            }
                                             }),
                                       activeColor: AppTheme.of(context)
                                           .primaryColor,
@@ -720,13 +743,13 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                 ),
                               );
                             },
-                            // validator: (val) {
-                            //   if (jornadaProvider.imagen == null ||
-                            //       jornadaProvider.imagen.isEmpty) {
-                            //     return 'Para continuar, cargue el circulo de la empresa';
-                            //   }
-                            //   return null;
-                            // }
+                            validator: (val) {
+                              if (newCirculoEmpresa == null ||
+                                  newCirculoEmpresa.isEmpty) {
+                                return 'Para continuar, cargue el circulo de la empresa';
+                              }
+                              return null;
+                            }
                             )
                           ],
                         ),

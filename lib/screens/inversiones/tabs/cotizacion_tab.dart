@@ -252,7 +252,7 @@ with TickerProviderStateMixin {
                                             ),
                                           ),
                                           Text(
-                                            '\$ $totalProyecto',
+                                            '\$ ${totalProyecto.toStringAsFixed(2)}',
                                             style: AppTheme.of(context).bodyText1.override(
                                                   fontFamily: AppTheme.of(context).bodyText1Family,
                                                   color: Colors.white,
@@ -556,7 +556,7 @@ with TickerProviderStateMixin {
                                                           ),
                                                     ),
                                                     Text(
-                                                      "\$ ${productoCot.costo * productoCot.cantidad}",
+                                                      "\$ ${(productoCot.costo * productoCot.cantidad).toStringAsFixed(2)}",
                                                       textAlign: TextAlign.end,
                                                       style: AppTheme.of(context).subtitle2.override(
                                                             fontFamily: AppTheme.of(context).subtitle2Family,

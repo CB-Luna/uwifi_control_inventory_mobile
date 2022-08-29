@@ -51,6 +51,8 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
   late bool activoController;
   late String newAnalisisFinanciero;
   XFile? image;
+  Jornadas? jornada1;
+  Jornadas? jornada2;
   String tipoProyecto = "";
   String proyecto = "";
   String emprendedor = "";
@@ -61,6 +63,8 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
   @override
   void initState() {
     super.initState();
+    jornada1 = null;
+    jornada2 =  null;
     newAnalisisFinanciero = widget.jornada.tarea.target!.image.target?.imagenes ?? "NO FILE";
     fechaRevision = widget.jornada.fechaRevision;
     fechaRegistro = widget.jornada.fechaRegistro;
@@ -454,10 +458,35 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                       options: '¿Tarea Completada?',
                                       onChanged: (val) => setState(
                                           () {
-                                            print(val);
-                                            activoController = val;
-                                            print(activoController);
-                                            }),
+                                            Emprendimientos emprendimiento = widget.jornada.emprendimiento.target!;
+                                            List<Jornadas> listJornadas = emprendimiento.jornadas.toList();
+                                            for (var i = 0; i < listJornadas.length; i++) {
+                                              switch (listJornadas[i].numJornada) {
+                                                case "1":
+                                                  jornada1 = listJornadas[i];
+                                                  break;
+                                                case "2":
+                                                  jornada2 = listJornadas[i];
+                                                  break;
+                                                default:
+                                                  break;
+                                              }
+                                            }
+                                            if (jornada1 != null && jornada2 != null) {
+                                              if (jornada1!.tarea.target!.activo == false && jornada2!.tarea.target!.activo == false) {
+                                                print(val);
+                                                activoController = val;
+                                                print(activoController);
+                                              } else {
+                                                snackbarKey.currentState
+                                                ?.showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      "No puedes completar esta tarea si tienes tareas previas activas."),
+                                                ));
+                                              }
+                                            }
+                                            }
+                                            ),
                                       activeColor: AppTheme.of(context)
                                           .primaryColor,
                                       checkColor: Colors.white,
@@ -604,13 +633,13 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                 ),
                               );
                             },
-                            // validator: (val) {
-                            //   if (jornadaProvider.imagen == null ||
-                            //       jornadaProvider.imagen.isEmpty) {
-                            //     return 'Para continuar, cargue una imagen';
-                            //   }
-                            //   return null;
-                            // }
+                            validator: (val) {
+                              if (newAnalisisFinanciero == null ||
+                                  newAnalisisFinanciero.isEmpty) {
+                                return 'Para continuar, cargue una imagen';
+                              }
+                              return null;
+                            }
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(

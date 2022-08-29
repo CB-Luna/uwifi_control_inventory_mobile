@@ -591,7 +591,8 @@ class _AgregarRegistroJornadaScreenState
                                       child: TextFormField(
                                         autovalidateMode: AutovalidateMode.onUserInteraction,
                                         onChanged: (value) {
-                                          registroJornadaController.costoEstimado = value;
+                                          registroJornadaController.costoEstimado = 
+                                            currencyFormat.getUnformattedValue().toStringAsFixed(2);
                                         },
                                         obscureText: false,
                                         decoration: InputDecoration(
@@ -635,6 +636,9 @@ class _AgregarRegistroJornadaScreenState
                                           fillColor: const Color(0x49FFFFFF),
                                         ),
                                         keyboardType: TextInputType.number,
+                                         inputFormatters: [
+                                          currencyFormat
+                                        ],
                                         style: AppTheme.of(context)
                                             .title3
                                             .override(

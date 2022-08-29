@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:provider/provider.dart';
@@ -6,7 +8,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:bizpro_app/util/util.dart';
 import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/providers/user_provider.dart';
 import 'package:bizpro_app/providers/database_providers/emprendedor_controller.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/helpers/globals.dart';
@@ -142,16 +143,45 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                 child: Hero(
                                   tag: currentUserPhoto,
                                   transitionOnUserGestures: true,
-                                  child: Container(
+                                  child: currentUser.image.target?.imagenes == "" ?
+                                  Container(
                                     width: 40,
                                     height: 40,
                                     clipBehavior: Clip.antiAlias,
                                     decoration: const BoxDecoration(
                                       shape: BoxShape.circle,
                                     ),
-                                    //TODO: manejar imagenes de red
-                                    child: Image.asset(
-                                      currentUserPhoto,
+                                    child: Container(
+                                      color: Colors.blue,
+                                      child: Center(
+                                        child: Text(
+                                          "${currentUser.nombre.substring(0,1)} ${currentUser.apellidoP.substring(0,1)}",
+                                        style: AppTheme.of(context)
+                                                  .bodyText1
+                                                  .override(
+                                                    fontFamily:
+                                                        AppTheme.of(context)
+                                                            .bodyText1Family,
+                                                    color: Colors.white,
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                  :
+                                  Container(
+                                    width: 40,
+                                    height: 40,
+                                    clipBehavior: Clip.antiAlias,
+                                    decoration: BoxDecoration(
+                                        color: const Color(0x00EEEEEE),
+                                        image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: FileImage(File(currentUser.image.target!.imagenes))
+                                        ),
+                                        shape: BoxShape.circle,
                                     ),
                                   ),
                                 ),

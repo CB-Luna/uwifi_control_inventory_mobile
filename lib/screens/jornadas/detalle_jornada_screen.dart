@@ -8,6 +8,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bizpro_app/screens/jornadas/editar_jornada1_screen.dart';
 import 'package:bizpro_app/screens/jornadas/editar_jornada2_screen.dart';
 import 'package:bizpro_app/screens/jornadas/editar_jornada3_screen.dart';
+import 'package:bizpro_app/screens/jornadas/editar_jornada4_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_carousel.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
@@ -208,6 +209,16 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) => EditarJornada3Screen(
+                                                          jornada: widget.jornada
+                                                          ),
+                                                        ),
+                                                  );
+                                                  break;
+                                                case "4":
+                                                  await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) => EditarJornada4Screen(
                                                           jornada: widget.jornada
                                                           ),
                                                         ),

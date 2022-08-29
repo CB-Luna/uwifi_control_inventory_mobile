@@ -350,7 +350,7 @@ class _RegistroJornadaTemporalScreenState extends State<RegistroJornadaTemporalS
                                                             ),
                                                           ),
                                                           Text(
-                                                            '\$ $totalProyecto',
+                                                            '\$ ${totalProyecto.toStringAsFixed(2)}',
                                                             style: AppTheme.of(context).bodyText1.override(
                                                                   fontFamily: AppTheme.of(context).bodyText1Family,
                                                                   color: Colors.white,
@@ -666,7 +666,7 @@ class _RegistroJornadaTemporalScreenState extends State<RegistroJornadaTemporalS
                                                                             ),
                                                                       ),
                                                                       Text(
-                                                                        "\$ ${prodSolicitado.costoEstimado == null ? 0 : prodSolicitado.costoEstimado! * prodSolicitado.cantidad}",
+                                                                        "\$ ${prodSolicitado.costoEstimado == null ? 0 : (prodSolicitado.costoEstimado! * prodSolicitado.cantidad).toStringAsFixed(2)}",
                                                                         textAlign: TextAlign.end,
                                                                         style: AppTheme.of(context).subtitle2.override(
                                                                               fontFamily: AppTheme.of(context).subtitle2Family,
