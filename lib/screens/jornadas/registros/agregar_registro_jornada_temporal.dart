@@ -601,7 +601,7 @@ class _AgregarRegistroJornadaTemporalState
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.normal,
                                               ),
-                                          hintText: 'Ingresa costo sugerido...',
+                                          hintText: 'Ingresa costo estimado...',
                                           hintStyle: AppTheme.of(context)
                                               .title3
                                               .override(

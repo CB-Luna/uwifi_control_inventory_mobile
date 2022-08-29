@@ -599,7 +599,7 @@ class _EditarDetalleRegistroJornadaState
                                         autovalidateMode: AutovalidateMode.onUserInteraction,
                                         obscureText: false,
                                         decoration: InputDecoration(
-                                          labelText: 'Costo sugerido*',
+                                          labelText: 'Costo estimado*',
                                           labelStyle: AppTheme.of(context)
                                               .title3
                                               .override(
@@ -609,7 +609,7 @@ class _EditarDetalleRegistroJornadaState
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.normal,
                                               ),
-                                          hintText: 'Ingresa costo sugerido...',
+                                          hintText: 'Ingresa costo estimado...',
                                           hintStyle: AppTheme.of(context)
                                               .title3
                                               .override(
