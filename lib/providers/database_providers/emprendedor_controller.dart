@@ -99,7 +99,7 @@ class EmprendedorController extends ChangeNotifier {
 
   void update(int id, String newImagen, String newNombre, String newApellidos, String newCurp, 
   String newIntegrantesFamilia, String newTelefono, String newComentarios, int idComunidad) {
-    var updateEmprendedor = dataBase.emprendedoresBox.get(id);
+    final updateEmprendedor = dataBase.emprendedoresBox.get(id);
     final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
     if (updateEmprendedor != null) {
       updateEmprendedor.imagen = newImagen;
@@ -117,7 +117,7 @@ class EmprendedorController extends ChangeNotifier {
       }
       updateEmprendedor.bitacora.add(nuevaInstruccion);
       dataBase.emprendedoresBox.put(updateEmprendedor);
-      print('Emprendimiento actualizado exitosamente');
+      print('Emprendedor actualizado exitosamente');
 
     }
     notifyListeners();

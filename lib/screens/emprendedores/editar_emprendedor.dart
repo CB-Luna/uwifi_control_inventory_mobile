@@ -224,7 +224,7 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                               
                                           setState(() {
                                             image = pickedFile;
-                                            emprendedorProvider.imagen = image!.path;
+                                            newImagen = image!.path;
                                           });
                                         },
                                         child: Container(
@@ -310,9 +310,6 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                 child: TextFormField(
                                   textCapitalization: TextCapitalization.words,
                                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                                  onChanged: (value) {
-                                    emprendedorProvider.nombre = value;
-                                  },
                                   obscureText: false,
                                   controller: nombreController,
                                   decoration: InputDecoration(
@@ -368,9 +365,6 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                 child: TextFormField(
                                   textCapitalization: TextCapitalization.words,
                                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                                  onChanged: (value) {
-                                    emprendedorProvider.apellidos = value;
-                                  },
                                   obscureText: false,
                                   controller: apellidosController,
                                   decoration: InputDecoration(
@@ -426,9 +420,6 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                 child: TextFormField(
                                   textCapitalization: TextCapitalization.characters,
                                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                                  onChanged: (value) {
-                                    emprendedorProvider.curp = value;
-                                  },
                                   obscureText: false,
                                   controller: curpController,
                                   decoration: InputDecoration(
@@ -483,9 +474,6 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                     5, 0, 5, 10),
                                 child: TextFormField(
                                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                                  onChanged: (value) {
-                                    emprendedorProvider.integrantesFamilia = value;
-                                  },
                                   obscureText: false,
                                   controller: integrantesController,
                                   decoration: InputDecoration(
@@ -715,9 +703,6 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                     5, 0, 5, 10),
                                 child: TextFormField(
                                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                                  onChanged: (value) {
-                                    emprendedorProvider.telefono = value;
-                                  },
                                   obscureText: false,
                                   controller: telefonoController,
                                   decoration: InputDecoration(
@@ -773,9 +758,6 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                 child: TextFormField(
                                   textCapitalization: TextCapitalization.sentences,
                                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                                  onChanged: (value) {
-                                    emprendedorProvider.comentarios = value;
-                                  },
                                   obscureText: false,
                                   controller: comentariosController,
                                   decoration: InputDecoration(
@@ -859,6 +841,7 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                                 if (idMunicipio != null) {
                                                   final idComunidad = dataBase.comunidadesBox.query(Comunidades_.municipios.equals(idMunicipio).and(Comunidades_.nombre.equals(nombreComunidad))).build().findFirst()?.id;
                                                   if (idComunidad != null) {
+                                                    print("Antes de actualizar");
                                                     emprendedorProvider.update(
                                                       widget.emprendedor.id, 
                                                       newImagen, 

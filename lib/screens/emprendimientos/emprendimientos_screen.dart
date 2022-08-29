@@ -37,7 +37,6 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
         getInfo();
         listAreaCirculo = [];
@@ -45,7 +44,6 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
         dataBase.areaCirculoBox.getAll().forEach((element) {listAreaCirculo.add(element.nombreArea);});
         emprendimientosPDF = dataBase.emprendimientosBox.getAll();
       });
-    });
   }
 
   getInfo() {

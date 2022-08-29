@@ -33,17 +33,18 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
   TextEditingController searchController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   List<Emprendedores> emprendedoresPDF = [];
+  List<Emprendedores> emprendedores = [];
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
         getInfo();
         emprendedoresPDF = [];
+        emprendedores = [];
         emprendedoresPDF = dataBase.emprendedoresBox.getAll();
+        emprendedores = dataBase.emprendedoresBox.getAll();
       });
-    });
   }
 
   getInfo() {
@@ -54,8 +55,6 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final UserState userState = Provider.of<UserState>(context);
-    final emprendedorProvider = Provider.of<EmprendedorController>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
     final Usuarios currentUser = usuarioProvider.usuarioCurrent!;
     //TODO: almacenar imagen?
@@ -398,9 +397,6 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 145, 0, 6),
                     child: Builder(
                       builder: (context) {
-                        List<Emprendedores> emprendedores =
-                            emprendedorProvider.emprendedores;
-
                         //Busqueda
                         if (searchController.text != '') {
                           emprendedores.removeWhere((element) {
