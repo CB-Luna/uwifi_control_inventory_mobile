@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:bizpro_app/models/temporals/productos_solicitados_temporal.dart';
 import 'package:bizpro_app/providers/database_providers/registro_jornada_controller.dart';
-import 'package:bizpro_app/screens/jornadas/registros/agregar_registro_jornada_screen.dart';
-import 'package:bizpro_app/screens/jornadas/registros/editar_detalle_registro_jornada.dart';
+import 'package:bizpro_app/screens/jornadas/registros/agregar_registro_jornada_temporal.dart';
+import 'package:bizpro_app/screens/jornadas/registros/editar_detalle_registro_jornada_temporal.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,19 +14,19 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
 import 'package:bizpro_app/theme/theme.dart';
 
 
-class RegistroJornadaScreen extends StatefulWidget {
+class RegistroJornadaTemporalScreen extends StatefulWidget {
   final Emprendimientos emprendimiento;
   
-  const RegistroJornadaScreen({
+  const RegistroJornadaTemporalScreen({
     Key? key, required this.emprendimiento,
   }) : super(key: key);
 
 
   @override
-  _RegistroJornadaScreenState createState() => _RegistroJornadaScreenState();
+  _RegistroJornadaTemporalScreenState createState() => _RegistroJornadaTemporalScreenState();
 }
 
-class _RegistroJornadaScreenState extends State<RegistroJornadaScreen>
+class _RegistroJornadaTemporalScreenState extends State<RegistroJornadaTemporalScreen>
     with TickerProviderStateMixin {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -492,7 +492,7 @@ class _RegistroJornadaScreenState extends State<RegistroJornadaScreen>
                                               MaterialPageRoute(
                                                 builder:
                                                     (context) =>
-                                                        AgregarRegistroJornadaScreen(),
+                                                        const AgregarRegistroJornadaTemporal(),
                                               ),
                                             );
                                           },
@@ -552,7 +552,7 @@ class _RegistroJornadaScreenState extends State<RegistroJornadaScreen>
                                               MaterialPageRoute(
                                                 builder:
                                                     (context) =>
-                                                        EditarDetalleRegistroJornada(productoSol: prodSolicitado),
+                                                        EditarDetalleRegistroJornadaTemporal(productoSol: prodSolicitado),
                                               ),
                                             );
                                             },

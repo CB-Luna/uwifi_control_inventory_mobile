@@ -19,7 +19,7 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart
 import 'package:bizpro_app/providers/database_providers/jornada_controller.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_checkbox_group.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:bizpro_app/screens/jornadas/registros/registro_jornada_screen.dart';
+import 'package:bizpro_app/screens/jornadas/registros/registro_jornada_temporal_screen.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
@@ -959,7 +959,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                           );
                                         }
                                       },
-                                      text: 'Agregar Registro',
+                                      text: 'Editar Registro',
                                       options: FFButtonOptions(
                                         width: 150,
                                         height: 50,

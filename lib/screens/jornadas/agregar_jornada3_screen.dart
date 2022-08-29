@@ -5,8 +5,8 @@ import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:bizpro_app/providers/database_providers/registro_jornada_controller.dart';
 import 'package:bizpro_app/screens/jornadas/jornada_creada.dart';
-import 'package:bizpro_app/screens/jornadas/registros/agregar_registro_jornada_screen.dart';
-import 'package:bizpro_app/screens/jornadas/registros/registro_jornada_screen.dart';
+import 'package:bizpro_app/screens/jornadas/registros/agregar_registro_jornada_temporal.dart';
+import 'package:bizpro_app/screens/jornadas/registros/registro_jornada_temporal_screen.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
@@ -911,7 +911,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                RegistroJornadaScreen(emprendimiento: widget.emprendimiento),
+                                                RegistroJornadaTemporalScreen(emprendimiento: widget.emprendimiento),
                                           ),
                                         );
                                       },

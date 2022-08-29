@@ -1,5 +1,7 @@
 import 'dart:io';
-import 'package:bizpro_app/screens/jornadas/registros/agregar_registro_jornada_screen.dart';
+import 'package:bizpro_app/screens/jornadas/registros/agregar_registro_jornada.dart';
+import 'package:bizpro_app/screens/jornadas/registros/agregar_registro_jornada_temporal.dart';
+import 'package:bizpro_app/screens/jornadas/registros/editar_detalle_registro_jornada.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -485,7 +487,7 @@ class _EditarRegistroJornadaScreenState extends State<EditarRegistroJornadaScree
                                               MaterialPageRoute(
                                                 builder:
                                                     (context) =>
-                                                        AgregarRegistroJornadaScreen(),
+                                                        AgregarRegistroJornadaScreen(idInversion: widget.inversion.id,),
                                               ),
                                             );
                                           },
@@ -539,15 +541,15 @@ class _EditarRegistroJornadaScreenState extends State<EditarRegistroJornadaScree
                                           final prodSolicitado = prodSolicitados[index];
                                           return InkWell(
                                             onTap: () async {
-                                            //   await Navigator
-                                            //     .push(
-                                            //   context,
-                                            //   MaterialPageRoute(
-                                            //     builder:
-                                            //         (context) =>
-                                            //             EditarDetalleRegistroJornada(productoSol: prodSolicitado),
-                                            //   ),
-                                            // );
+                                              await Navigator
+                                                .push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder:
+                                                    (context) =>
+                                                        EditarDetalleRegistroJornada(productoSol: prodSolicitado),
+                                              ),
+                                            );
                                             },
                                             child: Padding(
                                               padding:
