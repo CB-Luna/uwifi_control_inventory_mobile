@@ -26,7 +26,7 @@ Widget? getImageEmprendedor(String? image, double height) {
     return Image(
       height: height,
       width: double.infinity,
-      image: const AssetImage("assets/images/default-user-profile-picture.jpg"),
+      image: const AssetImage("assets/images/default-user-profile-picture.png"),
       fit: BoxFit.cover,
     );
   } else if (image.startsWith('http') || image.startsWith('https')) {

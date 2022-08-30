@@ -37,172 +37,310 @@ class _LoginScreenState extends State<LoginScreen> {
     final UserState userState = Provider.of<UserState>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
     final catalogoProvider = Provider.of<CatalogProvider>(context);
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: const Color(0xFFCAEFFE),
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: SingleChildScrollView(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-              color: const Color(0xFFD9EEF9),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: Image.asset(
-                  'assets/images/bglogin2.png',
-                ).image,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: const Color(0xFFCAEFFE),
+        body: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: SingleChildScrollView(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                color: const Color(0xFFD9EEF9),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: Image.asset(
+                    'assets/images/bglogin2.png',
+                  ).image,
+                ),
               ),
-            ),
-            child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
-              child: Form(
-                key: formKey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    //LOGO
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
-                      child: Image.asset(
-                        'assets/images/emlogo.png',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-
-                    //TITULO
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-                      child: Container(
-                        height: 40,
-                        decoration: const BoxDecoration(
-                          color: Color(0x00EEEEEE),
+              child: Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      //LOGO
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
+                        child: Image.asset(
+                          'assets/images/emlogo.png',
+                          fit: BoxFit.cover,
                         ),
-                        child: Text(
-                          'Inicia sesión',
-                          style: AppTheme.of(context).title1.override(
+                      ),
+
+                      //TITULO
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                        child: Container(
+                          height: 40,
+                          decoration: const BoxDecoration(
+                            color: Color(0x00EEEEEE),
+                          ),
+                          child: Text(
+                            'Inicia sesión',
+                            style: AppTheme.of(context).title1.override(
+                                  fontFamily: 'Poppins',
+                                  color: const Color(0xFF221573),
+                                ),
+                          ),
+                        ),
+                      ),
+
+                      //CORREO
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+                        child: TextFormField(
+                          controller: userState.emailController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'El correo es requerido';
+                            } else if (!EmailValidator.validate(value)) {
+                              return 'Por favor ingresa un correo válido';
+                            }
+                            return null;
+                          },
+                          decoration: getInputDecoration(
+                            context: context,
+                            labelText: 'Correo electrónico *',
+                          ),
+                          style: AppTheme.of(context).bodyText1.override(
                                 fontFamily: 'Poppins',
                                 color: const Color(0xFF221573),
+                                fontSize: 15,
+                                fontWeight: FontWeight.normal,
                               ),
                         ),
                       ),
-                    ),
 
-                    //CORREO
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
-                      child: TextFormField(
-                        controller: userState.emailController,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'El correo es requerido';
-                          } else if (!EmailValidator.validate(value)) {
-                            return 'Por favor ingresa un correo válido';
-                          }
-                          return null;
-                        },
-                        decoration: getInputDecoration(
-                          context: context,
-                          labelText: 'Correo electrónico *',
-                        ),
-                        style: AppTheme.of(context).bodyText1.override(
-                              fontFamily: 'Poppins',
-                              color: const Color(0xFF221573),
-                              fontSize: 15,
-                              fontWeight: FontWeight.normal,
-                            ),
-                      ),
-                    ),
-
-                    //CONTRASEÑA
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                      child: TextFormField(
-                        controller: userState.passwordController,
-                        obscureText: !contrasenaVisibility,
-                        obscuringCharacter: '*',
-                        validator: (value) {
-                          final RegExp regex = RegExp(
-                              r"^(?=.*[A-Z])(?=.*\d)(?=.*\d)[A-Za-z\d!#\$%&/\(\)=?¡¿+\*\.-_:,;]{8,50}$");
-                          if (value == null || value.isEmpty) {
-                            return 'La contraseña es requerida';
-                          } else if (!regex.hasMatch(value)) {
-                            return 'La contraseña debe tener al menos 8 caracteres, una letra mayúscula y dos números.\nLos caracteres especiales válidos son: !#\$%&/()=?¡¿+*.-_:,; y no se permite el uso de\nespacios, tildes o acentos.';
-                          }
-                          return null;
-                        },
-                        decoration: getInputDecoration(
-                          context: context,
-                          labelText: 'Contraseña *',
-                          inkWell: InkWell(
-                            onTap: () => setState(
-                              () =>
-                                  contrasenaVisibility = !contrasenaVisibility,
-                            ),
-                            focusNode: FocusNode(skipTraversal: true),
-                            child: Icon(
-                              contrasenaVisibility
-                                  ? Icons.visibility_outlined
-                                  : Icons.visibility_off_outlined,
-                              color: const Color(0xFF4672FF),
-                              size: 22,
+                      //CONTRASEÑA
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                        child: TextFormField(
+                          controller: userState.passwordController,
+                          obscureText: !contrasenaVisibility,
+                          obscuringCharacter: '*',
+                          validator: (value) {
+                            final RegExp regex = RegExp(
+                                r"^(?=.*[A-Z])(?=.*\d)(?=.*\d)[A-Za-z\d!#\$%&/\(\)=?¡¿+\*\.-_:,;]{8,50}$");
+                            if (value == null || value.isEmpty) {
+                              return 'La contraseña es requerida';
+                            } else if (!regex.hasMatch(value)) {
+                              return 'La contraseña debe tener al menos 8 caracteres, una letra mayúscula y dos números.\nLos caracteres especiales válidos son: !#\$%&/()=?¡¿+*.-_:,; y no se permite el uso de\nespacios, tildes o acentos.';
+                            }
+                            return null;
+                          },
+                          decoration: getInputDecoration(
+                            context: context,
+                            labelText: 'Contraseña *',
+                            inkWell: InkWell(
+                              onTap: () => setState(
+                                () => contrasenaVisibility =
+                                    !contrasenaVisibility,
+                              ),
+                              focusNode: FocusNode(skipTraversal: true),
+                              child: Icon(
+                                contrasenaVisibility
+                                    ? Icons.visibility_outlined
+                                    : Icons.visibility_off_outlined,
+                                color: const Color(0xFF4672FF),
+                                size: 22,
+                              ),
                             ),
                           ),
+                          style: AppTheme.of(context).bodyText1.override(
+                                fontFamily: 'Poppins',
+                                color: const Color(0xFF393838),
+                                fontSize: 15,
+                                fontWeight: FontWeight.normal,
+                              ),
                         ),
-                        style: AppTheme.of(context).bodyText1.override(
-                              fontFamily: 'Poppins',
-                              color: const Color(0xFF393838),
-                              fontSize: 15,
-                              fontWeight: FontWeight.normal,
-                            ),
                       ),
-                    ),
 
-                    //BOTON
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-                      child: CustomButton(
-                        onPressed: () async {
-                          if (!formKey.currentState!.validate()) {
-                            return;
-                          }
+                      //BOTON
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                        child: CustomButton(
+                          onPressed: () async {
+                            if (!formKey.currentState!.validate()) {
+                              return;
+                            }
 
-                          //TODO: revisar status de red y si es la primera vez
-                          //TODO: hacer push a pantalla de loading
-                          final connectivityResult =
-                              await (Connectivity().checkConnectivity());
-                          // if(esPrimeraVez) {} else {}
-                          if (connectivityResult == ConnectivityResult.none) {
-                            //offline
-                            // loginOffline(email, contrasena);
-                            if (usuarioProvider.validateUserOffline(
+                            //TODO: revisar status de red y si es la primera vez
+                            //TODO: hacer push a pantalla de loading
+                            final connectivityResult =
+                                await (Connectivity().checkConnectivity());
+                            // if(esPrimeraVez) {} else {}
+                            if (connectivityResult == ConnectivityResult.none) {
+                              //offline
+                              // loginOffline(email, contrasena);
+                              if (usuarioProvider.validateUserOffline(
+                                  userState.emailController.text,
+                                  userState.passwordController.text)) {
+                                print('Usuario ya existente');
+                                //Se guarda el ID DEL USUARIO (correo)
+                                prefs.setString(
+                                    "userId", userState.emailController.text);
+                                usuarioProvider
+                                    .getUser(prefs.getString("userId")!);
+                                //Se almacena el ID Variables Usuario
+                                final lastUsuario = dataBase.usuariosBox
+                                    .query(Usuarios_.correo
+                                        .equals(prefs.getString("userId")!))
+                                    .build()
+                                    .findUnique();
+                                if (lastUsuario != null) {
+                                  print(
+                                      "NOMBRE USUARIO: ${lastUsuario.nombre}");
+                                  print(
+                                      "ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
+                                  print(
+                                      "Tamaño VariablesUser: ${dataBase.variablesUsuarioBox.getAll().length}");
+                                  if (lastUsuario.variablesUsuario.target?.id !=
+                                      null) {
+                                    print("Se guarda ID DE VARIABLES USUARIO");
+                                    prefs.setInt(
+                                        "idVariablesUser",
+                                        lastUsuario
+                                            .variablesUsuario.target!.id);
+                                  }
+                                }
+
+                                if (userState.recuerdame == true) {
+                                  await userState.setEmail();
+                                  //TODO: quitar?
+                                  await userState.setPassword();
+                                } else {
+                                  userState.emailController.text = '';
+                                  userState.passwordController.text = '';
+                                  await prefs.remove('email');
+                                  await prefs.remove('password');
+                                }
+
+                                if (!mounted) return;
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const EmprendimientosScreen(),
+                                  ),
+                                );
+                              } else {
+                                print('Usuario no existente');
+                                snackbarKey.currentState
+                                    ?.showSnackBar(const SnackBar(
+                                  content: Text(
+                                      "Credenciales incorrectas o no ha sido registrado al sistema"),
+                                ));
+
+                                //TODO Verificar como es el rol
+                                // print("Rol ${loginResponse.user.profile.idRolFk.toString()}");
+                              }
+                            } else {
+                              //Proceso online
+
+                              //Login
+                              final loginResponse = await AuthService.login(
                                 userState.emailController.text,
-                                userState.passwordController.text)) {
-                              print('Usuario ya existente');
+                                userState.passwordController.text,
+                              );
+                              if (loginResponse == null) return;
+                              await userState.setToken(loginResponse.token);
+                              final userId = loginResponse.user.email;
+
                               //Se guarda el ID DEL USUARIO (correo)
-                              prefs.setString("userId", userState.emailController.text);
-                              usuarioProvider.getUser(
-                                   prefs.getString("userId")!);
-                              //Se almacena el ID Variables Usuario
-                              final lastUsuario = dataBase.usuariosBox.query(Usuarios_.correo.equals(prefs.getString("userId")!)).build().findUnique();
-                              if (lastUsuario != null) {
-                                print("NOMBRE USUARIO: ${lastUsuario.nombre}");
-                                print("ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
-                                print("Tamaño VariablesUser: ${dataBase.variablesUsuarioBox.getAll().length}");
-                                if (lastUsuario.variablesUsuario.target?.id != null) {
-                                  print("Se guarda ID DE VARIABLES USUARIO");
-                                  prefs.setInt("idVariablesUser", lastUsuario.variablesUsuario.target!.id);
+                              prefs.setString("userId", userId);
+
+                              //User Query
+                              final emiUser = await ApiService.getEmiUser(
+                                  loginResponse.user.id);
+
+                              final idDBR = await AuthService.userEMIByID(
+                                  loginResponse.user.id);
+
+                              if (emiUser == null) return;
+
+                              if (usuarioProvider.validateUser(userId)) {
+                                print('Usuario ya existente');
+                                usuarioProvider.getUser(userId);
+                                usuarioProvider.updatePasswordLocal(
+                                    userState.passwordController.text);
+                                //Se almacena el ID Variables Usuario
+                                final lastUsuario = dataBase.usuariosBox
+                                    .query(Usuarios_.correo.equals(userId))
+                                    .build()
+                                    .findUnique();
+                                if (lastUsuario != null) {
+                                  print(
+                                      "NOMBRE USUARIO: ${lastUsuario.nombre}");
+                                  print(
+                                      "ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
+                                  print(
+                                      "Tamaño VariablesUser: ${dataBase.variablesUsuarioBox.getAll().length}");
+                                  if (lastUsuario.variablesUsuario.target?.id !=
+                                      null) {
+                                    print("Se guarda ID DE VARIABLES USUARIO");
+                                    prefs.setInt(
+                                        "idVariablesUser",
+                                        lastUsuario
+                                            .variablesUsuario.target!.id);
+                                  }
+                                }
+                              } else {
+                                print('Usuario no existente');
+                                if (dataBase.catalogoProyectoBox.isEmpty()) {
+                                  await catalogoProvider.getRoles();
+                                }
+                                usuarioProvider.add(
+                                  emiUser.nombreUsuario,
+                                  emiUser.apellidoP,
+                                  emiUser.apellidoM ?? '',
+                                  emiUser.nacimiento,
+                                  emiUser.telefono ?? "",
+                                  emiUser.celular,
+                                  loginResponse.user.email,
+                                  userState.passwordController.text,
+                                  emiUser.avatar ?? "",
+                                  idDBR ?? "",
+                                  emiUser.idRolFk,
+                                );
+                                usuarioProvider
+                                    .getUser(loginResponse.user.email);
+                                //Se almacena el ID Variables Usuario
+                                final lastUsuario = dataBase.usuariosBox
+                                    .query(Usuarios_.correo.equals(userId))
+                                    .build()
+                                    .findUnique();
+                                if (lastUsuario != null) {
+                                  print(
+                                      "NOMBRE USUARIO: ${lastUsuario.nombre}");
+                                  print(
+                                      "ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
+                                  print(
+                                      "Emprendedores: ${lastUsuario.variablesUsuario.target?.emprendedores ?? 'none'}");
+                                  print(
+                                      "Tamaño VariablesUser: ${dataBase.variablesUsuarioBox.getAll().length}");
+                                  if (lastUsuario.variablesUsuario.target?.id !=
+                                      null) {
+                                    print("Se guarda ID DE VARIABLES USUARIO");
+                                    prefs.setInt(
+                                        "idVariablesUser",
+                                        lastUsuario
+                                            .variablesUsuario.target!.id);
+                                  }
                                 }
                               }
-
                               if (userState.recuerdame == true) {
                                 await userState.setEmail();
                                 //TODO: quitar?
@@ -222,272 +360,172 @@ class _LoginScreenState extends State<LoginScreen> {
                                       const EmprendimientosScreen(),
                                 ),
                               );
-                            } else {
-                              print('Usuario no existente');
-                              snackbarKey.currentState
-                                  ?.showSnackBar(const SnackBar(
-                                content: Text(
-                                    "Credenciales incorrectas o no ha sido registrado al sistema"),
-                              ));
-
-                              //TODO Verificar como es el rol
-                              // print("Rol ${loginResponse.user.profile.idRolFk.toString()}");
                             }
-                          } else {
-                            //Proceso online
+                          },
+                          text: 'Ingresar',
+                          options: ButtonOptions(
+                            width: 170,
+                            height: 50,
+                            color: const Color(0xFF4672FF),
+                            textStyle: AppTheme.of(context).subtitle2.override(
+                                  fontFamily: 'Montserrat',
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                            elevation: 0,
+                            borderSide: const BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                      ),
 
-                            //Login
-                            final loginResponse = await AuthService.login(
-                              userState.emailController.text,
-                              userState.passwordController.text,
-                            );
-                            if (loginResponse == null) return;
-                            await userState.setToken(loginResponse.token);
-                            final userId = loginResponse.user.email;
+                      //Recordar
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                        child: Container(
+                          width: 146,
+                          height: 40,
+                          decoration: const BoxDecoration(
+                            color: Color(0x00EEEEEE),
+                          ),
+                          child: GestureDetector(
+                            onTap: () async {
+                              userState.updateRecuerdame();
+                            },
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Recordarme',
+                                  style:
+                                      AppTheme.of(context).bodyText1.override(
+                                            fontFamily: 'Poppins',
+                                            color: const Color(0xFF4672FF),
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                ),
+                                ToggleIcon(
+                                  onPressed: () async {
+                                    userState.updateRecuerdame();
+                                  },
+                                  value: userState.recuerdame,
+                                  onIcon: const Icon(
+                                    Icons.check_box,
+                                    color: Color(0xFF4672FF),
+                                    size: 25,
+                                  ),
+                                  offIcon: const Icon(
+                                    Icons.check_box_outline_blank,
+                                    color: Color(0xFF4672FF),
+                                    size: 25,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
 
-                            //Se guarda el ID DEL USUARIO (correo)
-                            prefs.setString("userId", userId);
-
-                            //User Query
-                            final emiUser = await ApiService.getEmiUser(
-                                loginResponse.user.id);
-
-                            final idDBR = await AuthService.userEMIByID(
-                                loginResponse.user.id);
-
-                            if (emiUser == null) return;
-
-                            if (usuarioProvider.validateUser(userId)) {
-                              print('Usuario ya existente');
-                              usuarioProvider.getUser(userId);
-                              usuarioProvider.updatePasswordLocal(
-                                  userState.passwordController.text);
-                              //Se almacena el ID Variables Usuario
-                              final lastUsuario = dataBase.usuariosBox.query(Usuarios_.correo.equals(userId)).build().findUnique();
-                              if (lastUsuario != null) {
-                                print("NOMBRE USUARIO: ${lastUsuario.nombre}");
-                                print("ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
-                                print("Tamaño VariablesUser: ${dataBase.variablesUsuarioBox.getAll().length}");
-                                if (lastUsuario.variablesUsuario.target?.id != null) {
-                                  print("Se guarda ID DE VARIABLES USUARIO");
-                                  prefs.setInt("idVariablesUser", lastUsuario.variablesUsuario.target!.id);
-                                }
-                              }
-                            } 
-                            else {
-                              print('Usuario no existente');
-                              if (dataBase.catalogoProyectoBox.isEmpty()) {
-                                await catalogoProvider.getRoles();
-                              }
-                              usuarioProvider.add(
-                                emiUser.nombreUsuario,
-                                emiUser.apellidoP,
-                                emiUser.apellidoM ?? '',
-                                emiUser.nacimiento,
-                                emiUser.telefono ?? "",
-                                emiUser.celular,
-                                loginResponse.user.email,
-                                userState.passwordController.text,
-                                emiUser.avatar ?? "",
-                                idDBR ?? "",
-                                emiUser.idRolFk,
-                              );
-                              usuarioProvider.getUser(loginResponse.user.email);
-                              //Se almacena el ID Variables Usuario
-                              final lastUsuario = dataBase.usuariosBox.query(Usuarios_.correo.equals(userId)).build().findUnique();
-                              if (lastUsuario != null) {
-                                print("NOMBRE USUARIO: ${lastUsuario.nombre}");
-                                print("ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
-                                print("Emprendedores: ${lastUsuario.variablesUsuario.target?.emprendedores ?? 'none'}");
-                                print("Tamaño VariablesUser: ${dataBase.variablesUsuarioBox.getAll().length}");
-                                if (lastUsuario.variablesUsuario.target?.id != null) {
-                                  print("Se guarda ID DE VARIABLES USUARIO");
-                                  prefs.setInt("idVariablesUser", lastUsuario.variablesUsuario.target!.id);
-                                }
-                              }
-                            }
-                            if (userState.recuerdame == true) {
-                              await userState.setEmail();
-                              //TODO: quitar?
-                              await userState.setPassword();
-                            } else {
-                              userState.emailController.text = '';
-                              userState.passwordController.text = '';
-                              await prefs.remove('email');
-                              await prefs.remove('password');
-                            }
-
-                            if (!mounted) return;
+                      //Restablecer contraseña
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                        child: InkWell(
+                          onTap: () async {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    const EmprendimientosScreen(),
+                                    const ResetPasswordScreen(),
                               ),
                             );
-                          }
-                        },
-                        text: 'Ingresar',
-                        options: ButtonOptions(
-                          width: 170,
-                          height: 50,
-                          color: const Color(0xFF4672FF),
-                          textStyle: AppTheme.of(context).subtitle2.override(
-                                fontFamily: 'Montserrat',
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                              ),
-                          elevation: 0,
-                          borderSide: const BorderSide(
-                            color: Colors.transparent,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                    ),
-
-                    //Recordar
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-                      child: Container(
-                        width: 146,
-                        height: 40,
-                        decoration: const BoxDecoration(
-                          color: Color(0x00EEEEEE),
-                        ),
-                        child: GestureDetector(
-                          onTap: () async {
-                            userState.updateRecuerdame();
                           },
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Recordarme',
-                                style: AppTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      color: const Color(0xFF4672FF),
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                              ),
-                              ToggleIcon(
-                                onPressed: () async {
-                                  userState.updateRecuerdame();
-                                },
-                                value: userState.recuerdame,
-                                onIcon: const Icon(
-                                  Icons.check_box,
-                                  color: Color(0xFF4672FF),
-                                  size: 25,
+                          child: Text(
+                            '¿Olvidaste tu contraseña?',
+                            style: AppTheme.of(context).bodyText1.override(
+                                  fontFamily: 'Poppins',
+                                  color: const Color(0xFF221573),
+                                  fontSize: 15,
+                                  decoration: TextDecoration.underline,
                                 ),
-                                offIcon: const Icon(
-                                  Icons.check_box_outline_blank,
-                                  color: Color(0xFF4672FF),
-                                  size: 25,
-                                ),
-                              ),
-                            ],
                           ),
                         ),
                       ),
-                    ),
 
-                    //Restablecer contraseña
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-                      child: InkWell(
-                        onTap: () async {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ResetPasswordScreen(),
+                      Flexible(
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 20.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    const Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 5, 0),
+                                      child: FaIcon(
+                                        FontAwesomeIcons.shieldHalved,
+                                        color: Color(0xFF959595),
+                                        size: 40,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 5, 0),
+                                      child: Text(
+                                        'Acceso\nseguro',
+                                        style: AppTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              fontFamily: 'Poppins',
+                                              color: const Color(0xFF959595),
+                                              fontSize: 13,
+                                            ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  width: 2,
+                                  height: 80,
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xFF959595),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      5, 0, 0, 0),
+                                  child: Text(
+                                    'La seguridad es nuestra prioridad, para\nello utilizamos los estándares\nmás altos.',
+                                    style:
+                                        AppTheme.of(context).bodyText1.override(
+                                              fontFamily: 'Poppins',
+                                              color: const Color(0xFF959595),
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
                             ),
-                          );
-                        },
-                        child: Text(
-                          '¿Olvidaste tu contraseña?',
-                          style: AppTheme.of(context).bodyText1.override(
-                                fontFamily: 'Poppins',
-                                color: const Color(0xFF221573),
-                                fontSize: 15,
-                                decoration: TextDecoration.underline,
-                              ),
-                        ),
-                      ),
-                    ),
-
-                    Flexible(
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 20.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  const Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 5, 0),
-                                    child: FaIcon(
-                                      FontAwesomeIcons.shieldHalved,
-                                      color: Color(0xFF959595),
-                                      size: 40,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 5, 0),
-                                    child: Text(
-                                      'Acceso\nseguro',
-                                      style: AppTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Poppins',
-                                            color: const Color(0xFF959595),
-                                            fontSize: 13,
-                                          ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                width: 2,
-                                height: 80,
-                                decoration: const BoxDecoration(
-                                  color: Color(0xFF959595),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    5, 0, 0, 0),
-                                child: Text(
-                                  'La seguridad es nuestra prioridad, para\nello utilizamos los estándares\nmás altos.',
-                                  style:
-                                      AppTheme.of(context).bodyText1.override(
-                                            fontFamily: 'Poppins',
-                                            color: const Color(0xFF959595),
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ],
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

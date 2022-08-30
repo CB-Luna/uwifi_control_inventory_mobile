@@ -27,9 +27,12 @@ class SideMenu extends StatelessWidget {
     final UserState userState = Provider.of<UserState>(context);
 
     if (usuarioProvider.usuarioCurrent == null) {
-      return const Scaffold(
-        body: Center(
-          child: Text('Error al leer información'),
+      return WillPopScope(
+        onWillPop: () async => false,
+        child: const Scaffold(
+          body: Center(
+            child: Text('Error al leer información'),
+          ),
         ),
       );
     }
@@ -111,55 +114,56 @@ class SideMenu extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            currentUser.image.target?.imagenes == "" ?
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  10, 0, 5, 0),
-                              child: Container(
-                                width: 40,
-                                height: 40,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Container(
-                                  color: Colors.blue,
-                                  child: Center(
-                                    child: Text(
-                                      "${currentUser.nombre.substring(0,1)} ${currentUser.apellidoP.substring(0,1)}",
-                                    style: AppTheme.of(context)
-                                              .bodyText1
-                                              .override(
-                                                fontFamily:
-                                                    AppTheme.of(context)
-                                                        .bodyText1Family,
-                                                color: Colors.white,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w300,
-                                              ),
+                            currentUser.image.target?.imagenes == ""
+                                ? Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            10, 0, 5, 0),
+                                    child: Container(
+                                      width: 40,
+                                      height: 40,
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Container(
+                                        color: Colors.blue,
+                                        child: Center(
+                                          child: Text(
+                                            "${currentUser.nombre.substring(0, 1)} ${currentUser.apellidoP.substring(0, 1)}",
+                                            style: AppTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily:
+                                                      AppTheme.of(context)
+                                                          .bodyText1Family,
+                                                  color: Colors.white,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w300,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            10, 0, 5, 0),
+                                    child: Container(
+                                      width: 40,
+                                      height: 40,
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0x00EEEEEE),
+                                        image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: FileImage(File(currentUser
+                                                .image.target!.imagenes))),
+                                        shape: BoxShape.circle,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            )
-                            :
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  10, 0, 5, 0),
-                              child: Container(
-                                width: 40,
-                                height: 40,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                    color: const Color(0x00EEEEEE),
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: FileImage(File(currentUser.image.target!.imagenes))
-                                    ),
-                                    shape: BoxShape.circle,
-                                ),
-                              ),
-                            ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 5, 0, 0),
@@ -212,7 +216,7 @@ class SideMenu extends StatelessWidget {
                       lineHeight: 1.2,
                       onTap: () async {
                         final connectivityResult =
-                              await (Connectivity().checkConnectivity());
+                            await (Connectivity().checkConnectivity());
                         final bitacora = dataBase.bitacoraBox.getAll().toList();
                         print("Tamaño bitacora: ${bitacora.length}");
                         await showModalBottomSheet(
@@ -225,10 +229,15 @@ class SideMenu extends StatelessWidget {
                               child: SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * 0.45,
-                                child: connectivityResult == ConnectivityResult.none || bitacora.isEmpty ?
-                                  const BottomSheetSincronizarWidget(isVisible: false,)
-                                  :
-                                  const BottomSheetSincronizarWidget(isVisible: true,),
+                                child: connectivityResult ==
+                                            ConnectivityResult.none ||
+                                        bitacora.isEmpty
+                                    ? const BottomSheetSincronizarWidget(
+                                        isVisible: false,
+                                      )
+                                    : const BottomSheetSincronizarWidget(
+                                        isVisible: true,
+                                      ),
                               ),
                             );
                           },
