@@ -22,8 +22,7 @@ class Emprendimientos {
   final emprendedor = ToOne<Emprendedores>();
   final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
-  @Backlink()
-  final fasesEmp = ToMany<FasesEmp>();
+  final faseEmp = ToOne<FasesEmp>();
   @Backlink()
   final ventas = ToMany<Ventas>();
   @Backlink()

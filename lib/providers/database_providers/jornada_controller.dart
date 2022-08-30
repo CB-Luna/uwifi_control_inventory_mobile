@@ -58,6 +58,10 @@ class JornadaController extends ChangeNotifier {
     if (emprendimiento != null) {
       final nuevoSyncJornada = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Jornada 1
       final nuevaInstruccion = Bitacora(instrucciones: 'syncAddJornada1', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      //Se actualiza la fase del Emprendimiento
+      //TODO actualizar en el backend.
+      final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Jornada 1")).build().findFirst();
+      emprendimiento.faseEmp.target =  faseEmp;
       nuevaJornada.statusSync.target = nuevoSyncJornada;
       nuevaJornada.tarea.target = nuevaTarea;
       nuevaJornada.emprendimiento.target = emprendimiento;
@@ -129,6 +133,10 @@ class JornadaController extends ChangeNotifier {
     if (emprendimiento != null) {
       final nuevoSyncJornada = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Jornada 2
       final nuevaInstruccion = Bitacora(instrucciones: 'syncAddJornada2', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      //Se actualiza la fase del Emprendimiento
+      //TODO actualizar en el backend.
+      final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Jornada 2")).build().findFirst();
+      emprendimiento.faseEmp.target =  faseEmp;
       nuevaJornada.statusSync.target = nuevoSyncJornada;
       nuevaJornada.tarea.target = nuevaTarea;
       nuevaJornada.emprendimiento.target = emprendimiento;
@@ -207,6 +215,10 @@ class JornadaController extends ChangeNotifier {
     if (emprendimiento != null && catalogoProyecto != null) {
       final nuevoSyncJornada = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Jornada 3
       final nuevaInstruccion = Bitacora(instrucciones: 'syncAddJornada3', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      //Se actualiza la fase del Emprendimiento
+      //TODO actualizar en el backend.
+      final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Jornada 3")).build().findFirst();
+      emprendimiento.faseEmp.target =  faseEmp;
       nuevaJornada.statusSync.target = nuevoSyncJornada;
       nuevaJornada.tarea.target = nuevaTarea;
       nuevaJornada.emprendimiento.target = emprendimiento;
@@ -325,6 +337,10 @@ class JornadaController extends ChangeNotifier {
       print("Entro aca");
       final nuevoSyncJornada = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Jornada 1
       final nuevaInstruccion = Bitacora(instrucciones: 'syncAddJornada4', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      //Se actualiza la fase del Emprendimiento
+      //TODO actualizar en el backend.
+      final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Jornada 4")).build().findFirst();
+      emprendimiento.faseEmp.target =  faseEmp;
       nuevaJornada.statusSync.target = nuevoSyncJornada;
       nuevaJornada.tarea.target = nuevaTarea;
       nuevaJornada.emprendimiento.target = emprendimiento;

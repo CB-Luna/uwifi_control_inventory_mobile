@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "8:804684152773215409",
-      "lastPropertyId": "28:8555609759623119270",
+      "lastPropertyId": "29:51738632601896353",
       "name": "Emprendimientos",
       "properties": [
         {
@@ -103,6 +103,14 @@
           "id": "28:8555609759623119270",
           "name": "idInversionJornada",
           "type": 6
+        },
+        {
+          "id": "29:51738632601896353",
+          "name": "faseEmpId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "161:3039839111509637856",
+          "relationTarget": "FasesEmp"
         }
       ],
       "relations": [
@@ -2182,7 +2190,7 @@
     }
   ],
   "lastEntityId": "50:6250629756136671550",
-  "lastIndexId": "160:6457619861549834438",
+  "lastIndexId": "161:3039839111509637856",
   "lastRelationId": "34:1844994221846500557",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

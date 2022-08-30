@@ -21,7 +21,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(8, 804684152773215409),
       name: 'Emprendimientos',
-      lastPropertyId: const IdUid(28, 8555609759623119270),
+      lastPropertyId: const IdUid(29, 51738632601896353),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -111,7 +111,14 @@ final _entities = <ModelEntity>[
             id: const IdUid(28, 8555609759623119270),
             name: 'idInversionJornada',
             type: 6,
-            flags: 0)
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(29, 51738632601896353),
+            name: 'faseEmpId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(161, 3039839111509637856),
+            relationTarget: 'FasesEmp')
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -128,7 +135,6 @@ final _entities = <ModelEntity>[
             targetId: const IdUid(38, 5382242557058931829))
       ],
       backlinks: <ModelBacklink>[
-        ModelBacklink(name: 'fasesEmp', srcEntity: 'FasesEmp', srcField: ''),
         ModelBacklink(name: 'ventas', srcEntity: 'Ventas', srcField: ''),
         ModelBacklink(
             name: 'productosEmp', srcEntity: 'ProductosEmp', srcField: ''),
@@ -2186,7 +2192,7 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(50, 6250629756136671550),
-      lastIndexId: const IdUid(160, 6457619861549834438),
+      lastIndexId: const IdUid(161, 3039839111509637856),
       lastRelationId: const IdUid(34, 1844994221846500557),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -2455,14 +2461,14 @@ ModelDefinition getObjectBoxModel() {
               object.comunidad,
               object.usuario,
               object.prioridadEmp,
-              object.catalogoProyecto
+              object.catalogoProyecto,
+              object.faseEmp
             ],
         toManyRelations: (Emprendimientos object) => {
               RelInfo<Emprendimientos>.toMany(5, object.id): object.jornadas,
               RelInfo<Emprendimientos>.toMany(8, object.id): object.bitacora,
               RelInfo<Emprendimientos>.toMany(13, object.id):
                   object.proveedores,
-              RelInfo<FasesEmp>.toManyBacklink(14, object.id): object.fasesEmp,
               RelInfo<Ventas>.toOneBacklink(7, object.id,
                       (Ventas srcObject) => srcObject.emprendimientos):
                   object.ventas,
@@ -2489,7 +2495,7 @@ ModelDefinition getObjectBoxModel() {
           final descripcionOffset = fbb.writeString(object.descripcion);
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(29);
+          fbb.startTable(30);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, imagenOffset);
           fbb.addOffset(2, nombreOffset);
@@ -2505,6 +2511,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(24, object.prioridadEmp.targetId);
           fbb.addInt64(26, object.catalogoProyecto.targetId);
           fbb.addInt64(27, object.idInversionJornada);
+          fbb.addInt64(28, object.faseEmp.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -2548,6 +2555,9 @@ ModelDefinition getObjectBoxModel() {
           object.catalogoProyecto.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 56, 0);
           object.catalogoProyecto.attach(store);
+          object.faseEmp.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 60, 0);
+          object.faseEmp.attach(store);
           InternalToManyAccess.setRelInfo(
               object.jornadas,
               store,
@@ -2562,11 +2572,6 @@ ModelDefinition getObjectBoxModel() {
               object.proveedores,
               store,
               RelInfo<Emprendimientos>.toMany(13, object.id),
-              store.box<Emprendimientos>());
-          InternalToManyAccess.setRelInfo(
-              object.fasesEmp,
-              store,
-              RelInfo<FasesEmp>.toManyBacklink(14, object.id),
               store.box<Emprendimientos>());
           InternalToManyAccess.setRelInfo(
               object.ventas,
@@ -4823,6 +4828,10 @@ class Emprendimientos_ {
   /// see [Emprendimientos.idInversionJornada]
   static final idInversionJornada =
       QueryIntegerProperty<Emprendimientos>(_entities[0].properties[14]);
+
+  /// see [Emprendimientos.faseEmp]
+  static final faseEmp = QueryRelationToOne<Emprendimientos, FasesEmp>(
+      _entities[0].properties[15]);
 
   /// see [Emprendimientos.jornadas]
   static final jornadas =

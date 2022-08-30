@@ -1,4 +1,5 @@
 import 'package:bizpro_app/models/get_familia_productos.dart';
+import 'package:bizpro_app/models/get_fases_emp.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -46,6 +47,7 @@ class CatalogProvider extends ChangeNotifier {
     await getFamiliaProd();
     await getUnidadMedida();
     await getAmbitoConsultoria();
+    await getFasesEmp();
     await getAreaCirculo();
     print("Proceso terminado");
     procesoterminado = true;
@@ -453,6 +455,34 @@ class CatalogProvider extends ChangeNotifier {
         if (record.id.isNotEmpty) {
             print('Area circulo actualizado en el backend exitosamente');
           }
+        }
+      }
+      notifyListeners();
+    }
+  }
+
+  Future<void> getFasesEmp() async {
+    if (dataBase.fasesEmpBox.isEmpty()) {
+      final records = await client.records.
+      getFullList('fases_emp', batch: 200, sort: '+fase');
+      final List<GetFasesEmp> listFasesEmp = [];
+      for (var element in records) {
+        listFasesEmp.add(getFasesEmpFromMap(element.toString()));
+      }
+      listFasesEmp.sort((a, b) => removeDiacritics(a.fase).compareTo(removeDiacritics(b.fase)));
+      print("****Informacion fase emp****");
+      for (var i = 0; i < records.length; i++) {
+        print(records[i]);
+        if (listFasesEmp[i].id.isNotEmpty) {
+        final nuevaFaseEmp = FasesEmp(
+        fase: listFasesEmp[i].fase,
+        idDBR: listFasesEmp[i].id,
+        );
+        final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
+        nuevaFaseEmp.statusSync.target = nuevoSync;
+        dataBase.fasesEmpBox.put(nuevaFaseEmp);
+        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
+        print('Fase emp agregada exitosamente');
         }
       }
       notifyListeners();
