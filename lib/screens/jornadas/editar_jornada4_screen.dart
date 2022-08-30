@@ -628,7 +628,7 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                               return;
                             }
                           },
-                          text: 'Crear',
+                          text: 'Actualizar',
                           icon: const Icon(
                             Icons.check_rounded,
                             size: 15,

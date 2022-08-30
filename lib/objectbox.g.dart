@@ -111,14 +111,7 @@ final _entities = <ModelEntity>[
             id: const IdUid(28, 8555609759623119270),
             name: 'idInversionJornada',
             type: 6,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(29, 51738632601896353),
-            name: 'faseEmpId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(161, 3039839111509637856),
-            relationTarget: 'FasesEmp')
+            flags: 0)
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -132,7 +125,11 @@ final _entities = <ModelEntity>[
         ModelRelation(
             id: const IdUid(13, 2084439730118676088),
             name: 'proveedores',
-            targetId: const IdUid(38, 5382242557058931829))
+            targetId: const IdUid(38, 5382242557058931829)),
+        ModelRelation(
+            id: const IdUid(35, 5306897733520592510),
+            name: 'faseEmp',
+            targetId: const IdUid(36, 8975733277369074245))
       ],
       backlinks: <ModelBacklink>[
         ModelBacklink(name: 'ventas', srcEntity: 'Ventas', srcField: ''),
@@ -2193,7 +2190,7 @@ ModelDefinition getObjectBoxModel() {
       entities: _entities,
       lastEntityId: const IdUid(50, 6250629756136671550),
       lastIndexId: const IdUid(161, 3039839111509637856),
-      lastRelationId: const IdUid(34, 1844994221846500557),
+      lastRelationId: const IdUid(35, 5306897733520592510),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
         1366246136666677579,
@@ -2256,7 +2253,8 @@ ModelDefinition getObjectBoxModel() {
         2386897909389581505,
         4608900919778481553,
         6162710869800712054,
-        5632813823143218712
+        5632813823143218712,
+        3039839111509637856
       ],
       retiredPropertyUids: const [
         7079790605743243388,
@@ -2437,7 +2435,8 @@ ModelDefinition getObjectBoxModel() {
         7181885270107922782,
         2009950526621565134,
         4207552670152335906,
-        8160792045369167469
+        8160792045369167469,
+        51738632601896353
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -2461,14 +2460,14 @@ ModelDefinition getObjectBoxModel() {
               object.comunidad,
               object.usuario,
               object.prioridadEmp,
-              object.catalogoProyecto,
-              object.faseEmp
+              object.catalogoProyecto
             ],
         toManyRelations: (Emprendimientos object) => {
               RelInfo<Emprendimientos>.toMany(5, object.id): object.jornadas,
               RelInfo<Emprendimientos>.toMany(8, object.id): object.bitacora,
               RelInfo<Emprendimientos>.toMany(13, object.id):
                   object.proveedores,
+              RelInfo<Emprendimientos>.toMany(35, object.id): object.faseEmp,
               RelInfo<Ventas>.toOneBacklink(7, object.id,
                       (Ventas srcObject) => srcObject.emprendimientos):
                   object.ventas,
@@ -2511,7 +2510,6 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(24, object.prioridadEmp.targetId);
           fbb.addInt64(26, object.catalogoProyecto.targetId);
           fbb.addInt64(27, object.idInversionJornada);
-          fbb.addInt64(28, object.faseEmp.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -2555,9 +2553,6 @@ ModelDefinition getObjectBoxModel() {
           object.catalogoProyecto.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 56, 0);
           object.catalogoProyecto.attach(store);
-          object.faseEmp.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 60, 0);
-          object.faseEmp.attach(store);
           InternalToManyAccess.setRelInfo(
               object.jornadas,
               store,
@@ -2572,6 +2567,11 @@ ModelDefinition getObjectBoxModel() {
               object.proveedores,
               store,
               RelInfo<Emprendimientos>.toMany(13, object.id),
+              store.box<Emprendimientos>());
+          InternalToManyAccess.setRelInfo(
+              object.faseEmp,
+              store,
+              RelInfo<Emprendimientos>.toMany(35, object.id),
               store.box<Emprendimientos>());
           InternalToManyAccess.setRelInfo(
               object.ventas,
@@ -4829,10 +4829,6 @@ class Emprendimientos_ {
   static final idInversionJornada =
       QueryIntegerProperty<Emprendimientos>(_entities[0].properties[14]);
 
-  /// see [Emprendimientos.faseEmp]
-  static final faseEmp = QueryRelationToOne<Emprendimientos, FasesEmp>(
-      _entities[0].properties[15]);
-
   /// see [Emprendimientos.jornadas]
   static final jornadas =
       QueryRelationToMany<Emprendimientos, Jornadas>(_entities[0].relations[0]);
@@ -4844,6 +4840,10 @@ class Emprendimientos_ {
   /// see [Emprendimientos.proveedores]
   static final proveedores = QueryRelationToMany<Emprendimientos, Proveedores>(
       _entities[0].relations[2]);
+
+  /// see [Emprendimientos.faseEmp]
+  static final faseEmp =
+      QueryRelationToMany<Emprendimientos, FasesEmp>(_entities[0].relations[3]);
 }
 
 /// [Usuarios] entity fields to define ObjectBox queries.

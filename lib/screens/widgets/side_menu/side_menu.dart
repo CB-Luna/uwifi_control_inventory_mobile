@@ -4,6 +4,7 @@ import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
+import 'package:bizpro_app/screens/widgets/bottom_sheet_cerrar_sesion.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_sincronizar_widget.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
@@ -225,9 +226,9 @@ class SideMenu extends StatelessWidget {
                                 height:
                                     MediaQuery.of(context).size.height * 0.45,
                                 child: connectivityResult == ConnectivityResult.none || bitacora.isEmpty ?
-                                  BottomSheetSincronizarWidget(isVisible: false,)
+                                  const BottomSheetSincronizarWidget(isVisible: false,)
                                   :
-                                  BottomSheetSincronizarWidget(isVisible: true,),
+                                  const BottomSheetSincronizarWidget(isVisible: true,),
                               ),
                             );
                           },
@@ -239,7 +240,21 @@ class SideMenu extends StatelessWidget {
                       label: 'Cerrar Sesión',
                       iconData: Icons.logout,
                       onTap: () async {
-                        await userState.logout();
+                        await showModalBottomSheet(
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          context: context,
+                          builder: (context) {
+                            return Padding(
+                              padding: MediaQuery.of(context).viewInsets,
+                              child: SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.45,
+                                child: const BottomSheetCerrarSesion(),
+                              ),
+                            );
+                          },
+                        );
                       },
                       padding: const EdgeInsets.only(top: 60),
                     ),

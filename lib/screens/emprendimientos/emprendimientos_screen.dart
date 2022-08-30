@@ -353,7 +353,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                               emprendimiento: emp.nombre,
                                               comunidad: emp.comunidad.target!.nombre,
                                               tipoProyecto: emp.catalogoProyecto.target != null ? emp.catalogoProyecto.target!.clasificacionEmp.target!.clasificacion : "",
-                                              fase: emp.faseEmp.target?.fase ?? "Inscrito",
+                                              fase: emp.faseEmp.last.fase,
                                             ),
                                         ],
                                       );

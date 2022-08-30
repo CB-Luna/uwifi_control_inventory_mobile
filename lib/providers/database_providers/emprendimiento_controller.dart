@@ -43,13 +43,13 @@ class EmprendimientoController extends ChangeNotifier {
       archivado: false,
       );
       final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
-      // final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("inscrito")).build().findFirst();
+      final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Inscrito")).build().findFirst(); //Agregamos fase actual al emprendimiento
       final nuevaInstruccion = Bitacora(instrucciones: 'syncAddEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       final comunidad = dataBase.comunidadesBox.get(idComunidad);
-      if (comunidad != null) {
+      if (comunidad != null && faseEmp != null) {
         nuevoEmprendimiento.comunidad.target = comunidad;
         nuevoEmprendimiento.statusSync.target = nuevoSync;
-        // nuevoEmprendimiento.faseEmp.target = faseEmp;
+        nuevoEmprendimiento.faseEmp.add(faseEmp); //Agregamos fase actual al emprendimiento
         nuevoEmprendimiento.bitacora.add(nuevaInstruccion);
         //Agregamos el emprendimiento en objectBox y recuperamos el Id
         idEmprendimiento = dataBase.emprendimientosBox.put(nuevoEmprendimiento);

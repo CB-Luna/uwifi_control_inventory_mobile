@@ -63,11 +63,11 @@ class PdfInvoiceEmprendimiento {
 
     final titles = <String>[
       'Usuario Actual:',
-      'Fecha Descarga:',
+      'Fecha Generación:',
     ];
     final data = <String>[
       info.usuario,
-      Utils.formatDate(info.fecha),
+      Utils.formatDateHour(info.fecha),
     ];
 
     return Column(
@@ -76,7 +76,7 @@ class PdfInvoiceEmprendimiento {
         final title = titles[index];
         final value = data[index];
 
-        return buildText(title: title, value: value, width: 200);
+        return buildText(title: title, value: value, width: 250);
       }),
     );
   }

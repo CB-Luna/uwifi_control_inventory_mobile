@@ -1,8 +1,11 @@
 import 'dart:io';
-import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/main.dart';
 import 'package:flutter/material.dart';
+ import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
+import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/providers/database_providers/jornada_controller.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bizpro_app/screens/jornadas/editar_jornada1_screen.dart';
@@ -11,7 +14,6 @@ import 'package:bizpro_app/screens/jornadas/editar_jornada3_screen.dart';
 import 'package:bizpro_app/screens/jornadas/editar_jornada4_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_carousel.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 
 
@@ -61,6 +63,7 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
 
   @override
   Widget build(BuildContext context) {
+    final jornadaProvider = Provider.of<JornadaController>(context);
     final List<Tareas> tareas = [];
     tareas.add(widget.jornada.tarea.target!);
     return Scaffold(
@@ -215,14 +218,33 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                                   );
                                                   break;
                                                 case "4":
-                                                  await Navigator.push(
+                                                  if(widget.jornada.fechaRegistro.add(const Duration(hours: 24)).isBefore(DateTime.now())) {
+                                                    snackbarKey.currentState
+                                                      ?.showSnackBar(const SnackBar(
+                                                        content: Text(
+                                                          "La jornada ya ha sido registrada, ya no se puede editar."),
+                                                      ));
+                                                    bool? isActivo = dataBase.tareasBox.get(widget.jornada.tarea.target!.id)?.activo;
+                                                    if (isActivo != null && isActivo == true) {
+                                                        print("Entro a actualziar activo de tarea en J4");
+                                                        jornadaProvider.updateJornada4(
+                                                        widget.jornada.id, 
+                                                        widget.jornada.fechaRegistro, 
+                                                        widget.jornada.tarea.target!.observacion, 
+                                                        widget.jornada.tarea.target!.image.target?.imagenes ?? "NO FILE", 
+                                                        false, 
+                                                        widget.jornada.tarea.target!.id);
+                                                    }
+                                                  } else{
+                                                    await Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) => EditarJornada4Screen(
                                                           jornada: widget.jornada
                                                           ),
                                                         ),
-                                                  );
+                                                    );
+                                                  }
                                                   break;
                                                 default:
                                                   break;
