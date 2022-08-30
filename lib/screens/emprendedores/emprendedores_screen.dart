@@ -44,8 +44,10 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
       getInfo();
       emprendedoresPDF = [];
       emprendedores = [];
-      emprendedoresPDF = dataBase.emprendedoresBox.getAll();
-      emprendedores = dataBase.emprendedoresBox.getAll();
+      emprendedoresPDF = context.read<EmprendedorController>().getEmprendedoresActualUser(
+        context.read<UsuarioController>().getEmprendimientos());
+      emprendedores = context.read<EmprendedorController>().getEmprendedoresActualUser(
+        context.read<UsuarioController>().getEmprendimientos());
     });
   }
 
@@ -62,6 +64,9 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
     //TODO: almacenar imagen?
     const String currentUserPhoto =
         'assets/images/default-user-profile-picture.jpg';
+    emprendedores = [];
+    emprendedores = context.read<EmprendedorController>().getEmprendedoresActualUser(
+        context.read<UsuarioController>().getEmprendimientos());
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -445,13 +450,20 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                           //Busqueda
                           if (searchController.text != '') {
                             emprendedores.removeWhere((element) {
-                              final tempNombre =
-                                  removeDiacritics(element.nombre)
+                              final nombreEmprendedor = removeDiacritics(
+                                      '${element.nombre} ${element.apellidos}')
+                                  .toLowerCase();
+                              final nombreEmprendimiento =
+                                  removeDiacritics(element.emprendimiento.target!.nombre)
                                       .toLowerCase();
                               final tempBusqueda =
                                   removeDiacritics(searchController.text)
                                       .toLowerCase();
-                              return !tempNombre.contains(tempBusqueda);
+                              if (nombreEmprendimiento.contains(tempBusqueda) ||
+                                  nombreEmprendedor.contains(tempBusqueda)) {
+                                return false;
+                              }
+                              return true;
                             });
                           }
                           return ListView.builder(

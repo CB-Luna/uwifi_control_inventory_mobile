@@ -442,9 +442,6 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                             itemBuilder: (context, resultadoIndex) {
                               final emprendimiento =
                                   emprendimientos[resultadoIndex];
-                              // resultadoItem.emprendedores.forEach((element) {
-                              //   emprendedores.add(element.nombre);
-                              // });
                               return Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     15, 10, 15, 0),

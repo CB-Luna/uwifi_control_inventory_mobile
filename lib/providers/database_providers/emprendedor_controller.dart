@@ -134,13 +134,14 @@ class EmprendedorController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getEmprendedoresActualUser(List<Emprendimientos> emprendimientos) {
+  List<Emprendedores> getEmprendedoresActualUser(List<Emprendimientos> emprendimientos) {
     emprendedores = [];
     for (var element in emprendimientos) {
       if (element.emprendedor.target != null) {
         emprendedores.add(element.emprendedor.target!);
       }
     }
+    return emprendedores;
   }
 
   void getEmprendedoresByEmprendimiento(Emprendimientos emprendimiento) {

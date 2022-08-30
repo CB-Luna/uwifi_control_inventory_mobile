@@ -22,12 +22,10 @@ class GridEmprendedoresScreen extends StatefulWidget {
 
 class _GridEmprendedoresScreenState extends State<GridEmprendedoresScreen> {
   TextEditingController searchController = TextEditingController();
-  List<Emprendedores> emprendedores = [];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    emprendedores = [];
 
   }
   @override
