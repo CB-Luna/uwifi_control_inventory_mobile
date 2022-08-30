@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bizpro_app/screens/emprendedores/grid_emprendedores_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:provider/provider.dart';
@@ -338,25 +339,13 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                     ),
                                     child: InkWell(
                                       onTap: () async {
-                                        await showModalBottomSheet(
-                                          isScrollControlled: true,
-                                          backgroundColor:
-                                              const Color(0xFF3B9FE5),
-                                          context: context,
-                                          builder: (context) {
-                                            return Padding(
-                                              padding: MediaQuery.of(context)
-                                                  .viewInsets,
-                                              child: Container(
-                                                height: MediaQuery.of(context)
-                                                    .size
-                                                    .height,
-                                                //TODO: agregar pantalla
-                                                // child: GridEmpredimientosWidget(),
-                                              ),
-                                            );
-                                          },
-                                        );
+                                        await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              GridEmprendedoresScreen(emprendedores: emprendedores),
+                                        ),
+                                      );
                                       },
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,

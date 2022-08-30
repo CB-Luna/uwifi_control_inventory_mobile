@@ -1,35 +1,41 @@
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
-import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
-import 'package:bizpro_app/screens/widgets/custom_button.dart';
-import 'package:bizpro_app/screens/widgets/flutter_icon_button.dart';
-import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/util/util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:bizpro_app/database/entitys.dart';
+import 'package:bizpro_app/theme/theme.dart';
+import 'package:bizpro_app/util/util.dart';
+import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
+import 'package:bizpro_app/screens/emprendedores/detalle_emprendedor_screen.dart';
+import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 
-class GridEmprendimientosScreen extends StatefulWidget {
-  final List<Emprendimientos> emprendimientos;
-  const GridEmprendimientosScreen({
+
+class GridEmprendedoresScreen extends StatefulWidget {
+  final List<Emprendedores> emprendedores;
+  const GridEmprendedoresScreen({
     Key? key, 
-    required this.emprendimientos
+    required this.emprendedores
     }) : super(key: key);
 
   @override
-  State<GridEmprendimientosScreen> createState() =>
-      _GridEmprendimientosScreenState();
+  State<GridEmprendedoresScreen> createState() =>
+      _GridEmprendedoresScreenState();
 }
 
-class _GridEmprendimientosScreenState extends State<GridEmprendimientosScreen> {
+class _GridEmprendedoresScreenState extends State<GridEmprendedoresScreen> {
   TextEditingController searchController = TextEditingController();
+  List<Emprendedores> emprendedores = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    emprendedores = [];
 
+  }
   @override
   Widget build(BuildContext context) {
     final usuarioProvider = Provider.of<UsuarioController>(context);
-    return SafeArea(
-      child: WillPopScope(
-        onWillPop: () async => false,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: SafeArea(
         child: Scaffold(
           resizeToAvoidBottomInset: false, //teclado no movera widgets
           backgroundColor: Colors.white,
@@ -95,34 +101,34 @@ class _GridEmprendimientosScreenState extends State<GridEmprendimientosScreen> {
                         ),
                       ),
                       Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(20, 20, 0, 0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 0, 0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  15, 0, 0, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
                               child: Text(
-                                'Emprendimientos',
+                                'Emprendedores',
                                 textAlign: TextAlign.center,
-                                style: AppTheme.of(context).bodyText1.override(
-                                      fontFamily:
-                                          AppTheme.of(context).bodyText1Family,
-                                      color: const Color(0xFF221573),
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                style:
+                                  AppTheme.of(context).bodyText1.override(
+                                        fontFamily: AppTheme.of(context)
+                                            .bodyText1Family,
+                                        color: const Color(0xFF221573),
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                               ),
                             ),
                           ],
                         ),
                       ),
                       Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            15, 10, 0, 0),
                         child: Container(
-                          width: MediaQuery.of(context).size.width * 0.9,
+                          width:
+                              MediaQuery.of(context).size.width * 0.9,
                           height: 50,
                           decoration: BoxDecoration(
                             color: const Color(0x49FFFFFF),
@@ -134,19 +140,20 @@ class _GridEmprendimientosScreenState extends State<GridEmprendimientosScreen> {
                             borderRadius: BorderRadius.circular(40),
                           ),
                           child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                4, 4, 0, 4),
+                            padding:
+                                const EdgeInsetsDirectional.fromSTEB(
+                                    4, 4, 0, 4),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Expanded(
                                   child: Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            4, 0, 4, 0),
+                                    padding: const EdgeInsetsDirectional
+                                        .fromSTEB(4, 0, 4, 0),
                                     child: TextFormField(
                                       controller: searchController,
-                                      onChanged: (value) => setState(() {}),
+                                      onChanged: (value) =>
+                                          setState(() {}),
                                       decoration: InputDecoration(
                                         labelText: 'Buscar...',
                                         labelStyle: AppTheme.of(context)
@@ -155,9 +162,11 @@ class _GridEmprendimientosScreenState extends State<GridEmprendimientosScreen> {
                                               fontFamily: 'Poppins',
                                               color: Colors.black,
                                               fontSize: 13,
-                                              fontWeight: FontWeight.normal,
+                                              fontWeight:
+                                                  FontWeight.normal,
                                             ),
-                                        enabledBorder: OutlineInputBorder(
+                                        enabledBorder:
+                                            OutlineInputBorder(
                                           borderSide: const BorderSide(
                                             color: Color(0x00000000),
                                             width: 2,
@@ -165,7 +174,8 @@ class _GridEmprendimientosScreenState extends State<GridEmprendimientosScreen> {
                                           borderRadius:
                                               BorderRadius.circular(8),
                                         ),
-                                        focusedBorder: OutlineInputBorder(
+                                        focusedBorder:
+                                            OutlineInputBorder(
                                           borderSide: const BorderSide(
                                             color: Color(0x00000000),
                                             width: 2,
@@ -185,22 +195,26 @@ class _GridEmprendimientosScreenState extends State<GridEmprendimientosScreen> {
                                             fontFamily: 'Poppins',
                                             color: Colors.black,
                                             fontSize: 13,
-                                            fontWeight: FontWeight.normal,
+                                            fontWeight:
+                                                FontWeight.normal,
                                           ),
                                     ),
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 5, 0),
+                                  padding: const EdgeInsetsDirectional
+                                      .fromSTEB(0, 0, 5, 0),
                                   child: Container(
                                     width: 40,
                                     height: 40,
                                     decoration: BoxDecoration(
-                                      color: AppTheme.of(context).secondaryText,
-                                      borderRadius: const BorderRadius.only(
+                                      color: AppTheme.of(context)
+                                          .secondaryText,
+                                      borderRadius:
+                                          const BorderRadius.only(
                                         bottomLeft: Radius.circular(8),
-                                        bottomRight: Radius.circular(30),
+                                        bottomRight:
+                                            Radius.circular(30),
                                         topLeft: Radius.circular(8),
                                         topRight: Radius.circular(30),
                                       ),
@@ -224,17 +238,15 @@ class _GridEmprendimientosScreenState extends State<GridEmprendimientosScreen> {
                       ),
                       Expanded(
                         child: Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                           child: Builder(
                             builder: (context) {
-
+      
                               //Busqueda
                               if (searchController.text != '') {
-                                widget.emprendimientos.removeWhere((element) {
+                                widget.emprendedores.removeWhere((element) {
                                   final tempNombre =
-                                      removeDiacritics(element.nombre)
-                                          .toLowerCase();
+                                      removeDiacritics(element.nombre).toLowerCase();
                                   final tempBusqueda =
                                       removeDiacritics(searchController.text)
                                           .toLowerCase();
@@ -251,14 +263,12 @@ class _GridEmprendimientosScreenState extends State<GridEmprendimientosScreen> {
                                   childAspectRatio: 1,
                                 ),
                                 scrollDirection: Axis.horizontal,
-                                itemCount: widget.emprendimientos.length,
+                                itemCount: widget.emprendedores.length,
                                 itemBuilder: (context, gridViewIndex) {
-                                  final emprendimiento =
-                                      widget.emprendimientos[gridViewIndex];
+                                  final emprendedor = widget.emprendedores[gridViewIndex];
                                   return Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            15, 10, 15, 0),
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        15, 10, 15, 0),
                                     child: Container(
                                       width: 250,
                                       height: 200,
@@ -276,8 +286,7 @@ class _GridEmprendimientosScreenState extends State<GridEmprendimientosScreen> {
                                       ),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           InkWell(
                                             onTap: () async {
@@ -285,63 +294,54 @@ class _GridEmprendimientosScreenState extends State<GridEmprendimientosScreen> {
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      DetalleEmprendimientoScreen(
-                                                    emprendimiento:
-                                                        emprendimiento,
+                                                      DetallesEmprendedorScreen(
+                                                    emprendedor: emprendedor,
                                                   ),
                                                 ),
                                               );
                                             },
                                             child: ClipRRect(
-                                              borderRadius:
-                                                  const BorderRadius.only(
+                                              borderRadius: const BorderRadius.only(
                                                 bottomLeft: Radius.circular(0),
                                                 bottomRight: Radius.circular(0),
                                                 topLeft: Radius.circular(8),
                                                 topRight: Radius.circular(8),
                                               ),
-                                              child: getImage(
-                                                emprendimiento.imagen,
-                                                height: 155,
+                                              child: getImageEmprendedor(
+                                                emprendedor.imagen,
+                                                155,
                                               ),
                                             ),
                                           ),
                                           Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(10, 5, 10, 2),
+                                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                                10, 5, 10, 2),
                                             child: Text(
-                                              emprendimiento.nombre,
+                                              emprendedor.nombre,
                                               overflow: TextOverflow.ellipsis,
-                                              style: AppTheme.of(context)
-                                                  .title3
-                                                  .override(
+                                              style: AppTheme.of(context).title3.override(
                                                     fontFamily: 'Poppins',
-                                                    color:
-                                                        const Color(0xFF221573),
+                                                    color: const Color(0xFF221573),
                                                     fontSize: 18,
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                             ),
                                           ),
                                           Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(10, 0, 10, 0),
+                                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                                10, 0, 10, 0),
                                             child: Text(
-                                              emprendimiento.comunidad.target
-                                                      ?.nombre ??
+                                              emprendedor.comunidad.target?.nombre ??
                                                   '',
                                               overflow: TextOverflow.ellipsis,
                                               maxLines: 1,
-                                              style: AppTheme.of(context)
-                                                  .bodyText2
-                                                  .override(
-                                                    fontFamily: 'Poppins',
-                                                    color:
-                                                        const Color(0xFF040404),
-                                                    fontSize: 12,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
+                                              style:
+                                                  AppTheme.of(context).bodyText2.override(
+                                                        fontFamily: 'Poppins',
+                                                        color: const Color(0xFF040404),
+                                                        fontSize: 12,
+                                                        fontWeight: FontWeight.normal,
+                                                      ),
                                             ),
                                           ),
                                         ],

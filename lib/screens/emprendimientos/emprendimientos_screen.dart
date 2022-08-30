@@ -41,10 +41,10 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
       getInfo();
       listAreaCirculo = [];
       emprendimientosPDF = [];
-      dataBase.areaCirculoBox.getAll().forEach((element) {
-        listAreaCirculo.add(element.nombreArea);
-      });
-      emprendimientosPDF = dataBase.emprendimientosBox.getAll();
+      emprendimientos = [];
+      dataBase.areaCirculoBox.getAll().forEach((element) {listAreaCirculo.add(element.nombreArea);});
+      emprendimientosPDF = context.read<UsuarioController>().getEmprendimientos();
+      emprendimientos = context.read<UsuarioController>().getEmprendimientos();
     });
   }
 
@@ -319,7 +319,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                const GridEmprendimientosScreen(),
+                                                GridEmprendimientosScreen(emprendimientos: emprendimientos,),
                                           ),
                                         );
                                       },
