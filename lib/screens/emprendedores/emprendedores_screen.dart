@@ -466,7 +466,7 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                       5, 10, 5, 0),
                                   child: Container(
                                     width: double.infinity,
-                                    height: 265,
+                                    height: 275,
                                     decoration: BoxDecoration(
                                       color: const Color(0xB14672FF),
                                       boxShadow: const [
@@ -501,7 +501,7 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                                 topLeft: Radius.circular(8),
                                                 topRight: Radius.circular(8),
                                               ),
-                                              child: getImageEmprendedor(
+                                              child: getWidgetImageEmprendedor(
                                                   emprendedor.imagen, 180)),
                                         ),
                                         Padding(
@@ -571,6 +571,32 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                                             FontWeight.normal,
                                                       ),
                                                 ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(16, 0, 16, 5),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Text(
+                                                emprendedor.emprendimiento.target
+                                                            ?.nombre ==
+                                                        null
+                                                    ? 'SIN EMPRENDIMIENTO'
+                                                    : emprendedor.emprendimiento.target!.nombre,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: AppTheme.of(context)
+                                                    .bodyText2
+                                                    .override(
+                                                      fontFamily: 'Poppins',
+                                                      color: Colors.black,
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.normal,
+                                                    ),
                                               ),
                                             ],
                                           ),

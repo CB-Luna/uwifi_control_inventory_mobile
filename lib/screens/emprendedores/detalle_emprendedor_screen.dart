@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:bizpro_app/screens/emprendedores/editar_emprendedor.dart';
+import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -27,7 +28,7 @@ class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
     if (widget.emprendedor.emprendimiento.target != null) {
       emprendimientos.add(widget.emprendedor.emprendimiento.target!);
     }
-    print(emprendimientos.length);
+    print(widget.emprendedor.imagen);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -208,10 +209,9 @@ class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
                           PageTransition(
                             type: PageTransitionType.fade,
                             child: FlutterFlowExpandedImageView(
-                              image: Image.file(
-                                File(widget.emprendedor.imagen),
-                                fit: BoxFit.contain,
-                              ),
+                              image: getImageEmprendedor(
+                                widget.emprendedor.imagen
+                                ),
                               allowRotation: false,
                               tag: widget.emprendedor.imagen,
                               useHeroAnimation: true,
@@ -229,8 +229,9 @@ class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                           ),
-                          child: Image.file(
-                            File(widget.emprendedor.imagen),
+                          child: getImageEmprendedor(
+                            widget.emprendedor.imagen,
+                            height: 200
                           ),
                         ),
                       ),

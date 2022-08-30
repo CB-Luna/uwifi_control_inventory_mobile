@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 Widget? getImage(String? image, {double height = 180}) {
-  if (image == null) {
+  if (image == null || image == '') {
     return null;
   } else if (image.startsWith('http') || image.startsWith('https')) {
     return FadeInImage(
@@ -21,13 +21,41 @@ Widget? getImage(String? image, {double height = 180}) {
   );
 }
 
-Widget? getImageEmprendedor(String? image, double height) {
+Widget getImageEmprendedor(String? image, {double height = 180}) {
   if (image == null || image == '') {
     return Image(
+        height: height,
+        width: double.infinity,
+        image: const AssetImage("assets/images/default-user-profile-picture.png"),
+        fit: BoxFit.cover,
+      );
+  } else if (image.startsWith('http') || image.startsWith('https')) {
+    return FadeInImage(
       height: height,
       width: double.infinity,
-      image: const AssetImage("assets/images/default-user-profile-picture.png"),
+      placeholder: const AssetImage('assets/images/animation_500_l3ur8tqa.gif'),
+      image: NetworkImage(image),
       fit: BoxFit.cover,
+    );
+  }
+  return Image.file(
+    File(image),
+    height: height,
+    width: double.infinity,
+    fit: BoxFit.cover,
+  );
+}
+
+Widget? getWidgetImageEmprendedor(String? image, double height) {
+  if (image == null || image == '') {
+    return Container(
+      height: height,
+      width: double.infinity,
+      color: Colors.grey,
+      child: const Image(
+        image: AssetImage("assets/images/default-user-profile-picture.png"),
+        fit: BoxFit.cover,
+      ),
     );
   } else if (image.startsWith('http') || image.startsWith('https')) {
     return FadeInImage(

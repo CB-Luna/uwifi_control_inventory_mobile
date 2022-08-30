@@ -307,7 +307,7 @@ class _GridEmprendedoresScreenState extends State<GridEmprendedoresScreen> {
                                                 topLeft: Radius.circular(8),
                                                 topRight: Radius.circular(8),
                                               ),
-                                              child: getImageEmprendedor(
+                                              child: getWidgetImageEmprendedor(
                                                 emprendedor.imagen,
                                                 155,
                                               ),

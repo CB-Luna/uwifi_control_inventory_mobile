@@ -257,8 +257,8 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                                 width: 1.5,
                                               ),
                                             ),
-                                            child: getImage(image?.path ??
-                                                widget.emprendedor.imagen),
+                                            child: getImage(
+                                              widget.emprendedor.imagen),
                                           ),
                                         ),
                                       ),
