@@ -1,3 +1,4 @@
+import 'package:bizpro_app/providers/database_providers/producto_emprendedor_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -77,6 +78,10 @@ void main() async {
         ),
         ChangeNotifierProvider<RegistroJornadaController>(
           create: (context) => RegistroJornadaController(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<ProductoEmprendedorController>(
+          create: (context) => ProductoEmprendedorController(),
           lazy: false,
         ),
         ChangeNotifierProvider<CotizacionController>(

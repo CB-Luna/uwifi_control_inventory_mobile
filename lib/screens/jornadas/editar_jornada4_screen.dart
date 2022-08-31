@@ -49,7 +49,7 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
     comentariosController =
         TextEditingController(text: widget.jornada.tarea.target!.observacion);
     newConvenio =
-        widget.jornada.tarea.target!.image.target?.imagenes ?? "NO FILE";
+        "NO FILE";
     activoController = widget.jornada.tarea.target!.activo;
   }
 
@@ -580,9 +580,7 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                     comentariosController.text !=
                                         widget.jornada.tarea.target!
                                             .observacion ||
-                                    newConvenio !=
-                                        widget.jornada.tarea.target!.image
-                                            .target?.imagenes ||
+                                    newConvenio != "" ||
                                     activoController !=
                                         widget.jornada.tarea.target!.activo) {
                                   jornadaProvider.updateJornada4(

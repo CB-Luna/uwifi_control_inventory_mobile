@@ -248,7 +248,7 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                                       .bodyText2
                                                       .override(
                                                         fontFamily: 'Poppins',
-                                                        color: Colors.white,
+                                                        color: Colors.black,
                                                         fontSize: 13,
                                                         fontWeight:
                                                             FontWeight.normal,
@@ -285,7 +285,7 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                                     .bodyText1
                                                     .override(
                                                       fontFamily: 'Poppins',
-                                                      color: Colors.white,
+                                                      color: Colors.black,
                                                       fontSize: 13,
                                                       fontWeight:
                                                           FontWeight.normal,

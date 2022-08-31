@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +16,7 @@ import 'package:bizpro_app/screens/jornadas/detalle_jornada_screen.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada2_screen.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada1_screen.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada3_screen.dart';
+import 'package:bizpro_app/screens/productos/productos_screen.dart';
 import 'package:bizpro_app/screens/inversiones/inversion.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada4_screen.dart';
 import 'package:bizpro_app/screens/consultorias/agregar_consultoria_screen.dart';
@@ -48,13 +48,13 @@ class _DetalleEmprendimientoScreenState
           "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
     }
     final List<Jornadas> jornadas = [];
-    widget.emprendimiento.jornadas.forEach((element) {
+    for (var element in widget.emprendimiento.jornadas) {
       jornadas.add(element);
-    });
+    }
     final List<Consultorias> consultorias = [];
-    widget.emprendimiento.consultorias.forEach((element) {
+    for (var element in widget.emprendimiento.consultorias) {
       consultorias.add(element);
-    });
+    }
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -898,7 +898,6 @@ class _DetalleEmprendimientoScreenState
                                             .jornadas
                                             .last
                                             .numJornada);
-                                        print(numJornada);
                                         if (numJornada < 4) {
                                           switch (numJornada) {
                                             case 1:
@@ -1070,23 +1069,48 @@ class _DetalleEmprendimientoScreenState
                               children: [
                                 InkWell(
                                   onTap: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => InversionScreen(
-                                            emprendimiento:
-                                                widget.emprendimiento),
-                                      ),
-                                    );
+                                    if (widget
+                                        .emprendimiento.jornadas.isNotEmpty) {
+                                      final int numJornada = int.parse(widget
+                                          .emprendimiento
+                                          .jornadas
+                                          .last
+                                          .numJornada);
+                                      if (numJornada == 4) {
+                                        await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ProductosScreen(
+                                                productosEmprendedor:
+                                                    widget.emprendimiento.productosEmp.toList(),
+                                                  emprendimiento: widget.emprendimiento,
+                                              ),
+                                            ),
+                                          );
+                                      } else {
+                                        snackbarKey.currentState
+                                            ?.showSnackBar(const SnackBar(
+                                          content: Text(
+                                              "Necesitas tener 4 jornadas registradas"),
+                                        ));
+                                      }
+                                    } else {
+                                      snackbarKey.currentState
+                                          ?.showSnackBar(const SnackBar(
+                                        content: Text(
+                                            "Necesitas tener 4 jornadas registradas"),
+                                      ));
+                                    }
                                   },
-                                  child: const Icon(
-                                    Icons.attach_money_rounded,
+                                  child: const FaIcon(
+                                    FontAwesomeIcons.productHunt,
                                     color: Colors.white,
                                     size: 24,
                                   ),
                                 ),
                                 Text(
-                                  'Inversión',
+                                  'Productos',
                                   style:
                                       AppTheme.of(context).bodyText1.override(
                                             fontFamily: 'Poppins',
@@ -1121,15 +1145,24 @@ class _DetalleEmprendimientoScreenState
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 InkWell(
-                                  onTap: () {},
-                                  child: const FaIcon(
-                                    FontAwesomeIcons.productHunt,
+                                  onTap: () async {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => InversionScreen(
+                                            emprendimiento:
+                                                widget.emprendimiento),
+                                      ),
+                                    );
+                                  },
+                                  child: const Icon(
+                                    Icons.attach_money_rounded,
                                     color: Colors.white,
                                     size: 24,
                                   ),
                                 ),
                                 Text(
-                                  'Productos',
+                                  'Inversión',
                                   style:
                                       AppTheme.of(context).bodyText1.override(
                                             fontFamily: 'Poppins',

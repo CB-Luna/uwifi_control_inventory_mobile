@@ -1,14 +1,15 @@
 import 'dart:io';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/screens/jornadas/jornada_actualizada.dart';
-import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
+import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/screens/jornadas/jornada_actualizada.dart';
+import 'package:bizpro_app/screens/widgets/bottom_sheet_imagenes_completas.dart';
+import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
+import 'package:bizpro_app/screens/widgets/flutter_flow_carousel.dart';
 
 import 'package:bizpro_app/providers/database_providers/jornada_controller.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_checkbox_group.dart';
@@ -40,16 +41,25 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
   late TextEditingController tareaController;
   late TextEditingController comentariosController;
   late bool activoController;
-  late String newCirculoEmpresa;
-  XFile? image;
+  List<String> newCirculoEmpresa = [];
+  List<String> oldCirculoEmpresa = [];
+  List<Imagenes>? imagenes = [];
+  List<XFile> imagenesTemp = [];
   Jornadas? jornada1;
 
   @override
   void initState() {
     super.initState();
     jornada1 = null;
-    newCirculoEmpresa =
-        widget.jornada.tarea.target!.image.target?.imagenes ?? "NO FILE";
+    imagenesTemp =[];
+    newCirculoEmpresa = [];
+    imagenes = widget.jornada.tarea.target?.imagenes.toList();
+    if (imagenes != null ) {
+      for (var element in imagenes!) {
+        newCirculoEmpresa.add(element.imagenes);
+        oldCirculoEmpresa.add(element.imagenes);
+      }
+    }
     fechaRevision = widget.jornada.fechaRevision;
     fechaRegistro = widget.jornada.fechaRegistro;
     fechaRevisionText = TextEditingController(
@@ -615,63 +625,47 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color:
-                                              AppTheme.of(context).primaryText,
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          border: Border.all(
-                                            width: 1.5,
-                                          ),
-                                        ),
-                                        child: InkWell(
-                                          onTap: () async {
-                                            await Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                type: PageTransitionType.fade,
-                                                child:
-                                                    FlutterFlowExpandedImageView(
-                                                  image: newCirculoEmpresa ==
-                                                          null
-                                                      ? Image.network(
-                                                          'https://picsum.photos/seed/836/600',
-                                                          fit: BoxFit.contain,
-                                                        )
-                                                      : Image.file(
-                                                          File(
-                                                              newCirculoEmpresa),
-                                                          fit: BoxFit.contain,
-                                                        ),
-                                                  allowRotation: false,
-                                                  tag: 'imageTag2',
-                                                  useHeroAnimation: true,
-                                                ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 10, 10, 0),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.4,
+                                              height: 100,
+                                              decoration: BoxDecoration(
+                                                color: const Color(0xFFEEEEEE),
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
                                               ),
-                                            );
-                                          },
-                                          child: Hero(
-                                            tag: 'imageTag2',
-                                            transitionOnUserGestures: true,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              child: newCirculoEmpresa == null
-                                                  ? Image.network(
-                                                      'https://picsum.photos/seed/836/600',
-                                                      width: 170,
-                                                      height: 120,
-                                                      fit: BoxFit.cover,
-                                                    )
-                                                  : Image.file(
-                                                      File(newCirculoEmpresa),
-                                                      width: 170,
-                                                      height: 120,
-                                                      fit: BoxFit.cover,
+                                              child: SizedBox(
+                                                  width: 180,
+                                                  height: 100,
+                                                  child: FlutterFlowCarousel(
+                                                      width: 180,
+                                                      height: 100,
+                                                      listaImagenes: newCirculoEmpresa
+                                                      )
                                                     ),
                                             ),
-                                          ),
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 10, 0, 0),
+                                              child: Text(
+                                                "Total imágenes: ${newCirculoEmpresa.length}",
+                                                style: AppTheme.of(context).title3.override(
+                                                fontFamily: 'Poppins',
+                                                color:
+                                                    AppTheme.of(context).secondaryText,
+                                                fontSize: 12.5,
+                                                fontWeight: FontWeight.normal,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                       FFButtonWidget(
@@ -686,28 +680,141 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                           if (option == null) return;
 
                                           final picker = ImagePicker();
-
-                                          late final XFile? pickedFile;
-
+                                          imagenesTemp = [];
+                                          XFile? pickedFile;
+                                          List<XFile>? pickedFiles;
                                           if (option == 'camera') {
-                                            pickedFile = await picker.pickImage(
-                                              source: ImageSource.camera,
+                                            if (newCirculoEmpresa.length < 3) {
+                                              pickedFile = await picker.pickImage(
+                                                source: ImageSource.camera,
+                                                imageQuality: 100,
+                                              );
+                                              if (pickedFile != null) {
+                                                imagenesTemp.add(pickedFile);
+                                              }
+                                            } else {
+                                                bool? booleano = await showModalBottomSheet(
+                                                isScrollControlled: true,
+                                                backgroundColor: Colors.transparent,
+                                                context: context,
+                                                builder: (context) {
+                                                  return Padding(
+                                                    padding: MediaQuery.of(context).viewInsets,
+                                                    child: SizedBox(
+                                                      height:
+                                                          MediaQuery.of(context).size.height * 0.45,
+                                                      child: const BottomSheetImagenesCompletas(),
+                                                    ),
+                                                  );
+                                                },
+                                              );  
+                                              if (booleano != null && booleano == true) {
+                                                pickedFile = await picker.pickImage(
+                                                source: ImageSource.camera,
+                                                imageQuality: 100,
+                                                );
+                                                if (pickedFile != null) {
+                                                  setState(() {
+                                                    jornadaProvider.imagenes.removeLast();
+                                                    jornadaProvider.imagenes.add(pickedFile!.path);
+                                                  });
+                                                }
+                                                return;
+                                              }        
+                                            }
+                                          } else { //Se selecciona galería
+                                            if (jornadaProvider.imagenes.length < 3) {
+                                              pickedFiles = await picker.pickMultiImage(
                                               imageQuality: 100,
-                                            );
-                                          } else {
-                                            pickedFile = await picker.pickImage(
-                                              source: ImageSource.gallery,
-                                              imageQuality: 100,
-                                            );
+                                              );
+                                              if (pickedFiles == null) {
+                                                return;
+                                              }
+                                              if (pickedFiles.length > 3) {
+                                                snackbarKey.currentState
+                                                  ?.showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      "No se permite cargar más de 3 imágenes."),
+                                                ));
+                                                return;
+                                              }
+                                              switch (newCirculoEmpresa.length) {
+                                                case 0:
+                                                  for(int i = 0; i < pickedFiles.length; i++)
+                                                  {
+                                                    imagenesTemp.add(pickedFiles[i]);
+                                                  }
+                                                  break;
+                                                case 1:
+                                                  if(pickedFiles.length <= 2){
+                                                    for(int i = 0; i < pickedFiles.length; i++)
+                                                    {
+                                                      imagenesTemp.add(pickedFiles[i]);
+                                                    }
+                                                  }
+                                                  else{
+                                                    snackbarKey.currentState
+                                                    ?.showSnackBar(const SnackBar(
+                                                      content: Text(
+                                                          "No se permite cargar más de 3 imágenes."),
+                                                    ));
+                                                    return;
+                                                  }
+                                                  break;
+                                                case 2:
+                                                  if(pickedFiles.length <= 1){
+                                                    for(int i = 0; i < pickedFiles.length; i++)
+                                                    {
+                                                      imagenesTemp.add(pickedFiles[i]);
+                                                    }
+                                                  }
+                                                  else{
+                                                    snackbarKey.currentState
+                                                    ?.showSnackBar(const SnackBar(
+                                                      content: Text(
+                                                          "No se permite cargar más de 3 imágenes."),
+                                                    ));
+                                                    return;
+                                                  }
+                                                  break;
+                                                default:
+                                                  break;
+                                              }
+                                            } else {
+                                              bool? booleano = await showModalBottomSheet(
+                                                isScrollControlled: true,
+                                                backgroundColor: Colors.transparent,
+                                                context: context,
+                                                builder: (context) {
+                                                  return Padding(
+                                                    padding: MediaQuery.of(context).viewInsets,
+                                                    child: SizedBox(
+                                                      height:
+                                                          MediaQuery.of(context).size.height * 0.45,
+                                                      child: const BottomSheetImagenesCompletas(),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                              if (booleano != null && booleano == true) {
+                                                pickedFile = await picker.pickImage(
+                                                source: ImageSource.gallery,
+                                                imageQuality: 100,
+                                                );
+                                                if (pickedFile != null) {
+                                                  setState(() {
+                                                    newCirculoEmpresa.removeLast();
+                                                    newCirculoEmpresa.add(pickedFile!.path);
+                                                  });
+                                                }
+                                                return;
+                                              }     
+                                            }
                                           }
-
-                                          if (pickedFile == null) {
-                                            return;
-                                          }
-
                                           setState(() {
-                                            image = pickedFile;
-                                            newCirculoEmpresa = image!.path;
+                                            for (var i = 0; i < imagenesTemp.length; i++) {
+                                              newCirculoEmpresa.add(imagenesTemp[i].path);
+                                            }
                                           });
                                         },
                                         text: 'Círculo Empresa',
@@ -740,12 +847,12 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                   ),
                                 );
                               }, validator: (val) {
-                                if (newCirculoEmpresa == null ||
-                                    newCirculoEmpresa.isEmpty) {
+                                if (newCirculoEmpresa.isEmpty ||
+                                    newCirculoEmpresa == []) {
                                   return 'Para continuar, cargue el circulo de la empresa';
                                 }
                                 return null;
-                              })
+                              }),
                             ],
                           ),
                         ),
@@ -767,14 +874,14 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                     activoController !=
                                         widget.jornada.tarea.target!.activo ||
                                     newCirculoEmpresa !=
-                                        widget.jornada.tarea.target!.image
-                                            .target!.imagenes) {
+                                        "") {
                                   jornadaProvider.updateJornada2(
                                       widget.jornada.id,
                                       fechaRegistro,
                                       fechaRevision,
                                       tareaController.text,
                                       comentariosController.text,
+                                      imagenes,
                                       newCirculoEmpresa,
                                       activoController,
                                       widget.jornada.tarea.target!.id);

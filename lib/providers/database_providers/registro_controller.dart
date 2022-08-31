@@ -48,8 +48,6 @@ class RegistroController extends ChangeNotifier {
       imagen: imagen,
       costo: double.parse(costo),
       precioVenta: precioVenta,
-      cantidad: int.parse(cantidad),
-      proveedor: proveedor,
       );
       final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
       final familia = dataBase.familiaInversionBox.get(idFamilia);

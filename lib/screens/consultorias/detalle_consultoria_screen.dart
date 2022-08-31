@@ -529,16 +529,14 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                                             BorderRadius
                                                                 .circular(5),
                                                       ),
-                                                      child: SizedBox(
+                                                      child: const SizedBox(
                                                         width: 180,
                                                         height: 100,
                                                         child:
                                                             FlutterFlowCarousel(
                                                           width: 180,
                                                           height: 100,
-                                                          listaImagenes: tareas[
-                                                                      index]
-                                                                  .imagenes ??
+                                                          listaImagenes:
                                                               [],
                                                         ),
                                                       ),

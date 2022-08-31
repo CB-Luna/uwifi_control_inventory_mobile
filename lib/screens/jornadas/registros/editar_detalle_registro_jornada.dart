@@ -738,7 +738,7 @@ class _EditarDetalleRegistroJornadaState
                                             proveedorController.text !=
                                                 widget.productoSol
                                                     .proveedorSugerido ||
-                                            costoController.text !=
+                                            costoController.text.substring(1) !=
                                                 widget.productoSol.costoEstimado
                                                     ?.toStringAsFixed(2) ||
                                             cantidadController.text !=

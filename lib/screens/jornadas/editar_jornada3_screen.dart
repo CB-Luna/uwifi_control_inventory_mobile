@@ -64,7 +64,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
     jornada1 = null;
     jornada2 = null;
     newAnalisisFinanciero =
-        widget.jornada.tarea.target!.image.target?.imagenes ?? "NO FILE";
+         "NO FILE";
     fechaRevision = widget.jornada.fechaRevision;
     fechaRegistro = widget.jornada.fechaRegistro;
     fechaRevisionText = TextEditingController(
@@ -1078,8 +1078,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                         widget.jornada.tarea.target!
                                             .descripcion ||
                                     newAnalisisFinanciero !=
-                                        widget.jornada.tarea.target!.image
-                                            .target?.imagenes) {
+                                        "") {
                                   final idTipoProyecto = dataBase
                                       .clasificacionesEmpBox
                                       .query(ClasificacionEmp_.clasificacion

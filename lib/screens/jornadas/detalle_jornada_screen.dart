@@ -47,6 +47,8 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
     ),
   };
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  List<Imagenes>? imagenes = [];
+  List<String> listImagenes = [];
 
   @override
   void initState() {
@@ -56,13 +58,17 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
           .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
       this,
     );
+    imagenes = widget.jornada.tarea.target?.imagenes;
+    if (imagenes != null) {
+      for (var element in imagenes!) {
+        listImagenes.add(element.imagenes);
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final jornadaProvider = Provider.of<JornadaController>(context);
-    final List<Tareas> tareas = [];
-    tareas.add(widget.jornada.tarea.target!);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -240,13 +246,7 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                                                 .tarea
                                                                 .target!
                                                                 .observacion,
-                                                            widget
-                                                                    .jornada
-                                                                    .tarea
-                                                                    .target!
-                                                                    .image
-                                                                    .target
-                                                                    ?.imagenes ??
+
                                                                 "NO FILE",
                                                             false,
                                                             widget.jornada.tarea
@@ -461,7 +461,7 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                   primary: false,
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
-                  itemCount: tareas.length,
+                  itemCount: 1,
                   itemBuilder: (context, listViewIndex) {
                     return Padding(
                       padding:
@@ -507,7 +507,7 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(0, 10, 0, 0),
                                             child: AutoSizeText(
-                                              tareas[listViewIndex].tarea,
+                                              widget.jornada.tarea.target!.tarea,
                                               maxLines: 2,
                                               style: AppTheme.of(context)
                                                   .subtitle1
@@ -524,7 +524,7 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                       ),
                                     ),
                                   ),
-                                  tareas[listViewIndex].image.target != null
+                                  imagenes != null
                                       ? Padding(
                                           padding: const EdgeInsetsDirectional
                                               .fromSTEB(0, 10, 10, 0),
@@ -545,12 +545,9 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                                 child: FlutterFlowCarousel(
                                                     width: 180,
                                                     height: 100,
-                                                    listaImagenes: [
-                                                      tareas[listViewIndex]
-                                                          .image
-                                                          .target!
-                                                          .imagenes
-                                                    ])),
+                                                    listaImagenes: 
+                                                      listImagenes
+                                                    )),
                                           ),
                                         )
                                       : Container(),

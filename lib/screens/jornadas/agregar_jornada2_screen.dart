@@ -1,16 +1,17 @@
 import 'dart:io';
-import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
+import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/screens/widgets/bottom_sheet_imagenes_completas.dart';
+import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
+import 'package:bizpro_app/screens/widgets/flutter_flow_carousel.dart';
 
 import 'package:bizpro_app/providers/database_providers/jornada_controller.dart';
 import 'package:bizpro_app/screens/jornadas/jornada_creada.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_checkbox_group.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 import 'package:bizpro_app/util/flutter_flow_util.dart';
@@ -36,7 +37,7 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
   List<String> checkboxGroupValues = [];
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  XFile? image;
+  List<XFile> imagenesTemp = [];
 
   @override
   void initState() {
@@ -44,6 +45,7 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
     fechaRevision = TextEditingController();
     fechaRegistro = TextEditingController();
     fechaRegistro.text = dateTimeFormat('yMMMd', DateTime.now());
+    imagenesTemp = [];
   }
 
   @override
@@ -54,12 +56,6 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
       emprendedor =
           "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
     }
-    // if (widget.emprendimiento.jornadas.isEmpty) {
-    //   jornadaProvider.numJornada = "1";
-    // }
-    // else {
-    //   jornadaProvider.numJornada = (int.parse(widget.emprendimiento.jornadas.last.numJornada) + 1).toString();
-    // }
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -138,6 +134,7 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                                       ),
                                       child: InkWell(
                                         onTap: () async {
+                                          jornadaProvider.clearInformation();
                                           Navigator.pop(context);
                                         },
                                         child: Row(
@@ -546,61 +543,47 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color:
-                                              AppTheme.of(context).primaryText,
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          border: Border.all(
-                                            width: 1.5,
-                                          ),
-                                        ),
-                                        child: InkWell(
-                                          onTap: () async {
-                                            await Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                type: PageTransitionType.fade,
-                                                child:
-                                                    FlutterFlowExpandedImageView(
-                                                  image: image == null
-                                                      ? Image.network(
-                                                          'https://picsum.photos/seed/836/600',
-                                                          fit: BoxFit.contain,
-                                                        )
-                                                      : Image.file(
-                                                          File(image!.path),
-                                                          fit: BoxFit.contain,
-                                                        ),
-                                                  allowRotation: false,
-                                                  tag: 'imageTag2',
-                                                  useHeroAnimation: true,
-                                                ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 10, 10, 0),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.4,
+                                              height: 100,
+                                              decoration: BoxDecoration(
+                                                color: const Color(0xFFEEEEEE),
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
                                               ),
-                                            );
-                                          },
-                                          child: Hero(
-                                            tag: 'imageTag2',
-                                            transitionOnUserGestures: true,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              child: image == null
-                                                  ? Image.network(
-                                                      'https://picsum.photos/seed/836/600',
-                                                      width: 170,
-                                                      height: 120,
-                                                      fit: BoxFit.cover,
-                                                    )
-                                                  : Image.file(
-                                                      File(image!.path),
-                                                      width: 170,
-                                                      height: 120,
-                                                      fit: BoxFit.cover,
+                                              child: SizedBox(
+                                                  width: 180,
+                                                  height: 100,
+                                                  child: FlutterFlowCarousel(
+                                                      width: 180,
+                                                      height: 100,
+                                                      listaImagenes: jornadaProvider.imagenes
+                                                      )
                                                     ),
                                             ),
-                                          ),
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 10, 0, 0),
+                                              child: Text(
+                                                "Total imágenes: ${jornadaProvider.imagenes.length}",
+                                                style: AppTheme.of(context).title3.override(
+                                                fontFamily: 'Poppins',
+                                                color:
+                                                    AppTheme.of(context).secondaryText,
+                                                fontSize: 12.5,
+                                                fontWeight: FontWeight.normal,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                       FFButtonWidget(
@@ -615,29 +598,141 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                                           if (option == null) return;
 
                                           final picker = ImagePicker();
-
-                                          late final XFile? pickedFile;
-
+                                          imagenesTemp = [];
+                                          XFile? pickedFile;
+                                          List<XFile>? pickedFiles;
                                           if (option == 'camera') {
-                                            pickedFile = await picker.pickImage(
-                                              source: ImageSource.camera,
+                                            if (jornadaProvider.imagenes.length < 3) {
+                                              pickedFile = await picker.pickImage(
+                                                source: ImageSource.camera,
+                                                imageQuality: 100,
+                                              );
+                                              if (pickedFile != null) {
+                                                imagenesTemp.add(pickedFile);
+                                              }
+                                            } else {
+                                                bool? booleano = await showModalBottomSheet(
+                                                isScrollControlled: true,
+                                                backgroundColor: Colors.transparent,
+                                                context: context,
+                                                builder: (context) {
+                                                  return Padding(
+                                                    padding: MediaQuery.of(context).viewInsets,
+                                                    child: SizedBox(
+                                                      height:
+                                                          MediaQuery.of(context).size.height * 0.45,
+                                                      child: const BottomSheetImagenesCompletas(),
+                                                    ),
+                                                  );
+                                                },
+                                              );  
+                                              if (booleano != null && booleano == true) {
+                                                pickedFile = await picker.pickImage(
+                                                source: ImageSource.camera,
+                                                imageQuality: 100,
+                                                );
+                                                if (pickedFile != null) {
+                                                  setState(() {
+                                                    jornadaProvider.imagenes.removeLast();
+                                                    jornadaProvider.imagenes.add(pickedFile!.path);
+                                                  });
+                                                }
+                                                return;
+                                              }        
+                                            }
+                                          } else { //Se selecciona galería
+                                            if (jornadaProvider.imagenes.length < 3) {
+                                              pickedFiles = await picker.pickMultiImage(
                                               imageQuality: 100,
-                                            );
-                                          } else {
-                                            pickedFile = await picker.pickImage(
-                                              source: ImageSource.gallery,
-                                              imageQuality: 100,
-                                            );
+                                              );
+                                              if (pickedFiles == null) {
+                                                return;
+                                              }
+                                              if (pickedFiles.length > 3) {
+                                                snackbarKey.currentState
+                                                  ?.showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      "No se permite cargar más de 3 imágenes."),
+                                                ));
+                                                return;
+                                              }
+                                              switch (jornadaProvider.imagenes.length) {
+                                                case 0:
+                                                  for(int i = 0; i < pickedFiles.length; i++)
+                                                  {
+                                                    imagenesTemp.add(pickedFiles[i]);
+                                                  }
+                                                  break;
+                                                case 1:
+                                                  if(pickedFiles.length <= 2){
+                                                    for(int i = 0; i < pickedFiles.length; i++)
+                                                    {
+                                                      imagenesTemp.add(pickedFiles[i]);
+                                                    }
+                                                  }
+                                                  else{
+                                                    snackbarKey.currentState
+                                                    ?.showSnackBar(const SnackBar(
+                                                      content: Text(
+                                                          "No se permite cargar más de 3 imágenes."),
+                                                    ));
+                                                    return;
+                                                  }
+                                                  break;
+                                                case 2:
+                                                  if(pickedFiles.length <= 1){
+                                                    for(int i = 0; i < pickedFiles.length; i++)
+                                                    {
+                                                      imagenesTemp.add(pickedFiles[i]);
+                                                    }
+                                                  }
+                                                  else{
+                                                    snackbarKey.currentState
+                                                    ?.showSnackBar(const SnackBar(
+                                                      content: Text(
+                                                          "No se permite cargar más de 3 imágenes."),
+                                                    ));
+                                                    return;
+                                                  }
+                                                  break;
+                                                default:
+                                                  break;
+                                              }
+                                            } else {
+                                              bool? booleano = await showModalBottomSheet(
+                                                isScrollControlled: true,
+                                                backgroundColor: Colors.transparent,
+                                                context: context,
+                                                builder: (context) {
+                                                  return Padding(
+                                                    padding: MediaQuery.of(context).viewInsets,
+                                                    child: SizedBox(
+                                                      height:
+                                                          MediaQuery.of(context).size.height * 0.45,
+                                                      child: const BottomSheetImagenesCompletas(),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                              if (booleano != null && booleano == true) {
+                                                pickedFile = await picker.pickImage(
+                                                source: ImageSource.gallery,
+                                                imageQuality: 100,
+                                                );
+                                                if (pickedFile != null) {
+                                                  setState(() {
+                                                    jornadaProvider.imagenes.removeLast();
+                                                    jornadaProvider.imagenes.add(pickedFile!.path);
+                                                  });
+                                                }
+                                                return;
+                                              }     
+                                            }
                                           }
-
-                                          if (pickedFile == null) {
-                                            return;
-                                          }
-
                                           setState(() {
-                                            image = pickedFile;
-                                            jornadaProvider.imagen =
-                                                image!.path;
+                                            for (var i = 0; i < imagenesTemp.length; i++) {
+                                              jornadaProvider.imagenes.add(imagenesTemp[i].path);
+                                            }
                                           });
                                         },
                                         text: 'Círculo Empresa',
@@ -670,8 +765,8 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                                   ),
                                 );
                               }, validator: (val) {
-                                if (jornadaProvider.imagen == null ||
-                                    jornadaProvider.imagen.isEmpty) {
+                                if (jornadaProvider.imagenes.isEmpty ||
+                                    jornadaProvider.imagenes == []) {
                                   return 'Para continuar, cargue el circulo de la empresa';
                                 }
                                 return null;

@@ -1,9 +1,10 @@
+import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/database/entitys.dart';
 
-class InversionSugeridaController extends ChangeNotifier {
+class ProductoEmprendedorController extends ChangeNotifier {
 
   List<ProductosEmp> productosEmp= [];
 
@@ -39,7 +40,7 @@ class InversionSugeridaController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void add(int idEmprendimiento, int idFamilia) {
+  void add(int idEmprendimiento, int idUnidadMedida) {
     final nuevoProductoEmp = ProductosEmp(
       nombre: nombre,
       descripcion: descripcion,
@@ -48,23 +49,47 @@ class InversionSugeridaController extends ChangeNotifier {
       precioVenta: precioVenta,
       );
       final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
-      final familia = dataBase.familiaInversionBox.get(idFamilia);
-      if (emprendimiento != null && familia != null) {
+      final unidadMedidad = dataBase.unidadesMedidaBox.get(idUnidadMedida);
+      if (emprendimiento != null && unidadMedidad != null) {
         final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
         final nuevaInstruccion = Bitacora(instrucciones: 'syncAddCotizacion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
         nuevoProductoEmp.statusSync.target = nuevoSync;
         nuevoProductoEmp.emprendimientos.target = emprendimiento;
-        nuevoProductoEmp.familiaInversion.target = familia;
+        nuevoProductoEmp.unidadMedida.target = unidadMedidad;
         nuevoProductoEmp.bitacora.add(nuevaInstruccion);
         emprendimiento.productosEmp.add(nuevoProductoEmp);
         dataBase.emprendimientosBox.put(emprendimiento);
         // dataBase.emprendedoresBox.put(nuevoEmprendedor);
         productosEmp.add(nuevoProductoEmp);
-        print('ProductoEmp agregado exitosamente');
+        print('Producto Emprendedor agregado exitosamente');
         clearInformation();
         notifyListeners();
       }
   }
+
+  void update(int id, String newNombre, String newDescripcion, String newImagen,
+    String newCosto, int newIdUnidadMedida) {
+    var updateProdEmprendedor = dataBase.productosEmpBox.get(id);
+    final updateUnidadMedida = dataBase.unidadesMedidaBox.get(newIdUnidadMedida);
+    if (updateProdEmprendedor !=  null && updateUnidadMedida != null) {
+      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateProductoEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      updateProdEmprendedor.nombre = newNombre;
+      updateProdEmprendedor.descripcion = newDescripcion;
+      updateProdEmprendedor.imagen =  newImagen;
+      updateProdEmprendedor.costo = double.parse(newCosto);
+      updateProdEmprendedor.unidadMedida.target = updateUnidadMedida;
+      final statusSyncJornada = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateProdEmprendedor.statusSync.target!.id)).build().findUnique();
+      if (statusSyncJornada != null) {
+        statusSyncJornada.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del prod Solicitado
+        dataBase.statusSyncBox.put(statusSyncJornada);
+      }
+      updateProdEmprendedor.bitacora.add(nuevaInstruccion);
+      dataBase.productosEmpBox.put(updateProdEmprendedor);
+    }
+    print('Producto Emprendedor actualizado exitosamente');
+    notifyListeners();
+}
+
 
   void remove(ProductosEmp productosEmp) {
     dataBase.productosEmpBox.remove(productosEmp.id); //Se elimina de bitacora la instruccion creada anteriormente

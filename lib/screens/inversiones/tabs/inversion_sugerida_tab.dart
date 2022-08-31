@@ -39,7 +39,7 @@ with TickerProviderStateMixin {
     double totalProyecto = 0;
     widget.emprendimiento.productosEmp.forEach((element) {
       productosEmp.add(element);
-      totalProyecto += (element.costo * element.cantidad); 
+      totalProyecto += (element.costo); 
     });
     return Align(
       alignment: const AlignmentDirectional(0, 0),
@@ -545,23 +545,23 @@ with TickerProviderStateMixin {
                                                             color: AppTheme.of(context).primaryText,
                                                           ),
                                                     ),
-                                                    Text(
-                                                      'Und: ${productoEmp.cantidad}',
-                                                      style: AppTheme.of(context).subtitle1.override(
-                                                            fontFamily: AppTheme.of(context).subtitle1Family,
-                                                            color: AppTheme.of(context).primaryText,
-                                                            fontSize: 18,
-                                                            fontWeight: FontWeight.w600,
-                                                          ),
-                                                    ),
-                                                    Text(
-                                                      "\$ ${(productoEmp.costo * productoEmp.cantidad).toStringAsFixed(2)}",
-                                                      textAlign: TextAlign.end,
-                                                      style: AppTheme.of(context).subtitle2.override(
-                                                            fontFamily: AppTheme.of(context).subtitle2Family,
-                                                            color: AppTheme.of(context).primaryText,
-                                                          ),
-                                                    ),
+                                                    // Text(
+                                                    //   'Und: ${productoEmp.cantidad}',
+                                                    //   style: AppTheme.of(context).subtitle1.override(
+                                                    //         fontFamily: AppTheme.of(context).subtitle1Family,
+                                                    //         color: AppTheme.of(context).primaryText,
+                                                    //         fontSize: 18,
+                                                    //         fontWeight: FontWeight.w600,
+                                                    //       ),
+                                                    // ),
+                                                    // Text(
+                                                    //   "\$ ${(productoEmp.costo * productoEmp.cantidad).toStringAsFixed(2)}",
+                                                    //   textAlign: TextAlign.end,
+                                                    //   style: AppTheme.of(context).subtitle2.override(
+                                                    //         fontFamily: AppTheme.of(context).subtitle2Family,
+                                                    //         color: AppTheme.of(context).primaryText,
+                                                    //       ),
+                                                    // ),
                                                   ],
                                                 ),
                                                 Padding(
@@ -603,13 +603,13 @@ with TickerProviderStateMixin {
                                                             color: AppTheme.of(context).secondaryText,
                                                           ),
                                                     ),
-                                                    Text(
-                                                      productoEmp.proveedor,
-                                                      style: AppTheme.of(context).bodyText1.override(
-                                                            fontFamily: AppTheme.of(context).bodyText1Family,
-                                                            color: AppTheme.of(context).secondaryText,
-                                                          ),
-                                                    ),
+                                                    // Text(
+                                                    //   productoEmp.proveedor,
+                                                    //   style: AppTheme.of(context).bodyText1.override(
+                                                    //         fontFamily: AppTheme.of(context).bodyText1Family,
+                                                    //         color: AppTheme.of(context).secondaryText,
+                                                    //       ),
+                                                    // ),
                                                   ],
                                                 ),
                                               ],

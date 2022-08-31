@@ -1,16 +1,16 @@
 import 'dart:io';
 
 import 'package:bizpro_app/screens/widgets/pdf/api/pdf_api.dart';
-import 'package:bizpro_app/screens/widgets/pdf/models/emprendedor_invoice.dart';
 import 'package:bizpro_app/screens/widgets/pdf/models/invoice_info.dart';
+import 'package:bizpro_app/screens/widgets/pdf/models/productos_emprendedor_invoice.dart';
 import 'package:bizpro_app/screens/widgets/pdf/utils.dart';
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/widgets.dart';
 
-class PdfInvoiceEmprendedor {
-  static Future<File> generate(EmprendedorInvoice invoice) async {
+class PdfInvoiceProductosEmprendedor {
+  static Future<File> generate(ProductosEmprendedorInvoice invoice) async {
     var assetImage = pw.MemoryImage(
       (await rootBundle.load('assets/images/emlogo.png'))
           .buffer
@@ -29,10 +29,10 @@ class PdfInvoiceEmprendedor {
       margin: const pw.EdgeInsets.symmetric(horizontal: 40, vertical: 20),
     ));
 
-    return PdfApi.saveDocument(name: 'emprendedores.pdf', pdf: pdf);
+    return PdfApi.saveDocument(name: 'productos_emprendedor.pdf', pdf: pdf);
   }
 
-  static Widget buildHeader(EmprendedorInvoice invoice, MemoryImage assetImage) => Column(
+  static Widget buildHeader(ProductosEmprendedorInvoice invoice, MemoryImage assetImage) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 1 * PdfPageFormat.cm),
@@ -82,7 +82,7 @@ class PdfInvoiceEmprendedor {
   }
 
 
-  static Widget buildTitle(EmprendedorInvoice invoice) => Column(
+  static Widget buildTitle(ProductosEmprendedorInvoice invoice) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
@@ -95,31 +95,29 @@ class PdfInvoiceEmprendedor {
         ],
       );
 
-  static Widget buildInvoice(EmprendedorInvoice invoice) {
+  static Widget buildInvoice(ProductosEmprendedorInvoice invoice) {
     final headers = [
       'ID',
-      'Nombre',
-      'Apellidos',
-      'CURP',
-      'Integrantes',
-      'Comunidad',
-      'Teléfono',
+      'Emprendedor',
+      'Tipo de Proyecto',
       'Emprendimiento',
-      'Comentarios',
+      'Producto',
+      'Descripción',
+      'Unidad de Medida',
+      'Costo por Unidad',
       'Usuario',
       'Fecha de Registro'
     ];
     final data = invoice.items.map((item) {
       return [
         item.id.toString(),
-        item.nombre,
-        item.apellidos,
-        item.curp,
-        item.integrantesFamilia,
-        item.comunidad,
-        item.telefono,
+        item.emprendedor,
+        item.tipoProyecto,
         item.emprendimiento,
-        item.comentarios,
+        item.producto,
+        item.descripcion,
+        item.unidadMedida,
+        item.costo,
         item.usuario,
         Utils.formatDateHour(item.fechaRegistro),
       ];
@@ -145,7 +143,6 @@ class PdfInvoiceEmprendedor {
         8: Alignment.centerLeft,
         9: Alignment.centerLeft,
         10: Alignment.centerLeft,
-        11: Alignment.centerLeft,
       },
     );
   }

@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:bizpro_app/screens/jornadas/registros/agregar_registro_jornada.dart';
-import 'package:bizpro_app/screens/jornadas/registros/agregar_registro_jornada_temporal.dart';
 import 'package:bizpro_app/screens/jornadas/registros/editar_detalle_registro_jornada.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';

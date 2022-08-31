@@ -315,14 +315,13 @@ class Tareas {
   bool activo;
   DateTime fechaRevision;
   DateTime fechaRegistro;
-  List<String>? imagenes;
   @Unique()
   String? idDBR;
   final jornada = ToOne<Jornadas>();
   final consultoria = ToOne<Consultorias>();
   final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
-  final image = ToOne<Imagenes>();
+  final imagenes = ToMany<Imagenes>();
   Tareas({
     this.id = 0,
     required this.tarea,
@@ -332,7 +331,6 @@ class Tareas {
     this.activo = true,
     required this.fechaRevision,
     DateTime? fechaRegistro,
-    this.imagenes,
     this.idDBR,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
@@ -512,10 +510,8 @@ class ProductosEmp {
   String imagen;
   double costo;
   int precioVenta;
-  int cantidad;
   DateTime fechaRegistro;
   bool archivado;
-  String proveedor;
   @Unique()
   String? idDBR;
   final statusSync = ToOne<StatusSync>();
@@ -533,10 +529,8 @@ class ProductosEmp {
     required this.imagen,
     required this.costo,
     required this.precioVenta,
-    required this.cantidad,
     DateTime? fechaRegistro,
     this.archivado = false,
-    required this.proveedor,
     this.idDBR,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
