@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:bizpro_app/screens/jornadas/registros/editar_registro_jornada.dart';
+import 'package:bizpro_app/screens/widgets/bottom_sheet_imagenes_completas.dart';
+import 'package:bizpro_app/screens/widgets/flutter_flow_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -47,8 +49,10 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
   late TextEditingController comentariosController;
   late TextEditingController descController;
   late bool activoController;
-  late String newAnalisisFinanciero;
-  XFile? image;
+  List<String> newAnalisisFinanciero = [];
+  List<String> oldAnalisisFinanciero = [];
+  List<Imagenes>? imagenes = [];
+  List<XFile> imagenesTemp = [];
   Jornadas? jornada1;
   Jornadas? jornada2;
   String tipoProyecto = "";
@@ -63,8 +67,15 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
     super.initState();
     jornada1 = null;
     jornada2 = null;
-    newAnalisisFinanciero =
-         "NO FILE";
+    imagenesTemp =[];
+    newAnalisisFinanciero = [];
+    imagenes = widget.jornada.tarea.target?.imagenes.toList();
+    if (imagenes != null ) {
+      for (var element in imagenes!) {
+        newAnalisisFinanciero.add(element.imagenes);
+        oldAnalisisFinanciero.add(element.imagenes);
+      }
+    }
     fechaRevision = widget.jornada.fechaRevision;
     fechaRegistro = widget.jornada.fechaRegistro;
     fechaRevisionText = TextEditingController(
@@ -517,74 +528,53 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                               FormField(builder: (state) {
                                 return Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      5, 0, 5, 10),
+                                      5, 0, 5, 0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color:
-                                              AppTheme.of(context).primaryText,
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          border: Border.all(
-                                            width: 1.5,
-                                          ),
-                                        ),
-                                        child: InkWell(
-                                          onTap: () async {
-                                            await Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                type: PageTransitionType.fade,
-                                                child:
-                                                    FlutterFlowExpandedImageView(
-                                                  image:
-                                                      newAnalisisFinanciero ==
-                                                              null
-                                                          ? Image.network(
-                                                              'https://picsum.photos/seed/836/600',
-                                                              fit: BoxFit
-                                                                  .contain,
-                                                            )
-                                                          : Image.file(
-                                                              File(
-                                                                  newAnalisisFinanciero),
-                                                              fit: BoxFit
-                                                                  .contain,
-                                                            ),
-                                                  allowRotation: false,
-                                                  tag: 'imageTag2',
-                                                  useHeroAnimation: true,
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 10, 10, 0),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.4,
+                                              height: 100,
+                                              decoration: BoxDecoration(
+                                                color: const Color(0xFFEEEEEE),
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                              ),
+                                              child: SizedBox(
+                                                  width: 180,
+                                                  height: 100,
+                                                  child: FlutterFlowCarousel(
+                                                      width: 180,
+                                                      height: 100,
+                                                      listaImagenes: newAnalisisFinanciero
+                                                      )
+                                                    ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 10, 0, 0),
+                                              child: Text(
+                                                "Total imágenes: ${newAnalisisFinanciero.length}",
+                                                style: AppTheme.of(context).title3.override(
+                                                fontFamily: 'Poppins',
+                                                color:
+                                                    AppTheme.of(context).secondaryText,
+                                                fontSize: 12.5,
+                                                fontWeight: FontWeight.normal,
                                                 ),
                                               ),
-                                            );
-                                          },
-                                          child: Hero(
-                                            tag: 'imageTag2',
-                                            transitionOnUserGestures: true,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              child:
-                                                  newAnalisisFinanciero == null
-                                                      ? Image.network(
-                                                          'https://picsum.photos/seed/836/600',
-                                                          width: 170,
-                                                          height: 120,
-                                                          fit: BoxFit.cover,
-                                                        )
-                                                      : Image.file(
-                                                          File(
-                                                              newAnalisisFinanciero),
-                                                          width: 170,
-                                                          height: 120,
-                                                          fit: BoxFit.cover,
-                                                        ),
                                             ),
-                                          ),
+                                          ],
                                         ),
                                       ),
                                       FFButtonWidget(
@@ -599,37 +589,150 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                           if (option == null) return;
 
                                           final picker = ImagePicker();
-
-                                          late final XFile? pickedFile;
-
+                                          imagenesTemp = [];
+                                          XFile? pickedFile;
+                                          List<XFile>? pickedFiles;
                                           if (option == 'camera') {
-                                            pickedFile = await picker.pickImage(
-                                              source: ImageSource.camera,
+                                            if (newAnalisisFinanciero.length < 3) {
+                                              pickedFile = await picker.pickImage(
+                                                source: ImageSource.camera,
+                                                imageQuality: 100,
+                                              );
+                                              if (pickedFile != null) {
+                                                imagenesTemp.add(pickedFile);
+                                              }
+                                            } else {
+                                                bool? booleano = await showModalBottomSheet(
+                                                isScrollControlled: true,
+                                                backgroundColor: Colors.transparent,
+                                                context: context,
+                                                builder: (context) {
+                                                  return Padding(
+                                                    padding: MediaQuery.of(context).viewInsets,
+                                                    child: SizedBox(
+                                                      height:
+                                                          MediaQuery.of(context).size.height * 0.45,
+                                                      child: const BottomSheetImagenesCompletas(),
+                                                    ),
+                                                  );
+                                                },
+                                              );  
+                                              if (booleano != null && booleano == true) {
+                                                pickedFile = await picker.pickImage(
+                                                source: ImageSource.camera,
+                                                imageQuality: 100,
+                                                );
+                                                if (pickedFile != null) {
+                                                  setState(() {
+                                                    newAnalisisFinanciero.removeLast();
+                                                    newAnalisisFinanciero.add(pickedFile!.path);
+                                                  });
+                                                }
+                                                return;
+                                              }        
+                                            }
+                                          } else { //Se selecciona galería
+                                            if (newAnalisisFinanciero.length < 3) {
+                                              pickedFiles = await picker.pickMultiImage(
                                               imageQuality: 100,
-                                            );
-                                          } else {
-                                            pickedFile = await picker.pickImage(
-                                              source: ImageSource.gallery,
-                                              imageQuality: 100,
-                                            );
+                                              );
+                                              if (pickedFiles == null) {
+                                                return;
+                                              }
+                                              if (pickedFiles.length > 3) {
+                                                snackbarKey.currentState
+                                                  ?.showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      "No se permite cargar más de 3 imágenes."),
+                                                ));
+                                                return;
+                                              }
+                                              switch (newAnalisisFinanciero.length) {
+                                                case 0:
+                                                  for(int i = 0; i < pickedFiles.length; i++)
+                                                  {
+                                                    imagenesTemp.add(pickedFiles[i]);
+                                                  }
+                                                  break;
+                                                case 1:
+                                                  if(pickedFiles.length <= 2){
+                                                    for(int i = 0; i < pickedFiles.length; i++)
+                                                    {
+                                                      imagenesTemp.add(pickedFiles[i]);
+                                                    }
+                                                  }
+                                                  else{
+                                                    snackbarKey.currentState
+                                                    ?.showSnackBar(const SnackBar(
+                                                      content: Text(
+                                                          "No se permite cargar más de 3 imágenes."),
+                                                    ));
+                                                    return;
+                                                  }
+                                                  break;
+                                                case 2:
+                                                  if(pickedFiles.length <= 1){
+                                                    for(int i = 0; i < pickedFiles.length; i++)
+                                                    {
+                                                      imagenesTemp.add(pickedFiles[i]);
+                                                    }
+                                                  }
+                                                  else{
+                                                    snackbarKey.currentState
+                                                    ?.showSnackBar(const SnackBar(
+                                                      content: Text(
+                                                          "No se permite cargar más de 3 imágenes."),
+                                                    ));
+                                                    return;
+                                                  }
+                                                  break;
+                                                default:
+                                                  break;
+                                              }
+                                            } else {
+                                              bool? booleano = await showModalBottomSheet(
+                                                isScrollControlled: true,
+                                                backgroundColor: Colors.transparent,
+                                                context: context,
+                                                builder: (context) {
+                                                  return Padding(
+                                                    padding: MediaQuery.of(context).viewInsets,
+                                                    child: SizedBox(
+                                                      height:
+                                                          MediaQuery.of(context).size.height * 0.45,
+                                                      child: const BottomSheetImagenesCompletas(),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                              if (booleano != null && booleano == true) {
+                                                pickedFile = await picker.pickImage(
+                                                source: ImageSource.gallery,
+                                                imageQuality: 100,
+                                                );
+                                                if (pickedFile != null) {
+                                                  setState(() {
+                                                    newAnalisisFinanciero.removeLast();
+                                                    newAnalisisFinanciero.add(pickedFile!.path);
+                                                  });
+                                                }
+                                                return;
+                                              }     
+                                            }
                                           }
-
-                                          if (pickedFile == null) {
-                                            return;
-                                          }
-
                                           setState(() {
-                                            image = pickedFile;
-                                            newAnalisisFinanciero = image!.path;
+                                            for (var i = 0; i < imagenesTemp.length; i++) {
+                                              newAnalisisFinanciero.add(imagenesTemp[i].path);
+                                            }
                                           });
                                         },
-                                        text: 'Análisis Financiero',
+                                        text: 'Círculo Empresa',
                                         icon: const Icon(
                                           Icons.add_a_photo,
                                           size: 15,
                                         ),
                                         options: FFButtonOptions(
-                                          width: 160,
+                                          width: 140,
                                           height: 40,
                                           color: AppTheme.of(context)
                                               .secondaryText,
@@ -653,9 +756,9 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                   ),
                                 );
                               }, validator: (val) {
-                                if (newAnalisisFinanciero == null ||
-                                    newAnalisisFinanciero.isEmpty) {
-                                  return 'Para continuar, cargue una imagen';
+                                if (newAnalisisFinanciero.isEmpty ||
+                                    newAnalisisFinanciero == []) {
+                                  return 'Para continuar, cargue el circulo de la empresa';
                                 }
                                 return null;
                               }),
@@ -1078,7 +1181,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                         widget.jornada.tarea.target!
                                             .descripcion ||
                                     newAnalisisFinanciero !=
-                                        "") {
+                                        oldAnalisisFinanciero) {
                                   final idTipoProyecto = dataBase
                                       .clasificacionesEmpBox
                                       .query(ClasificacionEmp_.clasificacion
@@ -1108,6 +1211,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                           fechaRevision,
                                           comentariosController.text,
                                           newAnalisisFinanciero,
+                                          imagenes,
                                           idProyecto,
                                           descController.text,
                                           widget.jornada.tarea.target!.id);

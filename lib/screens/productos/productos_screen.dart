@@ -256,10 +256,8 @@ class _ProductosScreenState extends State<ProductosScreen> {
                                     color: const Color(0x49FFFFFF),
                                     boxShadow: const[
                                       BoxShadow(
-                                        blurRadius: 3,
-                                        color: Color(0x39000000),
-                                        offset: Offset(0, 1),
-                                      )
+                                          color: Color(0x39000000),
+                                        ) 
                                     ],
                                     borderRadius: BorderRadius.circular(40),
                                   ),

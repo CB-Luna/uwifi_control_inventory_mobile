@@ -127,9 +127,10 @@ class JornadaController extends ChangeNotifier {
       );
     final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
     nuevaTarea.statusSync.target = nuevoSyncTarea;
+    //Se agregan las imagenes a la Tarea
     for (var i = 0; i < imagenes.length; i++) {
-      final nuevasImagenTarea = Imagenes(imagenes: imagenes[i]); //Se crea el objeto imagenes para la Tarea
-      nuevaTarea.imagenes.add(nuevasImagenTarea);
+      final nuevaImagenTarea = Imagenes(imagenes: imagenes[i]); //Se crea el objeto imagenes para la Tarea
+      nuevaTarea.imagenes.add(nuevaImagenTarea);
     }
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Jornada 2")).build().findFirst();
@@ -169,22 +170,20 @@ class JornadaController extends ChangeNotifier {
         dataBase.imagenesBox.remove(oldImagenes[i].id);
       }
       }
-      // for (var i = 0; i < imagenes.length; i++) {
-      //   final nuevasImagenTarea = Imagenes(imagenes: imagenes[i]); //Se crea el objeto imagenes para la Tarea
-      //   updateTarea.imagenes.add(nuevasImagenTarea);
-      // }
-      // final imagenTarea = dataBase.imagenesBox.query(Imagenes_.id.equals(updateTarea.image.target!.id)).build().findUnique();
-      // if (imagenTarea != null) {
-      //     imagenTarea.imagenes = newImagen; //Se actualiza la imagen de la tarea
-      //     dataBase.imagenesBox.put(imagenTarea);
-      //   }
+      //Se agregan las nuevas imagenes
+      for (var i = 0; i < newImagenes.length; i++) {
+        final nuevaImagenTarea = Imagenes(imagenes: newImagenes[i]); //Se crea el objeto imagenes para la Tarea
+        int idNuevaTarea = dataBase.imagenesBox.put(nuevaImagenTarea);
+        updateTarea.imagenes.add(dataBase.imagenesBox.get(idNuevaTarea)!);
+      }
+      //Se actualiza la tarea con las nuevas imagenes
+      dataBase.tareasBox.put(updateTarea);
       final statusSyncTarea = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateTarea.statusSync.target!.id)).build().findUnique();
       if (statusSyncTarea != null) {
           statusSyncTarea.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la tarea
           dataBase.statusSyncBox.put(statusSyncTarea);
         }
-      dataBase.tareasBox.put(updateTarea);
-      var updateJornada = dataBase.jornadasBox.get(id);
+      final updateJornada = dataBase.jornadasBox.get(id);
       if (updateJornada !=  null) {
         updateJornada.fechaRegistro = newFechaRegistro;
         updateJornada.fechaRevision = newFechaRevision;
@@ -198,6 +197,7 @@ class JornadaController extends ChangeNotifier {
         print('Jornada actualizada exitosamente');
       }
     }
+    print(dataBase.imagenesBox.getAll().length);
     notifyListeners();
   }
 
@@ -219,9 +219,10 @@ class JornadaController extends ChangeNotifier {
       );
     final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
     nuevaTarea.statusSync.target = nuevoSyncTarea;
+    //Se agregan las imagenes a la Tarea
     for (var i = 0; i < imagenes.length; i++) {
-      final nuevasImagenTarea = Imagenes(imagenes: imagenes[i]); //Se crea el objeto imagenes para la Tarea
-      nuevaTarea.imagenes.add(nuevasImagenTarea);
+      final nuevaImagenTarea = Imagenes(imagenes: imagenes[i]); //Se crea el objeto imagenes para la Tarea
+      nuevaTarea.imagenes.add(nuevaImagenTarea);
     }
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Jornada 3")).build().findFirst();
@@ -258,7 +259,7 @@ class JornadaController extends ChangeNotifier {
   }
 
   void updateJornada3(int id, int idEmprendimiento, DateTime newFechaRegistro, String newTarea, bool newActivo, DateTime newFechaRevision, 
-    String newComentarios, String newImagen, int newIdProyecto, String newDescripcion, int idTarea) {
+    String newComentarios, List<String> newImagenes, List<Imagenes>? oldImagenes, int newIdProyecto, String newDescripcion, int idTarea) {
     var updateTarea  = dataBase.tareasBox.get(idTarea);
     if (updateTarea != null) {
       final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateJornada3', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
@@ -268,11 +269,20 @@ class JornadaController extends ChangeNotifier {
       updateTarea.observacion = newComentarios;
       updateTarea.descripcion = newDescripcion;
       updateTarea.activo = newActivo;
-      // final imagenTarea = dataBase.imagenesBox.query(Imagenes_.id.equals(updateTarea.image.target!.id)).build().findUnique();
-      // if (imagenTarea != null) {
-      //     imagenTarea.imagenes = newImagen; //Se actualiza la imagen de la tarea
-      //     dataBase.imagenesBox.put(imagenTarea);
-      //   }
+      //Se eliminan imagenes anteriores
+      if (oldImagenes != null) {
+        for (var i = 0; i < oldImagenes.length; i++) {
+        dataBase.imagenesBox.remove(oldImagenes[i].id);
+      }
+      }
+      //Se agregan las nuevas imagenes
+      for (var i = 0; i < newImagenes.length; i++) {
+        final nuevaImagenTarea = Imagenes(imagenes: newImagenes[i]); //Se crea el objeto imagenes para la Tarea
+        int idNuevaTarea = dataBase.imagenesBox.put(nuevaImagenTarea);
+        updateTarea.imagenes.add(dataBase.imagenesBox.get(idNuevaTarea)!);
+      }
+      //Se actualiza la tarea con las nuevas imagenes
+      dataBase.tareasBox.put(updateTarea);
       final statusSyncTarea = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateTarea.statusSync.target!.id)).build().findUnique();
       if (statusSyncTarea != null) {
         statusSyncTarea.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la tarea
@@ -329,9 +339,10 @@ class JornadaController extends ChangeNotifier {
       print("Entro aca");
     final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
     nuevaTarea.statusSync.target = nuevoSyncTarea;
+    //Se agregan las imagenes a la Tarea
     for (var i = 0; i < imagenes.length; i++) {
-      final nuevasImagenTarea = Imagenes(imagenes: imagenes[i]); //Se crea el objeto imagenes para la Tarea
-      nuevaTarea.imagenes.add(nuevasImagenTarea);
+      final nuevaImagenTarea = Imagenes(imagenes: imagenes[i]); //Se crea el objeto imagenes para la Tarea
+      nuevaTarea.imagenes.add(nuevaImagenTarea);
     }
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Jornada 4")).build().findFirst();
@@ -372,18 +383,27 @@ class JornadaController extends ChangeNotifier {
     print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
   }
 
-  void updateJornada4(int id, DateTime newFechaRegistro, String newComentarios, String newImagen, bool newActivo, int idTarea) {
+  void updateJornada4(int id, DateTime newFechaRegistro, String newComentarios, List<String> newImagenes, List<Imagenes>? oldImagenes, bool newActivo, int idTarea) {
     var updateTarea  = dataBase.tareasBox.get(idTarea);
     if (updateTarea != null) {
       final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateJornada4', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       updateTarea.fechaRegistro = newFechaRegistro;
       updateTarea.observacion = newComentarios;
       updateTarea.activo = newActivo;
-      // final imagenTarea = dataBase.imagenesBox.query(Imagenes_.id.equals(updateTarea.image.target!.id)).build().findUnique();
-      // if (imagenTarea != null) {
-      //     imagenTarea.imagenes = newImagen; //Se actualiza la imagen de la tarea
-      //     dataBase.imagenesBox.put(imagenTarea);
-      //   }
+      //Se eliminan imagenes anteriores
+      if (oldImagenes != null) {
+        for (var i = 0; i < oldImagenes.length; i++) {
+        dataBase.imagenesBox.remove(oldImagenes[i].id);
+      }
+      }
+      //Se agregan las nuevas imagenes
+      for (var i = 0; i < newImagenes.length; i++) {
+        final nuevaImagenTarea = Imagenes(imagenes: newImagenes[i]); //Se crea el objeto imagenes para la Tarea
+        int idNuevaTarea = dataBase.imagenesBox.put(nuevaImagenTarea);
+        updateTarea.imagenes.add(dataBase.imagenesBox.get(idNuevaTarea)!);
+      }
+      //Se actualiza la tarea con las nuevas imagenes
+      dataBase.tareasBox.put(updateTarea);
       final statusSyncTarea = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateTarea.statusSync.target!.id)).build().findUnique();
       if (statusSyncTarea != null) {
           statusSyncTarea.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la tarea

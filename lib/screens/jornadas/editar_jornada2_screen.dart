@@ -715,15 +715,15 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                                 );
                                                 if (pickedFile != null) {
                                                   setState(() {
-                                                    jornadaProvider.imagenes.removeLast();
-                                                    jornadaProvider.imagenes.add(pickedFile!.path);
+                                                    newCirculoEmpresa.removeLast();
+                                                    newCirculoEmpresa.add(pickedFile!.path);
                                                   });
                                                 }
                                                 return;
                                               }        
                                             }
                                           } else { //Se selecciona galería
-                                            if (jornadaProvider.imagenes.length < 3) {
+                                            if (newCirculoEmpresa.length < 3) {
                                               pickedFiles = await picker.pickMultiImage(
                                               imageQuality: 100,
                                               );
@@ -874,7 +874,7 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                     activoController !=
                                         widget.jornada.tarea.target!.activo ||
                                     newCirculoEmpresa !=
-                                        "") {
+                                        oldCirculoEmpresa) {
                                   jornadaProvider.updateJornada2(
                                       widget.jornada.id,
                                       fechaRegistro,

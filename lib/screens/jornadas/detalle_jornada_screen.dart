@@ -246,8 +246,8 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                                                 .tarea
                                                                 .target!
                                                                 .observacion,
-
-                                                                "NO FILE",
+                                                            listImagenes,
+                                                            imagenes,
                                                             false,
                                                             widget.jornada.tarea
                                                                 .target!.id);
