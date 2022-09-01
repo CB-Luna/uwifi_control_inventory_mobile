@@ -14,6 +14,8 @@ class ConsultoriaController extends ChangeNotifier {
   String tarea = "";
   String observacion = "";
   String descripcion = "";
+  String avanceObservado = "";
+  String porcentaje = "";
   bool activo = true;
 
   bool validateForm(GlobalKey<FormState> consultoriaKey) {
@@ -26,6 +28,8 @@ class ConsultoriaController extends ChangeNotifier {
     tarea = "";
     observacion = "";
     descripcion = "";
+    avanceObservado = "";
+    porcentaje = "";
     fechaRevision =  null;
     activo = true;
     notifyListeners();
@@ -35,7 +39,7 @@ class ConsultoriaController extends ChangeNotifier {
     final nuevaConsultoria = Consultorias();
     final nuevaTarea = Tareas(
     tarea: tarea,
-    descripcion: "Creación Consultoría",
+    descripcion: "Creación de Consultoría",
     observacion: "Se crea consultoría",
     porcentaje: 1,
     fechaRevision: fechaRevision!);
@@ -65,14 +69,21 @@ class ConsultoriaController extends ChangeNotifier {
     }
   }
 
-  void updateConsultoria(int id, int idAmbito, int idAreaCirculo) {
-    var updateConsultoria = dataBase.consultoriasBox.get(id);
+  void updateConsultoria(int id, int idOldTarea) {
+    var oldTarea  = dataBase.tareasBox.get(idOldTarea);
+    if (oldTarea != null) {
+      final nuevaTarea = Tareas(
+      tarea: tarea == "" ? oldTarea.tarea : tarea,
+      descripcion: "Actualización de Consultoría",
+      observacion: observacion,
+      porcentaje: int.parse(porcentaje),
+      activo: activo,
+      fechaRevision: fechaRevision!);
+      var updateConsultoria = dataBase.consultoriasBox.get(id);
       if (updateConsultoria !=  null) {
+        //Se agrega la nueva tarea
+        updateConsultoria.tareas.add(nuevaTarea);
         final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-        final nuevoAmbito = dataBase.ambitoConsultoriaBox.get(idAmbito);
-        final nuevaAreaCirculo = dataBase.areaCirculoBox.get(idAreaCirculo);
-        updateConsultoria.ambitoConsultoria.target = nuevoAmbito;
-        updateConsultoria.areaCirculo.target = nuevaAreaCirculo;
         final statusSyncConsultoria = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateConsultoria.statusSync.target!.id)).build().findUnique();
         if (statusSyncConsultoria != null) {
           statusSyncConsultoria.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la consultoria
@@ -81,7 +92,10 @@ class ConsultoriaController extends ChangeNotifier {
         updateConsultoria.bitacora.add(nuevaInstruccion);
         dataBase.consultoriasBox.put(updateConsultoria);
         print('Consultoria actualizada exitosamente');
+        clearInformation(); //Se limpia información para usar el mismo controller en otro registro
+        notifyListeners();
       }
+    }
   }
 
   void addTareaConsultoria(int idConsultoria) {

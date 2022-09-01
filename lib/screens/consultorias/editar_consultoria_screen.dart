@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/objectbox.g.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:bizpro_app/helpers/constants.dart';
+import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:bizpro_app/providers/database_providers/consultoria_controller.dart';
 import 'package:bizpro_app/screens/consultorias/consultoria_actualizada.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
@@ -15,11 +15,13 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 class EditarConsultoriaScreen extends StatefulWidget {
   final Consultorias consultoria;
   final String numConsultoria;
+  final Tareas tarea;
 
   const EditarConsultoriaScreen({
     Key? key,
     required this.consultoria,
-    required this.numConsultoria,
+    required this.numConsultoria, 
+    required this.tarea,
   }) : super(key: key);
 
   @override
@@ -28,27 +30,19 @@ class EditarConsultoriaScreen extends StatefulWidget {
 }
 
 class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
+  TextEditingController fechaRevision = TextEditingController();
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   String ambito = "";
   String areaCirculo = "";
+  String porcentajeAvance = "";
   String emprendedor = "";
-  List<String> listAmbitos = [];
-  List<String> listAreaCirculo = [];
 
   @override
   void initState() {
     super.initState();
     ambito = widget.consultoria.ambitoConsultoria.target!.nombreAmbito;
     areaCirculo = widget.consultoria.areaCirculo.target!.nombreArea;
-    listAmbitos = [];
-    listAreaCirculo = [];
-    dataBase.ambitoConsultoriaBox.getAll().forEach((element) {
-      listAmbitos.add(element.nombreAmbito);
-    });
-    dataBase.areaCirculoBox.getAll().forEach((element) {
-      listAreaCirculo.add(element.nombreArea);
-    });
   }
 
   @override
@@ -211,7 +205,7 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                             children: [
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    5, 0, 5, 10),
+                                    5, 0, 5, 0),
                                 child: Container(
                                   width: MediaQuery.of(context).size.width,
                                   decoration: BoxDecoration(
@@ -262,59 +256,227 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                   ),
                                 ),
                               ),
-                              FormField(
-                                builder: (state) {
-                                  return Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            5, 0, 5, 10),
-                                    child: DropDown(
-                                      initialOption: ambito,
-                                      options: listAmbitos,
-                                      onChanged: (val) => setState(() {
-                                        if (listAmbitos.isEmpty) {
-                                          snackbarKey.currentState
-                                              ?.showSnackBar(const SnackBar(
-                                            content: Text(
-                                                "Debes descargar los catálogos desde la sección de tu perfil"),
-                                          ));
-                                        } else {
-                                          ambito = val!;
-                                        }
-                                      }),
-                                      width: double.infinity,
-                                      height: 50,
-                                      textStyle:
-                                          AppTheme.of(context).title3.override(
-                                                fontFamily: 'Poppins',
-                                                color: const Color(0xFF221573),
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                      hintText: 'Ámbito*',
-                                      icon: const Icon(
-                                        Icons.keyboard_arrow_down_rounded,
-                                        color: Color(0xFF221573),
-                                        size: 30,
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    5, 0, 5, 0),
+                                child: TextFormField(
+                                  enabled: false,
+                                  readOnly: true,
+                                  initialValue: ambito,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: 'Ámbito*',
+                                    labelStyle:
+                                        AppTheme.of(context).title3.override(
+                                              fontFamily: 'Montserrat',
+                                              color: AppTheme.of(context)
+                                                  .secondaryText,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                    hintText: 'Ámbito...',
+                                    hintStyle:
+                                        AppTheme.of(context).title3.override(
+                                              fontFamily: 'Poppins',
+                                              color: AppTheme.of(context)
+                                                  .secondaryText,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: AppTheme.of(context).primaryText,
+                                        width: 1.5,
                                       ),
-                                      fillColor: Colors.white,
-                                      elevation: 2,
-                                      borderColor: const Color(0xFF221573),
-                                      borderWidth: 2,
-                                      borderRadius: 8,
-                                      margin:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              12, 4, 12, 4),
-                                      hidesUnderline: true,
+                                      borderRadius: BorderRadius.circular(12),
                                     ),
-                                  );
-                                },
-                                validator: (val) {
-                                  if (ambito == "" || ambito.isEmpty) {
-                                    return 'Para continuar, seleccione un ámbito.';
-                                  }
-                                  return null;
-                                },
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: AppTheme.of(context).primaryText,
+                                        width: 1.5,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    filled: true,
+                                    fillColor: const Color(0x49FFFFFF),
+                                  ),
+                                  style: AppTheme.of(context).title3.override(
+                                        fontFamily: 'Poppins',
+                                        color: AppTheme.of(context).primaryText,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                  maxLines: 1,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    5, 0, 5, 0),
+                                child: TextFormField(
+                                  enabled: false,
+                                  readOnly: true,
+                                  initialValue: areaCirculo,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: 'Área del círculo*',
+                                    labelStyle:
+                                        AppTheme.of(context).title3.override(
+                                              fontFamily: 'Montserrat',
+                                              color: AppTheme.of(context)
+                                                  .secondaryText,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                    hintText: 'Área del círculo...',
+                                    hintStyle:
+                                        AppTheme.of(context).title3.override(
+                                              fontFamily: 'Poppins',
+                                              color: AppTheme.of(context)
+                                                  .secondaryText,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: AppTheme.of(context).primaryText,
+                                        width: 1.5,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: AppTheme.of(context).primaryText,
+                                        width: 1.5,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    filled: true,
+                                    fillColor: const Color(0x49FFFFFF),
+                                  ),
+                                  style: AppTheme.of(context).title3.override(
+                                        fontFamily: 'Poppins',
+                                        color: AppTheme.of(context).primaryText,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                  maxLines: 1,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    5, 0, 5, 0),
+                                child: TextFormField(
+                                  enabled: false,
+                                  readOnly: true,
+                                  initialValue: widget.tarea.tarea,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: 'Tarea asignada*',
+                                    labelStyle:
+                                        AppTheme.of(context).title3.override(
+                                              fontFamily: 'Montserrat',
+                                              color: AppTheme.of(context)
+                                                  .secondaryText,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                    hintText: 'Tarea asignada...',
+                                    hintStyle:
+                                        AppTheme.of(context).title3.override(
+                                              fontFamily: 'Poppins',
+                                              color: AppTheme.of(context)
+                                                  .secondaryText,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: AppTheme.of(context).primaryText,
+                                        width: 1.5,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: AppTheme.of(context).primaryText,
+                                        width: 1.5,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    filled: true,
+                                    fillColor: const Color(0x49FFFFFF),
+                                  ),
+                                  style: AppTheme.of(context).title3.override(
+                                        fontFamily: 'Poppins',
+                                        color: AppTheme.of(context).primaryText,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                  maxLines: 1,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    5, 0, 5, 10),
+                                child: TextFormField(
+                                  textCapitalization:
+                                      TextCapitalization.sentences,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  onChanged: (value) {
+                                    consultoriaProvider.observacion = value;
+                                  },
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: 'Avance observado*',
+                                    labelStyle:
+                                        AppTheme.of(context).title3.override(
+                                              fontFamily: 'Montserrat',
+                                              color: AppTheme.of(context)
+                                                  .secondaryText,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                    hintText: 'Avance observado...',
+                                    hintStyle:
+                                        AppTheme.of(context).title3.override(
+                                              fontFamily: 'Poppins',
+                                              color: AppTheme.of(context)
+                                                  .secondaryText,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: AppTheme.of(context).primaryText,
+                                        width: 1.5,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: AppTheme.of(context).primaryText,
+                                        width: 1.5,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    filled: true,
+                                    fillColor: const Color(0x49FFFFFF),
+                                  ),
+                                  style: AppTheme.of(context).title3.override(
+                                        fontFamily: 'Poppins',
+                                        color: AppTheme.of(context).primaryText,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                  maxLines: 2,
+                                  validator: (value) {
+                                    return capitalizadoCharacters
+                                            .hasMatch(value ?? '')
+                                        ? null
+                                        : 'Para continuar, ingrese el avance observado empezando por mayúscula';
+                                  },
+                                ),
                               ),
                               FormField(
                                 builder: (state) {
@@ -323,18 +485,9 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                         const EdgeInsetsDirectional.fromSTEB(
                                             5, 0, 5, 10),
                                     child: DropDown(
-                                      initialOption: areaCirculo,
-                                      options: listAreaCirculo,
+                                      options: const ["1", "2", "3"],
                                       onChanged: (val) => setState(() {
-                                        if (listAreaCirculo.isEmpty) {
-                                          snackbarKey.currentState
-                                              ?.showSnackBar(const SnackBar(
-                                            content: Text(
-                                                "Debes descargar los catálogos desde la sección de tu perfil"),
-                                          ));
-                                        } else {
-                                          areaCirculo = val!;
-                                        }
+                                        consultoriaProvider.porcentaje = val!;
                                       }),
                                       width: double.infinity,
                                       height: 50,
@@ -345,7 +498,7 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.normal,
                                               ),
-                                      hintText: 'Área del círculo*',
+                                      hintText: 'Porcentaje de avance*',
                                       icon: const Icon(
                                         Icons.keyboard_arrow_down_rounded,
                                         color: Color(0xFF221573),
@@ -364,12 +517,148 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                   );
                                 },
                                 validator: (val) {
-                                  if (areaCirculo == "" ||
-                                      areaCirculo.isEmpty) {
-                                    return 'Para continuar, seleccione un área del círculo.';
+                                  if (consultoriaProvider.porcentaje == "" ||
+                                      consultoriaProvider.porcentaje.isEmpty) {
+                                    return 'Para continuar, seleccione un porcentaje de avance.';
                                   }
                                   return null;
                                 },
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    5, 0, 5, 10),
+                                child: TextFormField(
+                                  textCapitalization:
+                                      TextCapitalization.sentences,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  onChanged: (value) {
+                                    consultoriaProvider.tarea = value;
+                                  },
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: 'Siguientes pasos',
+                                    labelStyle:
+                                        AppTheme.of(context).title3.override(
+                                              fontFamily: 'Montserrat',
+                                              color: AppTheme.of(context)
+                                                  .secondaryText,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                    hintText: 'Siguientes pasos..',
+                                    hintStyle:
+                                        AppTheme.of(context).title3.override(
+                                              fontFamily: 'Poppins',
+                                              color: AppTheme.of(context)
+                                                  .secondaryText,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: AppTheme.of(context).primaryText,
+                                        width: 1.5,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: AppTheme.of(context).primaryText,
+                                        width: 1.5,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    filled: true,
+                                    fillColor: const Color(0x49FFFFFF),
+                                  ),
+                                  style: AppTheme.of(context).title3.override(
+                                        fontFamily: 'Poppins',
+                                        color: AppTheme.of(context).primaryText,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                  maxLines: 2,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    5, 0, 5, 10),
+                                child: TextFormField(
+                                    controller: fechaRevision,
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    onTap: () async {
+                                      await DatePicker.showDatePicker(
+                                        context,
+                                        showTitleActions: true,
+                                        onConfirm: (date) {
+                                          setState(() {
+                                            consultoriaProvider.fechaRevision =
+                                                date;
+                                            fechaRevision.text =
+                                                dateTimeFormat('yMMMd', date);
+                                          });
+                                        },
+                                        currentTime: getCurrentTimestamp,
+                                        // minTime: getCurrentTimestamp,
+                                      );
+                                    },
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      labelText: 'Fecha de revisión*',
+                                      labelStyle:
+                                          AppTheme.of(context).title3.override(
+                                                fontFamily: 'Montserrat',
+                                                color: AppTheme.of(context)
+                                                    .secondaryText,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                      hintText: 'Ingresa fecha de revisión...',
+                                      hintStyle:
+                                          AppTheme.of(context).title3.override(
+                                                fontFamily: 'Poppins',
+                                                color: AppTheme.of(context)
+                                                    .secondaryText,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color:
+                                              AppTheme.of(context).primaryText,
+                                          width: 1.5,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color:
+                                              AppTheme.of(context).primaryText,
+                                          width: 1.5,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      filled: true,
+                                      fillColor: const Color(0x49FFFFFF),
+                                    ),
+                                    keyboardType: TextInputType.none,
+                                    showCursor: false,
+                                    style: AppTheme.of(context).title3.override(
+                                          fontFamily: 'Poppins',
+                                          color:
+                                              AppTheme.of(context).primaryText,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Para continuar, ingrese la fecha de revisión';
+                                      }
+
+                                      return null;
+                                    }),
                               ),
                             ],
                           ),
@@ -380,32 +669,9 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                           child: FFButtonWidget(
                             onPressed: () async {
                               if (consultoriaProvider.validateForm(formKey)) {
-                                // comunidadProvider.add();
-                                print(
-                                    "Fecha revision ${consultoriaProvider.fechaRevision}");
-                                print("Tarea ${consultoriaProvider.tarea}");
-                                final idAmbito = dataBase.ambitoConsultoriaBox
-                                    .query(AmbitoConsultoria_.nombreAmbito
-                                        .equals(ambito))
-                                    .build()
-                                    .findFirst()
-                                    ?.id;
-                                final idAreaCirculo = dataBase.areaCirculoBox
-                                    .query(AreaCirculo_.nombreArea
-                                        .equals(areaCirculo))
-                                    .build()
-                                    .findFirst()
-                                    ?.id;
-                                if (ambito !=
-                                        widget.consultoria.ambitoConsultoria
-                                            .target!.nombreAmbito ||
-                                    areaCirculo !=
-                                        widget.consultoria.areaCirculo.target!
-                                            .nombreArea) {
                                   consultoriaProvider.updateConsultoria(
                                     widget.consultoria.id,
-                                    idAmbito!,
-                                    idAreaCirculo!,
+                                    widget.tarea.id
                                   );
                                   await Navigator.push(
                                     context,
@@ -414,7 +680,6 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                           const ConsultoriaActualizada(),
                                     ),
                                   );
-                                }
                               } else {
                                 await showDialog(
                                   context: context,

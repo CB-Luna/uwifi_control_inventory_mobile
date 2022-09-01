@@ -5,12 +5,10 @@ import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/util/util.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:bizpro_app/screens/consultorias/agregar_tarea_consultoria_screen.dart';
 import 'package:bizpro_app/screens/consultorias/editar_consultoria_screen.dart';
-import 'package:bizpro_app/screens/consultorias/editar_tarea_consultoria_screen.dart';
+import 'package:bizpro_app/screens/consultorias/detalle_tarea_consultoria_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_carousel.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 class DetalleConsultoriaScreen extends StatefulWidget {
   final Consultorias consultoria;
@@ -169,7 +167,8 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                               EditarConsultoriaScreen(
                                             consultoria: widget.consultoria,
                                             numConsultoria:
-                                                widget.numConsultoria,
+                                                widget.numConsultoria, 
+                                                tarea: widget.consultoria.tareas.last,
                                           ),
                                         ),
                                       );
@@ -334,7 +333,7 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 5, 0, 0),
                                 child: Text(
-                                  'Fecha de registro',
+                                  'Próxima visita',
                                   style:
                                       AppTheme.of(context).bodyText1.override(
                                             fontFamily: AppTheme.of(context)
@@ -348,7 +347,7 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                     0, 5, 0, 5),
                                 child: AutoSizeText(
                                   dateTimeFormat('dd/MM/yyyy',
-                                      widget.consultoria.fechaRegistro),
+                                      widget.consultoria.tareas.last.fechaRevision),
                                   textAlign: TextAlign.start,
                                   maxLines: 1,
                                   style:
@@ -360,54 +359,8 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                           ),
                                 ),
                               ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 16, 0),
-                                    child: FFButtonWidget(
-                                      onPressed: () async {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                AgregarTareaConsultoriaScreen(
-                                              consultoria: widget.consultoria,
-                                              numConsultoria:
-                                                  widget.numConsultoria,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      text: '+ Tarea',
-                                      options: FFButtonOptions(
-                                        width: 100,
-                                        height: 40,
-                                        color:
-                                            AppTheme.of(context).secondaryText,
-                                        textStyle: AppTheme.of(context)
-                                            .subtitle2
-                                            .override(
-                                              fontFamily: AppTheme.of(context)
-                                                  .subtitle2Family,
-                                              color: Colors.white,
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                        borderSide: const BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
                               ListView.builder(
+                                reverse: true,
                                 padding: EdgeInsets.zero,
                                 primary: false,
                                 shrinkWrap: true,
@@ -424,10 +377,9 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                EditarTareaConsultoriaScreen(
+                                                DetalleTareaConsultoriaScreen(
                                               consultoria: widget.consultoria,
                                               tarea: tareas[index],
-                                              numTarea: index + 1,
                                             ),
                                           ),
                                         );
