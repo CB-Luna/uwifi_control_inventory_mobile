@@ -637,7 +637,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                           size: 15,
                                         ),
                                         options: FFButtonOptions(
-                                          width: 140,
+                                          width: 160,
                                           height: 40,
                                           color: AppTheme.of(context)
                                               .secondaryText,

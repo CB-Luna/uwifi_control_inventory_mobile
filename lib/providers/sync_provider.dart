@@ -591,29 +591,27 @@ class SyncProvider extends ChangeNotifier {
 
   Future<bool?> syncAddConsultoria(Consultorias consultoria) async {
     print("Estoy en syncAddConsultoria");
-    List<String> listIdTareas = [];
-    final tareasToSync = consultoria.tareas.toList();
+    final tareaToSync = consultoria.tareas.last;
     try {
     //Primero creamos las tareas asociadas a la consultoria
-    for (var i = 0; i < tareasToSync.length; i++) {
       print("Datos");
-      print(tareasToSync[i].tarea);
-      print(tareasToSync[i].descripcion);
-      print(tareasToSync[i].fechaRevision.toUtc().toString());
-      print(tareasToSync[i].observacion);
-      print(tareasToSync[i].porcentaje.toString());
+      print(tareaToSync.tarea);
+      print(tareaToSync.descripcion);
+      print(tareaToSync.fechaRevision.toUtc().toString());
+      print(tareaToSync.observacion);
+      print(tareaToSync.porcentaje.toString());
       final recordTarea = await client.records.create('tareas', body: {
-        "tarea": tareasToSync[i].tarea,
-        "descripcion": tareasToSync[i].descripcion,
-        "observacion": tareasToSync[i].observacion,
-        "porcentaje": tareasToSync[i].porcentaje,
-        "fecha_revision": tareasToSync[i].fechaRevision.toUtc().toString(),
+        "tarea": tareaToSync.tarea,
+        "descripcion": tareaToSync.descripcion,
+        "observacion": tareaToSync.observacion,
+        "porcentaje": tareaToSync.porcentaje,
+        "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
         "id_status_sync_fk": "HoI36PzYw1wtbO1"
       });
       if (recordTarea.id.isNotEmpty) {
       //Se actualiza el estado de la tarea
       String idDBRTarea = recordTarea.id;
-      final statusSyncTarea = dataBase.statusSyncBox.query(StatusSync_.id.equals(tareasToSync[i].statusSync.target!.id)).build().findUnique();
+      final statusSyncTarea = dataBase.statusSyncBox.query(StatusSync_.id.equals(tareaToSync.statusSync.target!.id)).build().findUnique();
       if (statusSyncTarea != null) {
         statusSyncTarea.status = "HoI36PzYw1wtbO1";
         dataBase.statusSyncBox.put(statusSyncTarea);
@@ -622,14 +620,13 @@ class SyncProvider extends ChangeNotifier {
         print("Actualizacion de estado de la Tarea");
       }
       //Se recupera el idDBR de la tarea
-      final updateTarea = dataBase.tareasBox.query(Tareas_.id.equals(tareasToSync[i].id)).build().findUnique();
+      final updateTarea = dataBase.tareasBox.query(Tareas_.id.equals(tareaToSync.id)).build().findUnique();
       if (updateTarea != null) {
         updateTarea.idDBR = idDBRTarea;
         dataBase.tareasBox.put(updateTarea);
         print("Se recupera el idDBR de la Tarea");
       }
       }
-      listIdTareas.add(recordTarea.id);
 
       //Segundo actualizamos el ambito de la consultoria
       //   final record = await client.records.update('emprendimientos', consultoria.idDBR.toString(), body: {
@@ -647,11 +644,10 @@ class SyncProvider extends ChangeNotifier {
       //   }
       // }
       // }
-    }
     //Tercero creamos la consultoria
     final recordConsultoria = await client.records.create('consultorias', body: {
       "id_emprendimiento_fk": consultoria.emprendimiento.target!.idDBR,
-      "id_tarea_fk": jsonEncode(listIdTareas),
+      "id_tarea_fk": recordTarea.id,
       "id_status_sync_fk": "HoI36PzYw1wtbO1",
     });
 
@@ -1211,19 +1207,19 @@ return true;
         // }); 
 
         // if (recordConsultoria.id.isNotEmpty) {
-          print("Consultoria updated succesfully");
-          var updateConsultoria = dataBase.consultoriasBox.get(consultoria.id);
-          if (updateConsultoria != null) {
-            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateConsultoria.statusSync.target!.id)).build().findUnique();
-            if (statusSync != null) {
-              statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado de la consultoria
-              dataBase.statusSyncBox.put(statusSync);
-            }
-          // }
-        }
-        else{
-          return false;
-        }
+        //   print("Consultoria updated succesfully");
+        //   var updateConsultoria = dataBase.consultoriasBox.get(consultoria.id);
+        //   if (updateConsultoria != null) {
+        //     final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateConsultoria.statusSync.target!.id)).build().findUnique();
+        //     if (statusSync != null) {
+        //       statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado de la consultoria
+        //       dataBase.statusSyncBox.put(statusSync);
+        //     }
+        //   // }
+        // }
+        // else{
+        //   return false;
+        // }
       return true;
 
     } catch (e) {
