@@ -16,6 +16,7 @@ class ConsultoriaController extends ChangeNotifier {
   String descripcion = "";
   String avanceObservado = "";
   String porcentaje = "";
+  String imagen = "";
   bool activo = true;
 
   bool validateForm(GlobalKey<FormState> consultoriaKey) {
@@ -32,6 +33,7 @@ class ConsultoriaController extends ChangeNotifier {
     porcentaje = "";
     fechaRevision =  null;
     activo = true;
+    imagen = "";
     notifyListeners();
   }
 
@@ -43,6 +45,9 @@ class ConsultoriaController extends ChangeNotifier {
     observacion: "Se crea consultoría",
     porcentaje: 1,
     fechaRevision: fechaRevision!);
+    //Se agrega la imagen a la Tarea
+    final nuevaImagenTarea = Imagenes(imagenes: imagen); //Se crea el objeto imagenes para la Tarea
+    nuevaTarea.imagenes.add(nuevaImagenTarea);
     final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
     nuevaTarea.statusSync.target = nuevoSyncTarea;
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
@@ -79,6 +84,9 @@ class ConsultoriaController extends ChangeNotifier {
       porcentaje: int.parse(porcentaje),
       activo: activo,
       fechaRevision: fechaRevision!);
+      //Se agrega la imagen a la Tarea
+      final nuevaImagenTarea = Imagenes(imagenes: imagen); //Se crea el objeto imagenes para la Tarea
+      nuevaTarea.imagenes.add(nuevaImagenTarea);
       var updateConsultoria = dataBase.consultoriasBox.get(id);
       if (updateConsultoria !=  null) {
         //Se agrega la nueva tarea

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -8,7 +9,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bizpro_app/screens/consultorias/editar_consultoria_screen.dart';
 import 'package:bizpro_app/screens/consultorias/detalle_tarea_consultoria_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_carousel.dart';
 
 class DetalleConsultoriaScreen extends StatefulWidget {
   final Consultorias consultoria;
@@ -46,7 +46,6 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
     ),
   };
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   void initState() {
     super.initState();
@@ -475,21 +474,50 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                                               0.4,
                                                       height: 100,
                                                       decoration: BoxDecoration(
-                                                        color: const Color(
-                                                            0xFFEEEEEE),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5),
+                                                        color: const Color(0x554672FF),
+                                                        borderRadius: BorderRadius.circular(8),
+                                                        border: Border.all(
+                                                          width: 1.5,           
+                                                        ),
                                                       ),
-                                                      child: const SizedBox(
-                                                        width: 180,
-                                                        height: 100,
-                                                        child:
-                                                            FlutterFlowCarousel(
-                                                          width: 180,
-                                                          height: 100,
-                                                          listaImagenes:
-                                                              [],
+                                                      child: InkWell(
+                                                        onTap: () async {
+                                                          if (tareas[index].imagenes.last.imagenes != "") {
+                                                            await Navigator.push(
+                                                            context,
+                                                            PageTransition(
+                                                              type: PageTransitionType.fade,
+                                                              child:
+                                                                  FlutterFlowExpandedImageView(
+                                                                image: Image.file(
+                                                                  File(tareas[index].imagenes.last.imagenes),
+                                                                  fit: BoxFit.contain,
+                                                                ),
+                                                                allowRotation: false,
+                                                                tag: tareas[index].imagenes.last.imagenes,
+                                                                useHeroAnimation: true,
+                                                              ),
+                                                            ),
+                                                          );
+                                                          }
+                                                        },
+                                                        child: tareas[index].imagenes.last.imagenes == "" ?
+                                                        null
+                                                        :
+                                                        Hero(
+                                                          tag: tareas[index].imagenes.last.imagenes,
+                                                          transitionOnUserGestures: true,
+                                                          child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius.circular(8),
+                                                            child: 
+                                                             Image.file(
+                                                              File(tareas[index].imagenes.last.imagenes),
+                                                              width: 170,
+                                                              height: 120,
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          ),
                                                         ),
                                                       ),
                                                     ),

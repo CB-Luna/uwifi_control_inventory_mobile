@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -446,6 +447,46 @@ class _DetalleTareaConsultoriaScreenState
                                           fontWeight: FontWeight.normal,
                                         ),
                                   ),
+                              ),
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional
+                                        .fromSTEB(20, 5, 0, 10),
+                                    child: Text(
+                                      "Imagen",
+                                      style:  AppTheme.of(context).title3.override(
+                                              fontFamily: 'Montserrat',
+                                              color: AppTheme.of(context)
+                                                  .secondaryText,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 0, 5),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          child: getImageTareaConsultoria(
+                                            widget.tarea.imagenes.last.imagenes,
+                                            height: 200,
+                                            width: 250
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                               // Padding(
                               //   padding: const EdgeInsetsDirectional.fromSTEB(

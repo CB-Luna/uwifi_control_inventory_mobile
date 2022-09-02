@@ -21,6 +21,25 @@ Widget? getImage(String? image, {double height = 180}) {
   );
 }
 
+Widget? getImageTareaConsultoria(String? image, {double height = 180, double width = 180}) {
+  if (image == null || image == '') {
+    return null;
+  } else if (image.startsWith('http') || image.startsWith('https')) {
+    return FadeInImage(
+      height: height,
+      width: width,
+      placeholder: const AssetImage('assets/images/animation_500_l3ur8tqa.gif'),
+      image: NetworkImage(image),
+      fit: BoxFit.cover,
+    );
+  }
+  return Image.file(
+    File(image),
+    height: height,
+    width: width,
+    fit: BoxFit.cover,
+  );
+}
 
 Widget? getImageProductoEmprendedor(String? image, {double height = 180, double width = 180}) {
   if (image == null || image == '') {

@@ -1,7 +1,10 @@
 import 'dart:io';
 import 'package:bizpro_app/screens/jornadas/registros/editar_registro_jornada.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_imagenes_completas.dart';
+import 'package:bizpro_app/screens/widgets/bottom_sheet_validacion_eliminar_imagen.dart';
+import 'package:bizpro_app/screens/widgets/custom_bottom_eliminar_imagen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_carousel.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -553,11 +556,60 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                               child: SizedBox(
                                                   width: 180,
                                                   height: 100,
-                                                  child: FlutterFlowCarousel(
-                                                      width: 180,
-                                                      height: 100,
-                                                      listaImagenes: newAnalisisFinanciero
-                                                      )
+                                                  child: CarouselSlider(
+                                                    options: CarouselOptions(height: 400.0),
+                                                    items: newAnalisisFinanciero.map((i) {
+                                                      return Builder(
+                                                        builder: (BuildContext context) {
+                                                          return InkWell(
+                                                            onTap: () async {
+                                                              String? option =
+                                                                  await showModalBottomSheet(
+                                                                context: context,
+                                                                builder: (_) =>
+                                                                    const CustomBottomEliminarImagen(),
+                                                              );
+                                                              if (option == 'eliminar') {
+                                                                print("Eliminar a ${File(i)}");
+                                                                var booleano = await showModalBottomSheet(
+                                                                  isScrollControlled: true,
+                                                                  backgroundColor: Colors.transparent,
+                                                                  context: context,
+                                                                  builder: (context) {
+                                                                    return Padding(
+                                                                      padding: MediaQuery.of(context).viewInsets,
+                                                                      child: SizedBox(
+                                                                        height:
+                                                                            MediaQuery.of(context).size.height * 0.45,
+                                                                        child: BottomSheetValidacionEliminarImagen(imagen: i,),
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                );
+                                                                if (booleano) {
+                                                                  print("Se elimina IMAGEN");
+                                                                    newAnalisisFinanciero.remove(i);
+                                                                }
+
+                                                              } else { //Se aborta la opción
+                                                                return;
+                                                              }
+                                                              setState(() {
+                                                              });
+                                                            },
+                                                            child: Container(
+                                                                width: MediaQuery.of(context).size.width,
+                                                                margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                                                                child: Image.file(
+                                                                    File(i),
+                                                                    fit: BoxFit.cover,
+                                                                  ),
+                                                            ),
+                                                          );
+                                                        },
+                                                      );
+                                                      }).toList(),
+                                                    ),
                                                     ),
                                             ),
                                             Padding(

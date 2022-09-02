@@ -231,6 +231,106 @@ class _DetalleEmprendimientoScreenState
                               ),
                             ),
                           ),
+                          Positioned.fill(
+                            top: 150,
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Material(
+                                color: Colors.transparent,
+                                elevation: 10,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width * 0.6,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xCF4672FF),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                            },
+                                            child: const FaIcon(
+                                              Icons.pause_circle_outline,
+                                              color: Colors.white,
+                                              size: 24,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Detener',
+                                            style:
+                                                AppTheme.of(context).bodyText1.override(
+                                                      fontFamily: 'Poppins',
+                                                      color: Colors.white,
+                                                      fontSize: 8,
+                                                    ),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          InkWell(
+                                            onTap: ()  {
+                            
+                                            },
+                                            child: const Icon(
+                                              Icons.play_circle_outline,
+                                              color: Colors.white,
+                                              size: 24,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Reactivar',
+                                            style:
+                                                AppTheme.of(context).bodyText1.override(
+                                                      fontFamily: 'Poppins',
+                                                      color: Colors.white,
+                                                      fontSize: 8,
+                                                    ),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                            },
+                                            child: const FaIcon(
+                                              Icons.file_download_outlined,
+                                              color: Colors.white,
+                                              size: 24,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Archivar',
+                                            style:
+                                                AppTheme.of(context).bodyText1.override(
+                                                      fontFamily: 'Poppins',
+                                                      color: Colors.white,
+                                                      fontSize: 8,
+                                                    ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                       //Detalles de emprendimiento

@@ -1,5 +1,8 @@
 import 'dart:io';
+import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
+import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -37,6 +40,7 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
   String areaCirculo = "";
   String porcentajeAvance = "";
   String emprendedor = "";
+  XFile? image;
 
   @override
   void initState() {
@@ -659,6 +663,136 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
 
                                       return null;
                                     }),
+                              ),
+                              FormField(builder: (state){
+                                return Padding(
+                                  padding:
+                                      const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          color: AppTheme.of(context)
+                                              .primaryText,
+                                          borderRadius: BorderRadius.circular(8),
+                                          border: Border.all(
+                                            width: 1.5,
+                                          ),
+                                        ),
+                                        child: InkWell(
+                                          onTap: () async {
+                                            await Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                type: PageTransitionType.fade,
+                                                child:
+                                                    FlutterFlowExpandedImageView(
+                                                  image: image == null ? Image.network(
+                                                    'https://picsum.photos/seed/836/600',
+                                                    fit: BoxFit.contain,
+                                                  ) 
+                                                  :
+                                                  Image.file(
+                                                    File(image!.path),
+                                                    fit: BoxFit.contain,
+                                                  ),
+                                                  allowRotation: false,
+                                                  tag: 'imagen',
+                                                  useHeroAnimation: true,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          child: Hero(
+                                            tag: 'imagen',
+                                            transitionOnUserGestures: true,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              child: image == null ?Image.network(
+                                                'https://picsum.photos/seed/836/600',
+                                                width: 170,
+                                                height: 120,
+                                                fit: BoxFit.cover,
+                                              )
+                                              :
+                                              Image.file(
+                                                File(image!.path),
+                                                width: 170,
+                                                height: 120,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      FFButtonWidget(
+                                        onPressed: () async {
+                                          String? option = await showModalBottomSheet(
+                                              context: context,
+                                              builder: (_) => const CustomBottomSheet(),
+                                            );
+                                
+                                            if (option == null) return;
+                                
+                                            final picker = ImagePicker();
+                                
+                                            late final XFile? pickedFile;
+                                
+                                            if (option == 'camera') {
+                                              pickedFile = await picker.pickImage(
+                                                source: ImageSource.camera,
+                                                imageQuality: 100,
+                                              );
+                                            } else {
+                                              pickedFile = await picker.pickImage(
+                                                source: ImageSource.gallery,
+                                                imageQuality: 100,
+                                              );
+                                            }
+                                
+                                            if (pickedFile == null) {
+                                              return;
+                                            }
+                                
+                                            setState(() {
+                                              image = pickedFile;
+                                              consultoriaProvider.imagen = image!.path;
+                                            });
+                                        },
+                                        text: 'Imagen',
+                                        icon: const Icon(
+                                          Icons.add_a_photo,
+                                          size: 15,
+                                        ),
+                                        options: FFButtonOptions(
+                                          width: 140,
+                                          height: 40,
+                                          color: AppTheme.of(context)
+                                              .secondaryText,
+                                          textStyle: AppTheme.of(context)
+                                              .subtitle2
+                                              .override(
+                                                fontFamily:
+                                                    AppTheme.of(context)
+                                                        .subtitle2Family,
+                                                color: Colors.white,
+                                                fontSize: 15,
+                                              ),
+                                          borderSide: const BorderSide(
+                                            color: Colors.transparent,
+                                            width: 1,
+                                          ),
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
                               ),
                             ],
                           ),
