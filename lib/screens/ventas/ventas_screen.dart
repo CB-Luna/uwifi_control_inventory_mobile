@@ -1,3 +1,5 @@
+import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
+import 'package:bizpro_app/screens/ventas/editar_venta.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:provider/provider.dart';
@@ -57,7 +59,7 @@ class _VentasScreenState extends State<VentasScreen> {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            AgregarVentaScreen(emprendimiento: widget.emprendimiento,),
+                            AgregarVentaScreen(idEmprendimiento: widget.emprendimiento.id,),
                       ),
                     );
                 },
@@ -113,7 +115,15 @@ class _VentasScreenState extends State<VentasScreen> {
                                     ),
                                     child: InkWell(
                                       onTap: () async {
-                                        Navigator.pop(context);
+                                        await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DetalleEmprendimientoScreen(
+                                                    emprendimiento: widget.emprendimiento,
+                                                    ),
+                                            ),
+                                          );
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -421,15 +431,13 @@ class _VentasScreenState extends State<VentasScreen> {
                                           widget.ventas[resultadoIndex];
                                       return InkWell(
                                         onTap: () async {
-                                          //  await Navigator.push(
-                                          //         context,
-                                          //         MaterialPageRoute(
-                                          //           builder: (context) =>
-                                          //               DetalleProductoEmprendedor(
-                                          //             productoEmprendedor: productoEmprendedor,
-                                          //           ),
-                                          //         ),
-                                          //       );
+                                          await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    EditarVentaScreen(venta: venta,),
+                                              ),
+                                            );
                                         },
                                         child: Padding(
                                           padding: const EdgeInsetsDirectional.fromSTEB(
@@ -448,154 +456,143 @@ class _VentasScreenState extends State<VentasScreen> {
                                               ],
                                               borderRadius: BorderRadius.circular(8),
                                             ),
-                                            child: InkWell(
-                                              onTap: () async {
-                                                // await Navigator.push(
-                                                //   context,
-                                                //   MaterialPageRoute(
-                                                //     builder: (context) =>
-                                                //         DetalleVentaWidget(),
-                                                //   ),
-                                                // );
-                                              },
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsetsDirectional
-                                                        .fromSTEB(10, 0, 0, 0),
-                                                    child: Column(
-                                                      mainAxisSize: MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.center,
-                                                      children: [
-                                                        ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                  12),
-                                                          child: SizedBox(
-                                                            height: 80,
-                                                            width: 120,
-                                                            child: getWidgetImage(
-                                                              widget.emprendimiento.imagen
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(10, 0, 0, 0),
+                                                  child: Column(
+                                                    mainAxisSize: MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.center,
+                                                    children: [
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                12),
+                                                        child: SizedBox(
+                                                          height: 80,
+                                                          width: 120,
+                                                          child: getWidgetImage(
+                                                            widget.emprendimiento.imagen
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: Column(
+                                                    mainAxisSize: MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.center,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    5, 0, 5, 5),
+                                                        child: Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceAround,
+                                                          children: [
+                                                            Container(
+                                                              width: 30,
+                                                              height: 30,
+                                                              clipBehavior:
+                                                                  Clip.antiAlias,
+                                                              decoration:
+                                                                  const BoxDecoration(
+                                                                shape:
+                                                                    BoxShape.circle,
+                                                              ),
+                                                              child: getWidgetImageEmprendedor(
+                                                                widget.emprendimiento.
+                                                                  emprendedor.target!.imagen,
+                                                                30,
+                                                                30),
                                                             ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Column(
-                                                      mainAxisSize: MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.center,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      5, 0, 5, 5),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize.max,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceAround,
-                                                            children: [
-                                                              Container(
-                                                                width: 30,
-                                                                height: 30,
-                                                                clipBehavior:
-                                                                    Clip.antiAlias,
-                                                                decoration:
-                                                                    const BoxDecoration(
-                                                                  shape:
-                                                                      BoxShape.circle,
-                                                                ),
-                                                                child: getWidgetImageEmprendedor(
-                                                                  widget.emprendimiento.
-                                                                    emprendedor.target!.imagen,
-                                                                  30,
-                                                                  30),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                      .fromSTEB(5,
+                                                                          0, 0, 0),
+                                                              child: Text(
+                                                                emprendedor,
+                                                                style: AppTheme
+                                                                        .of(context)
+                                                                    .bodyText1,
                                                               ),
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(5,
-                                                                            0, 0, 0),
-                                                                child: Text(
-                                                                  emprendedor,
-                                                                  style: AppTheme
-                                                                          .of(context)
-                                                                      .bodyText1,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
+                                                            ),
+                                                          ],
                                                         ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      5, 0, 5, 0),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize.max,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Row(
-                                                                mainAxisSize:
-                                                                    MainAxisSize.max,
-                                                                children: [
-                                                                  Padding(
-                                                                    padding:
-                                                                        const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                                5,
-                                                                                0,
-                                                                                0,
-                                                                                0),
-                                                                    child: Text(
-                                                                      'Total\nVenta',
-                                                                      style: AppTheme.of(
-                                                                              context)
-                                                                          .bodyText1,
-                                                                    ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    5, 0, 5, 0),
+                                                        child: Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize.max,
+                                                              children: [
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                              5,
+                                                                              0,
+                                                                              0,
+                                                                              0),
+                                                                  child: Text(
+                                                                    'Total\nVenta',
+                                                                    style: AppTheme.of(
+                                                                            context)
+                                                                        .bodyText1,
                                                                   ),
-                                                                  Padding(
-                                                                    padding:
-                                                                        const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                                10,
-                                                                                0,
-                                                                                0,
-                                                                                0),
-                                                                    child: Text(
-                                                                      '\$${venta.total.toStringAsFixed(2)}',
-                                                                      style: AppTheme.of(
-                                                                              context)
-                                                                          .bodyText1
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                AppTheme.of(context)
-                                                                                    .bodyText1Family,
-                                                                            fontSize:
-                                                                                20,
-                                                                          ),
-                                                                    ),
+                                                                ),
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                              10,
+                                                                              0,
+                                                                              0,
+                                                                              0),
+                                                                  child: Text(
+                                                                    '\$${venta.total.toStringAsFixed(2)}',
+                                                                    style: AppTheme.of(
+                                                                            context)
+                                                                        .bodyText1
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              AppTheme.of(context)
+                                                                                  .bodyText1Family,
+                                                                          fontSize:
+                                                                              20,
+                                                                        ),
                                                                   ),
-                                                                ],
-                                                              ),
-                                                            ],
-                                                          ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ],
                                                         ),
-                                                      ],
-                                                    ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                ],
-                                              ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),

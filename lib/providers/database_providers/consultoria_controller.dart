@@ -52,6 +52,11 @@ class ConsultoriaController extends ChangeNotifier {
     nuevaTarea.statusSync.target = nuevoSyncTarea;
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Consultoría")).build().findFirst();
+    if (faseEmp != null) {
+      print("Fase: ${faseEmp.fase}");
+    } else {
+      print("Hay error en esta fase"); 
+    }
     //Se recupera el ambito y el area del circulo
     final ambito = dataBase.ambitoConsultoriaBox.get(idAmbito);
     final areaCirculo = dataBase.areaCirculoBox.get(idAreaCirculo);
@@ -59,9 +64,6 @@ class ConsultoriaController extends ChangeNotifier {
       final nuevoSyncConsultoria = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Consultoria
       final nuevaInstruccion = Bitacora(instrucciones: 'syncAddConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       nuevaConsultoria.statusSync.target = nuevoSyncConsultoria;
-      //Se actualiza la fase del Emprendimiento
-      //TODO actualizar en el backend.
-      emprendimiento.faseEmp.add(faseEmp);
       //Se asigna un ambito y un area del circulo a la nuevaConsultoria
       nuevaConsultoria.ambitoConsultoria.target = ambito;
       nuevaConsultoria.areaCirculo.target = areaCirculo;
@@ -70,6 +72,10 @@ class ConsultoriaController extends ChangeNotifier {
       nuevaConsultoria.bitacora.add(nuevaInstruccion);
       //Indispensable para que se muestre en la lista de consultorias
       emprendimiento.consultorias.add(nuevaConsultoria);
+      //Se actualiza la fase del Emprendimiento
+      //TODO actualizar en el backend.
+      emprendimiento.faseEmp.add(faseEmp);
+      emprendimiento.faseEmp.toList().forEach((element) {print(element.fase);});
       dataBase.emprendimientosBox.put(emprendimiento);
       consultorias.add(nuevaConsultoria);
       print('Consultoria agregada exitosamente');

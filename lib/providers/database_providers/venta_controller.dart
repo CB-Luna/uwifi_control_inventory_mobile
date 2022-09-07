@@ -53,56 +53,24 @@ class VentaController extends ChangeNotifier {
     return idVenta;
   }
 
-  // void add(int idEmprendimiento) {
-  //   if (fechaInicio != null && fechaTermino != null) {
-  //     final nuevaVenta = Ventas(
-  //     fechaInicio: fechaInicio!,
-  //     fechaTermino: fechaTermino!,
-  //     total: double.parse(total),
-  //   );
-  //   final nuevoSyncVenta = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Venta
-  //   final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
-  //   if (emprendimiento != null) {
-  //     final nuevaInstruccion = Bitacora(instrucciones: 'syncAddVenta', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-  //     nuevaVenta.statusSync.target = nuevoSyncVenta;
-  //     nuevaVenta.emprendimiento.target = emprendimiento;
-  //     nuevaVenta.bitacora.add(nuevaInstruccion);
-  //     //Indispensable para que se muestre en la lista de jornadas
-  //     emprendimiento.ventas.add(nuevaVenta);
-  //     dataBase.emprendimientosBox.put(emprendimiento);
-  //     print('Venta agregada exitosamente');
-  //     clearInformation(); //Se limpia información para usar el mismo controller en otro registro
-  //     notifyListeners();
-  //   }      
-  //   }
-  // }
 
-
-void update(int id, String newProducto, String? newMarcaSugerida, String newDescripcion, 
-    String? newProveedor, String? newCostoEstimado, String newCantidad, int newIdFamiliaProd, 
-    int newIdUnidadMedida) {
-    var updateProdSolicitado = dataBase.productosSolicitadosBox.get(id);
-    final updateFamiliaProd = dataBase.familiaProductosBox.get(newIdFamiliaProd);
-    final updateUnidadMedida = dataBase.unidadesMedidaBox.get(newIdUnidadMedida);
-    if (updateProdSolicitado !=  null && updateFamiliaProd != null && updateUnidadMedida != null) {
-      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateProductoSolicitado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-      updateProdSolicitado.producto = newProducto;
-      updateProdSolicitado.marcaSugerida = newMarcaSugerida;
-      updateProdSolicitado.proveedorSugerido =  newProveedor;
-      updateProdSolicitado.costoEstimado = newCostoEstimado == null ? null : double.parse(newCostoEstimado);
-      updateProdSolicitado.cantidad = int.parse(newCantidad);
-      updateProdSolicitado.familiaProducto.target = updateFamiliaProd;
-      updateProdSolicitado.unidadMedida.target = updateUnidadMedida;
-      final statusSyncJornada = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateProdSolicitado.statusSync.target!.id)).build().findUnique();
-      if (statusSyncJornada != null) {
-        statusSyncJornada.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del prod Solicitado
-        dataBase.statusSyncBox.put(statusSyncJornada);
+void update(int id, DateTime newFechaInicio, DateTime newFechaTermino, double newTotal) {
+    var updateVenta = dataBase.ventasBox.get(id);
+    if (updateVenta !=  null) {
+      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateVenta', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      updateVenta.fechaInicio = newFechaInicio;
+      updateVenta.fechaTermino = newFechaTermino;
+      updateVenta.total = newTotal;
+      final statusSyncVenta = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateVenta.statusSync.target!.id)).build().findUnique();
+      if (statusSyncVenta != null) {
+        statusSyncVenta.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la venta
+        dataBase.statusSyncBox.put(statusSyncVenta);
       }
-      updateProdSolicitado.bitacora.add(nuevaInstruccion);
-      dataBase.productosSolicitadosBox.put(updateProdSolicitado);
+      updateVenta.bitacora.add(nuevaInstruccion);
+      dataBase.ventasBox.put(updateVenta);
+      notifyListeners();
+      print('Venta actualizada exitosamente');
     }
-    print('Registro actualizado exitosamente');
-    notifyListeners();
 }
   void remove(ProductosEmp productosEmp) {
     dataBase.productosEmpBox.remove(productosEmp.id); //Se elimina de bitacora la instruccion creada anteriormente

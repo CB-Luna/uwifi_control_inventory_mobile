@@ -4,6 +4,7 @@ import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:bizpro_app/providers/database_providers/consultoria_controller.dart';
 import 'package:bizpro_app/screens/consultorias/consultoria_creada.dart';
+import 'package:bizpro_app/screens/ventas/agregar_venta.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -452,8 +453,7 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                                 dateTimeFormat('yMMMd', date);
                                           });
                                         },
-                                        currentTime: getCurrentTimestamp,
-                                        // minTime: getCurrentTimestamp,
+                                        minTime: getCurrentTimestamp,
                                       );
                                     },
                                     obscureText: false,
@@ -538,18 +538,77 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                     .findFirst()
                                     ?.id;
                                 if (idAmbito != null && idAreaCirculo != null) {
-                                  consultoriaProvider.add(
+                                  if (ambito == "Capacidad" && areaCirculo == "Venta") {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (alertDialogContext) {
+                                        return AlertDialog(
+                                          title: const Text('Ventas'),
+                                          content: const Text(
+                                              '¿Deseas agregar ventas?'),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () async {
+                                                Navigator.pop(alertDialogContext);
+                                                if (widget.emprendimiento.productosEmp.isNotEmpty) {
+                                                  consultoriaProvider.add(
+                                                  widget.emprendimiento.id,
+                                                  widget.numConsultoria,
+                                                  idAmbito,
+                                                  idAreaCirculo);
+                                                  await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          AgregarVentaScreen(idEmprendimiento: widget.emprendimiento.id,),
+                                                    ),
+                                                  );
+                                                } else {
+                                                  snackbarKey.currentState
+                                                      ?.showSnackBar(const SnackBar(
+                                                    content: Text(
+                                                        "Para poder registrar una Venta es necesario que primero registres los productos del Emprendedor dentro del módulo 'Productos'"),
+                                                  ));
+                                                }
+                                              },
+                                              child: const Text('Sí'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () async {
+                                                Navigator.pop(alertDialogContext);
+                                                consultoriaProvider.add(
+                                                  widget.emprendimiento.id,
+                                                  widget.numConsultoria,
+                                                  idAmbito,
+                                                  idAreaCirculo);
+                                                await Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const ConsultoriaCreada(),
+                                                  ),
+                                                );
+                                              },
+                                              child: const Text('No'),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  } else {
+                                    consultoriaProvider.add(
                                       widget.emprendimiento.id,
                                       widget.numConsultoria,
                                       idAmbito,
                                       idAreaCirculo);
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ConsultoriaCreada(),
-                                    ),
-                                  );
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ConsultoriaCreada(),
+                                      ),
+                                    );
+                                  }
                                 }
                               } else {
                                 await showDialog(

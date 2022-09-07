@@ -17,6 +17,7 @@ import 'package:bizpro_app/screens/jornadas/agregar_jornada2_screen.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada1_screen.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada3_screen.dart';
 import 'package:bizpro_app/screens/productos/productos_emprendedor_screen.dart';
+import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/inversiones/inversion.dart';
 import 'package:bizpro_app/screens/ventas/ventas_screen.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada4_screen.dart';
@@ -127,7 +128,13 @@ class _DetalleEmprendimientoScreenState
                                   ),
                                   child: InkWell(
                                     onTap: () async {
-                                      Navigator.pop(context);
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const EmprendimientosScreen(),
+                                        ),
+                                      );
                                     },
                                     child: Row(
                                       mainAxisAlignment:

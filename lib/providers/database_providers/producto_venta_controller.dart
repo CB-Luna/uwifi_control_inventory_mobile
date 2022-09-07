@@ -91,6 +91,7 @@ void add(int idEmprendimiento, int idVenta) {
         );
         final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
         final nuevaInstruccion = Bitacora(instrucciones: 'syncAddProductoVenta', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+        nuevoProdVendido.productoEmp.target = productoEmp;
         nuevoProdVendido.statusSync.target = nuevoSync;
         nuevoProdVendido.venta.target = venta;
         nuevoProdVendido.bitacora.add(nuevaInstruccion);
@@ -98,36 +99,53 @@ void add(int idEmprendimiento, int idVenta) {
         dataBase.ventasBox.put(venta);
       }
     }
-    print('Registro agregado exitosamente');
+    print('Productos Vendidos agregados exitosamente');
     clearInformation();
     notifyListeners();
   }
 }
 
-void update(int id, String newProducto, String? newMarcaSugerida, String newDescripcion, 
-    String? newProveedor, String? newCostoEstimado, String newCantidad, int newIdFamiliaProd, 
-    int newIdUnidadMedida) {
-    var updateProdSolicitado = dataBase.productosSolicitadosBox.get(id);
-    final updateFamiliaProd = dataBase.familiaProductosBox.get(newIdFamiliaProd);
-    final updateUnidadMedida = dataBase.unidadesMedidaBox.get(newIdUnidadMedida);
-    if (updateProdSolicitado !=  null && updateFamiliaProd != null && updateUnidadMedida != null) {
-      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateProductoSolicitado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-      updateProdSolicitado.producto = newProducto;
-      updateProdSolicitado.marcaSugerida = newMarcaSugerida;
-      updateProdSolicitado.proveedorSugerido =  newProveedor;
-      updateProdSolicitado.costoEstimado = newCostoEstimado == null ? null : double.parse(newCostoEstimado);
-      updateProdSolicitado.cantidad = int.parse(newCantidad);
-      updateProdSolicitado.familiaProducto.target = updateFamiliaProd;
-      updateProdSolicitado.unidadMedida.target = updateUnidadMedida;
-      final statusSyncJornada = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateProdSolicitado.statusSync.target!.id)).build().findUnique();
-      if (statusSyncJornada != null) {
-        statusSyncJornada.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del prod Solicitado
-        dataBase.statusSyncBox.put(statusSyncJornada);
+void addSingle(int idVenta, int idProductoEmp, String subTotal, ) {
+  final venta = dataBase.ventasBox.get(idVenta);
+  final productoEmp = dataBase.productosEmpBox.get(idProductoEmp);
+  if (venta != null && productoEmp != null) {
+      final nuevoProdVendido = ProdVendidos(
+        cantVendida: int.parse(cantidad),
+        subtotal: double.parse(subTotal),
+        precioVenta: double.parse(precioVenta),
+      );
+      final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
+      final nuevaInstruccion = Bitacora(instrucciones: 'syncAddProductoVenta', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      nuevoProdVendido.productoEmp.target = productoEmp;
+      nuevoProdVendido.statusSync.target = nuevoSync;
+      nuevoProdVendido.venta.target = venta;
+      nuevoProdVendido.bitacora.add(nuevaInstruccion);
+      venta.prodVendidos.add(nuevoProdVendido);
+      dataBase.ventasBox.put(venta);
+      print('Producto Vendido agregado exitosamente');
+      clearInformation();
+      notifyListeners();
+  }
+  }
+
+void update(int id, int idProductoEmp, double newPrecioVenta, int newCantidad, double newSubTotal) {
+    var updateProdVendido = dataBase.productosVendidosBox.get(id);
+    final updateProductoEmp = dataBase.productosEmpBox.get(idProductoEmp);
+    if (updateProdVendido != null && updateProductoEmp != null) {
+      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateProductoVendido', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      updateProdVendido.productoEmp.target = updateProductoEmp;
+      updateProdVendido.cantVendida = newCantidad;
+      updateProdVendido.precioVenta =  newPrecioVenta;
+      updateProdVendido.subtotal = newSubTotal;
+      final statusSyncProdVendido = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateProdVendido.statusSync.target!.id)).build().findUnique();
+      if (statusSyncProdVendido != null) {
+        statusSyncProdVendido.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del prod Solicitado
+        dataBase.statusSyncBox.put(statusSyncProdVendido);
       }
-      updateProdSolicitado.bitacora.add(nuevaInstruccion);
-      dataBase.productosSolicitadosBox.put(updateProdSolicitado);
+      updateProdVendido.bitacora.add(nuevaInstruccion);
+      dataBase.productosVendidosBox.put(updateProdVendido);
     }
-    print('Registro actualizado exitosamente');
+    print('Producto Vendido actualizado exitosamente');
     notifyListeners();
 }
 

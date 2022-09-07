@@ -1,3 +1,4 @@
+import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -598,14 +599,25 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                           onPressed: () async {
                                             if (emprendedorProvider
                                                 .validateForm(emprendedorKey)) {
-                                              emprendedorProvider
+                                              final emprendedor = 
+                                               dataBase.emprendedoresBox.query(Emprendedores_.curp.equals(emprendedorProvider.curp)).build().findFirst();
+                                              if (emprendedor != null && emprendedor.emprendimiento.target!.activo) {
+                                                  snackbarKey.currentState
+                                                      ?.showSnackBar(const SnackBar(
+                                                    content: Text(
+                                                        "No es posible asignar este emprendedor a un nuevo emprendimiento, revise el CURP ingresado."),
+                                                  ));
+                                              }
+                                              else {
+                                                emprendedorProvider
                                                   .addTemporaly();
-                                              Navigator.pop(context);
-                                              snackbarKey.currentState
-                                                  ?.showSnackBar(const SnackBar(
-                                                content: Text(
-                                                    "¡Emprendedor asocidado éxitosamente!"),
-                                              ));
+                                                Navigator.pop(context);
+                                                snackbarKey.currentState
+                                                    ?.showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      "¡Emprendedor asocidado éxitosamente!"),
+                                                ));
+                                              }
                                             } else {
                                               await showDialog(
                                                 context: context,
