@@ -1,8 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/globals.dart';
@@ -11,12 +9,14 @@ import 'package:expandable/expandable.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
+
+import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/consultorias/detalle_consultoria_screen.dart';
 import 'package:bizpro_app/screens/jornadas/detalle_jornada_screen.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada2_screen.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada1_screen.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada3_screen.dart';
-import 'package:bizpro_app/screens/productos/agregar_producto_emprendedor.dart';
+import 'package:bizpro_app/screens/productos/productos_emprendedor_screen.dart';
 import 'package:bizpro_app/screens/inversiones/inversion.dart';
 import 'package:bizpro_app/screens/ventas/ventas_screen.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada4_screen.dart';
@@ -1178,7 +1178,7 @@ class _DetalleEmprendimientoScreenState
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              AgregarProductoEmprendedor(
+                                              ProductosEmprendedorScreen(
                                             productosEmprendedor:
                                                 widget.emprendimiento.productosEmp.toList(),
                                               emprendimiento: widget.emprendimiento,

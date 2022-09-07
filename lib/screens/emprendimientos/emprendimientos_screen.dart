@@ -489,18 +489,38 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                       Padding(
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(16, 10, 16, 5),
-                                        child: Text(
-                                          emprendimiento.nombre,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: AppTheme.of(context)
-                                              .title3
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                color: Colors.white,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500,
-                                              ),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              emprendimiento.nombre,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: AppTheme.of(context)
+                                                  .title3
+                                                  .override(
+                                                    fontFamily: 'Poppins',
+                                                    color: Colors.white,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                            ),
+                                            Text(
+                                              emprendimiento
+                                                      .faseEmp.last.fase,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: AppTheme.of(context)
+                                                  .title3
+                                                  .override(
+                                                    fontFamily: 'Poppins',
+                                                    color: Colors.white,
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                       Padding(
