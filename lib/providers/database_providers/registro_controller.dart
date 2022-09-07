@@ -14,7 +14,6 @@ class RegistroController extends ChangeNotifier {
   String nombre = '';
   String descripcion = '';
   String costo = '';
-  int precioVenta = 0;
   String cantidad = '';
   String proveedor = '';
   String familia = '';
@@ -34,7 +33,6 @@ class RegistroController extends ChangeNotifier {
     nombre = '';
     descripcion = '';
     costo = '';
-    precioVenta = 0;
     cantidad = '';
     proveedor = '';
     familia = '';
@@ -47,7 +45,6 @@ class RegistroController extends ChangeNotifier {
       descripcion: descripcion,
       imagen: imagen,
       costo: double.parse(costo),
-      precioVenta: precioVenta,
       );
       final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
       final familia = dataBase.familiaInversionBox.get(idFamilia);

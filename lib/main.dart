@@ -1,4 +1,3 @@
-import 'package:bizpro_app/providers/database_providers/producto_emprendedor_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -13,6 +12,7 @@ import 'package:bizpro_app/database/object_box_database.dart';
 import 'providers/database_providers/consultoria_controller.dart';
 import 'providers/database_providers/emprendedor_controller.dart';
 import 'providers/database_providers/emprendimiento_controller.dart';
+import 'providers/database_providers/producto_venta_controller.dart';
 import 'providers/database_providers/registro_jornada_controller.dart';
 import 'providers/database_providers/usuario_controller.dart';
 import 'providers/database_providers/jornada_controller.dart';
@@ -21,11 +21,14 @@ import 'package:bizpro_app/providers/database_providers/cotizacion_controller.da
 import 'package:bizpro_app/providers/database_providers/inversion_sugerida_controller.dart';
 import 'package:bizpro_app/providers/database_providers/registro_controller.dart';
 import 'package:bizpro_app/providers/database_providers/inversion_jornada_controller.dart';
+import 'package:bizpro_app/providers/database_providers/producto_emprendedor_controller.dart';
 import 'package:bizpro_app/providers/sync_provider.dart';
 
 import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/services/navigation_service.dart';
 import 'package:bizpro_app/internationalization/internationalization.dart';
+
+import 'providers/database_providers/venta_controller.dart';
 
 late ObjectBoxDatabase dataBase;
 DeepLinkBloc bloc = DeepLinkBloc();
@@ -82,6 +85,14 @@ void main() async {
         ),
         ChangeNotifierProvider<ProductoEmprendedorController>(
           create: (context) => ProductoEmprendedorController(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<ProductoVentaController>(
+          create: (context) => ProductoVentaController(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<VentaController>(
+          create: (context) => VentaController(),
           lazy: false,
         ),
         ChangeNotifierProvider<CotizacionController>(

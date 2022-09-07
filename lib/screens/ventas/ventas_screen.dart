@@ -1,44 +1,43 @@
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/screens/productos/agregar_producto_emprendedor.dart';
-import 'package:bizpro_app/screens/productos/detalle_producto_emprendedor.dart';
-import 'package:bizpro_app/screens/widgets/pdf/api/pdf_api.dart';
-import 'package:bizpro_app/screens/widgets/pdf/api/pdf_invoice_productos_emprendedor.dart';
-import 'package:bizpro_app/screens/widgets/pdf/models/invoice_info.dart';
-import 'package:bizpro_app/screens/widgets/pdf/models/productos_emprendedor_invoice.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:provider/provider.dart';
+import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:bizpro_app/screens/ventas/agregar_venta.dart';
 import 'package:bizpro_app/providers/user_provider.dart';
+import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
-import '../widgets/get_image_widget.dart';
 
 
-class ProductosScreen extends StatefulWidget {
-  final List<ProductosEmp> productosEmprendedor;
+class VentasScreen extends StatefulWidget {
+  final List<Ventas> ventas;
   final Emprendimientos emprendimiento;
-  const ProductosScreen({
+  const VentasScreen({
     Key? key, 
-    required this.productosEmprendedor, 
+    required this.ventas, 
     required this.emprendimiento,
   }) : super(key: key);
 
 
   @override
-  _ProductosScreenState createState() => _ProductosScreenState();
+  _VentasScreenState createState() => _VentasScreenState();
 }
 
-class _ProductosScreenState extends State<ProductosScreen> {
+class _VentasScreenState extends State<VentasScreen> {
   TextEditingController searchController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  String emprendedor = "";
 
   @override
   void initState() {
     super.initState();
-
+    emprendedor = "";
+    if (widget.emprendimiento.emprendedor.target != null) {
+      emprendedor =
+          "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
+    }
   }
 
   @override
@@ -58,7 +57,7 @@ class _ProductosScreenState extends State<ProductosScreen> {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            AgregarProductoEmprendedorScreen(emprendimiento: widget.emprendimiento,),
+                            AgregarVentaScreen(emprendimiento: widget.emprendimiento,),
                       ),
                     );
                 },
@@ -148,7 +147,7 @@ class _ProductosScreenState extends State<ProductosScreen> {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       10, 35, 0, 0),
                                   child: Text(
-                                    'Productos de Emprendedores',
+                                    'Ventas del Emprendimiento',
                                     style: AppTheme.of(context)
                                         .bodyText1
                                         .override(
@@ -182,57 +181,57 @@ class _ProductosScreenState extends State<ProductosScreen> {
                                     ),
                                     child: InkWell(
                                       onTap: () async {
-                                        final date = DateTime.now();
-                                        final invoice = ProductosEmprendedorInvoice(
-                                          info: InvoiceInfo(
-                                            usuario:
-                                                '${currentUser.nombre} ${currentUser.apellidoP}',
-                                            fecha: date,
-                                            titulo: 'Productos de Emprendedor',
-                                            descripcion:
-                                                'En la siguiente tabla se muestran todos los productos creados por el emprendedor ${widget.emprendimiento.emprendedor.target!.nombre} hasta el momento.',
-                                          ),
-                                          items: [
-                                            for (var producto in widget.productosEmprendedor)
-                                              ProductosEmprendedorItem(
-                                                id: producto.id,
-                                                emprendedor: 
-                                                  "${producto.
-                                                  emprendimientos.target!.
-                                                  emprendedor.target!.nombre} ${producto.
-                                                  emprendimientos.target!.
-                                                  emprendedor.target!.apellidos}",
-                                                tipoProyecto: 
-                                                  producto.
-                                                  emprendimientos.target!.
-                                                  catalogoProyecto.target!.nombre,
-                                                  emprendimiento: producto.
-                                                  emprendimientos.target!.nombre,
-                                                producto:
-                                                  producto.nombre,
-                                                descripcion: 
-                                                  producto.descripcion,
-                                                unidadMedida: 
-                                                  producto.unidadMedida.target!.
-                                                    unidadMedida,
-                                                costo:
-                                                  currencyFormat.format(producto.
-                                                    costo.toStringAsFixed(2)),
-                                                usuario:
-                                                    "${producto.emprendimientos.target!.
-                                                    usuario.target!.nombre} ${producto.
-                                                    emprendimientos.target!.usuario.
-                                                    target!.apellidoP}",
-                                                fechaRegistro:
-                                                    producto.fechaRegistro,
-                                              ),
-                                          ],
-                                        );
-                                        final pdfFile =
-                                            await PdfInvoiceProductosEmprendedor
-                                                .generate(invoice);
+                                        // final date = DateTime.now();
+                                        // final invoice = ProductosEmprendedorInvoice(
+                                        //   info: InvoiceInfo(
+                                        //     usuario:
+                                        //         '${currentUser.nombre} ${currentUser.apellidoP}',
+                                        //     fecha: date,
+                                        //     titulo: 'Productos de Emprendedor',
+                                        //     descripcion:
+                                        //         'En la siguiente tabla se muestran todos los productos creados por el emprendedor ${widget.emprendimiento.emprendedor.target!.nombre} hasta el momento.',
+                                        //   ),
+                                        //   items: [
+                                        //     for (var producto in widget.productosEmprendedor)
+                                        //       ProductosEmprendedorItem(
+                                        //         id: producto.id,
+                                        //         emprendedor: 
+                                        //           "${producto.
+                                        //           emprendimientos.target!.
+                                        //           emprendedor.target!.nombre} ${producto.
+                                        //           emprendimientos.target!.
+                                        //           emprendedor.target!.apellidos}",
+                                        //         tipoProyecto: 
+                                        //           producto.
+                                        //           emprendimientos.target!.
+                                        //           catalogoProyecto.target!.nombre,
+                                        //           emprendimiento: producto.
+                                        //           emprendimientos.target!.nombre,
+                                        //         producto:
+                                        //           producto.nombre,
+                                        //         descripcion: 
+                                        //           producto.descripcion,
+                                        //         unidadMedida: 
+                                        //           producto.unidadMedida.target!.
+                                        //             unidadMedida,
+                                        //         costo:
+                                        //           currencyFormat.format(producto.
+                                        //             costo.toStringAsFixed(2)),
+                                        //         usuario:
+                                        //             "${producto.emprendimientos.target!.
+                                        //             usuario.target!.nombre} ${producto.
+                                        //             emprendimientos.target!.usuario.
+                                        //             target!.apellidoP}",
+                                        //         fechaRegistro:
+                                        //             producto.fechaRegistro,
+                                        //       ),
+                                        //   ],
+                                        // );
+                                        // final pdfFile =
+                                        //     await PdfInvoiceProductosEmprendedor
+                                        //         .generate(invoice);
 
-                                        PdfApi.openFile(pdfFile);
+                                        // PdfApi.openFile(pdfFile);
                                       },
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
@@ -416,28 +415,28 @@ class _ProductosScreenState extends State<ProductosScreen> {
                                     padding: EdgeInsets.zero,
                                     shrinkWrap: true,
                                     scrollDirection: Axis.vertical,
-                                    itemCount: widget.productosEmprendedor.length,
+                                    itemCount: widget.ventas.length,
                                     itemBuilder: (context, resultadoIndex) {
-                                      final productoEmprendedor =
-                                          widget.productosEmprendedor[resultadoIndex];
+                                      final venta =
+                                          widget.ventas[resultadoIndex];
                                       return InkWell(
                                         onTap: () async {
-                                           await Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        DetalleProductoEmprendedor(
-                                                      productoEmprendedor: productoEmprendedor,
-                                                    ),
-                                                  ),
-                                                );
+                                          //  await Navigator.push(
+                                          //         context,
+                                          //         MaterialPageRoute(
+                                          //           builder: (context) =>
+                                          //               DetalleProductoEmprendedor(
+                                          //             productoEmprendedor: productoEmprendedor,
+                                          //           ),
+                                          //         ),
+                                          //       );
                                         },
                                         child: Padding(
                                           padding: const EdgeInsetsDirectional.fromSTEB(
-                                              15, 10, 15, 0),
+                                              20, 10, 20, 0),
                                           child: Container(
                                             width: double.infinity,
-                                            height: 275,
+                                            height: 100,
                                             decoration: BoxDecoration(
                                               color: const Color(0xB14672FF),
                                               boxShadow: const [
@@ -449,76 +448,154 @@ class _ProductosScreenState extends State<ProductosScreen> {
                                               ],
                                               borderRadius: BorderRadius.circular(8),
                                             ),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                ClipRRect(
-                                                  borderRadius: const BorderRadius.only(
-                                                    bottomLeft: Radius.circular(0),
-                                                    bottomRight: Radius.circular(0),
-                                                    topLeft: Radius.circular(8),
-                                                    topRight: Radius.circular(8),
+                                            child: InkWell(
+                                              onTap: () async {
+                                                // await Navigator.push(
+                                                //   context,
+                                                //   MaterialPageRoute(
+                                                //     builder: (context) =>
+                                                //         DetalleVentaWidget(),
+                                                //   ),
+                                                // );
+                                              },
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsetsDirectional
+                                                        .fromSTEB(10, 0, 0, 0),
+                                                    child: Column(
+                                                      mainAxisSize: MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.center,
+                                                      children: [
+                                                        ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  12),
+                                                          child: SizedBox(
+                                                            height: 80,
+                                                            width: 120,
+                                                            child: getWidgetImage(
+                                                              widget.emprendimiento.imagen
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
-                                                  child:
-                                                      getImage(productoEmprendedor.imagen),
-                                                ),
-                                                Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional.fromSTEB(
-                                                        16, 12, 16, 8),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.max,
-                                                  children: [
-                                                    Padding(
-                                                      padding: const EdgeInsetsDirectional
-                                                          .fromSTEB(0, 0, 5, 0),
-                                                      child: Text(
-                                                        productoEmprendedor.nombre,
-                                                        style: AppTheme.of(
-                                                                context)
-                                                            .bodyText1
-                                                            .override(
-                                                              fontFamily:
-                                                                  AppTheme.of(
-                                                                          context)
-                                                                      .bodyText1Family,
-                                                              color: Colors.white,
-                                                              fontSize: 15,
-                                                              fontWeight:
-                                                                  FontWeight.w600,
-                                                            ),
-                                                      ),
+                                                  Expanded(
+                                                    child: Column(
+                                                      mainAxisSize: MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.center,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      5, 0, 5, 5),
+                                                          child: Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize.max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceAround,
+                                                            children: [
+                                                              Container(
+                                                                width: 30,
+                                                                height: 30,
+                                                                clipBehavior:
+                                                                    Clip.antiAlias,
+                                                                decoration:
+                                                                    const BoxDecoration(
+                                                                  shape:
+                                                                      BoxShape.circle,
+                                                                ),
+                                                                child: getWidgetImageEmprendedor(
+                                                                  widget.emprendimiento.
+                                                                    emprendedor.target!.imagen,
+                                                                  30,
+                                                                  30),
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsetsDirectional
+                                                                        .fromSTEB(5,
+                                                                            0, 0, 0),
+                                                                child: Text(
+                                                                  emprendedor,
+                                                                  style: AppTheme
+                                                                          .of(context)
+                                                                      .bodyText1,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      5, 0, 5, 0),
+                                                          child: Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize.max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize.max,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
+                                                                                5,
+                                                                                0,
+                                                                                0,
+                                                                                0),
+                                                                    child: Text(
+                                                                      'Total\nVenta',
+                                                                      style: AppTheme.of(
+                                                                              context)
+                                                                          .bodyText1,
+                                                                    ),
+                                                                  ),
+                                                                  Padding(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
+                                                                                10,
+                                                                                0,
+                                                                                0,
+                                                                                0),
+                                                                    child: Text(
+                                                                      '\$${venta.total.toStringAsFixed(2)}',
+                                                                      style: AppTheme.of(
+                                                                              context)
+                                                                          .bodyText1
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                AppTheme.of(context)
+                                                                                    .bodyText1Family,
+                                                                            fontSize:
+                                                                                20,
+                                                                          ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
-                                                  ],
-                                                ),
+                                                  ),
+                                                ],
                                               ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional.fromSTEB(
-                                                        16, 0, 16, 8),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.max,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Text(
-                                                        productoEmprendedor.emprendimientos.target?.catalogoProyecto.target?.nombre ?? "SIN TIPO DE PROYECTO",
-                                                        style: AppTheme.of(
-                                                                context)
-                                                            .bodyText2
-                                                            .override(
-                                                              fontFamily: 'Outfit',
-                                                              color: Colors.white,
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight.normal,
-                                                            ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              ],
                                             ),
                                           ),
                                         ),

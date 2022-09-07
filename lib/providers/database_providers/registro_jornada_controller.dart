@@ -67,7 +67,6 @@ class RegistroJornadaController extends ChangeNotifier {
     String newDescripcion, String? newProveedor, String? newCostoEstimado, String newCantidad,
     int newIdFamiliaProd, String newFamiliaProd, int newIdUnidadMedida, String newUnidadMedida, 
     DateTime fechaRegistro) {
-      print(newCantidad);
     final updateProductoSolicitado = ProductosSolicitadosTemporal(
         id: idProdSolicitadoTemp,
         producto: newProducto,

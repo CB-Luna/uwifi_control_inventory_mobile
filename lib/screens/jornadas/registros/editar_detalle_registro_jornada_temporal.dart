@@ -1,20 +1,18 @@
-import 'dart:ffi';
-
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/models/temporals/productos_solicitados_temporal.dart';
-import 'package:bizpro_app/objectbox.g.dart';
-import 'package:bizpro_app/providers/database_providers/inversion_sugerida_controller.dart';
-import 'package:bizpro_app/providers/database_providers/registro_jornada_controller.dart';
-import 'package:bizpro_app/screens/inversiones/inversion_sugerida_creada.dart';
-import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:bizpro_app/objectbox.g.dart';
+import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/theme/theme.dart';
 
+import 'package:bizpro_app/providers/database_providers/inversion_sugerida_controller.dart';
+import 'package:bizpro_app/providers/database_providers/registro_jornada_controller.dart';
+
+import 'package:bizpro_app/helpers/constants.dart';
+import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/models/temporals/productos_solicitados_temporal.dart';
+import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:provider/provider.dart';
 
 class EditarDetalleRegistroJornadaTemporal extends StatefulWidget {
   final ProductosSolicitadosTemporal productoSol;
@@ -64,7 +62,6 @@ class _EditarDetalleRegistroJornadaTemporalState
 
   @override
   Widget build(BuildContext context) {
-    print(widget.productoSol.costoEstimado.toString());
     final inversionSProvider =
         Provider.of<InversionSugeridaController>(context);
     final registroJornadaProvider =
@@ -626,6 +623,9 @@ class _EditarDetalleRegistroJornadaTemporalState
                                             fillColor: const Color(0x49FFFFFF),
                                           ),
                                           keyboardType: TextInputType.number,
+                                          inputFormatters: [
+                                              FilteringTextInputFormatter.digitsOnly
+                                          ],
                                           style: AppTheme.of(context)
                                               .title3
                                               .override(
@@ -725,7 +725,6 @@ class _EditarDetalleRegistroJornadaTemporalState
                                       0, 0, 0, 20),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      print("Desde inversion");
                                       if (inversionSProvider
                                           .validateForm(formKey)) {
                                         if (productoController.text !=

@@ -3,30 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/models/temporals/productos_solicitados_temporal.dart';
-import 'package:bizpro_app/providers/database_providers/registro_jornada_controller.dart';
-import 'package:bizpro_app/screens/jornadas/registros/agregar_registro_jornada_temporal.dart';
-import 'package:bizpro_app/screens/jornadas/registros/editar_detalle_registro_jornada_temporal.dart';
+import 'package:bizpro_app/providers/database_providers/producto_venta_controller.dart';
+import 'package:bizpro_app/providers/database_providers/venta_controller.dart';
+import 'package:bizpro_app/screens/ventas/agregar_producto_venta_temporal.dart';
+import 'package:bizpro_app/screens/ventas/editar_producto_venta_temporal.dart';
+import 'package:bizpro_app/models/temporals/productos_vendidos_temporal.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
 import 'package:bizpro_app/theme/theme.dart';
 
-class RegistroJornadaTemporalScreen extends StatefulWidget {
+class RegistroVentaTemporalScreen extends StatefulWidget {
   final Emprendimientos emprendimiento;
 
-  const RegistroJornadaTemporalScreen({
+  const RegistroVentaTemporalScreen({
     Key? key,
     required this.emprendimiento,
   }) : super(key: key);
 
   @override
-  _RegistroJornadaTemporalScreenState createState() =>
-      _RegistroJornadaTemporalScreenState();
+  _RegistroVentaTemporalScreenState createState() =>
+      _RegistroVentaTemporalScreenState();
 }
 
-class _RegistroJornadaTemporalScreenState
-    extends State<RegistroJornadaTemporalScreen> with TickerProviderStateMixin {
+class _RegistroVentaTemporalScreenState
+    extends State<RegistroVentaTemporalScreen> with TickerProviderStateMixin {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -41,18 +42,22 @@ class _RegistroJornadaTemporalScreenState
 
   @override
   Widget build(BuildContext context) {
-    final registroJornadaController =
-        Provider.of<RegistroJornadaController>(context);
-    List<ProductosSolicitadosTemporal> inversionJornada =
-        registroJornadaController.productosSolicitados;
-    List<ProductosSolicitadosTemporal> prodSolicitados = [];
+    final productoVentaController =
+        Provider.of<ProductoVentaController>(context);
+    final ventaController =
+        Provider.of<VentaController>(context);
+    List<ProductosVendidosTemporal> productosVendidos =
+        productoVentaController.productosVendidos;
+    List<String> nombreProductosVendidos = [];
+    List<ProductosVendidosTemporal> prodRegistradosVendidos = [];
     double totalProyecto = 0;
-    for (var element in inversionJornada) {
-      prodSolicitados.add(element);
-      totalProyecto += (element.costoEstimado == null
-          ? 0
-          : element.costoEstimado! * element.cantidad);
+    ventaController.total = "";
+    for (var element in productosVendidos) {
+      prodRegistradosVendidos.add(element);
+      nombreProductosVendidos.add(element.producto);
+      totalProyecto += (element.subTotal);
     }
+    ventaController.total = totalProyecto.toString();
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -157,7 +162,7 @@ class _RegistroJornadaTemporalScreenState
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'Inversión sugerida',
+                                    'Productos vendidos',
                                     style:
                                         AppTheme.of(context).bodyText1.override(
                                               fontFamily: AppTheme.of(context)
@@ -393,7 +398,7 @@ class _RegistroJornadaTemporalScreenState
                                                             ),
                                                           ),
                                                           Text(
-                                                            prodSolicitados
+                                                            prodRegistradosVendidos
                                                                 .length
                                                                 .toString(),
                                                             style: AppTheme.of(
@@ -467,11 +472,15 @@ class _RegistroJornadaTemporalScreenState
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      const AgregarRegistroJornadaTemporal(),
+                                                      AgregarProductoVentaTemporal(
+                                                        emprendimiento: widget.emprendimiento,
+                                                        prodRegistradosVendidos: nombreProductosVendidos,
+
+                                                      ),
                                                 ),
                                               );
                                             },
-                                            text: 'Inversión',
+                                            text: 'Producto',
                                             icon: const Icon(
                                               Icons.add,
                                               size: 15,
@@ -507,19 +516,20 @@ class _RegistroJornadaTemporalScreenState
                                           padding: EdgeInsets.zero,
                                           shrinkWrap: true,
                                           scrollDirection: Axis.vertical,
-                                          itemCount: prodSolicitados.length,
+                                          itemCount: prodRegistradosVendidos.length,
                                           itemBuilder: (context, index) {
-                                            final prodSolicitado =
-                                                prodSolicitados[index];
+                                            final prodVendido =
+                                                prodRegistradosVendidos[index];
                                             return InkWell(
                                               onTap: () async {
                                                 await Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        EditarDetalleRegistroJornadaTemporal(
-                                                            productoSol:
-                                                                prodSolicitado),
+                                                        EditarProductoVentaTemporal(
+                                                          emprendimiento: widget.emprendimiento,
+                                                            prodVendido:
+                                                                prodVendido),
                                                   ),
                                                 );
                                               },
@@ -624,7 +634,7 @@ class _RegistroJornadaTemporalScreenState
                                                                               .spaceBetween,
                                                                       children: [
                                                                         Text(
-                                                                          prodSolicitado
+                                                                          prodVendido
                                                                               .producto,
                                                                           style: AppTheme.of(context)
                                                                               .subtitle1
@@ -634,7 +644,7 @@ class _RegistroJornadaTemporalScreenState
                                                                               ),
                                                                         ),
                                                                         Text(
-                                                                          'Und: ${prodSolicitado.unidadMedida}',
+                                                                          'Und: ${prodVendido.unidadMedida}',
                                                                           style: AppTheme.of(context)
                                                                               .subtitle1
                                                                               .override(
@@ -642,17 +652,6 @@ class _RegistroJornadaTemporalScreenState
                                                                                 color: AppTheme.of(context).primaryText,
                                                                                 fontSize: 18,
                                                                                 fontWeight: FontWeight.w600,
-                                                                              ),
-                                                                        ),
-                                                                        Text(
-                                                                          "\$ ${prodSolicitado.costoEstimado == null ? 0 : (prodSolicitado.costoEstimado! * prodSolicitado.cantidad).toStringAsFixed(2)}",
-                                                                          textAlign:
-                                                                              TextAlign.end,
-                                                                          style: AppTheme.of(context)
-                                                                              .subtitle2
-                                                                              .override(
-                                                                                fontFamily: AppTheme.of(context).subtitle2Family,
-                                                                                color: AppTheme.of(context).primaryText,
                                                                               ),
                                                                         ),
                                                                       ],
@@ -670,15 +669,17 @@ class _RegistroJornadaTemporalScreenState
                                                                             MainAxisAlignment.spaceBetween,
                                                                         children: [
                                                                           Text(
-                                                                            prodSolicitado.familiaProd,
-                                                                            style: AppTheme.of(context).bodyText1.override(
+                                                                            "Cantidad Vendida: ${prodVendido.cantidad}",
+                                                                            style: AppTheme.of(context)
+                                                                                .bodyText1
+                                                                                .override(
                                                                                   fontFamily: AppTheme.of(context).bodyText1Family,
                                                                                   color: AppTheme.of(context).secondaryText,
                                                                                 ),
                                                                           ),
                                                                           Text(
                                                                             dateTimeFormat('dd/MM/yyyy',
-                                                                                prodSolicitado.fechaRegistro),
+                                                                                prodVendido.fechaRegistro),
                                                                             textAlign:
                                                                                 TextAlign.end,
                                                                             style: AppTheme.of(context).bodyText1.override(
@@ -699,18 +700,22 @@ class _RegistroJornadaTemporalScreenState
                                                                               .spaceBetween,
                                                                       children: [
                                                                         Text(
-                                                                          prodSolicitado
-                                                                              .descripcion,
+                                                                          "Precio: \$ ${prodVendido
+                                                                                    .precioVenta
+                                                                                    .toStringAsFixed(2)}",
+                                                                          textAlign:
+                                                                              TextAlign.end,
                                                                           style: AppTheme.of(context)
-                                                                              .bodyText1
+                                                                              .subtitle2
                                                                               .override(
-                                                                                fontFamily: AppTheme.of(context).bodyText1Family,
-                                                                                color: AppTheme.of(context).secondaryText,
+                                                                                fontFamily: AppTheme.of(context).subtitle2Family,
+                                                                                color: AppTheme.of(context).primaryText,
                                                                               ),
                                                                         ),
                                                                         Text(
-                                                                          prodSolicitado.proveedorSugerido ??
-                                                                              "",
+                                                                          "Subtotal: \$ ${prodVendido
+                                                                                    .subTotal
+                                                                                    .toStringAsFixed(2)}",
                                                                           style: AppTheme.of(context)
                                                                               .bodyText1
                                                                               .override(

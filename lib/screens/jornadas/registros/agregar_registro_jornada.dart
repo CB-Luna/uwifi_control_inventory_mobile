@@ -1,17 +1,17 @@
-import 'dart:ffi';
-
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
+import 'package:flutter/services.dart';
+import 'package:bizpro_app/theme/theme.dart';
+
 import 'package:bizpro_app/providers/database_providers/registro_jornada_controller.dart';
 import 'package:bizpro_app/screens/jornadas/registros/registro_jornada_creado.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
-import 'package:flutter/material.dart';
-import 'package:bizpro_app/theme/theme.dart';
 
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:provider/provider.dart';
 
 class AgregarRegistroJornadaScreen extends StatefulWidget {
   final int idInversion;
@@ -616,6 +616,9 @@ class _AgregarRegistroJornadaScreenState
                                             fillColor: const Color(0x49FFFFFF),
                                           ),
                                           keyboardType: TextInputType.number,
+                                          inputFormatters: [
+                                              FilteringTextInputFormatter.digitsOnly
+                                          ],
                                           style: AppTheme.of(context)
                                               .title3
                                               .override(

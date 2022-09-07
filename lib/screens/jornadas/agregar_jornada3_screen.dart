@@ -1,23 +1,21 @@
 import 'dart:io';
-import 'package:badges/badges.dart';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/objectbox.g.dart';
-import 'package:bizpro_app/providers/database_providers/registro_jornada_controller.dart';
-import 'package:bizpro_app/screens/jornadas/jornada_creada.dart';
-import 'package:bizpro_app/screens/jornadas/registros/agregar_registro_jornada_temporal.dart';
-import 'package:bizpro_app/screens/jornadas/registros/registro_jornada_temporal_screen.dart';
-import 'package:bizpro_app/screens/widgets/bottom_sheet_imagenes_completas.dart';
-import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
-import 'package:bizpro_app/screens/widgets/drop_down.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_carousel.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
+import 'package:badges/badges.dart';
+import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/objectbox.g.dart';
+import 'package:bizpro_app/providers/database_providers/registro_jornada_controller.dart';
+import 'package:bizpro_app/screens/jornadas/jornada_creada.dart';
+import 'package:bizpro_app/screens/jornadas/registros/registro_jornada_temporal_screen.dart';
+import 'package:bizpro_app/screens/widgets/bottom_sheet_imagenes_completas.dart';
+import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
+import 'package:bizpro_app/screens/widgets/drop_down.dart';
+import 'package:bizpro_app/screens/widgets/flutter_flow_carousel.dart';
 
 import 'package:bizpro_app/providers/database_providers/jornada_controller.dart';
 import 'package:bizpro_app/providers/database_providers/inversion_jornada_controller.dart';
@@ -1062,10 +1060,6 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                             onPressed: () async {
                               if (jornadaProvider.validateForm(formKey) &&
                                   totalProductos != "0") {
-                                print(
-                                    "Fecha revision ${jornadaProvider.fechaRevision}");
-                                print("Tarea ${jornadaProvider.tarea}");
-                                print("Jorndada ${widget.numJornada}");
                                 final idProyecto = dataBase.catalogoProyectoBox
                                     .query(CatalogoProyecto_.nombre
                                         .equals(proyecto))

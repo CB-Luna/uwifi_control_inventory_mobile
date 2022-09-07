@@ -1,3 +1,4 @@
+import 'package:bizpro_app/objectbox.g.dart';
 import 'package:intl/intl.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -146,7 +147,11 @@ class Bitacora{
   final inversiones = ToMany<Inversiones>();
   @Backlink()
   final prodSolicitados = ToMany<ProdSolicitado>();
-  
+  @Backlink()
+  final ventas = ToMany<Ventas>();
+  @Backlink()
+  final prodVendidos = ToMany<ProdVendidos>();
+
   Bitacora({
     this.id = 0,
     required this.usuario,
@@ -454,12 +459,15 @@ class Ventas {
   int id;
   DateTime fechaInicio;
   DateTime fechaTermino;
-  int total;
+  double total;
   DateTime fechaRegistro;
-  DateTime fechaSync;
+  bool archivado;
   @Unique()
   String? idDBR;
-  final emprendimientos = ToOne<Emprendimientos>();
+  final statusSync = ToOne<StatusSync>();
+  final bitacora = ToMany<Bitacora>();
+  final emprendimiento = ToOne<Emprendimientos>();
+  final prodVendidos= ToMany<ProdVendidos>();
 
   Ventas({
     this.id = 0,
@@ -467,38 +475,38 @@ class Ventas {
     required this.fechaTermino,
     required this.total,
     DateTime? fechaRegistro,
-    DateTime? fechaSync,
+    this.archivado = false,
     this.idDBR,
-    }): fechaRegistro = fechaRegistro ?? DateTime.now(), fechaSync = fechaSync ?? DateTime.now();
+    }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-  String get fechaSyncFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaSync);
 
 }
 
 
 @Entity()
-class Vendidos {
+class ProdVendidos {
   int id;
   int cantVendida;
-  int subtotal;
+  double subtotal;
+  double precioVenta;
   DateTime fechaRegistro;
-  DateTime fechaSync;
   @Unique()
   String? idDBR;
-  final ventas = ToOne<Ventas>();
+  final statusSync = ToOne<StatusSync>();
+  final bitacora = ToMany<Bitacora>();
+  final venta = ToOne<Ventas>();
   final productoEmp = ToOne<ProductosEmp>();
-  Vendidos({
+  ProdVendidos({
     this.id = 0,
     required this.cantVendida,
     required this.subtotal,
+    required this.precioVenta,
     DateTime? fechaRegistro,
-    DateTime? fechaSync,
     this.idDBR,
-    }): fechaRegistro = fechaRegistro ?? DateTime.now(), fechaSync = fechaSync ?? DateTime.now();
+    }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-  String get fechaSyncFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaSync);
 
 }
 
@@ -509,7 +517,6 @@ class ProductosEmp {
   String descripcion;
   String imagen;
   double costo;
-  int precioVenta;
   DateTime fechaRegistro;
   bool archivado;
   @Unique()
@@ -520,7 +527,7 @@ class ProductosEmp {
   final unidadMedida = ToOne<UnidadMedida>();
   final bitacora = ToMany<Bitacora>();
   @Backlink()
-  final vendidos = ToMany<Vendidos>();
+  final vendidos = ToMany<ProdVendidos>();
 
   ProductosEmp({
     this.id = 0,
@@ -528,7 +535,6 @@ class ProductosEmp {
     required this.descripcion,
     required this.imagen,
     required this.costo,
-    required this.precioVenta,
     DateTime? fechaRegistro,
     this.archivado = false,
     this.idDBR,
@@ -938,7 +944,11 @@ class StatusSync {
   @Backlink()
   final inversiones = ToMany<Inversiones>();
   @Backlink()
-  final prodSolicitado= ToMany<ProdSolicitado>();
+  final prodSolicitado = ToMany<ProdSolicitado>();
+  @Backlink()
+  final ventas = ToMany<Ventas>();
+  @Backlink()
+  final prodVendidos = ToMany<ProdVendidos>();
   StatusSync({
     this.id = 0,
     this.status = "0E3hoVIByUxMUMZ", //M__

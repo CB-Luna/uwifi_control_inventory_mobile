@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
 
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class EditarDetalleRegistroJornada extends StatefulWidget {
@@ -625,6 +626,9 @@ class _EditarDetalleRegistroJornadaState
                                             fillColor: const Color(0x49FFFFFF),
                                           ),
                                           keyboardType: TextInputType.number,
+                                          inputFormatters: [
+                                              FilteringTextInputFormatter.digitsOnly
+                                          ],
                                           style: AppTheme.of(context)
                                               .title3
                                               .override(
