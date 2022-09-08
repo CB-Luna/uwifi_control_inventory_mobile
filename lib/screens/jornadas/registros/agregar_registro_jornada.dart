@@ -633,7 +633,6 @@ class _AgregarRegistroJornadaScreenState
                                             if (val == null || val.isEmpty) {
                                               return 'Para continuar, ingrese una cantidad.';
                                             }
-
                                             return null;
                                           },
                                         ),
@@ -709,9 +708,8 @@ class _AgregarRegistroJornadaScreenState
                                           maxLines: 1,
                                           validator: (val) {
                                             if (val == null || val.isEmpty) {
-                                              return 'Para continuar, ingrese un costo sugerido.';
+                                              return 'Para continuar, ingrese un costo estimado.';
                                             }
-
                                             return null;
                                           },
                                         ),

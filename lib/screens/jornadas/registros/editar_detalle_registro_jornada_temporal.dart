@@ -5,7 +5,7 @@ import 'package:bizpro_app/objectbox.g.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/theme/theme.dart';
 
-import 'package:bizpro_app/providers/database_providers/inversion_sugerida_controller.dart';
+import 'package:bizpro_app/providers/database_providers/inversion_controller.dart';
 import 'package:bizpro_app/providers/database_providers/registro_jornada_controller.dart';
 
 import 'package:bizpro_app/helpers/constants.dart';
@@ -63,7 +63,7 @@ class _EditarDetalleRegistroJornadaTemporalState
   @override
   Widget build(BuildContext context) {
     final inversionSProvider =
-        Provider.of<InversionSugeridaController>(context);
+        Provider.of<InversionController>(context);
     final registroJornadaProvider =
         Provider.of<RegistroJornadaController>(context);
     List<String> listFamilias = [];

@@ -35,12 +35,14 @@ with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final List<ProductosEmp> productosEmp = [];
+    final List<Inversiones> inversiones = [];
     double totalProyecto = 0;
-    widget.emprendimiento.productosEmp.forEach((element) {
-      productosEmp.add(element);
-      totalProyecto += (element.costo); 
-    });
+    for (var element in widget.emprendimiento.inversiones) {
+      if (element.id != widget.emprendimiento.idInversionJornada) {
+        inversiones.add(element);
+        totalProyecto += (element.totalInversion); 
+      }
+    }
     return Align(
       alignment: const AlignmentDirectional(0, 0),
       child: Column(
@@ -310,7 +312,7 @@ with TickerProviderStateMixin {
                                           ),
                                         ),
                                         Text(
-                                          productosEmp.length.toString(),
+                                          inversiones.length.toString(),
                                           style: AppTheme.of(context).bodyText1.override(
                                                 fontFamily: AppTheme.of(context).bodyText1Family,
                                                 color: Colors.white,
@@ -442,9 +444,9 @@ with TickerProviderStateMixin {
                         padding: EdgeInsets.zero,
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
-                        itemCount: productosEmp.length,
+                        itemCount: inversiones.length,
                         itemBuilder: (context, index) {
-                          final productoEmp = productosEmp[index];
+                          final inversion = inversiones[index];
                           return Padding(
                             padding:
                                 const EdgeInsetsDirectional
@@ -539,7 +541,7 @@ with TickerProviderStateMixin {
                                                       MainAxisAlignment.spaceBetween,
                                                   children: [
                                                     Text(
-                                                      productoEmp.nombre,
+                                                      inversion.prodSolicitado.first.producto,
                                                       style: AppTheme.of(context).subtitle1.override(
                                                             fontFamily: AppTheme.of(context).subtitle1Family,
                                                             color: AppTheme.of(context).primaryText,
@@ -572,14 +574,14 @@ with TickerProviderStateMixin {
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                         children: [
                                                           Text(
-                                                              productoEmp.familiaInversion.target?.nombre  ?? "SIN FAMILIA",
+                                                              inversion.prodSolicitado.first.familiaProducto.target?.nombre  ?? "SIN FAMILIA",
                                                               style: AppTheme.of(context).bodyText1.override(
                                                               fontFamily: AppTheme.of(context).bodyText1Family,
                                                               color: AppTheme.of(context).secondaryText,
                                                             ),
                                                             ),
                                                           Text(
-                                                              dateTimeFormat('dd/MM/yyyy', productoEmp.fechaRegistro),
+                                                              dateTimeFormat('dd/MM/yyyy', inversion.fechaRegistro),
                                                               textAlign:
                                                             TextAlign.end,
                                                               style: AppTheme.of(context).bodyText1.override(
@@ -597,7 +599,7 @@ with TickerProviderStateMixin {
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
                                                     Text(
-                                                      productoEmp.descripcion,
+                                                      inversion.estadoInversion.target?.estado ?? "SIN ESTADO",
                                                       style: AppTheme.of(context).bodyText1.override(
                                                             fontFamily: AppTheme.of(context).bodyText1Family,
                                                             color: AppTheme.of(context).secondaryText,

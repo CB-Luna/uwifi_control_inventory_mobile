@@ -735,6 +735,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.8.0"
+  number_text_input_formatter:
+    dependency: "direct main"
+    description:
+      name: number_text_input_formatter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0+1"
   objectbox:
     dependency: "direct main"
     description:

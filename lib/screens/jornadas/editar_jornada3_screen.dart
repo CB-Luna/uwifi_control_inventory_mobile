@@ -106,9 +106,9 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
       if (element.clasificacionEmp.target?.clasificacion == tipoProyecto) {
         listProyectos.add(element.nombre);
       }
-      inversion = dataBase.inversionesBox
-          .get(widget.jornada.emprendimiento.target?.idInversionJornada ?? -1);
     });
+    inversion = dataBase.inversionesBox
+          .get(widget.jornada.emprendimiento.target?.idInversionJornada ?? -1);
   }
 
   @override

@@ -66,6 +66,7 @@ class ProdSolicitado {
   String? idDBR;
   final familiaProducto = ToOne<FamiliaProd>();
   final unidadMedida = ToOne<UnidadMedida>();
+  final tipoEmpaques = ToOne<TipoEmpaques>();
   final inversiones = ToOne<Inversiones>();
   final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
@@ -103,6 +104,7 @@ class Inversiones {
   final bitacora = ToMany<Bitacora>();
   final emprendimiento = ToOne<Emprendimientos>();
   final prodSolicitado = ToMany<ProdSolicitado>();
+  final estadoInversion = ToOne<EstadoInversion>();
   
   Inversiones({
     this.id = 0,
@@ -264,6 +266,26 @@ class PrioridadEmp {
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
 }
 
+
+@Entity()
+class EstadoInversion {
+  int id;
+  String estado;
+  DateTime fechaRegistro;
+  @Unique()
+  String? idDBR;
+  final emprendimientos = ToMany<Inversiones>();
+  final statusSync = ToOne<StatusSync>();
+
+  EstadoInversion({
+    this.id = 0,
+    required this.estado,
+    DateTime? fechaRegistro,
+    this.idDBR,
+    }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+}
 
 @Entity()
 class FasesEmp {
@@ -591,10 +613,34 @@ class FamiliaInversion {
   @Unique()
   String? idDBR;
   final statusSync = ToOne<StatusSync>();
+  final productosEmp = ToMany<ProductosEmp>();
 
   FamiliaInversion({
     this.id = 0,
     required this.nombre,
+    DateTime? fechaRegistro,
+    this.activo = true,
+    this.idDBR,
+    }): fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+
+}
+
+@Entity()
+class TipoEmpaques {
+  int id;
+  String tipo;
+  DateTime fechaRegistro;
+  bool activo;
+  @Unique()
+  String? idDBR;
+  final statusSync = ToOne<StatusSync>();
+  final prodSolicitados = ToMany<ProdSolicitado>();
+
+  TipoEmpaques({
+    this.id = 0,
+    required this.tipo,
     DateTime? fechaRegistro,
     this.activo = true,
     this.idDBR,
@@ -613,6 +659,8 @@ class FamiliaProd {
   @Unique()
   String? idDBR;
   final statusSync = ToOne<StatusSync>();
+  final prodSolicitados = ToMany<ProdSolicitado>();
+  final productosEmp = ToMany<ProductosEmp>();
 
   FamiliaProd({
     this.id = 0,
@@ -823,6 +871,7 @@ class UnidadMedida {
   String? idDBR;
   final statusSync = ToOne<StatusSync>();
   final productosEmp = ToMany<ProductosEmp>();
+  final prodSolicitados = ToMany<ProdSolicitado>();
 
   UnidadMedida({
     this.id = 0,

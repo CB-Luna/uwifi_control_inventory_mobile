@@ -1,20 +1,17 @@
-import 'dart:ffi';
-
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
-import 'package:bizpro_app/providers/database_providers/inversion_sugerida_controller.dart';
+import 'package:number_text_input_formatter/number_text_input_formatter.dart';
+import 'package:bizpro_app/providers/database_providers/inversion_controller.dart';
 import 'package:bizpro_app/screens/inversiones/inversion_sugerida_creada.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
-import 'package:flutter/material.dart';
-import 'package:bizpro_app/theme/theme.dart';
-
-import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_drop_down.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:provider/provider.dart';
 
 class AgregarInversionSugeridaScreen extends StatefulWidget {
   final Emprendimientos emprendimiento;
@@ -32,26 +29,32 @@ class _AgregarInversionSugeridaScreenState
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
   String familia = "";
-  String unidadMedida = "";
+  String tipoEmpaques = "";
+  String emprendedor = "";
 
   @override
   void initState() {
     super.initState();
     familia = "";
-    unidadMedida = "";
+    tipoEmpaques = "";
+    emprendedor = "";
+    if (widget.emprendimiento.emprendedor.target != null) {
+      emprendedor =
+          "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final inversionSProvider =
-        Provider.of<InversionSugeridaController>(context);
+        Provider.of<InversionController>(context);
     List<String> listFamilias = [];
-    List<String> listUnidadesMedida = [];
-    dataBase.familiaInversionBox.getAll().forEach((element) {
+    List<String> listTipoEmpaques = [];
+    dataBase.familiaProductosBox.getAll().forEach((element) {
       listFamilias.add(element.nombre);
     });
-    dataBase.unidadesMedidaBox.getAll().forEach((element) {
-      listUnidadesMedida.add(element.unidadMedida);
+    dataBase.tipoEmpaquesBox.getAll().forEach((element) {
+      listTipoEmpaques.add(element.tipo);
     });
     return WillPopScope(
       onWillPop: () async => false,
@@ -136,7 +139,7 @@ class _AgregarInversionSugeridaScreenState
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Inversión Sugerida',
+                                'Inversión',
                                 style: AppTheme.of(context).bodyText1.override(
                                       fontFamily:
                                           AppTheme.of(context).bodyText1Family,
@@ -161,6 +164,68 @@ class _AgregarInversionSugeridaScreenState
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(5, 0, 5, 10),
+                                        child: TextFormField(
+                                          initialValue: emprendedor,
+                                          enabled: false,
+                                          readOnly: true,
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            labelText: 'Emprendedor*',
+                                            labelStyle: AppTheme.of(context)
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Montserrat',
+                                                  color: AppTheme.of(context)
+                                                      .secondaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            hintText: 'Ingresa emprendedor...',
+                                            hintStyle: AppTheme.of(context)
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  color: AppTheme.of(context)
+                                                      .secondaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            filled: true,
+                                            fillColor: const Color(0x49FFFFFF),
+                                          ),
+                                          style: AppTheme.of(context)
+                                              .title3
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                          maxLines: 1,
+                                        ),
+                                      ),
                                       FormField(
                                         builder: (state) {
                                           return Padding(
@@ -301,6 +366,73 @@ class _AgregarInversionSugeridaScreenState
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
+                                            inversionSProvider
+                                                .marcaSugerida = value;
+                                          },
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            labelText: 'Marca sugerida',
+                                            labelStyle: AppTheme.of(context)
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Montserrat',
+                                                  color: AppTheme.of(context)
+                                                      .secondaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            hintText: 'Marca sugerida...',
+                                            hintStyle: AppTheme.of(context)
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  color: AppTheme.of(context)
+                                                      .secondaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            filled: true,
+                                            fillColor: const Color(0x49FFFFFF),
+                                          ),
+                                          style: AppTheme.of(context)
+                                              .title3
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                          maxLines: 1,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(5, 0, 5, 10),
+                                        child: TextFormField(
+                                          textCapitalization:
+                                              TextCapitalization.sentences,
+                                          autovalidateMode: AutovalidateMode
+                                              .onUserInteraction,
+                                          onChanged: (value) {
                                             inversionSProvider.descripcion =
                                                 value;
                                           },
@@ -373,83 +505,13 @@ class _AgregarInversionSugeridaScreenState
                                               TextCapitalization.sentences,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
-                                          onChanged: (value) {},
-                                          obscureText: false,
-                                          decoration: InputDecoration(
-                                            labelText: 'Marca sugerida*',
-                                            labelStyle: AppTheme.of(context)
-                                                .title3
-                                                .override(
-                                                  fontFamily: 'Montserrat',
-                                                  color: AppTheme.of(context)
-                                                      .secondaryText,
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
-                                            hintText: 'Marca sugerida...',
-                                            hintStyle: AppTheme.of(context)
-                                                .title3
-                                                .override(
-                                                  fontFamily: 'Poppins',
-                                                  color: AppTheme.of(context)
-                                                      .secondaryText,
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: AppTheme.of(context)
-                                                    .primaryText,
-                                                width: 1.5,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: AppTheme.of(context)
-                                                    .primaryText,
-                                                width: 1.5,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                            ),
-                                            filled: true,
-                                            fillColor: const Color(0x49FFFFFF),
-                                          ),
-                                          style: AppTheme.of(context)
-                                              .title3
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                color: AppTheme.of(context)
-                                                    .primaryText,
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                          maxLines: 1,
-                                          validator: (value) {
-                                            return capitalizadoCharacters
-                                                    .hasMatch(value ?? '')
-                                                ? null
-                                                : 'Para continuar, ingrese la marca empezando por mayúscula';
-                                          },
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(5, 0, 5, 10),
-                                        child: TextFormField(
-                                          textCapitalization:
-                                              TextCapitalization.sentences,
-                                          autovalidateMode: AutovalidateMode
-                                              .onUserInteraction,
                                           onChanged: (value) {
                                             inversionSProvider.proveedor =
                                                 value;
                                           },
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            labelText: 'Proveedor sugerido*',
+                                            labelText: 'Proveedor sugerido',
                                             labelStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(
@@ -500,24 +562,17 @@ class _AgregarInversionSugeridaScreenState
                                                 fontWeight: FontWeight.normal,
                                               ),
                                           maxLines: 1,
-                                          validator: (value) {
-                                            return capitalizadoCharacters
-                                                    .hasMatch(value ?? '')
-                                                ? null
-                                                : 'Para continuar, ingrese el proveedor empezando por mayúscula';
-                                          },
                                         ),
                                       ),
-                                      // Form(
                                       FormField(
                                         builder: (state) {
                                           return Padding(
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(5, 0, 5, 10),
                                             child: DropDown(
-                                              options: listUnidadesMedida,
+                                              options: listTipoEmpaques,
                                               onChanged: (val) => setState(() {
-                                                if (listUnidadesMedida
+                                                if (listTipoEmpaques
                                                     .isEmpty) {
                                                   snackbarKey.currentState
                                                       ?.showSnackBar(
@@ -526,7 +581,7 @@ class _AgregarInversionSugeridaScreenState
                                                         "Debes descargar los catálogos desde la sección de tu perfil"),
                                                   ));
                                                 } else {
-                                                  unidadMedida = val!;
+                                                  tipoEmpaques = val!;
                                                 }
                                               }),
                                               width: double.infinity,
@@ -541,7 +596,7 @@ class _AgregarInversionSugeridaScreenState
                                                     fontWeight:
                                                         FontWeight.normal,
                                                   ),
-                                              hintText: 'Unidad de medida*',
+                                              hintText: 'Tipo de empaque*',
                                               icon: const Icon(
                                                 Icons
                                                     .keyboard_arrow_down_rounded,
@@ -562,9 +617,9 @@ class _AgregarInversionSugeridaScreenState
                                           );
                                         },
                                         validator: (val) {
-                                          if (unidadMedida == "" ||
-                                              unidadMedida.isEmpty) {
-                                            return 'Para continuar, seleccione una unidad de medida.';
+                                          if (tipoEmpaques == "" ||
+                                              tipoEmpaques.isEmpty) {
+                                            return 'Para continuar, seleccione un tipo de empaque.';
                                           }
                                           return null;
                                         },
@@ -576,7 +631,8 @@ class _AgregarInversionSugeridaScreenState
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
-                                            inversionSProvider.cantidad = value;
+                                            inversionSProvider.cantidad =
+                                                value;
                                           },
                                           obscureText: false,
                                           decoration: InputDecoration(
@@ -622,6 +678,9 @@ class _AgregarInversionSugeridaScreenState
                                             fillColor: const Color(0x49FFFFFF),
                                           ),
                                           keyboardType: TextInputType.number,
+                                          inputFormatters: [
+                                              FilteringTextInputFormatter.digitsOnly
+                                          ],
                                           style: AppTheme.of(context)
                                               .title3
                                               .override(
@@ -636,7 +695,6 @@ class _AgregarInversionSugeridaScreenState
                                             if (val == null || val.isEmpty) {
                                               return 'Para continuar, ingrese una cantidad.';
                                             }
-
                                             return null;
                                           },
                                         ),
@@ -648,7 +706,11 @@ class _AgregarInversionSugeridaScreenState
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
-                                            inversionSProvider.costo = value;
+                                            inversionSProvider
+                                                    .costo =
+                                                currencyFormat
+                                                    .getUnformattedValue()
+                                                    .toStringAsFixed(2);
                                           },
                                           obscureText: false,
                                           decoration: InputDecoration(
@@ -695,6 +757,7 @@ class _AgregarInversionSugeridaScreenState
                                             fillColor: const Color(0x49FFFFFF),
                                           ),
                                           keyboardType: TextInputType.number,
+                                          inputFormatters: [currencyFormat],
                                           style: AppTheme.of(context)
                                               .title3
                                               .override(
@@ -709,7 +772,81 @@ class _AgregarInversionSugeridaScreenState
                                             if (val == null || val.isEmpty) {
                                               return 'Para continuar, ingrese un costo sugerido.';
                                             }
-
+                                            return null;
+                                          },
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(5, 0, 5, 10),
+                                        child: TextFormField(
+                                          autovalidateMode: AutovalidateMode
+                                              .onUserInteraction,
+                                          onChanged: (value) {
+                                            inversionSProvider.porcentaje = value;
+                                          },
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            labelText: 'Porcentaje de pago*',
+                                            labelStyle: AppTheme.of(context)
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Montserrat',
+                                                  color: AppTheme.of(context)
+                                                      .secondaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            hintText: 'Ingresa porcentaje de pago...',
+                                            hintStyle: AppTheme.of(context)
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  color: AppTheme.of(context)
+                                                      .secondaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            filled: true,
+                                            fillColor: const Color(0x49FFFFFF),
+                                          ),
+                                          keyboardType: TextInputType.number,
+                                          inputFormatters: [
+                                              FilteringTextInputFormatter.digitsOnly,
+                                              PercentageTextInputFormatter()
+                                          ],
+                                          style: AppTheme.of(context)
+                                              .title3
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                          maxLines: 1,
+                                          validator: (val) {
+                                            if (val == null || val.isEmpty ) {
+                                              return 'Para continuar, ingrese un porcentaje entre 50% y 100%.';
+                                            }
                                             return null;
                                           },
                                         ),

@@ -128,7 +128,7 @@ class _InversionScreenState extends State<InversionScreen>
                       ),
                       Expanded(
                         child: DefaultTabController(
-                          length: 2,
+                          length: 1,
                           initialIndex: 0,
                           child: Column(
                             children: [
@@ -140,10 +140,7 @@ class _InversionScreenState extends State<InversionScreen>
                                     AppTheme.of(context).secondaryText,
                                 tabs: const [
                                   Tab(
-                                    text: 'Inversión sugerida',
-                                  ),
-                                  Tab(
-                                    text: 'Cotización',
+                                    text: 'Inversión',
                                   ),
                                 ],
                               ),
@@ -151,8 +148,6 @@ class _InversionScreenState extends State<InversionScreen>
                                 child: TabBarView(
                                   children: [
                                     InversionSugeridaTab(
-                                        emprendimiento: widget.emprendimiento),
-                                    CotizacionTab(
                                         emprendimiento: widget.emprendimiento),
                                   ],
                                 ),

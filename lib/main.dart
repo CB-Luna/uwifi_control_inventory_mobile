@@ -18,7 +18,7 @@ import 'providers/database_providers/usuario_controller.dart';
 import 'providers/database_providers/jornada_controller.dart';
 import 'package:bizpro_app/providers/catalog_provider.dart';
 import 'package:bizpro_app/providers/database_providers/cotizacion_controller.dart';
-import 'package:bizpro_app/providers/database_providers/inversion_sugerida_controller.dart';
+import 'package:bizpro_app/providers/database_providers/inversion_controller.dart';
 import 'package:bizpro_app/providers/database_providers/registro_controller.dart';
 import 'package:bizpro_app/providers/database_providers/inversion_jornada_controller.dart';
 import 'package:bizpro_app/providers/database_providers/producto_emprendedor_controller.dart';
@@ -67,8 +67,8 @@ void main() async {
           create: (context) => ConsultoriaController(),
           lazy: false,
         ),
-        ChangeNotifierProvider<InversionSugeridaController>(
-          create: (context) => InversionSugeridaController(),
+        ChangeNotifierProvider<InversionController>(
+          create: (context) => InversionController(),
           lazy: false,
         ),
         ChangeNotifierProvider<RegistroController>(

@@ -227,13 +227,13 @@ class _EditarEmprendimientoScreenState
                                 context: context,
                                 builder: (_) => const CustomBottomSheet(),
                               );
-
+                
                               if (option == null) return;
-
+                
                               final picker = ImagePicker();
-
+                
                               late final XFile? pickedFile;
-
+                
                               if (option == 'camera') {
                                 pickedFile = await picker.pickImage(
                                   source: ImageSource.camera,
@@ -245,11 +245,11 @@ class _EditarEmprendimientoScreenState
                                   imageQuality: 100,
                                 );
                               }
-
+                
                               if (pickedFile == null) {
                                 return;
                               }
-
+                
                               setState(() {
                                 image = pickedFile;
                                 newImagen = image!.path;

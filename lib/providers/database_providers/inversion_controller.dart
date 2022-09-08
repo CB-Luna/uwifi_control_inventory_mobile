@@ -3,7 +3,7 @@ import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/database/entitys.dart';
 
-class InversionSugeridaController extends ChangeNotifier {
+class InversionController extends ChangeNotifier {
 
   List<ProductosEmp> productosEmp= [];
 
@@ -16,6 +16,8 @@ class InversionSugeridaController extends ChangeNotifier {
   String costo = '';
   String cantidad = '';
   String proveedor = '';
+  String marcaSugerida = '';
+  String porcentaje = '';
 
   TextEditingController textControllerImagen = TextEditingController();
   TextEditingController textControllerNombre = TextEditingController();
@@ -34,6 +36,8 @@ class InversionSugeridaController extends ChangeNotifier {
     costo = '';
     cantidad = '';
     proveedor = '';
+    marcaSugerida = '';
+    porcentaje = '';
     notifyListeners();
   }
 
@@ -48,7 +52,7 @@ class InversionSugeridaController extends ChangeNotifier {
       final familia = dataBase.familiaInversionBox.get(idFamilia);
       if (emprendimiento != null && familia != null) {
         final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
-        final nuevaInstruccion = Bitacora(instrucciones: 'syncAddCotizacion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+        final nuevaInstruccion = Bitacora(instrucciones: 'syncAddInversion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
         nuevoProductoEmp.statusSync.target = nuevoSync;
         nuevoProductoEmp.emprendimientos.target = emprendimiento;
         nuevoProductoEmp.familiaInversion.target = familia;

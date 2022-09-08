@@ -1565,7 +1565,13 @@
           "relationTarget": "StatusSync"
         }
       ],
-      "relations": []
+      "relations": [
+        {
+          "id": "41:653215963143423103",
+          "name": "productosEmp",
+          "targetId": "43:8172937846526815489"
+        }
+      ]
     },
     {
       "id": "43:8172937846526815489",
@@ -1756,6 +1762,11 @@
           "id": "23:6114299832999780262",
           "name": "productosEmp",
           "targetId": "43:8172937846526815489"
+        },
+        {
+          "id": "45:2780758001951939604",
+          "name": "prodSolicitados",
+          "targetId": "49:100215042722630549"
         }
       ]
     },
@@ -1900,7 +1911,7 @@
     },
     {
       "id": "48:5212286852224162052",
-      "lastPropertyId": "12:8160792045369167469",
+      "lastPropertyId": "13:5805002687075125842",
       "name": "Inversiones",
       "properties": [
         {
@@ -1966,6 +1977,14 @@
           "flags": 520,
           "indexId": "152:7486967127840588613",
           "relationTarget": "Emprendimientos"
+        },
+        {
+          "id": "13:5805002687075125842",
+          "name": "estadoInversionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "173:1856912266704407521",
+          "relationTarget": "EstadoInversion"
         }
       ],
       "relations": [
@@ -1983,7 +2002,7 @@
     },
     {
       "id": "49:100215042722630549",
-      "lastPropertyId": "14:900705157350773814",
+      "lastPropertyId": "15:4907586445446392728",
       "name": "ProdSolicitado",
       "properties": [
         {
@@ -2070,6 +2089,14 @@
           "flags": 520,
           "indexId": "160:6457619861549834438",
           "relationTarget": "UnidadMedida"
+        },
+        {
+          "id": "15:4907586445446392728",
+          "name": "tipoEmpaquesId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "174:6286964184448623398",
+          "relationTarget": "TipoEmpaques"
         }
       ],
       "relations": [
@@ -2122,7 +2149,18 @@
           "relationTarget": "StatusSync"
         }
       ],
-      "relations": []
+      "relations": [
+        {
+          "id": "42:7889644416277535376",
+          "name": "prodSolicitados",
+          "targetId": "49:100215042722630549"
+        },
+        {
+          "id": "43:6438336217652797796",
+          "name": "productosEmp",
+          "targetId": "43:8172937846526815489"
+        }
+      ]
     },
     {
       "id": "51:1596057038243167918",
@@ -2194,11 +2232,106 @@
           "targetId": "27:1774905738150923512"
         }
       ]
+    },
+    {
+      "id": "52:8669365513736941915",
+      "lastPropertyId": "5:8975130600421841117",
+      "name": "EstadoInversion",
+      "properties": [
+        {
+          "id": "1:4939758375178121758",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1898388958620666182",
+          "name": "estado",
+          "type": 9
+        },
+        {
+          "id": "3:3626156555686478411",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "4:4437359734776404765",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "171:912793781028577083"
+        },
+        {
+          "id": "5:8975130600421841117",
+          "name": "statusSyncId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "172:7213593374400816024",
+          "relationTarget": "StatusSync"
+        }
+      ],
+      "relations": [
+        {
+          "id": "40:5834951486994371212",
+          "name": "emprendimientos",
+          "targetId": "48:5212286852224162052"
+        }
+      ]
+    },
+    {
+      "id": "53:2607346891989518545",
+      "lastPropertyId": "6:3471162061504283542",
+      "name": "TipoEmpaques",
+      "properties": [
+        {
+          "id": "1:4183204359112636458",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:218677502596731995",
+          "name": "tipo",
+          "type": 9
+        },
+        {
+          "id": "3:1565136780225606979",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "4:4403299478097620527",
+          "name": "activo",
+          "type": 1
+        },
+        {
+          "id": "5:4330832673145927863",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "175:3351216675199889495"
+        },
+        {
+          "id": "6:3471162061504283542",
+          "name": "statusSyncId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "176:4402712870398339367",
+          "relationTarget": "StatusSync"
+        }
+      ],
+      "relations": [
+        {
+          "id": "44:4935766962611062723",
+          "name": "prodSolicitados",
+          "targetId": "49:100215042722630549"
+        }
+      ]
     }
   ],
-  "lastEntityId": "51:1596057038243167918",
-  "lastIndexId": "170:8808435336941675980",
-  "lastRelationId": "39:2722631720886832152",
+  "lastEntityId": "53:2607346891989518545",
+  "lastIndexId": "176:4402712870398339367",
+  "lastRelationId": "45:2780758001951939604",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,

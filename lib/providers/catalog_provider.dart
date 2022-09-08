@@ -1,5 +1,3 @@
-import 'package:bizpro_app/models/get_familia_productos.dart';
-import 'package:bizpro_app/models/get_fases_emp.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -15,6 +13,10 @@ import 'package:bizpro_app/models/get_roles.dart';
 import 'package:bizpro_app/models/get_unidades_medida.dart';
 import 'package:bizpro_app/models/get_estados.dart';
 import 'package:bizpro_app/models/get_municipios.dart';
+import 'package:bizpro_app/models/get_estado_inversiones.dart';
+import 'package:bizpro_app/models/get_familia_productos.dart';
+import 'package:bizpro_app/models/get_fases_emp.dart';
+import 'package:bizpro_app/models/get_tipo_empaques.dart';
 import 'package:bizpro_app/util/util.dart';
 
 import 'package:http/http.dart' as http;
@@ -489,6 +491,57 @@ class CatalogProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> getTipoEmpaque() async {
+    if (dataBase.tipoEmpaquesBox.isEmpty()) {
+      final records = await client.records.
+      getFullList('tipo_empaques', batch: 200, sort: '+tipo_empaque');
+      final List<GetTipoEmpaques> listTipoEmpaques = [];
+      for (var element in records) {
+        listTipoEmpaques.add(getTipoEmpaquesFromMap(element.toString()));
+      }
+      listTipoEmpaques.sort((a, b) => removeDiacritics(a.tipoEmpaque).compareTo(removeDiacritics(b.tipoEmpaque)));
+      print("****Informacion tipo empaque****");
+      for (var i = 0; i < records.length; i++) {
+        if (listTipoEmpaques[i].id.isNotEmpty) {
+        final nuevoTipoEmpaque = TipoEmpaques(
+        tipo: listTipoEmpaques[i].tipoEmpaque,
+        idDBR: listTipoEmpaques[i].id,
+        );
+        final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
+        nuevoTipoEmpaque.statusSync.target = nuevoSync;
+        dataBase.tipoEmpaquesBox.put(nuevoTipoEmpaque);
+        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
+        print('Tipo empaque agregado exitosamente');
+        }
+      }
+      notifyListeners();
+    }
+  }
   
-
+  Future<void> getEstadoInversion() async {
+    if (dataBase.estadoInversionBox.isEmpty()) {
+      final records = await client.records.
+      getFullList('estado_inversiones', batch: 200, sort: '+estado');
+      final List<GetEstadoInversiones> listEstadoInversiones = [];
+      for (var element in records) {
+        listEstadoInversiones.add(getEstadoInversionesFromMap(element.toString()));
+      }
+      listEstadoInversiones.sort((a, b) => removeDiacritics(a.estado).compareTo(removeDiacritics(b.estado)));
+      print("****Informacion estado inversiones****");
+      for (var i = 0; i < records.length; i++) {
+        if (listEstadoInversiones[i].id.isNotEmpty) {
+        final nuevaEstadoInversiones = EstadoInversion(
+        estado: listEstadoInversiones[i].estado,
+        idDBR: listEstadoInversiones[i].id,
+        );
+        final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
+        nuevaEstadoInversiones.statusSync.target = nuevoSync;
+        dataBase.estadoInversionBox.put(nuevaEstadoInversiones);
+        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
+        print('Estado inversion agregado exitosamente');
+        }
+      }
+      notifyListeners();
+    }
+  }
 }
