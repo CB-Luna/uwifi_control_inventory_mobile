@@ -1,5 +1,6 @@
 import 'dart:io';
-import 'package:bizpro_app/screens/inversiones/agregar_inversion_sugerida_screen.dart';
+import 'package:bizpro_app/screens/inversiones/agregar_producto_inversion_screen.dart';
+import 'package:bizpro_app/screens/inversiones/editar_producto_inversion.dart';
 import 'package:bizpro_app/util/util.dart';
 import 'package:flutter/material.dart';
 
@@ -10,21 +11,23 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 
-class InversionSugeridaTab extends StatefulWidget {
+class InversionTab extends StatefulWidget {
 
   final Emprendimientos emprendimiento;
+  final Inversiones inversion;
   
-  const InversionSugeridaTab({
+  const InversionTab({
     Key? key, 
-    required this.emprendimiento
+    required this.emprendimiento, 
+    required this.inversion
     }) : super(key: key);
     
 
   @override
-  State<InversionSugeridaTab> createState() => _InversionSugeridaTabState();
+  State<InversionTab> createState() => _InversionTabState();
 }
 
-class _InversionSugeridaTabState extends State<InversionSugeridaTab> 
+class _InversionTabState extends State<InversionTab> 
 with TickerProviderStateMixin {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -35,13 +38,11 @@ with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final List<Inversiones> inversiones = [];
+    final List<ProdSolicitado> prodSolicitado = [];
     double totalProyecto = 0;
-    for (var element in widget.emprendimiento.inversiones) {
-      if (element.id != widget.emprendimiento.idInversionJornada) {
-        inversiones.add(element);
-        totalProyecto += (element.totalInversion); 
-      }
+    for (var element in widget.inversion.prodSolicitados.toList()) {
+        prodSolicitado.add(element);
+        totalProyecto += (element.cantidad.toDouble() * (element.costoEstimado ?? 0)); 
     }
     return Align(
       alignment: const AlignmentDirectional(0, 0),
@@ -312,7 +313,7 @@ with TickerProviderStateMixin {
                                           ),
                                         ),
                                         Text(
-                                          inversiones.length.toString(),
+                                          prodSolicitado.length.toString(),
                                           style: AppTheme.of(context).bodyText1.override(
                                                 fontFamily: AppTheme.of(context).bodyText1Family,
                                                 color: Colors.white,
@@ -395,11 +396,13 @@ with TickerProviderStateMixin {
                               MaterialPageRoute(
                                 builder:
                                     (context) =>
-                                        AgregarInversionSugeridaScreen(emprendimiento: widget.emprendimiento,),
+                                        AgregarProductoInversionScreen(
+                                          emprendimiento: widget.emprendimiento,
+                                          inversion: widget.inversion,),
                               ),
                             );
                           },
-                          text: 'Inversión',
+                          text: 'Producto',
                           icon: const Icon(
                             Icons.add,
                             size: 15,
@@ -444,185 +447,195 @@ with TickerProviderStateMixin {
                         padding: EdgeInsets.zero,
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
-                        itemCount: inversiones.length,
+                        itemCount: prodSolicitado.length,
                         itemBuilder: (context, index) {
-                          final inversion = inversiones[index];
-                          return Padding(
-                            padding:
-                                const EdgeInsetsDirectional
-                                    .fromSTEB(
-                                        0, 0, 0, 24),
-                            child: Column(
-                              mainAxisSize:
-                                  MainAxisSize.max,
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsetsDirectional
-                                          .fromSTEB(
-                                              0,
-                                              0,
-                                              0,
-                                              8),
-                                  child: Container(
-                                    width: MediaQuery.of(
-                                                context)
-                                            .size
-                                            .width *
-                                        0.92,
-                                    decoration:
-                                        BoxDecoration(
-                                      color: const Color(
-                                          0x374672FF),
-                                      borderRadius:
-                                          BorderRadius
-                                              .circular(
-                                                  8),
-                                    ),
-                                    child: Row(
-                                      mainAxisSize:
-                                          MainAxisSize
-                                              .max,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(
-                                                  15,
-                                                  0,
-                                                  0,
-                                                  0),
-                                          child:
-                                              Container(
-                                            width: 35,
-                                            height:
-                                                35,
-                                            decoration:
-                                                BoxDecoration(
-                                              color: AppTheme.of(context)
-                                                  .secondaryBackground,
-                                              shape: BoxShape
-                                                  .circle,
-                                            ),
+                          final productoSolicitado = prodSolicitado[index];
+                          return InkWell(
+                            onTap: () async {
+                              await Navigator
+                                .push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) =>
+                                        EditarProductoInversionScreen(
+                                          inversion: widget.inversion,
+                                          prodSolicitado: productoSolicitado,),
+                              ),
+                            );
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsetsDirectional
+                                      .fromSTEB(
+                                          0, 0, 0, 24),
+                              child: Column(
+                                mainAxisSize:
+                                    MainAxisSize.max,
+                                children: [
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional
+                                            .fromSTEB(
+                                                0,
+                                                0,
+                                                0,
+                                                8),
+                                    child: Container(
+                                      width: MediaQuery.of(
+                                                  context)
+                                              .size
+                                              .width *
+                                          0.92,
+                                      decoration:
+                                          BoxDecoration(
+                                        color: const Color(
+                                            0x374672FF),
+                                        borderRadius:
+                                            BorderRadius
+                                                .circular(
+                                                    8),
+                                      ),
+                                      child: Row(
+                                        mainAxisSize:
+                                            MainAxisSize
+                                                .max,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(
+                                                    15,
+                                                    0,
+                                                    0,
+                                                    0),
                                             child:
-                                                Column(
-                                              mainAxisSize:
-                                                  MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  (index + 1).toString(),
-                                                  style: AppTheme.of(context).bodyText1.override(
-                                                        fontFamily: AppTheme.of(context).bodyText1Family,
-                                                        fontSize: 20,
-                                                      ),
-                                                ),
-                                              ],
+                                                Container(
+                                              width: 35,
+                                              height:
+                                                  35,
+                                              decoration:
+                                                  BoxDecoration(
+                                                color: AppTheme.of(context)
+                                                    .secondaryBackground,
+                                                shape: BoxShape
+                                                    .circle,
+                                              ),
+                                              child:
+                                                  Column(
+                                                mainAxisSize:
+                                                    MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    (index + 1).toString(),
+                                                    style: AppTheme.of(context).bodyText1.override(
+                                                          fontFamily: AppTheme.of(context).bodyText1Family,
+                                                          fontSize: 20,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Expanded(
-                                          child:
-                                              Padding(
-                                            padding: const EdgeInsetsDirectional.all(8),
+                                          Expanded(
                                             child:
-                                                Column(
-                                              mainAxisSize:
-                                                  MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      inversion.prodSolicitado.first.producto,
-                                                      style: AppTheme.of(context).subtitle1.override(
-                                                            fontFamily: AppTheme.of(context).subtitle1Family,
-                                                            color: AppTheme.of(context).primaryText,
-                                                          ),
-                                                    ),
-                                                    // Text(
-                                                    //   'Und: ${productoEmp.cantidad}',
-                                                    //   style: AppTheme.of(context).subtitle1.override(
-                                                    //         fontFamily: AppTheme.of(context).subtitle1Family,
-                                                    //         color: AppTheme.of(context).primaryText,
-                                                    //         fontSize: 18,
-                                                    //         fontWeight: FontWeight.w600,
-                                                    //       ),
-                                                    // ),
-                                                    // Text(
-                                                    //   "\$ ${(productoEmp.costo * productoEmp.cantidad).toStringAsFixed(2)}",
-                                                    //   textAlign: TextAlign.end,
-                                                    //   style: AppTheme.of(context).subtitle2.override(
-                                                    //         fontFamily: AppTheme.of(context).subtitle2Family,
-                                                    //         color: AppTheme.of(context).primaryText,
-                                                    //       ),
-                                                    // ),
-                                                  ],
-                                                ),
                                                 Padding(
-                                                  padding: const EdgeInsets.symmetric(vertical: 5),
-                                                  child: Row(
-                                                    mainAxisSize: 
+                                              padding: const EdgeInsetsDirectional.all(8),
+                                              child:
+                                                  Column(
+                                                mainAxisSize:
+                                                    MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                          productoSolicitado.producto,
+                                                          style: AppTheme.of(context).bodyText1.override(
+                                                          fontFamily: AppTheme.of(context).bodyText1Family,
+                                                          color: AppTheme.of(context).secondaryText,
+                                                          ),
+                                                        ),
+                                                      Text(
+                                                          dateTimeFormat('dd/MM/yyyy', productoSolicitado.fechaRegistro),
+                                                          textAlign:
+                                                          TextAlign.end,
+                                                          style: AppTheme.of(context).bodyText1.override(
+                                                          fontFamily: AppTheme.of(context).bodyText1Family,
+                                                          color: AppTheme.of(context).secondaryText,
+                                                          fontSize: 12,
+                                                          ),
+                                                        ),
+                                                    ],
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.symmetric(vertical: 5),
+                                                    child: Row(
+                                                      mainAxisSize: 
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                              'Cantidad: ${productoSolicitado.cantidad}',
+                                                              style: AppTheme.of(context).subtitle1.override(
+                                                                    fontFamily: AppTheme.of(context).subtitle1Family,
+                                                                    color: AppTheme.of(context).primaryText,
+                                                                    fontSize: 18,
+                                                                    fontWeight: FontWeight.w600,
+                                                                  ),
+                                                            ),
+                                                            Text(
+                                                              "\$ ${((productoSolicitado.costoEstimado ?? 0)* productoSolicitado.cantidad).toStringAsFixed(2)}",
+                                                              textAlign: TextAlign.end,
+                                                              style: AppTheme.of(context).subtitle2.override(
+                                                                    fontFamily: AppTheme.of(context).subtitle2Family,
+                                                                    color: AppTheme.of(context).primaryText,
+                                                                  ),
+                                                            ),
+                                                          ],
+                                                    ),
+                                                  ),
+                                                  Row(
+                                                    mainAxisSize:
                                                         MainAxisSize.max,
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                              inversion.prodSolicitado.first.familiaProducto.target?.nombre  ?? "SIN FAMILIA",
-                                                              style: AppTheme.of(context).bodyText1.override(
+                                                    children: [
+                                                      Text(
+                                                        productoSolicitado.descripcion,
+                                                        style: AppTheme.of(context).bodyText1.override(
                                                               fontFamily: AppTheme.of(context).bodyText1Family,
                                                               color: AppTheme.of(context).secondaryText,
                                                             ),
-                                                            ),
-                                                          Text(
-                                                              dateTimeFormat('dd/MM/yyyy', inversion.fechaRegistro),
-                                                              textAlign:
-                                                            TextAlign.end,
-                                                              style: AppTheme.of(context).bodyText1.override(
+                                                        overflow: TextOverflow.ellipsis,
+                                                      ),
+                                                      Text(
+                                                        productoSolicitado.familiaProducto.target!.nombre,
+                                                        style: AppTheme.of(context).bodyText1.override(
                                                               fontFamily: AppTheme.of(context).bodyText1Family,
                                                               color: AppTheme.of(context).secondaryText,
-                                                              fontSize: 12,
                                                             ),
-                                                            ),
-                                                        ],
+                                                        overflow: TextOverflow.ellipsis,
+                                                      ),
+                                                    ],
                                                   ),
-                                                ),
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      inversion.estadoInversion.target?.estado ?? "SIN ESTADO",
-                                                      style: AppTheme.of(context).bodyText1.override(
-                                                            fontFamily: AppTheme.of(context).bodyText1Family,
-                                                            color: AppTheme.of(context).secondaryText,
-                                                          ),
-                                                    ),
-                                                    // Text(
-                                                    //   productoEmp.proveedor,
-                                                    //   style: AppTheme.of(context).bodyText1.override(
-                                                    //         fontFamily: AppTheme.of(context).bodyText1Family,
-                                                    //         color: AppTheme.of(context).secondaryText,
-                                                    //       ),
-                                                    // ),
-                                                  ],
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           );
                         },

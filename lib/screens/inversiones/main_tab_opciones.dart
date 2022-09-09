@@ -1,25 +1,25 @@
-import 'dart:io';
-import 'package:bizpro_app/screens/inversiones/tabs/cotizacion_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/screens/inversiones/tabs/inversion_sugerida_tab.dart';
+import 'package:bizpro_app/screens/inversiones/tabs/inversion_tab.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
 import 'package:bizpro_app/theme/theme.dart';
 
-class InversionScreen extends StatefulWidget {
+class MainTabOpcionesScreen extends StatefulWidget {
   final Emprendimientos emprendimiento;
+  final Inversiones inversion;
 
-  const InversionScreen({
+  const MainTabOpcionesScreen({
     Key? key,
-    required this.emprendimiento,
+    required this.emprendimiento, 
+    required this.inversion,
   }) : super(key: key);
 
   @override
-  _InversionScreenState createState() => _InversionScreenState();
+  _MainTabOpcionesScreenState createState() => _MainTabOpcionesScreenState();
 }
 
-class _InversionScreenState extends State<InversionScreen>
+class _MainTabOpcionesScreenState extends State<MainTabOpcionesScreen>
     with TickerProviderStateMixin {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -147,8 +147,9 @@ class _InversionScreenState extends State<InversionScreen>
                               Expanded(
                                 child: TabBarView(
                                   children: [
-                                    InversionSugeridaTab(
-                                        emprendimiento: widget.emprendimiento),
+                                    InversionTab(
+                                        emprendimiento: widget.emprendimiento,
+                                        inversion: widget.inversion,),
                                   ],
                                 ),
                               ),

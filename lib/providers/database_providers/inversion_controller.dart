@@ -1,3 +1,4 @@
+import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/helpers/globals.dart';
@@ -5,7 +6,7 @@ import 'package:bizpro_app/database/entitys.dart';
 
 class InversionController extends ChangeNotifier {
 
-  List<ProductosEmp> productosEmp= [];
+  List<Inversiones> inversiones= [];
 
   GlobalKey<FormState> productoEmpFormKey = GlobalKey<FormState>();
  
@@ -17,7 +18,6 @@ class InversionController extends ChangeNotifier {
   String cantidad = '';
   String proveedor = '';
   String marcaSugerida = '';
-  String porcentaje = '';
 
   TextEditingController textControllerImagen = TextEditingController();
   TextEditingController textControllerNombre = TextEditingController();
@@ -37,31 +37,65 @@ class InversionController extends ChangeNotifier {
     cantidad = '';
     proveedor = '';
     marcaSugerida = '';
-    porcentaje = '';
     notifyListeners();
   }
 
-  void add(int idEmprendimiento, int idFamilia) {
-    final nuevoProductoEmp = ProductosEmp(
-      nombre: nombre,
-      descripcion: descripcion,
-      imagen: imagen,
-      costo: double.parse(costo),
+  int addInversion(int idEmprendimiento, String porcentaje) {
+    int idInversion = -1;
+    final nuevaInversion = Inversiones(
+      porcentajePago: int.parse(porcentaje),
       );
       final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
-      final familia = dataBase.familiaInversionBox.get(idFamilia);
-      if (emprendimiento != null && familia != null) {
+      final estadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Solicitada")).build().findFirst();
+      if (emprendimiento != null && estadoInversion != null) {
         final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
         final nuevaInstruccion = Bitacora(instrucciones: 'syncAddInversion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-        nuevoProductoEmp.statusSync.target = nuevoSync;
-        nuevoProductoEmp.emprendimientos.target = emprendimiento;
-        nuevoProductoEmp.familiaInversion.target = familia;
-        nuevoProductoEmp.bitacora.add(nuevaInstruccion);
-        emprendimiento.productosEmp.add(nuevoProductoEmp);
+        nuevaInversion.statusSync.target = nuevoSync;
+        nuevaInversion.estadoInversion.target = estadoInversion;
+        nuevaInversion.emprendimiento.target = emprendimiento;
+        nuevaInversion.bitacora.add(nuevaInstruccion);
+        idInversion = dataBase.inversionesBox.put(nuevaInversion);
+        emprendimiento.inversiones.add(nuevaInversion);
         dataBase.emprendimientosBox.put(emprendimiento);
-        // dataBase.emprendedoresBox.put(nuevoEmprendedor);
-        productosEmp.add(nuevoProductoEmp);
-        print('ProductoEmp agregado exitosamente');
+        print('Inversion agregada exitosamente');
+        notifyListeners();
+      }
+    return idInversion;
+  }
+
+  void addProductoSolicitado(int idEmprendimiento, int idInversion, int idFamiliaProd, int idTipoEmpaques) {
+    print("Nombre: $cantidad");
+    print("descrip: $descripcion");
+    print("Cantidad: $cantidad");
+    final nuevoProdSolicitado = ProdSolicitado(
+      idInversion: idInversion,
+      producto: nombre,
+      marcaSugerida: marcaSugerida,
+      descripcion: descripcion,
+      proveedorSugerido: proveedor,
+      cantidad: int.parse(cantidad),
+      costoEstimado: costo != '' ? double.parse(costo) : 0.0,
+      );
+      if (imagen != '') {
+        final nuevaImagenProdSolicitado = Imagenes(imagenes: imagen); //Se crea el objeto imagenes para el Prod Solicitado
+        nuevoProdSolicitado.imagen.target = nuevaImagenProdSolicitado;
+      }
+      final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
+      final inversion = dataBase.inversionesBox.get(idInversion);
+      final familiaProd = dataBase.familiaProductosBox.get(idFamiliaProd);
+      final tipoEmpaques = dataBase.tipoEmpaquesBox.get(idTipoEmpaques);
+      if (emprendimiento != null && inversion != null && familiaProd != null && tipoEmpaques != null) {
+        final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
+        final nuevaInstruccion = Bitacora(instrucciones: 'syncAddProdSolicitado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+        nuevoProdSolicitado.statusSync.target = nuevoSync;
+        nuevoProdSolicitado.familiaProducto.target = familiaProd;
+        nuevoProdSolicitado.tipoEmpaques.target = tipoEmpaques;
+        nuevoProdSolicitado.inversion.target = inversion;
+        nuevoProdSolicitado.bitacora.add(nuevaInstruccion);
+        inversion.prodSolicitados.add(nuevoProdSolicitado);
+        inversion.totalInversion += costo != '' ? (int.parse(cantidad) * double.parse(costo)) : 0.0;
+        dataBase.inversionesBox.put(inversion);
+        print('ProdSolicitado agregado exitosamente');
         clearInformation();
         notifyListeners();
       }

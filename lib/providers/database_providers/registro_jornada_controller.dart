@@ -25,8 +25,8 @@ class RegistroJornadaController extends ChangeNotifier {
   TextEditingController textControllerNombre = TextEditingController();
   TextEditingController textControllerDescripcion = TextEditingController();
 
-  bool validateForm(GlobalKey<FormState> productoSolKey) {
-    return productoSolKey.currentState!.validate() ? true : false;
+  bool validateForm(GlobalKey<FormState> registroJornadaKey) {
+    return registroJornadaKey.currentState!.validate() ? true : false;
   }
 
 
@@ -50,7 +50,7 @@ class RegistroJornadaController extends ChangeNotifier {
       marcaSugerida: marcaSugerida,
       descripcion: descripcion,
       proveedorSugerido: proveedorSugerido,
-      costoEstimado: double.parse(costoEstimado),
+      costoEstimado: costoEstimado != '' ? double.parse(costoEstimado) : 0.0,
       cantidad: int.parse(cantidad),
       idFamiliaProd: idFamiliaProd,
       familiaProd: familiaProd,
@@ -144,9 +144,10 @@ void add(int idEmprendimiento, int idInversion) {
         nuevoProdSolicitado.familiaProducto.target = familiaProd;
         nuevoProdSolicitado.unidadMedida.target = unidadMedida;
         nuevoProdSolicitado.statusSync.target = nuevoSync;
-        nuevoProdSolicitado.inversiones.target = inversion;
+        nuevoProdSolicitado.inversion.target = inversion;
         nuevoProdSolicitado.bitacora.add(nuevaInstruccion);
-        inversion.prodSolicitado.add(nuevoProdSolicitado);
+        inversion.prodSolicitados.add(nuevoProdSolicitado);
+        inversion.totalInversion += productosSolicitados[i].costoEstimado != null ? (productosSolicitados[i].cantidad * productosSolicitados[i].costoEstimado!) : 0.0;
         dataBase.inversionesBox.put(inversion);
       }
     }
@@ -178,9 +179,9 @@ void addSingle(int idInversion, int idFamiliaProd, int idUnidadMedida) {
         nuevoProdSolicitado.familiaProducto.target = familiaProd;
         nuevoProdSolicitado.unidadMedida.target = unidadMedida;
         nuevoProdSolicitado.statusSync.target = nuevoSync;
-        nuevoProdSolicitado.inversiones.target = inversion;
+        nuevoProdSolicitado.inversion.target = inversion;
         // nuevoProdSolicitado.bitacora.add(nuevaInstruccion);
-        inversion.prodSolicitado.add(nuevoProdSolicitado);
+        inversion.prodSolicitados.add(nuevoProdSolicitado);
         dataBase.inversionesBox.put(inversion);
         print('Registro agregado exitosamente');
         clearInformation();

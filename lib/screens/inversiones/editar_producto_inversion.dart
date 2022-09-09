@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -7,46 +8,73 @@ import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
-import 'package:number_text_input_formatter/number_text_input_formatter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:bizpro_app/providers/database_providers/inversion_controller.dart';
-import 'package:bizpro_app/screens/inversiones/inversion_sugerida_creada.dart';
+import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
+import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
+import 'package:number_text_input_formatter/number_text_input_formatter.dart';
+import 'package:bizpro_app/screens/inversiones/producto_inversion_creado.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
-class AgregarInversionSugeridaScreen extends StatefulWidget {
-  final Emprendimientos emprendimiento;
+class EditarProductoInversionScreen extends StatefulWidget {
+  final Inversiones inversion;
+  final ProdSolicitado prodSolicitado;
 
-  const AgregarInversionSugeridaScreen({Key? key, required this.emprendimiento})
+  const EditarProductoInversionScreen({
+    Key? key, 
+    required this.inversion, 
+    required this.prodSolicitado,
+    })
       : super(key: key);
 
   @override
-  _AgregarInversionSugeridaScreenState createState() =>
-      _AgregarInversionSugeridaScreenState();
+  _EditarProductoInversionScreenState createState() =>
+      _EditarProductoInversionScreenState();
 }
 
-class _AgregarInversionSugeridaScreenState
-    extends State<AgregarInversionSugeridaScreen> {
+class _EditarProductoInversionScreenState
+    extends State<EditarProductoInversionScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
-  String familia = "";
-  String tipoEmpaques = "";
+  String? newImagen;
   String emprendedor = "";
+  String familia = "";
+  TextEditingController productoController = TextEditingController();
+  TextEditingController marcaController = TextEditingController();
+  TextEditingController descripcionController = TextEditingController();
+  TextEditingController proveedorController = TextEditingController();
+  String tipoEmpaques = "";
+  TextEditingController cantidadController = TextEditingController();
+  TextEditingController costoController = TextEditingController();
+  String porcentaje = "";
+  XFile? image;
 
   @override
   void initState() {
     super.initState();
-    familia = "";
-    tipoEmpaques = "";
+    newImagen = widget.prodSolicitado.imagen.target?.imagenes;
     emprendedor = "";
-    if (widget.emprendimiento.emprendedor.target != null) {
+    familia = widget.prodSolicitado.familiaProducto.target!.nombre;
+    productoController = TextEditingController(text: widget.prodSolicitado.producto);
+    marcaController = TextEditingController(text: widget.prodSolicitado.marcaSugerida);
+    descripcionController = TextEditingController(text: widget.prodSolicitado.descripcion);
+    proveedorController = TextEditingController(text: widget.prodSolicitado.proveedorSugerido);
+    tipoEmpaques = widget.prodSolicitado.tipoEmpaques.target?.tipo ?? "SIN TIPO DE EMPAQUE";
+    cantidadController = TextEditingController(text: widget.prodSolicitado.cantidad.toString());
+    costoController = TextEditingController(
+        text: currencyFormat.format(
+            widget.prodSolicitado.costoEstimado?.toStringAsFixed(2) ?? ""));
+    porcentaje = widget.inversion.porcentajePago.toString();
+    if (widget.inversion.emprendimiento.target?.emprendedor.target != null) {
       emprendedor =
-          "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
+          "${widget.inversion.emprendimiento.target!.emprendedor.target!.nombre} ${widget.inversion.emprendimiento.target!.emprendedor.target!.apellidos}";
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final inversionSProvider =
+    final inversionProvider =
         Provider.of<InversionController>(context);
     List<String> listFamilias = [];
     List<String> listTipoEmpaques = [];
@@ -155,6 +183,85 @@ class _AgregarInversionSugeridaScreenState
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               children: [
+                                FormField(builder: (state) {
+                                  return Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            0, 10, 0, 0),
+                                        child: InkWell(
+                                          onTap: () async {
+                                            String? option = await showModalBottomSheet(
+                                              context: context,
+                                              builder: (_) => const CustomBottomSheet(),
+                                            );
+
+                                            if (option == null) return;
+
+                                            final picker = ImagePicker();
+
+                                            late final XFile? pickedFile;
+
+                                            if (option == 'camera') {
+                                              pickedFile = await picker.pickImage(
+                                                source: ImageSource.camera,
+                                                imageQuality: 100,
+                                              );
+                                            } else {
+                                              pickedFile = await picker.pickImage(
+                                                source: ImageSource.gallery,
+                                                imageQuality: 100,
+                                              );
+                                            }
+
+                                            if (pickedFile == null) {
+                                              return;
+                                            }
+
+                                            setState(() {
+                                              image = pickedFile;
+                                              newImagen = image!.path;
+                                            });
+                                          },
+                                          child: Container(
+                                            width:
+                                                MediaQuery.of(context).size.width * 0.9,
+                                            height: 180,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(8),
+                                              border: Border.all(
+                                                color: const Color(0xFF221573),
+                                                width: 1.5,
+                                              ),
+                                            ),
+                                            child: Stack(
+                                              children: [
+                                                Lottie.asset(
+                                                  'assets/lottie_animations/75669-animation-for-the-photo-optimization-process.json',
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.9,
+                                                  height: 180,
+                                                  fit: BoxFit.contain,
+                                                  animate: true,
+                                                ),
+                                                ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                  child: getImage(image?.path),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       15, 16, 15, 0),
@@ -232,6 +339,7 @@ class _AgregarInversionSugeridaScreenState
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(5, 0, 5, 10),
                                             child: DropDown(
+                                              initialOption: familia,
                                               options: listFamilias,
                                               onChanged: (val) => setState(() {
                                                 if (listFamilias.isEmpty) {
@@ -289,13 +397,9 @@ class _AgregarInversionSugeridaScreenState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
-                                          textCapitalization:
-                                              TextCapitalization.sentences,
-                                          autovalidateMode: AutovalidateMode
-                                              .onUserInteraction,
-                                          onChanged: (value) {
-                                            inversionSProvider.nombre = value;
-                                          },
+                                          controller: productoController,
+                                          enabled: false,
+                                          readOnly: true,
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             labelText: 'Producto*',
@@ -349,12 +453,6 @@ class _AgregarInversionSugeridaScreenState
                                                 fontWeight: FontWeight.normal,
                                               ),
                                           maxLines: 1,
-                                          validator: (value) {
-                                            return capitalizadoCharacters
-                                                    .hasMatch(value ?? '')
-                                                ? null
-                                                : 'Para continuar, ingrese el producto empezando por mayúscula';
-                                          },
                                         ),
                                       ),
                                       Padding(
@@ -366,7 +464,7 @@ class _AgregarInversionSugeridaScreenState
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
-                                            inversionSProvider
+                                            inversionProvider
                                                 .marcaSugerida = value;
                                           },
                                           obscureText: false,
@@ -428,14 +526,9 @@ class _AgregarInversionSugeridaScreenState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
-                                          textCapitalization:
-                                              TextCapitalization.sentences,
-                                          autovalidateMode: AutovalidateMode
-                                              .onUserInteraction,
-                                          onChanged: (value) {
-                                            inversionSProvider.descripcion =
-                                                value;
-                                          },
+                                          controller: descripcionController,
+                                          enabled: false,
+                                          readOnly: true,
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             labelText: 'Descripción*',
@@ -489,26 +582,17 @@ class _AgregarInversionSugeridaScreenState
                                                 fontWeight: FontWeight.normal,
                                               ),
                                           maxLines: 3,
-                                          validator: (value) {
-                                            return capitalizadoCharacters
-                                                    .hasMatch(value ?? '')
-                                                ? null
-                                                : 'Para continuar, ingrese la descripción empezando por mayúscula';
-                                          },
                                         ),
                                       ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          controller: proveedorController,
                                           textCapitalization:
                                               TextCapitalization.sentences,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
-                                          onChanged: (value) {
-                                            inversionSProvider.proveedor =
-                                                value;
-                                          },
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             labelText: 'Proveedor sugerido',
@@ -570,6 +654,7 @@ class _AgregarInversionSugeridaScreenState
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(5, 0, 5, 10),
                                             child: DropDown(
+                                              initialOption: tipoEmpaques,
                                               options: listTipoEmpaques,
                                               onChanged: (val) => setState(() {
                                                 if (listTipoEmpaques
@@ -628,12 +713,9 @@ class _AgregarInversionSugeridaScreenState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          controller: cantidadController,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
-                                          onChanged: (value) {
-                                            inversionSProvider.cantidad =
-                                                value;
-                                          },
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             labelText: 'Cantidad*',
@@ -703,18 +785,12 @@ class _AgregarInversionSugeridaScreenState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          controller: costoController,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
-                                          onChanged: (value) {
-                                            inversionSProvider
-                                                    .costo =
-                                                currencyFormat
-                                                    .getUnformattedValue()
-                                                    .toStringAsFixed(2);
-                                          },
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            labelText: 'Costo sugerido*',
+                                            labelText: 'Costo total estimado',
                                             labelStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(
@@ -725,7 +801,7 @@ class _AgregarInversionSugeridaScreenState
                                                   fontWeight: FontWeight.normal,
                                                 ),
                                             hintText:
-                                                'Ingresa costo sugerido...',
+                                                'Ingresa costo total estimado...',
                                             hintStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(
@@ -768,25 +844,26 @@ class _AgregarInversionSugeridaScreenState
                                                 fontWeight: FontWeight.normal,
                                               ),
                                           maxLines: 1,
-                                          validator: (val) {
-                                            if (val == null || val.isEmpty) {
-                                              return 'Para continuar, ingrese un costo sugerido.';
-                                            }
-                                            return null;
-                                          },
                                         ),
                                       ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
-                                          autovalidateMode: AutovalidateMode
-                                              .onUserInteraction,
-                                          onChanged: (value) {
-                                            inversionSProvider.porcentaje = value;
-                                          },
-                                          obscureText: false,
+                                          initialValue: porcentaje,
+                                          enabled: false,
+                                          readOnly: true,
                                           decoration: InputDecoration(
+                                            suffixText: "%",
+                                            suffixStyle: AppTheme.of(context)
+                                              .title3
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.normal,
+                                              ),
                                             labelText: 'Porcentaje de pago*',
                                             labelStyle: AppTheme.of(context)
                                                 .title3
@@ -843,12 +920,6 @@ class _AgregarInversionSugeridaScreenState
                                                 fontWeight: FontWeight.normal,
                                               ),
                                           maxLines: 1,
-                                          validator: (val) {
-                                            if (val == null || val.isEmpty ) {
-                                              return 'Para continuar, ingrese un porcentaje entre 50% y 100%.';
-                                            }
-                                            return null;
-                                          },
                                         ),
                                       ),
                                     ],
@@ -856,31 +927,40 @@ class _AgregarInversionSugeridaScreenState
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 20),
+                                      0, 20, 0, 20),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      print("Desde inversion");
-                                      if (inversionSProvider
+                                      if (inversionProvider
                                           .validateForm(formKey)) {
                                         // comunidadProvider.add();
-                                        final idFamiliaInversion = dataBase
-                                            .familiaInversionBox
-                                            .query(FamiliaInversion_.nombre
+                                        final idFamiliaProducto = dataBase
+                                            .familiaProductosBox
+                                            .query(FamiliaProd_.nombre
                                                 .equals(familia))
                                             .build()
                                             .findFirst()
                                             ?.id;
-                                        if (idFamiliaInversion != null) {
-                                          inversionSProvider.add(
-                                              widget.emprendimiento.id,
-                                              idFamiliaInversion);
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const InversionSugeridaCreada(),
-                                            ),
-                                          );
+                                        final idTipoEmpaques = dataBase
+                                            .tipoEmpaquesBox
+                                            .query(TipoEmpaques_.tipo
+                                                .equals(tipoEmpaques))
+                                            .build()
+                                            .findFirst()
+                                            ?.id;
+                                        if (idFamiliaProducto != null && idTipoEmpaques != null) {
+                                          // inversionProvider.addProductoSolicitado(
+                                          //     widget.emprendimiento.id,
+                                          //     widget.inversion.id,
+                                          //     idFamiliaProducto,
+                                          //     idTipoEmpaques
+                                          //     );
+                                          // await Navigator.push(
+                                          //   context,
+                                          //   MaterialPageRoute(
+                                          //     builder: (context) =>
+                                          //         const ProductoInversionCreado(),
+                                          //   ),
+                                          // );
                                         }
                                       } else {
                                         await showDialog(
@@ -905,7 +985,7 @@ class _AgregarInversionSugeridaScreenState
                                         return;
                                       }
                                     },
-                                    text: 'Agregar',
+                                    text: 'Actualizar',
                                     icon: const Icon(
                                       Icons.check_rounded,
                                       color: Colors.white,
@@ -931,6 +1011,7 @@ class _AgregarInversionSugeridaScreenState
                                     ),
                                   ),
                                 ),
+                                const SizedBox(height: 50),
                               ],
                             ),
                           ),

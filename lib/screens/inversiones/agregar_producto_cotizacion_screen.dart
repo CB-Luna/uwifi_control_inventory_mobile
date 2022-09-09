@@ -1,31 +1,31 @@
-import 'package:bizpro_app/main.dart';
-import 'package:provider/provider.dart';
-import 'package:bizpro_app/objectbox.g.dart';
+import 'dart:ffi';
+
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
-
-import 'package:bizpro_app/providers/database_providers/registro_controller.dart';
-import 'package:bizpro_app/screens/inversiones/inversion_sugerida_creada.dart';
+import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/objectbox.g.dart';
+import 'package:bizpro_app/providers/database_providers/cotizacion_controller.dart';
+import 'package:bizpro_app/screens/inversiones/cotizacion_creada.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
 
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:provider/provider.dart';
 
-class AgregarRegistroProyectoSreen extends StatefulWidget {
+class AgregarProductoCotizacionScreen extends StatefulWidget {
   final Emprendimientos emprendimiento;
 
-  const AgregarRegistroProyectoSreen({Key? key, required this.emprendimiento})
+  const AgregarProductoCotizacionScreen({Key? key, required this.emprendimiento})
       : super(key: key);
 
   @override
-  _AgregarRegistroProyectoSreenState createState() =>
-      _AgregarRegistroProyectoSreenState();
+  _AgregarProductoCotizacionScreenState createState() =>
+      _AgregarProductoCotizacionScreenState();
 }
 
-class _AgregarRegistroProyectoSreenState
-    extends State<AgregarRegistroProyectoSreen> {
+class _AgregarProductoCotizacionScreenState extends State<AgregarProductoCotizacionScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
   String familia = "";
@@ -40,7 +40,7 @@ class _AgregarRegistroProyectoSreenState
 
   @override
   Widget build(BuildContext context) {
-    final registroController = Provider.of<RegistroController>(context);
+    final inversionCProvider = Provider.of<CotizacionController>(context);
     List<String> listFamilias = [];
     List<String> listUnidadesMedida = [];
     dataBase.familiaInversionBox.getAll().forEach((element) {
@@ -132,7 +132,7 @@ class _AgregarRegistroProyectoSreenState
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Inversión Sugerida',
+                                'Cotización',
                                 style: AppTheme.of(context).bodyText1.override(
                                       fontFamily:
                                           AppTheme.of(context).bodyText1Family,
@@ -225,7 +225,7 @@ class _AgregarRegistroProyectoSreenState
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
-                                            registroController.nombre = value;
+                                            inversionCProvider.nombre = value;
                                           },
                                           obscureText: false,
                                           decoration: InputDecoration(
@@ -297,7 +297,7 @@ class _AgregarRegistroProyectoSreenState
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
-                                            registroController.descripcion =
+                                            inversionCProvider.descripcion =
                                                 value;
                                           },
                                           obscureText: false,
@@ -369,10 +369,13 @@ class _AgregarRegistroProyectoSreenState
                                               TextCapitalization.sentences,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
-                                          onChanged: (value) {},
+                                          onChanged: (value) {
+                                            inversionCProvider.proveedor =
+                                                value;
+                                          },
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            labelText: 'Marca sugerida',
+                                            labelText: 'Marca sugerida*',
                                             labelStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(
@@ -439,13 +442,10 @@ class _AgregarRegistroProyectoSreenState
                                               TextCapitalization.sentences,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
-                                          onChanged: (value) {
-                                            registroController.proveedor =
-                                                value;
-                                          },
+                                          onChanged: (value) {},
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            labelText: 'Proveedor sugerido',
+                                            labelText: 'Proveedor sugerido*',
                                             labelStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(
@@ -572,7 +572,7 @@ class _AgregarRegistroProyectoSreenState
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
-                                            registroController.cantidad = value;
+                                            inversionCProvider.cantidad = value;
                                           },
                                           obscureText: false,
                                           decoration: InputDecoration(
@@ -644,11 +644,11 @@ class _AgregarRegistroProyectoSreenState
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
-                                            registroController.costo = value;
+                                            inversionCProvider.costo = value;
                                           },
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            labelText: 'Costo estimado*',
+                                            labelText: 'Costo sugerido*',
                                             labelStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(
@@ -691,7 +691,6 @@ class _AgregarRegistroProyectoSreenState
                                             fillColor: const Color(0x49FFFFFF),
                                           ),
                                           keyboardType: TextInputType.number,
-                                          inputFormatters: [currencyFormat],
                                           style: AppTheme.of(context)
                                               .title3
                                               .override(
@@ -719,8 +718,8 @@ class _AgregarRegistroProyectoSreenState
                                       0, 0, 0, 20),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      print("Desde registro");
-                                      if (registroController
+                                      print("Desde cotizacion");
+                                      if (inversionCProvider
                                           .validateForm(formKey)) {
                                         // comunidadProvider.add();
                                         final idFamiliaInversion = dataBase
@@ -731,15 +730,16 @@ class _AgregarRegistroProyectoSreenState
                                             .findFirst()
                                             ?.id;
                                         if (idFamiliaInversion != null) {
-                                          registroController.add(
+                                          inversionCProvider.add(
                                               widget.emprendimiento.id,
                                               idFamiliaInversion);
-                                          Navigator.pop(context);
-                                          snackbarKey.currentState
-                                              ?.showSnackBar(const SnackBar(
-                                            content: Text(
-                                                "¡Registro agregado éxitosamente!"),
-                                          ));
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const CotizacionCreada(),
+                                            ),
+                                          );
                                         }
                                       } else {
                                         await showDialog(

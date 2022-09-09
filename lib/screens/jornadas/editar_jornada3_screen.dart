@@ -1147,7 +1147,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                     child: Badge(
                                       badgeContent: Text(
                                           inversion != null
-                                              ? inversion!.prodSolicitado.length
+                                              ? inversion!.prodSolicitados.length
                                                   .toString()
                                               : "0",
                                           style:

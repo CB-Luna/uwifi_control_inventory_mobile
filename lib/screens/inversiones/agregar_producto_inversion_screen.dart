@@ -1,53 +1,73 @@
-import 'dart:ffi';
-
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
+import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
-import 'package:bizpro_app/providers/database_providers/cotizacion_controller.dart';
-import 'package:bizpro_app/screens/inversiones/cotizacion_creada.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:bizpro_app/providers/database_providers/inversion_controller.dart';
+import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
+import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
+import 'package:number_text_input_formatter/number_text_input_formatter.dart';
+import 'package:bizpro_app/screens/inversiones/producto_inversion_creado.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
-import 'package:flutter/material.dart';
-import 'package:bizpro_app/theme/theme.dart';
-
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:provider/provider.dart';
 
-class AgregarCotizacionScreen extends StatefulWidget {
+class AgregarProductoInversionScreen extends StatefulWidget {
   final Emprendimientos emprendimiento;
+  final Inversiones inversion;
 
-  const AgregarCotizacionScreen({Key? key, required this.emprendimiento})
+  const AgregarProductoInversionScreen({
+    Key? key, 
+    required this.emprendimiento, 
+    required this.inversion})
       : super(key: key);
 
   @override
-  _AgregarCotizacionScreenState createState() =>
-      _AgregarCotizacionScreenState();
+  _AgregarProductoInversionScreenState createState() =>
+      _AgregarProductoInversionScreenState();
 }
 
-class _AgregarCotizacionScreenState extends State<AgregarCotizacionScreen> {
+class _AgregarProductoInversionScreenState
+    extends State<AgregarProductoInversionScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
+  TextEditingController porcentajeController = TextEditingController();
+  XFile? image;
   String familia = "";
-  String unidadMedida = "";
+  String tipoEmpaques = "";
+  String emprendedor = "";
+  String porcentaje = "";
 
   @override
   void initState() {
     super.initState();
     familia = "";
-    unidadMedida = "";
+    tipoEmpaques = "";
+    emprendedor = "";
+    porcentaje = widget.inversion.porcentajePago.toString();
+    porcentajeController = TextEditingController(text: "50");
+    if (widget.emprendimiento.emprendedor.target != null) {
+      emprendedor =
+          "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final inversionCProvider = Provider.of<CotizacionController>(context);
+    final inversionProvider =
+        Provider.of<InversionController>(context);
     List<String> listFamilias = [];
-    List<String> listUnidadesMedida = [];
-    dataBase.familiaInversionBox.getAll().forEach((element) {
+    List<String> listTipoEmpaques = [];
+    dataBase.familiaProductosBox.getAll().forEach((element) {
       listFamilias.add(element.nombre);
     });
-    dataBase.unidadesMedidaBox.getAll().forEach((element) {
-      listUnidadesMedida.add(element.unidadMedida);
+    dataBase.tipoEmpaquesBox.getAll().forEach((element) {
+      listTipoEmpaques.add(element.tipo);
     });
     return WillPopScope(
       onWillPop: () async => false,
@@ -132,7 +152,7 @@ class _AgregarCotizacionScreenState extends State<AgregarCotizacionScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Cotización',
+                                'Inversión',
                                 style: AppTheme.of(context).bodyText1.override(
                                       fontFamily:
                                           AppTheme.of(context).bodyText1Family,
@@ -148,6 +168,86 @@ class _AgregarCotizacionScreenState extends State<AgregarCotizacionScreen> {
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               children: [
+                                FormField(builder: (state) {
+                                  return Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            0, 10, 0, 0),
+                                        child: InkWell(
+                                          onTap: () async {
+                                            String? option = await showModalBottomSheet(
+                                              context: context,
+                                              builder: (_) => const CustomBottomSheet(),
+                                            );
+
+                                            if (option == null) return;
+
+                                            final picker = ImagePicker();
+
+                                            late final XFile? pickedFile;
+
+                                            if (option == 'camera') {
+                                              pickedFile = await picker.pickImage(
+                                                source: ImageSource.camera,
+                                                imageQuality: 100,
+                                              );
+                                            } else {
+                                              pickedFile = await picker.pickImage(
+                                                source: ImageSource.gallery,
+                                                imageQuality: 100,
+                                              );
+                                            }
+
+                                            if (pickedFile == null) {
+                                              return;
+                                            }
+
+                                            setState(() {
+                                              image = pickedFile;
+                                              inversionProvider.imagen =
+                                                  image!.path;
+                                            });
+                                          },
+                                          child: Container(
+                                            width:
+                                                MediaQuery.of(context).size.width * 0.9,
+                                            height: 180,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(8),
+                                              border: Border.all(
+                                                color: const Color(0xFF221573),
+                                                width: 1.5,
+                                              ),
+                                            ),
+                                            child: Stack(
+                                              children: [
+                                                Lottie.asset(
+                                                  'assets/lottie_animations/75669-animation-for-the-photo-optimization-process.json',
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.9,
+                                                  height: 180,
+                                                  fit: BoxFit.contain,
+                                                  animate: true,
+                                                ),
+                                                ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                  child: getImage(image?.path),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       15, 16, 15, 0),
@@ -157,6 +257,68 @@ class _AgregarCotizacionScreenState extends State<AgregarCotizacionScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(5, 0, 5, 10),
+                                        child: TextFormField(
+                                          initialValue: emprendedor,
+                                          enabled: false,
+                                          readOnly: true,
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            labelText: 'Emprendedor*',
+                                            labelStyle: AppTheme.of(context)
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Montserrat',
+                                                  color: AppTheme.of(context)
+                                                      .secondaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            hintText: 'Ingresa emprendedor...',
+                                            hintStyle: AppTheme.of(context)
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  color: AppTheme.of(context)
+                                                      .secondaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            filled: true,
+                                            fillColor: const Color(0x49FFFFFF),
+                                          ),
+                                          style: AppTheme.of(context)
+                                              .title3
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                          maxLines: 1,
+                                        ),
+                                      ),
                                       FormField(
                                         builder: (state) {
                                           return Padding(
@@ -225,7 +387,7 @@ class _AgregarCotizacionScreenState extends State<AgregarCotizacionScreen> {
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
-                                            inversionCProvider.nombre = value;
+                                            inversionProvider.nombre = value;
                                           },
                                           obscureText: false,
                                           decoration: InputDecoration(
@@ -297,7 +459,74 @@ class _AgregarCotizacionScreenState extends State<AgregarCotizacionScreen> {
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
-                                            inversionCProvider.descripcion =
+                                            inversionProvider
+                                                .marcaSugerida = value;
+                                          },
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            labelText: 'Marca sugerida',
+                                            labelStyle: AppTheme.of(context)
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Montserrat',
+                                                  color: AppTheme.of(context)
+                                                      .secondaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            hintText: 'Marca sugerida...',
+                                            hintStyle: AppTheme.of(context)
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  color: AppTheme.of(context)
+                                                      .secondaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            filled: true,
+                                            fillColor: const Color(0x49FFFFFF),
+                                          ),
+                                          style: AppTheme.of(context)
+                                              .title3
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                          maxLines: 1,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(5, 0, 5, 10),
+                                        child: TextFormField(
+                                          textCapitalization:
+                                              TextCapitalization.sentences,
+                                          autovalidateMode: AutovalidateMode
+                                              .onUserInteraction,
+                                          onChanged: (value) {
+                                            inversionProvider.descripcion =
                                                 value;
                                           },
                                           obscureText: false,
@@ -370,82 +599,12 @@ class _AgregarCotizacionScreenState extends State<AgregarCotizacionScreen> {
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
-                                            inversionCProvider.proveedor =
+                                            inversionProvider.proveedor =
                                                 value;
                                           },
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            labelText: 'Marca sugerida*',
-                                            labelStyle: AppTheme.of(context)
-                                                .title3
-                                                .override(
-                                                  fontFamily: 'Montserrat',
-                                                  color: AppTheme.of(context)
-                                                      .secondaryText,
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
-                                            hintText: 'Marca sugerida...',
-                                            hintStyle: AppTheme.of(context)
-                                                .title3
-                                                .override(
-                                                  fontFamily: 'Poppins',
-                                                  color: AppTheme.of(context)
-                                                      .secondaryText,
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: AppTheme.of(context)
-                                                    .primaryText,
-                                                width: 1.5,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: AppTheme.of(context)
-                                                    .primaryText,
-                                                width: 1.5,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                            ),
-                                            filled: true,
-                                            fillColor: const Color(0x49FFFFFF),
-                                          ),
-                                          style: AppTheme.of(context)
-                                              .title3
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                color: AppTheme.of(context)
-                                                    .primaryText,
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                          maxLines: 1,
-                                          validator: (value) {
-                                            return capitalizadoCharacters
-                                                    .hasMatch(value ?? '')
-                                                ? null
-                                                : 'Para continuar, ingrese la marca empezando por mayúscula';
-                                          },
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(5, 0, 5, 10),
-                                        child: TextFormField(
-                                          textCapitalization:
-                                              TextCapitalization.sentences,
-                                          autovalidateMode: AutovalidateMode
-                                              .onUserInteraction,
-                                          onChanged: (value) {},
-                                          obscureText: false,
-                                          decoration: InputDecoration(
-                                            labelText: 'Proveedor sugerido*',
+                                            labelText: 'Proveedor sugerido',
                                             labelStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(
@@ -496,24 +655,17 @@ class _AgregarCotizacionScreenState extends State<AgregarCotizacionScreen> {
                                                 fontWeight: FontWeight.normal,
                                               ),
                                           maxLines: 1,
-                                          validator: (value) {
-                                            return capitalizadoCharacters
-                                                    .hasMatch(value ?? '')
-                                                ? null
-                                                : 'Para continuar, ingrese el proveedor empezando por mayúscula';
-                                          },
                                         ),
                                       ),
-                                      // Form(
                                       FormField(
                                         builder: (state) {
                                           return Padding(
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(5, 0, 5, 10),
                                             child: DropDown(
-                                              options: listUnidadesMedida,
+                                              options: listTipoEmpaques,
                                               onChanged: (val) => setState(() {
-                                                if (listUnidadesMedida
+                                                if (listTipoEmpaques
                                                     .isEmpty) {
                                                   snackbarKey.currentState
                                                       ?.showSnackBar(
@@ -522,7 +674,7 @@ class _AgregarCotizacionScreenState extends State<AgregarCotizacionScreen> {
                                                         "Debes descargar los catálogos desde la sección de tu perfil"),
                                                   ));
                                                 } else {
-                                                  unidadMedida = val!;
+                                                  tipoEmpaques = val!;
                                                 }
                                               }),
                                               width: double.infinity,
@@ -537,7 +689,7 @@ class _AgregarCotizacionScreenState extends State<AgregarCotizacionScreen> {
                                                     fontWeight:
                                                         FontWeight.normal,
                                                   ),
-                                              hintText: 'Unidad de medida*',
+                                              hintText: 'Tipo de empaque*',
                                               icon: const Icon(
                                                 Icons
                                                     .keyboard_arrow_down_rounded,
@@ -558,9 +710,9 @@ class _AgregarCotizacionScreenState extends State<AgregarCotizacionScreen> {
                                           );
                                         },
                                         validator: (val) {
-                                          if (unidadMedida == "" ||
-                                              unidadMedida.isEmpty) {
-                                            return 'Para continuar, seleccione una unidad de medida.';
+                                          if (tipoEmpaques == "" ||
+                                              tipoEmpaques.isEmpty) {
+                                            return 'Para continuar, seleccione un tipo de empaque.';
                                           }
                                           return null;
                                         },
@@ -572,7 +724,8 @@ class _AgregarCotizacionScreenState extends State<AgregarCotizacionScreen> {
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
-                                            inversionCProvider.cantidad = value;
+                                            inversionProvider.cantidad =
+                                                value;
                                           },
                                           obscureText: false,
                                           decoration: InputDecoration(
@@ -618,6 +771,9 @@ class _AgregarCotizacionScreenState extends State<AgregarCotizacionScreen> {
                                             fillColor: const Color(0x49FFFFFF),
                                           ),
                                           keyboardType: TextInputType.number,
+                                          inputFormatters: [
+                                              FilteringTextInputFormatter.digitsOnly
+                                          ],
                                           style: AppTheme.of(context)
                                               .title3
                                               .override(
@@ -632,7 +788,6 @@ class _AgregarCotizacionScreenState extends State<AgregarCotizacionScreen> {
                                             if (val == null || val.isEmpty) {
                                               return 'Para continuar, ingrese una cantidad.';
                                             }
-
                                             return null;
                                           },
                                         ),
@@ -644,11 +799,15 @@ class _AgregarCotizacionScreenState extends State<AgregarCotizacionScreen> {
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
-                                            inversionCProvider.costo = value;
+                                            inversionProvider
+                                                    .costo =
+                                                currencyFormat
+                                                    .getUnformattedValue()
+                                                    .toStringAsFixed(2);
                                           },
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            labelText: 'Costo sugerido*',
+                                            labelText: 'Costo total estimado',
                                             labelStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(
@@ -659,7 +818,7 @@ class _AgregarCotizacionScreenState extends State<AgregarCotizacionScreen> {
                                                   fontWeight: FontWeight.normal,
                                                 ),
                                             hintText:
-                                                'Ingresa costo sugerido...',
+                                                'Ingresa costo total estimado...',
                                             hintStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(
@@ -691,6 +850,7 @@ class _AgregarCotizacionScreenState extends State<AgregarCotizacionScreen> {
                                             fillColor: const Color(0x49FFFFFF),
                                           ),
                                           keyboardType: TextInputType.number,
+                                          inputFormatters: [currencyFormat],
                                           style: AppTheme.of(context)
                                               .title3
                                               .override(
@@ -701,13 +861,82 @@ class _AgregarCotizacionScreenState extends State<AgregarCotizacionScreen> {
                                                 fontWeight: FontWeight.normal,
                                               ),
                                           maxLines: 1,
-                                          validator: (val) {
-                                            if (val == null || val.isEmpty) {
-                                              return 'Para continuar, ingrese un costo sugerido.';
-                                            }
-
-                                            return null;
-                                          },
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(5, 0, 5, 10),
+                                        child: TextFormField(
+                                          initialValue: porcentaje,
+                                          enabled: false,
+                                          readOnly: true,
+                                          decoration: InputDecoration(
+                                            suffixText: "%",
+                                            suffixStyle: AppTheme.of(context)
+                                              .title3
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                            labelText: 'Porcentaje de pago*',
+                                            labelStyle: AppTheme.of(context)
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Montserrat',
+                                                  color: AppTheme.of(context)
+                                                      .secondaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            hintText: 'Ingresa porcentaje de pago...',
+                                            hintStyle: AppTheme.of(context)
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  color: AppTheme.of(context)
+                                                      .secondaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            filled: true,
+                                            fillColor: const Color(0x49FFFFFF),
+                                          ),
+                                          keyboardType: TextInputType.number,
+                                          inputFormatters: [
+                                              FilteringTextInputFormatter.digitsOnly,
+                                              PercentageTextInputFormatter()
+                                          ],
+                                          style: AppTheme.of(context)
+                                              .title3
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                          maxLines: 1,
                                         ),
                                       ),
                                     ],
@@ -715,29 +944,38 @@ class _AgregarCotizacionScreenState extends State<AgregarCotizacionScreen> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 20),
+                                      0, 20, 0, 20),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      print("Desde cotizacion");
-                                      if (inversionCProvider
+                                      if (inversionProvider
                                           .validateForm(formKey)) {
                                         // comunidadProvider.add();
-                                        final idFamiliaInversion = dataBase
-                                            .familiaInversionBox
-                                            .query(FamiliaInversion_.nombre
+                                        final idFamiliaProducto = dataBase
+                                            .familiaProductosBox
+                                            .query(FamiliaProd_.nombre
                                                 .equals(familia))
                                             .build()
                                             .findFirst()
                                             ?.id;
-                                        if (idFamiliaInversion != null) {
-                                          inversionCProvider.add(
+                                        final idTipoEmpaques = dataBase
+                                            .tipoEmpaquesBox
+                                            .query(TipoEmpaques_.tipo
+                                                .equals(tipoEmpaques))
+                                            .build()
+                                            .findFirst()
+                                            ?.id;
+                                        if (idFamiliaProducto != null && idTipoEmpaques != null) {
+                                          inversionProvider.addProductoSolicitado(
                                               widget.emprendimiento.id,
-                                              idFamiliaInversion);
+                                              widget.inversion.id,
+                                              idFamiliaProducto,
+                                              idTipoEmpaques
+                                              );
                                           await Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  const CotizacionCreada(),
+                                                  const ProductoInversionCreado(),
                                             ),
                                           );
                                         }
@@ -790,6 +1028,7 @@ class _AgregarCotizacionScreenState extends State<AgregarCotizacionScreen> {
                                     ),
                                   ),
                                 ),
+                                const SizedBox(height: 50),
                               ],
                             ),
                           ),

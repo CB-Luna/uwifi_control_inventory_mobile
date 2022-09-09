@@ -50,6 +50,8 @@ class CatalogProvider extends ChangeNotifier {
     await getUnidadMedida();
     await getAmbitoConsultoria();
     await getFasesEmp();
+    await getTipoEmpaque();
+    await getEstadoInversion();
     await getAreaCirculo();
     print("Proceso terminado");
     procesoterminado = true;

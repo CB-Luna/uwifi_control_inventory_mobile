@@ -1,20 +1,18 @@
-import 'dart:ffi';
-
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
+import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
-import 'package:bizpro_app/providers/database_providers/inversion_controller.dart';
 import 'package:bizpro_app/providers/database_providers/registro_jornada_controller.dart';
 import 'package:bizpro_app/screens/jornadas/registros/registro_jornada_actualizado.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
-import 'package:flutter/material.dart';
-import 'package:bizpro_app/theme/theme.dart';
 
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
+
 
 class EditarDetalleRegistroJornada extends StatefulWidget {
   final ProdSolicitado productoSol;
@@ -65,8 +63,6 @@ class _EditarDetalleRegistroJornadaState
   @override
   Widget build(BuildContext context) {
     print(widget.productoSol.costoEstimado.toString());
-    final inversionSProvider =
-        Provider.of<InversionController>(context);
     final registroJornadaProvider =
         Provider.of<RegistroJornadaController>(context);
     List<String> listFamilias = [];
@@ -729,7 +725,7 @@ class _EditarDetalleRegistroJornadaState
                                   child: FFButtonWidget(
                                     onPressed: () async {
                                       print("Desde inversion");
-                                      if (inversionSProvider
+                                      if (registroJornadaProvider
                                           .validateForm(formKey)) {
                                         if (productoController.text !=
                                                 widget.productoSol.producto ||

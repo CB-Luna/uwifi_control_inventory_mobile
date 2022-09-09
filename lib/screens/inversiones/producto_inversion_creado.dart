@@ -2,19 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:bizpro_app/theme/theme.dart';
-
 import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
-class InversionSugeridaCreada extends StatefulWidget {
-  const InversionSugeridaCreada({Key? key}) : super(key: key);
+class ProductoInversionCreado extends StatefulWidget {
+  const ProductoInversionCreado({Key? key}) : super(key: key);
 
   @override
-  State<InversionSugeridaCreada> createState() =>
-      _InversionSugeridaCreadaState();
+  State<ProductoInversionCreado> createState() => _ProductoInversionCreadoState();
 }
 
-class _InversionSugeridaCreadaState extends State<InversionSugeridaCreada> {
+class _ProductoInversionCreadoState extends State<ProductoInversionCreado> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -39,7 +37,7 @@ class _InversionSugeridaCreadaState extends State<InversionSugeridaCreada> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                       child: Text(
-                        '¡Inversión\nCreada!',
+                        '¡Producto de Inversión\nCreado!',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -52,7 +50,7 @@ class _InversionSugeridaCreadaState extends State<InversionSugeridaCreada> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: Text(
-                        'Listo, la inversión se agregará \na la lista de partidas.',
+                        'Listo, el producto se \nagregará a tu inversión.',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',

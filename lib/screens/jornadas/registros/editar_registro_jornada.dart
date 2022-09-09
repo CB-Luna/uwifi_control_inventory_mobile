@@ -36,7 +36,7 @@ class _EditarRegistroJornadaScreenState
           .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
       this,
     );
-    prodSolicitados = widget.inversion.prodSolicitado.toList();
+    prodSolicitados = widget.inversion.prodSolicitados.toList();
     for (var element in prodSolicitados) {
       totalProyecto += (element.costoEstimado == null
           ? 0

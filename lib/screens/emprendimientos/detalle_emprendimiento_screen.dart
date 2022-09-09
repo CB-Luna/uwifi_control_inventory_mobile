@@ -18,7 +18,7 @@ import 'package:bizpro_app/screens/jornadas/agregar_jornada1_screen.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada3_screen.dart';
 import 'package:bizpro_app/screens/productos/productos_emprendedor_screen.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
-import 'package:bizpro_app/screens/inversiones/inversion.dart';
+import 'package:bizpro_app/screens/inversiones/inversiones_screen.dart';
 import 'package:bizpro_app/screens/ventas/ventas_screen.dart';
 import 'package:bizpro_app/screens/jornadas/agregar_jornada4_screen.dart';
 import 'package:bizpro_app/screens/consultorias/agregar_consultoria_screen.dart';
@@ -161,32 +161,6 @@ class _DetalleEmprendimientoScreenState
                                   ),
                                 ),
                                 const Spacer(),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 15),
-                                  child: Container(
-                                    width: 45,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFF4672FF),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: InkWell(
-                                      onTap: () async {},
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: const [
-                                          FaIcon(
-                                            FontAwesomeIcons.fileArrowDown,
-                                            color: Colors.white,
-                                            size: 20,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
                                 Container(
                                   width: 45,
                                   height: 40,
@@ -1277,7 +1251,10 @@ class _DetalleEmprendimientoScreenState
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => InversionScreen(
+                                    builder: (context) => InversionesScreen(
+                                      inversiones: 
+                                            widget.emprendimiento
+                                            .inversiones.toList(),
                                         emprendimiento:
                                             widget.emprendimiento),
                                   ),

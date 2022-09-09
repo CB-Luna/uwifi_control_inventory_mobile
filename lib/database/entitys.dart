@@ -67,7 +67,8 @@ class ProdSolicitado {
   final familiaProducto = ToOne<FamiliaProd>();
   final unidadMedida = ToOne<UnidadMedida>();
   final tipoEmpaques = ToOne<TipoEmpaques>();
-  final inversiones = ToOne<Inversiones>();
+  final inversion = ToOne<Inversiones>();
+  final imagen = ToOne<Imagenes>();
   final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
 
@@ -103,7 +104,7 @@ class Inversiones {
   final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
   final emprendimiento = ToOne<Emprendimientos>();
-  final prodSolicitado = ToMany<ProdSolicitado>();
+  final prodSolicitados = ToMany<ProdSolicitado>();
   final estadoInversion = ToOne<EstadoInversion>();
   
   Inversiones({
@@ -1033,6 +1034,7 @@ class Imagenes {
   String imagenes;
   DateTime fechaRegistro;
   final tareas = ToMany<Tareas>();
+  final prodSolicitados = ToMany<ProdSolicitado>();
   final usuarios = ToMany<Usuarios>();
   Imagenes({
     this.id = 0,

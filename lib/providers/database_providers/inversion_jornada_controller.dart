@@ -1,4 +1,5 @@
 import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -29,7 +30,7 @@ class InversionJornadaController extends ChangeNotifier {
   void clearInformation()
   {
     fechaCompra = null;
-    porcentajePago = 0;
+    porcentajePago = 50;
     montoPagar = 0.0;
     saldo = 0.0;
     totalInversion = 0.0;
@@ -65,10 +66,12 @@ class InversionJornadaController extends ChangeNotifier {
   int add(int idEmprendimiento) {
     int idInversion = -1;
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
-    if (emprendimiento != null && inversion != null) {
+    final estadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Solicitada")).build().findFirst();
+    if (emprendimiento != null && inversion != null && estadoInversion != null) {
       final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
       final nuevaInstruccion = Bitacora(instrucciones: 'syncAddInversion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       inversion!.statusSync.target = nuevoSync;
+      inversion!.estadoInversion.target = estadoInversion;
       inversion!.emprendimiento.target = emprendimiento;
       inversion!.bitacora.add(nuevaInstruccion);
       idInversion = dataBase.inversionesBox.put(inversion!);
