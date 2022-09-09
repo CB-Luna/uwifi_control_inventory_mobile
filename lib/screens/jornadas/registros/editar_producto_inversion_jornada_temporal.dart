@@ -1,57 +1,99 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:lottie/lottie.dart';
+import 'package:number_text_input_formatter/number_text_input_formatter.dart';
 import 'package:provider/provider.dart';
+import 'package:bizpro_app/objectbox.g.dart';
+import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/theme/theme.dart';
+import 'package:bizpro_app/database/entitys.dart';
+
+import 'package:bizpro_app/providers/database_providers/producto_inversion_jornada_controller.dart';
+import 'package:bizpro_app/providers/database_providers/inversion_jornada_controller.dart';
+import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
+import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/objectbox.g.dart';
-import 'package:flutter/services.dart';
-import 'package:bizpro_app/theme/theme.dart';
-
-import 'package:bizpro_app/providers/database_providers/registro_jornada_controller.dart';
-import 'package:bizpro_app/screens/jornadas/registros/registro_jornada_creado.dart';
+import 'package:bizpro_app/models/temporals/productos_solicitados_temporal.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
-
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
-class AgregarRegistroJornadaScreen extends StatefulWidget {
-  final int idInversion;
+class EditarProductoInversionJornadaTemporal extends StatefulWidget {
+  final ProductosSolicitadosTemporal productoSol;
+  final Emprendimientos emprendimiento;
 
-  const AgregarRegistroJornadaScreen({
+  const EditarProductoInversionJornadaTemporal({
     Key? key,
-    required this.idInversion,
+    required this.productoSol, 
+    required this.emprendimiento,
   }) : super(key: key);
 
   @override
-  _AgregarRegistroJornadaScreenState createState() =>
-      _AgregarRegistroJornadaScreenState();
+  _EditarProductoInversionJornadaTemporalState createState() =>
+      _EditarProductoInversionJornadaTemporalState();
 }
 
-class _AgregarRegistroJornadaScreenState
-    extends State<AgregarRegistroJornadaScreen> {
+class _EditarProductoInversionJornadaTemporalState
+    extends State<EditarProductoInversionJornadaTemporal> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
-  String familia = "";
-  String unidadMedida = "";
+  String? newImagen;
+  String newFamilia = "";
+  String newTipoEmpaques = "";
+  String emprendedor = "";
+  List<String> listFamilias = [];
+  List<String> listTipoEmpaques = [];
+  late TextEditingController porcentajeController;
+  late TextEditingController productoController;
+  late TextEditingController descripcionController;
+  late TextEditingController marcaController;
+  late TextEditingController proveedorController;
+  late TextEditingController costoController;
+  late TextEditingController cantidadController;
+  XFile? image;
 
   @override
   void initState() {
     super.initState();
-    familia = "";
-    unidadMedida = "";
+    newImagen = widget.productoSol.imagen;
+    newFamilia = widget.productoSol.familiaProd;
+    newTipoEmpaques = widget.productoSol.tipoEmpaques;
+    productoController =
+        TextEditingController(text: widget.productoSol.producto);
+    descripcionController =
+        TextEditingController(text: widget.productoSol.descripcion);
+    marcaController =
+        TextEditingController(text: widget.productoSol.marcaSugerida);
+    proveedorController =
+        TextEditingController(text: widget.productoSol.proveedorSugerido);
+    costoController = TextEditingController(
+        text: currencyFormat.format(
+            widget.productoSol.costoEstimado?.toStringAsFixed(2) ?? ""));
+    cantidadController =
+        TextEditingController(text: widget.productoSol.cantidad.toString());
+    emprendedor = "";
+    if (widget.emprendimiento.emprendedor.target != null) {
+      emprendedor =
+          "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
+    }
+    listFamilias = [];
+    listTipoEmpaques = [];
+    dataBase.familiaProductosBox.getAll().forEach((element) {
+      listFamilias.add(element.nombre);
+    });
+    dataBase.tipoEmpaquesBox.getAll().forEach((element) {
+      listTipoEmpaques.add(element.tipo);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final registroJornadaController =
-        Provider.of<RegistroJornadaController>(context);
-    List<String> listFamilias = [];
-    List<String> listUnidadesMedida = [];
-    dataBase.familiaProductosBox.getAll().forEach((element) {
-      listFamilias.add(element.nombre);
-    });
-    dataBase.unidadesMedidaBox.getAll().forEach((element) {
-      listUnidadesMedida.add(element.unidadMedida);
-    });
+    final productoInversionJornadaController =
+        Provider.of<ProductoInversionJornadaController>(context);
+    final inversionJornadaController =
+        Provider.of<InversionJornadaController>(context);
+    porcentajeController = TextEditingController(text: inversionJornadaController.porcentajePago);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -96,8 +138,6 @@ class _AgregarRegistroJornadaScreenState
                                 ),
                                 child: InkWell(
                                   onTap: () async {
-                                    registroJornadaController
-                                        .clearInformation();
                                     Navigator.pop(context);
                                   },
                                   child: Row(
@@ -162,12 +202,92 @@ class _AgregarRegistroJornadaScreenState
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      FormField(builder: (state) {
+                                        return Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                                  5, 0, 5, 10),
+                                              child: InkWell(
+                                                onTap: () async {
+                                                  String? option = await showModalBottomSheet(
+                                                    context: context,
+                                                    builder: (_) => const CustomBottomSheet(),
+                                                  );
+
+                                                  if (option == null) return;
+
+                                                  final picker = ImagePicker();
+
+                                                  late final XFile? pickedFile;
+
+                                                  if (option == 'camera') {
+                                                    pickedFile = await picker.pickImage(
+                                                      source: ImageSource.camera,
+                                                      imageQuality: 100,
+                                                    );
+                                                  } else {
+                                                    pickedFile = await picker.pickImage(
+                                                      source: ImageSource.gallery,
+                                                      imageQuality: 100,
+                                                    );
+                                                  }
+
+                                                  if (pickedFile == null) {
+                                                    return;
+                                                  }
+
+                                                  setState(() {
+                                                    image = pickedFile;
+                                                    newImagen = image!.path;
+                                                  });
+                                                },
+                                                child: Container(
+                                                  width:
+                                                      MediaQuery.of(context).size.width * 0.9,
+                                                  height: 180,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius: BorderRadius.circular(8),
+                                                    border: Border.all(
+                                                      color: const Color(0xFF221573),
+                                                      width: 1.5,
+                                                    ),
+                                                  ),
+                                                  child: Stack(
+                                                    children: [
+                                                      Lottie.asset(
+                                                        'assets/lottie_animations/75669-animation-for-the-photo-optimization-process.json',
+                                                        width: MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.9,
+                                                        height: 180,
+                                                        fit: BoxFit.contain,
+                                                        animate: true,
+                                                      ),
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius.circular(8),
+                                                        child: getImage(image?.path),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },),
                                       FormField(
                                         builder: (state) {
                                           return Padding(
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(5, 0, 5, 10),
                                             child: DropDown(
+                                              initialOption: newFamilia,
                                               options: listFamilias,
                                               onChanged: (val) => setState(() {
                                                 if (listFamilias.isEmpty) {
@@ -178,7 +298,7 @@ class _AgregarRegistroJornadaScreenState
                                                         "Debes descargar los catálogos desde la sección de tu perfil"),
                                                   ));
                                                 } else {
-                                                  familia = val!;
+                                                  newFamilia = val!;
                                                 }
                                               }),
                                               width: double.infinity,
@@ -214,8 +334,8 @@ class _AgregarRegistroJornadaScreenState
                                           );
                                         },
                                         validator: (val) {
-                                          if (familia == "" ||
-                                              familia.isEmpty) {
+                                          if (newFamilia == "" ||
+                                              newFamilia.isEmpty) {
                                             return 'Para continuar, seleccione una familia.';
                                           }
                                           return null;
@@ -225,14 +345,11 @@ class _AgregarRegistroJornadaScreenState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          controller: productoController,
                                           textCapitalization:
                                               TextCapitalization.sentences,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
-                                          onChanged: (value) {
-                                            registroJornadaController.producto =
-                                                value;
-                                          },
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             labelText: 'Producto*',
@@ -298,14 +415,11 @@ class _AgregarRegistroJornadaScreenState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          controller: descripcionController,
                                           textCapitalization:
                                               TextCapitalization.sentences,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
-                                          onChanged: (value) {
-                                            registroJornadaController
-                                                .descripcion = value;
-                                          },
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             labelText: 'Descripción*',
@@ -371,14 +485,11 @@ class _AgregarRegistroJornadaScreenState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          controller: marcaController,
                                           textCapitalization:
                                               TextCapitalization.sentences,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
-                                          onChanged: (value) {
-                                            registroJornadaController
-                                                .marcaSugerida = value;
-                                          },
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             labelText: 'Marca sugerida',
@@ -438,14 +549,11 @@ class _AgregarRegistroJornadaScreenState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          controller: proveedorController,
                                           textCapitalization:
                                               TextCapitalization.sentences,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
-                                          onChanged: (value) {
-                                            registroJornadaController
-                                                .proveedorSugerido = value;
-                                          },
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             labelText: 'Proveedor sugerido',
@@ -508,9 +616,10 @@ class _AgregarRegistroJornadaScreenState
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(5, 0, 5, 10),
                                             child: DropDown(
-                                              options: listUnidadesMedida,
+                                              initialOption: newTipoEmpaques,
+                                              options: listTipoEmpaques,
                                               onChanged: (val) => setState(() {
-                                                if (listUnidadesMedida
+                                                if (listTipoEmpaques
                                                     .isEmpty) {
                                                   snackbarKey.currentState
                                                       ?.showSnackBar(
@@ -519,7 +628,7 @@ class _AgregarRegistroJornadaScreenState
                                                         "Debes descargar los catálogos desde la sección de tu perfil"),
                                                   ));
                                                 } else {
-                                                  unidadMedida = val!;
+                                                  newTipoEmpaques = val!;
                                                 }
                                               }),
                                               width: double.infinity,
@@ -534,7 +643,7 @@ class _AgregarRegistroJornadaScreenState
                                                     fontWeight:
                                                         FontWeight.normal,
                                                   ),
-                                              hintText: 'Unidad de medida*',
+                                              hintText: 'Tipo de empaques*',
                                               icon: const Icon(
                                                 Icons
                                                     .keyboard_arrow_down_rounded,
@@ -555,9 +664,9 @@ class _AgregarRegistroJornadaScreenState
                                           );
                                         },
                                         validator: (val) {
-                                          if (unidadMedida == "" ||
-                                              unidadMedida.isEmpty) {
-                                            return 'Para continuar, seleccione una unidad de medida.';
+                                          if (newTipoEmpaques == "" ||
+                                              newTipoEmpaques.isEmpty) {
+                                            return 'Para continuar, seleccione un tipo de empaques.';
                                           }
                                           return null;
                                         },
@@ -566,12 +675,9 @@ class _AgregarRegistroJornadaScreenState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          controller: cantidadController,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
-                                          onChanged: (value) {
-                                            registroJornadaController.cantidad =
-                                                value;
-                                          },
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             labelText: 'Cantidad*',
@@ -633,6 +739,7 @@ class _AgregarRegistroJornadaScreenState
                                             if (val == null || val.isEmpty) {
                                               return 'Para continuar, ingrese una cantidad.';
                                             }
+
                                             return null;
                                           },
                                         ),
@@ -641,15 +748,9 @@ class _AgregarRegistroJornadaScreenState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          controller: costoController,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
-                                          onChanged: (value) {
-                                            registroJornadaController
-                                                    .costoEstimado =
-                                                currencyFormat
-                                                    .getUnformattedValue()
-                                                    .toStringAsFixed(2);
-                                          },
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             labelText: 'Costo estimado*',
@@ -708,10 +809,88 @@ class _AgregarRegistroJornadaScreenState
                                           maxLines: 1,
                                           validator: (val) {
                                             if (val == null || val.isEmpty) {
-                                              return 'Para continuar, ingrese un costo estimado.';
+                                              return 'Para continuar, ingrese un costo sugerido.';
                                             }
+
                                             return null;
                                           },
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(5, 0, 5, 10),
+                                        child: TextFormField(
+                                          controller: porcentajeController,
+                                          readOnly: true,
+                                          enabled: false,
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            suffixText: "%",
+                                            suffixStyle: AppTheme.of(context)
+                                              .title3
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                            labelText: 'Porcentaje de pago*',
+                                            labelStyle: AppTheme.of(context)
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Montserrat',
+                                                  color: AppTheme.of(context)
+                                                      .secondaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            hintText: 'Ingresa porcentaje de pago...',
+                                            hintStyle: AppTheme.of(context)
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  color: AppTheme.of(context)
+                                                      .secondaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            filled: true,
+                                            fillColor: const Color(0x49FFFFFF),
+                                          ),
+                                          keyboardType: TextInputType.number,
+                                          inputFormatters: [
+                                              FilteringTextInputFormatter.digitsOnly,
+                                              PercentageTextInputFormatter()
+                                          ],
+                                          style: AppTheme.of(context)
+                                              .title3
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                          maxLines: 1,
                                         ),
                                       ),
                                     ],
@@ -722,37 +901,73 @@ class _AgregarRegistroJornadaScreenState
                                       0, 0, 0, 20),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      print("Desde registro");
-                                      if (registroJornadaController
+                                      if (productoInversionJornadaController
                                           .validateForm(formKey)) {
-                                        final idFamiliaProd = dataBase
-                                            .familiaProductosBox
-                                            .query(FamiliaProd_.nombre
-                                                .equals(familia))
-                                            .build()
-                                            .findFirst()
-                                            ?.id;
-                                        final idUnidadMedida = dataBase
-                                            .unidadesMedidaBox
-                                            .query(UnidadMedida_.unidadMedida
-                                                .equals(unidadMedida))
-                                            .build()
-                                            .findFirst()
-                                            ?.id;
-                                        if (idFamiliaProd != null &&
-                                            idUnidadMedida != null) {
-                                          registroJornadaController.addSingle(
-                                            widget.idInversion,
-                                            idFamiliaProd,
-                                            idUnidadMedida,
-                                          );
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const RegistroJornadaCreado(),
-                                            ),
-                                          );
+                                        if (productoController.text !=
+                                                widget.productoSol.producto ||
+                                            marcaController.text !=
+                                                widget.productoSol
+                                                    .marcaSugerida ||
+                                            descripcionController.text !=
+                                                widget
+                                                    .productoSol.descripcion ||
+                                            proveedorController.text !=
+                                                widget.productoSol
+                                                    .proveedorSugerido ||
+                                            costoController.text.substring(1) !=
+                                                widget.productoSol.costoEstimado
+                                                    ?.toStringAsFixed(2) ||
+                                            cantidadController.text !=
+                                                widget.productoSol.cantidad
+                                                    .toString() ||
+                                            newFamilia !=
+                                                widget
+                                                    .productoSol.familiaProd ||
+                                            newTipoEmpaques !=
+                                                widget
+                                                    .productoSol.tipoEmpaques ||
+                                            newImagen != 
+                                                widget
+                                                    .productoSol.imagen) {
+                                          final newIdFamiliaProd = dataBase
+                                              .familiaProductosBox
+                                              .query(FamiliaProd_.nombre
+                                                  .equals(newFamilia))
+                                              .build()
+                                              .findFirst()
+                                              ?.id;
+                                          final newIdTipoEmpaques = dataBase
+                                              .tipoEmpaquesBox
+                                              .query(TipoEmpaques_.tipo
+                                                  .equals(newTipoEmpaques))
+                                              .build()
+                                              .findFirst()
+                                              ?.id;
+                                          if (newIdFamiliaProd != null &&
+                                              newIdTipoEmpaques != null) {
+                                            productoInversionJornadaController
+                                                .updateTemporal(
+                                              widget.productoSol.id,
+                                              productoController.text,
+                                              marcaController.text,
+                                              descripcionController.text,
+                                              proveedorController.text,
+                                              costoController.text.substring(1),
+                                              cantidadController.text,
+                                              newIdFamiliaProd,
+                                              newFamilia,
+                                              newIdTipoEmpaques,
+                                              newTipoEmpaques,
+                                              newImagen,
+                                              widget.productoSol.fechaRegistro,
+                                            );
+                                            Navigator.pop(context);
+                                            snackbarKey.currentState
+                                                ?.showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "¡Registro actualizado éxitosamente!"),
+                                            ));
+                                          }
                                         }
                                       } else {
                                         await showDialog(
@@ -777,7 +992,7 @@ class _AgregarRegistroJornadaScreenState
                                         return;
                                       }
                                     },
-                                    text: 'Agregar',
+                                    text: 'Actualizar',
                                     icon: const Icon(
                                       Icons.check_rounded,
                                       color: Colors.white,

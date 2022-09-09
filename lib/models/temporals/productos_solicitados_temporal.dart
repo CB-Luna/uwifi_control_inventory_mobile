@@ -9,8 +9,9 @@ class ProductosSolicitadosTemporal {
     final int cantidad;
     final int idFamiliaProd;
     final String familiaProd;
-    final int idUnidadMedida;
-    final String unidadMedida;
+    final int idTipoEmpaques;
+    final String tipoEmpaques;
+    final String? imagen;
     final DateTime fechaRegistro;
 
     ProductosSolicitadosTemporal({
@@ -23,8 +24,9 @@ class ProductosSolicitadosTemporal {
       required this.cantidad,
       required this.idFamiliaProd,
       required this.familiaProd,
-      required this.idUnidadMedida,
-      required this.unidadMedida,
+      required this.idTipoEmpaques,
+      required this.tipoEmpaques,
+      this.imagen,
       required this.fechaRegistro,
     });
 

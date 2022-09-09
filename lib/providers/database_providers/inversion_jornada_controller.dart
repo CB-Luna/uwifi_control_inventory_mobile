@@ -12,7 +12,7 @@ class InversionJornadaController extends ChangeNotifier {
  
   //Inversiones
   DateTime? fechaCompra;
-  int porcentajePago = 0;
+  String porcentajePago = "";
   double montoPagar = 0.0;
   double saldo = 0.0;
   double totalInversion = 0.0;
@@ -30,7 +30,7 @@ class InversionJornadaController extends ChangeNotifier {
   void clearInformation()
   {
     fechaCompra = null;
-    porcentajePago = 50;
+    porcentajePago = "";
     montoPagar = 0.0;
     saldo = 0.0;
     totalInversion = 0.0;
@@ -41,7 +41,7 @@ class InversionJornadaController extends ChangeNotifier {
 
   void addTemporal(int idEmprendimiento) {
     final inversionTemporal = Inversiones(
-      porcentajePago: porcentajePago,
+      porcentajePago: int.parse(porcentajePago),
       montoPagar: montoPagar,
       saldo: saldo,
       totalInversion: totalInversion,

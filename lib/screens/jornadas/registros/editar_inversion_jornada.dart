@@ -1,33 +1,32 @@
 import 'dart:io';
+import 'package:bizpro_app/screens/jornadas/registros/agregar_producto_inversion_jornada.dart';
+import 'package:bizpro_app/screens/jornadas/registros/editar_producto_inversion_jornada.dart';
+import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/models/temporals/productos_solicitados_temporal.dart';
-import 'package:bizpro_app/providers/database_providers/registro_jornada_controller.dart';
-import 'package:bizpro_app/screens/jornadas/registros/agregar_registro_jornada_temporal.dart';
-import 'package:bizpro_app/screens/jornadas/registros/editar_detalle_registro_jornada_temporal.dart';
-import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
 import 'package:bizpro_app/theme/theme.dart';
 
-class RegistroJornadaTemporalScreen extends StatefulWidget {
-  final Emprendimientos emprendimiento;
+class EditarInversionJornadaScreen extends StatefulWidget {
+  final Inversiones inversion;
 
-  const RegistroJornadaTemporalScreen({
+  const EditarInversionJornadaScreen({
     Key? key,
-    required this.emprendimiento,
+    required this.inversion,
   }) : super(key: key);
 
   @override
-  _RegistroJornadaTemporalScreenState createState() =>
-      _RegistroJornadaTemporalScreenState();
+  _EditarInversionJornadaScreenState createState() =>
+      _EditarInversionJornadaScreenState();
 }
 
-class _RegistroJornadaTemporalScreenState
-    extends State<RegistroJornadaTemporalScreen> with TickerProviderStateMixin {
+class _EditarInversionJornadaScreenState
+    extends State<EditarInversionJornadaScreen> with TickerProviderStateMixin {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  double totalProyecto = 0.0;
+  List<ProdSolicitado> prodSolicitados = [];
 
   @override
   void initState() {
@@ -37,22 +36,16 @@ class _RegistroJornadaTemporalScreenState
           .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
       this,
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final registroJornadaController =
-        Provider.of<RegistroJornadaController>(context);
-    List<ProductosSolicitadosTemporal> inversionJornada =
-        registroJornadaController.productosSolicitados;
-    List<ProductosSolicitadosTemporal> prodSolicitados = [];
-    double totalProyecto = 0;
-    for (var element in inversionJornada) {
-      prodSolicitados.add(element);
+    prodSolicitados = widget.inversion.prodSolicitados.toList();
+    for (var element in prodSolicitados) {
       totalProyecto += (element.costoEstimado == null
           ? 0
           : element.costoEstimado! * element.cantidad);
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -189,7 +182,8 @@ class _RegistroJornadaTemporalScreenState
                                         image: DecorationImage(
                                           fit: BoxFit.cover,
                                           image: Image.file(
-                                            File(widget.emprendimiento.imagen),
+                                            File(widget.inversion.emprendimiento
+                                                .target!.imagen),
                                             fit: BoxFit.contain,
                                           ).image,
                                         ),
@@ -243,7 +237,10 @@ class _RegistroJornadaTemporalScreenState
                                                           MainAxisSize.max,
                                                       children: [
                                                         Text(
-                                                          widget.emprendimiento
+                                                          widget
+                                                              .inversion
+                                                              .emprendimiento
+                                                              .target!
                                                               .nombre,
                                                           style: AppTheme.of(
                                                                   context)
@@ -467,11 +464,14 @@ class _RegistroJornadaTemporalScreenState
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      const AgregarRegistroJornadaTemporal(),
+                                                      AgregarProductoInversionJornadaScreen(
+                                                    idInversion:
+                                                        widget.inversion.id,
+                                                  ),
                                                 ),
                                               );
                                             },
-                                            text: 'Inversión',
+                                            text: 'Producto',
                                             icon: const Icon(
                                               Icons.add,
                                               size: 15,
@@ -517,7 +517,7 @@ class _RegistroJornadaTemporalScreenState
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        EditarDetalleRegistroJornadaTemporal(
+                                                        EditarProductoInversionJornada(
                                                             productoSol:
                                                                 prodSolicitado),
                                                   ),
@@ -634,7 +634,7 @@ class _RegistroJornadaTemporalScreenState
                                                                               ),
                                                                         ),
                                                                         Text(
-                                                                          'Und: ${prodSolicitado.unidadMedida}',
+                                                                          'Und: ${prodSolicitado.unidadMedida.target!.unidadMedida}',
                                                                           style: AppTheme.of(context)
                                                                               .subtitle1
                                                                               .override(
@@ -670,7 +670,7 @@ class _RegistroJornadaTemporalScreenState
                                                                             MainAxisAlignment.spaceBetween,
                                                                         children: [
                                                                           Text(
-                                                                            prodSolicitado.familiaProd,
+                                                                            prodSolicitado.familiaProducto.target!.nombre,
                                                                             style: AppTheme.of(context).bodyText1.override(
                                                                                   fontFamily: AppTheme.of(context).bodyText1Family,
                                                                                   color: AppTheme.of(context).secondaryText,

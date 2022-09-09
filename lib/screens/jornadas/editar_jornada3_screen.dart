@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:bizpro_app/screens/jornadas/registros/editar_registro_jornada.dart';
+import 'package:bizpro_app/screens/jornadas/registros/editar_inversion_jornada.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_imagenes_completas.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_validacion_eliminar_imagen.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_eliminar_imagen.dart';
@@ -24,7 +24,7 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart
 import 'package:bizpro_app/providers/database_providers/jornada_controller.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_checkbox_group.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:bizpro_app/screens/jornadas/registros/registro_jornada_temporal_screen.dart';
+import 'package:bizpro_app/screens/jornadas/registros/inversion_jornada_temporal_screen.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
@@ -1164,13 +1164,13 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    EditarRegistroJornadaScreen(
+                                                    EditarInversionJornadaScreen(
                                                         inversion: inversion!),
                                               ),
                                             );
                                           }
                                         },
-                                        text: 'Editar Registro',
+                                        text: 'Editar Inversión',
                                         options: FFButtonOptions(
                                           width: 150,
                                           height: 50,

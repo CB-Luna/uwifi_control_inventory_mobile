@@ -1,3 +1,4 @@
+import 'package:bizpro_app/screens/inversiones/tabs/cotizacion_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
@@ -128,7 +129,7 @@ class _MainTabOpcionesScreenState extends State<MainTabOpcionesScreen>
                       ),
                       Expanded(
                         child: DefaultTabController(
-                          length: 1,
+                          length: 2,
                           initialIndex: 0,
                           child: Column(
                             children: [
@@ -142,6 +143,9 @@ class _MainTabOpcionesScreenState extends State<MainTabOpcionesScreen>
                                   Tab(
                                     text: 'Inversión',
                                   ),
+                                  Tab(
+                                    text: 'Cotización',
+                                  ),
                                 ],
                               ),
                               Expanded(
@@ -150,6 +154,9 @@ class _MainTabOpcionesScreenState extends State<MainTabOpcionesScreen>
                                     InversionTab(
                                         emprendimiento: widget.emprendimiento,
                                         inversion: widget.inversion,),
+                                    CotizacionTab(
+                                        emprendimiento: widget.emprendimiento,
+                                        ),
                                   ],
                                 ),
                               ),

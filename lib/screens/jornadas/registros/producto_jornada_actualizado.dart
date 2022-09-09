@@ -5,14 +5,16 @@ import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
-class RegistroJornadaCreado extends StatefulWidget {
-  const RegistroJornadaCreado({Key? key}) : super(key: key);
+class ProductoJornadaActualizado extends StatefulWidget {
+  const ProductoJornadaActualizado({Key? key}) : super(key: key);
 
   @override
-  State<RegistroJornadaCreado> createState() => _RegistroJornadaCreadoState();
+  State<ProductoJornadaActualizado> createState() =>
+      _ProductoJornadaActualizadoState();
 }
 
-class _RegistroJornadaCreadoState extends State<RegistroJornadaCreado> {
+class _ProductoJornadaActualizadoState
+    extends State<ProductoJornadaActualizado> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -37,7 +39,7 @@ class _RegistroJornadaCreadoState extends State<RegistroJornadaCreado> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                       child: Text(
-                        '¡Registro de Jornada\nCreado!',
+                        '¡Producto de Jornada\nActualizado!',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -50,7 +52,7 @@ class _RegistroJornadaCreadoState extends State<RegistroJornadaCreado> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: Text(
-                        'Listo, el registro se agregará a tu\nlista de registros.',
+                        'Listo, el producto se actualizará a tu\nlista de productos.',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',

@@ -9,9 +9,9 @@ import 'package:badges/badges.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
-import 'package:bizpro_app/providers/database_providers/registro_jornada_controller.dart';
+import 'package:bizpro_app/providers/database_providers/producto_inversion_jornada_controller.dart';
 import 'package:bizpro_app/screens/jornadas/jornada_creada.dart';
-import 'package:bizpro_app/screens/jornadas/registros/registro_jornada_temporal_screen.dart';
+import 'package:bizpro_app/screens/jornadas/registros/inversion_jornada_temporal_screen.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_imagenes_completas.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
@@ -78,10 +78,10 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
     final jornadaProvider = Provider.of<JornadaController>(context);
     final inversionJornadaProvider =
         Provider.of<InversionJornadaController>(context);
-    final registroJornadaController =
-        Provider.of<RegistroJornadaController>(context);
+    final productoInversionJornadaController =
+        Provider.of<ProductoInversionJornadaController>(context);
     String totalProductos =
-        registroJornadaController.productosSolicitados.length.toString();
+        productoInversionJornadaController.productosSolicitados.length.toString();
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -162,7 +162,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                         onTap: () async {
                                           inversionJornadaProvider
                                               .clearInformation();
-                                          registroJornadaController
+                                          productoInversionJornadaController
                                               .clearInformation();
                                           Navigator.pop(context);
                                         },
@@ -1008,24 +1008,17 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                       elevation: 4,
                                       child: FFButtonWidget(
                                         onPressed: () async {
-                                          if (inversionJornadaProvider
-                                                  .inversion ==
-                                              null) {
-                                            inversionJornadaProvider
-                                                .addTemporal(
-                                                    widget.emprendimiento.id);
-                                          }
                                           await Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  RegistroJornadaTemporalScreen(
+                                                  InversionJornadaTemporalScreen(
                                                       emprendimiento: widget
                                                           .emprendimiento),
                                             ),
                                           );
                                         },
-                                        text: 'Agregar Registro',
+                                        text: 'Agregar Inversión',
                                         options: FFButtonOptions(
                                           width: 150,
                                           height: 50,
@@ -1067,7 +1060,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                     .findFirst()
                                     ?.id;
                                 if (idProyecto != null) {
-                                  registroJornadaController.add(
+                                  productoInversionJornadaController.add(
                                       widget.emprendimiento.id,
                                       inversionJornadaProvider
                                           .add(widget.emprendimiento.id));

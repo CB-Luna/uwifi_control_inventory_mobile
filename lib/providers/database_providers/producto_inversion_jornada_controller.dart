@@ -6,7 +6,7 @@ import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:uuid/uuid.dart';
 
-class RegistroJornadaController extends ChangeNotifier {
+class ProductoInversionJornadaController extends ChangeNotifier {
 
   List<ProductosSolicitadosTemporal> productosSolicitados = [];
 
@@ -19,6 +19,8 @@ class RegistroJornadaController extends ChangeNotifier {
   String proveedorSugerido = '';
   String costoEstimado = '';
   String cantidad = '';
+  String imagen = '';
+
   var uuid = Uuid();
 
   TextEditingController textControllerImagen = TextEditingController();
@@ -37,11 +39,12 @@ class RegistroJornadaController extends ChangeNotifier {
     descripcion = '';
     costoEstimado = '';
     cantidad = '';
+    imagen = '';
     productosSolicitados.clear();
     notifyListeners();
   }
 
-  void addTemporal(int idFamiliaProd, String familiaProd, int idUnidadMedida, String unidadMedida) {
+  void addTemporal(int idFamiliaProd, String familiaProd, int idTipoEmpaques, String tipoEmpaques) {
     //Se crea un Id temporal
     final id = uuid.v4();
     final nuevoProductoSolicitado = ProductosSolicitadosTemporal(
@@ -54,8 +57,9 @@ class RegistroJornadaController extends ChangeNotifier {
       cantidad: int.parse(cantidad),
       idFamiliaProd: idFamiliaProd,
       familiaProd: familiaProd,
-      idUnidadMedida: idUnidadMedida,
-      unidadMedida: unidadMedida,
+      idTipoEmpaques: idTipoEmpaques,
+      tipoEmpaques: tipoEmpaques,
+      imagen: imagen,
       fechaRegistro: DateTime.now(),
     );
     productosSolicitados.add(nuevoProductoSolicitado);
@@ -65,8 +69,8 @@ class RegistroJornadaController extends ChangeNotifier {
 
   void updateTemporal(String idProdSolicitadoTemp, String newProducto, String? newMarcaSugerida, 
     String newDescripcion, String? newProveedor, String? newCostoEstimado, String newCantidad,
-    int newIdFamiliaProd, String newFamiliaProd, int newIdUnidadMedida, String newUnidadMedida, 
-    DateTime fechaRegistro) {
+    int newIdFamiliaProd, String newFamiliaProd, int newIdTipoEmpaques, String newTipoEmpaques, 
+    String? newImagen, DateTime fechaRegistro) {
     final updateProductoSolicitado = ProductosSolicitadosTemporal(
         id: idProdSolicitadoTemp,
         producto: newProducto,
@@ -77,8 +81,9 @@ class RegistroJornadaController extends ChangeNotifier {
         cantidad: int.parse(newCantidad),
         idFamiliaProd: newIdFamiliaProd,
         familiaProd: newFamiliaProd,
-        idUnidadMedida: newIdUnidadMedida,
-        unidadMedida: newUnidadMedida,
+        idTipoEmpaques: newIdTipoEmpaques,
+        tipoEmpaques: newTipoEmpaques,
+        imagen: newImagen,
         fechaRegistro: fechaRegistro,
       );
       //Se actualiza el registro
@@ -95,11 +100,11 @@ class RegistroJornadaController extends ChangeNotifier {
 
 void update(int id, String newProducto, String? newMarcaSugerida, String newDescripcion, 
     String? newProveedor, String? newCostoEstimado, String newCantidad, int newIdFamiliaProd, 
-    int newIdUnidadMedida) {
+    int newIdTipoEmpaques) {
     var updateProdSolicitado = dataBase.productosSolicitadosBox.get(id);
     final updateFamiliaProd = dataBase.familiaProductosBox.get(newIdFamiliaProd);
-    final updateUnidadMedida = dataBase.unidadesMedidaBox.get(newIdUnidadMedida);
-    if (updateProdSolicitado !=  null && updateFamiliaProd != null && updateUnidadMedida != null) {
+    final updateTipoEmpaques = dataBase.tipoEmpaquesBox.get(newIdTipoEmpaques);
+    if (updateProdSolicitado !=  null && updateFamiliaProd != null && updateTipoEmpaques != null) {
       final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateProductoSolicitado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       updateProdSolicitado.producto = newProducto;
       updateProdSolicitado.marcaSugerida = newMarcaSugerida;
@@ -107,7 +112,7 @@ void update(int id, String newProducto, String? newMarcaSugerida, String newDesc
       updateProdSolicitado.costoEstimado = newCostoEstimado == null ? null : double.parse(newCostoEstimado);
       updateProdSolicitado.cantidad = int.parse(newCantidad);
       updateProdSolicitado.familiaProducto.target = updateFamiliaProd;
-      updateProdSolicitado.unidadMedida.target = updateUnidadMedida;
+      updateProdSolicitado.tipoEmpaques.target = updateTipoEmpaques;
       final statusSyncJornada = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateProdSolicitado.statusSync.target!.id)).build().findUnique();
       if (statusSyncJornada != null) {
         statusSyncJornada.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del prod Solicitado
@@ -135,14 +140,14 @@ void add(int idEmprendimiento, int idInversion) {
         cantidad: productosSolicitados[i].cantidad,
         fechaRegistro: productosSolicitados[i].fechaRegistro,
       );
-      //Se recupera la familia y unidad medida
+      //Se recupera la familia y tipoEmpaques
       final familiaProd = dataBase.familiaProductosBox.get(productosSolicitados[i].idFamiliaProd);
-      final unidadMedida = dataBase.unidadesMedidaBox.get(productosSolicitados[i].idUnidadMedida);
-      if (familiaProd != null && unidadMedida != null) {
+      final tipoEmpaques = dataBase.tipoEmpaquesBox.get(productosSolicitados[i].idTipoEmpaques);
+      if (familiaProd != null && tipoEmpaques != null) {
         final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
         final nuevaInstruccion = Bitacora(instrucciones: 'syncAddProductoSolicitado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
         nuevoProdSolicitado.familiaProducto.target = familiaProd;
-        nuevoProdSolicitado.unidadMedida.target = unidadMedida;
+        nuevoProdSolicitado.tipoEmpaques.target = tipoEmpaques;
         nuevoProdSolicitado.statusSync.target = nuevoSync;
         nuevoProdSolicitado.inversion.target = inversion;
         nuevoProdSolicitado.bitacora.add(nuevaInstruccion);
@@ -157,7 +162,7 @@ void add(int idEmprendimiento, int idInversion) {
   }
   }
 
-void addSingle(int idInversion, int idFamiliaProd, int idUnidadMedida) {
+void addSingle(int idInversion, int idFamiliaProd, int idTipoEmpaques) {
   final inversion = dataBase.inversionesBox.get(idInversion);
   if (inversion != null) {
       final nuevoProdSolicitado = ProdSolicitado(
@@ -169,15 +174,15 @@ void addSingle(int idInversion, int idFamiliaProd, int idUnidadMedida) {
         costoEstimado: double.parse(costoEstimado),
         cantidad: int.parse(cantidad),
       );
-      //Se recupera la familia y unidad medida
+      //Se recupera la familia y tipo de empaques
       final familiaProd = dataBase.familiaProductosBox.get(idFamiliaProd);
-      final unidadMedida = dataBase.unidadesMedidaBox.get(idUnidadMedida);
-      if (familiaProd != null && unidadMedida != null) {
+      final tipoEmpaques = dataBase.tipoEmpaquesBox.get(idTipoEmpaques);
+      if (familiaProd != null && tipoEmpaques != null) {
         final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
         //TODO: Agregar instrucción correcta
         // final nuevaInstruccion = Bitacora(instrucciones: 'syncAddProductoSolicitado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
         nuevoProdSolicitado.familiaProducto.target = familiaProd;
-        nuevoProdSolicitado.unidadMedida.target = unidadMedida;
+        nuevoProdSolicitado.tipoEmpaques.target = tipoEmpaques;
         nuevoProdSolicitado.statusSync.target = nuevoSync;
         nuevoProdSolicitado.inversion.target = inversion;
         // nuevoProdSolicitado.bitacora.add(nuevaInstruccion);

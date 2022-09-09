@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:bizpro_app/screens/inversiones/agregar_producto_cotizacion_screen.dart';
-import 'package:bizpro_app/screens/inversiones/agregar_producto_inversion_screen.dart';
 import 'package:bizpro_app/util/util.dart';
 import 'package:flutter/material.dart';
 
@@ -384,55 +383,6 @@ with TickerProviderStateMixin {
                                     .bodyText1Family,
                                 fontSize: 16,
                               ),
-                        ),
-                        FFButtonWidget(
-                          onPressed:
-                              () async {
-                            await Navigator
-                                .push(
-                              context,
-                              MaterialPageRoute(
-                                builder:
-                                    (context) =>
-                                        AgregarProductoCotizacionScreen(emprendimiento: widget.emprendimiento,),
-                              ),
-                            );
-                          },
-                          text: 'Cotización',
-                          icon: const Icon(
-                            Icons.add,
-                            size: 15,
-                          ),
-                          options:
-                              FFButtonOptions(
-                            width: 150,
-                            height: 35,
-                            color: AppTheme
-                                    .of(context)
-                                .secondaryText,
-                            textStyle:
-                                AppTheme.of(
-                                        context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily:
-                                          AppTheme.of(context).subtitle2Family,
-                                      color: Colors
-                                          .white,
-                                      fontSize:
-                                          15,
-                                    ),
-                            borderSide:
-                                const BorderSide(
-                              color: Colors
-                                  .transparent,
-                              width: 1,
-                            ),
-                            borderRadius:
-                                BorderRadius
-                                    .circular(
-                                        8),
-                          ),
                         ),
                       ],
                     ),

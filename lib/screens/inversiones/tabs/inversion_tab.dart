@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:bizpro_app/screens/inversiones/agregar_producto_inversion_screen.dart';
 import 'package:bizpro_app/screens/inversiones/editar_producto_inversion.dart';
+import 'package:bizpro_app/screens/jornadas/registros/agregar_producto_inversion_jornada.dart';
+import 'package:bizpro_app/screens/jornadas/registros/editar_producto_inversion_jornada.dart';
 import 'package:bizpro_app/util/util.dart';
 import 'package:flutter/material.dart';
 
@@ -390,17 +392,17 @@ with TickerProviderStateMixin {
                         FFButtonWidget(
                           onPressed:
                               () async {
-                            await Navigator
+                                await Navigator
                                 .push(
-                              context,
-                              MaterialPageRoute(
-                                builder:
-                                    (context) =>
-                                        AgregarProductoInversionScreen(
-                                          emprendimiento: widget.emprendimiento,
-                                          inversion: widget.inversion,),
-                              ),
-                            );
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) =>
+                                            AgregarProductoInversionScreen(
+                                              emprendimiento: widget.emprendimiento,
+                                              inversion: widget.inversion,),
+                                  ),
+                                );
                           },
                           text: 'Producto',
                           icon: const Icon(
@@ -452,17 +454,17 @@ with TickerProviderStateMixin {
                           final productoSolicitado = prodSolicitado[index];
                           return InkWell(
                             onTap: () async {
-                              await Navigator
+                                await Navigator
                                 .push(
-                              context,
-                              MaterialPageRoute(
-                                builder:
-                                    (context) =>
-                                        EditarProductoInversionScreen(
-                                          inversion: widget.inversion,
-                                          prodSolicitado: productoSolicitado,),
-                              ),
-                            );
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) =>
+                                            EditarProductoInversionScreen(
+                                              inversion: widget.inversion,
+                                              prodSolicitado: productoSolicitado,),
+                                  ),
+                                );
                             },
                             child: Padding(
                               padding:

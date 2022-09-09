@@ -1,76 +1,74 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:lottie/lottie.dart';
+import 'package:number_text_input_formatter/number_text_input_formatter.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/objectbox.g.dart';
-import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/theme/theme.dart';
-
-import 'package:bizpro_app/providers/database_providers/registro_jornada_controller.dart';
-
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/models/temporals/productos_solicitados_temporal.dart';
-import 'package:bizpro_app/screens/widgets/drop_down.dart';
+import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/objectbox.g.dart';
+import 'package:bizpro_app/database/entitys.dart';
+import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
+import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:flutter/services.dart';
+import 'package:bizpro_app/providers/database_providers/inversion_jornada_controller.dart';
+import 'package:bizpro_app/providers/database_providers/producto_inversion_jornada_controller.dart';
+import 'package:bizpro_app/screens/widgets/drop_down.dart';
 
-class EditarDetalleRegistroJornadaTemporal extends StatefulWidget {
-  final ProductosSolicitadosTemporal productoSol;
-
-  const EditarDetalleRegistroJornadaTemporal({
-    Key? key,
-    required this.productoSol,
+class AgregarProductoInversionJornadaTemporal extends StatefulWidget {
+  final Emprendimientos emprendimiento;
+  const AgregarProductoInversionJornadaTemporal({
+    Key? key, 
+    required this.emprendimiento,
   }) : super(key: key);
 
   @override
-  _EditarDetalleRegistroJornadaTemporalState createState() =>
-      _EditarDetalleRegistroJornadaTemporalState();
+  _AgregarProductoInversionJornadaTemporalState createState() =>
+      _AgregarProductoInversionJornadaTemporalState();
 }
 
-class _EditarDetalleRegistroJornadaTemporalState
-    extends State<EditarDetalleRegistroJornadaTemporal> {
+class _AgregarProductoInversionJornadaTemporalState
+    extends State<AgregarProductoInversionJornadaTemporal> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
-  String newFamilia = "";
-  String newUnidadMedida = "";
-  late TextEditingController productoController;
-  late TextEditingController descripcionController;
-  late TextEditingController marcaController;
-  late TextEditingController proveedorController;
-  late TextEditingController costoController;
-  late TextEditingController cantidadController;
+  TextEditingController porcentajeController = TextEditingController(text: "");
+  String familia = "";
+  String tipoEmpaques = "";
+  String emprendedor = "";
+  XFile? image;
+  List<String> listFamilias = [];
+  List<String> listTipoEmpaques = [];
 
   @override
   void initState() {
     super.initState();
-    newFamilia = widget.productoSol.familiaProd;
-    newUnidadMedida = widget.productoSol.unidadMedida;
-    productoController =
-        TextEditingController(text: widget.productoSol.producto);
-    descripcionController =
-        TextEditingController(text: widget.productoSol.descripcion);
-    marcaController =
-        TextEditingController(text: widget.productoSol.marcaSugerida);
-    proveedorController =
-        TextEditingController(text: widget.productoSol.proveedorSugerido);
-    costoController = TextEditingController(
-        text: currencyFormat.format(
-            widget.productoSol.costoEstimado?.toStringAsFixed(2) ?? ""));
-    cantidadController =
-        TextEditingController(text: widget.productoSol.cantidad.toString());
+    familia = "";
+    tipoEmpaques = "";
+    emprendedor = "";
+    listFamilias = [];
+    listTipoEmpaques = [];
+    dataBase.familiaProductosBox.getAll().forEach((element) {
+      listFamilias.add(element.nombre);
+    });
+    dataBase.tipoEmpaquesBox.getAll().forEach((element) {
+      listTipoEmpaques.add(element.tipo);
+    });
+    emprendedor = "";
+    if (widget.emprendimiento.emprendedor.target != null) {
+      emprendedor =
+          "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final registroJornadaProvider =
-        Provider.of<RegistroJornadaController>(context);
-    List<String> listFamilias = [];
-    List<String> listUnidadesMedida = [];
-    dataBase.familiaProductosBox.getAll().forEach((element) {
-      listFamilias.add(element.nombre);
-    });
-    dataBase.unidadesMedidaBox.getAll().forEach((element) {
-      listUnidadesMedida.add(element.unidadMedida);
-    });
+    final productoInversionJornadaController =
+        Provider.of<ProductoInversionJornadaController>(context);
+    final inversionJornadaController = 
+        Provider.of<InversionJornadaController>(context);
+    porcentajeController = TextEditingController(text: inversionJornadaController.porcentajePago);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -179,13 +177,154 @@ class _EditarDetalleRegistroJornadaTemporalState
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      FormField(builder: (state) {
+                                        return Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                                  5, 0, 5, 10),
+                                              child: InkWell(
+                                                onTap: () async {
+                                                  String? option = await showModalBottomSheet(
+                                                    context: context,
+                                                    builder: (_) => const CustomBottomSheet(),
+                                                  );
+
+                                                  if (option == null) return;
+
+                                                  final picker = ImagePicker();
+
+                                                  late final XFile? pickedFile;
+
+                                                  if (option == 'camera') {
+                                                    pickedFile = await picker.pickImage(
+                                                      source: ImageSource.camera,
+                                                      imageQuality: 100,
+                                                    );
+                                                  } else {
+                                                    pickedFile = await picker.pickImage(
+                                                      source: ImageSource.gallery,
+                                                      imageQuality: 100,
+                                                    );
+                                                  }
+
+                                                  if (pickedFile == null) {
+                                                    return;
+                                                  }
+
+                                                  setState(() {
+                                                    image = pickedFile;
+                                                    productoInversionJornadaController.imagen =
+                                                        image!.path;
+                                                  });
+                                                },
+                                                child: Container(
+                                                  width:
+                                                      MediaQuery.of(context).size.width * 0.9,
+                                                  height: 180,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius: BorderRadius.circular(8),
+                                                    border: Border.all(
+                                                      color: const Color(0xFF221573),
+                                                      width: 1.5,
+                                                    ),
+                                                  ),
+                                                  child: Stack(
+                                                    children: [
+                                                      Lottie.asset(
+                                                        'assets/lottie_animations/75669-animation-for-the-photo-optimization-process.json',
+                                                        width: MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.9,
+                                                        height: 180,
+                                                        fit: BoxFit.contain,
+                                                        animate: true,
+                                                      ),
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius.circular(8),
+                                                        child: getImage(image?.path),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(5, 0, 5, 10),
+                                        child: TextFormField(
+                                          initialValue: emprendedor,
+                                          enabled: false,
+                                          readOnly: true,
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            labelText: 'Emprendedor*',
+                                            labelStyle: AppTheme.of(context)
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Montserrat',
+                                                  color: AppTheme.of(context)
+                                                      .secondaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            hintText: 'Ingresa emprendedor...',
+                                            hintStyle: AppTheme.of(context)
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  color: AppTheme.of(context)
+                                                      .secondaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            filled: true,
+                                            fillColor: const Color(0x49FFFFFF),
+                                          ),
+                                          style: AppTheme.of(context)
+                                              .title3
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                          maxLines: 1,
+                                        ),
+                                      ),
                                       FormField(
                                         builder: (state) {
                                           return Padding(
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(5, 0, 5, 10),
                                             child: DropDown(
-                                              initialOption: newFamilia,
                                               options: listFamilias,
                                               onChanged: (val) => setState(() {
                                                 if (listFamilias.isEmpty) {
@@ -196,7 +335,7 @@ class _EditarDetalleRegistroJornadaTemporalState
                                                         "Debes descargar los catálogos desde la sección de tu perfil"),
                                                   ));
                                                 } else {
-                                                  newFamilia = val!;
+                                                  familia = val!;
                                                 }
                                               }),
                                               width: double.infinity,
@@ -232,8 +371,8 @@ class _EditarDetalleRegistroJornadaTemporalState
                                           );
                                         },
                                         validator: (val) {
-                                          if (newFamilia == "" ||
-                                              newFamilia.isEmpty) {
+                                          if (familia == "" ||
+                                              familia.isEmpty) {
                                             return 'Para continuar, seleccione una familia.';
                                           }
                                           return null;
@@ -243,11 +382,14 @@ class _EditarDetalleRegistroJornadaTemporalState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
-                                          controller: productoController,
                                           textCapitalization:
                                               TextCapitalization.sentences,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
+                                          onChanged: (value) {
+                                            productoInversionJornadaController.producto =
+                                                value;
+                                          },
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             labelText: 'Producto*',
@@ -313,11 +455,14 @@ class _EditarDetalleRegistroJornadaTemporalState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
-                                          controller: descripcionController,
                                           textCapitalization:
                                               TextCapitalization.sentences,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
+                                          onChanged: (value) {
+                                            productoInversionJornadaController
+                                                .descripcion = value;
+                                          },
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             labelText: 'Descripción*',
@@ -383,11 +528,14 @@ class _EditarDetalleRegistroJornadaTemporalState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
-                                          controller: marcaController,
                                           textCapitalization:
                                               TextCapitalization.sentences,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
+                                          onChanged: (value) {
+                                            productoInversionJornadaController
+                                                .marcaSugerida = value;
+                                          },
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             labelText: 'Marca sugerida',
@@ -447,11 +595,14 @@ class _EditarDetalleRegistroJornadaTemporalState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
-                                          controller: proveedorController,
                                           textCapitalization:
                                               TextCapitalization.sentences,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
+                                          onChanged: (value) {
+                                            productoInversionJornadaController
+                                                .proveedorSugerido = value;
+                                          },
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             labelText: 'Proveedor sugerido',
@@ -514,10 +665,9 @@ class _EditarDetalleRegistroJornadaTemporalState
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(5, 0, 5, 10),
                                             child: DropDown(
-                                              initialOption: newUnidadMedida,
-                                              options: listUnidadesMedida,
+                                              options: listTipoEmpaques,
                                               onChanged: (val) => setState(() {
-                                                if (listUnidadesMedida
+                                                if (listTipoEmpaques
                                                     .isEmpty) {
                                                   snackbarKey.currentState
                                                       ?.showSnackBar(
@@ -526,7 +676,7 @@ class _EditarDetalleRegistroJornadaTemporalState
                                                         "Debes descargar los catálogos desde la sección de tu perfil"),
                                                   ));
                                                 } else {
-                                                  newUnidadMedida = val!;
+                                                  tipoEmpaques = val!;
                                                 }
                                               }),
                                               width: double.infinity,
@@ -541,7 +691,7 @@ class _EditarDetalleRegistroJornadaTemporalState
                                                     fontWeight:
                                                         FontWeight.normal,
                                                   ),
-                                              hintText: 'Unidad de medida*',
+                                              hintText: 'Tipo de Empaques*',
                                               icon: const Icon(
                                                 Icons
                                                     .keyboard_arrow_down_rounded,
@@ -562,9 +712,9 @@ class _EditarDetalleRegistroJornadaTemporalState
                                           );
                                         },
                                         validator: (val) {
-                                          if (newUnidadMedida == "" ||
-                                              newUnidadMedida.isEmpty) {
-                                            return 'Para continuar, seleccione una unidad de medida.';
+                                          if (tipoEmpaques == "" ||
+                                              tipoEmpaques.isEmpty) {
+                                            return 'Para continuar, seleccione un tipo de empaques.';
                                           }
                                           return null;
                                         },
@@ -573,9 +723,12 @@ class _EditarDetalleRegistroJornadaTemporalState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
-                                          controller: cantidadController,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
+                                          onChanged: (value) {
+                                            productoInversionJornadaController.cantidad =
+                                                value;
+                                          },
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             labelText: 'Cantidad*',
@@ -646,9 +799,15 @@ class _EditarDetalleRegistroJornadaTemporalState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
-                                          controller: costoController,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
+                                          onChanged: (value) {
+                                            productoInversionJornadaController
+                                                    .costoEstimado =
+                                                currencyFormat
+                                                    .getUnformattedValue()
+                                                    .toStringAsFixed(2);
+                                          },
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             labelText: 'Costo estimado*',
@@ -714,6 +873,83 @@ class _EditarDetalleRegistroJornadaTemporalState
                                           },
                                         ),
                                       ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(5, 0, 5, 10),
+                                        child: TextFormField(
+                                          controller: porcentajeController,
+                                          readOnly: true,
+                                          enabled: false,
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            suffixText: "%",
+                                            suffixStyle: AppTheme.of(context)
+                                              .title3
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                            labelText: 'Porcentaje de pago*',
+                                            labelStyle: AppTheme.of(context)
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Montserrat',
+                                                  color: AppTheme.of(context)
+                                                      .secondaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            hintText: 'Ingresa porcentaje de pago...',
+                                            hintStyle: AppTheme.of(context)
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  color: AppTheme.of(context)
+                                                      .secondaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            filled: true,
+                                            fillColor: const Color(0x49FFFFFF),
+                                          ),
+                                          keyboardType: TextInputType.number,
+                                          inputFormatters: [
+                                              FilteringTextInputFormatter.digitsOnly,
+                                              PercentageTextInputFormatter()
+                                          ],
+                                          style: AppTheme.of(context)
+                                              .title3
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                          maxLines: 1,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -722,69 +958,41 @@ class _EditarDetalleRegistroJornadaTemporalState
                                       0, 0, 0, 20),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      if (registroJornadaProvider
+                                      print("Desde registro");
+                                      print(productoInversionJornadaController
+                                          .costoEstimado);
+                                      print(currencyFormat.format(
+                                          productoInversionJornadaController
+                                              .costoEstimado));
+                                      if (productoInversionJornadaController
                                           .validateForm(formKey)) {
-                                        if (productoController.text !=
-                                                widget.productoSol.producto ||
-                                            marcaController.text !=
-                                                widget.productoSol
-                                                    .marcaSugerida ||
-                                            descripcionController.text !=
-                                                widget
-                                                    .productoSol.descripcion ||
-                                            proveedorController.text !=
-                                                widget.productoSol
-                                                    .proveedorSugerido ||
-                                            costoController.text.substring(1) !=
-                                                widget.productoSol.costoEstimado
-                                                    ?.toStringAsFixed(2) ||
-                                            cantidadController.text !=
-                                                widget.productoSol.cantidad
-                                                    .toString() ||
-                                            newFamilia !=
-                                                widget
-                                                    .productoSol.familiaProd ||
-                                            newUnidadMedida !=
-                                                widget
-                                                    .productoSol.unidadMedida) {
-                                          final newIdFamiliaProd = dataBase
-                                              .familiaProductosBox
-                                              .query(FamiliaProd_.nombre
-                                                  .equals(newFamilia))
-                                              .build()
-                                              .findFirst()
-                                              ?.id;
-                                          final newIdUnidadMedida = dataBase
-                                              .unidadesMedidaBox
-                                              .query(UnidadMedida_.unidadMedida
-                                                  .equals(newUnidadMedida))
-                                              .build()
-                                              .findFirst()
-                                              ?.id;
-                                          if (newIdFamiliaProd != null &&
-                                              newIdUnidadMedida != null) {
-                                            registroJornadaProvider
-                                                .updateTemporal(
-                                              widget.productoSol.id,
-                                              productoController.text,
-                                              marcaController.text,
-                                              descripcionController.text,
-                                              proveedorController.text,
-                                              costoController.text.substring(1),
-                                              cantidadController.text,
-                                              newIdFamiliaProd,
-                                              newFamilia,
-                                              newIdUnidadMedida,
-                                              newUnidadMedida,
-                                              widget.productoSol.fechaRegistro,
-                                            );
-                                            Navigator.pop(context);
-                                            snackbarKey.currentState
-                                                ?.showSnackBar(const SnackBar(
-                                              content: Text(
-                                                  "¡Registro actualizado éxitosamente!"),
-                                            ));
-                                          }
+                                        final idFamiliaProd = dataBase
+                                            .familiaProductosBox
+                                            .query(FamiliaProd_.nombre
+                                                .equals(familia))
+                                            .build()
+                                            .findFirst()
+                                            ?.id;
+                                        final idTipoEmpaques = dataBase
+                                            .tipoEmpaquesBox
+                                            .query(TipoEmpaques_.tipo
+                                                .equals(tipoEmpaques))
+                                            .build()
+                                            .findFirst()
+                                            ?.id;
+                                        if (idFamiliaProd != null &&
+                                            idTipoEmpaques != null) {
+                                          productoInversionJornadaController.addTemporal(
+                                              idFamiliaProd,
+                                              familia,
+                                              idTipoEmpaques,
+                                              tipoEmpaques);
+                                          Navigator.pop(context);
+                                          snackbarKey.currentState
+                                              ?.showSnackBar(const SnackBar(
+                                            content: Text(
+                                                "¡Registro agregado éxitosamente!"),
+                                          ));
                                         }
                                       } else {
                                         await showDialog(
@@ -809,7 +1017,7 @@ class _EditarDetalleRegistroJornadaTemporalState
                                         return;
                                       }
                                     },
-                                    text: 'Actualizar',
+                                    text: 'Agregar',
                                     icon: const Icon(
                                       Icons.check_rounded,
                                       color: Colors.white,

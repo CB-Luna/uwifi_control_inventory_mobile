@@ -1,77 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/services.dart';
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
-import 'package:bizpro_app/providers/database_providers/registro_jornada_controller.dart';
-import 'package:bizpro_app/screens/jornadas/registros/registro_jornada_actualizado.dart';
+import 'package:flutter/services.dart';
+import 'package:bizpro_app/theme/theme.dart';
+
+import 'package:bizpro_app/providers/database_providers/producto_inversion_jornada_controller.dart';
+import 'package:bizpro_app/screens/jornadas/registros/producto_jornada_creado.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
+class AgregarProductoInversionJornadaScreen extends StatefulWidget {
+  final int idInversion;
 
-class EditarDetalleRegistroJornada extends StatefulWidget {
-  final ProdSolicitado productoSol;
-
-  const EditarDetalleRegistroJornada({
+  const AgregarProductoInversionJornadaScreen({
     Key? key,
-    required this.productoSol,
+    required this.idInversion,
   }) : super(key: key);
 
   @override
-  _EditarDetalleRegistroJornadaState createState() =>
-      _EditarDetalleRegistroJornadaState();
+  _AgregarProductoInversionJornadaScreenState createState() =>
+      _AgregarProductoInversionJornadaScreenState();
 }
 
-class _EditarDetalleRegistroJornadaState
-    extends State<EditarDetalleRegistroJornada> {
+class _AgregarProductoInversionJornadaScreenState
+    extends State<AgregarProductoInversionJornadaScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
-  String newFamilia = "";
-  String newUnidadMedida = "";
-  late TextEditingController productoController;
-  late TextEditingController descripcionController;
-  late TextEditingController marcaController;
-  late TextEditingController proveedorController;
-  late TextEditingController costoController;
-  late TextEditingController cantidadController;
+  String familia = "";
+  String tipoEmpaques = "";
 
   @override
   void initState() {
     super.initState();
-    newFamilia = widget.productoSol.familiaProducto.target!.nombre;
-    newUnidadMedida = widget.productoSol.unidadMedida.target!.unidadMedida;
-    productoController =
-        TextEditingController(text: widget.productoSol.producto);
-    descripcionController =
-        TextEditingController(text: widget.productoSol.descripcion);
-    marcaController =
-        TextEditingController(text: widget.productoSol.marcaSugerida);
-    proveedorController =
-        TextEditingController(text: widget.productoSol.proveedorSugerido);
-    costoController = TextEditingController(
-        text: currencyFormat.format(
-            widget.productoSol.costoEstimado?.toStringAsFixed(2) ?? ""));
-    cantidadController =
-        TextEditingController(text: widget.productoSol.cantidad.toString());
+    familia = "";
+    tipoEmpaques = "";
   }
 
   @override
   Widget build(BuildContext context) {
-    print(widget.productoSol.costoEstimado.toString());
-    final registroJornadaProvider =
-        Provider.of<RegistroJornadaController>(context);
+    final productoInversionJornadaController =
+        Provider.of<ProductoInversionJornadaController>(context);
     List<String> listFamilias = [];
-    List<String> listUnidadesMedida = [];
+    List<String> listTipoEmpaques = [];
     dataBase.familiaProductosBox.getAll().forEach((element) {
       listFamilias.add(element.nombre);
     });
-    dataBase.unidadesMedidaBox.getAll().forEach((element) {
-      listUnidadesMedida.add(element.unidadMedida);
+    dataBase.tipoEmpaquesBox.getAll().forEach((element) {
+      listTipoEmpaques.add(element.tipo);
     });
     return WillPopScope(
       onWillPop: () async => false,
@@ -117,6 +96,8 @@ class _EditarDetalleRegistroJornadaState
                                 ),
                                 child: InkWell(
                                   onTap: () async {
+                                    productoInversionJornadaController
+                                        .clearInformation();
                                     Navigator.pop(context);
                                   },
                                   child: Row(
@@ -187,7 +168,6 @@ class _EditarDetalleRegistroJornadaState
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(5, 0, 5, 10),
                                             child: DropDown(
-                                              initialOption: newFamilia,
                                               options: listFamilias,
                                               onChanged: (val) => setState(() {
                                                 if (listFamilias.isEmpty) {
@@ -198,7 +178,7 @@ class _EditarDetalleRegistroJornadaState
                                                         "Debes descargar los catálogos desde la sección de tu perfil"),
                                                   ));
                                                 } else {
-                                                  newFamilia = val!;
+                                                  familia = val!;
                                                 }
                                               }),
                                               width: double.infinity,
@@ -234,8 +214,8 @@ class _EditarDetalleRegistroJornadaState
                                           );
                                         },
                                         validator: (val) {
-                                          if (newFamilia == "" ||
-                                              newFamilia.isEmpty) {
+                                          if (familia == "" ||
+                                              familia.isEmpty) {
                                             return 'Para continuar, seleccione una familia.';
                                           }
                                           return null;
@@ -245,11 +225,14 @@ class _EditarDetalleRegistroJornadaState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
-                                          controller: productoController,
                                           textCapitalization:
                                               TextCapitalization.sentences,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
+                                          onChanged: (value) {
+                                            productoInversionJornadaController.producto =
+                                                value;
+                                          },
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             labelText: 'Producto*',
@@ -315,11 +298,14 @@ class _EditarDetalleRegistroJornadaState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
-                                          controller: descripcionController,
                                           textCapitalization:
                                               TextCapitalization.sentences,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
+                                          onChanged: (value) {
+                                            productoInversionJornadaController
+                                                .descripcion = value;
+                                          },
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             labelText: 'Descripción*',
@@ -385,11 +371,14 @@ class _EditarDetalleRegistroJornadaState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
-                                          controller: marcaController,
                                           textCapitalization:
                                               TextCapitalization.sentences,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
+                                          onChanged: (value) {
+                                            productoInversionJornadaController
+                                                .marcaSugerida = value;
+                                          },
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             labelText: 'Marca sugerida',
@@ -449,11 +438,14 @@ class _EditarDetalleRegistroJornadaState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
-                                          controller: proveedorController,
                                           textCapitalization:
                                               TextCapitalization.sentences,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
+                                          onChanged: (value) {
+                                            productoInversionJornadaController
+                                                .proveedorSugerido = value;
+                                          },
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             labelText: 'Proveedor sugerido',
@@ -516,10 +508,9 @@ class _EditarDetalleRegistroJornadaState
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(5, 0, 5, 10),
                                             child: DropDown(
-                                              initialOption: newUnidadMedida,
-                                              options: listUnidadesMedida,
+                                              options: listTipoEmpaques,
                                               onChanged: (val) => setState(() {
-                                                if (listUnidadesMedida
+                                                if (listTipoEmpaques
                                                     .isEmpty) {
                                                   snackbarKey.currentState
                                                       ?.showSnackBar(
@@ -528,7 +519,7 @@ class _EditarDetalleRegistroJornadaState
                                                         "Debes descargar los catálogos desde la sección de tu perfil"),
                                                   ));
                                                 } else {
-                                                  newUnidadMedida = val!;
+                                                  tipoEmpaques = val!;
                                                 }
                                               }),
                                               width: double.infinity,
@@ -543,7 +534,7 @@ class _EditarDetalleRegistroJornadaState
                                                     fontWeight:
                                                         FontWeight.normal,
                                                   ),
-                                              hintText: 'Unidad de medida*',
+                                              hintText: 'Tipo de Empaques*',
                                               icon: const Icon(
                                                 Icons
                                                     .keyboard_arrow_down_rounded,
@@ -564,9 +555,9 @@ class _EditarDetalleRegistroJornadaState
                                           );
                                         },
                                         validator: (val) {
-                                          if (newUnidadMedida == "" ||
-                                              newUnidadMedida.isEmpty) {
-                                            return 'Para continuar, seleccione una unidad de medida.';
+                                          if (tipoEmpaques == "" ||
+                                              tipoEmpaques.isEmpty) {
+                                            return 'Para continuar, seleccione un tipo de empaques.';
                                           }
                                           return null;
                                         },
@@ -575,9 +566,12 @@ class _EditarDetalleRegistroJornadaState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
-                                          controller: cantidadController,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
+                                          onChanged: (value) {
+                                            productoInversionJornadaController.cantidad =
+                                                value;
+                                          },
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             labelText: 'Cantidad*',
@@ -639,7 +633,6 @@ class _EditarDetalleRegistroJornadaState
                                             if (val == null || val.isEmpty) {
                                               return 'Para continuar, ingrese una cantidad.';
                                             }
-
                                             return null;
                                           },
                                         ),
@@ -648,9 +641,15 @@ class _EditarDetalleRegistroJornadaState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
-                                          controller: costoController,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
+                                          onChanged: (value) {
+                                            productoInversionJornadaController
+                                                    .costoEstimado =
+                                                currencyFormat
+                                                    .getUnformattedValue()
+                                                    .toStringAsFixed(2);
+                                          },
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             labelText: 'Costo estimado*',
@@ -709,9 +708,8 @@ class _EditarDetalleRegistroJornadaState
                                           maxLines: 1,
                                           validator: (val) {
                                             if (val == null || val.isEmpty) {
-                                              return 'Para continuar, ingrese un costo sugerido.';
+                                              return 'Para continuar, ingrese un costo estimado.';
                                             }
-
                                             return null;
                                           },
                                         ),
@@ -724,70 +722,37 @@ class _EditarDetalleRegistroJornadaState
                                       0, 0, 0, 20),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      print("Desde inversion");
-                                      if (registroJornadaProvider
+                                      print("Desde registro");
+                                      if (productoInversionJornadaController
                                           .validateForm(formKey)) {
-                                        if (productoController.text !=
-                                                widget.productoSol.producto ||
-                                            marcaController.text !=
-                                                widget.productoSol
-                                                    .marcaSugerida ||
-                                            descripcionController.text !=
-                                                widget
-                                                    .productoSol.descripcion ||
-                                            proveedorController.text !=
-                                                widget.productoSol
-                                                    .proveedorSugerido ||
-                                            costoController.text.substring(1) !=
-                                                widget.productoSol.costoEstimado
-                                                    ?.toStringAsFixed(2) ||
-                                            cantidadController.text !=
-                                                widget.productoSol.cantidad
-                                                    .toString() ||
-                                            newFamilia !=
-                                                widget
-                                                    .productoSol
-                                                    .familiaProducto
-                                                    .target!
-                                                    .nombre ||
-                                            newUnidadMedida !=
-                                                widget.productoSol.unidadMedida
-                                                    .target!.unidadMedida) {
-                                          final newIdFamiliaProd = dataBase
-                                              .familiaProductosBox
-                                              .query(FamiliaProd_.nombre
-                                                  .equals(newFamilia))
-                                              .build()
-                                              .findFirst()
-                                              ?.id;
-                                          final newIdUnidadMedida = dataBase
-                                              .unidadesMedidaBox
-                                              .query(UnidadMedida_.unidadMedida
-                                                  .equals(newUnidadMedida))
-                                              .build()
-                                              .findFirst()
-                                              ?.id;
-                                          if (newIdFamiliaProd != null &&
-                                              newIdUnidadMedida != null) {
-                                            registroJornadaProvider.update(
-                                              widget.productoSol.id,
-                                              productoController.text,
-                                              marcaController.text,
-                                              descripcionController.text,
-                                              proveedorController.text,
-                                              costoController.text.substring(1),
-                                              cantidadController.text,
-                                              newIdFamiliaProd,
-                                              newIdUnidadMedida,
-                                            );
-                                            await Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const RegistroJornadaActualizado(),
-                                              ),
-                                            );
-                                          }
+                                        final idFamiliaProd = dataBase
+                                            .familiaProductosBox
+                                            .query(FamiliaProd_.nombre
+                                                .equals(familia))
+                                            .build()
+                                            .findFirst()
+                                            ?.id;
+                                        final idTipoEmpaques = dataBase
+                                            .tipoEmpaquesBox
+                                            .query(TipoEmpaques_.tipo
+                                                .equals(tipoEmpaques))
+                                            .build()
+                                            .findFirst()
+                                            ?.id;
+                                        if (idFamiliaProd != null &&
+                                            idTipoEmpaques != null) {
+                                          productoInversionJornadaController.addSingle(
+                                            widget.idInversion,
+                                            idFamiliaProd,
+                                            idTipoEmpaques,
+                                          );
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const ProductoJornadaCreado(),
+                                            ),
+                                          );
                                         }
                                       } else {
                                         await showDialog(
@@ -812,7 +777,7 @@ class _EditarDetalleRegistroJornadaState
                                         return;
                                       }
                                     },
-                                    text: 'Actualizar',
+                                    text: 'Agregar',
                                     icon: const Icon(
                                       Icons.check_rounded,
                                       color: Colors.white,
