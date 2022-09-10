@@ -5,22 +5,16 @@ import 'package:bizpro_app/database/entitys.dart';
 
 class CotizacionController extends ChangeNotifier {
 
-  List<ProductosCot> productosCot= [];
+  List<ProdCotizados> productosCot= [];
 
   GlobalKey<FormState> productoCotFormKey = GlobalKey<FormState>();
  
   //ProductoCot
-  String imagen = '';
-  String nombre = '';
-  String descripcion = '';
-  String costo = '';
-  int precioVenta = 0;
-  String cantidad = '';
-  String proveedor = '';
+  String producto = '';
+  double costo = 0.00;
+  int cantidad = 0;
+  String estado = '';
 
-  TextEditingController textControllerImagen = TextEditingController();
-  TextEditingController textControllerNombre = TextEditingController();
-  TextEditingController textControllerDescripcion = TextEditingController();
 
   bool validateForm(GlobalKey<FormState> productoCotKey) {
     return productoCotKey.currentState!.validate() ? true : false;
@@ -29,46 +23,37 @@ class CotizacionController extends ChangeNotifier {
 
   void clearInformation()
   {
-    imagen = '';
-    nombre = '';
-    descripcion = '';
-    costo = '';
-    precioVenta = 0;
-    cantidad = '';
-    proveedor = '';
+    producto = '';
+    costo = 0.00;
+    cantidad = 0;
+    estado = '';
     notifyListeners();
   }
 
-  void add(int idEmprendimiento, int idFamilia) {
-    final nuevoProductoCot = ProductosCot(
-      nombre: nombre,
-      descripcion: descripcion,
-      imagen: imagen,
-      costo: double.parse(costo),
-      precioVenta: precioVenta,
-      cantidad: int.parse(cantidad),
-      proveedor: proveedor,
+  void add(int idEmprendimiento, int idInversion) {
+    final nuevoProductoCot = ProdCotizados(
+      producto: producto,
+      cantidad: cantidad,
+      costo: costo,
+      estado: estado,
       );
       final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
-      final familia = dataBase.familiaInversionBox.get(idFamilia);
-      if (emprendimiento != null && familia != null) {
+      final inversion = dataBase.inversionesBox.get(idInversion);
+      if (emprendimiento != null && inversion != null) {
         final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
-        final nuevaInstruccion = Bitacora(instrucciones: 'syncAddCotizacion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+        final nuevaInstruccion = Bitacora(instrucciones: 'syncRecoverCotizacion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
         nuevoProductoCot.statusSync.target = nuevoSync;
-        nuevoProductoCot.emprendimientos.target = emprendimiento;
-        nuevoProductoCot.familiaInversion.target = familia;
+        nuevoProductoCot.inversion.target = inversion;
         nuevoProductoCot.bitacora.add(nuevaInstruccion);
-        emprendimiento.productosCot.add(nuevoProductoCot);
-        dataBase.emprendimientosBox.put(emprendimiento);
-        // dataBase.emprendedoresBox.put(nuevoEmprendedor);
-        productosCot.add(nuevoProductoCot);
+        inversion.prodCotizados.add(nuevoProductoCot);
+        dataBase.inversionesBox.put(inversion);
         print('ProductoCot agregado exitosamente');
         clearInformation();
         notifyListeners();
       }
   }
 
-  void remove(ProductosCot productosCot) {
+  void remove(ProdCotizados productosCot) {
     dataBase.productosCotBox.remove(productosCot.id); //Se elimina de bitacora la instruccion creada anteriormente
     notifyListeners(); 
   }

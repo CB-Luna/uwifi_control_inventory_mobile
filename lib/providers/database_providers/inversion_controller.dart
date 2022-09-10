@@ -86,7 +86,7 @@ class InversionController extends ChangeNotifier {
       final tipoEmpaques = dataBase.tipoEmpaquesBox.get(idTipoEmpaques);
       if (emprendimiento != null && inversion != null && familiaProd != null && tipoEmpaques != null) {
         final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
-        final nuevaInstruccion = Bitacora(instrucciones: 'syncAddProdSolicitado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+        final nuevaInstruccion = Bitacora(instrucciones: 'syncAddProductoSolicitado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
         nuevoProdSolicitado.statusSync.target = nuevoSync;
         nuevoProdSolicitado.familiaProducto.target = familiaProd;
         nuevoProdSolicitado.tipoEmpaques.target = tipoEmpaques;

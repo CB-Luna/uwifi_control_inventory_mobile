@@ -348,11 +348,8 @@ class _MenuInferiorDetalleEmprendimientoState extends State<MenuInferiorDetalleE
                           context,
                           MaterialPageRoute(
                             builder: (context) => InversionesScreen(
-                              inversiones: 
-                                    widget.emprendimiento
-                                    .inversiones.toList(),
-                                emprendimiento:
-                                    widget.emprendimiento),
+                                idEmprendimiento:
+                                    widget.emprendimiento.id),
                           ),
                         );
                       } else {

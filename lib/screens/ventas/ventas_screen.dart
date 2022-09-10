@@ -1,10 +1,14 @@
-import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
-import 'package:bizpro_app/screens/ventas/editar_venta.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
+import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
+import 'package:bizpro_app/screens/ventas/editar_venta.dart';
+import 'package:bizpro_app/screens/widgets/pdf/models/invoice_info.dart';
+import 'package:bizpro_app/screens/widgets/pdf/models/ventas_invoice.dart';
+import 'package:bizpro_app/screens/widgets/pdf/api/pdf_api.dart';
+import 'package:bizpro_app/screens/widgets/pdf/api/pdf_invoice_ventas.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:bizpro_app/screens/ventas/agregar_venta.dart';
 import 'package:bizpro_app/providers/user_provider.dart';
@@ -191,57 +195,68 @@ class _VentasScreenState extends State<VentasScreen> {
                                     ),
                                     child: InkWell(
                                       onTap: () async {
-                                        // final date = DateTime.now();
-                                        // final invoice = ProductosEmprendedorInvoice(
-                                        //   info: InvoiceInfo(
-                                        //     usuario:
-                                        //         '${currentUser.nombre} ${currentUser.apellidoP}',
-                                        //     fecha: date,
-                                        //     titulo: 'Productos de Emprendedor',
-                                        //     descripcion:
-                                        //         'En la siguiente tabla se muestran todos los productos creados por el emprendedor ${widget.emprendimiento.emprendedor.target!.nombre} hasta el momento.',
-                                        //   ),
-                                        //   items: [
-                                        //     for (var producto in widget.productosEmprendedor)
-                                        //       ProductosEmprendedorItem(
-                                        //         id: producto.id,
-                                        //         emprendedor: 
-                                        //           "${producto.
-                                        //           emprendimientos.target!.
-                                        //           emprendedor.target!.nombre} ${producto.
-                                        //           emprendimientos.target!.
-                                        //           emprendedor.target!.apellidos}",
-                                        //         tipoProyecto: 
-                                        //           producto.
-                                        //           emprendimientos.target!.
-                                        //           catalogoProyecto.target!.nombre,
-                                        //           emprendimiento: producto.
-                                        //           emprendimientos.target!.nombre,
-                                        //         producto:
-                                        //           producto.nombre,
-                                        //         descripcion: 
-                                        //           producto.descripcion,
-                                        //         unidadMedida: 
-                                        //           producto.unidadMedida.target!.
-                                        //             unidadMedida,
-                                        //         costo:
-                                        //           currencyFormat.format(producto.
-                                        //             costo.toStringAsFixed(2)),
-                                        //         usuario:
-                                        //             "${producto.emprendimientos.target!.
-                                        //             usuario.target!.nombre} ${producto.
-                                        //             emprendimientos.target!.usuario.
-                                        //             target!.apellidoP}",
-                                        //         fechaRegistro:
-                                        //             producto.fechaRegistro,
-                                        //       ),
-                                        //   ],
-                                        // );
-                                        // final pdfFile =
-                                        //     await PdfInvoiceProductosEmprendedor
-                                        //         .generate(invoice);
+                                        final date = DateTime.now();
+                                        final invoice = VentasInvoice(
+                                          info: InvoiceInfo(
+                                            usuario:
+                                                '${currentUser.nombre} ${currentUser.apellidoP}',
+                                            fecha: date,
+                                            titulo: 'Ventas del Emprendimiento',
+                                            descripcion:
+                                                'En la siguiente tabla se muestran todas las ventas hechas en el emprendimiento ${widget.emprendimiento.nombre} hasta el momento.',
+                                          ),
+                                          items: [
+                                            for (var venta in widget.ventas)
+                                              for(var productoVendido in venta.prodVendidos)
+                                                VentasItem(
+                                                id: venta.id,
+                                                emprendedor: 
+                                                  "${venta.
+                                                  emprendimiento.target!.
+                                                  emprendedor.target!.nombre} ${venta.
+                                                  emprendimiento.target!.
+                                                  emprendedor.target!.apellidos}",
+                                                fechaInicio: 
+                                                  venta.
+                                                  fechaInicio,
+                                                fechaTermino: 
+                                                  venta.
+                                                  fechaTermino,
+                                                producto:
+                                                  productoVendido.
+                                                  productoEmp.target!.nombre,
+                                                unidadMedida: 
+                                                  productoVendido.
+                                                  productoEmp.target!.unidadMedida.
+                                                  target!.unidadMedida,
+                                                cantidadVendida:
+                                                  productoVendido.
+                                                  cantVendida.toString(),
+                                                costoUnitario: 
+                                                  "\$${productoVendido.
+                                                  productoEmp.target!.
+                                                  costo.toStringAsFixed(2)}",
+                                                precioVenta: 
+                                                  "\$${productoVendido.
+                                                  precioVenta.toStringAsFixed(2)}",
+                                                total: 
+                                                  "\$${productoVendido.
+                                                  subtotal.toStringAsFixed(2)}",
+                                                usuario:
+                                                    "${venta.emprendimiento.target!.
+                                                    usuario.target!.nombre} ${venta.
+                                                    emprendimiento.target!.usuario.
+                                                    target!.apellidoP}",
+                                                fechaRegistro:
+                                                    venta.fechaRegistro,
+                                              ),
+                                          ],
+                                        );
+                                        final pdfFile =
+                                            await PdfInvoiceVentas
+                                                .generate(invoice);
 
-                                        // PdfApi.openFile(pdfFile);
+                                        PdfApi.openFile(pdfFile);
                                       },
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,

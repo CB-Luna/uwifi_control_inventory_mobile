@@ -1,22 +1,27 @@
 import 'dart:io';
-import 'package:bizpro_app/screens/inversiones/agregar_producto_cotizacion_screen.dart';
-import 'package:bizpro_app/util/util.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/providers/sync_provider.dart';
+import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:bizpro_app/util/util.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/helpers/constants.dart';
+import 'package:bizpro_app/screens/cotizaciones/cotizaciones_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-
 
 class CotizacionTab extends StatefulWidget {
 
   final Emprendimientos emprendimiento;
+  final Inversiones inversion;
   
   const CotizacionTab({
     Key? key, 
-    required this.emprendimiento
+    required this.emprendimiento, 
+    required this.inversion
     }) : super(key: key);
     
 
@@ -27,20 +32,24 @@ class CotizacionTab extends StatefulWidget {
 class _CotizacionTabState extends State<CotizacionTab> 
 with TickerProviderStateMixin {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  List<ProdCotizados> productosCot = [];
+  double totalProyecto = 0.00;
 
    @override
   void initState() {
     super.initState();
+    productosCot = [];
+    totalProyecto = 0.00;
+    for (var element in widget.inversion.prodCotizados) {
+      productosCot.add(element);
+      totalProyecto += (element.costo); 
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<ProductosCot> productosCot = [];
-    double totalProyecto = 0;
-    for (var element in widget.emprendimiento.productosCot) {
-      productosCot.add(element);
-      totalProyecto += (element.costo * element.cantidad); 
-    }
+    final syncProvider =
+        Provider.of<SyncProvider>(context);
     return Align(
       alignment: const AlignmentDirectional(0, 0),
       child: Column(
@@ -384,6 +393,98 @@ with TickerProviderStateMixin {
                                 fontSize: 16,
                               ),
                         ),
+                        FFButtonWidget(
+                          onPressed:
+                              () async {
+                            switch (widget.inversion.estadoInversion.target!.estado) {
+                              case "Solicitada":
+                                snackbarKey.currentState
+                                  ?.showSnackBar(const SnackBar(
+                                content: Text(
+                                    "Primero debes sincronizar tu información."),
+                                ));
+                                break;
+                              case "En cotización":
+                                final connectivityResult =
+                                  await (Connectivity().checkConnectivity());
+                                if(connectivityResult == ConnectivityResult.none) {
+                                  snackbarKey.currentState
+                                    ?.showSnackBar(const SnackBar(
+                                  content: Text(
+                                      "Necesitas conexión a internet para obtener la cotización."),
+                                  ));
+                                }
+                                else {
+                                if (await syncProvider.validateLengthCotizacion(widget.inversion)) {
+                                  print("Holaaaaaaaa");
+                                  syncProvider.procesoCargando(true);
+                                  syncProvider.procesoTerminado(false);
+                                   // ignore: use_build_context_synchronously
+                                   await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CotizacionesScreen(
+                                            emprendimiento: widget.emprendimiento, 
+                                            inversion: widget.inversion,
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  snackbarKey.currentState
+                                    ?.showSnackBar(const SnackBar(
+                                  content: Text(
+                                      "Aún no hay datos de cotización de esta inversión."),
+                                  ));
+                                }
+                                }
+                                break;
+                              case "Cotizada":
+                                snackbarKey.currentState
+                                  ?.showSnackBar(const SnackBar(
+                                content: Text(
+                                    "Esta inversión ya ha sido cotizada."),
+                                ));
+                                break;
+                              default:
+                                break;
+                            }
+                          },
+                          text: 'Obtener Cotización',
+                          icon: const Icon(
+                            Icons.add,
+                            size: 15,
+                          ),
+                          options:
+                              FFButtonOptions(
+                            width: 180,
+                            height: 35,
+                            color: AppTheme
+                                    .of(context)
+                                .secondaryText,
+                            textStyle:
+                                AppTheme.of(
+                                        context)
+                                    .subtitle2
+                                    .override(
+                                      fontFamily:
+                                          AppTheme.of(context).subtitle2Family,
+                                      color: Colors
+                                          .white,
+                                      fontSize:
+                                          15,
+                                    ),
+                            borderSide:
+                                const BorderSide(
+                              color: Colors
+                                  .transparent,
+                              width: 1,
+                            ),
+                            borderRadius:
+                                BorderRadius
+                                    .circular(
+                                        8),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -490,29 +591,22 @@ with TickerProviderStateMixin {
                                                       MainAxisAlignment.spaceBetween,
                                                   children: [
                                                     Text(
-                                                      productoCot.nombre,
-                                                      style: AppTheme.of(context).subtitle1.override(
-                                                            fontFamily: AppTheme.of(context).subtitle1Family,
-                                                            color: AppTheme.of(context).primaryText,
-                                                          ),
-                                                    ),
+                                                        productoCot.producto,
+                                                        style: AppTheme.of(context).bodyText1.override(
+                                                        fontFamily: AppTheme.of(context).bodyText1Family,
+                                                        color: AppTheme.of(context).secondaryText,
+                                                        ),
+                                                      ),
                                                     Text(
-                                                      'Und: ${productoCot.cantidad}',
-                                                      style: AppTheme.of(context).subtitle1.override(
-                                                            fontFamily: AppTheme.of(context).subtitle1Family,
-                                                            color: AppTheme.of(context).primaryText,
-                                                            fontSize: 18,
-                                                            fontWeight: FontWeight.w600,
-                                                          ),
-                                                    ),
-                                                    Text(
-                                                      "\$ ${(productoCot.costo * productoCot.cantidad).toStringAsFixed(2)}",
-                                                      textAlign: TextAlign.end,
-                                                      style: AppTheme.of(context).subtitle2.override(
-                                                            fontFamily: AppTheme.of(context).subtitle2Family,
-                                                            color: AppTheme.of(context).primaryText,
-                                                          ),
-                                                    ),
+                                                        dateTimeFormat('dd/MM/yyyy', productoCot.fechaRegistro),
+                                                        textAlign:
+                                                        TextAlign.end,
+                                                        style: AppTheme.of(context).bodyText1.override(
+                                                        fontFamily: AppTheme.of(context).bodyText1Family,
+                                                        color: AppTheme.of(context).secondaryText,
+                                                        fontSize: 12,
+                                                        ),
+                                                      ),
                                                   ],
                                                 ),
                                                 Padding(
@@ -523,22 +617,22 @@ with TickerProviderStateMixin {
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                         children: [
                                                           Text(
-                                                              productoCot.familiaInversion.target?.nombre  ?? "SIN FAMILIA",
-                                                              style: AppTheme.of(context).bodyText1.override(
-                                                              fontFamily: AppTheme.of(context).bodyText1Family,
-                                                              color: AppTheme.of(context).secondaryText,
-                                                            ),
-                                                            ),
+                                                            'Cantidad: ${productoCot.cantidad}',
+                                                            style: AppTheme.of(context).subtitle1.override(
+                                                                  fontFamily: AppTheme.of(context).subtitle1Family,
+                                                                  color: AppTheme.of(context).primaryText,
+                                                                  fontSize: 18,
+                                                                  fontWeight: FontWeight.w600,
+                                                                ),
+                                                          ),
                                                           Text(
-                                                              dateTimeFormat('dd/MM/yyyy', productoCot.fechaRegistro),
-                                                              textAlign:
-                                                            TextAlign.end,
-                                                              style: AppTheme.of(context).bodyText1.override(
-                                                              fontFamily: AppTheme.of(context).bodyText1Family,
-                                                              color: AppTheme.of(context).secondaryText,
-                                                              fontSize: 12,
-                                                            ),
-                                                            ),
+                                                            "\$ ${(productoCot.costo).toStringAsFixed(2)}",
+                                                            textAlign: TextAlign.end,
+                                                            style: AppTheme.of(context).subtitle2.override(
+                                                                  fontFamily: AppTheme.of(context).subtitle2Family,
+                                                                  color: AppTheme.of(context).primaryText,
+                                                                ),
+                                                          ),
                                                         ],
                                                   ),
                                                 ),
@@ -548,14 +642,7 @@ with TickerProviderStateMixin {
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
                                                     Text(
-                                                      productoCot.descripcion,
-                                                      style: AppTheme.of(context).bodyText1.override(
-                                                            fontFamily: AppTheme.of(context).bodyText1Family,
-                                                            color: AppTheme.of(context).secondaryText,
-                                                          ),
-                                                    ),
-                                                    Text(
-                                                      productoCot.proveedor,
+                                                      productoCot.estado ?? "ESTADO",
                                                       style: AppTheme.of(context).bodyText1.override(
                                                             fontFamily: AppTheme.of(context).bodyText1Family,
                                                             color: AppTheme.of(context).secondaryText,

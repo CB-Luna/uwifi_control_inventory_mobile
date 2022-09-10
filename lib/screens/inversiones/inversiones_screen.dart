@@ -1,24 +1,25 @@
+import 'package:bizpro_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:bizpro_app/providers/user_provider.dart';
+import 'package:bizpro_app/screens/widgets/pdf/api/pdf_invoice_inversiones.dart';
+import 'package:bizpro_app/screens/widgets/pdf/models/inversiones_invoice.dart';
+import 'package:bizpro_app/screens/widgets/pdf/api/pdf_api.dart';
+import 'package:bizpro_app/screens/widgets/pdf/models/invoice_info.dart';
 import 'package:bizpro_app/screens/inversiones/agregar_primer_producto_inversion_screen.dart';
 import 'package:bizpro_app/screens/inversiones/main_tab_opciones.dart';
 import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
-
-
 class InversionesScreen extends StatefulWidget {
-  final List<Inversiones> inversiones;
-  final Emprendimientos emprendimiento;
+  final int idEmprendimiento;
   const InversionesScreen({
     Key? key, 
-    required this.inversiones, 
-    required this.emprendimiento,
+    required this.idEmprendimiento,
   }) : super(key: key);
 
 
@@ -27,17 +28,23 @@ class InversionesScreen extends StatefulWidget {
 }
 
 class _InversionesScreenState extends State<InversionesScreen> {
+  Emprendimientos? actualEmprendimiento;
   TextEditingController searchController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   String emprendedor = "";
+  late List<Inversiones> inversiones;
 
   @override
   void initState() {
     super.initState();
-    emprendedor = "";
-    if (widget.emprendimiento.emprendedor.target != null) {
-      emprendedor =
-          "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
+    actualEmprendimiento = dataBase.emprendimientosBox.get(widget.idEmprendimiento);
+    if (actualEmprendimiento != null) {
+      inversiones = actualEmprendimiento!.inversiones.toList();
+      emprendedor = "";
+      if (actualEmprendimiento!.emprendedor.target != null) {
+        emprendedor =
+            "${actualEmprendimiento!.emprendedor.target!.nombre} ${actualEmprendimiento!.emprendedor.target!.apellidos}";
+      }
     }
   }
 
@@ -57,7 +64,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                       MaterialPageRoute(
                         builder: (context) =>
                             AgregarPrimerProductoInversionScreen(
-                              emprendimiento: widget.emprendimiento),
+                              emprendimiento: actualEmprendimiento!),
                       ),
                     );
                 },
@@ -118,7 +125,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   DetalleEmprendimientoScreen(
-                                                    emprendimiento: widget.emprendimiento,
+                                                    emprendimiento: actualEmprendimiento!,
                                                     ),
                                             ),
                                           );
@@ -189,57 +196,70 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                     ),
                                     child: InkWell(
                                       onTap: () async {
-                                        // final date = DateTime.now();
-                                        // final invoice = ProductosEmprendedorInvoice(
-                                        //   info: InvoiceInfo(
-                                        //     usuario:
-                                        //         '${currentUser.nombre} ${currentUser.apellidoP}',
-                                        //     fecha: date,
-                                        //     titulo: 'Productos de Emprendedor',
-                                        //     descripcion:
-                                        //         'En la siguiente tabla se muestran todos los productos creados por el emprendedor ${widget.emprendimiento.emprendedor.target!.nombre} hasta el momento.',
-                                        //   ),
-                                        //   items: [
-                                        //     for (var producto in widget.productosEmprendedor)
-                                        //       ProductosEmprendedorItem(
-                                        //         id: producto.id,
-                                        //         emprendedor: 
-                                        //           "${producto.
-                                        //           emprendimientos.target!.
-                                        //           emprendedor.target!.nombre} ${producto.
-                                        //           emprendimientos.target!.
-                                        //           emprendedor.target!.apellidos}",
-                                        //         tipoProyecto: 
-                                        //           producto.
-                                        //           emprendimientos.target!.
-                                        //           catalogoProyecto.target!.nombre,
-                                        //           emprendimiento: producto.
-                                        //           emprendimientos.target!.nombre,
-                                        //         producto:
-                                        //           producto.nombre,
-                                        //         descripcion: 
-                                        //           producto.descripcion,
-                                        //         unidadMedida: 
-                                        //           producto.unidadMedida.target!.
-                                        //             unidadMedida,
-                                        //         costo:
-                                        //           currencyFormat.format(producto.
-                                        //             costo.toStringAsFixed(2)),
-                                        //         usuario:
-                                        //             "${producto.emprendimientos.target!.
-                                        //             usuario.target!.nombre} ${producto.
-                                        //             emprendimientos.target!.usuario.
-                                        //             target!.apellidoP}",
-                                        //         fechaRegistro:
-                                        //             producto.fechaRegistro,
-                                        //       ),
-                                        //   ],
-                                        // );
-                                        // final pdfFile =
-                                        //     await PdfInvoiceProductosEmprendedor
-                                        //         .generate(invoice);
+                                        final date = DateTime.now();
+                                        final invoice = InversionesInvoice(
+                                          info: InvoiceInfo(
+                                            usuario:
+                                                '${actualEmprendimiento!.usuario.target!.nombre} ${actualEmprendimiento!.usuario.target!.apellidoP}',
+                                            fecha: date,
+                                            titulo: 'Inversiones',
+                                            descripcion:
+                                                'En la siguiente tabla se muestran todas las inversiones hechas en el emprendimiento ${actualEmprendimiento!.nombre} hasta el momento.',
+                                          ),
+                                          items: [
+                                            for (var inversion in inversiones)
+                                              for(var productoSol in inversion.prodSolicitados)
+                                              InversionesItem(
+                                                id: inversion.id,
+                                                emprendedor: 
+                                                  "${inversion.
+                                                    emprendimiento.target!.
+                                                    emprendedor.target!.nombre} ${inversion.
+                                                    emprendimiento.target!.
+                                                    emprendedor.target!.apellidos}",
+                                                producto: 
+                                                  productoSol.
+                                                    producto,
+                                                descripcion: 
+                                                  productoSol.
+                                                    descripcion,
+                                                marcaSugerida: 
+                                                  productoSol.
+                                                    marcaSugerida ?? "",
+                                                proveedorSugerido: 
+                                                  productoSol.
+                                                    proveedorSugerido ?? "",
+                                                tipoEmpaque: 
+                                                  productoSol.
+                                                    tipoEmpaques.target!.tipo,
+                                                cantidad: 
+                                                  productoSol.
+                                                    cantidad.toString(),
+                                                costoEstimado:
+                                                  productoSol.costoEstimado == null ?
+                                                  ""
+                                                  :
+                                                  "\$${productoSol.
+                                                    costoEstimado}",
+                                                porcentajePago: 
+                                                  "%${productoSol.
+                                                    inversion.target!.
+                                                    porcentajePago}",
+                                                usuario:
+                                                    "${inversion.emprendimiento.target!.
+                                                    usuario.target!.nombre} ${inversion.
+                                                    emprendimiento.target!.usuario.
+                                                    target!.apellidoP}",
+                                                fechaRegistro:
+                                                    inversion.fechaRegistro,
+                                              ),
+                                          ],
+                                        );
+                                        final pdfFile =
+                                            await PdfInvoiceInversiones
+                                                .generate(invoice);
 
-                                        // PdfApi.openFile(pdfFile);
+                                        PdfApi.openFile(pdfFile);
                                       },
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
@@ -423,10 +443,10 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                     padding: EdgeInsets.zero,
                                     shrinkWrap: true,
                                     scrollDirection: Axis.vertical,
-                                    itemCount: widget.inversiones.length,
+                                    itemCount: inversiones.length,
                                     itemBuilder: (context, resultadoIndex) {
                                       final inversion =
-                                          widget.inversiones[resultadoIndex];
+                                          inversiones[resultadoIndex];
                                       return InkWell(
                                         onTap: () async {
                                           await Navigator.push(
@@ -434,7 +454,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     MainTabOpcionesScreen(
-                                                      emprendimiento: widget.emprendimiento,
+                                                      emprendimiento: actualEmprendimiento!,
                                                       inversion: inversion,
                                                     ),
                                               ),
@@ -479,12 +499,12 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                               height: 80,
                                                               width: 120,
                                                               child: getWidgetImage(
-                                                                widget.emprendimiento.imagen
+                                                                actualEmprendimiento!.imagen
                                                               ),
                                                             ),
                                                           ),
                                                           Text(
-                                                            widget.emprendimiento.nombre,
+                                                            actualEmprendimiento!.nombre,
                                                             style: AppTheme.of(
                                                                     context)
                                                                 .bodyText1
@@ -529,7 +549,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                         BoxShape.circle,
                                                                   ),
                                                                   child: getWidgetImageEmprendedor(
-                                                                    widget.emprendimiento.
+                                                                    actualEmprendimiento!.
                                                                       emprendedor.target!.imagen,
                                                                     30,
                                                                     30),
@@ -632,7 +652,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                         5,
                                                                         0),
                                                             child: Text(
-                                                              "Tipo de proyecto: ${widget.emprendimiento.catalogoProyecto.target?.nombre ?? ''}",
+                                                              "Tipo de proyecto: ${actualEmprendimiento!.catalogoProyecto.target?.nombre ?? ''}",
                                                               style: AppTheme.of(
                                                                       context)
                                                                   .bodyText1

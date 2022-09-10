@@ -29,8 +29,6 @@ class Emprendimientos {
   @Backlink()
   final productosEmp = ToMany<ProductosEmp>();
   @Backlink()
-  final productosCot = ToMany<ProductosCot>();
-  @Backlink()
   final consultorias = ToMany<Consultorias>();
   @Backlink()
   final inversiones = ToMany<Inversiones>();
@@ -105,6 +103,7 @@ class Inversiones {
   final bitacora = ToMany<Bitacora>();
   final emprendimiento = ToOne<Emprendimientos>();
   final prodSolicitados = ToMany<ProdSolicitado>();
+  final prodCotizados = ToMany<ProdCotizados>();
   final estadoInversion = ToOne<EstadoInversion>();
   
   Inversiones({
@@ -145,7 +144,7 @@ class Bitacora{
   @Backlink()
   final productosEmp = ToMany<ProductosEmp>();
   @Backlink()
-  final productosCot = ToMany<ProductosCot>();
+  final productosCot = ToMany<ProdCotizados>();
   @Backlink()
   final inversiones = ToMany<Inversiones>();
   @Backlink()
@@ -568,37 +567,27 @@ class ProductosEmp {
 }
 
 @Entity()
-class ProductosCot {
+class ProdCotizados {
   int id;
-  String nombre;
-  String descripcion;
-  String imagen;
-  double costo;
-  int precioVenta;
+  String producto;
   int cantidad;
+  double costo;
+  String? estado;
   DateTime fechaRegistro;
-  bool archivado;
-  String proveedor;
   @Unique()
   String? idDBR;
   final statusSync = ToOne<StatusSync>();
-  final emprendimientos = ToOne<Emprendimientos>();
-  final familiaInversion = ToOne<FamiliaInversion>();
-  final unidadMedida = ToOne<UnidadMedida>();
+  final inversion = ToOne<Inversiones>();
   final bitacora = ToMany<Bitacora>();
 
-  ProductosCot({
+  ProdCotizados({
     this.id = 0,
-    required this.nombre,
-    required this.descripcion,
-    required this.imagen,
-    required this.costo,
-    required this.precioVenta,
+    required this.producto,
     required this.cantidad,
+    required this.costo,
+    this.estado,
     DateTime? fechaRegistro,
-    this.archivado = false,
     this.idDBR,
-    required this.proveedor,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -986,7 +975,7 @@ class StatusSync {
   @Backlink()
   final productosEmp = ToMany<ProductosEmp>();
   @Backlink()
-  final productosCot = ToMany<ProductosCot>();
+  final productosCot = ToMany<ProdCotizados>();
   @Backlink()
   final familiasInversion = ToMany<FamiliaInversion>();
   @Backlink()

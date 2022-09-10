@@ -1,10 +1,11 @@
-import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
-import '../objectbox.g.dart';
+import 'package:bizpro_app/objectbox.g.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
-
+import 'package:bizpro_app/models/get_prod_cotizados.dart';
+import 'package:bizpro_app/util/flutter_flow_util.dart';
+import 'package:bizpro_app/util/util.dart';
 
 
 class SyncProvider extends ChangeNotifier {
@@ -285,6 +286,20 @@ class SyncProvider extends ChangeNotifier {
             }   
           }
           break;
+        case "syncAddInversion":
+          print("Entro aqui");
+          final inversionToSync = getFirstInversion(dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
+          if(inversionToSync != null){
+            if(inversionToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
+            print("Entro aqui en el if");
+            break;
+          } else {
+            print("Entro aqui en el else");
+            
+            await syncAddInversion(inversionToSync);
+          } 
+          }         
+          break;
         default:
          break;
       }
@@ -330,7 +345,6 @@ class SyncProvider extends ChangeNotifier {
     }
     return null;
   }
-
   Emprendimientos? getFirstEmprendimiento(List<Emprendimientos> emprendimientos, int idInstruccionesBitacora)
   {
     for (var i = 0; i < emprendimientos.length; i++) {
@@ -355,6 +369,21 @@ class SyncProvider extends ChangeNotifier {
         for (var j = 0; j < jornadas[i].bitacora.length; j++) {
           if (jornadas[i].bitacora[j].id == idInstruccionesBitacora) {
             return jornadas[i];
+          } 
+        }
+      }
+    }
+    return null;
+  }
+  Inversiones? getFirstInversion(List<Inversiones> inversiones, int idInstruccionesBitacora)
+  {
+    for (var i = 0; i < inversiones.length; i++) {
+      if (inversiones[i].bitacora.isEmpty) {
+        
+      } else {
+        for (var j = 0; j < inversiones[i].bitacora.length; j++) {
+          if (inversiones[i].bitacora[j].id == idInstruccionesBitacora) {
+            return inversiones[i];
           } 
         }
       }
@@ -1306,4 +1335,171 @@ void deleteBitacora() {
   dataBase.bitacoraBox.removeAll();
   notifyListeners();
 }
+
+  Future<bool?> syncAddInversion(Inversiones inversion) async {
+    try {
+      print("Estoy en syncAddInversion");
+      //Primero creamos la inversion  
+      //Se busca el estado de inversión 'En cotización'
+      final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En cotización")).build().findFirst();
+      if (newEstadoInversion != null) {
+        print("Datos inversion");
+        print(inversion.estadoInversion);
+        print(inversion.porcentajePago);
+        print(inversion.montoPagar);
+        final recordInversion = await client.records.create('inversiones', body: {
+          "id_emprendimiento_fk": inversion.emprendimiento.target!.idDBR,
+          "id_estado_inversion_fk": newEstadoInversion.idDBR,
+          "porcentaje_pago": inversion.porcentajePago,
+          "monto_pagar": inversion.montoPagar,
+          "saldo": inversion.saldo,
+          "total_inversion": inversion.totalInversion,
+          "inversion_recibida": true,
+          "pago_recibido": false,
+          "producto_entregado": false
+        });
+
+        if (recordInversion.id.isNotEmpty) {
+          //Se actualiza el estado de la inversion
+          String idDBRInversion = recordInversion.id;
+          final statusSyncInversion = dataBase.statusSyncBox.query(StatusSync_.id.equals(inversion.statusSync.target!.id)).build().findUnique();
+          if (statusSyncInversion != null) {
+            statusSyncInversion.status = "HoI36PzYw1wtbO1";
+            dataBase.statusSyncBox.put(statusSyncInversion);
+            print("Se hace el conteo de la tabla statusSync");
+            print(dataBase.statusSyncBox.count());
+            print("Actualizacion de estado de la inversion");
+          }
+          //Se recupera el idDBR de la inversion y el estado-inversion de la misma
+          final updateInversion = dataBase.inversionesBox.query(Inversiones_.id.equals(inversion.id)).build().findUnique();
+          if (updateInversion != null) {
+            updateInversion.idDBR = idDBRInversion;
+            updateInversion.estadoInversion.target = newEstadoInversion;
+            dataBase.inversionesBox.put(updateInversion);
+            print("Se recupera el idDBR de la inversion y su estado-inversión");
+          }
+        }
+        //Segundo creamos los productos solicitados asociados a la inversion
+        //Se recupera la inversion con los últimos cambios
+        final actualInversion = dataBase.inversionesBox.get(inversion.id);
+        if (actualInversion != null) {
+          final prodSolicitadosToSync = actualInversion.prodSolicitados.toList();
+          if (prodSolicitadosToSync.isNotEmpty) {  
+            for (var i = 0; i < prodSolicitadosToSync.length; i++) {
+              print("Datos Prod Solicitados");
+              print(prodSolicitadosToSync[i].producto);
+              print(prodSolicitadosToSync[i].cantidad);
+              print(prodSolicitadosToSync[i].costoEstimado);
+              final recordProdSolicitado = await client.records.create('productos_solicitados', body: {
+                "producto": prodSolicitadosToSync[i].producto,
+                "marca_sugerida": prodSolicitadosToSync[i].marcaSugerida,
+                "descripcion": prodSolicitadosToSync[i].descripcion,
+                "proveedo_sugerido": prodSolicitadosToSync[i].proveedorSugerido,
+                "cantidad": prodSolicitadosToSync[i].cantidad,
+                "costo_estimado": prodSolicitadosToSync[i].costoEstimado,
+                "id_familia_prod_fk": prodSolicitadosToSync[i].familiaProducto.target!.idDBR,
+                "id_tipo_empaques_fk": prodSolicitadosToSync[i].tipoEmpaques.target!.idDBR,
+                "id_inversion_fk": prodSolicitadosToSync[i].inversion.target!.idDBR,
+              });
+              if (recordProdSolicitado.id.isNotEmpty) {
+              //Se actualiza el estado del prod Solicitado
+              String idDBRProdSolicitado = recordProdSolicitado.id;
+              final statusSyncProdSolicitado = dataBase.statusSyncBox.query(StatusSync_.id.equals(prodSolicitadosToSync[i].statusSync.target!.id)).build().findUnique();
+              if (statusSyncProdSolicitado != null) {
+                statusSyncProdSolicitado.status = "HoI36PzYw1wtbO1";
+                dataBase.statusSyncBox.put(statusSyncProdSolicitado);
+                print("Se hace el conteo de la tabla statusSync");
+                print(dataBase.statusSyncBox.count());
+                print("Actualizacion de estado del Prod Solicitado");
+              }
+              //Se recupera el idDBR del prod Solicitado
+              final updateProdSolicitado = dataBase.productosSolicitadosBox.query(ProdSolicitado_.id.equals(prodSolicitadosToSync[i].id)).build().findUnique();
+              if (updateProdSolicitado != null) {
+                updateProdSolicitado.idDBR = idDBRProdSolicitado;
+                dataBase.productosSolicitadosBox.put(updateProdSolicitado);
+                print("Se recupera el idDBR del Prod Solicitado");
+              }
+              }
+            }
+          }
+        }
+      }
+      } catch (e) {
+        print('ERROR - function syncAddInversion(): $e');
+        return false;
+      }
+    
+    return null;
+}
+//TODO VALIDAR QUE HAYA INFO EN EK BACKEND
+  Future<bool> validateLengthCotizacion(Inversiones inversion) async {
+    print("Id Inversion: ${inversion.idDBR}");
+    final records = await client.records.
+    getFullList('productos_cotizados', batch: 200, sort: '+producto', filter: "id_inversion_fk='${inversion.idDBR}'");
+    if (records.isEmpty) {
+      return false;
+    } else {
+      print("No está vacio");
+      print("tamaño: ${records.length}");
+      return true;
+    }
+  }
+
+  Future<void> getCotizacion(Emprendimientos emprendimiento, Inversiones inversion) async {
+    //obtenemos los productos cotizados
+    print("Tamaño ProdCotizados al principio: ${dataBase.productosCotBox.getAll().length}");
+    final records = await client.records.
+    getFullList('productos_cotizados', batch: 200, sort: '+producto', filter: "id_inversion_fk='${inversion.idDBR}'");
+    final List<GetProdCotizados> listProdCotizados = [];
+    for (var element in records) {
+      listProdCotizados.add(getProdCotizadosFromMap(element.toString()));
+    }
+    listProdCotizados.sort((a, b) => removeDiacritics(a.producto).compareTo(removeDiacritics(b.producto)));
+    print("****Informacion productos cotizados****");
+    print(records.length);
+    for (var i = 0; i < records.length; i++) {
+      print(listProdCotizados[i].producto);
+      if (listProdCotizados[i].id.isNotEmpty) {
+      final nuevoProductoCotizado = ProdCotizados(
+      producto: listProdCotizados[i].producto,
+      cantidad: listProdCotizados[i].cantidad,
+      costo: listProdCotizados[i].costoTotal,
+      estado: listProdCotizados[i].estado,
+      idDBR: listProdCotizados[i].id,
+      );
+      final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
+      nuevoProductoCotizado.statusSync.target = nuevoSync;
+      nuevoProductoCotizado.inversion.target = inversion;
+      dataBase.productosCotBox.put(nuevoProductoCotizado);
+      inversion.prodCotizados.add(nuevoProductoCotizado);
+      dataBase.inversionesBox.put(inversion);
+      print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
+      print('Prod Cotizado agregado exitosamente');
+      print("Tamaño ProdCotizados al final: ${dataBase.productosCotBox.getAll().length}");
+      }
+    }
+    //Se actualiza el estado de la inversión
+    final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Cotizada")).build().findFirst();
+    if (newEstadoInversion != null) {
+      final record = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
+        "id_estado_inversion_fk": newEstadoInversion.idDBR,
+      }); 
+      if (record.id.isNotEmpty) {
+      print("Inversion updated succesfully");
+      var updateInversion = dataBase.inversionesBox.get(inversion.id);
+      if (updateInversion != null) {
+          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateInversion.statusSync.target!.id)).build().findUnique();
+          if (statusSync != null) {
+            statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
+            dataBase.statusSyncBox.put(statusSync);
+            updateInversion.estadoInversion.target = newEstadoInversion;
+            dataBase.inversionesBox.put(updateInversion);
+          }
+        }
+      }
+    }
+    procesoterminado = true;
+    procesocargando = false;
+    notifyListeners();
+  }
 }

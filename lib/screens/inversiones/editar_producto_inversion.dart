@@ -930,7 +930,8 @@ class _EditarProductoInversionScreenState
                                       0, 20, 0, 20),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      if (inversionProvider
+                                      if (widget.inversion.estadoInversion.target!.estado == "Solicitada") {
+                                        if (inversionProvider
                                           .validateForm(formKey)) {
                                           if (newImagen != 
                                                   widget.prodSolicitado
@@ -1017,6 +1018,13 @@ class _EditarProductoInversionScreenState
                                           );
                                           return;
                                         }
+                                      }
+                                      } else {
+                                        snackbarKey.currentState
+                                            ?.showSnackBar(const SnackBar(
+                                          content: Text(
+                                              "Ya no puedes actualizar este producto."),
+                                        ));
                                       }
                                     },
                                     text: 'Actualizar',

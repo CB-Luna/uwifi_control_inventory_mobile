@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/screens/inversiones/agregar_producto_inversion_screen.dart';
 import 'package:bizpro_app/screens/inversiones/editar_producto_inversion.dart';
 import 'package:bizpro_app/screens/jornadas/registros/agregar_producto_inversion_jornada.dart';
@@ -392,17 +393,25 @@ with TickerProviderStateMixin {
                         FFButtonWidget(
                           onPressed:
                               () async {
-                                await Navigator
-                                .push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder:
-                                        (context) =>
-                                            AgregarProductoInversionScreen(
-                                              emprendimiento: widget.emprendimiento,
-                                              inversion: widget.inversion,),
-                                  ),
-                                );
+                                if (widget.inversion.estadoInversion.target!.estado == "Solicitada") {
+                                  await Navigator
+                                  .push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder:
+                                          (context) =>
+                                              AgregarProductoInversionScreen(
+                                                emprendimiento: widget.emprendimiento,
+                                                inversion: widget.inversion,),
+                                    ),
+                                  );
+                                } else {
+                                  snackbarKey.currentState
+                                      ?.showSnackBar(const SnackBar(
+                                    content: Text(
+                                        "Ya no puedes agregar más productos."),
+                                  ));
+                                }
                           },
                           text: 'Producto',
                           icon: const Icon(
