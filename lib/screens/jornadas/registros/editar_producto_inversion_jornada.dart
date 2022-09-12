@@ -1,4 +1,9 @@
+import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
+import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:lottie/lottie.dart';
+import 'package:number_text_input_formatter/number_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -33,16 +38,21 @@ class _EditarProductoInversionJornadaState
   final formKey = GlobalKey<FormState>();
   String newFamilia = "";
   String newTipoEmpaques = "";
+  String emprendedor = "";
+  String? newImagen;
+  XFile? image;
   late TextEditingController productoController;
   late TextEditingController descripcionController;
   late TextEditingController marcaController;
   late TextEditingController proveedorController;
   late TextEditingController costoController;
   late TextEditingController cantidadController;
+  late TextEditingController porcentajeController;
 
   @override
   void initState() {
     super.initState();
+    newImagen = widget.productoSol.imagen.target?.imagenes;
     newFamilia = widget.productoSol.familiaProducto.target!.nombre;
     newTipoEmpaques = widget.productoSol.tipoEmpaques.target!.tipo;
     productoController =
@@ -58,6 +68,17 @@ class _EditarProductoInversionJornadaState
             widget.productoSol.costoEstimado?.toStringAsFixed(2) ?? ""));
     cantidadController =
         TextEditingController(text: widget.productoSol.cantidad.toString());
+    porcentajeController = 
+        TextEditingController(text: widget.productoSol.inversion.target!.porcentajePago.toString());
+    emprendedor = "";
+    if (widget.productoSol.inversion.target!.emprendimiento.target!.emprendedor.target != null) {
+      emprendedor =
+          "${widget.productoSol.
+          inversion.target!.emprendimiento.
+          target!.emprendedor.target!.nombre} ${widget.productoSol
+          .inversion.target!.emprendimiento.
+          target!.emprendedor.target!.apellidos}";
+    }
   }
 
   @override
@@ -181,6 +202,148 @@ class _EditarProductoInversionJornadaState
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      FormField(builder: (state) {
+                                        return Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                                  5, 0, 5, 10),
+                                              child: InkWell(
+                                                onTap: () async {
+                                                  String? option = await showModalBottomSheet(
+                                                    context: context,
+                                                    builder: (_) => const CustomBottomSheet(),
+                                                  );
+
+                                                  if (option == null) return;
+
+                                                  final picker = ImagePicker();
+
+                                                  late final XFile? pickedFile;
+
+                                                  if (option == 'camera') {
+                                                    pickedFile = await picker.pickImage(
+                                                      source: ImageSource.camera,
+                                                      imageQuality: 100,
+                                                    );
+                                                  } else {
+                                                    pickedFile = await picker.pickImage(
+                                                      source: ImageSource.gallery,
+                                                      imageQuality: 100,
+                                                    );
+                                                  }
+
+                                                  if (pickedFile == null) {
+                                                    return;
+                                                  }
+
+                                                  setState(() {
+                                                    image = pickedFile;
+                                                    newImagen =
+                                                        image!.path;
+                                                  });
+                                                },
+                                                child: Container(
+                                                  width:
+                                                      MediaQuery.of(context).size.width * 0.9,
+                                                  height: 180,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius: BorderRadius.circular(8),
+                                                    border: Border.all(
+                                                      color: const Color(0xFF221573),
+                                                      width: 1.5,
+                                                    ),
+                                                  ),
+                                                  child: Stack(
+                                                    children: [
+                                                      Lottie.asset(
+                                                        'assets/lottie_animations/75669-animation-for-the-photo-optimization-process.json',
+                                                        width: MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.9,
+                                                        height: 180,
+                                                        fit: BoxFit.contain,
+                                                        animate: true,
+                                                      ),
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius.circular(8),
+                                                        child: getImage(newImagen),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(5, 0, 5, 10),
+                                        child: TextFormField(
+                                          initialValue: emprendedor,
+                                          enabled: false,
+                                          readOnly: true,
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            labelText: 'Emprendedor*',
+                                            labelStyle: AppTheme.of(context)
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Montserrat',
+                                                  color: AppTheme.of(context)
+                                                      .secondaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            hintText: 'Ingresa emprendedor...',
+                                            hintStyle: AppTheme.of(context)
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  color: AppTheme.of(context)
+                                                      .secondaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            filled: true,
+                                            fillColor: const Color(0x49FFFFFF),
+                                          ),
+                                          style: AppTheme.of(context)
+                                              .title3
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                          maxLines: 1,
+                                        ),
+                                      ),
                                       FormField(
                                         builder: (state) {
                                           return Padding(
@@ -245,6 +408,8 @@ class _EditarProductoInversionJornadaState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          enabled: false,
+                                          readOnly: true,
                                           controller: productoController,
                                           textCapitalization:
                                               TextCapitalization.sentences,
@@ -303,18 +468,14 @@ class _EditarProductoInversionJornadaState
                                                 fontWeight: FontWeight.normal,
                                               ),
                                           maxLines: 1,
-                                          validator: (value) {
-                                            return capitalizadoCharacters
-                                                    .hasMatch(value ?? '')
-                                                ? null
-                                                : 'Para continuar, ingrese el producto empezando por mayúscula';
-                                          },
                                         ),
                                       ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          enabled: false,
+                                          readOnly: true,
                                           controller: descripcionController,
                                           textCapitalization:
                                               TextCapitalization.sentences,
@@ -373,12 +534,6 @@ class _EditarProductoInversionJornadaState
                                                 fontWeight: FontWeight.normal,
                                               ),
                                           maxLines: 3,
-                                          validator: (value) {
-                                            return capitalizadoCharacters
-                                                    .hasMatch(value ?? '')
-                                                ? null
-                                                : 'Para continuar, ingrese la descripción empezando por mayúscula';
-                                          },
                                         ),
                                       ),
                                       Padding(
@@ -716,6 +871,83 @@ class _EditarProductoInversionJornadaState
                                           },
                                         ),
                                       ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(5, 0, 5, 10),
+                                        child: TextFormField(
+                                          controller: porcentajeController,
+                                          readOnly: true,
+                                          enabled: false,
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            suffixText: "%",
+                                            suffixStyle: AppTheme.of(context)
+                                              .title3
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                            labelText: 'Porcentaje de pago*',
+                                            labelStyle: AppTheme.of(context)
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Montserrat',
+                                                  color: AppTheme.of(context)
+                                                      .secondaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            hintText: 'Ingresa porcentaje de pago...',
+                                            hintStyle: AppTheme.of(context)
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  color: AppTheme.of(context)
+                                                      .secondaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            filled: true,
+                                            fillColor: const Color(0x49FFFFFF),
+                                          ),
+                                          keyboardType: TextInputType.number,
+                                          inputFormatters: [
+                                              FilteringTextInputFormatter.digitsOnly,
+                                              PercentageTextInputFormatter()
+                                          ],
+                                          style: AppTheme.of(context)
+                                              .title3
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                          maxLines: 1,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -769,16 +1001,17 @@ class _EditarProductoInversionJornadaState
                                               ?.id;
                                           if (newIdFamiliaProd != null &&
                                               newIdTipoEmpaques != null) {
-                                            productoInversionJornadaController.update(
+                                              productoInversionJornadaController.update(
                                               widget.productoSol.id,
                                               productoController.text,
                                               marcaController.text,
                                               descripcionController.text,
                                               proveedorController.text,
-                                              costoController.text.substring(1),
+                                              costoController.text.replaceAll("\$", "").replaceAll(",", ""),
                                               cantidadController.text,
                                               newIdFamiliaProd,
                                               newIdTipoEmpaques,
+                                              newImagen ?? ''
                                             );
                                             await Navigator.push(
                                               context,

@@ -977,17 +977,20 @@ class _EditarProductoInversionScreenState
                                                 ?.id;
                                             if (idFamiliaProducto != null &&
                                                 idTipoEmpaques != null) {
-                                                // registroJornadaProvider.update(
-                                                //   widget.productoSol.id,
-                                                //   productoController.text,
-                                                //   marcaController.text,
-                                                //   descripcionController.text,
-                                                //   proveedorController.text,
-                                                //   costoController.text.substring(1),
-                                                //   cantidadController.text,
-                                                //   newIdFamiliaProd,
-                                                //   newIdUnidadMedida,
-                                                // );
+                                                inversionProvider.updateProductoSolicitado(
+                                                  widget.prodSolicitado.id,
+                                                  widget.inversion.id,
+                                                  idFamiliaProducto,
+                                                  marcaController.text,
+                                                  proveedorController.text,
+                                                  idTipoEmpaques,
+                                                  int.parse(cantidadController.text),
+                                                  costoController.text != '' ? 
+                                                  double.parse(costoController.text.replaceAll("\$", "").replaceAll(",", ""))
+                                                  :
+                                                  null,
+                                                  newImagen ?? '',
+                                                );
                                                 await Navigator.push(
                                                   context,
                                                   MaterialPageRoute(

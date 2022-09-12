@@ -100,12 +100,24 @@ class ProductoInversionJornadaController extends ChangeNotifier {
 
 void update(int id, String newProducto, String? newMarcaSugerida, String newDescripcion, 
     String? newProveedor, String? newCostoEstimado, String newCantidad, int newIdFamiliaProd, 
-    int newIdTipoEmpaques) {
+    int newIdTipoEmpaques, String newImagen) {
     var updateProdSolicitado = dataBase.productosSolicitadosBox.get(id);
     final updateFamiliaProd = dataBase.familiaProductosBox.get(newIdFamiliaProd);
     final updateTipoEmpaques = dataBase.tipoEmpaquesBox.get(newIdTipoEmpaques);
     if (updateProdSolicitado !=  null && updateFamiliaProd != null && updateTipoEmpaques != null) {
       final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateProductoSolicitado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      if (newImagen != '') {
+        if (updateProdSolicitado.imagen.target != null) {
+          final updateImagen  = dataBase.imagenesBox.get(updateProdSolicitado.imagen.target!.id);
+          if (updateImagen != null) {
+            updateImagen.imagenes = newImagen;
+            dataBase.imagenesBox.put(updateImagen);
+          }
+        } else {
+          final nuevaImagenProdSolicitado = Imagenes(imagenes: imagen); //Se crea el objeto imagenes para el Prod Solicitado
+          updateProdSolicitado.imagen.target = nuevaImagenProdSolicitado;
+        }
+      }
       updateProdSolicitado.producto = newProducto;
       updateProdSolicitado.marcaSugerida = newMarcaSugerida;
       updateProdSolicitado.proveedorSugerido =  newProveedor;
@@ -140,6 +152,10 @@ void add(int idEmprendimiento, int idInversion) {
         cantidad: productosSolicitados[i].cantidad,
         fechaRegistro: productosSolicitados[i].fechaRegistro,
       );
+      if (imagen != '') {
+        final nuevaImagenProdSolicitado = Imagenes(imagenes: imagen); //Se crea el objeto imagenes para el Prod Solicitado
+        nuevoProdSolicitado.imagen.target = nuevaImagenProdSolicitado;
+      }
       //Se recupera la familia y tipoEmpaques
       final familiaProd = dataBase.familiaProductosBox.get(productosSolicitados[i].idFamiliaProd);
       final tipoEmpaques = dataBase.tipoEmpaquesBox.get(productosSolicitados[i].idTipoEmpaques);

@@ -63,6 +63,43 @@ class InversionController extends ChangeNotifier {
     return idInversion;
   }
 
+  void updateProductoSolicitado(int idProdSolicitado, int idInversion, int newIdFamiliaProd, String? newMarcaSugerida,
+  String? newProveedorSugerido, int newIdTipoEmpaques, int newCantidad, double? newCostoTotalEstimado, String newImagen) {
+    final updateProdSolicitado = dataBase.productosSolicitadosBox.get(idProdSolicitado);
+    final updateInversion = dataBase.inversionesBox.get(idInversion);
+    final newFamiliaProd = dataBase.familiaProductosBox.get(newIdFamiliaProd);
+    final newTipoEmpaques =  dataBase.tipoEmpaquesBox.get(newIdTipoEmpaques);
+    if (updateProdSolicitado != null && updateInversion != null && newFamiliaProd != null && newTipoEmpaques != null) {
+      // final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateInversion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      //Restamos actual costoTotal
+      updateInversion.totalInversion -= (updateProdSolicitado.costoEstimado == null ? 0.0 : (updateProdSolicitado.costoEstimado! * updateProdSolicitado.cantidad));
+      if (newImagen != '') {
+        if (updateProdSolicitado.imagen.target != null) {
+          final updateImagen  = dataBase.imagenesBox.get(updateProdSolicitado.imagen.target!.id);
+          if (updateImagen != null) {
+            updateImagen.imagenes = newImagen;
+          }
+        } else {
+          final nuevaImagenProdSolicitado = Imagenes(imagenes: imagen); //Se crea el objeto imagenes para el Prod Solicitado
+          updateProdSolicitado.imagen.target = nuevaImagenProdSolicitado;
+        }
+      }
+      updateProdSolicitado.familiaProducto.target = newFamiliaProd;
+      updateProdSolicitado.marcaSugerida = newMarcaSugerida;
+      updateProdSolicitado.proveedorSugerido =  newProveedorSugerido;
+      updateProdSolicitado.tipoEmpaques.target = newTipoEmpaques;
+      updateProdSolicitado.cantidad = newCantidad;
+      updateProdSolicitado.costoEstimado = newCostoTotalEstimado;
+      dataBase.productosSolicitadosBox.put(updateProdSolicitado);
+      //Sumamos actual costoTotal
+      updateInversion.totalInversion += newCostoTotalEstimado == null ? 0.0 : (newCostoTotalEstimado * newCantidad);
+      dataBase.inversionesBox.put(updateInversion);
+      print('Prod Solicitado actualizado exitosamente');
+      clearInformation();
+      notifyListeners();
+    }
+  }
+
   void addProductoSolicitado(int idEmprendimiento, int idInversion, int idFamiliaProd, int idTipoEmpaques) {
     print("Nombre: $cantidad");
     print("descrip: $descripcion");
@@ -93,7 +130,7 @@ class InversionController extends ChangeNotifier {
         nuevoProdSolicitado.inversion.target = inversion;
         nuevoProdSolicitado.bitacora.add(nuevaInstruccion);
         inversion.prodSolicitados.add(nuevoProdSolicitado);
-        inversion.totalInversion += costo != '' ? (int.parse(cantidad) * double.parse(costo)) : 0.0;
+        inversion.totalInversion += costo != '' ? (double.parse(costo) * double.parse(cantidad)) : 0.0;
         dataBase.inversionesBox.put(inversion);
         print('ProdSolicitado agregado exitosamente');
         clearInformation();

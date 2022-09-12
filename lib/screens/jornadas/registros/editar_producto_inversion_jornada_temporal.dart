@@ -952,7 +952,7 @@ class _EditarProductoInversionJornadaTemporalState
                                               marcaController.text,
                                               descripcionController.text,
                                               proveedorController.text,
-                                              costoController.text.substring(1),
+                                              costoController.text.replaceAll("\$", "").replaceAll(",", ""),
                                               cantidadController.text,
                                               newIdFamiliaProd,
                                               newFamilia,

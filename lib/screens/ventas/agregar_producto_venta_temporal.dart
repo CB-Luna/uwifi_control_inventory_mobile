@@ -561,7 +561,7 @@ class _AgregarProductoVentaTemporalState
                                               producto,
                                               idUnidadMedida,
                                               unidadMedida.text,
-                                              double.parse(costoUnitario.text.substring(1)),
+                                              double.parse(costoUnitario.text.replaceAll("\$", "").replaceAll(",", "")),
                                               subTotal.text
                                               );
                                             Navigator.pop(context);

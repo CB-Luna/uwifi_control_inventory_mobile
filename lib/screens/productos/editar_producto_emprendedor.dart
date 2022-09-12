@@ -578,7 +578,7 @@ class _EditarProductoEmprendedorScreenState
                                           unidadMedida !=
                                               widget.productoEmprendedor.
                                                 unidadMedida.target!.unidadMedida ||
-                                          costoController.text.substring(1) !=
+                                          costoController.text.replaceAll("\$", "").replaceAll(",", "") !=
                                                 widget.productoEmprendedor.costo
                                                     .toStringAsFixed(2)) {
                                         if (productoEmprendedorProvider
@@ -595,7 +595,7 @@ class _EditarProductoEmprendedorScreenState
                                                     nombreController.text,
                                                     descController.text,
                                                     newImagen,
-                                                    costoController.text.substring(1),
+                                                    costoController.text.replaceAll("\$", "").replaceAll(",", ""),
                                                     idUnidadMedida);
                                                 await Navigator.push(
                                                   context,

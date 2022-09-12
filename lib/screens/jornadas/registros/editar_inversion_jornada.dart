@@ -633,8 +633,8 @@ class _EditarInversionJornadaScreenState
                                                                                 color: AppTheme.of(context).primaryText,
                                                                               ),
                                                                         ),
-                                                                        Text(
-                                                                          'Und: ${prodSolicitado.unidadMedida.target!.unidadMedida}',
+                                                                         Text(
+                                                                          prodSolicitado.tipoEmpaques.target!.tipo,
                                                                           style: AppTheme.of(context)
                                                                               .subtitle1
                                                                               .override(
