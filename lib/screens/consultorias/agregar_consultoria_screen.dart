@@ -4,6 +4,7 @@ import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:bizpro_app/providers/database_providers/consultoria_controller.dart';
 import 'package:bizpro_app/screens/consultorias/consultoria_creada.dart';
+import 'package:bizpro_app/screens/inversiones/agregar_primer_producto_inversion_screen.dart';
 import 'package:bizpro_app/screens/ventas/agregar_venta.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:flutter/material.dart';
@@ -595,19 +596,70 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                         );
                                       },
                                     );
-                                  } else {
-                                    consultoriaProvider.add(
+                                  } 
+                                  if (ambito == "Capacidad" && areaCirculo == "Tecnología") {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (alertDialogContext) {
+                                        return AlertDialog(
+                                          title: const Text('Inversión'),
+                                          content: const Text(
+                                              '¿Deseas agregar inversión?'),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () async {
+                                                Navigator.pop(alertDialogContext);
+                                                  consultoriaProvider.add(
+                                                  widget.emprendimiento.id,
+                                                  widget.numConsultoria,
+                                                  idAmbito,
+                                                  idAreaCirculo);
+                                                  await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          AgregarPrimerProductoInversionScreen(idEmprendimiento: widget.emprendimiento.id,),
+                                                    ),
+                                                  );
+                                              },
+                                              child: const Text('Sí'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () async {
+                                                Navigator.pop(alertDialogContext);
+                                                consultoriaProvider.add(
+                                                  widget.emprendimiento.id,
+                                                  widget.numConsultoria,
+                                                  idAmbito,
+                                                  idAreaCirculo);
+                                                await Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const ConsultoriaCreada(),
+                                                  ),
+                                                );
+                                              },
+                                              child: const Text('No'),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  } else{
+                                     consultoriaProvider.add(
                                       widget.emprendimiento.id,
                                       widget.numConsultoria,
                                       idAmbito,
                                       idAreaCirculo);
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ConsultoriaCreada(),
-                                      ),
-                                    );
+                                    // ignore: use_build_context_synchronously
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ConsultoriaCreada(),
+                                        ),
+                                      );
                                   }
                                 }
                               } else {

@@ -468,12 +468,12 @@ class CatalogProvider extends ChangeNotifier {
   Future<void> getFasesEmp() async {
     if (dataBase.fasesEmpBox.isEmpty()) {
       final records = await client.records.
-      getFullList('fases_emp', batch: 200, sort: '+fase');
+      getFullList('fases_emp', batch: 200);
       final List<GetFasesEmp> listFasesEmp = [];
       for (var element in records) {
         listFasesEmp.add(getFasesEmpFromMap(element.toString()));
       }
-      listFasesEmp.sort((a, b) => removeDiacritics(a.fase).compareTo(removeDiacritics(b.fase)));
+      // listFasesEmp.sort((a, b) => removeDiacritics(a.fase).compareTo(removeDiacritics(b.fase)));
       print("****Informacion fase emp****");
       for (var i = 0; i < records.length; i++) {
         print(records[i]);

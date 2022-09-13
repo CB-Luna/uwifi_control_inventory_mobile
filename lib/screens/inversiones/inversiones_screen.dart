@@ -64,7 +64,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                       MaterialPageRoute(
                         builder: (context) =>
                             AgregarPrimerProductoInversionScreen(
-                              emprendimiento: actualEmprendimiento!),
+                              idEmprendimiento: widget.idEmprendimiento),
                       ),
                     );
                 },

@@ -1,16 +1,16 @@
 import 'dart:io';
 
 import 'package:bizpro_app/screens/widgets/pdf/api/pdf_api.dart';
-import 'package:bizpro_app/screens/widgets/pdf/models/inversiones_invoice.dart';
 import 'package:bizpro_app/screens/widgets/pdf/models/invoice_info.dart';
+import 'package:bizpro_app/screens/widgets/pdf/models/jornadas_invoice.dart';
 import 'package:bizpro_app/screens/widgets/pdf/utils.dart';
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/widgets.dart';
 
-class PdfInvoiceInversiones {
-  static Future<File> generate(InversionesInvoice invoice) async {
+class PdfInvoiceJornadas {
+  static Future<File> generate(JornadasInvoice invoice) async {
     var assetImage = pw.MemoryImage(
       (await rootBundle.load('assets/images/emlogo.png'))
           .buffer
@@ -29,10 +29,10 @@ class PdfInvoiceInversiones {
       margin: const pw.EdgeInsets.symmetric(horizontal: 40, vertical: 20),
     ));
 
-    return PdfApi.saveDocument(name: 'inversiones.pdf', pdf: pdf);
+    return PdfApi.saveDocument(name: 'jornadas.pdf', pdf: pdf);
   }
 
-  static Widget buildHeader(InversionesInvoice invoice, MemoryImage assetImage) => Column(
+  static Widget buildHeader(JornadasInvoice invoice, MemoryImage assetImage) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 1 * PdfPageFormat.cm),
@@ -82,7 +82,7 @@ class PdfInvoiceInversiones {
   }
 
 
-  static Widget buildTitle(InversionesInvoice invoice) => Column(
+  static Widget buildTitle(JornadasInvoice invoice) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
@@ -95,18 +95,16 @@ class PdfInvoiceInversiones {
         ],
       );
 
-  static Widget buildInvoice(InversionesInvoice invoice) {
+  static Widget buildInvoice(JornadasInvoice invoice) {
     final headers = [
       'ID',
       'Emprendedor',
-      'Producto Solicitado',
-      'Descripción Solicitada',
-      'Marca Sugerida',
-      'Proveedor Sugerido',
-      'Tipo de Empaque',
-      'Cantidad Solicitada',
-      'Costo Estimado',
-      'Porcentaje de Pago',
+      'Comunidad',
+      'Emprendimiento',
+      'Jornada',
+      'Tarea Registrada',
+      'Fecha de Revisión',
+      '¿Tarea Completada?',
       'Usuario',
       'Fecha de Registro'
     ];
@@ -114,14 +112,12 @@ class PdfInvoiceInversiones {
       return [
         item.id.toString(),
         item.emprendedor,
-        item.producto,
-        item.descripcion,
-        item.marcaSugerida,
-        item.proveedorSugerido,
-        item.tipoEmpaque,
-        item.cantidad,
-        item.costoEstimado,
-        item.porcentajePago,
+        item.comunidad,
+        item.emprendimiento,
+        item.jornada,
+        item.tareaRegistrada,
+        Utils.formatDateHour(item.fechaRevision),
+        item.completada,
         item.usuario,
         Utils.formatDateHour(item.fechaRegistro),
       ];
@@ -131,10 +127,10 @@ class PdfInvoiceInversiones {
       headers: headers,
       data: data,
       border: null,
-      headerStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 4),
+      headerStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 7),
       headerDecoration: const BoxDecoration(color: PdfColors.grey300),
       cellHeight: 30,
-      cellStyle: TextStyle(fontWeight: FontWeight.normal, fontSize: 5),
+      cellStyle: TextStyle(fontWeight: FontWeight.normal, fontSize: 7),
       cellAlignments: {
         0: Alignment.centerLeft,
         1: Alignment.centerLeft,
@@ -146,8 +142,6 @@ class PdfInvoiceInversiones {
         7: Alignment.centerLeft,
         8: Alignment.centerLeft,
         9: Alignment.centerLeft,
-        10: Alignment.centerLeft,
-        11: Alignment.centerLeft,
       },
     );
   }

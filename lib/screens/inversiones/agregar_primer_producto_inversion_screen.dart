@@ -13,16 +13,17 @@ import 'package:bizpro_app/providers/database_providers/inversion_controller.dar
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:number_text_input_formatter/number_text_input_formatter.dart';
+import 'package:bizpro_app/screens/inversiones/inversiones_screen.dart';
 import 'package:bizpro_app/screens/inversiones/inversion_creada.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 class AgregarPrimerProductoInversionScreen extends StatefulWidget {
-  final Emprendimientos emprendimiento;
+  final int idEmprendimiento;
 
   const AgregarPrimerProductoInversionScreen({
     Key? key, 
-    required this.emprendimiento, 
+    required this.idEmprendimiento, 
     })
       : super(key: key);
 
@@ -36,6 +37,7 @@ class _AgregarPrimerProductoInversionScreenState
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
   TextEditingController porcentajeController = TextEditingController();
+  Emprendimientos? actualEmprendimiento;
   XFile? image;
   String familia = "";
   String tipoEmpaques = "";
@@ -48,9 +50,12 @@ class _AgregarPrimerProductoInversionScreenState
     tipoEmpaques = "";
     emprendedor = "";
     porcentajeController = TextEditingController(text: "50");
-    if (widget.emprendimiento.emprendedor.target != null) {
+    actualEmprendimiento = dataBase.emprendimientosBox.get(widget.idEmprendimiento);
+    if (actualEmprendimiento != null) {
+      if (actualEmprendimiento!.emprendedor.target != null) {
       emprendedor =
-          "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
+          "${actualEmprendimiento!.emprendedor.target!.nombre} ${actualEmprendimiento!.emprendedor.target!.apellidos}";
+    }
     }
   }
 
@@ -110,7 +115,14 @@ class _AgregarPrimerProductoInversionScreenState
                                 ),
                                 child: InkWell(
                                   onTap: () async {
-                                    Navigator.pop(context);
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            InversionesScreen(
+                                              idEmprendimiento: widget.idEmprendimiento),
+                                      ),
+                                    );
                                   },
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -970,9 +982,9 @@ class _AgregarPrimerProductoInversionScreenState
                                             ?.id;
                                         if (idFamiliaProducto != null && idTipoEmpaques != null) {
                                           inversionProvider.addProductoSolicitado(
-                                              widget.emprendimiento.id,
+                                              actualEmprendimiento!.id,
                                               inversionProvider.addInversion(
-                                                widget.emprendimiento.id, 
+                                                actualEmprendimiento!.id, 
                                                 porcentajeController.text
                                                 ),
                                               idFamiliaProducto,

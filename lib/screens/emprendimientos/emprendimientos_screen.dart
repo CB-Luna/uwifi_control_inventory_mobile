@@ -15,8 +15,11 @@ import 'package:bizpro_app/screens/widgets/bottom_sheet_descargar_catalogos.dart
 import 'package:bizpro_app/screens/widgets/pdf/api/pdf_api.dart';
 import 'package:bizpro_app/screens/widgets/pdf/api/pdf_invoice_emprendimiento.dart';
 import 'package:bizpro_app/screens/widgets/pdf/models/emprendimiento_invoice.dart';
+import 'package:bizpro_app/screens/widgets/pdf/api/pdf_invoice_jornadas.dart';
+import 'package:bizpro_app/screens/widgets/pdf/models/jornadas_invoice.dart';
 import 'package:bizpro_app/screens/widgets/pdf/models/invoice_info.dart';
 import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
+import 'package:bizpro_app/screens/widgets/custom_bottom_download_info.dart';
 import 'package:bizpro_app/screens/widgets/side_menu/side_menu.dart';
 import 'package:bizpro_app/screens/emprendimientos/agregar_emprendimiento_screen.dart';
 
@@ -351,43 +354,103 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                     child: InkWell(
                                       onTap: () async {
                                         final date = DateTime.now();
-                                        final invoice = EmprendimientoInvoice(
-                                          info: InvoiceInfo(
-                                            usuario:
-                                                '${currentUser.nombre} ${currentUser.apellidoP}',
-                                            fecha: date,
-                                            titulo: 'Emprendimientos',
-                                            descripcion:
-                                                'En la siguiente tabla se muestran todos los emprendimientos creados hasta el momento.',
-                                          ),
-                                          items: [
-                                            for (var emp in emprendimientos)
-                                              EmprendimientoItem(
-                                                emprendedor:
-                                                    "${emp.emprendedor.target!.nombre} ${emp.emprendedor.target!.apellidos}",
-                                                emprendimiento: emp.nombre,
-                                                comunidad: emp
-                                                    .comunidad.target!.nombre,
-                                                tipoProyecto: emp
-                                                            .catalogoProyecto
-                                                            .target !=
-                                                        null
-                                                    ? emp
-                                                        .catalogoProyecto
-                                                        .target!
-                                                        .clasificacionEmp
-                                                        .target!
-                                                        .clasificacion
-                                                    : "",
-                                                fase: emp.faseEmp.last.fase,
-                                              ),
-                                          ],
+                                        String? option = await showModalBottomSheet(
+                                          context: context,
+                                          builder: (_) => const CustomBottomDownloadInfo(),
                                         );
-                                        final pdfFile =
-                                            await PdfInvoiceEmprendimiento
-                                                .generate(invoice);
 
-                                        PdfApi.openFile(pdfFile);
+                                        if (option == null) return;
+                                        if (option == "jornadas") {
+                                            final invoice = JornadasInvoice(
+                                            info: InvoiceInfo(
+                                              usuario:
+                                                  '${currentUser.nombre} ${currentUser.apellidoP}',
+                                              fecha: date,
+                                              titulo: 'Jornadas',
+                                              descripcion:
+                                                  'En la siguiente tabla se muestran todas las jornadas creadas hasta el momento.',
+                                            ),
+                                            items: [
+                                              for (var emp in emprendimientos)
+                                                for(var jornada in emp.jornadas)
+                                                  JornadasItem(
+                                                    id: 
+                                                        jornada.id,
+                                                    emprendedor:
+                                                        "${emp.emprendedor.target!.nombre} ${emp.emprendedor.target!.apellidos}",
+                                                    comunidad: 
+                                                        jornada
+                                                        .emprendimiento.target!
+                                                        .comunidad.target!.nombre,
+                                                    emprendimiento: emp.nombre,
+                                                    jornada: 
+                                                        jornada.numJornada.toString(),
+                                                    tareaRegistrada: 
+                                                        jornada
+                                                        .tarea.target!.tarea,
+                                                    fechaRevision: 
+                                                        jornada
+                                                        .fechaRevision,
+                                                    completada: 
+                                                        jornada
+                                                        .tarea.target!.activo == true ?
+                                                        "No"
+                                                        :
+                                                        "Sí",
+                                                    usuario:
+                                                    "${emp.
+                                                    usuario.target!
+                                                    .nombre} ${emp.usuario.
+                                                    target!.apellidoP}",
+                                                    fechaRegistro:
+                                                        jornada.fechaRegistro,
+                                                  ),
+                                            ],
+                                          );
+                                          final pdfFile =
+                                              await PdfInvoiceJornadas
+                                                  .generate(invoice);
+                                          PdfApi.openFile(pdfFile);
+                                        }
+                                        if (option == "emprendimientos") {
+                                            final invoice = EmprendimientoInvoice(
+                                            info: InvoiceInfo(
+                                              usuario:
+                                                  '${currentUser.nombre} ${currentUser.apellidoP}',
+                                              fecha: date,
+                                              titulo: 'Emprendimientos',
+                                              descripcion:
+                                                  'En la siguiente tabla se muestran todos los emprendimientos creados hasta el momento.',
+                                            ),
+                                            items: [
+                                              for (var emp in emprendimientos)
+                                                EmprendimientoItem(
+                                                  emprendedor:
+                                                      "${emp.emprendedor.target!.nombre} ${emp.emprendedor.target!.apellidos}",
+                                                  emprendimiento: emp.nombre,
+                                                  comunidad: emp
+                                                      .comunidad.target!.nombre,
+                                                  tipoProyecto: emp
+                                                              .catalogoProyecto
+                                                              .target !=
+                                                          null
+                                                      ? emp
+                                                          .catalogoProyecto
+                                                          .target!
+                                                          .clasificacionEmp
+                                                          .target!
+                                                          .clasificacion
+                                                      : "",
+                                                  fase: emp.faseEmp.last.fase,
+                                                ),
+                                            ],
+                                          );
+                                          final pdfFile =
+                                              await PdfInvoiceEmprendimiento
+                                                  .generate(invoice);
+                                          PdfApi.openFile(pdfFile);
+                                        }
+                                        
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -435,6 +498,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                             });
                           }
                           return ListView.builder(
+                            reverse: true,
                             padding: EdgeInsets.zero,
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
@@ -442,6 +506,8 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                             itemBuilder: (context, resultadoIndex) {
                               final emprendimiento =
                                   emprendimientos[resultadoIndex];
+                              print("Orden en Tabla Local");
+                              dataBase.fasesEmpBox.getAll().forEach((element) {print(element.fase);});
                               return Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     15, 10, 15, 0),
