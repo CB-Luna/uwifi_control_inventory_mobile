@@ -24,22 +24,22 @@ class GetTipoEmpaques {
     final bool activo;
 
     factory GetTipoEmpaques.fromMap(Map<String, dynamic> json) => GetTipoEmpaques(
-        collectionId: json["@collectionId"] == null ? null : json["@collectionId"],
-        collectionName: json["@collectionName"] == null ? null : json["@collectionName"],
-        id: json["id"] == null ? null : json["id"],
+        collectionId: json["@collectionId"],
+        collectionName: json["@collectionName"],
+        id: json["id"],
         created: json["created"] == null ? null : DateTime.parse(json["created"]),
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
-        tipoEmpaque: json["tipo_empaque"] == null ? null : json["tipo_empaque"],
-        activo: json["activo"] == null ? null : json["activo"],
+        tipoEmpaque: json["tipo_empaque"],
+        activo: json["activo"],
     );
 
     Map<String, dynamic> toMap() => {
-        "@collectionId": collectionId == null ? null : collectionId,
-        "@collectionName": collectionName == null ? null : collectionName,
-        "id": id == null ? null : id,
+        "@collectionId": collectionId,
+        "@collectionName": collectionName,
+        "id": id,
         "created": created == null ? null : created!.toIso8601String(),
         "updated": updated == null ? null : updated!.toIso8601String(),
-        "tipo_empaque": tipoEmpaque == null ? null : tipoEmpaque,
-        "activo": activo == null ? null : activo,
+        "tipo_empaque": tipoEmpaque,
+        "activo": activo,
     };
 }

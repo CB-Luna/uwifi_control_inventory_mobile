@@ -26,25 +26,25 @@ class GetAmbitoConsultoria {
     final String nombreAmbito;
 
     factory GetAmbitoConsultoria.fromMap(Map<String, dynamic> json) => GetAmbitoConsultoria(
-        id: json["id"] == null ? null : json["id"],
+        id: json["id"],
         created: json["created"] == null ? null : DateTime.parse(json["created"]),
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
-        collectionId: json["@collectionId"] == null ? null : json["@collectionId"],
-        collectionName: json["@collectionName"] == null ? null : json["@collectionName"],
+        collectionId: json["@collectionId"],
+        collectionName: json["@collectionName"],
         expand: json["@expand"] == null ? null : Expand.fromMap(json["@expand"]),
-        activo: json["activo"] == null ? null : json["activo"],
-        nombreAmbito: json["nombre_ambito"] == null ? null : json["nombre_ambito"],
+        activo: json["activo"],
+        nombreAmbito: json["nombre_ambito"],
     );
 
     Map<String, dynamic> toMap() => {
-        "id": id == null ? null : id,
+        "id": id,
         "created": created == null ? null : created!.toIso8601String(),
         "updated": updated == null ? null : updated!.toIso8601String(),
-        "@collectionId": collectionId == null ? null : collectionId,
-        "@collectionName": collectionName == null ? null : collectionName,
+        "@collectionId": collectionId,
+        "@collectionName": collectionName,
         "@expand": expand == null ? null : expand!.toMap(),
-        "activo": activo == null ? null : activo,
-        "nombre_ambito": nombreAmbito == null ? null : nombreAmbito,
+        "activo": activo,
+        "nombre_ambito": nombreAmbito,
     };
 }
 

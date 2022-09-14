@@ -11,6 +11,10 @@ import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/screens/cotizaciones/cotizaciones_screen.dart';
+import 'package:bizpro_app/screens/inversiones/cotizacion_aceptada.dart';
+import 'package:bizpro_app/screens/inversiones/cotizacion_cancelada.dart';
+import 'package:bizpro_app/screens/inversiones/cotizacion_solicitar_otra.dart';
+import 'package:bizpro_app/providers/database_providers/cotizacion_controller.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
 
 class CotizacionTab extends StatefulWidget {
@@ -42,7 +46,7 @@ with TickerProviderStateMixin {
     totalProyecto = 0.00;
     for (var element in widget.inversion.prodCotizados) {
       productosCot.add(element);
-      totalProyecto += (element.costo); 
+      totalProyecto += (element.costoTotal); 
     }
   }
 
@@ -50,6 +54,8 @@ with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final syncProvider =
         Provider.of<SyncProvider>(context);
+    final cotizacionProvider =
+        Provider.of<CotizacionController>(context);
     return Align(
       alignment: const AlignmentDirectional(0, 0),
       child: Column(
@@ -591,7 +597,7 @@ with TickerProviderStateMixin {
                                                       MainAxisAlignment.spaceBetween,
                                                   children: [
                                                     Text(
-                                                        productoCot.producto,
+                                                        productoCot.productosProv.target!.nombre,
                                                         style: AppTheme.of(context).bodyText1.override(
                                                         fontFamily: AppTheme.of(context).bodyText1Family,
                                                         color: AppTheme.of(context).secondaryText,
@@ -617,7 +623,7 @@ with TickerProviderStateMixin {
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                         children: [
                                                           Text(
-                                                            'Cantidad: ${productoCot.cantidad}',
+                                                            'Und: ${productoCot.productosProv.target?.unidadMedida.target?.unidadMedida ?? "SIN UND"}',
                                                             style: AppTheme.of(context).subtitle1.override(
                                                                   fontFamily: AppTheme.of(context).subtitle1Family,
                                                                   color: AppTheme.of(context).primaryText,
@@ -626,7 +632,7 @@ with TickerProviderStateMixin {
                                                                 ),
                                                           ),
                                                           Text(
-                                                            "\$ ${(productoCot.costo).toStringAsFixed(2)}",
+                                                            "\$ ${(productoCot.costoTotal).toStringAsFixed(2)}",
                                                             textAlign: TextAlign.end,
                                                             style: AppTheme.of(context).subtitle2.override(
                                                                   fontFamily: AppTheme.of(context).subtitle2Family,
@@ -642,12 +648,21 @@ with TickerProviderStateMixin {
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
                                                     Text(
-                                                      productoCot.estado ?? "ESTADO",
-                                                      style: AppTheme.of(context).bodyText1.override(
-                                                            fontFamily: AppTheme.of(context).bodyText1Family,
-                                                            color: AppTheme.of(context).secondaryText,
-                                                          ),
-                                                    ),
+                                                        productoCot.productosProv.target!.descripcion,
+                                                        style: AppTheme.of(context).bodyText1.override(
+                                                              fontFamily: AppTheme.of(context).bodyText1Family,
+                                                              color: AppTheme.of(context).secondaryText,
+                                                            ),
+                                                        overflow: TextOverflow.ellipsis,
+                                                      ),
+                                                      Text(
+                                                        productoCot.productosProv.target?.familiaProducto.target?.nombre ?? "SIN FAMILIA",
+                                                        style: AppTheme.of(context).bodyText1.override(
+                                                              fontFamily: AppTheme.of(context).bodyText1Family,
+                                                              color: AppTheme.of(context).secondaryText,
+                                                            ),
+                                                        overflow: TextOverflow.ellipsis,
+                                                      ),
                                                   ],
                                                 ),
                                               ],
@@ -665,6 +680,147 @@ with TickerProviderStateMixin {
                       );
                     },
                   ),
+                  Visibility(
+                    visible: widget.inversion.estadoInversion.target!.estado == "Cotizada",
+                    child: Column(
+                      children: [
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0, 10, 0, 10),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            FFButtonWidget(
+                              onPressed: () async {
+                                await cotizacionProvider.acceptCotizacion(widget.inversion.id);
+                                // ignore: use_build_context_synchronously
+                                await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CotizacionAceptada(
+                                        idEmprendimiento: widget.emprendimiento.id,
+                                        ),
+                                    ),
+                                  );
+                              },
+                              text: 'Aceptar',
+                              icon: const Icon(
+                                Icons.check_circle_outlined,
+                                size: 15,
+                              ),
+                              options: FFButtonOptions(
+                                width: 150,
+                                height: 50,
+                                color: Colors.green,
+                                textStyle: AppTheme.of(context)
+                                    .title3
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                elevation: 3,
+                                borderSide: const BorderSide(
+                                  color: Color(0x002CC3F4),
+                                  width: 0,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            FFButtonWidget(
+                              onPressed: () async {
+                                await cotizacionProvider.cancelCotizacion(widget.inversion.id);
+                                // ignore: use_build_context_synchronously
+                                await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CotizacionCancelada(
+                                        idEmprendimiento: widget.emprendimiento.id,
+                                        ),
+                                    ),
+                                  );
+                              },
+                              text: 'Rechazar',
+                              icon: const Icon(
+                                Icons.cancel_outlined,
+                                size: 15,
+                              ),
+                              options: FFButtonOptions(
+                                width: 150,
+                                height: 50,
+                                color: const Color.fromARGB(228, 255, 82, 70),
+                                textStyle: AppTheme.of(context)
+                                    .title3
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                elevation: 3,
+                                borderSide: const BorderSide(
+                                  color: Color(0x002CC3F4),
+                                  width: 0,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0, 10, 0, 10),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FFButtonWidget(
+                              onPressed: () async {
+                                await cotizacionProvider.buscarOtraCotizacion(widget.inversion.id);
+                                // ignore: use_build_context_synchronously
+                                await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CotizacionSolicitarOtra(
+                                        idEmprendimiento: widget.emprendimiento.id,
+                                        ),
+                                    ),
+                                  );
+                                
+                              },
+                              text: 'Solicitar otra cotización',
+                              icon: const Icon(
+                                Icons.restart_alt_outlined,
+                                size: 15,
+                              ),
+                              options: FFButtonOptions(
+                                width: 200,
+                                height: 50,
+                                color: const Color(0xFF4672FF),
+                                textStyle: AppTheme.of(context)
+                                    .title3
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                elevation: 3,
+                                borderSide: const BorderSide(
+                                  color: Color(0x002CC3F4),
+                                  width: 0,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],),
+                  )
                 ],
               ),
             ).animated([

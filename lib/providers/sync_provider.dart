@@ -834,7 +834,7 @@ class SyncProvider extends ChangeNotifier {
             "id_prioridad_fk": "yuEVuBv9rxLM4cR",
             "id_nombre_proyecto_fk": "xXVloemN098DiKW",
             "id_proveedor_fk": "",
-            "id_fase_emp_fk": emprendimientoToSync.faseEmp.last.fase,
+            "id_fase_emp_fk": emprendimientoToSync.faseEmp.last.idDBR,
             "id_status_sync_fk": "HoI36PzYw1wtbO1",
             "id_emprendedor_fk": emprendimientoToSync.emprendedor.target!.idDBR,
           });
@@ -1435,7 +1435,7 @@ void deleteBitacora() {
   Future<bool> validateLengthCotizacion(Inversiones inversion) async {
     print("Id Inversion: ${inversion.idDBR}");
     final records = await client.records.
-    getFullList('productos_cotizados', batch: 200, sort: '+producto', filter: "id_inversion_fk='${inversion.idDBR}'");
+    getFullList('productos_cotizados', batch: 200, filter: "id_inversion_fk='${inversion.idDBR}'");
     if (records.isEmpty) {
       return false;
     } else {
@@ -1449,33 +1449,33 @@ void deleteBitacora() {
     //obtenemos los productos cotizados
     print("Tamaño ProdCotizados al principio: ${dataBase.productosCotBox.getAll().length}");
     final records = await client.records.
-    getFullList('productos_cotizados', batch: 200, sort: '+producto', filter: "id_inversion_fk='${inversion.idDBR}'");
+    getFullList('productos_cotizados', batch: 200, filter: "id_inversion_fk='${inversion.idDBR}'");
     final List<GetProdCotizados> listProdCotizados = [];
     for (var element in records) {
       listProdCotizados.add(getProdCotizadosFromMap(element.toString()));
     }
-    listProdCotizados.sort((a, b) => removeDiacritics(a.producto).compareTo(removeDiacritics(b.producto)));
     print("****Informacion productos cotizados****");
-    print(records.length);
+    print("Tamaño: ${records.length}");
     for (var i = 0; i < records.length; i++) {
-      print(listProdCotizados[i].producto);
       if (listProdCotizados[i].id.isNotEmpty) {
       final nuevoProductoCotizado = ProdCotizados(
-      producto: listProdCotizados[i].producto,
       cantidad: listProdCotizados[i].cantidad,
-      costo: listProdCotizados[i].costoTotal,
-      estado: listProdCotizados[i].estado,
+      costoTotal: listProdCotizados[i].costoTotal,
       idDBR: listProdCotizados[i].id,
       );
       final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
-      nuevoProductoCotizado.statusSync.target = nuevoSync;
-      nuevoProductoCotizado.inversion.target = inversion;
-      dataBase.productosCotBox.put(nuevoProductoCotizado);
-      inversion.prodCotizados.add(nuevoProductoCotizado);
-      dataBase.inversionesBox.put(inversion);
-      print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-      print('Prod Cotizado agregado exitosamente');
-      print("Tamaño ProdCotizados al final: ${dataBase.productosCotBox.getAll().length}");
+      final productoProv = dataBase.productosProvBox.query(ProductosProv_.idDBR.equals(listProdCotizados[i].idProductoProvFk)).build().findUnique();
+      if (productoProv != null) {
+        nuevoProductoCotizado.statusSync.target = nuevoSync;
+        nuevoProductoCotizado.inversion.target = inversion;
+        nuevoProductoCotizado.productosProv.target = productoProv;
+        dataBase.productosCotBox.put(nuevoProductoCotizado);
+        inversion.prodCotizados.add(nuevoProductoCotizado);
+        dataBase.inversionesBox.put(inversion);
+        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
+        print('Prod Cotizado agregado exitosamente');
+        print("Tamaño ProdCotizados al final: ${dataBase.productosCotBox.getAll().length}");
+      }
       }
     }
     //Se actualiza el estado de la inversión

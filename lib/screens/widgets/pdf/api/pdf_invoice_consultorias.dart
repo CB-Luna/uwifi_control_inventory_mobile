@@ -1,16 +1,16 @@
 import 'dart:io';
 
 import 'package:bizpro_app/screens/widgets/pdf/api/pdf_api.dart';
+import 'package:bizpro_app/screens/widgets/pdf/models/consultorias_invoice.dart';
 import 'package:bizpro_app/screens/widgets/pdf/models/invoice_info.dart';
-import 'package:bizpro_app/screens/widgets/pdf/models/ventas_invoice.dart';
 import 'package:bizpro_app/screens/widgets/pdf/utils.dart';
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/widgets.dart';
 
-class PdfInvoiceVentas {
-  static Future<File> generate(VentasInvoice invoice) async {
+class PdfInvoiceConsultorias {
+  static Future<File> generate(ConsultoriasInvoice invoice) async {
     var assetImage = pw.MemoryImage(
       (await rootBundle.load('assets/images/emlogo.png'))
           .buffer
@@ -29,10 +29,10 @@ class PdfInvoiceVentas {
       margin: const pw.EdgeInsets.symmetric(horizontal: 40, vertical: 20),
     ));
 
-    return PdfApi.saveDocument(name: 'ventas.pdf', pdf: pdf);
+    return PdfApi.saveDocument(name: 'consultorias.pdf', pdf: pdf);
   }
 
-  static Widget buildHeader(VentasInvoice invoice, MemoryImage assetImage) => Column(
+  static Widget buildHeader(ConsultoriasInvoice invoice, MemoryImage assetImage) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 1 * PdfPageFormat.cm),
@@ -82,7 +82,7 @@ class PdfInvoiceVentas {
   }
 
 
-  static Widget buildTitle(VentasInvoice invoice) => Column(
+  static Widget buildTitle(ConsultoriasInvoice invoice) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
@@ -95,18 +95,16 @@ class PdfInvoiceVentas {
         ],
       );
 
-  static Widget buildInvoice(VentasInvoice invoice) {
+  static Widget buildInvoice(ConsultoriasInvoice invoice) {
     final headers = [
       'ID',
       'Emprendedor',
-      'Fecha de Inicio',
-      'Fecha de Término',
-      'Producto',
-      'Unidad de Medida',
-      'Cantidad Vendida',
-      'Costo Unitario',
-      'Precio de Venta',
-      'Total',
+      'Ámbito',
+      'Área del Círculo',
+      'Avance Observado',
+      'Porcentaje de Avance',
+      'Sigiuientes Pasos',
+      'Fecha de Revisión',
       'Usuario',
       'Fecha de Registro'
     ];
@@ -114,14 +112,12 @@ class PdfInvoiceVentas {
       return [
         item.id.toString(),
         item.emprendedor,
-        Utils.formatDateHour(item.fechaInicio),
-        Utils.formatDateHour(item.fechaTermino),
-        item.producto,
-        item.unidadMedida,
-        item.cantidadVendida,
-        item.costoUnitario,
-        item.precioVenta,
-        item.total,
+        item.ambito,
+        item.areaCirculo,
+        item.avanceObservado,
+        item.porcentajeAvance,
+        item.siguientesPasos,
+        Utils.formatDateHour(item.fechaRevision),
         item.usuario,
         Utils.formatDateHour(item.fechaRegistro),
       ];
@@ -131,10 +127,10 @@ class PdfInvoiceVentas {
       headers: headers,
       data: data,
       border: null,
-      headerStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 5),
+      headerStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 6),
       headerDecoration: const BoxDecoration(color: PdfColors.grey300),
       cellHeight: 30,
-      cellStyle: TextStyle(fontWeight: FontWeight.normal, fontSize: 5),
+      cellStyle: TextStyle(fontWeight: FontWeight.normal, fontSize: 6),
       cellAlignments: {
         0: Alignment.centerLeft,
         1: Alignment.centerLeft,
@@ -146,8 +142,6 @@ class PdfInvoiceVentas {
         7: Alignment.centerLeft,
         8: Alignment.centerLeft,
         9: Alignment.centerLeft,
-        10: Alignment.centerLeft,
-        11: Alignment.centerLeft,
       },
     );
   }

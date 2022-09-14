@@ -35,6 +35,12 @@ class ObjectBoxDatabase {
   late final Box<EstadoInversion> estadoInversionBox;
   late final Box<Ventas> ventasBox;
   late final Box<ProdVendidos> productosVendidosBox;
+  late final Box<TipoProveedor> tipoProveedorBox;
+  late final Box<CondicionesPago> condicionesPagoBox;
+  late final Box<Bancos> bancosBox;
+  late final Box<Proveedores> proveedoresBox;
+  late final Box<ProductosProv> productosProvBox;
+  late final Box<EstadoProdCotizado> estadosProductoCotizadosBox;
 
   ObjectBoxDatabase._create(this.store) {
     // Add any additional setup code, e.g. build queries.
@@ -68,6 +74,12 @@ class ObjectBoxDatabase {
     estadoInversionBox = Box<EstadoInversion>(store);
     ventasBox = Box<Ventas>(store);
     productosVendidosBox = Box<ProdVendidos>(store);
+    tipoProveedorBox = Box<TipoProveedor>(store);
+    condicionesPagoBox = Box<CondicionesPago>(store);
+    bancosBox = Box<Bancos>(store);
+    proveedoresBox = Box<Proveedores>(store);
+    productosProvBox = Box<ProductosProv>(store);
+    estadosProductoCotizadosBox = Box<EstadoProdCotizado>(store);
   }
 
   /// Create an instance of ObjectBox to use throughout the app.

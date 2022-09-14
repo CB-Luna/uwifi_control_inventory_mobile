@@ -1308,7 +1308,7 @@
     },
     {
       "id": "38:5382242557058931829",
-      "lastPropertyId": "15:1996743748672640144",
+      "lastPropertyId": "16:5093668385616053021",
       "name": "Proveedores",
       "properties": [
         {
@@ -1400,9 +1400,23 @@
           "flags": 520,
           "indexId": "120:2698679340301377654",
           "relationTarget": "Bancos"
+        },
+        {
+          "id": "16:5093668385616053021",
+          "name": "statusSyncId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "192:1965550973427455088",
+          "relationTarget": "StatusSync"
         }
       ],
-      "relations": []
+      "relations": [
+        {
+          "id": "54:4063522687370462098",
+          "name": "productosProv",
+          "targetId": "56:7277108221751789003"
+        }
+      ]
     },
     {
       "id": "39:5004962762570684805",
@@ -1521,7 +1535,13 @@
           "indexId": "124:54236561938110646"
         }
       ],
-      "relations": []
+      "relations": [
+        {
+          "id": "55:4346916878806035047",
+          "name": "proveedores",
+          "targetId": "38:5382242557058931829"
+        }
+      ]
     },
     {
       "id": "42:3199858035416333747",
@@ -1767,6 +1787,11 @@
           "id": "45:2780758001951939604",
           "name": "prodSolicitados",
           "targetId": "49:100215042722630549"
+        },
+        {
+          "id": "56:3150796807169985253",
+          "name": "productosProv",
+          "targetId": "56:7277108221751789003"
         }
       ]
     },
@@ -1807,6 +1832,11 @@
           "id": "46:3169132381372405348",
           "name": "prodSolicitados",
           "targetId": "49:100215042722630549"
+        },
+        {
+          "id": "52:7439886465704814216",
+          "name": "productosProv",
+          "targetId": "56:7277108221751789003"
         }
       ]
     },
@@ -2073,6 +2103,11 @@
           "id": "43:6438336217652797796",
           "name": "productosEmp",
           "targetId": "43:8172937846526815489"
+        },
+        {
+          "id": "51:2822716596879191097",
+          "name": "productosProv",
+          "targetId": "56:7277108221751789003"
         }
       ]
     },
@@ -2244,7 +2279,7 @@
     },
     {
       "id": "54:858406953056318390",
-      "lastPropertyId": "10:5332627173857470047",
+      "lastPropertyId": "13:1494248539864097608",
       "name": "ProdCotizados",
       "properties": [
         {
@@ -2254,24 +2289,9 @@
           "flags": 1
         },
         {
-          "id": "2:2599133563664475584",
-          "name": "producto",
-          "type": 9
-        },
-        {
           "id": "3:5892986395429184015",
           "name": "cantidad",
           "type": 6
-        },
-        {
-          "id": "4:7137124187474983956",
-          "name": "costo",
-          "type": 8
-        },
-        {
-          "id": "5:2112559093449404088",
-          "name": "estado",
-          "type": 9
         },
         {
           "id": "6:1735856656110822140",
@@ -2300,6 +2320,27 @@
           "flags": 520,
           "indexId": "182:4751856482932078104",
           "relationTarget": "Inversiones"
+        },
+        {
+          "id": "11:3418457446093523722",
+          "name": "costoTotal",
+          "type": 8
+        },
+        {
+          "id": "12:1088034900596660184",
+          "name": "estadoProdCotizadoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "185:4184900663065585925",
+          "relationTarget": "EstadoProdCotizado"
+        },
+        {
+          "id": "13:1494248539864097608",
+          "name": "productosProvId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "186:3410490313341050786",
+          "relationTarget": "ProductosProv"
         }
       ],
       "relations": [
@@ -2309,11 +2350,158 @@
           "targetId": "27:1774905738150923512"
         }
       ]
+    },
+    {
+      "id": "55:7989753976020672504",
+      "lastPropertyId": "5:4505898125473094823",
+      "name": "EstadoProdCotizado",
+      "properties": [
+        {
+          "id": "1:6457036745520664238",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:329513595407028238",
+          "name": "estado",
+          "type": 9
+        },
+        {
+          "id": "3:8604127764333477699",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "4:3921580369470275470",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "183:4663256496045953099"
+        },
+        {
+          "id": "5:4505898125473094823",
+          "name": "statusSyncId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "184:4987959058789930727",
+          "relationTarget": "StatusSync"
+        }
+      ],
+      "relations": [
+        {
+          "id": "50:7436777203359790186",
+          "name": "prodCotizados",
+          "targetId": "54:858406953056318390"
+        }
+      ]
+    },
+    {
+      "id": "56:7277108221751789003",
+      "lastPropertyId": "14:2161445370582181331",
+      "name": "ProductosProv",
+      "properties": [
+        {
+          "id": "1:8250405244079524719",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1196238384957646948",
+          "name": "nombre",
+          "type": 9
+        },
+        {
+          "id": "3:3967763482680592378",
+          "name": "descripcion",
+          "type": 9
+        },
+        {
+          "id": "4:7689442594664249010",
+          "name": "marca",
+          "type": 9
+        },
+        {
+          "id": "5:5704405114348775567",
+          "name": "costo",
+          "type": 8
+        },
+        {
+          "id": "6:7805692380146964309",
+          "name": "tiempoEntrega",
+          "type": 6
+        },
+        {
+          "id": "7:7556478417341751322",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "8:3895511561300571603",
+          "name": "archivado",
+          "type": 1
+        },
+        {
+          "id": "9:3435717903735435465",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "187:2826668704568862916"
+        },
+        {
+          "id": "10:4987742386121890857",
+          "name": "statusSyncId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "188:5634261937595659822",
+          "relationTarget": "StatusSync"
+        },
+        {
+          "id": "11:9188564848873461175",
+          "name": "proveedorId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "189:470088676257447863",
+          "relationTarget": "Proveedores"
+        },
+        {
+          "id": "12:1398624415618011183",
+          "name": "familiaProductoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "190:530782811209096402",
+          "relationTarget": "FamiliaProd"
+        },
+        {
+          "id": "13:7561241731767258348",
+          "name": "imagenId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "191:6543979908969061495",
+          "relationTarget": "Imagenes"
+        },
+        {
+          "id": "14:2161445370582181331",
+          "name": "unidadMedidaId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "193:2068950816938160691",
+          "relationTarget": "UnidadMedida"
+        }
+      ],
+      "relations": [
+        {
+          "id": "53:5207316558226170877",
+          "name": "prodCotizados",
+          "targetId": "54:858406953056318390"
+        }
+      ]
     }
   ],
-  "lastEntityId": "54:858406953056318390",
-  "lastIndexId": "182:4751856482932078104",
-  "lastRelationId": "49:7591979899617801170",
+  "lastEntityId": "56:7277108221751789003",
+  "lastIndexId": "193:2068950816938160691",
+  "lastRelationId": "56:3150796807169985253",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
@@ -2605,7 +2793,10 @@
     2514991401100204571,
     4261138498742165746,
     1991668705024615469,
-    7520457943588733683
+    7520457943588733683,
+    2599133563664475584,
+    7137124187474983956,
+    2112559093449404088
   ],
   "retiredRelationUids": [
     1226469011453769556,

@@ -1,4 +1,5 @@
 import 'package:bizpro_app/helpers/constants.dart';
+import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -124,6 +125,36 @@ class _CatalogosScreenState extends State<CatalogosScreen> {
                                     0, 100, 0, 0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
+                                    // final bancos = dataBase.bancosBox.getAll().toList();
+                                    // final tipoP = dataBase.tipoProveedorBox.getAll().toList();
+                                    // final proveedores = dataBase.proveedoresBox.getAll().toList();
+                                    // final condicionesP = dataBase.condicionesPagoBox.getAll().toList();
+                                    // final productos = dataBase.productosProvBox.getAll().toList();
+                                    // final estadoProdC = dataBase.estadosProductoCotizadosBox.getAll().toList();
+                                    //  print("Lista de estados prod C");
+                                    // for (var element in estadoProdC) {
+                                    //   print(element.estado);
+                                    // }
+                                    //  print("Lista de productos Prov");
+                                    // for (var element in productos) {
+                                    //   print(element.nombre);
+                                    // }
+                                    // print("Lista de condiciones");
+                                    // for (var element in condicionesP) {
+                                    //   print(element.condicion);
+                                    // }
+                                    // print("Lista de proveedores");
+                                    // for (var element in proveedores) {
+                                    //   print(element.nombreFiscal);
+                                    // }
+                                    // print("Lista de tipo de proveedor");
+                                    // for (var element in tipoP) {
+                                    //   print(element.tipo);
+                                    // }
+                                    // print("Lista de bancos");
+                                    // for (var element in bancos) {
+                                    //   print(element.banco);
+                                    // }
                                     await Navigator.push(
                                       context,
                                       MaterialPageRoute(

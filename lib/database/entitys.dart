@@ -569,29 +569,47 @@ class ProductosEmp {
 @Entity()
 class ProdCotizados {
   int id;
-  String producto;
   int cantidad;
-  double costo;
-  String? estado;
+  double costoTotal;
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
   final statusSync = ToOne<StatusSync>();
   final inversion = ToOne<Inversiones>();
+  final estadoProdCotizado = ToOne<EstadoProdCotizado>();
+  final productosProv = ToOne<ProductosProv>();
   final bitacora = ToMany<Bitacora>();
 
   ProdCotizados({
     this.id = 0,
-    required this.producto,
     required this.cantidad,
-    required this.costo,
-    this.estado,
+    required this.costoTotal,
     DateTime? fechaRegistro,
     this.idDBR,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
 
+}
+
+@Entity()
+class EstadoProdCotizado {
+  int id;
+  String estado;
+  DateTime fechaRegistro;
+  @Unique()
+  String? idDBR;
+  final prodCotizados = ToMany<ProdCotizados>();
+  final statusSync = ToOne<StatusSync>();
+
+  EstadoProdCotizado({
+    this.id = 0,
+    required this.estado,
+    DateTime? fechaRegistro,
+    this.idDBR,
+    }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
 }
 
 @Entity()
@@ -651,6 +669,7 @@ class FamiliaProd {
   final statusSync = ToOne<StatusSync>();
   final prodSolicitados = ToMany<ProdSolicitado>();
   final productosEmp = ToMany<ProductosEmp>();
+  final productosProv = ToMany<ProductosProv>();
 
   FamiliaProd({
     this.id = 0,
@@ -828,10 +847,12 @@ class Proveedores {
   bool archivado;
   @Unique()
   String? idDBR;
+  final statusSync = ToOne<StatusSync>();
   final tipoProveedor = ToOne<TipoProveedor>();
   final comunidades = ToOne<Comunidades>();
   final condicionPago = ToOne<CondicionesPago>();
   final banco = ToOne<Bancos>();
+  final productosProv= ToMany<ProductosProv>();
 
   Proveedores({
     this.id = 0,
@@ -852,6 +873,41 @@ class Proveedores {
 }
 
 @Entity()
+class ProductosProv{
+  int id;
+  String nombre;
+  String descripcion;
+  String marca;
+  double costo;
+  int tiempoEntrega;
+  DateTime fechaRegistro;
+  bool archivado;
+  @Unique()
+  String? idDBR;
+  final statusSync = ToOne<StatusSync>();
+  final proveedor = ToOne<Proveedores>();
+  final prodCotizados = ToMany<ProdCotizados>();
+  final unidadMedida = ToOne<UnidadMedida>();
+  final familiaProducto = ToOne<FamiliaProd>();
+  final imagen = ToOne<Imagenes>();
+
+  ProductosProv({
+    this.id = 0,
+    required this.nombre,
+    required this.descripcion,
+    required this.marca,
+    required this.costo,
+    required this.tiempoEntrega,
+    DateTime? fechaRegistro,
+    required this.archivado,
+    this.idDBR,
+    }): fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+
+}
+
+@Entity()
 class UnidadMedida {
   int id;
   String unidadMedida;
@@ -862,6 +918,7 @@ class UnidadMedida {
   final statusSync = ToOne<StatusSync>();
   final productosEmp = ToMany<ProductosEmp>();
   final prodSolicitados = ToMany<ProdSolicitado>();
+  final productosProv = ToMany<ProductosProv>();
 
   UnidadMedida({
     this.id = 0,
@@ -928,7 +985,6 @@ class TipoProveedor {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
-  @Backlink()
   final proveedores = ToMany<Proveedores>();
 
   TipoProveedor({
@@ -988,6 +1044,10 @@ class StatusSync {
   final ventas = ToMany<Ventas>();
   @Backlink()
   final prodVendidos = ToMany<ProdVendidos>();
+  @Backlink()
+  final proveedores = ToMany<Proveedores>();
+  @Backlink()
+  final productosProv = ToMany<ProductosProv>();
   StatusSync({
     this.id = 0,
     this.status = "0E3hoVIByUxMUMZ", //M__
@@ -1024,6 +1084,7 @@ class Imagenes {
   DateTime fechaRegistro;
   final tareas = ToMany<Tareas>();
   final prodSolicitados = ToMany<ProdSolicitado>();
+  final productosProv = ToMany<ProductosProv>();
   final usuarios = ToMany<Usuarios>();
   Imagenes({
     this.id = 0,

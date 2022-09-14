@@ -1,3 +1,5 @@
+import 'package:bizpro_app/screens/widgets/pdf/api/pdf_invoice_consultorias.dart';
+import 'package:bizpro_app/screens/widgets/pdf/models/consultorias_invoice.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/main.dart';
@@ -358,8 +360,64 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                           context: context,
                                           builder: (_) => const CustomBottomDownloadInfo(),
                                         );
-
                                         if (option == null) return;
+                                        if (option == "consultorias") {
+                                            final invoice = ConsultoriasInvoice(
+                                            info: InvoiceInfo(
+                                              usuario:
+                                                  '${currentUser.nombre} ${currentUser.apellidoP}',
+                                              fecha: date,
+                                              titulo: 'Consultorias',
+                                              descripcion:
+                                                  'En la siguiente tabla se muestran todas las consultorías creadas hasta el momento.',
+                                            ),
+                                            items: [
+                                              for (var emp in emprendimientos)
+                                                for(var consultoria in emp.consultorias)
+                                                  ConsultoriasItem(
+                                                    id: 
+                                                        consultoria.id,
+                                                    emprendedor:
+                                                        "${emp.emprendedor.target!.nombre} ${emp.emprendedor.target!.apellidos}",
+                                                    ambito: 
+                                                        consultoria
+                                                        .ambitoConsultoria
+                                                        .target!.nombreAmbito,
+                                                    areaCirculo: 
+                                                        consultoria
+                                                        .areaCirculo
+                                                        .target!.nombreArea,
+                                                    avanceObservado: 
+                                                        consultoria
+                                                        .tareas.last.
+                                                        observacion,
+                                                    porcentajeAvance: 
+                                                        consultoria
+                                                        .tareas.last
+                                                        .porcentaje.toString(),
+                                                    siguientesPasos: 
+                                                        consultoria
+                                                        .tareas.last
+                                                        .descripcion,
+                                                    fechaRevision: 
+                                                        consultoria
+                                                        .tareas.last
+                                                        .fechaRevision,
+                                                    usuario:
+                                                    "${emp.
+                                                    usuario.target!
+                                                    .nombre} ${emp.usuario.
+                                                    target!.apellidoP}",
+                                                    fechaRegistro:
+                                                        consultoria.fechaRegistro,
+                                                  ),
+                                            ],
+                                          );
+                                          final pdfFile =
+                                              await PdfInvoiceConsultorias
+                                                  .generate(invoice);
+                                          PdfApi.openFile(pdfFile);
+                                        }
                                         if (option == "jornadas") {
                                             final invoice = JornadasInvoice(
                                             info: InvoiceInfo(
@@ -506,8 +564,6 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                             itemBuilder: (context, resultadoIndex) {
                               final emprendimiento =
                                   emprendimientos[resultadoIndex];
-                              print("Orden en Tabla Local");
-                              dataBase.fasesEmpBox.getAll().forEach((element) {print(element.fase);});
                               return Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     15, 10, 15, 0),

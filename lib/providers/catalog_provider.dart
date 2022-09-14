@@ -1,3 +1,9 @@
+import 'package:bizpro_app/models/get_bancos.dart';
+import 'package:bizpro_app/models/get_condiciones_pago.dart';
+import 'package:bizpro_app/models/get_estados_prod_cotizados.dart';
+import 'package:bizpro_app/models/get_productos_prov.dart';
+import 'package:bizpro_app/models/get_proveedores.dart';
+import 'package:bizpro_app/models/get_tipo_proveedor.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -53,6 +59,12 @@ class CatalogProvider extends ChangeNotifier {
     await getTipoEmpaque();
     await getEstadoInversion();
     await getAreaCirculo();
+    await getTipoProveedor();
+    await getCondicionesPago();
+    await getBancos();
+    await getProveedores();
+    await getProductosProv();
+    await getEstadosProdCotizados();
     print("Proceso terminado");
     procesoterminado = true;
     procesocargando = false;
@@ -541,6 +553,183 @@ class CatalogProvider extends ChangeNotifier {
         dataBase.estadoInversionBox.put(nuevaEstadoInversiones);
         print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
         print('Estado inversion agregado exitosamente');
+        }
+      }
+      notifyListeners();
+    }
+  }
+
+  Future<void> getTipoProveedor() async {
+    if (dataBase.tipoProveedorBox.isEmpty()) {
+      final records = await client.records.
+      getFullList('tipo_proveedor', batch: 200, sort: '+tipo_proveedor');
+      final List<GetTipoProveedor> listTipoProveedor = [];
+      for (var element in records) {
+        listTipoProveedor.add(getTipoProveedorFromMap(element.toString()));
+      }
+      listTipoProveedor.sort((a, b) => removeDiacritics(a.tipoProveedor).compareTo(removeDiacritics(b.tipoProveedor)));
+      print("****Informacion tipo proveedor****");
+      for (var i = 0; i < records.length; i++) {
+        if (listTipoProveedor[i].id.isNotEmpty) {
+        final nuevoTipoProveedor = TipoProveedor(
+        tipo: listTipoProveedor[i].tipoProveedor,
+        idDBR: listTipoProveedor[i].id,
+        activo: listTipoProveedor[i].activo,
+        );
+        dataBase.tipoProveedorBox.put(nuevoTipoProveedor);
+        print('Tipo proveedor agregado exitosamente');
+        }
+      }
+      notifyListeners();
+    }
+  }
+
+  Future<void> getCondicionesPago() async {
+    if (dataBase.condicionesPagoBox.isEmpty()) {
+      final records = await client.records.
+      getFullList('condiciones_pago', batch: 200, sort: '+condicion_pago');
+      final List<GetCondicionesPago> listCondicionesPago = [];
+      for (var element in records) {
+        listCondicionesPago.add(getCondicionesPagoFromMap(element.toString()));
+      }
+      listCondicionesPago.sort((a, b) => removeDiacritics(a.condicionPago).compareTo(removeDiacritics(b.condicionPago)));
+      print("****Informacion condición pago****");
+      for (var i = 0; i < records.length; i++) {
+        if (listCondicionesPago[i].id.isNotEmpty) {
+        final nuevaCondicionPago = CondicionesPago(
+        condicion: listCondicionesPago[i].condicionPago,
+        idDBR: listCondicionesPago[i].id,
+        activo: listCondicionesPago[i].activo,
+        );
+        dataBase.condicionesPagoBox.put(nuevaCondicionPago);
+        print('Condición pago agregada exitosamente');
+        }
+      }
+      notifyListeners();
+    }
+  }
+
+Future<void> getBancos() async {
+    if (dataBase.bancosBox.isEmpty()) {
+      final records = await client.records.
+      getFullList('bancos', batch: 200, sort: '+nombre_banco');
+      final List<GetBancos> listBancos = [];
+      for (var element in records) {
+        listBancos.add(getBancosFromMap(element.toString()));
+      }
+      listBancos.sort((a, b) => removeDiacritics(a.nombreBanco).compareTo(removeDiacritics(b.nombreBanco)));
+      print("****Informacion banco****");
+      for (var i = 0; i < records.length; i++) {
+        if (listBancos[i].id.isNotEmpty) {
+        final nuevoBanco = Bancos(
+        banco: listBancos[i].nombreBanco,
+        idDBR: listBancos[i].id,
+        activo: listBancos[i].activo,
+        );
+        dataBase.bancosBox.put(nuevoBanco);
+        print('Banco agregado exitosamente');
+        }
+      }
+      notifyListeners();
+    }
+  }
+
+Future<void> getEstadosProdCotizados() async {
+    if (dataBase.estadosProductoCotizadosBox.isEmpty()) {
+      final records = await client.records.
+      getFullList('estado_prod_cotizados', batch: 200, sort: '+estado');
+      final List<GetEstadosProdCotizados> listEstadosProdCotizados = [];
+      for (var element in records) {
+        listEstadosProdCotizados.add(getEstadosProdCotizadosFromMap(element.toString()));
+      }
+      listEstadosProdCotizados.sort((a, b) => removeDiacritics(a.estado).compareTo(removeDiacritics(b.estado)));
+      print("****Informacion estado prod cotizado****");
+      for (var i = 0; i < records.length; i++) {
+        if (listEstadosProdCotizados[i].id.isNotEmpty) {
+        final nuevoEstadoProdCotizado = EstadoProdCotizado(
+        estado: listEstadosProdCotizados[i].estado,
+        idDBR: listEstadosProdCotizados[i].id,
+        );
+        dataBase.estadosProductoCotizadosBox.put(nuevoEstadoProdCotizado);
+        print('Estado prod Cotizado agregado exitosamente');
+        }
+      }
+      notifyListeners();
+    }
+  }
+
+Future<void> getProveedores() async {
+    if (dataBase.proveedoresBox.isEmpty()) {
+      final records = await client.records.
+      getFullList('proveedores', batch: 200, sort: '+nombre_fiscal');
+      final List<GetProveedores> listProveedores = [];
+      for (var element in records) {
+        listProveedores.add(getProveedoresFromMap(element.toString()));
+      }
+      listProveedores.sort((a, b) => removeDiacritics(a.nombreFiscal).compareTo(removeDiacritics(b.nombreFiscal)));
+      print("****Informacion proveedor****");
+      for (var i = 0; i < records.length; i++) {
+        if (listProveedores[i].id.isNotEmpty) {
+          final nuevoProveedor = Proveedores(
+          nombreFiscal: listProveedores[i].nombreFiscal,
+          rfc: listProveedores[i].rfc,
+          direccion: listProveedores[i].direccion,
+          nombreEncargado: listProveedores[i].nombreEncargado,
+          clabe: listProveedores[i].clabe,
+          telefono: listProveedores[i].telefono,
+          registradoPor: listProveedores[i].registradoPor,
+          archivado: listProveedores[i].archivado,
+          idDBR: listProveedores[i].id,
+          );
+          final tipoProveedor = dataBase.tipoProveedorBox.query(TipoProveedor_.idDBR.equals(listProveedores[i].idTipoProveedorFk)).build().findUnique();
+          final condicionPago = dataBase.condicionesPagoBox.query(CondicionesPago_.idDBR.equals(listProveedores[i].idCondicionPagoFk)).build().findUnique();
+          final banco = dataBase.bancosBox.query(Bancos_.idDBR.equals(listProveedores[i].idBancoFk)).build().findUnique();
+          final comunidad = dataBase.comunidadesBox.query(Comunidades_.idDBR.equals(listProveedores[i].idComunidadFk)).build().findUnique();
+          if (tipoProveedor != null && condicionPago != null && banco != null && comunidad != null) {
+            nuevoProveedor.tipoProveedor.target = tipoProveedor;
+            nuevoProveedor.condicionPago.target = condicionPago;
+            nuevoProveedor.banco.target = banco;
+            nuevoProveedor.comunidades.target = comunidad;
+            dataBase.proveedoresBox.put(nuevoProveedor);
+            print('Proveedor agregado exitosamente');
+          }
+        }
+      }
+      notifyListeners();
+    }
+  }
+
+Future<void> getProductosProv() async {
+    if (dataBase.productosProvBox.isEmpty()) {
+      final records = await client.records.
+      getFullList('productos_prov', batch: 200, sort: '+nombre_prod_prov');
+      final List<GetProductosProv> listProductosProv = [];
+      for (var element in records) {
+        listProductosProv.add(getProductosProvFromMap(element.toString()));
+      }
+      listProductosProv.sort((a, b) => removeDiacritics(a.nombreProdProv).compareTo(removeDiacritics(b.nombreProdProv)));
+      print("****Informacion producto prov****");
+      for (var i = 0; i < records.length; i++) {
+        if (listProductosProv[i].id.isNotEmpty) {
+          final nuevoProductoProv = ProductosProv(
+          nombre: listProductosProv[i].nombreProdProv,
+          descripcion: listProductosProv[i].descripcionProdProv,
+          marca: listProductosProv[i].marca,
+          costo: listProductosProv[i].costoProdProv,
+          tiempoEntrega: listProductosProv[i].tiempoEntrega,
+          archivado: listProductosProv[i].archivado,
+          idDBR: listProductosProv[i].id,
+          );
+          final proveedor = dataBase.proveedoresBox.query(Proveedores_.idDBR.equals(listProductosProv[i].idProveedorFk)).build().findUnique();
+          final unidadMedida = dataBase.unidadesMedidaBox.query(UnidadMedida_.idDBR.equals(listProductosProv[i].isUndMedidaFk)).build().findUnique();
+          final familiaProd = dataBase.familiaProductosBox.query(FamiliaProd_.idDBR.equals(listProductosProv[i].idFamiliaProdFk)).build().findUnique();
+          if (proveedor != null && unidadMedida != null && familiaProd != null) {
+            nuevoProductoProv.unidadMedida.target = unidadMedida;
+            nuevoProductoProv.familiaProducto.target = familiaProd;
+            nuevoProductoProv.proveedor.target = proveedor;
+            dataBase.productosProvBox.put(nuevoProductoProv);
+            print('Prducto Prov agregado exitosamente');
+          }
         }
       }
       notifyListeners();
