@@ -300,6 +300,23 @@ class SyncProvider extends ChangeNotifier {
           } 
           }         
           break;
+        case "syncUpdateInversion":
+          final inversionToSync = getFirstInversion(dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
+          if(inversionToSync != null){
+            if(inversionToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
+              print("Entro aqui en el if");
+              break;
+            } else {
+              print("Entro aqui en el else");
+              if (inversionToSync.idDBR != null) {
+                print("Ya ha sido enviado al backend");
+                syncUpdateInversion(inversionToSync);
+              } else {
+                print("No ha sido enviado al backend");
+              }
+            }   
+          }  
+          break;
         default:
          break;
       }
@@ -1379,49 +1396,74 @@ void deleteBitacora() {
             print("Se recupera el idDBR de la inversion y su estado-inversión");
           }
         }
-        //Segundo creamos los productos solicitados asociados a la inversion
+
         //Se recupera la inversion con los últimos cambios
         final actualInversion = dataBase.inversionesBox.get(inversion.id);
         if (actualInversion != null) {
-          final prodSolicitadosToSync = actualInversion.prodSolicitados.toList();
-          if (prodSolicitadosToSync.isNotEmpty) {  
-            for (var i = 0; i < prodSolicitadosToSync.length; i++) {
-              print("Datos Prod Solicitados");
-              print(prodSolicitadosToSync[i].producto);
-              print(prodSolicitadosToSync[i].cantidad);
-              print(prodSolicitadosToSync[i].costoEstimado);
-              final recordProdSolicitado = await client.records.create('productos_solicitados', body: {
-                "producto": prodSolicitadosToSync[i].producto,
-                "marca_sugerida": prodSolicitadosToSync[i].marcaSugerida,
-                "descripcion": prodSolicitadosToSync[i].descripcion,
-                "proveedo_sugerido": prodSolicitadosToSync[i].proveedorSugerido,
-                "cantidad": prodSolicitadosToSync[i].cantidad,
-                "costo_estimado": prodSolicitadosToSync[i].costoEstimado,
-                "id_familia_prod_fk": prodSolicitadosToSync[i].familiaProducto.target!.idDBR,
-                "id_tipo_empaques_fk": prodSolicitadosToSync[i].tipoEmpaques.target!.idDBR,
-                "id_inversion_fk": prodSolicitadosToSync[i].inversion.target!.idDBR,
-              });
-              if (recordProdSolicitado.id.isNotEmpty) {
-              //Se actualiza el estado del prod Solicitado
-              String idDBRProdSolicitado = recordProdSolicitado.id;
-              final statusSyncProdSolicitado = dataBase.statusSyncBox.query(StatusSync_.id.equals(prodSolicitadosToSync[i].statusSync.target!.id)).build().findUnique();
-              if (statusSyncProdSolicitado != null) {
-                statusSyncProdSolicitado.status = "HoI36PzYw1wtbO1";
-                dataBase.statusSyncBox.put(statusSyncProdSolicitado);
-                print("Se hace el conteo de la tabla statusSync");
-                print(dataBase.statusSyncBox.count());
-                print("Actualizacion de estado del Prod Solicitado");
-              }
-              //Se recupera el idDBR del prod Solicitado
-              final updateProdSolicitado = dataBase.productosSolicitadosBox.query(ProdSolicitado_.id.equals(prodSolicitadosToSync[i].id)).build().findUnique();
-              if (updateProdSolicitado != null) {
-                updateProdSolicitado.idDBR = idDBRProdSolicitado;
-                dataBase.productosSolicitadosBox.put(updateProdSolicitado);
-                print("Se recupera el idDBR del Prod Solicitado");
-              }
-              }
+          //Segundo creamos la instancia de inversion x prod Cotizados en el backend
+          final inversionXprodCotizados = actualInversion.inversionXprodCotizados.last;
+          final recordInversionXProdCotizados = await client.records.create('inversion_x_prod_cotizados', body: {
+            "id_inversion_fk": inversionXprodCotizados.inversion.target!.idDBR,
+          });
+        if (recordInversionXProdCotizados.id.isNotEmpty) {
+          //Se actualiza el estado de la instancia de inversion x prod Cotizados
+          String idDBRInversionXProdCotizados = recordInversionXProdCotizados.id;
+          final statusSyncInversionXProdCotizados = dataBase.statusSyncBox.query(StatusSync_.id.equals(inversionXprodCotizados.statusSync.target?.id ?? -1)).build().findUnique();
+          if (statusSyncInversionXProdCotizados != null) {
+            statusSyncInversionXProdCotizados.status = "HoI36PzYw1wtbO1";
+            dataBase.statusSyncBox.put(statusSyncInversionXProdCotizados);
+            print("Se hace el conteo de la tabla statusSync");
+            print(dataBase.statusSyncBox.count());
+            print("Actualizacion de estado de la instancia de inversion x prod Cotizados");
+          }
+          // Se recupera el idDBR de la instancia de inversion x prod Cotizados
+          final updateInversionXprodCotizado = dataBase.inversionesXprodCotizadosBox.query(InversionesXProdCotizados_.id.equals(inversionXprodCotizados.id)).build().findUnique();
+          if (updateInversionXprodCotizado != null) {
+            updateInversionXprodCotizado.idDBR = idDBRInversionXProdCotizados;
+            dataBase.inversionesXprodCotizadosBox.put(updateInversionXprodCotizado);
+            print("Se recupera el idDBR de la instancia de inversion x prod Cotizados");
+          }
+        }
+        //Tercero creamos los productos solicitados asociados a la inversion
+        final prodSolicitadosToSync = actualInversion.prodSolicitados.toList();
+        if (prodSolicitadosToSync.isNotEmpty) {  
+          for (var i = 0; i < prodSolicitadosToSync.length; i++) {
+            print("Datos Prod Solicitados");
+            print(prodSolicitadosToSync[i].producto);
+            print(prodSolicitadosToSync[i].cantidad);
+            print(prodSolicitadosToSync[i].costoEstimado);
+            final recordProdSolicitado = await client.records.create('productos_solicitados', body: {
+              "producto": prodSolicitadosToSync[i].producto,
+              "marca_sugerida": prodSolicitadosToSync[i].marcaSugerida,
+              "descripcion": prodSolicitadosToSync[i].descripcion,
+              "proveedo_sugerido": prodSolicitadosToSync[i].proveedorSugerido,
+              "cantidad": prodSolicitadosToSync[i].cantidad,
+              "costo_estimado": prodSolicitadosToSync[i].costoEstimado,
+              "id_familia_prod_fk": prodSolicitadosToSync[i].familiaProducto.target!.idDBR,
+              "id_tipo_empaques_fk": prodSolicitadosToSync[i].tipoEmpaques.target!.idDBR,
+              "id_inversion_fk": prodSolicitadosToSync[i].inversion.target!.idDBR,
+            });
+            if (recordProdSolicitado.id.isNotEmpty) {
+            //Se actualiza el estado del prod Solicitado
+            String idDBRProdSolicitado = recordProdSolicitado.id;
+            final statusSyncProdSolicitado = dataBase.statusSyncBox.query(StatusSync_.id.equals(prodSolicitadosToSync[i].statusSync.target!.id)).build().findUnique();
+            if (statusSyncProdSolicitado != null) {
+              statusSyncProdSolicitado.status = "HoI36PzYw1wtbO1";
+              dataBase.statusSyncBox.put(statusSyncProdSolicitado);
+              print("Se hace el conteo de la tabla statusSync");
+              print(dataBase.statusSyncBox.count());
+              print("Actualizacion de estado del Prod Solicitado");
+            }
+            //Se recupera el idDBR del prod Solicitado
+            final updateProdSolicitado = dataBase.productosSolicitadosBox.query(ProdSolicitado_.id.equals(prodSolicitadosToSync[i].id)).build().findUnique();
+            if (updateProdSolicitado != null) {
+              updateProdSolicitado.idDBR = idDBRProdSolicitado;
+              dataBase.productosSolicitadosBox.put(updateProdSolicitado);
+              print("Se recupera el idDBR del Prod Solicitado");
+            }
             }
           }
+        }
         }
       }
       } catch (e) {
@@ -1431,25 +1473,79 @@ void deleteBitacora() {
     
     return null;
 }
-//TODO VALIDAR QUE HAYA INFO EN EK BACKEND
-  Future<bool> validateLengthCotizacion(Inversiones inversion) async {
-    print("Id Inversion: ${inversion.idDBR}");
-    final records = await client.records.
-    getFullList('productos_cotizados', batch: 200, filter: "id_inversion_fk='${inversion.idDBR}'");
-    if (records.isEmpty) {
-      return false;
+
+  Future<bool?> syncUpdateInversion(Inversiones inversion) async {
+    try {
+      print("Estoy en syncUpdateInversion"); 
+      //Se busca el estado de inversión 'En cotización'
+      final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En cotización")).build().findFirst();
+      if (newEstadoInversion != null) {
+        print("Datos inversion");
+        print(inversion.estadoInversion);
+        print(inversion.porcentajePago);
+        print(inversion.montoPagar);
+        final record = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
+          "id_estado_inversion_fk": newEstadoInversion.idDBR,
+        }); 
+
+        if (record.id.isNotEmpty) {
+          print("Inversion updated succesfully");
+          var updateInversion = dataBase.inversionesBox.get(inversion.id);
+          if (updateInversion != null) {
+            final statusSyncInversion = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateInversion.statusSync.target!.id)).build().findUnique();
+            if (statusSyncInversion != null) {
+              statusSyncInversion.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado de la inversion
+              dataBase.statusSyncBox.put(statusSyncInversion);
+              updateInversion.estadoInversion.target = newEstadoInversion;
+              dataBase.inversionesBox.put(updateInversion);
+            }
+          }
+        }
+      }
+      } catch (e) {
+        print('ERROR - function syncUpdateInversion(): $e');
+        return false;
+      }
+    
+    return null;
+}
+
+
+// VALIDAR QUE HAYA INFO EN EK BACKEND
+  Future<bool> validateLengthCotizacion(InversionesXProdCotizados inversionXprodCotizados) async {
+    print("Id Inversion: ${inversionXprodCotizados.idDBR}");
+    final estadoProdCotizado = dataBase.estadosProductoCotizadosBox.query(EstadoProdCotizado_.estado.equals("Creado")).build().findUnique();
+    if (estadoProdCotizado != null) {
+      final records = await client.records.
+      getFullList('productos_cotizados', 
+      batch: 200, 
+      filter: "id_inversion_x_prod_cotizados_fk='${
+        inversionXprodCotizados.idDBR
+        }' && id_estado_prod_cotizado_fk='${
+          estadoProdCotizado.idDBR}'");
+      if (records.isEmpty) {
+        return false;
+      } else {
+        print("No está vacio");
+        print("tamaño: ${records.length}");
+        return true;
+    }
     } else {
-      print("No está vacio");
-      print("tamaño: ${records.length}");
-      return true;
+      return false;
     }
   }
 
-  Future<void> getCotizacion(Emprendimientos emprendimiento, Inversiones inversion) async {
+  Future<void> getCotizacion(Emprendimientos emprendimiento, Inversiones inversion, InversionesXProdCotizados inversionXprodCotizados) async {
     //obtenemos los productos cotizados
     print("Tamaño ProdCotizados al principio: ${dataBase.productosCotBox.getAll().length}");
+    final estadoProdCotizado = dataBase.estadosProductoCotizadosBox.query(EstadoProdCotizado_.estado.equals("Creado")).build().findUnique();
     final records = await client.records.
-    getFullList('productos_cotizados', batch: 200, filter: "id_inversion_fk='${inversion.idDBR}'");
+      getFullList('productos_cotizados', 
+      batch: 200, 
+      filter: "id_inversion_x_prod_cotizados_fk='${
+        inversionXprodCotizados.idDBR
+        }' && id_estado_prod_cotizado_fk='${
+          estadoProdCotizado!.idDBR}'");
     final List<GetProdCotizados> listProdCotizados = [];
     for (var element in records) {
       listProdCotizados.add(getProdCotizadosFromMap(element.toString()));
@@ -1465,13 +1561,15 @@ void deleteBitacora() {
       );
       final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
       final productoProv = dataBase.productosProvBox.query(ProductosProv_.idDBR.equals(listProdCotizados[i].idProductoProvFk)).build().findUnique();
-      if (productoProv != null) {
+      final estadoProdCotizado = dataBase.estadosProductoCotizadosBox.query(EstadoProdCotizado_.idDBR.equals(listProdCotizados[i].idEstadoProdCotizadoFk)).build().findUnique();
+      if (productoProv != null && estadoProdCotizado != null) {
         nuevoProductoCotizado.statusSync.target = nuevoSync;
-        nuevoProductoCotizado.inversion.target = inversion;
+        nuevoProductoCotizado.estadoProdCotizado.target = estadoProdCotizado;
+        nuevoProductoCotizado.inversionXprodCotizados.target = inversionXprodCotizados;
         nuevoProductoCotizado.productosProv.target = productoProv;
         dataBase.productosCotBox.put(nuevoProductoCotizado);
-        inversion.prodCotizados.add(nuevoProductoCotizado);
-        dataBase.inversionesBox.put(inversion);
+        inversionXprodCotizados.prodCotizados.add(nuevoProductoCotizado);
+        dataBase.inversionesXprodCotizadosBox.put(inversionXprodCotizados);
         print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
         print('Prod Cotizado agregado exitosamente');
         print("Tamaño ProdCotizados al final: ${dataBase.productosCotBox.getAll().length}");

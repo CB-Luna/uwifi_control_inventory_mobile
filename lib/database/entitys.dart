@@ -103,7 +103,7 @@ class Inversiones {
   final bitacora = ToMany<Bitacora>();
   final emprendimiento = ToOne<Emprendimientos>();
   final prodSolicitados = ToMany<ProdSolicitado>();
-  final prodCotizados = ToMany<ProdCotizados>();
+  final inversionXprodCotizados = ToMany<InversionesXProdCotizados>();
   final estadoInversion = ToOne<EstadoInversion>();
   
   Inversiones({
@@ -114,6 +114,27 @@ class Inversiones {
     this.saldo = 0.0,
     this.totalInversion = 0.0,
     this.inversionRecibida = false,
+    DateTime? fechaRegistro,
+    this.idDBR,
+    }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+
+}
+
+@Entity()
+class InversionesXProdCotizados {
+  int id;
+  DateTime fechaRegistro;
+  @Unique()
+  String? idDBR;
+  final statusSync = ToOne<StatusSync>();
+  final inversion = ToOne<Inversiones>();
+  final prodCotizados = ToMany<ProdCotizados>();
+  final bitacora = ToMany<Bitacora>();
+  
+  InversionesXProdCotizados({
+    this.id = 0,
     DateTime? fechaRegistro,
     this.idDBR,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
@@ -153,6 +174,8 @@ class Bitacora{
   final ventas = ToMany<Ventas>();
   @Backlink()
   final prodVendidos = ToMany<ProdVendidos>();
+  @Backlink()
+  final inversionXprodCotizados = ToMany<InversionesXProdCotizados>();
 
   Bitacora({
     this.id = 0,
@@ -575,7 +598,7 @@ class ProdCotizados {
   @Unique()
   String? idDBR;
   final statusSync = ToOne<StatusSync>();
-  final inversion = ToOne<Inversiones>();
+  final inversionXprodCotizados = ToOne<InversionesXProdCotizados>();
   final estadoProdCotizado = ToOne<EstadoProdCotizado>();
   final productosProv = ToOne<ProductosProv>();
   final bitacora = ToMany<Bitacora>();
@@ -1048,6 +1071,8 @@ class StatusSync {
   final proveedores = ToMany<Proveedores>();
   @Backlink()
   final productosProv = ToMany<ProductosProv>();
+  @Backlink()
+  final inversionXprodCotizados = ToMany<InversionesXProdCotizados>();
   StatusSync({
     this.id = 0,
     this.status = "0E3hoVIByUxMUMZ", //M__

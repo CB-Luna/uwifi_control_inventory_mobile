@@ -14,6 +14,7 @@ import 'package:bizpro_app/screens/cotizaciones/cotizaciones_screen.dart';
 import 'package:bizpro_app/screens/inversiones/cotizacion_aceptada.dart';
 import 'package:bizpro_app/screens/inversiones/cotizacion_cancelada.dart';
 import 'package:bizpro_app/screens/inversiones/cotizacion_solicitar_otra.dart';
+import 'package:bizpro_app/screens/inversiones/inversiones_screen.dart';
 import 'package:bizpro_app/providers/database_providers/cotizacion_controller.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
 
@@ -21,11 +22,13 @@ class CotizacionTab extends StatefulWidget {
 
   final Emprendimientos emprendimiento;
   final Inversiones inversion;
+  final InversionesXProdCotizados inversionesXprodCotizados;
   
   const CotizacionTab({
     Key? key, 
     required this.emprendimiento, 
-    required this.inversion
+    required this.inversion, 
+    required this.inversionesXprodCotizados, 
     }) : super(key: key);
     
 
@@ -44,7 +47,7 @@ with TickerProviderStateMixin {
     super.initState();
     productosCot = [];
     totalProyecto = 0.00;
-    for (var element in widget.inversion.prodCotizados) {
+    for (var element in widget.inversionesXprodCotizados.prodCotizados) {
       productosCot.add(element);
       totalProyecto += (element.costoTotal); 
     }
@@ -411,6 +414,7 @@ with TickerProviderStateMixin {
                                 ));
                                 break;
                               case "En cotización":
+                              print("Holaaaaaaaa");
                                 final connectivityResult =
                                   await (Connectivity().checkConnectivity());
                                 if(connectivityResult == ConnectivityResult.none) {
@@ -421,8 +425,9 @@ with TickerProviderStateMixin {
                                   ));
                                 }
                                 else {
-                                if (await syncProvider.validateLengthCotizacion(widget.inversion)) {
-                                  print("Holaaaaaaaa");
+                                  print("Holaaaaaaaa 2");
+                                  print(widget.inversionesXprodCotizados.idDBR);
+                                if (await syncProvider.validateLengthCotizacion(widget.inversionesXprodCotizados)) {
                                   syncProvider.procesoCargando(true);
                                   syncProvider.procesoTerminado(false);
                                    // ignore: use_build_context_synchronously
@@ -432,6 +437,7 @@ with TickerProviderStateMixin {
                                       builder: (context) => CotizacionesScreen(
                                             emprendimiento: widget.emprendimiento, 
                                             inversion: widget.inversion,
+                                            inversionesXProdCotizados: widget.inversionesXprodCotizados,
                                       ),
                                     ),
                                   );
@@ -449,6 +455,13 @@ with TickerProviderStateMixin {
                                   ?.showSnackBar(const SnackBar(
                                 content: Text(
                                     "Esta inversión ya ha sido cotizada."),
+                                ));
+                                break;
+                              case "Buscar otra cotización":
+                                snackbarKey.currentState
+                                  ?.showSnackBar(const SnackBar(
+                                content: Text(
+                                    "Debes volver a sincronizar tu información."),
                                 ));
                                 break;
                               default:
@@ -693,7 +706,10 @@ with TickerProviderStateMixin {
                           children: [
                             FFButtonWidget(
                               onPressed: () async {
-                                await cotizacionProvider.acceptCotizacion(widget.inversion.id);
+                                await cotizacionProvider.acceptCotizacion(
+                                  widget.inversion.id,
+                                  widget.inversionesXprodCotizados.id
+                                  );
                                 // ignore: use_build_context_synchronously
                                 await Navigator.push(
                                     context,
@@ -731,7 +747,10 @@ with TickerProviderStateMixin {
                             ),
                             FFButtonWidget(
                               onPressed: () async {
-                                await cotizacionProvider.cancelCotizacion(widget.inversion.id);
+                                await cotizacionProvider.cancelCotizacion(
+                                  widget.inversion.id,
+                                  widget.inversionesXprodCotizados.id
+                                  );
                                 // ignore: use_build_context_synchronously
                                 await Navigator.push(
                                     context,
@@ -779,7 +798,9 @@ with TickerProviderStateMixin {
                           children: [
                             FFButtonWidget(
                               onPressed: () async {
-                                await cotizacionProvider.buscarOtraCotizacion(widget.inversion.id);
+                                await cotizacionProvider.buscarOtraCotizacion(
+                                  widget.inversion.id,
+                                  widget.inversionesXprodCotizados.id);
                                 // ignore: use_build_context_synchronously
                                 await Navigator.push(
                                     context,

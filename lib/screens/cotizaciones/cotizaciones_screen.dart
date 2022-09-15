@@ -12,10 +12,12 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 class CotizacionesScreen extends StatefulWidget {
   final Emprendimientos emprendimiento;
   final Inversiones inversion;
+  final InversionesXProdCotizados inversionesXProdCotizados;
   const CotizacionesScreen({
     Key? key, 
     required this.emprendimiento, 
-    required this.inversion
+    required this.inversion, 
+    required this.inversionesXProdCotizados
     }) : super(key: key);
 
   @override
@@ -28,7 +30,10 @@ class _CotizacionesScreenState extends State<CotizacionesScreen> {
     // TODO: implement initState
     super.initState();
     setState(() {
-      context.read<SyncProvider>().getCotizacion(widget.emprendimiento, widget.inversion);
+      context.read<SyncProvider>().getCotizacion(
+        widget.emprendimiento, 
+        widget.inversion,
+        widget.inversionesXProdCotizados);
     });
   }
 

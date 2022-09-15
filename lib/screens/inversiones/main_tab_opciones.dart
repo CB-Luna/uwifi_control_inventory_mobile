@@ -157,6 +157,7 @@ class _MainTabOpcionesScreenState extends State<MainTabOpcionesScreen>
                                     CotizacionTab(
                                         emprendimiento: widget.emprendimiento,
                                         inversion: widget.inversion,
+                                        inversionesXprodCotizados: widget.inversion.inversionXprodCotizados.last,
                                         ),
                                   ],
                                 ),

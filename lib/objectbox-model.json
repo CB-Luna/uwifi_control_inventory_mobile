@@ -1930,9 +1930,9 @@
           "targetId": "49:100215042722630549"
         },
         {
-          "id": "48:9210369731160851167",
-          "name": "prodCotizados",
-          "targetId": "54:858406953056318390"
+          "id": "57:4635124561515689063",
+          "name": "inversionXprodCotizados",
+          "targetId": "57:2397636268740769237"
         }
       ]
     },
@@ -2279,7 +2279,7 @@
     },
     {
       "id": "54:858406953056318390",
-      "lastPropertyId": "13:1494248539864097608",
+      "lastPropertyId": "14:8902199047831449277",
       "name": "ProdCotizados",
       "properties": [
         {
@@ -2314,14 +2314,6 @@
           "relationTarget": "StatusSync"
         },
         {
-          "id": "10:5332627173857470047",
-          "name": "inversionId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "182:4751856482932078104",
-          "relationTarget": "Inversiones"
-        },
-        {
           "id": "11:3418457446093523722",
           "name": "costoTotal",
           "type": 8
@@ -2341,6 +2333,14 @@
           "flags": 520,
           "indexId": "186:3410490313341050786",
           "relationTarget": "ProductosProv"
+        },
+        {
+          "id": "14:8902199047831449277",
+          "name": "inversionXprodCotizadosId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "197:7282562986687369629",
+          "relationTarget": "InversionesXProdCotizados"
         }
       ],
       "relations": [
@@ -2497,11 +2497,64 @@
           "targetId": "54:858406953056318390"
         }
       ]
+    },
+    {
+      "id": "57:2397636268740769237",
+      "lastPropertyId": "5:8021686265792875560",
+      "name": "InversionesXProdCotizados",
+      "properties": [
+        {
+          "id": "1:8192697722688898302",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4228686267256851633",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "3:4482941668440171912",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "194:3785567655000907761"
+        },
+        {
+          "id": "4:6400590468977833336",
+          "name": "statusSyncId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "195:7814733577456564055",
+          "relationTarget": "StatusSync"
+        },
+        {
+          "id": "5:8021686265792875560",
+          "name": "inversionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "196:3975026415599243725",
+          "relationTarget": "Inversiones"
+        }
+      ],
+      "relations": [
+        {
+          "id": "58:7743390360918718064",
+          "name": "prodCotizados",
+          "targetId": "54:858406953056318390"
+        },
+        {
+          "id": "59:2270832969489684294",
+          "name": "bitacora",
+          "targetId": "27:1774905738150923512"
+        }
+      ]
     }
   ],
-  "lastEntityId": "56:7277108221751789003",
-  "lastIndexId": "193:2068950816938160691",
-  "lastRelationId": "56:3150796807169985253",
+  "lastEntityId": "57:2397636268740769237",
+  "lastIndexId": "197:7282562986687369629",
+  "lastRelationId": "59:2270832969489684294",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
@@ -2576,7 +2629,8 @@
     8191067602968359312,
     6721811467857329542,
     8251082717356223611,
-    2449024482161215302
+    2449024482161215302,
+    4751856482932078104
   ],
   "retiredPropertyUids": [
     7079790605743243388,
@@ -2796,7 +2850,8 @@
     7520457943588733683,
     2599133563664475584,
     7137124187474983956,
-    2112559093449404088
+    2112559093449404088,
+    5332627173857470047
   ],
   "retiredRelationUids": [
     1226469011453769556,
@@ -2806,7 +2861,8 @@
     7335578884425240534,
     8472678273863104956,
     7210017988446897791,
-    1844994221846500557
+    1844994221846500557,
+    9210369731160851167
   ],
   "version": 1
 }
