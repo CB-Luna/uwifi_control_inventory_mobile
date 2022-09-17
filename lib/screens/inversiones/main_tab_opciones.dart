@@ -1,10 +1,16 @@
-import 'package:bizpro_app/screens/inversiones/tabs/cotizacion_tab.dart';
+import 'package:bizpro_app/screens/inversiones/inversiones_screen.dart';
+import 'package:bizpro_app/screens/inversiones/pagos_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:bizpro_app/theme/theme.dart';
+import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/providers/sync_provider.dart';
+import 'package:bizpro_app/screens/inversiones/tabs/cotizacion_tab.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/screens/inversiones/tabs/inversion_tab.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
-import 'package:bizpro_app/theme/theme.dart';
 
 class MainTabOpcionesScreen extends StatefulWidget {
   final Emprendimientos emprendimiento;
@@ -36,6 +42,8 @@ class _MainTabOpcionesScreenState extends State<MainTabOpcionesScreen>
 
   @override
   Widget build(BuildContext context) {
+    final syncProvider =
+        Provider.of<SyncProvider>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -79,7 +87,14 @@ class _MainTabOpcionesScreenState extends State<MainTabOpcionesScreen>
                               ),
                               child: InkWell(
                                 onTap: () async {
-                                  Navigator.pop(context);
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => InversionesScreen(
+                                        idEmprendimiento: widget.emprendimiento.id,
+                                      ),
+                                    ),
+                                  );
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
@@ -102,6 +117,84 @@ class _MainTabOpcionesScreenState extends State<MainTabOpcionesScreen>
                                             fontSize: 16,
                                             fontWeight: FontWeight.w300,
                                           ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Visibility(
+                              visible: widget.inversion.estadoInversion.target!.estado == "Autorizada" ||
+                              widget.inversion.estadoInversion.target!.estado == "Comprada" || 
+                              widget.inversion.estadoInversion.target!.estado == "Entregada al promotor" ||
+                              widget.inversion.estadoInversion.target!.estado == "Entregada al emprendedor" ||
+                              widget.inversion.estadoInversion.target!.estado == "Pagada",
+                              child: Container(
+                                width: 45,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: AppTheme.of(context).secondaryText,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    InkWell(
+                                      onTap: () async {
+                                        switch (widget.inversion.estadoInversion.target!.estado) {
+                                          case "Autorizada":
+                                            final connectivityResult =
+                                              await (Connectivity().checkConnectivity());
+                                            if(connectivityResult == ConnectivityResult.none) {
+                                              snackbarKey.currentState
+                                                ?.showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "Necesitas conexión a internet para validar el estado de la Inversión."),
+                                              ));
+                                            }
+                                            else {
+                                              print(widget.inversion.idDBR);
+                                            if (await syncProvider.validateInversionComprada(widget.inversion)) {
+                                              snackbarKey.currentState
+                                                ?.showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "Se ha actualizado el estado de la inversión a 'Comprada'."),
+                                              ));
+                                              // ignore: use_build_context_synchronously
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => PagosScreen(
+                                                    idInversion: widget.inversion.id,
+                                                  ),
+                                                ),
+                                              );
+                                            } else {
+                                              snackbarKey.currentState
+                                                ?.showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "Aún no se actualiza el estado de esta inversión a 'Comprada'."),
+                                              ));
+                                            }
+                                            }
+                                            break;
+                                          default:
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => PagosScreen(
+                                                  idInversion: widget.inversion.id,
+                                                ),
+                                              ),
+                                            );
+                                            break;
+                                        }
+                                      },
+                                      child: const Icon(
+                                        Icons.edit_rounded,
+                                        color: Colors.white,
+                                        size: 20,
+                                      ),
                                     ),
                                   ],
                                 ),

@@ -244,6 +244,11 @@
           "id": "30:6849141679018238392",
           "name": "bitacora",
           "targetId": "27:1774905738150923512"
+        },
+        {
+          "id": "62:9163628031946481713",
+          "name": "pagos",
+          "targetId": "58:6428801880818699617"
         }
       ]
     },
@@ -1837,6 +1842,11 @@
           "id": "52:7439886465704814216",
           "name": "productosProv",
           "targetId": "56:7277108221751789003"
+        },
+        {
+          "id": "63:1285445577259759221",
+          "name": "inversiones",
+          "targetId": "48:5212286852224162052"
         }
       ]
     },
@@ -1933,6 +1943,16 @@
           "id": "57:4635124561515689063",
           "name": "inversionXprodCotizados",
           "targetId": "57:2397636268740769237"
+        },
+        {
+          "id": "60:7449809876194961892",
+          "name": "pagos",
+          "targetId": "58:6428801880818699617"
+        },
+        {
+          "id": "64:8898484037009311682",
+          "name": "imagenes",
+          "targetId": "47:4406411524870188538"
         }
       ]
     },
@@ -2279,7 +2299,7 @@
     },
     {
       "id": "54:858406953056318390",
-      "lastPropertyId": "14:8902199047831449277",
+      "lastPropertyId": "15:4879353849688490270",
       "name": "ProdCotizados",
       "properties": [
         {
@@ -2341,6 +2361,11 @@
           "flags": 520,
           "indexId": "197:7282562986687369629",
           "relationTarget": "InversionesXProdCotizados"
+        },
+        {
+          "id": "15:4879353849688490270",
+          "name": "aceptado",
+          "type": 1
         }
       ],
       "relations": [
@@ -2500,7 +2525,7 @@
     },
     {
       "id": "57:2397636268740769237",
-      "lastPropertyId": "5:8021686265792875560",
+      "lastPropertyId": "6:1747257805174508181",
       "name": "InversionesXProdCotizados",
       "properties": [
         {
@@ -2536,6 +2561,11 @@
           "flags": 520,
           "indexId": "196:3975026415599243725",
           "relationTarget": "Inversiones"
+        },
+        {
+          "id": "6:1747257805174508181",
+          "name": "aceptado",
+          "type": 1
         }
       ],
       "relations": [
@@ -2550,11 +2580,77 @@
           "targetId": "27:1774905738150923512"
         }
       ]
+    },
+    {
+      "id": "58:6428801880818699617",
+      "lastPropertyId": "8:8776328160547757904",
+      "name": "Pagos",
+      "properties": [
+        {
+          "id": "1:4115903305292342690",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4203156006095368368",
+          "name": "montoAbonado",
+          "type": 8
+        },
+        {
+          "id": "3:2622731725629235359",
+          "name": "fechaMovimiento",
+          "type": 10
+        },
+        {
+          "id": "4:7079987813871341317",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "5:7803421008754010390",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "198:7168385615663272966"
+        },
+        {
+          "id": "6:4146278510371356915",
+          "name": "statusSyncId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "199:7654248222638135302",
+          "relationTarget": "StatusSync"
+        },
+        {
+          "id": "7:130051233404825466",
+          "name": "inversionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "200:5332962881385054503",
+          "relationTarget": "Inversiones"
+        },
+        {
+          "id": "8:8776328160547757904",
+          "name": "usuarioId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "201:5830096455343665109",
+          "relationTarget": "Usuarios"
+        }
+      ],
+      "relations": [
+        {
+          "id": "61:8919084738549353227",
+          "name": "bitacora",
+          "targetId": "27:1774905738150923512"
+        }
+      ]
     }
   ],
-  "lastEntityId": "57:2397636268740769237",
-  "lastIndexId": "197:7282562986687369629",
-  "lastRelationId": "59:2270832969489684294",
+  "lastEntityId": "58:6428801880818699617",
+  "lastIndexId": "201:5830096455343665109",
+  "lastRelationId": "64:8898484037009311682",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,

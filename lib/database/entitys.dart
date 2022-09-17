@@ -105,6 +105,8 @@ class Inversiones {
   final prodSolicitados = ToMany<ProdSolicitado>();
   final inversionXprodCotizados = ToMany<InversionesXProdCotizados>();
   final estadoInversion = ToOne<EstadoInversion>();
+  final pagos = ToMany<Pagos>();
+  final imagenes = ToMany<Imagenes>();
   
   Inversiones({
     this.id = 0,
@@ -122,10 +124,37 @@ class Inversiones {
 
 }
 
+
+@Entity()
+class Pagos {
+  int id;
+  double montoAbonado;
+  DateTime fechaMovimiento;
+  DateTime fechaRegistro;
+  @Unique()
+  String? idDBR;
+  final statusSync = ToOne<StatusSync>();
+  final inversion = ToOne<Inversiones>();
+  final usuario = ToOne<Usuarios>();
+  final bitacora = ToMany<Bitacora>();
+  
+  Pagos({
+    this.id = 0,
+    this.montoAbonado = 0.0,
+    required this.fechaMovimiento,
+    DateTime? fechaRegistro,
+    this.idDBR,
+    }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+
+}
+
 @Entity()
 class InversionesXProdCotizados {
   int id;
   DateTime fechaRegistro;
+  bool aceptado;
   @Unique()
   String? idDBR;
   final statusSync = ToOne<StatusSync>();
@@ -135,6 +164,7 @@ class InversionesXProdCotizados {
   
   InversionesXProdCotizados({
     this.id = 0,
+    this.aceptado = false,
     DateTime? fechaRegistro,
     this.idDBR,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
@@ -176,6 +206,8 @@ class Bitacora{
   final prodVendidos = ToMany<ProdVendidos>();
   @Backlink()
   final inversionXprodCotizados = ToMany<InversionesXProdCotizados>();
+  @Backlink()
+  final pagos = ToMany<Pagos>();
 
   Bitacora({
     this.id = 0,
@@ -455,6 +487,7 @@ class Usuarios {
   final variablesUsuario = ToOne<VariablesUsuario>(); //Importante para evaluar la sincronizacion
   final rol = ToOne<Roles>();
   final image = ToOne<Imagenes>();
+  final pagos = ToMany<Pagos>();
   @Backlink()
   final emprendimientos = ToMany<Emprendimientos>();
 
@@ -592,6 +625,7 @@ class ProductosEmp {
 @Entity()
 class ProdCotizados {
   int id;
+  bool aceptado;
   int cantidad;
   double costoTotal;
   DateTime fechaRegistro;
@@ -605,6 +639,7 @@ class ProdCotizados {
 
   ProdCotizados({
     this.id = 0,
+    this.aceptado = false,
     required this.cantidad,
     required this.costoTotal,
     DateTime? fechaRegistro,
@@ -1073,6 +1108,8 @@ class StatusSync {
   final productosProv = ToMany<ProductosProv>();
   @Backlink()
   final inversionXprodCotizados = ToMany<InversionesXProdCotizados>();
+  @Backlink()
+  final pagos = ToMany<Pagos>();
   StatusSync({
     this.id = 0,
     this.status = "0E3hoVIByUxMUMZ", //M__
@@ -1111,6 +1148,7 @@ class Imagenes {
   final prodSolicitados = ToMany<ProdSolicitado>();
   final productosProv = ToMany<ProductosProv>();
   final usuarios = ToMany<Usuarios>();
+  final inversiones = ToMany<Inversiones>();
   Imagenes({
     this.id = 0,
     required this.imagenes,

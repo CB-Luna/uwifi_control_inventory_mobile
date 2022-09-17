@@ -1,11 +1,12 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/screens/inversiones/agregar_producto_inversion_screen.dart';
 import 'package:bizpro_app/screens/inversiones/editar_producto_inversion.dart';
-import 'package:bizpro_app/screens/jornadas/registros/agregar_producto_inversion_jornada.dart';
-import 'package:bizpro_app/screens/jornadas/registros/editar_producto_inversion_jornada.dart';
+import 'package:bizpro_app/screens/widgets/bottom_sheet_sincronizar_widget.dart';
 import 'package:bizpro_app/util/util.dart';
-import 'package:flutter/material.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -652,6 +653,88 @@ with TickerProviderStateMixin {
                         },
                       );
                     },
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional
+                            .fromSTEB(10, 12,
+                                5, 12),
+                    child: Row(
+                      mainAxisSize:
+                          MainAxisSize.max,
+                      mainAxisAlignment:
+                          MainAxisAlignment
+                              .center,
+                      children: [
+                        FFButtonWidget(
+                          onPressed:
+                              () async {
+                                final connectivityResult =
+                                    await (Connectivity().checkConnectivity());
+                                final bitacora = dataBase.bitacoraBox.getAll().toList();
+                                print("Tamaño bitacora: ${bitacora.length}");
+                                await showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  backgroundColor: Colors.transparent,
+                                  context: context,
+                                  builder: (context) {
+                                    return Padding(
+                                      padding: MediaQuery.of(context).viewInsets,
+                                      child: SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height * 0.45,
+                                        child: connectivityResult ==
+                                                    ConnectivityResult.none ||
+                                                bitacora.isEmpty
+                                            ? const BottomSheetSincronizarWidget(
+                                                isVisible: false,
+                                              )
+                                            : const BottomSheetSincronizarWidget(
+                                                isVisible: true,
+                                              ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                          text: 'Sincronizar',
+                          icon: const Icon(
+                            Icons.sync_rounded,
+                            size: 18,
+                          ),
+                          options:
+                              FFButtonOptions(
+                            width: 150,
+                            height: 45,
+                            color: AppTheme
+                                    .of(context)
+                                .secondaryText,
+                            textStyle:
+                                AppTheme.of(
+                                        context)
+                                    .subtitle2
+                                    .override(
+                                      fontFamily:
+                                          AppTheme.of(context).subtitle2Family,
+                                      color: Colors
+                                          .white,
+                                      fontSize:
+                                          18,
+                                    ),
+                            borderSide:
+                                const BorderSide(
+                              color: Colors
+                                  .transparent,
+                              width: 1,
+                            ),
+                            borderRadius:
+                                BorderRadius
+                                    .circular(
+                                        8),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

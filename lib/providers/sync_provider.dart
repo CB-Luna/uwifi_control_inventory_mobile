@@ -1499,6 +1499,34 @@ void deleteBitacora() {
               updateInversion.estadoInversion.target = newEstadoInversion;
               dataBase.inversionesBox.put(updateInversion);
             }
+            //Se recupera la inversion con los últimos cambios
+            final actualInversion = dataBase.inversionesBox.get(inversion.id);
+            if (actualInversion != null) {
+              //Segundo creamos la instancia de inversion x prod Cotizados en el backend
+              final inversionXprodCotizados = actualInversion.inversionXprodCotizados.last;
+              final recordInversionXProdCotizados = await client.records.create('inversion_x_prod_cotizados', body: {
+                "id_inversion_fk": inversionXprodCotizados.inversion.target!.idDBR,
+              });
+              if (recordInversionXProdCotizados.id.isNotEmpty) {
+                //Se actualiza el estado de la instancia de inversion x prod Cotizados
+                String idDBRInversionXProdCotizados = recordInversionXProdCotizados.id;
+                final statusSyncInversionXProdCotizados = dataBase.statusSyncBox.query(StatusSync_.id.equals(inversionXprodCotizados.statusSync.target?.id ?? -1)).build().findUnique();
+                if (statusSyncInversionXProdCotizados != null) {
+                  statusSyncInversionXProdCotizados.status = "HoI36PzYw1wtbO1";
+                  dataBase.statusSyncBox.put(statusSyncInversionXProdCotizados);
+                  print("Se hace el conteo de la tabla statusSync");
+                  print(dataBase.statusSyncBox.count());
+                  print("Actualizacion de estado de la instancia de inversion x prod Cotizados");
+                }
+                // Se recupera el idDBR de la instancia de inversion x prod Cotizados
+                final updateInversionXprodCotizado = dataBase.inversionesXprodCotizadosBox.query(InversionesXProdCotizados_.id.equals(inversionXprodCotizados.id)).build().findUnique();
+                if (updateInversionXprodCotizado != null) {
+                  updateInversionXprodCotizado.idDBR = idDBRInversionXProdCotizados;
+                  dataBase.inversionesXprodCotizadosBox.put(updateInversionXprodCotizado);
+                  print("Se recupera el idDBR de la instancia de inversion x prod Cotizados");
+                }
+              }
+            }
           }
         }
       }
@@ -1535,6 +1563,45 @@ void deleteBitacora() {
     }
   }
 
+  // VALIDAR QUE HAYA CAMBIADO EL ESTADO DE LA INVERSION A COMPRADA
+  Future<bool> validateInversionComprada(Inversiones inversion) async {
+    print("Id Inversion: ${inversion.idDBR}");
+    final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Comprada")).build().findUnique();
+    if (newEstadoInversion != null) {
+      final records = await client.records.
+      getFullList('inversiones', 
+      batch: 200, 
+      filter: "id='${
+        inversion.idDBR
+        }' && id_estado_inversion_fk='${
+          newEstadoInversion.idDBR}'");
+      if (records.isEmpty) {
+        return false;
+      } else {
+        print("No está vacio en Inversion Comprada");
+        var updateInversion = dataBase.inversionesBox.get(inversion.id);
+        if (updateInversion != null) {
+          final statusSyncInversion = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateInversion.statusSync.target!.id)).build().findUnique();
+          if (statusSyncInversion != null) {
+            statusSyncInversion.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado de la inversion
+            dataBase.statusSyncBox.put(statusSyncInversion);
+            updateInversion.estadoInversion.target = newEstadoInversion;
+            dataBase.inversionesBox.put(updateInversion);
+            return true;
+          }
+          else{
+            return false;
+          }
+        }
+        else{
+          return false;
+        }
+    }
+    } else {
+      return false;
+    }
+  }
+
   Future<void> getCotizacion(Emprendimientos emprendimiento, Inversiones inversion, InversionesXProdCotizados inversionXprodCotizados) async {
     //obtenemos los productos cotizados
     print("Tamaño ProdCotizados al principio: ${dataBase.productosCotBox.getAll().length}");
@@ -1558,6 +1625,7 @@ void deleteBitacora() {
       cantidad: listProdCotizados[i].cantidad,
       costoTotal: listProdCotizados[i].costoTotal,
       idDBR: listProdCotizados[i].id,
+      aceptado: listProdCotizados[i].aceptado,
       );
       final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
       final productoProv = dataBase.productosProvBox.query(ProductosProv_.idDBR.equals(listProdCotizados[i].idProductoProvFk)).build().findUnique();

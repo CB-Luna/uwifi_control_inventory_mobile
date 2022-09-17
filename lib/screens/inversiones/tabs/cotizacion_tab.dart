@@ -706,6 +706,16 @@ with TickerProviderStateMixin {
                           children: [
                             FFButtonWidget(
                               onPressed: () async {
+                                final connectivityResult =
+                                  await (Connectivity().checkConnectivity());
+                                if(connectivityResult == ConnectivityResult.none) {
+                                  snackbarKey.currentState
+                                    ?.showSnackBar(const SnackBar(
+                                  content: Text(
+                                      "Necesitas conexión a internet para aceptar la cotización."),
+                                  ));
+                                } else
+                                {
                                 await cotizacionProvider.acceptCotizacion(
                                   widget.inversion.id,
                                   widget.inversionesXprodCotizados.id
@@ -719,6 +729,7 @@ with TickerProviderStateMixin {
                                         ),
                                     ),
                                   );
+                                }
                               },
                               text: 'Aceptar',
                               icon: const Icon(
@@ -747,6 +758,16 @@ with TickerProviderStateMixin {
                             ),
                             FFButtonWidget(
                               onPressed: () async {
+                                final connectivityResult =
+                                  await (Connectivity().checkConnectivity());
+                                if(connectivityResult == ConnectivityResult.none) {
+                                  snackbarKey.currentState
+                                    ?.showSnackBar(const SnackBar(
+                                  content: Text(
+                                      "Necesitas conexión a internet para cancelar la cotización."),
+                                  ));
+                                } else
+                                {
                                 await cotizacionProvider.cancelCotizacion(
                                   widget.inversion.id,
                                   widget.inversionesXprodCotizados.id
@@ -760,6 +781,7 @@ with TickerProviderStateMixin {
                                         ),
                                     ),
                                   );
+                                }
                               },
                               text: 'Rechazar',
                               icon: const Icon(
@@ -798,6 +820,16 @@ with TickerProviderStateMixin {
                           children: [
                             FFButtonWidget(
                               onPressed: () async {
+                                final connectivityResult =
+                                  await (Connectivity().checkConnectivity());
+                                if(connectivityResult == ConnectivityResult.none) {
+                                  snackbarKey.currentState
+                                    ?.showSnackBar(const SnackBar(
+                                  content: Text(
+                                      "Necesitas conexión a internet para buscar Otra Cotización."),
+                                  ));
+                                } else
+                                {
                                 await cotizacionProvider.buscarOtraCotizacion(
                                   widget.inversion.id,
                                   widget.inversionesXprodCotizados.id);
@@ -810,7 +842,7 @@ with TickerProviderStateMixin {
                                         ),
                                     ),
                                   );
-                                
+                                }
                               },
                               text: 'Solicitar otra cotización',
                               icon: const Icon(

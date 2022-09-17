@@ -1,13 +1,10 @@
 import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:lottie/lottie.dart';
 import 'package:bizpro_app/providers/catalog_provider.dart';
-import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
-import 'package:bizpro_app/providers/sync_provider.dart';
 
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 

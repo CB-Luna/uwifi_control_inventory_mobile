@@ -1,4 +1,5 @@
 import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:provider/provider.dart';
@@ -467,14 +468,8 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                             width: double.infinity,
                                             height: 130,
                                             decoration: BoxDecoration(
-                                              color: const Color(0xB14672FF),
-                                              boxShadow: const [
-                                                BoxShadow(
-                                                  blurRadius: 4,
-                                                  color: Color(0x32000000),
-                                                  offset: Offset(0, 2),
-                                                )
-                                              ],
+                                              color: const Color(
+                                                0x374672FF),
                                               borderRadius: BorderRadius.circular(8),
                                             ),
                                             child: Column(
@@ -504,7 +499,9 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                             ),
                                                           ),
                                                           Text(
-                                                            actualEmprendimiento!.nombre,
+                                                            maybeHandleOverflow(
+                                                              actualEmprendimiento!.nombre, 12, "..."
+                                                              ),
                                                             style: AppTheme.of(
                                                                     context)
                                                                 .bodyText1
@@ -513,7 +510,9 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                       AppTheme.of(context)
                                                                           .bodyText1Family,
                                                                   fontSize:
-                                                                      18,
+                                                                      16,
+                                                                  color: AppTheme.of(context)
+                                                                          .secondaryText,
                                                                 ),
                                                             overflow: TextOverflow.ellipsis,
                                                           ),
@@ -560,10 +559,20 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                           .fromSTEB(5,
                                                                               0, 0, 0),
                                                                   child: Text(
-                                                                    emprendedor,
-                                                                    style: AppTheme
-                                                                            .of(context)
-                                                                        .bodyText1,
+                                                                    maybeHandleOverflow(emprendedor, 25, "..."),
+                                                                    style: AppTheme.of(
+                                                                            context)
+                                                                        .bodyText1
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              AppTheme.of(context)
+                                                                                  .bodyText1Family,
+                                                                          fontSize:
+                                                                              14,
+                                                                          color: AppTheme.of(context)
+                                                                                  .secondaryText,
+                                                                        ),
+                                                                    overflow: TextOverflow.ellipsis,
                                                                   ),
                                                                 ),
                                                               ],
@@ -605,7 +614,10 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                               0,
                                                                               0),
                                                                   child: Text(
-                                                                    '\$${inversion.totalInversion.toStringAsFixed(2)}',
+                                                                    maybeHandleOverflow(
+                                                                    '\$${inversion.totalInversion.toStringAsFixed(2)}'
+                                                                    , 12, "..."
+                                                                    ),
                                                                     style: AppTheme.of(
                                                                             context)
                                                                         .bodyText1
@@ -614,7 +626,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                               AppTheme.of(context)
                                                                                   .bodyText1Family,
                                                                           fontSize:
-                                                                              20,
+                                                                              16,
                                                                         ),
                                                                   ),
                                                                 ),
@@ -639,7 +651,8 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                         AppTheme.of(context)
                                                                             .bodyText1Family,
                                                                     fontSize:
-                                                                        15,
+                                                                        14,
+                                                                    color: AppTheme.of(context).secondaryText,
                                                                   ),
                                                             ),
                                                           ),
@@ -652,7 +665,12 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                         5,
                                                                         0),
                                                             child: Text(
-                                                              "Tipo de proyecto: ${actualEmprendimiento!.catalogoProyecto.target?.nombre ?? ''}",
+                                                              maybeHandleOverflow(
+                                                              "Tipo de proyecto: ${
+                                                                actualEmprendimiento!
+                                                                  .catalogoProyecto
+                                                                  .target!.nombre}", 38, "..."
+                                                              ),
                                                               style: AppTheme.of(
                                                                       context)
                                                                   .bodyText1

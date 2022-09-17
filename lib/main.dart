@@ -21,6 +21,7 @@ import 'package:bizpro_app/providers/database_providers/inversion_controller.dar
 import 'package:bizpro_app/providers/database_providers/registro_controller.dart';
 import 'package:bizpro_app/providers/database_providers/inversion_jornada_controller.dart';
 import 'package:bizpro_app/providers/database_providers/producto_emprendedor_controller.dart';
+import 'package:bizpro_app/providers/database_providers/recepcion_y_entrega_inversion_controller.dart';
 import 'package:bizpro_app/providers/sync_provider.dart';
 
 import 'package:bizpro_app/screens/screens.dart';
@@ -96,6 +97,10 @@ void main() async {
         ),
         ChangeNotifierProvider<CotizacionController>(
           create: (context) => CotizacionController(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<RecepcionYEntregaController>(
+          create: (context) => RecepcionYEntregaController(),
           lazy: false,
         ),
         ChangeNotifierProvider<SyncProvider>(

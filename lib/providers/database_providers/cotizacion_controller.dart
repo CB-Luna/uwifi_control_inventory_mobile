@@ -56,27 +56,7 @@ class CotizacionController extends ChangeNotifier {
   // }
 
   Future<void> acceptCotizacion(int idInversion, int idInversionesXProdCotizados) async {
-    //Se actualiza el estado de la inversión
-    final inversion = dataBase.inversionesBox.get(idInversion);
-    final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Autorizada")).build().findFirst();
-    if (newEstadoInversion != null && inversion != null) {
-      final record = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
-        "id_estado_inversion_fk": newEstadoInversion.idDBR,
-      }); 
-      if (record.id.isNotEmpty) {
-      print("Inversion updated succesfully");
-      var updateInversion = dataBase.inversionesBox.get(inversion.id);
-      if (updateInversion != null) {
-          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateInversion.statusSync.target!.id)).build().findUnique();
-          if (statusSync != null) {
-            statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
-            dataBase.statusSyncBox.put(statusSync);
-            updateInversion.estadoInversion.target = newEstadoInversion;
-            dataBase.inversionesBox.put(updateInversion);
-          }
-        }
-      }
-    }
+    double montoPagarYSaldoInicial = 0.0;
     //Se actualiza es el estado de los prod Cotizados
     final inversionXprodCotizados = dataBase.inversionesXprodCotizadosBox.get(idInversionesXProdCotizados);
     final newEstadoProdCotizado = dataBase.estadosProductoCotizadosBox.query(EstadoProdCotizado_.estado.equals("Aceptado")).build().findFirst();
@@ -97,6 +77,32 @@ class CotizacionController extends ChangeNotifier {
               updateProdCotizado.estadoProdCotizado.target = newEstadoProdCotizado;
               dataBase.productosCotBox.put(updateProdCotizado);
             }
+            //Se suma el total del Prod Cotizado al monto a pagar y saldo
+            montoPagarYSaldoInicial += updateProdCotizado.costoTotal;
+          }
+        }
+      }
+    }
+    //Se actualiza el estado de la inversión
+    final inversion = dataBase.inversionesBox.get(idInversion);
+    final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Autorizada")).build().findFirst();
+    if (newEstadoInversion != null && inversion != null) {
+      final record = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
+        "id_estado_inversion_fk": newEstadoInversion.idDBR,
+      }); 
+      if (record.id.isNotEmpty) {
+      print("Inversion updated succesfully");
+      var updateInversion = dataBase.inversionesBox.get(inversion.id);
+      if (updateInversion != null) {
+          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateInversion.statusSync.target!.id)).build().findUnique();
+          if (statusSync != null) {
+            statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
+            dataBase.statusSyncBox.put(statusSync);
+            updateInversion.estadoInversion.target = newEstadoInversion;
+            //Se asigna monto a Pagar y el Saldo inicial
+            updateInversion.montoPagar = double.parse(((montoPagarYSaldoInicial * updateInversion.porcentajePago)/100).toStringAsFixed(2));
+            updateInversion.saldo = double.parse(((montoPagarYSaldoInicial * updateInversion.porcentajePago)/100).toStringAsFixed(2));
+            dataBase.inversionesBox.put(updateInversion);
           }
         }
       }
