@@ -1323,6 +1323,9 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                             ),
                           ),
                         ),
+                        const SizedBox(
+                          height: 40,
+                        )
                       ],
                     ),
                   ),

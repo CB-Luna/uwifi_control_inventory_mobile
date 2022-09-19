@@ -839,6 +839,9 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                             ),
                           ),
                         ),
+                        const SizedBox(
+                          height: 40,
+                        )
                       ],
                     ),
                   ),

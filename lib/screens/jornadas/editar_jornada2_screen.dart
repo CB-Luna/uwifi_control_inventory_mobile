@@ -992,6 +992,9 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                             ),
                           ),
                         ),
+                        const SizedBox(
+                          height: 40,
+                        ),
                       ],
                     ),
                   ),
