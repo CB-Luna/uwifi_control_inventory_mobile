@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
+import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -40,7 +41,7 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
   String areaCirculo = "";
   String porcentajeAvance = "";
   String emprendedor = "";
-  XFile? image;
+  XFile? fotoAvance;
 
   @override
   void initState() {
@@ -690,15 +691,7 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                                 type: PageTransitionType.fade,
                                                 child:
                                                     FlutterFlowExpandedImageView(
-                                                  image: image == null ? Image.network(
-                                                    'https://picsum.photos/seed/836/600',
-                                                    fit: BoxFit.contain,
-                                                  ) 
-                                                  :
-                                                  Image.file(
-                                                    File(image!.path),
-                                                    fit: BoxFit.contain,
-                                                  ),
+                                                  image: getWidgetContainImage(fotoAvance?.path),
                                                   allowRotation: false,
                                                   tag: 'imagen',
                                                   useHeroAnimation: true,
@@ -712,19 +705,11 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(8),
-                                              child: image == null ?Image.network(
-                                                'https://picsum.photos/seed/836/600',
-                                                width: 170,
-                                                height: 120,
-                                                fit: BoxFit.cover,
-                                              )
-                                              :
-                                              Image.file(
-                                                File(image!.path),
-                                                width: 170,
-                                                height: 120,
-                                                fit: BoxFit.cover,
-                                              ),
+                                              child: getWidgetContainerImage(
+                                                  fotoAvance?.path, 
+                                                  120, 
+                                                  170
+                                                ),
                                             ),
                                           ),
                                         ),
@@ -759,11 +744,11 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                             }
                                 
                                             setState(() {
-                                              image = pickedFile;
-                                              consultoriaProvider.imagen = image!.path;
+                                              fotoAvance = pickedFile;
+                                              consultoriaProvider.imagen = fotoAvance!.path;
                                             });
                                         },
-                                        text: 'Imagen',
+                                        text: 'Foto Avance',
                                         icon: const Icon(
                                           Icons.add_a_photo,
                                           size: 15,
@@ -859,6 +844,9 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                               borderRadius: BorderRadius.circular(8),
                             ),
                           ),
+                        ),
+                        const SizedBox(
+                          height: 40,
                         ),
                       ],
                     ),

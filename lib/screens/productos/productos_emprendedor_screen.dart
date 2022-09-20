@@ -437,16 +437,10 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                                               15, 10, 15, 0),
                                           child: Container(
                                             width: double.infinity,
-                                            height: 280,
+                                            height: 250,
                                             decoration: BoxDecoration(
-                                              color: const Color(0xB14672FF),
-                                              boxShadow: const [
-                                                BoxShadow(
-                                                  blurRadius: 4,
-                                                  color: Color(0x32000000),
-                                                  offset: Offset(0, 2),
-                                                )
-                                              ],
+                                              color: const Color(
+                                                0x374672FF),
                                               borderRadius: BorderRadius.circular(8),
                                             ),
                                             child: Column(
@@ -461,7 +455,10 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                                                     topRight: Radius.circular(8),
                                                   ),
                                                   child:
-                                                      getImage(productoEmprendedor.imagen),
+                                                      getWidgetContainerImage(
+                                                        productoEmprendedor.imagen,
+                                                        150,
+                                                        double.infinity),
                                                 ),
                                                 Padding(
                                                 padding:
@@ -480,7 +477,8 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                                                               AppTheme.of(
                                                                       context)
                                                                   .bodyText1Family,
-                                                          color: Colors.white,
+                                                          color: AppTheme.of(context)
+                                                                          .primaryText,
                                                           fontSize: 15,
                                                           fontWeight:
                                                               FontWeight.w600,
@@ -503,7 +501,8 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                                                             .bodyText2
                                                             .override(
                                                               fontFamily: 'Outfit',
-                                                              color: Colors.white,
+                                                              color: AppTheme.of(context)
+                                                                          .secondaryText,
                                                               fontSize: 14,
                                                               fontWeight:
                                                                   FontWeight.normal,
@@ -531,7 +530,8 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                                                                 AppTheme.of(
                                                                         context)
                                                                     .bodyText1Family,
-                                                            color: Colors.white,
+                                                            color: AppTheme.of(context)
+                                                                          .secondaryText,
                                                             fontSize: 14,
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -547,7 +547,8 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                                                                 AppTheme.of(
                                                                         context)
                                                                     .bodyText1Family,
-                                                            color: Colors.white,
+                                                            color: AppTheme.of(context)
+                                                                          .primaryText,
                                                             fontSize: 14,
                                                             fontWeight:
                                                                 FontWeight.w600,

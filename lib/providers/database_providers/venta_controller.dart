@@ -72,8 +72,11 @@ void update(int id, DateTime newFechaInicio, DateTime newFechaTermino, double ne
       print('Venta actualizada exitosamente');
     }
 }
-  void remove(ProductosEmp productosEmp) {
-    dataBase.productosEmpBox.remove(productosEmp.id); //Se elimina de bitacora la instruccion creada anteriormente
+  void remove(Ventas ventas) {
+    print("Tamaño ventas antes de remover: ${dataBase.ventasBox.getAll().length}");
+    final nuevaInstruccion = Bitacora(instrucciones: 'syncDeleteVenta', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+    dataBase.ventasBox.remove(ventas.id); //Se elimina de bitacora la instruccion creada anteriormente
+    print("Tamaño ventas después de remover: ${dataBase.ventasBox.getAll().length}");
     notifyListeners(); 
   }
 

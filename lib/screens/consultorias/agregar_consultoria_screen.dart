@@ -708,6 +708,9 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                             ),
                           ),
                         ),
+                        const SizedBox(
+                          height: 40,
+                        )
                       ],
                     ),
                   ),

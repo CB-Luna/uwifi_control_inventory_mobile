@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
+import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -489,9 +490,8 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                                               type: PageTransitionType.fade,
                                                               child:
                                                                   FlutterFlowExpandedImageView(
-                                                                image: Image.file(
-                                                                  File(tareas[index].imagenes.last.imagenes),
-                                                                  fit: BoxFit.contain,
+                                                                image: getWidgetContainImage(
+                                                                  tareas[index].imagenes.last.imagenes
                                                                 ),
                                                                 allowRotation: false,
                                                                 tag: tareas[index].imagenes.last.imagenes,
@@ -501,22 +501,18 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                                           );
                                                           }
                                                         },
-                                                        child: tareas[index].imagenes.last.imagenes == "" ?
-                                                        null
-                                                        :
-                                                        Hero(
+                                                        child: Hero(
                                                           tag: tareas[index].imagenes.last.imagenes,
                                                           transitionOnUserGestures: true,
                                                           child: ClipRRect(
                                                             borderRadius:
                                                                 BorderRadius.circular(8),
                                                             child: 
-                                                             Image.file(
-                                                              File(tareas[index].imagenes.last.imagenes),
-                                                              width: 170,
-                                                              height: 120,
-                                                              fit: BoxFit.cover,
-                                                            ),
+                                                            getWidgetContainerImage(
+                                                              tareas[index].imagenes.last.imagenes, 
+                                                              170, 
+                                                              120,
+                                                              ),
                                                           ),
                                                         ),
                                                       ),

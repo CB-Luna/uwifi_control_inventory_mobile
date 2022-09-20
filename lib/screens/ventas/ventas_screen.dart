@@ -489,7 +489,7 @@ class _VentasScreenState extends State<VentasScreen> {
                                                         child: SizedBox(
                                                           height: 80,
                                                           width: 120,
-                                                          child: getWidgetImage(
+                                                          child: getWidgetCoverImage(
                                                             widget.emprendimiento.imagen
                                                           ),
                                                         ),

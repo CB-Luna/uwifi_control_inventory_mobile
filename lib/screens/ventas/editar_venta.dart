@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:bizpro_app/screens/ventas/venta_eliminada.dart';
+import 'package:bizpro_app/screens/widgets/bottom_sheet_eliminar_venta.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -170,6 +172,48 @@ class _EditarVentaScreenState extends State<EditarVentaScreen> {
                                                   ),
                                             ),
                                           ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                                    child: Container(
+                                      width: 45,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFF4672FF),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: InkWell(
+                                        onTap: () async {
+                                          String? option =
+                                              await showModalBottomSheet(
+                                            context: context,
+                                            builder: (_) =>
+                                                const BottomSheetEliminarVenta(),
+                                          );
+                                          if (option == 'eliminar') {
+                                            ventaProvider.remove(widget.venta);
+                                            // ignore: use_build_context_synchronously
+                                            await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                            builder: (context) =>
+                                                const VentaEliminadaScreen()),
+                                            );
+                                          } else { //Se aborta la opción
+                                            return;
+                                          }
+                                          // setState(() {
+                                          // });
+                                        },
+                                        child: const Icon(
+                                          Icons.delete,
+                                          color: Colors.white,
+                                          size: 20,
                                         ),
                                       ),
                                     ),

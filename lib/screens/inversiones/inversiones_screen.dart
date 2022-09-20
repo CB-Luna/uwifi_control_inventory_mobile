@@ -493,7 +493,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                             child: SizedBox(
                                                               height: 80,
                                                               width: 120,
-                                                              child: getWidgetImage(
+                                                              child: getWidgetCoverImage(
                                                                 actualEmprendimiento!.imagen
                                                               ),
                                                             ),

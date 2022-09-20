@@ -278,7 +278,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
-                                                        .spaceEvenly,
+                                                        .spaceBetween,
                                                 children: [
                                                   Text(
                                                     'Producto',
@@ -287,7 +287,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                         .bodyText1,
                                                   ),
                                                   Text(
-                                                    'Cantidad *',
+                                                    'Cantidad',
                                                     style: AppTheme.of(
                                                             context)
                                                         .bodyText1,
@@ -370,8 +370,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                               mainAxisSize:
                                                                   MainAxisSize.max,
                                                               mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
+                                                                  MainAxisAlignment.spaceBetween,
                                                               children: [
                                                                 Text(
                                                                   productoCot.productosProv.target!.nombre,
@@ -1238,143 +1237,33 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                     .bodyText1,
                                                           ),
                                                         ),
-                                                        SizedBox(
-                                                          width: 200,
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0, 0, 10, 0),
-                                                            child: TextFormField(
-                                                              controller:
-                                                                  montoPagar,
-                                                              readOnly: true,
-                                                              obscureText: false,
-                                                              enabled: false,
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                labelText:
-                                                                    'Monto a pagar',
-                                                                labelStyle:
-                                                                    AppTheme.of(
-                                                                            context)
-                                                                        .title3
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Montserrat',
-                                                                          color: AppTheme.of(
-                                                                                  context)
-                                                                              .secondaryText,
-                                                                          fontSize:
-                                                                              15,
-                                                                          fontWeight:
-                                                                              FontWeight
-                                                                                  .normal,
-                                                                          useGoogleFonts: GoogleFonts
-                                                                                  .asMap()
-                                                                              .containsKey(
-                                                                                  AppTheme.of(context).title3Family),
-                                                                        ),
-                                                                hintText: 'Monto a pagar...',
-                                                                hintStyle:
-                                                                    AppTheme.of(
-                                                                            context)
-                                                                        .title3
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Poppins',
-                                                                          color: AppTheme.of(
-                                                                                  context)
-                                                                              .secondaryText,
-                                                                          fontSize:
-                                                                              15,
-                                                                          fontWeight:
-                                                                              FontWeight
-                                                                                  .normal,
-                                                                          useGoogleFonts: GoogleFonts
-                                                                                  .asMap()
-                                                                              .containsKey(
-                                                                                  AppTheme.of(context).title3Family),
-                                                                        ),
-                                                                enabledBorder:
-                                                                    OutlineInputBorder(
-                                                                  borderSide:
-                                                                      BorderSide(
-                                                                    color: AppTheme
-                                                                            .of(context)
-                                                                        .primaryText,
-                                                                    width: 1.5,
-                                                                  ),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8),
-                                                                ),
-                                                                focusedBorder:
-                                                                    OutlineInputBorder(
-                                                                  borderSide:
-                                                                      BorderSide(
-                                                                    color: AppTheme
-                                                                            .of(context)
-                                                                        .primaryText,
-                                                                    width: 1.5,
-                                                                  ),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8),
-                                                                ),
-                                                                errorBorder:
-                                                                    OutlineInputBorder(
-                                                                  borderSide:
-                                                                      const BorderSide(
-                                                                    color: Color(
-                                                                        0x00000000),
-                                                                    width: 1.5,
-                                                                  ),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8),
-                                                                ),
-                                                                focusedErrorBorder:
-                                                                    OutlineInputBorder(
-                                                                  borderSide:
-                                                                      const BorderSide(
-                                                                    color: Color(
-                                                                        0x00000000),
-                                                                    width: 1.5,
-                                                                  ),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8),
-                                                                ),
-                                                                filled: true,
-                                                                fillColor:
-                                                                    const Color(0x58FFFFFF),
-                                                              ),
-                                                              style:
-                                                                  AppTheme.of(
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      0, 5, 0, 10),
+                                                          child: Text(
+                                                            montoPagar.text,
+                                                            style:
+                                                                AppTheme.of(
+                                                                    context)
+                                                                .title3
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Poppins',
+                                                                  color: AppTheme.of(
                                                                           context)
-                                                                      .title3
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Poppins',
-                                                                        color: AppTheme.of(
-                                                                                context)
-                                                                            .primaryText,
-                                                                        fontSize: 15,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .normal,
-                                                                        useGoogleFonts: GoogleFonts
-                                                                                .asMap()
-                                                                            .containsKey(
-                                                                                AppTheme.of(context)
-                                                                                    .title3Family),
-                                                                      ),
-                                                            ),
+                                                                      .primaryText,
+                                                                  fontSize: 25,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal,
+                                                                  useGoogleFonts: GoogleFonts
+                                                                          .asMap()
+                                                                      .containsKey(
+                                                                          AppTheme.of(context)
+                                                                              .title3Family),
+                                                                ),
                                                           ),
                                                         ),
                                                         Padding(
@@ -1480,143 +1369,33 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                     .bodyText1,
                                                           ),
                                                         ),
-                                                        SizedBox(
-                                                          width: 200,
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0, 0, 10, 0),
-                                                            child: TextFormField(
-                                                              controller:
-                                                                  saldo,
-                                                              readOnly: true,
-                                                              obscureText: false,
-                                                              enabled: false,
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                labelText:
-                                                                    'Saldo restante',
-                                                                labelStyle:
-                                                                    AppTheme.of(
-                                                                            context)
-                                                                        .title3
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Montserrat',
-                                                                          color: AppTheme.of(
-                                                                                  context)
-                                                                              .secondaryText,
-                                                                          fontSize:
-                                                                              15,
-                                                                          fontWeight:
-                                                                              FontWeight
-                                                                                  .normal,
-                                                                          useGoogleFonts: GoogleFonts
-                                                                                  .asMap()
-                                                                              .containsKey(
-                                                                                  AppTheme.of(context).title3Family),
-                                                                        ),
-                                                                hintText: 'Saldo restante...',
-                                                                hintStyle:
-                                                                    AppTheme.of(
-                                                                            context)
-                                                                        .title3
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Poppins',
-                                                                          color: AppTheme.of(
-                                                                                  context)
-                                                                              .secondaryText,
-                                                                          fontSize:
-                                                                              15,
-                                                                          fontWeight:
-                                                                              FontWeight
-                                                                                  .normal,
-                                                                          useGoogleFonts: GoogleFonts
-                                                                                  .asMap()
-                                                                              .containsKey(
-                                                                                  AppTheme.of(context).title3Family),
-                                                                        ),
-                                                                enabledBorder:
-                                                                    OutlineInputBorder(
-                                                                  borderSide:
-                                                                      BorderSide(
-                                                                    color: AppTheme
-                                                                            .of(context)
-                                                                        .primaryText,
-                                                                    width: 1.5,
-                                                                  ),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8),
-                                                                ),
-                                                                focusedBorder:
-                                                                    OutlineInputBorder(
-                                                                  borderSide:
-                                                                      BorderSide(
-                                                                    color: AppTheme
-                                                                            .of(context)
-                                                                        .primaryText,
-                                                                    width: 1.5,
-                                                                  ),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8),
-                                                                ),
-                                                                errorBorder:
-                                                                    OutlineInputBorder(
-                                                                  borderSide:
-                                                                      const BorderSide(
-                                                                    color: Color(
-                                                                        0x00000000),
-                                                                    width: 1.5,
-                                                                  ),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8),
-                                                                ),
-                                                                focusedErrorBorder:
-                                                                    OutlineInputBorder(
-                                                                  borderSide:
-                                                                      const BorderSide(
-                                                                    color: Color(
-                                                                        0x00000000),
-                                                                    width: 1.5,
-                                                                  ),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8),
-                                                                ),
-                                                                filled: true,
-                                                                fillColor:
-                                                                    const Color(0x58FFFFFF),
-                                                              ),
-                                                              style:
-                                                                  AppTheme.of(
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      0, 5, 0, 10),
+                                                          child: Text(
+                                                            saldo.text,
+                                                            style:
+                                                                AppTheme.of(
+                                                                    context)
+                                                                .title3
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Poppins',
+                                                                  color: AppTheme.of(
                                                                           context)
-                                                                      .title3
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Poppins',
-                                                                        color: AppTheme.of(
-                                                                                context)
-                                                                            .primaryText,
-                                                                        fontSize: 15,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .normal,
-                                                                        useGoogleFonts: GoogleFonts
-                                                                                .asMap()
-                                                                            .containsKey(
-                                                                                AppTheme.of(context)
-                                                                                    .title3Family),
-                                                                      ),
-                                                            ),
+                                                                      .primaryText,
+                                                                  fontSize: 25,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal,
+                                                                  useGoogleFonts: GoogleFonts
+                                                                          .asMap()
+                                                                      .containsKey(
+                                                                          AppTheme.of(context)
+                                                                              .title3Family),
+                                                                ),
                                                           ),
                                                         ),
                                                       ],

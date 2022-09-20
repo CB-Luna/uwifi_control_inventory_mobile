@@ -469,7 +469,6 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                                                   },
                                                                 );
                                                                 if (booleano) {
-                                                                  print("Se elimina IMAGEN");
                                                                     newConvenio.remove(i);
                                                                 }
 
