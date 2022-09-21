@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/objectbox.g.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
@@ -48,11 +50,16 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
     super.initState();
     ambito = widget.consultoria.ambitoConsultoria.target!.nombreAmbito;
     areaCirculo = widget.consultoria.areaCirculo.target!.nombreArea;
+    porcentajeAvance = widget.tarea.porcentaje.target!.porcentajeAvance.toString();
   }
 
   @override
   Widget build(BuildContext context) {
     final consultoriaProvider = Provider.of<ConsultoriaController>(context);
+    List<String> listPorcentaje = [];
+    dataBase.porcentajeAvanceBox.getAll().forEach((element) {
+      listPorcentaje.add(element.porcentajeAvance.toString());
+    });
     String emprendedor = "";
     if (widget.consultoria.emprendimiento.target!.emprendedor.target != null) {
       emprendedor =
@@ -490,9 +497,9 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                         const EdgeInsetsDirectional.fromSTEB(
                                             5, 0, 5, 10),
                                     child: DropDown(
-                                      options: const ["1", "2", "3"],
+                                      options: listPorcentaje,
                                       onChanged: (val) => setState(() {
-                                        consultoriaProvider.porcentaje = val!;
+                                        porcentajeAvance = val!;
                                       }),
                                       width: double.infinity,
                                       height: 50,
@@ -522,8 +529,8 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                   );
                                 },
                                 validator: (val) {
-                                  if (consultoriaProvider.porcentaje == "" ||
-                                      consultoriaProvider.porcentaje.isEmpty) {
+                                  if (val == "" ||
+                                      val == null) {
                                     return 'Para continuar, seleccione un porcentaje de avance.';
                                   }
                                   return null;
@@ -605,13 +612,12 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                                 dateTimeFormat('yMMMd', date);
                                           });
                                         },
-                                        currentTime: getCurrentTimestamp,
-                                        // minTime: getCurrentTimestamp,
+                                        minTime: getCurrentTimestamp,
                                       );
                                     },
                                     obscureText: false,
                                     decoration: InputDecoration(
-                                      labelText: 'Fecha de revisión*',
+                                      labelText: 'Fecha de próxima revisión*',
                                       labelStyle:
                                           AppTheme.of(context).title3.override(
                                                 fontFamily: 'Montserrat',
@@ -620,7 +626,7 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.normal,
                                               ),
-                                      hintText: 'Ingresa fecha de revisión...',
+                                      hintText: 'Ingresa fecha de próxima revisión...',
                                       hintStyle:
                                           AppTheme.of(context).title3.override(
                                                 fontFamily: 'Poppins',
@@ -788,9 +794,18 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                           child: FFButtonWidget(
                             onPressed: () async {
                               if (consultoriaProvider.validateForm(formKey)) {
-                                  consultoriaProvider.updateConsultoria(
+                                  final idPorcentajeAvance = dataBase.porcentajeAvanceBox
+                                    .query(PorcentajeAvance_
+                                    .porcentajeAvance.
+                                    equals(int.parse(porcentajeAvance)))
+                                    .build()
+                                    .findFirst()
+                                    ?.id;
+                                  if (idPorcentajeAvance != null) {
+                                    consultoriaProvider.updateConsultoria(
                                     widget.consultoria.id,
-                                    widget.tarea.id
+                                    widget.tarea.id,
+                                    idPorcentajeAvance,
                                   );
                                   await Navigator.push(
                                     context,
@@ -799,6 +814,7 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                           const ConsultoriaActualizada(),
                                     ),
                                   );
+                                  }
                               } else {
                                 await showDialog(
                                   context: context,

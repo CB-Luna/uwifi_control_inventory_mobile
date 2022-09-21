@@ -1,19 +1,25 @@
+import 'package:bizpro_app/database/entitys.dart';
+import 'package:bizpro_app/screens/ventas/registro_venta_screen.dart';
+import 'package:bizpro_app/screens/ventas/ventas_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:bizpro_app/theme/theme.dart';
-
-import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
-class VentaEliminadaScreen extends StatefulWidget {
-  const VentaEliminadaScreen({Key? key}) : super(key: key);
+class ProductoVentaEliminado extends StatefulWidget {
+  final Ventas venta;
+  
+  const ProductoVentaEliminado({
+    Key? key, 
+    required this.venta
+    }) : super(key: key);
 
   @override
-  State<VentaEliminadaScreen> createState() => _VentaEliminadaScreenState();
+  State<ProductoVentaEliminado> createState() => _ProductoVentaEliminadoState();
 }
 
-class _VentaEliminadaScreenState extends State<VentaEliminadaScreen> {
+class _ProductoVentaEliminadoState extends State<ProductoVentaEliminado> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -38,7 +44,7 @@ class _VentaEliminadaScreenState extends State<VentaEliminadaScreen> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                       child: Text(
-                        '¡Venta\nEliminada!',
+                        '¡Producto de\nVenta\nEliminado!',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -51,7 +57,7 @@ class _VentaEliminadaScreenState extends State<VentaEliminadaScreen> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: Text(
-                        'Listo, la venta se eliminará \nde la lista de ventas.',
+                        'Listo, el producto se eliminará de tu\nlista de productos en la venta.',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -81,7 +87,9 @@ class _VentaEliminadaScreenState extends State<VentaEliminadaScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const EmprendimientosScreen(),
+                                  VentasScreen(
+                                    ventas: widget.venta.emprendimiento.target!.ventas, 
+                                    emprendimiento: widget.venta.emprendimiento.target!,),
                             ),
                           );
                         },

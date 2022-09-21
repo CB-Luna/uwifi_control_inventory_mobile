@@ -1,6 +1,8 @@
 import 'package:bizpro_app/models/get_bancos.dart';
 import 'package:bizpro_app/models/get_condiciones_pago.dart';
 import 'package:bizpro_app/models/get_estados_prod_cotizados.dart';
+import 'package:bizpro_app/models/get_porcentaje_avance.dart';
+import 'package:bizpro_app/models/get_prod_proyecto.dart';
 import 'package:bizpro_app/models/get_productos_prov.dart';
 import 'package:bizpro_app/models/get_proveedores.dart';
 import 'package:bizpro_app/models/get_tipo_proveedor.dart';
@@ -62,8 +64,10 @@ class CatalogProvider extends ChangeNotifier {
     await getTipoProveedor();
     await getCondicionesPago();
     await getBancos();
+    await getPorcentajeAvance();
     await getProveedores();
     await getProductosProv();
+    await getProdProyecto();
     await getEstadosProdCotizados();
     print("Proceso terminado");
     procesoterminado = true;
@@ -634,6 +638,30 @@ Future<void> getBancos() async {
     }
   }
 
+Future<void> getPorcentajeAvance() async {
+    if (dataBase.porcentajeAvanceBox.isEmpty()) {
+      final records = await client.records.
+      getFullList('porcentaje_avance', batch: 200, sort: '+porcentaje');
+      final List<GetPorcentajeAvance> listPorcentaje = [];
+      for (var element in records) {
+        listPorcentaje.add(getPorcentajeAvanceFromMap(element.toString()));
+      }
+      print("****Informacion porcentaje****");
+      for (var i = 0; i < records.length; i++) {
+        if (listPorcentaje[i].id.isNotEmpty) {
+        final nuevoPorcentaje = PorcentajeAvance(
+        porcentajeAvance: listPorcentaje[i].porcentaje,
+        idDBR: listPorcentaje[i].id,
+        activo: listPorcentaje[i].activo,
+        );
+        dataBase.porcentajeAvanceBox.put(nuevoPorcentaje);
+        print('Porcentaje agregado exitosamente');
+        }
+      }
+      notifyListeners();
+    }
+  }
+
 Future<void> getEstadosProdCotizados() async {
     if (dataBase.estadosProductoCotizadosBox.isEmpty()) {
       final records = await client.records.
@@ -735,4 +763,49 @@ Future<void> getProductosProv() async {
       notifyListeners();
     }
   }
+
+  Future<void> getProdProyecto() async {
+    if (dataBase.productosProyectoBox.isEmpty()) {
+      final records = await client.records.
+      getFullList('prod_proyecto', batch: 200, sort: '+producto');
+
+      final List<GetProdProyecto> listProdProyecto = [];
+      for (var element in records) {
+        listProdProyecto.add(getProdProyectoFromMap(element.toString()));
+      }
+
+      listProdProyecto.sort((a, b) => removeDiacritics(a.producto).compareTo(removeDiacritics(b.producto)));
+
+      print("****Informacion prod Proyecto****");
+      for (var i = 0; i < records.length; i++) {
+        if (listProdProyecto[i].id.isNotEmpty) {
+        final nuevoProdProyecto = ProdProyecto(
+        producto: listProdProyecto[i].producto,
+        marcaSugerida: listProdProyecto[i].marcaSugerida,
+        descripcion: listProdProyecto[i].descripcion,
+        proveedorSugerido: listProdProyecto[i].proveedorSugerido,
+        cantidad: listProdProyecto[i].cantidad,
+        costoEstimado: listProdProyecto[i].costoEstimado,
+        idDBR: listProdProyecto[i].id,
+        );
+        final familiaProd = dataBase.familiaProductosBox.query(FamiliaProd_.idDBR.equals(listProdProyecto[i].idFamiliaProdFk)).build().findUnique();
+        final tipoEmpaque = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idDBR.equals(listProdProyecto[i].idTipoEmpaquesFk)).build().findUnique();
+        final catalogoProyecto = dataBase.catalogoProyectoBox.query(CatalogoProyecto_.idDBR.equals(listProdProyecto[i].idCatalogoProyectoFk)).build().findUnique();
+        if (familiaProd != null && tipoEmpaque != null && catalogoProyecto != null) {
+          final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
+          nuevoProdProyecto.statusSync.target = nuevoSync;
+          nuevoProdProyecto.familiaProducto.target = familiaProd;
+          nuevoProdProyecto.tipoEmpaques.target = tipoEmpaque;
+          nuevoProdProyecto.catalogoProyecto.target = catalogoProyecto;
+          // dataBase.productosProyectoBox.put(nuevoProdProyecto);
+          catalogoProyecto.proProyecto.add(nuevoProdProyecto);
+          dataBase.catalogoProyectoBox.put(catalogoProyecto);
+          print("TAMANÑO PROD PROYECTO: ${dataBase.productosProyectoBox.getAll().length}");
+          print('Prod Proyecto agregado exitosamente');
+          }
+        }
+      }
+      notifyListeners();
+      }
+    }
 }

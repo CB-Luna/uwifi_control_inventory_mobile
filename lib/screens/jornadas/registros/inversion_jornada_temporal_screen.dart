@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bizpro_app/screens/jornadas/agregar_jornada3_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -15,10 +16,12 @@ import 'package:bizpro_app/theme/theme.dart';
 
 class InversionJornadaTemporalScreen extends StatefulWidget {
   final Emprendimientos emprendimiento;
+  final int numJornada;
 
   const InversionJornadaTemporalScreen({
     Key? key,
-    required this.emprendimiento,
+    required this.emprendimiento, 
+    required this.numJornada,
   }) : super(key: key);
 
   @override
@@ -97,7 +100,16 @@ class _InversionJornadaTemporalScreenState
                               ),
                               child: InkWell(
                                 onTap: () async {
-                                  Navigator.pop(context);
+                                  await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                  builder: (context) =>
+                                      AgregarJornada3Screen(
+                                        emprendimiento: widget.emprendimiento, 
+                                        numJornada: widget.numJornada,
+                                        ),
+                                      ),
+                                  );
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
@@ -538,7 +550,9 @@ class _InversionJornadaTemporalScreenState
                                                             productoSol:
                                                                 prodSolicitado,
                                                             emprendimiento: 
-                                                                widget.emprendimiento,),
+                                                                widget.emprendimiento, 
+                                                            numJornada: 
+                                                                widget.numJornada,),
                                                   ),
                                                 );
                                               },

@@ -4,8 +4,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/providers/database_providers/producto_emprendedor_controller.dart';
 import 'package:bizpro_app/screens/productos/editar_producto_emprendedor.dart';
-import 'package:bizpro_app/screens/productos/producto_emprendedor_eliminado.dart';
-import 'package:bizpro_app/screens/widgets/bottom_sheet_eliminar_producto.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -135,51 +133,9 @@ class _DetalleProductoEmprendedorState extends State<DetalleProductoEmprendedor>
                                     ),
                                   ),
                                 ),
-                                const Spacer(),
                                 Padding(
                                   padding:
-                                      const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
-                                  child: Container(
-                                    width: 45,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFF4672FF),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: InkWell(
-                                      onTap: () async {
-                                        String? option =
-                                            await showModalBottomSheet(
-                                          context: context,
-                                          builder: (_) =>
-                                              const BottomSheetEliminarProducto(),
-                                        );
-                                        if (option == 'eliminar') {
-                                          productoEmprendedorProvider.remove(widget.productoEmprendedor);
-                                          // ignore: use_build_context_synchronously
-                                          await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                          builder: (context) =>
-                                              const ProductoEmprendedorEliminado()),
-                                          );
-                                        } else { //Se aborta la opción
-                                          return;
-                                        }
-                                        // setState(() {
-                                        // });
-                                      },
-                                      child: const Icon(
-                                        Icons.delete,
-                                        color: Colors.white,
-                                        size: 20,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 10),
+                                      const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                                   child: Container(
                                     width: 45,
                                     height: 40,

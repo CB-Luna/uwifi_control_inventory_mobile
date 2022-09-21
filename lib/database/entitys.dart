@@ -88,6 +88,40 @@ class ProdSolicitado {
 }
 
 @Entity()
+class ProdProyecto {
+  int id;
+  String producto;
+  String? marcaSugerida;
+  String descripcion;
+  String? proveedorSugerido;
+  int cantidad;
+  double? costoEstimado;
+  DateTime fechaRegistro;
+  @Unique()
+  String? idDBR;
+  final familiaProducto = ToOne<FamiliaProd>();
+  final tipoEmpaques = ToOne<TipoEmpaques>();
+  final catalogoProyecto = ToOne<CatalogoProyecto>();
+  final imagen = ToOne<Imagenes>();
+  final statusSync = ToOne<StatusSync>();
+
+  ProdProyecto({
+    this.id = 0,
+    required this.producto,
+    this.marcaSugerida,
+    required this.descripcion,
+    this.proveedorSugerido,
+    required this.cantidad,
+    this.costoEstimado,
+    DateTime? fechaRegistro,
+    this.idDBR,
+    }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+
+}
+
+@Entity()
 class Inversiones {
   int id;
   DateTime? fechaCompra;
@@ -178,6 +212,7 @@ class Bitacora{
   int id;
   String usuario;
   String instrucciones;
+  String? idDBR;
   DateTime fechaRegistro;
   DateTime? fechaSync;
   @Backlink()
@@ -213,6 +248,7 @@ class Bitacora{
     this.id = 0,
     required this.usuario,
     required this.instrucciones,
+    this.idDBR,
     DateTime? fechaRegistro,
     this.fechaSync,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
@@ -289,6 +325,7 @@ class CatalogoProyecto {
   String? idDBR;
   final emprendimientos = ToMany<Emprendimientos>();
   final clasificacionEmp = ToOne<ClasificacionEmp>();
+  final proProyecto = ToMany<ProdProyecto>();
   final statusSync = ToOne<StatusSync>();
   
   CatalogoProyecto({
@@ -393,7 +430,6 @@ class Tareas {
   String tarea;
   String descripcion;
   String observacion;
-  int porcentaje;
   bool activo;
   DateTime fechaRevision;
   DateTime fechaRegistro;
@@ -404,12 +440,12 @@ class Tareas {
   final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
   final imagenes = ToMany<Imagenes>();
+  final porcentaje = ToOne<PorcentajeAvance>();
   Tareas({
     this.id = 0,
     required this.tarea,
     required this.descripcion,
     required this.observacion,
-    required this.porcentaje,
     this.activo = true,
     required this.fechaRevision,
     DateTime? fechaRegistro,
@@ -703,6 +739,7 @@ class TipoEmpaques {
   String? idDBR;
   final statusSync = ToOne<StatusSync>();
   final prodSolicitados = ToMany<ProdSolicitado>();
+  final prodProyecto = ToMany<ProdProyecto>();
 
   TipoEmpaques({
     this.id = 0,
@@ -728,6 +765,7 @@ class FamiliaProd {
   final prodSolicitados = ToMany<ProdSolicitado>();
   final productosEmp = ToMany<ProductosEmp>();
   final productosProv = ToMany<ProductosProv>();
+  final prodProyecto = ToMany<ProdProyecto>();
 
   FamiliaProd({
     this.id = 0,
@@ -1107,6 +1145,8 @@ class StatusSync {
   @Backlink()
   final productosProv = ToMany<ProductosProv>();
   @Backlink()
+  final prodProyecto = ToMany<ProdProyecto>();
+  @Backlink()
   final inversionXprodCotizados = ToMany<InversionesXProdCotizados>();
   @Backlink()
   final pagos = ToMany<Pagos>();
@@ -1147,12 +1187,36 @@ class Imagenes {
   final tareas = ToMany<Tareas>();
   final prodSolicitados = ToMany<ProdSolicitado>();
   final productosProv = ToMany<ProductosProv>();
+  final prodProyecto = ToMany<ProdProyecto>();
   final usuarios = ToMany<Usuarios>();
   final inversiones = ToMany<Inversiones>();
   Imagenes({
     this.id = 0,
     required this.imagenes,
     DateTime? fechaRegistro,
+    }): fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+
+}
+
+@Entity()
+class PorcentajeAvance {
+  int id;
+  int porcentajeAvance;
+  bool activo;
+  DateTime fechaRegistro;
+  @Unique()
+  String? idDBR;
+  @Backlink()
+  final tareas = ToMany<Tareas>();
+
+  PorcentajeAvance({
+    this.id = 0,
+    required this.porcentajeAvance,
+    this.activo = true,
+    DateTime? fechaRegistro,
+    this.idDBR,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);

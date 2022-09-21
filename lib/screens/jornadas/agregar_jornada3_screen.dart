@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:bizpro_app/models/temporals/productos_solicitados_temporal.dart';
+import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -40,7 +42,10 @@ class AgregarJornada3Screen extends StatefulWidget {
 
 class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
   TextEditingController fechaRevision = TextEditingController();
+  TextEditingController tareaController = TextEditingController();
   TextEditingController fechaRegistro = TextEditingController();
+  TextEditingController comentariosController = TextEditingController();
+  TextEditingController descripcionController = TextEditingController();
   List<String> checkboxGroupValues = [];
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -55,16 +60,27 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
   void initState() {
     super.initState();
     imagenesTemp = [];
-    fechaRevision = TextEditingController();
+    fechaRevision = TextEditingController(text: 
+          context.read<JornadaController>().fechaRevision != null ? 
+          dateTimeFormat('yMMMd', context.read<JornadaController>().fechaRevision!)
+          : "");
+    tareaController = TextEditingController(text: context.read<JornadaController>().tarea);
     fechaRegistro = TextEditingController();
+    comentariosController = TextEditingController(text: context.read<JornadaController>().observacion);
     fechaRegistro.text = dateTimeFormat('yMMMd', DateTime.now());
-    tipoProyecto = "";
-    proyecto = "";
+    tipoProyecto = context.read<JornadaController>().tipoProyecto;
+    proyecto = context.read<JornadaController>().proyecto;
+    descripcionController = TextEditingController(text: context.read<JornadaController>().descripcion);
     listProyectos = [];
     listTipoProyecto = [];
     // dataBase.clasificacionesEmpBox.getAll().forEach((element) {listTipoProyecto.add(element.clasificacion);});
     dataBase.clasificacionesEmpBox.getAll().forEach((element) {
       listTipoProyecto.add(element.clasificacion);
+    });
+    dataBase.catalogoProyectoBox.getAll().forEach((element) {
+      if (element.clasificacionEmp.target?.clasificacion == tipoProyecto) {
+        listProyectos.add(element.nombre);
+      }
     });
     emprendedor = "";
     if (widget.emprendimiento.emprendedor.target != null) {
@@ -164,7 +180,17 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                               .clearInformation();
                                           productoInversionJornadaController
                                               .clearInformation();
-                                          Navigator.pop(context);
+                                          jornadaProvider
+                                              .clearInformation();
+                                          await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                          builder: (context) =>
+                                              DetalleEmprendimientoScreen(
+                                                emprendimiento: widget.emprendimiento,
+                                                ),
+                                              ),
+                                          );
                                         },
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
@@ -369,6 +395,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     5, 0, 5, 10),
                                 child: TextFormField(
+                                  controller: tareaController,
                                   textCapitalization:
                                       TextCapitalization.sentences,
                                   autovalidateMode:
@@ -748,6 +775,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     5, 0, 5, 10),
                                 child: TextFormField(
+                                  controller: comentariosController,
                                   textCapitalization:
                                       TextCapitalization.sentences,
                                   autovalidateMode:
@@ -808,6 +836,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                         const EdgeInsetsDirectional.fromSTEB(
                                             5, 0, 5, 10),
                                     child: DropDown(
+                                      initialOption: tipoProyecto,
                                       options: listTipoProyecto,
                                       onChanged: (val) => setState(() {
                                         if (listTipoProyecto.isEmpty) {
@@ -819,6 +848,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                         } else {
                                           listProyectos.clear();
                                           tipoProyecto = val!;
+                                          jornadaProvider.tipoProyecto = val;
                                           dataBase.catalogoProyectoBox
                                               .getAll()
                                               .forEach((element) {
@@ -876,6 +906,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                         const EdgeInsetsDirectional.fromSTEB(
                                             5, 0, 5, 10),
                                     child: DropDown(
+                                      initialOption: proyecto,
                                       options: (tipoProyecto == "" ||
                                               listProyectos.isEmpty)
                                           ? ["Sin proyectos"]
@@ -889,6 +920,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                           ));
                                         } else {
                                           proyecto = val!;
+                                          jornadaProvider.proyecto = val;
                                           print("Entro a proyectos");
                                         }
                                         print("Proyecto: $proyecto");
@@ -931,6 +963,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     5, 0, 5, 10),
                                 child: TextFormField(
+                                  controller: descripcionController,
                                   textCapitalization:
                                       TextCapitalization.sentences,
                                   autovalidateMode:
@@ -1008,15 +1041,129 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                       elevation: 4,
                                       child: FFButtonWidget(
                                         onPressed: () async {
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  InversionJornadaTemporalScreen(
-                                                      emprendimiento: widget
-                                                          .emprendimiento),
-                                            ),
-                                          );
+                                          if (productoInversionJornadaController.productosSolicitados.isEmpty) {
+                                            if (proyecto != "" && tipoProyecto != "") {
+                                            print("Proyecto: $proyecto");
+                                            final actualProyecto = dataBase.catalogoProyectoBox
+                                            .query(CatalogoProyecto_.nombre
+                                                .equals(proyecto))
+                                            .build()
+                                            .findFirst();
+                                            if (actualProyecto != null && actualProyecto.proProyecto.isNotEmpty) {
+                                              await showDialog(
+                                                context: context,
+                                                builder: (alertDialogContext) {
+                                                  return AlertDialog(
+                                                    title: const Text('Productos precargados'),
+                                                    content: const Text(
+                                                        '¿Deseas agregar productos precargados?'),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () async {
+                                                          List<ProdProyecto> listProdProyecto = actualProyecto.proProyecto.toList();
+                                                          inversionJornadaProvider.porcentajePago = "50";
+                                                          inversionJornadaProvider
+                                                                .addTemporal(
+                                                          widget.emprendimiento.id);
+                                                          for (var element in listProdProyecto) {
+                                                            var nuevoProdSolicitadoTemporal = ProductosSolicitadosTemporal(
+                                                              id: element.idDBR!, 
+                                                              producto: element.producto, 
+                                                              marcaSugerida: element.marcaSugerida,
+                                                              descripcion: element.descripcion, 
+                                                              proveedorSugerido: element.proveedorSugerido,
+                                                              costoEstimado: element.costoEstimado ?? 0.0,
+                                                              cantidad: element.cantidad, 
+                                                              idFamiliaProd: element.familiaProducto.target!.id, 
+                                                              familiaProd: element.familiaProducto.target!.nombre, 
+                                                              idTipoEmpaques: element.tipoEmpaques.target!.id, 
+                                                              tipoEmpaques: element.tipoEmpaques.target!.tipo, 
+                                                              fechaRegistro: DateTime.now()
+                                                              );
+                                                            productoInversionJornadaController.productosSolicitados.add(nuevoProdSolicitadoTemporal);
+                                                          }
+                                                          Navigator.pop(alertDialogContext);
+                                                          await Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  InversionJornadaTemporalScreen(
+                                                                      emprendimiento: widget
+                                                                          .emprendimiento, 
+                                                                          numJornada: 
+                                                                          widget.numJornada,),
+                                                            ),
+                                                          );
+                                                        },
+                                                        child: const Text('Sí'),
+                                                      ),
+                                                      TextButton(
+                                                        onPressed: () async {
+                                                          Navigator.pop(alertDialogContext);
+                                                          await Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  InversionJornadaTemporalScreen(
+                                                                      emprendimiento: widget
+                                                                          .emprendimiento, 
+                                                                          numJornada: 
+                                                                          widget.numJornada,),
+                                                            ),
+                                                          );
+                                                        },
+                                                        child: const Text('No'),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                            } else {
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      InversionJornadaTemporalScreen(
+                                                          emprendimiento: widget
+                                                              .emprendimiento, 
+                                                              numJornada: 
+                                                              widget.numJornada,),
+                                                ),
+                                              );
+                                            }
+                                          } else {
+                                            await showDialog(
+                                              context: context,
+                                              builder: (alertDialogContext) {
+                                                return AlertDialog(
+                                                  title: const Text('Campos vacíos'),
+                                                  content: const Text(
+                                                      "Para continuar, debes llenar los campos 'Proyecto' y 'Tipo de Proyecto'"),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(alertDialogContext),
+                                                      child: const Text('Bien'),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                            return;
+                                          }
+                                          } else {
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    InversionJornadaTemporalScreen(
+                                                        emprendimiento: widget
+                                                            .emprendimiento, 
+                                                            numJornada: 
+                                                            widget.numJornada,),
+                                              ),
+                                            );
+                                          }
                                         },
                                         text: 'Agregar Inversión',
                                         options: FFButtonOptions(

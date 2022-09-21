@@ -7,6 +7,8 @@ import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
+import 'package:bizpro_app/screens/ventas/producto_venta_eliminado.dart';
+import 'package:bizpro_app/screens/widgets/bottom_sheet_eliminar_producto.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:bizpro_app/providers/database_providers/venta_controller.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
@@ -16,11 +18,13 @@ import 'package:bizpro_app/providers/database_providers/producto_venta_controlle
 class EditarProductoVenta extends StatefulWidget {
   final Emprendimientos emprendimiento;
   final ProdVendidos prodVendido;
+  final Ventas venta;
 
   const EditarProductoVenta({
     Key? key, 
     required this.emprendimiento,
-    required this.prodVendido,
+    required this.prodVendido, 
+    required this.venta,
     }) : super(key: key);
 
   @override
@@ -93,49 +97,104 @@ class _EditarProductoVentaState
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                20, 45, 20, 0),
-                            child: Container(
-                              width: 80,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF4672FF),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: InkWell(
-                                onTap: () async {
-                                  Navigator.pop(context);
-                                },
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    const Icon(
-                                      Icons.arrow_back_ios_rounded,
-                                      color: Colors.white,
-                                      size: 16,
-                                    ),
-                                    Text(
-                                      'Atrás',
-                                      style: AppTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: AppTheme.of(context)
-                                                .bodyText1Family,
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w300,
-                                          ),
-                                    ),
-                                  ],
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 0, 10),
+                              child: Container(
+                                width: 80,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF4672FF),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: InkWell(
+                                  onTap: () async {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      const Icon(
+                                        Icons.arrow_back_ios_rounded,
+                                        color: Colors.white,
+                                        size: 16,
+                                      ),
+                                      Text(
+                                        'Atrás',
+                                        style: AppTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              fontFamily: AppTheme.of(context)
+                                                  .bodyText1Family,
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w300,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
+                            const Spacer(),
+                            Padding(
+                              padding:
+                                  const EdgeInsetsDirectional.fromSTEB(0, 0, 10, 10),
+                              child: Container(
+                                width: 45,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF4672FF),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: InkWell(
+                                  onTap: () async {
+                                    String? option =
+                                        await showModalBottomSheet(
+                                      context: context,
+                                      builder: (_) =>
+                                          const BottomSheetEliminarProducto(),
+                                    );
+                                    if (option == 'eliminar') {
+                                      productoVentaProvider.remove(widget.prodVendido);
+                                      double totalVentas = 0.00;
+                                      Ventas venta = widget.prodVendido.venta.target!;
+                                      List<ProdVendidos> productosVenta = venta.prodVendidos.toList();
+                                      for (var i = 0; i < productosVenta.length; i++) {
+                                        totalVentas += productosVenta[i].subtotal;
+                                      }
+                                      ventaProvider.update(
+                                        venta.id,
+                                        venta.fechaInicio,
+                                        venta.fechaTermino,
+                                        totalVentas,
+                                        );
+                                      // ignore: use_build_context_synchronously
+                                      await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                      builder: (context) =>
+                                           ProductoVentaEliminado(venta: 
+                                              widget.venta,
+                                              ),
+                                            ),
+                                      );
+                                    } else { //Se aborta la opción
+                                      return;
+                                    }
+                                  },
+                                  child: const Icon(
+                                    Icons.delete,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         Padding(
                           padding:

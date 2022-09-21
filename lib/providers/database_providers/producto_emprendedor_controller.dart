@@ -88,13 +88,13 @@ class ProductoEmprendedorController extends ChangeNotifier {
 }
   //TODO Eliminar producto del backend, agregando un campo idbr en la bitacora
 
-  void remove(ProductosEmp productosEmp) {
-    print("Tamaño productos antes de remover: ${dataBase.productosEmpBox.getAll().length}");
-    final nuevaInstruccion = Bitacora(instrucciones: 'syncDeleteProductoEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-    dataBase.productosEmpBox.remove(productosEmp.id); //Se elimina de bitacora la instruccion creada anteriormente
-    print("Tamaño productos después de remover: ${dataBase.productosEmpBox.getAll().length}");
-    notifyListeners(); 
-  }
+  // void remove(ProductosEmp productosEmp) {
+  //   print("Tamaño productos antes de remover: ${dataBase.productosEmpBox.getAll().length}");
+  //   final nuevaInstruccion = Bitacora(instrucciones: 'syncDeleteProductoEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+  //   dataBase.productosEmpBox.remove(productosEmp.id); //Se elimina de bitacora la instruccion creada anteriormente
+  //   print("Tamaño productos después de remover: ${dataBase.productosEmpBox.getAll().length}");
+  //   notifyListeners(); 
+  // }
 
   // getAll() {
   //   emprendimientos = dataBase.emprendimientosBox.getAll();

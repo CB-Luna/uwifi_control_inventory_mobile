@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bizpro_app/screens/ventas/agregar_venta.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -101,7 +102,15 @@ class _RegistroVentaTemporalScreenState
                               ),
                               child: InkWell(
                                 onTap: () async {
-                                  Navigator.pop(context);
+                                  await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                      builder: (context) =>
+                                          AgregarVentaScreen(
+                                            idEmprendimiento: widget.emprendimiento.id, 
+                                            ),
+                                          ),
+                                      );
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,

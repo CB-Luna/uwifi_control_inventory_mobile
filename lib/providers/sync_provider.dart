@@ -317,6 +317,16 @@ class SyncProvider extends ChangeNotifier {
             }   
           }  
           break;
+        case "syncDeleteProductoVendido":
+          final idDBRProdVendido = instruccionesBitacora[i].idDBR;
+          print("Entro aqui en el DeleteProductoVendido");
+          if(idDBRProdVendido != null)
+          {
+            //TODO Hacer el método para eliminar en backend
+          } else{
+            print("No se había sincronizado");
+          }
+          break;
         default:
          break;
       }
@@ -448,12 +458,10 @@ class SyncProvider extends ChangeNotifier {
           print(tareaToSync.descripcion);
           print(tareaToSync.fechaRevision.toUtc().toString());
           print(tareaToSync.observacion);
-          print(tareaToSync.porcentaje.toString());
           final recordTarea = await client.records.create('tareas', body: {
             "tarea": tareaToSync.tarea,
             "descripcion": tareaToSync.descripcion,
             "observacion": tareaToSync.observacion,
-            "porcentaje": tareaToSync.porcentaje,
             "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
             "id_status_sync_fk": "HoI36PzYw1wtbO1"
           });
@@ -538,12 +546,10 @@ class SyncProvider extends ChangeNotifier {
           print(tareaToSync.descripcion);
           print(tareaToSync.fechaRevision.toUtc().toString());
           print(tareaToSync.observacion);
-          print(tareaToSync.porcentaje.toString());
           final recordTarea = await client.records.create('tareas', body: {
             "tarea": tareaToSync.tarea,
             "descripcion": tareaToSync.descripcion,
             "observacion": tareaToSync.observacion,
-            "porcentaje": tareaToSync.porcentaje,
             "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
             "id_status_sync_fk": "HoI36PzYw1wtbO1"
           });
@@ -645,12 +651,11 @@ class SyncProvider extends ChangeNotifier {
       print(tareaToSync.descripcion);
       print(tareaToSync.fechaRevision.toUtc().toString());
       print(tareaToSync.observacion);
-      print(tareaToSync.porcentaje.toString());
       final recordTarea = await client.records.create('tareas', body: {
         "tarea": tareaToSync.tarea,
         "descripcion": tareaToSync.descripcion,
         "observacion": tareaToSync.observacion,
-        "porcentaje": tareaToSync.porcentaje,
+        "id_porcentaje_fk": tareaToSync.porcentaje.target!.idDBR,
         "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
         "id_status_sync_fk": "HoI36PzYw1wtbO1"
       });
@@ -738,12 +743,11 @@ class SyncProvider extends ChangeNotifier {
           print(tareaToSync.descripcion);
           print(tareaToSync.fechaRevision.toUtc().toString());
           print(tareaToSync.observacion);
-          print(tareaToSync.porcentaje.toString());
           final recordTarea = await client.records.create('tareas', body: {
             "tarea": tareaToSync.tarea,
             "descripcion": tareaToSync.descripcion,
             "observacion": tareaToSync.observacion,
-            "porcentaje": tareaToSync.porcentaje,
+            "id_porcentaje_fk": tareaToSync.porcentaje.target!.idDBR,
             "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
             "id_status_sync_fk": "HoI36PzYw1wtbO1"
           });
@@ -1284,7 +1288,7 @@ return true;
         "tarea": tarea.tarea,
         "descripcion": tarea.descripcion,
         "observacion": tarea.observacion,
-        "porcentaje": tarea.porcentaje,
+        "id_porcentaje_fk": tarea.porcentaje.target!.idDBR,
         "fecha_revision": tarea.fechaRevision.toUtc().toString(),
         "id_status_sync_fk": "HoI36PzYw1wtbO1"
       }); 

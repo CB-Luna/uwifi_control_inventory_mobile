@@ -43,20 +43,19 @@ class ConsultoriaController extends ChangeNotifier {
     tarea: tarea,
     descripcion: "Creación de Consultoría",
     observacion: "Se crea consultoría",
-    porcentaje: 1,
     fechaRevision: fechaRevision!);
-    //Se agrega la imagen a la Tarea
+    //Se agrega la imagen a la Tarea y el porcentaje de avance
     final nuevaImagenTarea = Imagenes(imagenes: imagen); //Se crea el objeto imagenes para la Tarea
     nuevaTarea.imagenes.add(nuevaImagenTarea);
     final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
     nuevaTarea.statusSync.target = nuevoSyncTarea;
+    //Se recupera el primer porcentaje de la Tarea
+    final porcentajeAvance = dataBase.porcentajeAvanceBox.query(PorcentajeAvance_.porcentajeAvance.equals(1)).build().findFirst();
+    if (porcentajeAvance != null) {
+      nuevaTarea.porcentaje.target = porcentajeAvance;
+    }
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Consultoría")).build().findFirst();
-    if (faseEmp != null) {
-      print("Fase: ${faseEmp.fase}");
-    } else {
-      print("Hay error en esta fase"); 
-    }
     //Se recupera el ambito y el area del circulo
     final ambito = dataBase.ambitoConsultoriaBox.get(idAmbito);
     final areaCirculo = dataBase.areaCirculoBox.get(idAreaCirculo);
@@ -84,19 +83,23 @@ class ConsultoriaController extends ChangeNotifier {
     }
   }
 
-  void updateConsultoria(int id, int idOldTarea) {
+  void updateConsultoria(int id, int idOldTarea, int idPorcentajeAvance) {
     var oldTarea  = dataBase.tareasBox.get(idOldTarea);
     if (oldTarea != null) {
       final nuevaTarea = Tareas(
       tarea: tarea == "" ? oldTarea.tarea : tarea,
       descripcion: "Actualización de Consultoría",
       observacion: observacion,
-      porcentaje: int.parse(porcentaje),
       activo: activo,
       fechaRevision: fechaRevision!);
       //Se agrega la imagen a la Tarea
       final nuevaImagenTarea = Imagenes(imagenes: imagen); //Se crea el objeto imagenes para la Tarea
       nuevaTarea.imagenes.add(nuevaImagenTarea);
+      //Se actualiza el porcentaje de la Tarea
+      final porcentajeAvance = dataBase.porcentajeAvanceBox.get(idPorcentajeAvance);
+      if (porcentajeAvance != null) {
+        nuevaTarea.porcentaje.target = porcentajeAvance;
+      }
       var updateConsultoria = dataBase.consultoriasBox.get(id);
       if (updateConsultoria !=  null) {
         //Se agrega la nueva tarea
@@ -116,17 +119,20 @@ class ConsultoriaController extends ChangeNotifier {
     }
   }
 
-  void addTareaConsultoria(int idConsultoria) {
+  void addTareaConsultoria(int idConsultoria, idPorcentajeAvance) {
     final nuevaTarea = Tareas(
     tarea: tarea,
     descripcion: descripcion,
     observacion: (observacion == "" || observacion.isEmpty) ? "Comentarios Consultoría" : observacion,
-    porcentaje: 1,
     activo: activo,
     fechaRevision: fechaRevision!);
     final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
     nuevaTarea.statusSync.target = nuevoSyncTarea;
-    // final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
+    //Se actualiza el porcentaje de la Tarea
+    final porcentajeAvance = dataBase.porcentajeAvanceBox.get(idPorcentajeAvance);
+    if (porcentajeAvance != null) {
+      nuevaTarea.porcentaje.target = porcentajeAvance;
+    }
     final updateConsultoria = dataBase.consultoriasBox.get(idConsultoria);
     if (updateConsultoria != null) {
       final nuevaInstruccion = Bitacora(instrucciones: 'syncAddTareaConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora

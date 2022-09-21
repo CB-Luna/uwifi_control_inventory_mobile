@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bizpro_app/screens/ventas/editar_venta.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -100,7 +101,15 @@ class _RegistroVentaScreenState
                               ),
                               child: InkWell(
                                 onTap: () async {
-                                  Navigator.pop(context);
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          EditarVentaScreen(
+                                            venta: widget.venta,
+                                          ),
+                                    ),
+                                  );
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
@@ -530,8 +539,10 @@ class _RegistroVentaScreenState
                                                         EditarProductoVenta(
                                                           emprendimiento: 
                                                                 widget.venta.emprendimiento.target!,
-                                                            prodVendido:
-                                                                prodVendido),
+                                                          prodVendido:
+                                                                prodVendido, 
+                                                          venta: 
+                                                                widget.venta,),
                                                   ),
                                                 );
                                               },

@@ -1,3 +1,5 @@
+import 'package:bizpro_app/screens/jornadas/registros/inversion_jornada_temporal_screen.dart';
+import 'package:bizpro_app/screens/widgets/bottom_sheet_eliminar_producto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,11 +24,13 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 class EditarProductoInversionJornadaTemporal extends StatefulWidget {
   final ProductosSolicitadosTemporal productoSol;
   final Emprendimientos emprendimiento;
+  final int numJornada;
 
   const EditarProductoInversionJornadaTemporal({
     Key? key,
     required this.productoSol, 
-    required this.emprendimiento,
+    required this.emprendimiento, 
+    required this.numJornada,
   }) : super(key: key);
 
   @override
@@ -122,52 +126,117 @@ class _EditarProductoInversionJornadaTemporalState
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              20, 40, 20, 0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                width: 80,
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  20, 40, 20, 0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width: 80,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: AppTheme.of(context).secondaryText,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: InkWell(
+                                      onTap: () async {
+                                        await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                        builder: (context) =>
+                                            InversionJornadaTemporalScreen(
+                                              emprendimiento: widget.emprendimiento, 
+                                              numJornada: widget.numJornada,
+                                              ),
+                                            ),
+                                        );
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          const Icon(
+                                            Icons.arrow_back_ios_rounded,
+                                            color: Colors.white,
+                                            size: 16,
+                                          ),
+                                          Text(
+                                            'Atrás',
+                                            style: AppTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: AppTheme.of(context)
+                                                      .bodyText1Family,
+                                                  color: Colors.white,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w300,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Spacer(),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  20, 40, 20, 0),
+                              child: Container(
+                                width: 45,
                                 height: 40,
                                 decoration: BoxDecoration(
-                                  color: AppTheme.of(context).secondaryText,
+                                  color: const Color(0xFF4672FF),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: InkWell(
                                   onTap: () async {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      const Icon(
-                                        Icons.arrow_back_ios_rounded,
-                                        color: Colors.white,
-                                        size: 16,
-                                      ),
-                                      Text(
-                                        'Atrás',
-                                        style: AppTheme.of(context)
-                                            .bodyText1
-                                            .override(
-                                              fontFamily: AppTheme.of(context)
-                                                  .bodyText1Family,
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w300,
+                                    String? option =
+                                        await showModalBottomSheet(
+                                      context: context,
+                                      builder: (_) =>
+                                          const BottomSheetEliminarProducto(),
+                                    );
+                                    if (option == 'eliminar') {
+                                      productoInversionJornadaController.productosSolicitados.remove(widget.productoSol);
+                                      snackbarKey.currentState
+                                          ?.showSnackBar(
+                                              const SnackBar(
+                                        content: Text(
+                                            "Producto eliminado éxitosamente."),
+                                      ));
+                                      // ignore: use_build_context_synchronously
+                                      await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                      builder: (context) =>
+                                          InversionJornadaTemporalScreen(
+                                            emprendimiento: widget.emprendimiento, 
+                                            numJornada: widget.numJornada,
                                             ),
-                                      ),
-                                    ],
+                                          ),
+                                      );
+                                    } else { 
+                                      //Se aborta la opción
+                                      return;
+                                    }
+                                  },
+                                  child: const Icon(
+                                    Icons.delete,
+                                    color: Colors.white,
+                                    size: 20,
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                         Padding(
                           padding:
@@ -1018,6 +1087,9 @@ class _EditarProductoInversionJornadaTemporalState
                                     ),
                                   ),
                                 ),
+                                const SizedBox(
+                                  height: 40,
+                                )
                               ],
                             ),
                           ),

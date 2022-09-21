@@ -18,6 +18,8 @@ class JornadaController extends ChangeNotifier {
   String descripcion = "";
   List<String> imagenes = [];
   bool activo = true;
+  String tipoProyecto = "";
+  String proyecto =  "";
 
   bool validateForm(GlobalKey<FormState> jornadaKey) {
     return jornadaKey.currentState!.validate() ? true : false;
@@ -34,6 +36,8 @@ class JornadaController extends ChangeNotifier {
     descripcion = "";
     imagenes = [];
     activo = true;
+    tipoProyecto = "";
+    proyecto = "";
   }
 
 
@@ -48,7 +52,6 @@ class JornadaController extends ChangeNotifier {
       tarea: tarea,
       descripcion: "Creación Jornada 1",
       observacion: "Se crea la jornada 1",
-      porcentaje: 1,
       activo: activo,
       fechaRevision: fechaRevision ?? DateTime.now(),
       fechaRegistro: fechaRegistro);
@@ -120,7 +123,6 @@ class JornadaController extends ChangeNotifier {
       tarea: tarea, 
       descripcion: "Creación Jornada 2", 
       observacion: (observacion == "" || observacion.isEmpty) ? "Comentarios Jornada 2" : observacion, 
-      porcentaje: 1, 
       activo: activo,
       fechaRevision: fechaRevision ?? DateTime.now(),
       fechaRegistro: fechaRegistro,
@@ -212,7 +214,6 @@ class JornadaController extends ChangeNotifier {
       tarea: tarea, 
       descripcion: descripcion, 
       observacion: (observacion == "" || observacion.isEmpty) ? "Comentarios Jornada 3" : observacion, 
-      porcentaje: 1, 
       activo: activo,
       fechaRevision: fechaRevision ?? DateTime.now(),
       fechaRegistro: fechaRegistro,
@@ -331,7 +332,6 @@ class JornadaController extends ChangeNotifier {
       tarea: "Creación Jornada 4",
       descripcion: "Creación Jornada 4",
       observacion: (observacion == "" || observacion.isEmpty) ? "Comentarios Jornada 4" : observacion,
-      porcentaje: 1,
       activo: activo,
       fechaRevision: fechaRevision ?? DateTime.now(),
       fechaRegistro: fechaRegistro,
