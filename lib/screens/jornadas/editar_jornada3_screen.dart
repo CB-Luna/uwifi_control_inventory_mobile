@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bizpro_app/screens/jornadas/detalle_jornada_screen.dart';
 import 'package:bizpro_app/screens/jornadas/registros/editar_inversion_jornada.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_imagenes_completas.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_validacion_eliminar_imagen.dart';
@@ -198,7 +199,15 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                       ),
                                       child: InkWell(
                                         onTap: () async {
-                                          Navigator.pop(context);
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DetalleJornadaScreen(
+                                                      jornada:
+                                                          widget.jornada),
+                                            ),
+                                          );
                                         },
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
@@ -1165,7 +1174,8 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     EditarInversionJornadaScreen(
-                                                        inversion: inversion!),
+                                                        inversion: inversion!, 
+                                                        jornada: widget.jornada,),
                                               ),
                                             );
                                           }

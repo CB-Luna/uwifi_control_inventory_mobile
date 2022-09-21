@@ -211,9 +211,19 @@ void addSingle(int idInversion, int idFamiliaProd, int idTipoEmpaques) {
   }
   }
 
-  void remove(ProductosEmp productosEmp) {
-    dataBase.productosEmpBox.remove(productosEmp.id); //Se elimina de bitacora la instruccion creada anteriormente
-    notifyListeners(); 
+  void remove(ProdSolicitado productoSolicitado) {
+    final inversion = dataBase.inversionesBox.get(productoSolicitado.idInversion);
+    if (inversion != null) {
+      print("Tamaño productos solicitados antes de remover: ${dataBase.productosSolicitadosBox.getAll().length}");
+      final nuevaInstruccion = Bitacora(instrucciones: 'syncDeleteProductoSolicitado', usuario: prefs.getString("userId")!, idDBR: productoSolicitado.idDBR); //Se crea la nueva instruccion a realizar en bitacora
+      //Se resta de la inversión el costo del Prod Solicitado
+      inversion.totalInversion -= productoSolicitado.costoEstimado != null ? (productoSolicitado.cantidad * productoSolicitado.costoEstimado!) : 0.0;
+      dataBase.inversionesBox.put(inversion);
+      productoSolicitado.bitacora.add(nuevaInstruccion);
+      dataBase.productosSolicitadosBox.remove(productoSolicitado.id); //Se elimina de bitacora la instruccion creada anteriormente?
+      print("Tamaño productos solicitados después de remover: ${dataBase.productosSolicitadosBox.getAll().length}");
+      notifyListeners(); 
+    }
   }
 
   // getAll() {

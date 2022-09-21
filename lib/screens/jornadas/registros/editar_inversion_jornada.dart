@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bizpro_app/screens/jornadas/editar_jornada3_screen.dart';
 import 'package:bizpro_app/screens/jornadas/registros/agregar_producto_inversion_jornada.dart';
 import 'package:bizpro_app/screens/jornadas/registros/editar_producto_inversion_jornada.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
@@ -11,10 +12,12 @@ import 'package:bizpro_app/theme/theme.dart';
 
 class EditarInversionJornadaScreen extends StatefulWidget {
   final Inversiones inversion;
+  final Jornadas jornada;
 
   const EditarInversionJornadaScreen({
     Key? key,
-    required this.inversion,
+    required this.inversion, 
+    required this.jornada,
   }) : super(key: key);
 
   @override
@@ -89,7 +92,15 @@ class _EditarInversionJornadaScreenState
                               ),
                               child: InkWell(
                                 onTap: () async {
-                                  Navigator.pop(context);
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          EditarJornada3Screen(
+                                              jornada:
+                                                  widget.jornada),
+                                    ),
+                                  );
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
@@ -519,7 +530,9 @@ class _EditarInversionJornadaScreenState
                                                     builder: (context) =>
                                                         EditarProductoInversionJornada(
                                                             productoSol:
-                                                                prodSolicitado),
+                                                                prodSolicitado, 
+                                                            jornada: 
+                                                                widget.jornada,),
                                                   ),
                                                 );
                                               },

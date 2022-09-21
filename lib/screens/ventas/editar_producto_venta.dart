@@ -98,6 +98,7 @@ class _EditarProductoVentaState
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Row(
+                          mainAxisSize: MainAxisSize.max,
                           children: [
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 0, 10),

@@ -327,6 +327,16 @@ class SyncProvider extends ChangeNotifier {
             print("No se había sincronizado");
           }
           break;
+        case "syncDeleteProductoSolicitado":
+          final idDBRProdSolicitado = instruccionesBitacora[i].idDBR;
+          print("Entro aqui en el DeleteProductoSolicitado");
+          if(idDBRProdSolicitado != null)
+          {
+            //TODO Hacer el método para eliminar en backend
+          } else{
+            print("No se había sincronizado");
+          }
+          break;
         default:
          break;
       }
@@ -1542,6 +1552,41 @@ void deleteBitacora() {
     return null;
 }
 
+  Future<bool?> syncDeleteProductoVendido(String idDBRProductoVendido) async {
+    try {
+      print("Estoy en syncDeleteProductoVendido"); 
+      //Validamos que el elemento exista en el backend
+      final record = await client.records.getOne('prod_vendidos', idDBRProductoVendido); 
+      if (record.id.isNotEmpty) {
+        //Se puede eliminar el producto vendido en el backend
+        await client.records.delete('prod_vendidos', idDBRProductoVendido); 
+        print("Producto Vendido deleted succesfully");
+        return true;
+        }
+      } catch (e) {
+        print('ERROR - function syncDeleteProductoVendido(): $e');
+        return false;
+      }
+    return null;
+}
+
+  Future<bool?> syncDeleteProductoSolicitado(String idDBRProductoSolicitado) async {
+    try {
+      print("Estoy en syncDeleteProductoSolicitado"); 
+      //Validamos que el elemento exista en el backend
+      final record = await client.records.getOne('productos_solicitados', idDBRProductoSolicitado); 
+      if (record.id.isNotEmpty) {
+        //Se puede eliminar el producto solicitado en el backend
+        await client.records.delete('productos_solicitados', idDBRProductoSolicitado); 
+        print("Producto Solicitado deleted succesfully");
+        return true;
+        }
+      } catch (e) {
+        print('ERROR - function syncDeleteProductoSolicitado(): $e');
+        return false;
+      }
+    return null;
+}
 
 // VALIDAR QUE HAYA INFO EN EK BACKEND
   Future<bool> validateLengthCotizacion(InversionesXProdCotizados inversionXprodCotizados) async {

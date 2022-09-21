@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -136,7 +137,15 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                       ),
                                       child: InkWell(
                                         onTap: () async {
-                                          Navigator.pop(context);
+                                          await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DetalleEmprendimientoScreen(
+                                                        emprendimiento:
+                                                            widget.jornada.emprendimiento.target!),
+                                              ),
+                                            );
                                         },
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
