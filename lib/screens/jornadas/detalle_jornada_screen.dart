@@ -254,7 +254,7 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                                                 .jornada
                                                                 .tarea
                                                                 .target!
-                                                                .observacion,
+                                                                .comentarios,
                                                             listImagenes,
                                                             imagenes,
                                                             false,

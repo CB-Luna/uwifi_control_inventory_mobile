@@ -289,7 +289,7 @@ class _DetalleTareaConsultoriaScreenState
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     5, 0, 5, 10),
                                 child: TextFormField(
-                                  initialValue: widget.tarea.observacion,
+                                  initialValue: widget.tarea.descripcion,
                                   enabled: false,
                                   readOnly: true,
                                   obscureText: false,
@@ -342,7 +342,7 @@ class _DetalleTareaConsultoriaScreenState
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     5, 0, 5, 10),
                                 child: TextFormField(
-                                  initialValue: widget.tarea.porcentaje.toString(),
+                                  initialValue: widget.tarea.porcentaje.target!.porcentajeAvance.toString(),
                                   enabled: false,
                                   readOnly: true,
                                   obscureText: false,

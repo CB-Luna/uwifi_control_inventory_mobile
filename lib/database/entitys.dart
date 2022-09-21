@@ -429,7 +429,7 @@ class Tareas {
   int id;
   String tarea;
   String descripcion;
-  String observacion;
+  String? comentarios;
   bool activo;
   DateTime fechaRevision;
   DateTime fechaRegistro;
@@ -445,7 +445,7 @@ class Tareas {
     this.id = 0,
     required this.tarea,
     required this.descripcion,
-    required this.observacion,
+    this.comentarios,
     this.activo = true,
     required this.fechaRevision,
     DateTime? fechaRegistro,

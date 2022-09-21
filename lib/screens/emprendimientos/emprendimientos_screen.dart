@@ -390,7 +390,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                                     avanceObservado: 
                                                         consultoria
                                                         .tareas.last.
-                                                        observacion,
+                                                        descripcion,
                                                     porcentajeAvance: 
                                                         consultoria
                                                         .tareas.last

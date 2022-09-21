@@ -397,7 +397,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(19, 2491530739310255510),
       name: 'Tareas',
-      lastPropertyId: const IdUid(20, 195209596343901530),
+      lastPropertyId: const IdUid(21, 6214653352507297699),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -408,11 +408,6 @@ final _entities = <ModelEntity>[
         ModelProperty(
             id: const IdUid(3, 8014791709560172837),
             name: 'descripcion',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 5194084986301717278),
-            name: 'observacion',
             type: 9,
             flags: 0),
         ModelProperty(
@@ -468,7 +463,12 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(203, 1870818626809919537),
-            relationTarget: 'PorcentajeAvance')
+            relationTarget: 'PorcentajeAvance'),
+        ModelProperty(
+            id: const IdUid(21, 6214653352507297699),
+            name: 'comentarios',
+            type: 9,
+            flags: 0)
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -3065,7 +3065,8 @@ ModelDefinition getObjectBoxModel() {
         7137124187474983956,
         2112559093449404088,
         5332627173857470047,
-        7823032235829845864
+        7823032235829845864,
+        5194084986301717278
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -3480,14 +3481,15 @@ ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (Tareas object, fb.Builder fbb) {
           final descripcionOffset = fbb.writeString(object.descripcion);
-          final observacionOffset = fbb.writeString(object.observacion);
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
           final tareaOffset = fbb.writeString(object.tarea);
-          fbb.startTable(21);
+          final comentariosOffset = object.comentarios == null
+              ? null
+              : fbb.writeString(object.comentarios!);
+          fbb.startTable(22);
           fbb.addInt64(0, object.id);
           fbb.addOffset(2, descripcionOffset);
-          fbb.addOffset(3, observacionOffset);
           fbb.addInt64(5, object.fechaRevision.millisecondsSinceEpoch);
           fbb.addInt64(7, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addInt64(10, object.jornada.targetId);
@@ -3497,6 +3499,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(16, tareaOffset);
           fbb.addBool(17, object.activo);
           fbb.addInt64(19, object.porcentaje.targetId);
+          fbb.addOffset(20, comentariosOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -3510,16 +3513,16 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 36, ''),
               descripcion: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 8, ''),
-              observacion: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 10, ''),
+              comentarios: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 44),
               activo: const fb.BoolReader()
                   .vTableGet(buffer, rootOffset, 38, false),
               fechaRevision: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0)),
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0)),
-              idDBR: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 32));
+              idDBR:
+                  const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 32));
           object.jornada.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
           object.jornada.attach(store);
@@ -6316,43 +6319,43 @@ class Tareas_ {
   static final descripcion =
       QueryStringProperty<Tareas>(_entities[4].properties[1]);
 
-  /// see [Tareas.observacion]
-  static final observacion =
-      QueryStringProperty<Tareas>(_entities[4].properties[2]);
-
   /// see [Tareas.fechaRevision]
   static final fechaRevision =
-      QueryIntegerProperty<Tareas>(_entities[4].properties[3]);
+      QueryIntegerProperty<Tareas>(_entities[4].properties[2]);
 
   /// see [Tareas.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<Tareas>(_entities[4].properties[4]);
+      QueryIntegerProperty<Tareas>(_entities[4].properties[3]);
 
   /// see [Tareas.jornada]
   static final jornada =
-      QueryRelationToOne<Tareas, Jornadas>(_entities[4].properties[5]);
+      QueryRelationToOne<Tareas, Jornadas>(_entities[4].properties[4]);
 
   /// see [Tareas.consultoria]
   static final consultoria =
-      QueryRelationToOne<Tareas, Consultorias>(_entities[4].properties[6]);
+      QueryRelationToOne<Tareas, Consultorias>(_entities[4].properties[5]);
 
   /// see [Tareas.statusSync]
   static final statusSync =
-      QueryRelationToOne<Tareas, StatusSync>(_entities[4].properties[7]);
+      QueryRelationToOne<Tareas, StatusSync>(_entities[4].properties[6]);
 
   /// see [Tareas.idDBR]
-  static final idDBR = QueryStringProperty<Tareas>(_entities[4].properties[8]);
+  static final idDBR = QueryStringProperty<Tareas>(_entities[4].properties[7]);
 
   /// see [Tareas.tarea]
-  static final tarea = QueryStringProperty<Tareas>(_entities[4].properties[9]);
+  static final tarea = QueryStringProperty<Tareas>(_entities[4].properties[8]);
 
   /// see [Tareas.activo]
   static final activo =
-      QueryBooleanProperty<Tareas>(_entities[4].properties[10]);
+      QueryBooleanProperty<Tareas>(_entities[4].properties[9]);
 
   /// see [Tareas.porcentaje]
   static final porcentaje =
-      QueryRelationToOne<Tareas, PorcentajeAvance>(_entities[4].properties[11]);
+      QueryRelationToOne<Tareas, PorcentajeAvance>(_entities[4].properties[10]);
+
+  /// see [Tareas.comentarios]
+  static final comentarios =
+      QueryStringProperty<Tareas>(_entities[4].properties[11]);
 
   /// see [Tareas.bitacora]
   static final bitacora =

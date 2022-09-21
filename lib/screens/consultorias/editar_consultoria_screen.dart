@@ -41,7 +41,6 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   String ambito = "";
   String areaCirculo = "";
-  String porcentajeAvance = "";
   String emprendedor = "";
   XFile? fotoAvance;
 
@@ -50,7 +49,6 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
     super.initState();
     ambito = widget.consultoria.ambitoConsultoria.target!.nombreAmbito;
     areaCirculo = widget.consultoria.areaCirculo.target!.nombreArea;
-    porcentajeAvance = widget.tarea.porcentaje.target!.porcentajeAvance.toString();
   }
 
   @override
@@ -436,7 +434,7 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
                                   onChanged: (value) {
-                                    consultoriaProvider.observacion = value;
+                                    consultoriaProvider.avanceObservado = value;
                                   },
                                   obscureText: false,
                                   decoration: InputDecoration(
@@ -484,7 +482,7 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                   maxLines: 2,
                                   validator: (value) {
                                     return capitalizadoCharacters
-                                            .hasMatch(value ?? '')
+                                            .hasMatch(consultoriaProvider.avanceObservado)
                                         ? null
                                         : 'Para continuar, ingrese el avance observado empezando por mayúscula';
                                   },
@@ -499,7 +497,7 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                     child: DropDown(
                                       options: listPorcentaje,
                                       onChanged: (val) => setState(() {
-                                        porcentajeAvance = val!;
+                                        consultoriaProvider.porcentaje = val!;
                                       }),
                                       width: double.infinity,
                                       height: 50,
@@ -529,8 +527,8 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                   );
                                 },
                                 validator: (val) {
-                                  if (val == "" ||
-                                      val == null) {
+                                  if (consultoriaProvider.porcentaje == "" ||
+                                      consultoriaProvider.porcentaje.isEmpty) {
                                     return 'Para continuar, seleccione un porcentaje de avance.';
                                   }
                                   return null;
@@ -664,10 +662,9 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                           fontWeight: FontWeight.normal,
                                         ),
                                     validator: (value) {
-                                      if (value == null || value.isEmpty) {
+                                      if (fechaRevision.text == "" || fechaRevision.text.isEmpty) {
                                         return 'Para continuar, ingrese la fecha de revisión';
                                       }
-
                                       return null;
                                     }),
                               ),
@@ -793,11 +790,15 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                               0, 20, 0, 10),
                           child: FFButtonWidget(
                             onPressed: () async {
+                              print("Avance observado: ${consultoriaProvider.avanceObservado}");
+                              print("Porcentaje obervado: ${consultoriaProvider.porcentaje}");
+                              print("Siguientes pasos: ${consultoriaProvider.tarea}");
+                              print("Fecha proxima revision: ${fechaRevision.text}");
                               if (consultoriaProvider.validateForm(formKey)) {
                                   final idPorcentajeAvance = dataBase.porcentajeAvanceBox
                                     .query(PorcentajeAvance_
                                     .porcentajeAvance.
-                                    equals(int.parse(porcentajeAvance)))
+                                    equals(int.parse(consultoriaProvider.porcentaje)))
                                     .build()
                                     .findFirst()
                                     ?.id;

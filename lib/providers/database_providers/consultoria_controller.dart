@@ -12,8 +12,6 @@ class ConsultoriaController extends ChangeNotifier {
   //Consultorias
   DateTime? fechaRevision = DateTime.now();
   String tarea = "";
-  String observacion = "";
-  String descripcion = "";
   String avanceObservado = "";
   String porcentaje = "";
   String imagen = "";
@@ -27,8 +25,6 @@ class ConsultoriaController extends ChangeNotifier {
   void clearInformation()
   {
     tarea = "";
-    observacion = "";
-    descripcion = "";
     avanceObservado = "";
     porcentaje = "";
     fechaRevision =  null;
@@ -42,7 +38,6 @@ class ConsultoriaController extends ChangeNotifier {
     final nuevaTarea = Tareas(
     tarea: tarea,
     descripcion: "Creación de Consultoría",
-    observacion: "Se crea consultoría",
     fechaRevision: fechaRevision!);
     //Se agrega la imagen a la Tarea y el porcentaje de avance
     final nuevaImagenTarea = Imagenes(imagenes: imagen); //Se crea el objeto imagenes para la Tarea
@@ -88,8 +83,7 @@ class ConsultoriaController extends ChangeNotifier {
     if (oldTarea != null) {
       final nuevaTarea = Tareas(
       tarea: tarea == "" ? oldTarea.tarea : tarea,
-      descripcion: "Actualización de Consultoría",
-      observacion: observacion,
+      descripcion: avanceObservado,
       activo: activo,
       fechaRevision: fechaRevision!);
       //Se agrega la imagen a la Tarea
@@ -122,8 +116,7 @@ class ConsultoriaController extends ChangeNotifier {
   void addTareaConsultoria(int idConsultoria, idPorcentajeAvance) {
     final nuevaTarea = Tareas(
     tarea: tarea,
-    descripcion: descripcion,
-    observacion: (observacion == "" || observacion.isEmpty) ? "Comentarios Consultoría" : observacion,
+    descripcion: avanceObservado,
     activo: activo,
     fechaRevision: fechaRevision!);
     final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
@@ -153,7 +146,6 @@ class ConsultoriaController extends ChangeNotifier {
       final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateTareaConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       updateTarea.fechaRevision = newFechaRevision;
       updateTarea.tarea = newTarea;
-      updateTarea.observacion = newComentarios;
       updateTarea.descripcion = newDescripcion;
       updateTarea.activo = newActivo;
       final statusSyncTarea = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateTarea.statusSync.target!.id)).build().findUnique();

@@ -207,6 +207,23 @@ class SyncProvider extends ChangeNotifier {
             }   
           }  
           break;
+        case "syncUpdateJornada4":
+          final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
+          if(jornadaToSync != null){
+            if(jornadaToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
+              print("Entro aqui en el if");
+              break;
+            } else {
+              print("Entro aqui en el else");
+              if (jornadaToSync.idDBR != null) {
+                print("Ya ha sido enviado al backend");
+                syncUpdateJornada4(jornadaToSync);
+              } else {
+                print("No ha sido enviado al backend");
+              }
+            }   
+          }  
+          break;
         case "syncAddConsultoria":
           print("Entro aqui");
           final consultoriaToSync = getFirstConsultoria(dataBase.consultoriasBox.getAll(), instruccionesBitacora[i].id);
@@ -467,11 +484,11 @@ class SyncProvider extends ChangeNotifier {
           print(tareaToSync.tarea);
           print(tareaToSync.descripcion);
           print(tareaToSync.fechaRevision.toUtc().toString());
-          print(tareaToSync.observacion);
+          print(tareaToSync.comentarios);
           final recordTarea = await client.records.create('tareas', body: {
             "tarea": tareaToSync.tarea,
             "descripcion": tareaToSync.descripcion,
-            "observacion": tareaToSync.observacion,
+            "comentarios": tareaToSync.comentarios,
             "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
             "id_status_sync_fk": "HoI36PzYw1wtbO1"
           });
@@ -555,11 +572,11 @@ class SyncProvider extends ChangeNotifier {
           print(tareaToSync.tarea);
           print(tareaToSync.descripcion);
           print(tareaToSync.fechaRevision.toUtc().toString());
-          print(tareaToSync.observacion);
+          print(tareaToSync.comentarios);
           final recordTarea = await client.records.create('tareas', body: {
             "tarea": tareaToSync.tarea,
             "descripcion": tareaToSync.descripcion,
-            "observacion": tareaToSync.observacion,
+            "comentarios": tareaToSync.comentarios,
             "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
             "id_status_sync_fk": "HoI36PzYw1wtbO1"
           });
@@ -660,11 +677,11 @@ class SyncProvider extends ChangeNotifier {
       print(tareaToSync.tarea);
       print(tareaToSync.descripcion);
       print(tareaToSync.fechaRevision.toUtc().toString());
-      print(tareaToSync.observacion);
+      print(tareaToSync.comentarios);
       final recordTarea = await client.records.create('tareas', body: {
         "tarea": tareaToSync.tarea,
         "descripcion": tareaToSync.descripcion,
-        "observacion": tareaToSync.observacion,
+        "comentarios": tareaToSync.comentarios,
         "id_porcentaje_fk": tareaToSync.porcentaje.target!.idDBR,
         "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
         "id_status_sync_fk": "HoI36PzYw1wtbO1"
@@ -752,11 +769,11 @@ class SyncProvider extends ChangeNotifier {
           print(tareaToSync.tarea);
           print(tareaToSync.descripcion);
           print(tareaToSync.fechaRevision.toUtc().toString());
-          print(tareaToSync.observacion);
+          print(tareaToSync.comentarios);
           final recordTarea = await client.records.create('tareas', body: {
             "tarea": tareaToSync.tarea,
             "descripcion": tareaToSync.descripcion,
-            "observacion": tareaToSync.observacion,
+            "comentarios": tareaToSync.comentarios,
             "id_porcentaje_fk": tareaToSync.porcentaje.target!.idDBR,
             "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
             "id_status_sync_fk": "HoI36PzYw1wtbO1"
@@ -1152,7 +1169,7 @@ return true;
       if (updateTarea != null) {
         final recordTarea = await client.records.update('tareas', updateTarea.idDBR.toString(), body: {
         "tarea": updateTarea.tarea,
-        "observacion": updateTarea.observacion,
+        "comentarios": updateTarea.comentarios,
         "fecha_revision": updateTarea.fechaRevision.toUtc().toString(),
         "id_status_sync_fk": "HoI36PzYw1wtbO1"
         });
@@ -1208,7 +1225,7 @@ return true;
       if (updateTarea != null) {
         final recordTarea = await client.records.update('tareas', updateTarea.idDBR.toString(), body: {
         "tarea": updateTarea.tarea,
-        "observacion": updateTarea.observacion,
+        "comentarios": updateTarea.comentarios,
         "descripcion": updateTarea.descripcion,
         "fecha_revision": updateTarea.fechaRevision.toUtc().toString(),
         "id_status_sync_fk": "HoI36PzYw1wtbO1"
@@ -1257,6 +1274,62 @@ return true;
 
   } 
 
+    Future<bool?> syncUpdateJornada4(Jornadas jornada) async {
+    print("Estoy en El syncUpdateJornada4");
+    try {
+      //Primero actualizamos la tarea
+      final updateTarea = dataBase.tareasBox.get(jornada.tarea.target!.id);
+      if (updateTarea != null) {
+        final recordTarea = await client.records.update('tareas', updateTarea.idDBR.toString(), body: {
+        "tarea": updateTarea.tarea,
+        "comentarios": updateTarea.comentarios,
+        "fecha_revision": updateTarea.fechaRevision.toUtc().toString(),
+        "id_status_sync_fk": "HoI36PzYw1wtbO1"
+        });
+        if (recordTarea.id.isNotEmpty) {
+          print("Tarea updated succesfully");
+          var updateTarea = dataBase.tareasBox.get(jornada.tarea.target!.id);
+          if (updateTarea  != null) {
+            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateTarea.statusSync.target!.id)).build().findUnique();
+            if (statusSync != null) {
+              statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado de la tarea
+              dataBase.statusSyncBox.put(statusSync);
+            }
+          }
+        }
+        //Segundo actualizamos la jornada
+        final recordJornada = await client.records.update('jornadas', jornada.idDBR.toString(), body: {
+            "proxima_visita": jornada.fechaRevision.toUtc().toString(),
+            "id_status_sync_fk": "HoI36PzYw1wtbO1",
+        }); 
+
+        if (recordJornada.id.isNotEmpty) {
+          print("Jornada updated succesfully");
+          var updateJornada = dataBase.jornadasBox.get(jornada.id);
+          if (updateJornada  != null) {
+            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateJornada.statusSync.target!.id)).build().findUnique();
+            if (statusSync != null) {
+              statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado de la jornada
+              dataBase.statusSyncBox.put(statusSync);
+            }
+          }
+        }
+        else{
+          return false;
+        }
+      }
+      else{
+        return false;
+      }
+      return true;
+
+    } catch (e) {
+      print('ERROR - function syncUpdateJornada4(): $e');
+      return false;
+    }
+
+  } 
+
   Future<bool?> syncUpdateConsultoria(Consultorias consultoria) async {
     print("Estoy en El syncUpdateConsultoria");
     try {
@@ -1297,7 +1370,7 @@ return true;
       final record = await client.records.update('tareas', tarea.idDBR.toString(), body: {
         "tarea": tarea.tarea,
         "descripcion": tarea.descripcion,
-        "observacion": tarea.observacion,
+        "comentarios": tarea.comentarios,
         "id_porcentaje_fk": tarea.porcentaje.target!.idDBR,
         "fecha_revision": tarea.fechaRevision.toUtc().toString(),
         "id_status_sync_fk": "HoI36PzYw1wtbO1"

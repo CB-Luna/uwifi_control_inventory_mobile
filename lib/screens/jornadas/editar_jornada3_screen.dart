@@ -89,7 +89,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
     tareaController =
         TextEditingController(text: widget.jornada.tarea.target!.tarea);
     comentariosController =
-        TextEditingController(text: widget.jornada.tarea.target!.observacion);
+        TextEditingController(text: widget.jornada.tarea.target!.comentarios);
     descController =
         TextEditingController(text: widget.jornada.tarea.target!.descripcion);
     activoController = widget.jornada.tarea.target!.activo;
@@ -1225,7 +1225,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                         widget.jornada.fechaRevision ||
                                     comentariosController.text !=
                                         widget.jornada.tarea.target!
-                                            .observacion ||
+                                            .comentarios ||
                                     tipoProyecto !=
                                         widget
                                             .jornada

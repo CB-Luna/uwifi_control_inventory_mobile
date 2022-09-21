@@ -350,7 +350,7 @@ class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
                                   onChanged: (value) {
-                                    jornadaProvider.observacion = value;
+                                    jornadaProvider.comentarios = value;
                                   },
                                   obscureText: false,
                                   decoration: InputDecoration(

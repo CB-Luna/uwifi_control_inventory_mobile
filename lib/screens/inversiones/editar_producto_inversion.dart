@@ -1,4 +1,7 @@
+import 'package:bizpro_app/screens/inversiones/main_tab_opciones.dart';
 import 'package:bizpro_app/screens/inversiones/producto_inversion_actualizado.dart';
+import 'package:bizpro_app/screens/inversiones/producto_inversion_eliminado.dart';
+import 'package:bizpro_app/screens/widgets/bottom_sheet_eliminar_producto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
@@ -112,52 +115,117 @@ class _EditarProductoInversionScreenState
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              20, 40, 20, 0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                width: 80,
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  20, 40, 20, 0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width: 80,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: AppTheme.of(context).secondaryText,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: InkWell(
+                                      onTap: () async {
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                MainTabOpcionesScreen(
+                                                  emprendimiento: widget.inversion.emprendimiento.target!,
+                                                  inversion: widget.inversion,
+                                                  ),
+                                          ),
+                                        );
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          const Icon(
+                                            Icons.arrow_back_ios_rounded,
+                                            color: Colors.white,
+                                            size: 16,
+                                          ),
+                                          Text(
+                                            'Atrás',
+                                            style: AppTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: AppTheme.of(context)
+                                                      .bodyText1Family,
+                                                  color: Colors.white,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w300,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Spacer(),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  20, 40, 20, 0),
+                              child: Container(
+                                width: 45,
                                 height: 40,
                                 decoration: BoxDecoration(
-                                  color: AppTheme.of(context).secondaryText,
+                                  color: const Color(0xFF4672FF),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: InkWell(
                                   onTap: () async {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      const Icon(
-                                        Icons.arrow_back_ios_rounded,
-                                        color: Colors.white,
-                                        size: 16,
-                                      ),
-                                      Text(
-                                        'Atrás',
-                                        style: AppTheme.of(context)
-                                            .bodyText1
-                                            .override(
-                                              fontFamily: AppTheme.of(context)
-                                                  .bodyText1Family,
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w300,
+                                    if (widget.inversion.estadoInversion.target!.estado == "Solicitada") {
+                                    String? option =
+                                        await showModalBottomSheet(
+                                      context: context,
+                                      builder: (_) =>
+                                          const BottomSheetEliminarProducto(),
+                                    );
+                                    if (option == 'eliminar') {
+                                     inversionProvider.remove(widget.prodSolicitado);
+                                      // ignore: use_build_context_synchronously
+                                      await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                      builder: (context) =>
+                                           ProductoInversionEliminado(
+                                            idEmprendimiento: widget.inversion.emprendimiento.target!.id,
+                                              ),
                                             ),
-                                      ),
-                                    ],
+                                      );
+                                    } else { //Se aborta la opción
+                                      return;
+                                    }
+                                  } else {
+                                    snackbarKey.currentState
+                                        ?.showSnackBar(const SnackBar(
+                                      content: Text(
+                                          "Ya no puedes eliminar este producto."),
+                                    ));
+                                  }
+                                  },
+                                  child: const Icon(
+                                    Icons.delete,
+                                    color: Colors.white,
+                                    size: 20,
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                         Padding(
                           padding:

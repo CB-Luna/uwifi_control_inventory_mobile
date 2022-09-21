@@ -14,7 +14,7 @@ class JornadaController extends ChangeNotifier {
   DateTime? fechaRevision = DateTime.now();
   DateTime? fechaRegistro = DateTime.now();
   String tarea = "";
-  String observacion = "";
+  String comentarios = "";
   String descripcion = "";
   List<String> imagenes = [];
   bool activo = true;
@@ -32,7 +32,7 @@ class JornadaController extends ChangeNotifier {
     fechaRevision = null;
     fechaRegistro = null;
     tarea = "";
-    observacion = "";
+    comentarios = "";
     descripcion = "";
     imagenes = [];
     activo = true;
@@ -51,7 +51,6 @@ class JornadaController extends ChangeNotifier {
     final nuevaTarea = Tareas(
       tarea: tarea,
       descripcion: "Creación Jornada 1",
-      observacion: "Se crea la jornada 1",
       activo: activo,
       fechaRevision: fechaRevision ?? DateTime.now(),
       fechaRegistro: fechaRegistro);
@@ -122,7 +121,7 @@ class JornadaController extends ChangeNotifier {
     final nuevaTarea = Tareas(
       tarea: tarea, 
       descripcion: "Creación Jornada 2", 
-      observacion: (observacion == "" || observacion.isEmpty) ? "Comentarios Jornada 2" : observacion, 
+      comentarios: comentarios, 
       activo: activo,
       fechaRevision: fechaRevision ?? DateTime.now(),
       fechaRegistro: fechaRegistro,
@@ -164,7 +163,7 @@ class JornadaController extends ChangeNotifier {
       updateTarea.fechaRegistro = newFechaRegistro;
       updateTarea.fechaRevision = newFechaRevision;
       updateTarea.tarea = newTarea;
-      updateTarea.observacion = newComentarios;
+      updateTarea.comentarios = newComentarios;
       updateTarea.activo = newActivo;
       //Se eliminan imagenes anteriores
       if (oldImagenes != null) {
@@ -213,7 +212,7 @@ class JornadaController extends ChangeNotifier {
     final nuevaTarea = Tareas(
       tarea: tarea, 
       descripcion: descripcion, 
-      observacion: (observacion == "" || observacion.isEmpty) ? "Comentarios Jornada 3" : observacion, 
+      comentarios: comentarios,
       activo: activo,
       fechaRevision: fechaRevision ?? DateTime.now(),
       fechaRegistro: fechaRegistro,
@@ -267,7 +266,7 @@ class JornadaController extends ChangeNotifier {
       updateTarea.fechaRegistro = newFechaRegistro;
       updateTarea.fechaRevision = newFechaRevision;
       updateTarea.tarea = newTarea;
-      updateTarea.observacion = newComentarios;
+      updateTarea.comentarios = newComentarios;
       updateTarea.descripcion = newDescripcion;
       updateTarea.activo = newActivo;
       //Se eliminan imagenes anteriores
@@ -331,7 +330,7 @@ class JornadaController extends ChangeNotifier {
     final nuevaTarea = Tareas(
       tarea: "Creación Jornada 4",
       descripcion: "Creación Jornada 4",
-      observacion: (observacion == "" || observacion.isEmpty) ? "Comentarios Jornada 4" : observacion,
+      comentarios: comentarios,
       activo: activo,
       fechaRevision: fechaRevision ?? DateTime.now(),
       fechaRegistro: fechaRegistro,
@@ -383,12 +382,12 @@ class JornadaController extends ChangeNotifier {
     print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
   }
 
-  void updateJornada4(int id, DateTime newFechaRegistro, String newComentarios, List<String> newImagenes, List<Imagenes>? oldImagenes, bool newActivo, int idTarea) {
+  void updateJornada4(int id, DateTime newFechaRegistro, String? newComentarios, List<String> newImagenes, List<Imagenes>? oldImagenes, bool newActivo, int idTarea) {
     var updateTarea  = dataBase.tareasBox.get(idTarea);
     if (updateTarea != null) {
       final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateJornada4', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       updateTarea.fechaRegistro = newFechaRegistro;
-      updateTarea.observacion = newComentarios;
+      updateTarea.comentarios = newComentarios;
       updateTarea.activo = newActivo;
       //Se eliminan imagenes anteriores
       if (oldImagenes != null) {

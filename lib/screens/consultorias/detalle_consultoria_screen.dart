@@ -317,7 +317,7 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 5, 0, 5),
                                 child: AutoSizeText(
-                                  widget.consultoria.tareas.last.porcentaje.toString(),
+                                  widget.consultoria.tareas.last.porcentaje.target!.porcentajeAvance.toString(),
                                   textAlign: TextAlign.start,
                                   maxLines: 1,
                                   style:

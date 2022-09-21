@@ -54,7 +54,7 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
     fechaRegistroText = TextEditingController(
         text: dateTimeFormat('yMMMd', widget.jornada.fechaRegistro));
     comentariosController =
-        TextEditingController(text: widget.jornada.tarea.target!.observacion);
+        TextEditingController(text: widget.jornada.tarea.target!.comentarios);
     imagenesTemp =[];
     newConvenio = [];
     imagenes = widget.jornada.tarea.target?.imagenes.toList();
@@ -738,7 +738,7 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                         widget.jornada.fechaRegistro ||
                                     comentariosController.text !=
                                         widget.jornada.tarea.target!
-                                            .observacion ||
+                                            .comentarios ||
                                     newConvenio != oldConvenio ||
                                     activoController !=
                                         widget.jornada.tarea.target!.activo) {

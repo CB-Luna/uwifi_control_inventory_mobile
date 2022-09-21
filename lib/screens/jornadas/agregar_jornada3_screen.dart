@@ -66,7 +66,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
           : "");
     tareaController = TextEditingController(text: context.read<JornadaController>().tarea);
     fechaRegistro = TextEditingController();
-    comentariosController = TextEditingController(text: context.read<JornadaController>().observacion);
+    comentariosController = TextEditingController(text: context.read<JornadaController>().comentarios);
     fechaRegistro.text = dateTimeFormat('yMMMd', DateTime.now());
     tipoProyecto = context.read<JornadaController>().tipoProyecto;
     proyecto = context.read<JornadaController>().proyecto;
@@ -781,7 +781,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
                                   onChanged: (value) {
-                                    jornadaProvider.observacion = value;
+                                    jornadaProvider.comentarios = value;
                                   },
                                   obscureText: false,
                                   decoration: InputDecoration(

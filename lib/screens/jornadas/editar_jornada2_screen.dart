@@ -73,7 +73,7 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
     tareaController =
         TextEditingController(text: widget.jornada.tarea.target!.tarea);
     comentariosController =
-        TextEditingController(text: widget.jornada.tarea.target!.observacion);
+        TextEditingController(text: widget.jornada.tarea.target!.comentarios);
     activoController = widget.jornada.tarea.target!.activo;
   }
 
@@ -923,7 +923,7 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                         widget.jornada.tarea.target!.tarea ||
                                     comentariosController.text !=
                                         widget.jornada.tarea.target!
-                                            .observacion ||
+                                            .comentarios||
                                     activoController !=
                                         widget.jornada.tarea.target!.activo ||
                                     newCirculoEmpresa !=
