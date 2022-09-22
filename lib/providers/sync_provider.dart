@@ -1790,4 +1790,25 @@ void deleteBitacora() {
     procesocargando = false;
     notifyListeners();
   }
+
+    // CAMBIAR EL ESTADO DE LA INVERSION A COMPRADA
+  Future<bool> cambiarInversionAComprada(Inversiones inversion) async {
+    print("Id Inversion: ${inversion.idDBR}");
+    final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Comprada")).build().findUnique();
+    final record = await client.records.getOne('inversiones', inversion.idDBR.toString()); 
+    if (newEstadoInversion != null && record.id.isNotEmpty) {
+      print("No está vacio en Inversion Comprada");
+      //Se actuzaliza a Inversión Comprada
+      final updateInversion = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
+      "id_estado_inversion_fk": newEstadoInversion.idDBR,
+      }); 
+      if (updateInversion.id.isNotEmpty) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
 }

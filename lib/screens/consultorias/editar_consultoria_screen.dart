@@ -17,6 +17,7 @@ import 'package:bizpro_app/screens/consultorias/consultoria_actualizada.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:uuid/uuid.dart';
 
 class EditarConsultoriaScreen extends StatefulWidget {
   final Consultorias consultoria;
@@ -696,14 +697,14 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                                     FlutterFlowExpandedImageView(
                                                   image: getWidgetContainImage(fotoAvance?.path),
                                                   allowRotation: false,
-                                                  tag: 'imagen',
+                                                  tag: "imagen1",
                                                   useHeroAnimation: true,
                                                 ),
                                               ),
                                             );
                                           },
                                           child: Hero(
-                                            tag: 'imagen',
+                                            tag: "imagen2",
                                             transitionOnUserGestures: true,
                                             child: ClipRRect(
                                               borderRadius:

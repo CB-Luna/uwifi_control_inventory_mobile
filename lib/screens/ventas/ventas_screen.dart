@@ -456,19 +456,13 @@ class _VentasScreenState extends State<VentasScreen> {
                                         },
                                         child: Padding(
                                           padding: const EdgeInsetsDirectional.fromSTEB(
-                                              20, 10, 20, 0),
+                                              20, 10, 20, 20),
                                           child: Container(
                                             width: double.infinity,
                                             height: 100,
                                             decoration: BoxDecoration(
-                                              color: const Color(0xB14672FF),
-                                              boxShadow: const [
-                                                BoxShadow(
-                                                  blurRadius: 4,
-                                                  color: Color(0x32000000),
-                                                  offset: Offset(0, 2),
-                                                )
-                                              ],
+                                              color: const Color(
+                                                0x374672FF),
                                               borderRadius: BorderRadius.circular(8),
                                             ),
                                             child: Row(
@@ -591,12 +585,16 @@ class _VentasScreenState extends State<VentasScreen> {
                                                                             context)
                                                                         .bodyText1
                                                                         .override(
-                                                                          fontFamily:
-                                                                              AppTheme.of(context)
-                                                                                  .bodyText1Family,
-                                                                          fontSize:
-                                                                              20,
-                                                                        ),
+                                                                        fontFamily:
+                                                                            AppTheme.of(
+                                                                                    context)
+                                                                                .bodyText1Family,
+                                                                        color: AppTheme.of(context)
+                                                                                .secondaryText,
+                                                                        fontSize: 20,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                      ),
                                                                   ),
                                                                 ),
                                                               ],

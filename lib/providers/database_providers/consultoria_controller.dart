@@ -27,7 +27,7 @@ class ConsultoriaController extends ChangeNotifier {
     tarea = "";
     avanceObservado = "";
     porcentaje = "";
-    fechaRevision =  null;
+    fechaRevision = DateTime.now();
     activo = true;
     imagen = "";
     notifyListeners();

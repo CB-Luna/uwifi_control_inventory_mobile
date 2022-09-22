@@ -40,9 +40,8 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
     super.initState();
     actualEmprendimiento = dataBase.emprendimientosBox.get(widget.idEmprendimiento);
     if (actualEmprendimiento != null) {
-      fechaInicio = TextEditingController();
+      fechaInicio = TextEditingController(text: dateTimeFormat('yMMMd', DateTime.now()));
       fechaTermino = TextEditingController();
-      fechaInicio.text = dateTimeFormat('yMMMd', DateTime.now());
       emprendedor = "";
       if (actualEmprendimiento!.emprendedor.target != null) {
         emprendedor =

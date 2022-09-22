@@ -736,6 +736,86 @@ with TickerProviderStateMixin {
                       ],
                     ),
                   ),
+                  // Padding(
+                  //   padding:
+                  //       const EdgeInsetsDirectional
+                  //           .fromSTEB(10, 12,
+                  //               5, 12),
+                  //   child: Row(
+                  //     mainAxisSize:
+                  //         MainAxisSize.max,
+                  //     mainAxisAlignment:
+                  //         MainAxisAlignment
+                  //             .center,
+                  //     children: [
+                  //       FFButtonWidget(
+                  //         onPressed:
+                  //             () async {
+                  //               final connectivityResult =
+                  //                   await (Connectivity().checkConnectivity());
+                  //               final bitacora = dataBase.bitacoraBox.getAll().toList();
+                  //               print("Tamaño bitacora: ${bitacora.length}");
+                  //               // await showModalBottomSheet(
+                  //               //   isScrollControlled: true,
+                  //               //   backgroundColor: Colors.transparent,
+                  //               //   context: context,
+                  //               //   builder: (context) {
+                  //               //     return Padding(
+                  //               //       padding: MediaQuery.of(context).viewInsets,
+                  //               //       child: SizedBox(
+                  //               //         height:
+                  //               //             MediaQuery.of(context).size.height * 0.45,
+                  //               //         child: connectivityResult ==
+                  //               //                     ConnectivityResult.none ||
+                  //               //                 bitacora.isEmpty
+                  //               //             ? const BottomSheetSincronizarWidget(
+                  //               //                 isVisible: false,
+                  //               //               )
+                  //               //             : const BottomSheetSincronizarWidget(
+                  //               //                 isVisible: true,
+                  //               //               ),
+                  //               //       ),
+                  //               //     );
+                  //               //   },
+                  //               // );
+                  //             },
+                  //         text: 'Cambiar a Comprada',
+                  //         icon: const Icon(
+                  //           Icons.sync_rounded,
+                  //           size: 18,
+                  //         ),
+                  //         options:
+                  //             FFButtonOptions(
+                  //           width: 200,
+                  //           height: 45,
+                  //           color: Colors.red.shade400,
+                  //           textStyle:
+                  //               AppTheme.of(
+                  //                       context)
+                  //                   .subtitle2
+                  //                   .override(
+                  //                     fontFamily:
+                  //                         AppTheme.of(context).subtitle2Family,
+                  //                     color: Colors
+                  //                         .white,
+                  //                     fontSize:
+                  //                         18,
+                  //                   ),
+                  //           borderSide:
+                  //               const BorderSide(
+                  //             color: Colors
+                  //                 .transparent,
+                  //             width: 1,
+                  //           ),
+                  //           borderRadius:
+                  //               BorderRadius
+                  //                   .circular(
+                  //                       8),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
             ).animated([
