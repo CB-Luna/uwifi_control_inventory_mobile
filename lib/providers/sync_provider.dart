@@ -1,3 +1,7 @@
+import 'dart:math';
+
+import 'package:bizpro_app/models/get_inversion.dart';
+import 'package:bizpro_app/models/get_inversion_x_prod_cotizados.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
@@ -9,6 +13,7 @@ import 'package:bizpro_app/util/util.dart';
 
 
 class SyncProvider extends ChangeNotifier {
+  Random random = new Random();
   bool procesoterminado = false;
   bool procesocargando = false;
 
@@ -1700,7 +1705,6 @@ void deleteBitacora() {
       if (records.isEmpty) {
         return false;
       } else {
-        print("No está vacio en Inversion Comprada");
         var updateInversion = dataBase.inversionesBox.get(inversion.id);
         if (updateInversion != null) {
           final statusSyncInversion = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateInversion.statusSync.target!.id)).build().findUnique();
@@ -1792,22 +1796,69 @@ void deleteBitacora() {
   }
 
     // CAMBIAR EL ESTADO DE LA INVERSION A COMPRADA
-  Future<bool> cambiarInversionAComprada(Inversiones inversion) async {
+  Future<bool?> cambiarInversionAComprada(Inversiones inversion) async {
     print("Id Inversion: ${inversion.idDBR}");
     final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Comprada")).build().findUnique();
     final record = await client.records.getOne('inversiones', inversion.idDBR.toString()); 
     if (newEstadoInversion != null && record.id.isNotEmpty) {
-      print("No está vacio en Inversion Comprada");
-      //Se actuzaliza a Inversión Comprada
-      final updateInversion = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
-      "id_estado_inversion_fk": newEstadoInversion.idDBR,
-      }); 
-      if (updateInversion.id.isNotEmpty) {
-        return true;
+      GetInversion getInversion = getInversionFromMap(record.toString());
+      if (getInversion.idEstadoInversionFk == newEstadoInversion.idDBR) {
+        return null;
       } else {
-        return false;
+        print("No está actualizada Inversion Comprada");
+        //Se actuzaliza a Inversión Comprada
+        final updateInversion = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
+        "id_estado_inversion_fk": newEstadoInversion.idDBR,
+        }); 
+        if (updateInversion.id.isNotEmpty) {
+          return true;
+        } else {
+          return false;
+        }
       }
     } else {
+      return false;
+    }
+  }
+  // Simular datos de cotizacion en el backend
+  Future<bool> simularCotizacion(Inversiones inversion) async {
+    try {
+      print("Id Inversion: ${inversion.idDBR}");
+      //Se recupera el último Id de inversion_x_prod_cotizados
+      final records = await client.records.
+        getFullList('inversion_x_prod_cotizados', 
+        batch: 200, 
+        filter: "id_inversion_fk='${
+          inversion.idDBR
+          }'",
+        sort: '-created');   
+      final List<GetInversionXProdCotizados> listInversionXProdCotizados = [];
+      for (var element in records) {
+        listInversionXProdCotizados.add(getInversionXProdCotizadosFromMap(element.toString()));
+      }
+      final GetInversionXProdCotizados lastInversionXProdCotizados = listInversionXProdCotizados[0];
+      for (var i = 0; i < listInversionXProdCotizados.length; i++) {
+        print("$i de ${listInversionXProdCotizados.length}");
+        print("ID INVERSION X PROD COTIZADOS: ${listInversionXProdCotizados[i].id}");
+      }
+      //Se enlistan los idDBR de los productos a cotizar
+      List<ProductosProv> prodCotizados = dataBase.productosProvBox.getAll().toList();
+      List<double> costos = [899.99, 699.99, 758.59, 666.99, 999.99];
+      for (var i = 0; i < random.nextInt(5) + 1; i++) {
+        //Se crean los prod Simulados Cotizados
+        await client.records.create('productos_cotizados', body: {
+          "cantidad": random.nextInt(12) + 1,
+          "costo_total": costos[random.nextInt(5)],
+          "id_estado_prod_cotizado_fk": "4J4BMuv4VnqYSou",  //Creado
+          "id_producto_prov_fk":prodCotizados[random.nextInt(6)].idDBR,
+          "id_inversion_x_prod_cotizados_fk": lastInversionXProdCotizados.id,
+          "aceptado": false
+        });
+      }
+      return true;
+      
+    } catch (e) {
+      print("Error en simularCotizacion: $e");
       return false;
     }
   }
