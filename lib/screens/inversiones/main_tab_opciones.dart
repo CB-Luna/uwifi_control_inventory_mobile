@@ -1,3 +1,4 @@
+import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/screens/inversiones/inversiones_screen.dart';
 import 'package:bizpro_app/screens/inversiones/pagos_screen.dart';
 import 'package:flutter/material.dart';
@@ -14,12 +15,12 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
 
 class MainTabOpcionesScreen extends StatefulWidget {
   final Emprendimientos emprendimiento;
-  final Inversiones inversion;
+  final int idInversion;
 
   const MainTabOpcionesScreen({
     Key? key,
     required this.emprendimiento, 
-    required this.inversion,
+    required this.idInversion,
   }) : super(key: key);
 
   @override
@@ -29,10 +30,12 @@ class MainTabOpcionesScreen extends StatefulWidget {
 class _MainTabOpcionesScreenState extends State<MainTabOpcionesScreen>
     with TickerProviderStateMixin {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  Inversiones? actualInversion;
 
   @override
   void initState() {
     super.initState();
+    actualInversion = dataBase.inversionesBox.get(widget.idInversion);
     startPageLoadAnimations(
       animationsMap.values
           .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
@@ -123,11 +126,11 @@ class _MainTabOpcionesScreenState extends State<MainTabOpcionesScreen>
                               ),
                             ),
                             Visibility(
-                              visible: widget.inversion.estadoInversion.target!.estado == "Autorizada" ||
-                              widget.inversion.estadoInversion.target!.estado == "Comprada" || 
-                              widget.inversion.estadoInversion.target!.estado == "Entregada al promotor" ||
-                              widget.inversion.estadoInversion.target!.estado == "Entregada al emprendedor" ||
-                              widget.inversion.estadoInversion.target!.estado == "Pagada",
+                              visible: actualInversion!.estadoInversion.target!.estado == "Autorizada" ||
+                              actualInversion!.estadoInversion.target!.estado == "Comprada" || 
+                              actualInversion!.estadoInversion.target!.estado == "Entregada al promotor" ||
+                              actualInversion!.estadoInversion.target!.estado == "Entregada al emprendedor" ||
+                              actualInversion!.estadoInversion.target!.estado == "Pagada",
                               child: Container(
                                 width: 45,
                                 height: 40,
@@ -141,7 +144,7 @@ class _MainTabOpcionesScreenState extends State<MainTabOpcionesScreen>
                                   children: [
                                     InkWell(
                                       onTap: () async {
-                                        switch (widget.inversion.estadoInversion.target!.estado) {
+                                        switch (actualInversion!.estadoInversion.target!.estado) {
                                           case "Autorizada":
                                             final connectivityResult =
                                               await (Connectivity().checkConnectivity());
@@ -153,8 +156,8 @@ class _MainTabOpcionesScreenState extends State<MainTabOpcionesScreen>
                                               ));
                                             }
                                             else {
-                                              print(widget.inversion.idDBR);
-                                            if (await syncProvider.validateInversionComprada(widget.inversion)) {
+                                              print(actualInversion!.idDBR);
+                                            if (await syncProvider.validateInversionComprada(actualInversion!)) {
                                               snackbarKey.currentState
                                                 ?.showSnackBar(const SnackBar(
                                               content: Text(
@@ -165,7 +168,7 @@ class _MainTabOpcionesScreenState extends State<MainTabOpcionesScreen>
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) => PagosScreen(
-                                                    idInversion: widget.inversion.id,
+                                                    idInversion: actualInversion!.id,
                                                   ),
                                                 ),
                                               );
@@ -183,7 +186,7 @@ class _MainTabOpcionesScreenState extends State<MainTabOpcionesScreen>
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) => PagosScreen(
-                                                  idInversion: widget.inversion.id,
+                                                  idInversion: actualInversion!.id,
                                                 ),
                                               ),
                                             );
@@ -246,11 +249,11 @@ class _MainTabOpcionesScreenState extends State<MainTabOpcionesScreen>
                                   children: [
                                     InversionTab(
                                         emprendimiento: widget.emprendimiento,
-                                        inversion: widget.inversion,),
+                                        inversion: actualInversion!,),
                                     CotizacionTab(
                                         emprendimiento: widget.emprendimiento,
-                                        inversion: widget.inversion,
-                                        inversionesXprodCotizados: widget.inversion.inversionXprodCotizados.last,
+                                        inversion: actualInversion!,
+                                        inversionesXprodCotizados: actualInversion!.inversionXprodCotizados.last,
                                         ),
                                   ],
                                 ),

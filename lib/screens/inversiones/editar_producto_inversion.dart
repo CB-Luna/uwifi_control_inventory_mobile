@@ -140,7 +140,7 @@ class _EditarProductoInversionScreenState
                                             builder: (context) =>
                                                 MainTabOpcionesScreen(
                                                   emprendimiento: widget.inversion.emprendimiento.target!,
-                                                  inversion: widget.inversion,
+                                                  idInversion: widget.inversion.id,
                                                   ),
                                           ),
                                         );

@@ -123,7 +123,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                 MaterialPageRoute(
                                   builder: (context) => MainTabOpcionesScreen(
                                     emprendimiento: actualInversion!.emprendimiento.target!,
-                                    inversion: actualInversion!,
+                                    idInversion: actualInversion!.id,
                                   ),
                                 ),
                               );

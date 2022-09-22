@@ -1,12 +1,18 @@
+import 'package:bizpro_app/database/entitys.dart';
+import 'package:bizpro_app/screens/inversiones/main_tab_opciones.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 class ProductoInversionCreado extends StatefulWidget {
-  const ProductoInversionCreado({Key? key}) : super(key: key);
+  final Emprendimientos emprendimiento;
+  final int idInversion;
+  const ProductoInversionCreado({
+    Key? key, 
+    required this.emprendimiento, 
+    required this.idInversion}) : super(key: key);
 
   @override
   State<ProductoInversionCreado> createState() => _ProductoInversionCreadoState();
@@ -80,7 +86,10 @@ class _ProductoInversionCreadoState extends State<ProductoInversionCreado> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const EmprendimientosScreen(),
+                                  MainTabOpcionesScreen(
+                                    emprendimiento: widget.emprendimiento, 
+                                    idInversion: widget.idInversion,
+                                    ),
                             ),
                           );
                         },

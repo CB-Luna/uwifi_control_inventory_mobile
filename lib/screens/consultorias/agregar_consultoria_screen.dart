@@ -551,6 +551,7 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                             TextButton(
                                               onPressed: () async {
                                                 Navigator.pop(alertDialogContext);
+                                                print("Holis en ventas");
                                                 if (widget.emprendimiento.productosEmp.isNotEmpty) {
                                                   consultoriaProvider.add(
                                                   widget.emprendimiento.id,
@@ -576,6 +577,7 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                             ),
                                             TextButton(
                                               onPressed: () async {
+                                                print("Holis en no ventas");
                                                 Navigator.pop(alertDialogContext);
                                                 consultoriaProvider.add(
                                                   widget.emprendimiento.id,

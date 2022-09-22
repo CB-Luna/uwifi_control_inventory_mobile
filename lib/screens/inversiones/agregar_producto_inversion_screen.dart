@@ -975,7 +975,9 @@ class _AgregarProductoInversionScreenState
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  const ProductoInversionCreado(),
+                                                  ProductoInversionCreado(
+                                                    emprendimiento: widget.emprendimiento, 
+                                                    idInversion: widget.inversion.id,),
                                             ),
                                           );
                                         }

@@ -23,7 +23,7 @@ class AgregarPrimerProductoInversionScreen extends StatefulWidget {
 
   const AgregarPrimerProductoInversionScreen({
     Key? key, 
-    required this.idEmprendimiento, 
+    required this.idEmprendimiento,
     })
       : super(key: key);
 
@@ -994,7 +994,9 @@ class _AgregarPrimerProductoInversionScreenState
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  const InversionCreada(),
+                                                  InversionCreada(
+                                                    emprendimiento: actualEmprendimiento!, 
+                                                    ),
                                             ),
                                           );
                                         }

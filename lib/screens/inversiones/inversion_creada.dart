@@ -1,13 +1,17 @@
+import 'package:bizpro_app/database/entitys.dart';
+import 'package:bizpro_app/screens/inversiones/inversiones_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:bizpro_app/theme/theme.dart';
-
-import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 class InversionCreada extends StatefulWidget {
-  const InversionCreada({Key? key}) : super(key: key);
+  final Emprendimientos emprendimiento;
+  const InversionCreada({
+    Key? key, 
+    required this.emprendimiento, 
+    }) : super(key: key);
 
   @override
   State<InversionCreada> createState() =>
@@ -82,7 +86,9 @@ class _InversionCreadaState extends State<InversionCreada> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const EmprendimientosScreen(),
+                                  InversionesScreen(
+                                    idEmprendimiento: widget.emprendimiento.id, 
+                                    ),
                             ),
                           );
                         },
