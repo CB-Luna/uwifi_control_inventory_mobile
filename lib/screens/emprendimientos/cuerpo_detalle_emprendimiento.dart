@@ -301,6 +301,7 @@ class _CuerpoDetalleEmprendimientoState extends State<CuerpoDetalleEmprendimient
                   expanded: Builder(
                     builder: (context) {
                       return ListView.builder(
+                        controller: ScrollController(),
                         padding: EdgeInsets.zero,
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
@@ -491,6 +492,7 @@ class _CuerpoDetalleEmprendimientoState extends State<CuerpoDetalleEmprendimient
                       Builder(
                         builder: (context) {
                           return ListView.builder(
+                            controller: ScrollController(),
                             padding: EdgeInsets.zero,
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
@@ -641,6 +643,9 @@ class _CuerpoDetalleEmprendimientoState extends State<CuerpoDetalleEmprendimient
                           );
                         },
                       ),
+                      const SizedBox(
+                        height: 120,
+                      )
                     ],
                   ),
                   theme: ExpandableThemeData(

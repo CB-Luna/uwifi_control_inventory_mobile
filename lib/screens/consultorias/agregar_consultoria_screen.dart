@@ -539,6 +539,20 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                     .findFirst()
                                     ?.id;
                                 if (idAmbito != null && idAreaCirculo != null) {
+                                  if (ambito != "Capacidad" && (areaCirculo != "Venta" || areaCirculo != "Tecnología")) {
+                                       consultoriaProvider.add(
+                                        widget.emprendimiento.id,
+                                        widget.numConsultoria,
+                                        idAmbito,
+                                        idAreaCirculo);
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ConsultoriaCreada(),
+                                          ),
+                                        );
+                                  }
                                   if (ambito == "Capacidad" && areaCirculo == "Venta") {
                                     await showDialog(
                                       context: context,
@@ -648,21 +662,7 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                         );
                                       },
                                     );
-                                  } else{
-                                     consultoriaProvider.add(
-                                      widget.emprendimiento.id,
-                                      widget.numConsultoria,
-                                      idAmbito,
-                                      idAreaCirculo);
-                                    // ignore: use_build_context_synchronously
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const ConsultoriaCreada(),
-                                        ),
-                                      );
-                                  }
+                                  } 
                                 }
                               } else {
                                 await showDialog(
@@ -682,7 +682,6 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                     );
                                   },
                                 );
-                                return;
                               }
                             },
                             text: 'Crear',
