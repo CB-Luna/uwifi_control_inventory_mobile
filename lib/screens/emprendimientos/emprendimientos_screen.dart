@@ -1,6 +1,13 @@
+import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
+import 'package:bizpro_app/screens/emprendimientos/components/tarjeta_descripcion_widget.dart';
+import 'package:bizpro_app/screens/emprendimientos/emprendimiento_archivado_screen.dart';
+import 'package:bizpro_app/screens/emprendimientos/emprendimiento_desconsolidado_screen.dart';
+import 'package:bizpro_app/screens/emprendimientos/emprendimiento_reactivado_screen.dart';
+import 'package:bizpro_app/screens/widgets/bottom_sheet_consolidar_emprendimiento.dart';
 import 'package:bizpro_app/screens/widgets/pdf/api/pdf_invoice_consultorias.dart';
 import 'package:bizpro_app/screens/widgets/pdf/models/consultorias_invoice.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/util/util.dart';
@@ -12,7 +19,6 @@ import 'package:bizpro_app/providers/providers.dart';
 import 'package:bizpro_app/screens/emprendimientos/grid_emprendimientos_screen.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_descargar_catalogos.dart';
 import 'package:bizpro_app/screens/widgets/pdf/api/pdf_api.dart';
 import 'package:bizpro_app/screens/widgets/pdf/api/pdf_invoice_emprendimiento.dart';
@@ -20,7 +26,6 @@ import 'package:bizpro_app/screens/widgets/pdf/models/emprendimiento_invoice.dar
 import 'package:bizpro_app/screens/widgets/pdf/api/pdf_invoice_jornadas.dart';
 import 'package:bizpro_app/screens/widgets/pdf/models/jornadas_invoice.dart';
 import 'package:bizpro_app/screens/widgets/pdf/models/invoice_info.dart';
-import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_download_info.dart';
 import 'package:bizpro_app/screens/widgets/side_menu/side_menu.dart';
 import 'package:bizpro_app/screens/emprendimientos/agregar_emprendimiento_screen.dart';
@@ -63,6 +68,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
   @override
   Widget build(BuildContext context) {
     final usuarioProvider = Provider.of<UsuarioController>(context);
+    final emprendimientoProvider = Provider.of<EmprendimientoController>(context);
     final Usuarios currentUser = usuarioProvider.usuarioCurrent!;
     final UserState userState = Provider.of<UserState>(context);
     emprendimientos = [];
@@ -555,142 +561,107 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                               return true;
                             });
                           }
-                          return ListView.builder(
-                            reverse: true,
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemCount: emprendimientos.length,
-                            itemBuilder: (context, resultadoIndex) {
-                              final emprendimiento =
-                                  emprendimientos[resultadoIndex];
-                              return Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    15, 10, 15, 0),
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 275,
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xB14672FF),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        blurRadius: 4,
-                                        color: Color(0x32000000),
-                                        offset: Offset(0, 2),
-                                      )
-                                    ],
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      InkWell(
-                                        onTap: () async {
-                                          await Navigator.push(
+                          return SlidableAutoCloseBehavior(
+                            closeWhenOpened: true,
+                            child: ListView.builder(
+                              reverse: true,
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 30),
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemCount: emprendimientos.length,
+                              itemBuilder: (context, resultadoIndex) {
+                                final emprendimiento =
+                                    emprendimientos[resultadoIndex];
+                                while (!emprendimiento.archivado) {
+                                  return emprendimiento.faseEmp.last.fase == "Detenido" ? 
+                                  Slidable(
+                                    startActionPane: ActionPane(
+                                      motion: const DrawerMotion(), 
+                                      children: [
+                                        SlidableAction(
+                                          label: "Reactivar",
+                                          icon: Icons.play_circle_outlined,
+                                          backgroundColor: const Color(0xFF4672FF),
+                                          onPressed: (context) async {
+                                            emprendimientoProvider.reactivarOdesconsolidarEmprendimiento(emprendimiento.id);
+                                            await Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetalleEmprendimientoScreen(
-                                                emprendimiento: emprendimiento,
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                        child: ClipRRect(
-                                          borderRadius: const BorderRadius.only(
-                                            bottomLeft: Radius.circular(0),
-                                            bottomRight: Radius.circular(0),
-                                            topLeft: Radius.circular(8),
-                                            topRight: Radius.circular(8),
-                                          ),
-                                          child:
-                                              getImage(emprendimiento.imagen),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(16, 10, 16, 5),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              emprendimiento.nombre,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: AppTheme.of(context)
-                                                  .title3
-                                                  .override(
-                                                    fontFamily: 'Poppins',
-                                                    color: Colors.white,
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w500,
+                                            builder: (context) =>
+                                                const EmprendimientoReactivadoScreen(),
                                                   ),
-                                            ),
-                                            Text(
-                                              emprendimiento
-                                                      .faseEmp.last.fase,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: AppTheme.of(context)
-                                                  .title3
-                                                  .override(
-                                                    fontFamily: 'Poppins',
-                                                    color: Colors.white,
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w500,
+                                            );
+                                          }
+                                        ),
+                                        SlidableAction(
+                                          label: "Archivar",
+                                          icon: Icons.file_download_outlined,
+                                          backgroundColor: const Color.fromARGB(207, 255, 64, 128),
+                                          onPressed: (context) async {
+                                            emprendimientoProvider.archivarEmprendimiento(emprendimiento.id);
+                                            await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                            builder: (context) =>
+                                                const EmprendimientoArchivadoScreen(),
                                                   ),
-                                            ),
-                                          ],
+                                            );
+                                          }
                                         ),
+                                      ]),
+                                    child: TargetDescripcionWidget(
+                                      emprendimiento: emprendimiento
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(16, 0, 16, 5),
-                                        child: Text(
-                                          emprendimiento
-                                                  .comunidad.target?.nombre
-                                                  .toString() ??
-                                              'NONE',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: AppTheme.of(context)
-                                              .bodyText2
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                color: Colors.black,
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.normal,
-                                              ),
+                                  )
+                                  :
+                                  emprendimiento.faseEmp.last.fase == "Consolidado" ? 
+                                  Slidable(
+                                    startActionPane: ActionPane(
+                                      motion: const DrawerMotion(), 
+                                      children: [
+                                        SlidableAction(
+                                          label: "Desconsolidar",
+                                          icon: Icons.thumb_down_outlined,
+                                          backgroundColor: const Color.fromARGB(207, 38, 128, 55),
+                                          onPressed: (context) async {
+                                            emprendimientoProvider.reactivarOdesconsolidarEmprendimiento(emprendimiento.id);
+                                            await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                            builder: (context) =>
+                                                const EmprendimientoDesconsolidadoScreen(),
+                                                  ),
+                                            );
+                                          }
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(16, 0, 16, 5),
-                                        child: Text(
-                                          emprendimiento.emprendedor.target
-                                                      ?.nombre ==
-                                                  null
-                                              ? 'SIN EMPRENDEDOR'
-                                              : "${emprendimiento.emprendedor.target!.nombre} ${emprendimiento.emprendedor.target!.apellidos}",
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: AppTheme.of(context)
-                                              .bodyText2
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                color: Colors.black,
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.normal,
-                                              ),
+                                        SlidableAction(
+                                          label: "Archivar",
+                                          icon: Icons.file_download_outlined,
+                                          backgroundColor: const Color.fromARGB(207, 255, 64, 128),
+                                          onPressed: (context) async {
+                                            emprendimientoProvider.archivarEmprendimiento(emprendimiento.id);
+                                            await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                            builder: (context) =>
+                                                const EmprendimientoArchivadoScreen(),
+                                                  ),
+                                            );
+                                          }
                                         ),
+                                      ]),
+                                    child: TargetDescripcionWidget(
+                                      emprendimiento: emprendimiento
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
+                                  )
+                                  :
+                                  TargetDescripcionWidget(
+                                    emprendimiento: emprendimiento
+                                  );
+                                }
+                                return const SizedBox();
+                              },
+                            ),
                           );
                         },
                       ),

@@ -1,10 +1,13 @@
 import 'dart:io';
+import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
+import 'package:bizpro_app/screens/emprendimientos/emprendimiento_consolidado_screen.dart';
+import 'package:bizpro_app/screens/emprendimientos/emprendimiento_detenido_screen.dart';
+import 'package:bizpro_app/screens/widgets/bottom_sheet_consolidar_emprendimiento.dart';
+import 'package:bizpro_app/screens/widgets/bottom_sheet_detener_emprendimiento.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:bizpro_app/screens/emprendimientos/menu_inferior_detalle_emprendimiento.dart';
 import 'package:bizpro_app/screens/emprendimientos/cuerpo_detalle_emprendimiento.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
@@ -29,7 +32,7 @@ class _DetalleEmprendimientoScreenState
 
   @override
   Widget build(BuildContext context) {
-    final usuarioProvider = Provider.of<UsuarioController>(context);
+    final emprendimientoProvider = Provider.of<EmprendimientoController>(context);
     String emprendedor = "";
     if (widget.emprendimiento.emprendedor.target != null) {
       emprendedor =
@@ -201,100 +204,121 @@ class _DetalleEmprendimientoScreenState
                           ),
                           Positioned.fill(
                             top: 150,
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Material(
-                                color: Colors.transparent,
-                                elevation: 10,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width * 0.6,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xCF4672FF),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                            },
-                                            child: const FaIcon(
-                                              Icons.pause_circle_outline,
-                                              color: Colors.white,
-                                              size: 24,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Detener',
-                                            style:
-                                                AppTheme.of(context).bodyText1.override(
-                                                      fontFamily: 'Poppins',
-                                                      color: Colors.white,
-                                                      fontSize: 8,
-                                                    ),
-                                          ),
-                                        ],
+                            child: Center(
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.6,
+                                height: 55,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Container(
+                                      width: 60,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFF4672FF),
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
-                                      Column(
+                                      child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           InkWell(
-                                            onTap: ()  {
-                            
+                                            onTap: () async {
+                                              String? option =
+                                                await showModalBottomSheet(
+                                                context: context,
+                                                builder: (_) =>
+                                                    const BottomSheetDetenerEmprendimiento(),
+                                              );
+                                              if (option == 'aceptar') {
+                                                emprendimientoProvider.detenerEmprendimiento(widget.emprendimiento.id);
+                                                // ignore: use_build_context_synchronously
+                                                await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const EmprendimientoDetenidoScreen(),
+                                                      ),
+                                                );
+                                              } else { //Se aborta la opción
+                                                return;
+                                              }
                                             },
                                             child: const Icon(
-                                              Icons.play_circle_outline,
+                                              Icons.pause_circle_outline,
                                               color: Colors.white,
-                                              size: 24,
+                                              size: 25,
                                             ),
                                           ),
                                           Text(
-                                            'Reactivar',
+                                          'Detener',
+                                          style:
+                                              AppTheme.of(context).bodyText1.override(
+                                                    fontFamily: 'Poppins',
+                                                    color: Colors.white,
+                                                    fontSize: 10,
+                                                  ),
+                                        ),
+                                        ],
+                                      ),
+                                    ),
+                                    Visibility(
+                                      visible: widget.emprendimiento.faseEmp.last.fase == "Jornada 4" ||
+                                      widget.emprendimiento.faseEmp.last.fase == "Consultoría",
+                                      child: Container(
+                                        width: 60,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFF4672FF),
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            InkWell(
+                                              onTap: () async {
+                                                 String? option =
+                                                  await showModalBottomSheet(
+                                                  context: context,
+                                                  builder: (_) =>
+                                                      const BottomSheetConsolidarEmprendimiento(),
+                                                );
+                                                if (option == 'aceptar') {
+                                                  emprendimientoProvider.consolidarEmprendimiento(widget.emprendimiento.id);
+                                                  // ignore: use_build_context_synchronously
+                                                  await Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const EmprendimientoConsolidadoScreen(),
+                                                        ),
+                                                  );
+                                                } else { //Se aborta la opción
+                                                  return;
+                                                }
+                                              },
+                                              child: const Icon(
+                                                Icons.thumb_up_alt_outlined,
+                                                color: Colors.white,
+                                                size: 25,
+                                              ),
+                                            ),
+                                            Text(
+                                            'Consolidar',
                                             style:
                                                 AppTheme.of(context).bodyText1.override(
                                                       fontFamily: 'Poppins',
                                                       color: Colors.white,
-                                                      fontSize: 8,
+                                                      fontSize: 10,
                                                     ),
                                           ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                      Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                            },
-                                            child: const FaIcon(
-                                              Icons.file_download_outlined,
-                                              color: Colors.white,
-                                              size: 24,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Archivar',
-                                            style:
-                                                AppTheme.of(context).bodyText1.override(
-                                                      fontFamily: 'Poppins',
-                                                      color: Colors.white,
-                                                      fontSize: 8,
-                                                    ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),

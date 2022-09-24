@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
+import 'package:bizpro_app/screens/archivados/archivados_screen.dart';
 import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_cerrar_sesion.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_sincronizar_widget.dart';
@@ -241,6 +242,19 @@ class SideMenu extends StatelessWidget {
                               ),
                             );
                           },
+                        );
+                      },
+                    ),
+
+                    CustomMenuItem(
+                      label: 'Archivados',
+                      iconData: Icons.file_download_outlined,
+                      onTap: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ArchivadosScreen(),
+                          ),
                         );
                       },
                     ),

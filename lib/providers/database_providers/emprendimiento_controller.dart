@@ -112,6 +112,94 @@ class EmprendimientoController extends ChangeNotifier {
     notifyListeners(); 
   }
 
+  void detenerEmprendimiento(int idEmprendimiento) {
+    final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
+    final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Detenido")).build().findFirst();
+    if (emprendimiento != null && faseEmp != null) {
+      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      //Se actualiza la fase del Emprendimiento
+      emprendimiento.faseEmp.add(faseEmp);
+      emprendimiento.faseEmp.toList().forEach((element) {print(element.fase);});
+      final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(emprendimiento.statusSync.target!.id)).build().findUnique();
+      if (statusSync != null) {
+        statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del emprendimiento
+        dataBase.statusSyncBox.put(statusSync);
+      }
+      emprendimiento.bitacora.add(nuevaInstruccion);
+      dataBase.emprendimientosBox.put(emprendimiento);
+      print('Emprendimiento actualizado exitosamente');
+    }
+  }
+
+  void reactivarOdesconsolidarEmprendimiento(int idEmprendimiento) {
+    final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
+    if (emprendimiento != null) {
+      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      //Se actualiza la fase del Emprendimiento
+      emprendimiento.faseEmp.removeLast();
+      final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(emprendimiento.statusSync.target!.id)).build().findUnique();
+      if (statusSync != null) {
+        statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del emprendimiento
+        dataBase.statusSyncBox.put(statusSync);
+      }
+      emprendimiento.bitacora.add(nuevaInstruccion);
+      dataBase.emprendimientosBox.put(emprendimiento);
+      print('Emprendimiento actualizado exitosamente');
+    }
+  }
+
+   void consolidarEmprendimiento(int idEmprendimiento) {
+    final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
+    final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Consolidado")).build().findFirst();
+    if (emprendimiento != null && faseEmp != null) {
+      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      //Se actualiza la fase del Emprendimiento
+      emprendimiento.faseEmp.add(faseEmp);
+      final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(emprendimiento.statusSync.target!.id)).build().findUnique();
+      if (statusSync != null) {
+        statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del emprendimiento
+        dataBase.statusSyncBox.put(statusSync);
+      }
+      emprendimiento.bitacora.add(nuevaInstruccion);
+      dataBase.emprendimientosBox.put(emprendimiento);
+      print('Emprendimiento actualizado exitosamente');
+    }
+  }
+
+    void archivarEmprendimiento(int idEmprendimiento) {
+    final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
+    if (emprendimiento != null) {
+      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      //Se actualiza el estado del Emprendimiento
+      emprendimiento.archivado = true;
+      final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(emprendimiento.statusSync.target!.id)).build().findUnique();
+      if (statusSync != null) {
+        statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del emprendimiento
+        dataBase.statusSyncBox.put(statusSync);
+      }
+      emprendimiento.bitacora.add(nuevaInstruccion);
+      dataBase.emprendimientosBox.put(emprendimiento);
+      print('Emprendimiento actualizado exitosamente');
+    }
+  }
+
+  void desarchivarEmprendimiento(int idEmprendimiento) {
+    final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
+    if (emprendimiento != null) {
+      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      //Se actualiza el estado del Emprendimiento
+      emprendimiento.archivado = false;
+      final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(emprendimiento.statusSync.target!.id)).build().findUnique();
+      if (statusSync != null) {
+        statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del emprendimiento
+        dataBase.statusSyncBox.put(statusSync);
+      }
+      emprendimiento.bitacora.add(nuevaInstruccion);
+      dataBase.emprendimientosBox.put(emprendimiento);
+      print('Emprendimiento actualizado exitosamente');
+    }
+  }
+
   // getAll() {
   //   emprendimientos = dataBase.emprendimientosBox.getAll();
   //   notifyListeners();
