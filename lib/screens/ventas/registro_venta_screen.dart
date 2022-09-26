@@ -339,7 +339,7 @@ class _RegistroVentaScreenState
                                                               ),
                                                             ),
                                                             Text(
-                                                              '\$ ${totalProyecto.toStringAsFixed(2)}',
+                                                              currencyFormat.format(totalProyecto.toStringAsFixed(2)),
                                                               style: AppTheme.of(
                                                                       context)
                                                                   .bodyText1
