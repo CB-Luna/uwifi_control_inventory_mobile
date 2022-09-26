@@ -3,7 +3,6 @@ import 'package:bizpro_app/screens/emprendimientos/components/tarjeta_descripcio
 import 'package:bizpro_app/screens/emprendimientos/emprendimiento_archivado_screen.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimiento_desconsolidado_screen.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimiento_reactivado_screen.dart';
-import 'package:bizpro_app/screens/widgets/bottom_sheet_consolidar_emprendimiento.dart';
 import 'package:bizpro_app/screens/widgets/pdf/api/pdf_invoice_consultorias.dart';
 import 'package:bizpro_app/screens/widgets/pdf/models/consultorias_invoice.dart';
 import 'package:flutter/material.dart';
@@ -565,7 +564,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                             closeWhenOpened: true,
                             child: ListView.builder(
                               reverse: true,
-                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 30),
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 100),
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
                               itemCount: emprendimientos.length,
@@ -609,7 +608,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                           }
                                         ),
                                       ]),
-                                    child: TargetDescripcionWidget(
+                                    child: TargetaDescripcionWidget(
                                       emprendimiento: emprendimiento
                                       ),
                                   )
@@ -650,12 +649,12 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                           }
                                         ),
                                       ]),
-                                    child: TargetDescripcionWidget(
+                                    child: TargetaDescripcionWidget(
                                       emprendimiento: emprendimiento
                                       ),
                                   )
                                   :
-                                  TargetDescripcionWidget(
+                                  TargetaDescripcionWidget(
                                     emprendimiento: emprendimiento
                                   );
                                 }

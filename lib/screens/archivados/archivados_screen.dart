@@ -320,7 +320,7 @@ class _ArchivadosScreenState extends State<ArchivadosScreen> {
                                               }
                                             ),
                                           ]),
-                                        child: TargetDescripcionWidget(
+                                        child: TargetaDescripcionWidget(
                                           emprendimiento: emprendimiento
                                           ),
                                       );

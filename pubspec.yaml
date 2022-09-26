@@ -43,6 +43,7 @@ dependencies:
   emoji_flag_converter: ^1.1.0
   expandable: ^5.0.1
   file_picker: ^5.0.0
+  flip_card: ^0.6.0
   flutter:
     sdk: flutter
   flutter_datetime_picker: ^1.5.1
