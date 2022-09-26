@@ -401,7 +401,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                       return curpCharacters
                                               .hasMatch(value ?? '')
                                           ? null
-                                          : 'Para continuar, ingrese un CURP válido con mayúsculas.';
+                                          : 'Por favor captura el CURP a 18 posiciones';
                                     },
                                   ),
                                 ),
@@ -605,7 +605,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                                   snackbarKey.currentState
                                                       ?.showSnackBar(const SnackBar(
                                                     content: Text(
-                                                        "No es posible asignar este emprendedor a un nuevo emprendimiento, revise el CURP ingresado."),
+                                                        "El emprendedor ya se encuentra registrado."),
                                                   ));
                                               }
                                               else {

@@ -15,6 +15,7 @@ import 'package:bizpro_app/screens/inversiones/main_tab_opciones.dart';
 import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:bizpro_app/helpers/constants.dart';
 
 class InversionesScreen extends StatefulWidget {
   final int idEmprendimiento;
@@ -616,7 +617,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                               0),
                                                                   child: Text(
                                                                     maybeHandleOverflow(
-                                                                    '\$${inversion.totalInversion.toStringAsFixed(2)}'
+                                                                    '\$${currencyFormat.format(inversion.totalInversion.toStringAsFixed(2))}'
                                                                     , 12, "..."
                                                                     ),
                                                                     style: AppTheme.of(

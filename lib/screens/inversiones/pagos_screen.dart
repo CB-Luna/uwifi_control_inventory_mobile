@@ -63,8 +63,8 @@ class _PagosScreenState extends State<PagosScreen> {
         imageProducto = "";
       }
       listPagos = actualInversion!.pagos.toList();
-      montoPagar = TextEditingController(text: "\$${actualInversion!.montoPagar.toStringAsFixed(2)}");
-      saldo = TextEditingController(text: "\$${actualInversion!.saldo.toStringAsFixed(2)}");
+      montoPagar = TextEditingController(text: "\$${currencyFormat.format(actualInversion!.montoPagar.toStringAsFixed(2))}");
+      saldo = TextEditingController(text: "\$${currencyFormat.format(actualInversion!.saldo.toStringAsFixed(2))}");
       montoAbonado = TextEditingController();
       totalProyecto = 0.00;
       inversionesXprodCotizados = actualInversion!.inversionXprodCotizados.last;
@@ -411,7 +411,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                       ),
                                                                 ),
                                                                 Text(
-                                                                  "\$ ${(productoCot.costoTotal).toStringAsFixed(2)}",
+                                                                  "\$ ${currencyFormat.format((productoCot.costoTotal).toStringAsFixed(2))}",
                                                                   style: AppTheme
                                                                           .of(context)
                                                                       .bodyText1
@@ -529,7 +529,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                       ),
                                                                     ),
                                                                     Text(
-                                                                      "\$ ${totalProyecto.toStringAsFixed(2)}",
+                                                                      "\$ ${currencyFormat.format(totalProyecto.toStringAsFixed(2))}",
                                                                       style: AppTheme.of(
                                                                               context)
                                                                           .bodyText1

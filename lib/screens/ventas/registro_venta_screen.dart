@@ -338,8 +338,7 @@ class _RegistroVentaScreenState
                                                                     ),
                                                               ),
                                                             ),
-                                                            Text(
-                                                              '\$ ${totalProyecto.toStringAsFixed(2)}',
+                                                            Text(currencyFormat.format(totalProyecto.toStringAsFixed(2)),
                                                               style: AppTheme.of(
                                                                       context)
                                                                   .bodyText1
@@ -716,9 +715,9 @@ class _RegistroVentaScreenState
                                                                               .spaceBetween,
                                                                       children: [
                                                                         Text(
-                                                                          "Precio: \$ ${prodVendido
+                                                                          "Precio: \$ ${currencyFormat.format(prodVendido
                                                                                     .precioVenta
-                                                                                    .toStringAsFixed(2)}",
+                                                                                    .toStringAsFixed(2))}) ",
                                                                           textAlign:
                                                                               TextAlign.end,
                                                                           style: AppTheme.of(context)
@@ -729,9 +728,9 @@ class _RegistroVentaScreenState
                                                                               ),
                                                                         ),
                                                                         Text(
-                                                                          "Subtotal: \$ ${prodVendido
+                                                                          "Subtotal: \$ ${currencyFormat.format(prodVendido
                                                                                     .subtotal
-                                                                                    .toStringAsFixed(2)}",
+                                                                                    .toStringAsFixed(2))}",
                                                                           style: AppTheme.of(context)
                                                                               .bodyText1
                                                                               .override(

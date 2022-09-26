@@ -14,6 +14,8 @@ import 'package:bizpro_app/screens/ventas/agregar_venta.dart';
 import 'package:bizpro_app/providers/user_provider.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:bizpro_app/helpers/constants.dart';
+
 
 
 
@@ -233,15 +235,13 @@ class _VentasScreenState extends State<VentasScreen> {
                                                   productoVendido.
                                                   cantVendida.toString(),
                                                 costoUnitario: 
-                                                  "\$${productoVendido.
+                                                  currencyFormat.format(productoVendido.
                                                   productoEmp.target!.
-                                                  costo.toStringAsFixed(2)}",
-                                                precioVenta: 
-                                                  "\$${productoVendido.
-                                                  precioVenta.toStringAsFixed(2)}",
-                                                total: 
-                                                  "\$${productoVendido.
-                                                  subtotal.toStringAsFixed(2)}",
+                                                  costo.toStringAsFixed(2)),
+                                                precioVenta: currencyFormat.format(productoVendido.
+                                                  precioVenta.toStringAsFixed(2)), 
+                                                total: currencyFormat.format(productoVendido.
+                                                  subtotal.toStringAsFixed(2)),
                                                 usuario:
                                                     "${venta.emprendimiento.target!.
                                                     usuario.target!.nombre} ${venta.
@@ -580,7 +580,7 @@ class _VentasScreenState extends State<VentasScreen> {
                                                                               0,
                                                                               0),
                                                                   child: Text(
-                                                                    '\$${venta.total.toStringAsFixed(2)}',
+                                                                    currencyFormat.format(venta.total.toStringAsFixed(2)),
                                                                     style: AppTheme.of(
                                                                             context)
                                                                         .bodyText1
