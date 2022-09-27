@@ -307,7 +307,7 @@ class _ArchivadosScreenState extends State<ArchivadosScreen> {
                                             SlidableAction(
                                               label: "Desarchivar",
                                               icon: Icons.file_upload_outlined,
-                                              backgroundColor: const Color.fromARGB(207, 255, 64, 128),
+                                              backgroundColor: Colors.black54,
                                               onPressed: (context) async {
                                                 emprendimientoProvider.desarchivarEmprendimiento(emprendimiento.id);
                                                 await Navigator.push(
@@ -320,9 +320,38 @@ class _ArchivadosScreenState extends State<ArchivadosScreen> {
                                               }
                                             ),
                                           ]),
-                                        child: TargetDescripcionWidget(
-                                          emprendimiento: emprendimiento
-                                          ),
+                                        child: Stack(
+                                          children: [
+                                            TargetaDescripcionWidget(
+                                              emprendimiento: emprendimiento
+                                              ),
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                                15, 10, 15, 10),
+                                              child: Container(
+                                                width: 60,
+                                                height: 275,
+                                                decoration: BoxDecoration(
+                                                  gradient: const LinearGradient(
+                                                    colors: [
+                                                      Colors.black26,
+                                                      Color(0x0014181B),
+                                                    ],
+                                                    stops: [0, 1],
+                                                    begin: Alignment.centerLeft,
+                                                    end: Alignment.centerRight,
+                                                  ),
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                child: const Icon(
+                                                  Icons.double_arrow_rounded,
+                                                  size: 65,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       );
                                     }
                                     return const SizedBox();

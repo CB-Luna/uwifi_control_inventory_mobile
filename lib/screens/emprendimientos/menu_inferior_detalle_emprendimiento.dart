@@ -28,7 +28,7 @@ class _MenuInferiorDetalleEmprendimientoState extends State<MenuInferiorDetalleE
   @override
   Widget build(BuildContext context) {
     return Positioned.fill(
-      bottom: 30,
+      bottom: 65,
       child: Align(
         alignment: Alignment.bottomCenter,
         child: Material(

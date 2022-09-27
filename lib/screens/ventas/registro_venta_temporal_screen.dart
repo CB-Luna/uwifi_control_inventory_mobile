@@ -686,16 +686,37 @@ class _RegistroVentaTemporalScreenState
                                                                                   color: AppTheme.of(context).secondaryText,
                                                                                 ),
                                                                           ),
-                                                                          Text(
-                                                                            dateTimeFormat('dd/MM/yyyy',
-                                                                                prodVendido.fechaRegistro),
-                                                                            textAlign:
-                                                                                TextAlign.end,
-                                                                            style: AppTheme.of(context).bodyText1.override(
-                                                                                  fontFamily: AppTheme.of(context).bodyText1Family,
-                                                                                  color: AppTheme.of(context).secondaryText,
-                                                                                  fontSize: 12,
-                                                                                ),
+                                                                          Column(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize
+                                                                                    .max,
+                                                                            crossAxisAlignment:
+                                                                                CrossAxisAlignment
+                                                                                    .end,
+                                                                            children: [
+                                                                              Text(
+                                                                                    "Inicio: ${dateTimeFormat('dd/MM/yyyy',
+                                                                                        ventaController.fechaInicio)}",
+                                                                                    textAlign:
+                                                                                        TextAlign.end,
+                                                                                    style: AppTheme.of(context).bodyText1.override(
+                                                                                          fontFamily: AppTheme.of(context).bodyText1Family,
+                                                                                          color: AppTheme.of(context).secondaryText,
+                                                                                          fontSize: 12,
+                                                                                        ),
+                                                                                  ),
+                                                                              Text(
+                                                                                    "Termino: ${dateTimeFormat('dd/MM/yyyy',
+                                                                                        ventaController.fechaTermino!)}",
+                                                                                    textAlign:
+                                                                                        TextAlign.end,
+                                                                                    style: AppTheme.of(context).bodyText1.override(
+                                                                                          fontFamily: AppTheme.of(context).bodyText1Family,
+                                                                                          color: AppTheme.of(context).primaryText,
+                                                                                          fontSize: 12,
+                                                                                        ),
+                                                                                  ),
+                                                                            ],
                                                                           ),
                                                                         ],
                                                                       ),

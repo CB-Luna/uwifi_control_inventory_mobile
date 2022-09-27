@@ -5,16 +5,16 @@ import 'package:lottie/lottie.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
-class EmprendimientoDesconsolidadoScreen extends StatefulWidget {
-  const EmprendimientoDesconsolidadoScreen({
+class EmprendimientoRetomadoScreen extends StatefulWidget {
+  const EmprendimientoRetomadoScreen({
     Key? key, 
     }) : super(key: key);
 
   @override
-  State<EmprendimientoDesconsolidadoScreen> createState() => _EmprendimientoDesconsolidadoScreenState();
+  State<EmprendimientoRetomadoScreen> createState() => _EmprendimientoRetomadoScreenState();
 }
 
-class _EmprendimientoDesconsolidadoScreenState extends State<EmprendimientoDesconsolidadoScreen> {
+class _EmprendimientoRetomadoScreenState extends State<EmprendimientoRetomadoScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -39,7 +39,7 @@ class _EmprendimientoDesconsolidadoScreenState extends State<EmprendimientoDesco
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                       child: Text(
-                        '¡Se ha desconsolidado\nel emprendimiento!',
+                        '¡Se ha retomado\nel emprendimiento!',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',

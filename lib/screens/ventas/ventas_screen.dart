@@ -1,3 +1,4 @@
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:provider/provider.dart';
@@ -37,11 +38,14 @@ class _VentasScreenState extends State<VentasScreen> {
   TextEditingController searchController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   String emprendedor = "";
+  List<Ventas> listActualVentas = [];
+
 
   @override
   void initState() {
     super.initState();
     emprendedor = "";
+    listActualVentas = widget.ventas.toList();
     if (widget.emprendimiento.emprendedor.target != null) {
       emprendedor =
           "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
@@ -53,6 +57,7 @@ class _VentasScreenState extends State<VentasScreen> {
     final usuarioProvider = Provider.of<UsuarioController>(context);
     final Usuarios currentUser = usuarioProvider.usuarioCurrent!;
     final UserState userState = Provider.of<UserState>(context);
+    listActualVentas = widget.ventas.toList();
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -358,19 +363,8 @@ class _VentasScreenState extends State<VentasScreen> {
                                           padding: const EdgeInsetsDirectional.fromSTEB(
                                               0, 0, 10, 0),
                                           child: FFButtonWidget(
-                                            onPressed: () async {
-                                              // setState(() =>
-                                              //     algoliaSearchResults = null);
-                                              // await ProyectosRecord.search(
-                                              //   term: textController.text,
-                                              //   maxResults: 15,
-                                              // )
-                                              //     .then((r) =>
-                                              //         algoliaSearchResults = r)
-                                              //     .onError((_, __) =>
-                                              //         algoliaSearchResults = [])
-                                              //     .whenComplete(
-                                              //         () => setState(() {}));
+                                            onPressed: () {
+                                               setState(() {});
                                             },
                                             text: '',
                                             icon: const Icon(
@@ -418,32 +412,32 @@ class _VentasScreenState extends State<VentasScreen> {
                               child: Builder(
                                 builder: (context) {
                                   //Busqueda
-                                  if (searchController.text != '') {
-                                    // emprendimientos.removeWhere((element) {
-                                    //   final nombreEmprendimiento =
-                                    //       removeDiacritics(element.nombre)
-                                    //           .toLowerCase();
-                                    //   final nombreEmprendedor = removeDiacritics(
-                                    //           '${element.emprendedor.target?.nombre ?? ''} ${element.emprendedor.target?.apellidos ?? ''}')
-                                    //       .toLowerCase();
-                                    //   final tempBusqueda =
-                                    //       removeDiacritics(searchController.text)
-                                    //           .toLowerCase();
-                                    //   if (nombreEmprendimiento.contains(tempBusqueda) ||
-                                    //       nombreEmprendedor.contains(tempBusqueda)) {
-                                    //     return false;
-                                    //   }
-                                    //   return true;
-                                    // });
+                                 if (searchController.text != '') {
+                                      listActualVentas.removeWhere((element) {
+                                        final nombreEmprendedor = removeDiacritics(
+                                            '${element.emprendimiento.target!.emprendedor.target?.nombre ?? ''} ${element.emprendimiento.target!.emprendedor.target?.apellidos ?? ''}')
+                                        .toLowerCase();
+                                        final total = removeDiacritics(
+                                                element.total.toStringAsFixed(2))
+                                            .toLowerCase();
+                                        final tempBusqueda =
+                                            removeDiacritics(searchController.text)
+                                                .toLowerCase();
+                                        if (nombreEmprendedor.contains(tempBusqueda) ||
+                                            total.contains(tempBusqueda)) {
+                                          return false;
+                                        }
+                                        return true;
+                                      });
                                   }
                                   return ListView.builder(
                                     padding: EdgeInsets.zero,
                                     shrinkWrap: true,
                                     scrollDirection: Axis.vertical,
-                                    itemCount: widget.ventas.length,
+                                    itemCount: listActualVentas.length,
                                     itemBuilder: (context, resultadoIndex) {
                                       final venta =
-                                          widget.ventas[resultadoIndex];
+                                          listActualVentas[resultadoIndex];
                                       return InkWell(
                                         onTap: () async {
                                           await Navigator.push(

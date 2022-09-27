@@ -1,3 +1,4 @@
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:provider/provider.dart';
@@ -34,11 +35,12 @@ class ProductosEmprendedorScreen extends StatefulWidget {
 class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen> {
   TextEditingController searchController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  List<ProductosEmp> listActualProductosEmp = [];
 
   @override
   void initState() {
     super.initState();
-
+    listActualProductosEmp = widget.productosEmprendedor.toList();
   }
 
   @override
@@ -46,6 +48,7 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
     final usuarioProvider = Provider.of<UsuarioController>(context);
     final Usuarios currentUser = usuarioProvider.usuarioCurrent!;
     final UserState userState = Provider.of<UserState>(context);
+    listActualProductosEmp = widget.productosEmprendedor.toList();
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -335,18 +338,7 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                                               0, 0, 10, 0),
                                           child: FFButtonWidget(
                                             onPressed: () async {
-                                              // setState(() =>
-                                              //     algoliaSearchResults = null);
-                                              // await ProyectosRecord.search(
-                                              //   term: textController.text,
-                                              //   maxResults: 15,
-                                              // )
-                                              //     .then((r) =>
-                                              //         algoliaSearchResults = r)
-                                              //     .onError((_, __) =>
-                                              //         algoliaSearchResults = [])
-                                              //     .whenComplete(
-                                              //         () => setState(() {}));
+                                              setState(() {});
                                             },
                                             text: '',
                                             icon: const Icon(
@@ -393,33 +385,37 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                                   const EdgeInsetsDirectional.fromSTEB(0, 25, 0, 6),
                               child: Builder(
                                 builder: (context) {
-                                  //Busqueda
-                                  if (searchController.text != '') {
-                                    // emprendimientos.removeWhere((element) {
-                                    //   final nombreEmprendimiento =
-                                    //       removeDiacritics(element.nombre)
-                                    //           .toLowerCase();
-                                    //   final nombreEmprendedor = removeDiacritics(
-                                    //           '${element.emprendedor.target?.nombre ?? ''} ${element.emprendedor.target?.apellidos ?? ''}')
-                                    //       .toLowerCase();
-                                    //   final tempBusqueda =
-                                    //       removeDiacritics(searchController.text)
-                                    //           .toLowerCase();
-                                    //   if (nombreEmprendimiento.contains(tempBusqueda) ||
-                                    //       nombreEmprendedor.contains(tempBusqueda)) {
-                                    //     return false;
-                                    //   }
-                                    //   return true;
-                                    // });
+                                     //Busqueda
+                                    if (searchController.text != '') {
+                                      listActualProductosEmp.removeWhere((element) {
+                                        final nombreProducto =
+                                            removeDiacritics(element.nombre)
+                                                .toLowerCase();
+                                        final tipoProyecto = removeDiacritics(
+                                                element.emprendimientos.target?.catalogoProyecto.target?.nombre ?? '')
+                                            .toLowerCase();
+                                        final costo = removeDiacritics(
+                                                element.costo.toStringAsFixed(2))
+                                            .toLowerCase();
+                                        final tempBusqueda =
+                                            removeDiacritics(searchController.text)
+                                                .toLowerCase();
+                                        if (nombreProducto.contains(tempBusqueda) ||
+                                            tipoProyecto.contains(tempBusqueda) ||
+                                            costo.contains(tempBusqueda)) {
+                                          return false;
+                                        }
+                                        return true;
+                                      });
                                   }
                                   return ListView.builder(
                                     padding: EdgeInsets.zero,
                                     shrinkWrap: true,
                                     scrollDirection: Axis.vertical,
-                                    itemCount: widget.productosEmprendedor.length,
+                                    itemCount: listActualProductosEmp.length,
                                     itemBuilder: (context, resultadoIndex) {
                                       final productoEmprendedor =
-                                          widget.productosEmprendedor[resultadoIndex];
+                                          listActualProductosEmp[resultadoIndex];
                                       return InkWell(
                                         onTap: () async {
                                            await Navigator.push(

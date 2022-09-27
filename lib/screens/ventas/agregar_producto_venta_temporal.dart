@@ -562,7 +562,7 @@ class _AgregarProductoVentaTemporalState
                                               idUnidadMedida,
                                               unidadMedida.text,
                                               double.parse(costoUnitario.text.replaceAll("\$", "").replaceAll(",", "")),
-                                              subTotal.text
+                                              subTotal.text,
                                               );
                                             Navigator.pop(context);
                                             snackbarKey.currentState
