@@ -11,7 +11,7 @@ class VentaController extends ChangeNotifier {
   GlobalKey<FormState> ventasFormKey = GlobalKey<FormState>();
  
   //ProductoSol
-  DateTime? fechaInicio;
+  DateTime fechaInicio = DateTime.now();
   DateTime? fechaTermino;
   String total = "";
 
@@ -22,7 +22,7 @@ class VentaController extends ChangeNotifier {
 
   void clearInformation()
   {
-    fechaInicio = null;
+    fechaInicio = DateTime.now();
     fechaTermino = null;
     total = "";
     notifyListeners();
@@ -32,7 +32,7 @@ class VentaController extends ChangeNotifier {
     print(total);
     int idVenta = -1;
       final nuevaVenta = Ventas(
-      fechaInicio: fechaInicio ?? DateTime.now(),
+      fechaInicio: fechaInicio,
       fechaTermino: fechaTermino!,
       total: double.parse(total),
     );

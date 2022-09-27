@@ -1,5 +1,6 @@
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:provider/provider.dart';
@@ -52,6 +53,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
   @override
   Widget build(BuildContext context) {
     final UserState userState = Provider.of<UserState>(context);
+    inversiones = actualEmprendimiento!.inversiones.toList();
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -364,18 +366,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                               0, 0, 10, 0),
                                           child: FFButtonWidget(
                                             onPressed: () async {
-                                              // setState(() =>
-                                              //     algoliaSearchResults = null);
-                                              // await ProyectosRecord.search(
-                                              //   term: textController.text,
-                                              //   maxResults: 15,
-                                              // )
-                                              //     .then((r) =>
-                                              //         algoliaSearchResults = r)
-                                              //     .onError((_, __) =>
-                                              //         algoliaSearchResults = [])
-                                              //     .whenComplete(
-                                              //         () => setState(() {}));
+                                              setState(() {});
                                             },
                                             text: '',
                                             icon: const Icon(
@@ -424,22 +415,22 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                 builder: (context) {
                                   //Busqueda
                                   if (searchController.text != '') {
-                                    // emprendimientos.removeWhere((element) {
-                                    //   final nombreEmprendimiento =
-                                    //       removeDiacritics(element.nombre)
-                                    //           .toLowerCase();
-                                    //   final nombreEmprendedor = removeDiacritics(
-                                    //           '${element.emprendedor.target?.nombre ?? ''} ${element.emprendedor.target?.apellidos ?? ''}')
-                                    //       .toLowerCase();
-                                    //   final tempBusqueda =
-                                    //       removeDiacritics(searchController.text)
-                                    //           .toLowerCase();
-                                    //   if (nombreEmprendimiento.contains(tempBusqueda) ||
-                                    //       nombreEmprendedor.contains(tempBusqueda)) {
-                                    //     return false;
-                                    //   }
-                                    //   return true;
-                                    // });
+                                    inversiones.removeWhere((element) {
+                                      final estadoInversion =
+                                          removeDiacritics(element.estadoInversion.target!.estado)
+                                              .toLowerCase();
+                                      final total = removeDiacritics(
+                                                element.totalInversion.toStringAsFixed(2))
+                                            .toLowerCase();
+                                      final tempBusqueda =
+                                          removeDiacritics(searchController.text)
+                                              .toLowerCase();
+                                      if (estadoInversion.contains(tempBusqueda) ||
+                                          total.contains(tempBusqueda)) {
+                                        return false;
+                                      }
+                                      return true;
+                                    });
                                   }
                                   return ListView.builder(
                                     padding: EdgeInsets.zero,

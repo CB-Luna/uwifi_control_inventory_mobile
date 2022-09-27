@@ -5,7 +5,6 @@ import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:bizpro_app/util/custom_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -32,10 +31,10 @@ class EditarUsuarioScreen extends StatefulWidget {
 
 class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
   String uploadedFileUrl = '';
-  late TextEditingController nombreController;
-  late TextEditingController apellidoPController;
-  late TextEditingController apellidoMController;
-  late TextEditingController telefonoController;
+  TextEditingController nombreController = TextEditingController();
+  TextEditingController apellidoPController = TextEditingController();
+  TextEditingController apellidoMController = TextEditingController();
+  TextEditingController telefonoController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
   late String fotoPerfil;

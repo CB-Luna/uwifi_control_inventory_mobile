@@ -1,7 +1,7 @@
 import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
 import 'package:bizpro_app/screens/emprendimientos/components/tarjeta_descripcion_widget.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimiento_archivado_screen.dart';
-import 'package:bizpro_app/screens/emprendimientos/emprendimiento_desconsolidado_screen.dart';
+import 'package:bizpro_app/screens/emprendimientos/emprendimiento_retomado_screen.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimiento_reactivado_screen.dart';
 import 'package:bizpro_app/screens/widgets/pdf/api/pdf_invoice_consultorias.dart';
 import 'package:bizpro_app/screens/widgets/pdf/models/consultorias_invoice.dart';
@@ -608,9 +608,38 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                           }
                                         ),
                                       ]),
-                                    child: TargetaDescripcionWidget(
-                                      emprendimiento: emprendimiento
-                                      ),
+                                    child: Stack(
+                                      children: [
+                                        TargetaDescripcionWidget(
+                                          emprendimiento: emprendimiento
+                                          ),
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional.fromSTEB(
+                                            15, 10, 15, 10),
+                                          child: Container(
+                                            width: 60,
+                                            height: 275,
+                                            decoration: BoxDecoration(
+                                              gradient: const LinearGradient(
+                                                colors: [
+                                                  Color.fromARGB(80, 255, 64, 128),
+                                                  Color(0x0014181B),
+                                                ],
+                                                stops: [0, 1],
+                                                begin: Alignment.centerLeft,
+                                                end: Alignment.centerRight,
+                                              ),
+                                              borderRadius: BorderRadius.circular(8),
+                                            ),
+                                            child: const Icon(
+                                              Icons.double_arrow_rounded,
+                                              size: 65,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   )
                                   :
                                   emprendimiento.faseEmp.last.fase == "Consolidado" ? 
@@ -619,16 +648,16 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                       motion: const DrawerMotion(), 
                                       children: [
                                         SlidableAction(
-                                          label: "Desconsolidar",
+                                          label: "Retomar",
                                           icon: Icons.thumb_down_outlined,
-                                          backgroundColor: const Color.fromARGB(207, 38, 128, 55),
+                                          backgroundColor: const Color(0xFF4672FF),
                                           onPressed: (context) async {
                                             emprendimientoProvider.reactivarOdesconsolidarEmprendimiento(emprendimiento.id);
                                             await Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                             builder: (context) =>
-                                                const EmprendimientoDesconsolidadoScreen(),
+                                                const EmprendimientoRetomadoScreen(),
                                                   ),
                                             );
                                           }
@@ -636,7 +665,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                         SlidableAction(
                                           label: "Archivar",
                                           icon: Icons.file_download_outlined,
-                                          backgroundColor: const Color.fromARGB(207, 255, 64, 128),
+                                          backgroundColor: const Color.fromARGB(207, 38, 128, 55),
                                           onPressed: (context) async {
                                             emprendimientoProvider.archivarEmprendimiento(emprendimiento.id);
                                             await Navigator.push(
@@ -649,9 +678,38 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                           }
                                         ),
                                       ]),
-                                    child: TargetaDescripcionWidget(
-                                      emprendimiento: emprendimiento
-                                      ),
+                                    child: Stack(
+                                      children: [
+                                        TargetaDescripcionWidget(
+                                          emprendimiento: emprendimiento
+                                          ),
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional.fromSTEB(
+                                            15, 10, 15, 10),
+                                          child: Container(
+                                            width: 60,
+                                            height: 275,
+                                            decoration: BoxDecoration(
+                                              gradient: const LinearGradient(
+                                                colors: [
+                                                  Color.fromARGB(80, 38, 128, 55),
+                                                  Color(0x0014181B),
+                                                ],
+                                                stops: [0, 1],
+                                                begin: Alignment.centerLeft,
+                                                end: Alignment.centerRight,
+                                              ),
+                                              borderRadius: BorderRadius.circular(8),
+                                            ),
+                                            child: const Icon(
+                                              Icons.double_arrow_rounded,
+                                              size: 65,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   )
                                   :
                                   TargetaDescripcionWidget(

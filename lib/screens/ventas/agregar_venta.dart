@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/screens/ventas/ventas_screen.dart';
 import 'package:flutter/material.dart';
@@ -40,8 +41,11 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
     super.initState();
     actualEmprendimiento = dataBase.emprendimientosBox.get(widget.idEmprendimiento);
     if (actualEmprendimiento != null) {
-      fechaInicio = TextEditingController(text: dateTimeFormat('yMMMd', DateTime.now()));
-      fechaTermino = TextEditingController();
+      fechaInicio = TextEditingController(text: dateTimeFormat('yMMMd', context.read<VentaController>().fechaInicio));
+      fechaTermino = TextEditingController(text: context.read<VentaController>().fechaTermino != null ? 
+      dateTimeFormat('yMMMd', context.read<VentaController>().fechaTermino!)
+      :
+      "");
       emprendedor = "";
       if (actualEmprendimiento!.emprendedor.target != null) {
         emprendedor =
@@ -140,6 +144,7 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
                                       ),
                                       child: InkWell(
                                         onTap: () async {
+                                          ventaProvider.clearInformation();
                                           productoVentaProvider.clearInformation();
                                           await Navigator.push(
                                             context,
@@ -437,13 +442,22 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
                                       elevation: 4,
                                       child: FFButtonWidget(
                                         onPressed: () async {
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  RegistroVentaTemporalScreen(emprendimiento: actualEmprendimiento!,),
-                                            ),
-                                          );
+                                          if (ventaProvider
+                                              .validateForm(formKey)) {
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    RegistroVentaTemporalScreen(emprendimiento: actualEmprendimiento!,),
+                                              ),
+                                            );
+                                          } else {
+                                            snackbarKey.currentState
+                                                ?.showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "Debes ingresar el periodo de la venta para continuar."),
+                                            ));
+                                          }
                                         },
                                         text: 'Producto',
                                         icon: const Icon(
