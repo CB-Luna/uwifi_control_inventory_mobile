@@ -50,8 +50,8 @@ class _EmprendedorCreadoState extends State<EmprendedorCreado> {
                     Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                      child: Text(
-                        'Listo, el emprendor se agregará \na la lista de emprendedores.',
+                      child: Text(                      
+                        'El registro se ha guardado con \nexito.',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',

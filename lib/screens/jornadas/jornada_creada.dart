@@ -50,8 +50,8 @@ class _JornadaCreadaState extends State<JornadaCreada> {
                     Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                      child: Text(
-                        'Listo, la jornada se agregará \na la lista de jornadas.',
+                      child: Text(                      
+                        'El registro se ha guaradado con exito.',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',

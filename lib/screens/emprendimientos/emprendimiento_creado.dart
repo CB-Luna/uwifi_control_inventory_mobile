@@ -49,8 +49,8 @@ class _EmprendimientoCreadoState extends State<EmprendimientoCreado> {
                     Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                      child: Text(
-                        'Listo, el emprendimiento y el emprendedor\nse agregarán a tus listas respectivas.',
+                      child: Text(                                
+                        'El registro se ha guadado con exito.',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
