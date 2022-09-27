@@ -1,3 +1,4 @@
+import 'package:bizpro_app/screens/emprendedores/detalle_emprendedor_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -134,7 +135,15 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                   ),
                                   child: InkWell(
                                     onTap: () async {
-                                      Navigator.pop(context);
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              DetallesEmprendedorScreen(
+                                                idEmprendedor: widget.emprendedor.id
+                                                ,),
+                                        ),
+                                      );
                                     },
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
@@ -974,7 +983,9 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                                         context,
                                                         MaterialPageRoute(
                                                           builder: (context) =>
-                                                              const EmprendedorActualizado(),
+                                                              EmprendedorActualizado(
+                                                                idEmprendedor: widget.emprendedor.id
+                                                                ,),
                                                         ),
                                                       );
                                                     }
@@ -1038,6 +1049,9 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                     ],
                                   ),
                                 ),
+                                const SizedBox(
+                                  height: 50,
+                                )
                               ],
                             ),
                           ),

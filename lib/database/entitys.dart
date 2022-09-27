@@ -14,7 +14,6 @@ class Emprendimientos {
   bool archivado;
   @Unique()
   String? idDBR;
-  final comunidad = ToOne<Comunidades>();
   final usuario = ToOne<Usuarios>(); //Promotor en Diagrama E-R
   final prioridadEmp = ToOne<PrioridadEmp>();
   final catalogoProyecto = ToOne<CatalogoProyecto>();
@@ -865,8 +864,6 @@ class Comunidades {
   final statusSync = ToOne<StatusSync>();
   @Backlink()
   final emprendedores = ToMany<Emprendedores>();
-  @Backlink()
-  final emprendimientos = ToMany<Emprendimientos>();
 
   Comunidades({
     this.id = 0,

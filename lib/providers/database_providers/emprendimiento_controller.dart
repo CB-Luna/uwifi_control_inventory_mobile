@@ -34,7 +34,7 @@ class EmprendimientoController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void add(int idComunidad) {
+  void add() {
     final nuevoEmprendimiento = Emprendimientos(
       imagen: imagen, 
       nombre: nombre,
@@ -45,9 +45,7 @@ class EmprendimientoController extends ChangeNotifier {
       final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
       final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Inscrito")).build().findFirst(); //Agregamos fase actual al emprendimiento
       final nuevaInstruccion = Bitacora(instrucciones: 'syncAddEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-      final comunidad = dataBase.comunidadesBox.get(idComunidad);
-      if (comunidad != null && faseEmp != null) {
-        nuevoEmprendimiento.comunidad.target = comunidad;
+      if (faseEmp != null) {
         nuevoEmprendimiento.statusSync.target = nuevoSync;
         nuevoEmprendimiento.faseEmp.add(faseEmp); //Agregamos fase actual al emprendimiento
         nuevoEmprendimiento.bitacora.add(nuevaInstruccion);
@@ -60,14 +58,13 @@ class EmprendimientoController extends ChangeNotifier {
       }
   }
 
-  void update(int id, String newImagen, String newNombre, String newDescripcion, int idComunidad) {
+  void update(int id, String newImagen, String newNombre, String newDescripcion) {
     var updateEmprendimiento = dataBase.emprendimientosBox.get(id);
     final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
     if (updateEmprendimiento != null) {
       updateEmprendimiento.imagen = newImagen;
       updateEmprendimiento.nombre = newNombre;
       updateEmprendimiento.descripcion = newDescripcion;
-      updateEmprendimiento.comunidad.target = dataBase.comunidadesBox.get(idComunidad);
       final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendimiento.statusSync.target!.id)).build().findUnique();
       if (statusSync != null) {
         statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del emprendimiento

@@ -123,7 +123,7 @@ class _FrenteTarjetaDescripcionWidgetState extends State<FrenteTarjetaDescripcio
                   .fromSTEB(16, 0, 16, 5),
               child: Text(
                 widget.emprendimiento
-                        .comunidad.target?.nombre
+                        .emprendedor.target?.comunidad.target?.nombre
                         .toString() ??
                     'NONE',
                 maxLines: 1,

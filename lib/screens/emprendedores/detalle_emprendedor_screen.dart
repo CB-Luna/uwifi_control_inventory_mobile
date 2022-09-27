@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/screens/emprendedores/editar_emprendedor.dart';
+import 'package:bizpro_app/screens/emprendedores/emprendedores_screen.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -8,10 +10,10 @@ import 'package:page_transition/page_transition.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
 
 class DetallesEmprendedorScreen extends StatefulWidget {
-  final Emprendedores emprendedor;
+  final int idEmprendedor;
   const DetallesEmprendedorScreen({
     Key? key,
-    required this.emprendedor,
+    required this.idEmprendedor,
   }) : super(key: key);
 
   @override
@@ -21,14 +23,19 @@ class DetallesEmprendedorScreen extends StatefulWidget {
 
 class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  Emprendedores? actualEmprendedor;
+  List<Emprendimientos> emprendimientos = [];
+  @override
+  void initState() {
+    super.initState();
+    actualEmprendedor = dataBase.emprendedoresBox.get(widget.idEmprendedor);
+    if (actualEmprendedor != null) {
+      emprendimientos.add(actualEmprendedor!.emprendimiento.target!);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final List<Emprendimientos> emprendimientos = [];
-    if (widget.emprendedor.emprendimiento.target != null) {
-      emprendimientos.add(widget.emprendedor.emprendimiento.target!);
-    }
-    print(widget.emprendedor.imagen);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -100,7 +107,13 @@ class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
                                   ),
                                   child: InkWell(
                                     onTap: () async {
-                                      Navigator.pop(context);
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const EmprendedoresScreen(),
+                                        ),
+                                      );
                                     },
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
@@ -138,7 +151,7 @@ class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       10, 0, 0, 0),
                                   child: Text(
-                                    widget.emprendedor.nombre,
+                                    actualEmprendedor!.nombre,
                                     style: AppTheme.of(context)
                                         .bodyText1
                                         .override(
@@ -166,7 +179,7 @@ class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
                                           builder: (context) =>
                                               EditarEmprendedor(
                                                   emprendedor:
-                                                      widget.emprendedor),
+                                                      actualEmprendedor!),
                                         ),
                                       );
                                     },
@@ -210,17 +223,17 @@ class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
                             type: PageTransitionType.fade,
                             child: FlutterFlowExpandedImageView(
                               image: getImageEmprendedor(
-                                widget.emprendedor.imagen
+                                actualEmprendedor!.imagen
                                 ),
                               allowRotation: false,
-                              tag: widget.emprendedor.imagen,
+                              tag: actualEmprendedor!.imagen,
                               useHeroAnimation: true,
                             ),
                           ),
                         );
                       },
                       child: Hero(
-                        tag: widget.emprendedor.imagen,
+                        tag: actualEmprendedor!.imagen,
                         transitionOnUserGestures: true,
                         child: Container(
                           width: 200,
@@ -230,7 +243,7 @@ class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
                             shape: BoxShape.circle,
                           ),
                           child: getImageEmprendedor(
-                            widget.emprendedor.imagen,
+                            actualEmprendedor!.imagen,
                             height: 200
                           ),
                         ),
@@ -247,7 +260,7 @@ class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 0, 2, 0),
                           child: Text(
-                            widget.emprendedor.nombre,
+                            actualEmprendedor!.nombre,
                             style: AppTheme.of(context).bodyText1.override(
                                   fontFamily:
                                       AppTheme.of(context).bodyText1Family,
@@ -261,7 +274,7 @@ class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(2, 0, 0, 0),
                           child: Text(
-                            widget.emprendedor.apellidos,
+                            actualEmprendedor!.apellidos,
                             style: AppTheme.of(context).bodyText1.override(
                                   fontFamily:
                                       AppTheme.of(context).bodyText1Family,
@@ -318,7 +331,7 @@ class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                     child: Text(
-                      widget.emprendedor.comunidad.target?.nombre ??
+                      actualEmprendedor!.comunidad.target?.nombre ??
                           "SIN COMUNIDAD",
                       style: AppTheme.of(context).bodyText1.override(
                             fontFamily: AppTheme.of(context).bodyText1Family,
@@ -349,7 +362,7 @@ class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(5, 10, 0, 0),
                         child: Text(
-                          widget.emprendedor.curp,
+                          actualEmprendedor!.curp,
                           style: AppTheme.of(context).bodyText1.override(
                                 fontFamily:
                                     AppTheme.of(context).bodyText1Family,
@@ -382,7 +395,7 @@ class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(5, 10, 0, 0),
                         child: Text(
-                          widget.emprendedor.telefono ??
+                          actualEmprendedor!.telefono ??
                               "TELÉFONO SIN REGISTRAR",
                           style: AppTheme.of(context).bodyText1.override(
                                 fontFamily:
@@ -416,7 +429,7 @@ class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(12, 10, 0, 0),
                         child: Text(
-                          widget.emprendedor.integrantesFamilia,
+                          actualEmprendedor!.integrantesFamilia,
                           style: AppTheme.of(context).bodyText1.override(
                                 fontFamily:
                                     AppTheme.of(context).bodyText1Family,
@@ -435,7 +448,7 @@ class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(12, 10, 0, 0),
                         child: Text(
-                          'Emprendimientos liderados por ${widget.emprendedor.nombre}',
+                          'Emprendimientos liderados por ${actualEmprendedor!.nombre}',
                           style: AppTheme.of(context).bodyText1.override(
                                 fontFamily:
                                     AppTheme.of(context).bodyText1Family,

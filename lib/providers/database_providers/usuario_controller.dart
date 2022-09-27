@@ -200,10 +200,11 @@ void update(int id, int newIdRol, String newfotoPerfil, String newNombre, String
 
   List<Emprendimientos> getEmprendimientos() {
     final List<Emprendimientos> emprendimientos = [];
-    if (usuarioCurrent != null) {
-        usuarioCurrent!.emprendimientos.forEach((element) {
+    final usuarioActual = dataBase.usuariosBox.get(usuarioCurrent?.id ?? -1);
+    if (usuarioActual != null) {
+        for (var element in usuarioActual.emprendimientos) {
         emprendimientos.add(element);
-      });
+      }
     }
     return emprendimientos;
   }

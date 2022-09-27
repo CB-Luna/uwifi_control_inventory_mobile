@@ -327,7 +327,7 @@ class _GridEmprendimientosScreenState extends State<GridEmprendimientosScreen> {
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(10, 0, 10, 0),
                                             child: Text(
-                                              emprendimiento.comunidad.target
+                                              emprendimiento.emprendedor.target?.comunidad.target
                                                       ?.nombre ??
                                                   '',
                                               overflow: TextOverflow.ellipsis,
