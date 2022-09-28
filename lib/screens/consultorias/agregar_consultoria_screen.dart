@@ -7,6 +7,7 @@ import 'package:bizpro_app/screens/consultorias/consultoria_creada.dart';
 import 'package:bizpro_app/screens/inversiones/agregar_primer_producto_inversion_screen.dart';
 import 'package:bizpro_app/screens/ventas/agregar_venta.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -57,10 +58,12 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
     dataBase.ambitoConsultoriaBox.getAll().forEach((element) {
       listAmbitos.add(element.nombreAmbito);
     });
+    listAmbitos.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     List<String> listAreaCirculo = [];
     dataBase.areaCirculoBox.getAll().forEach((element) {
       listAreaCirculo.add(element.nombreArea);
     });
+    listAreaCirculo.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     if (widget.emprendimiento.emprendedor.target != null) {
       emprendedor =
           "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";

@@ -91,6 +91,7 @@ class _EditarProductoInversionJornadaTemporalState
     dataBase.tipoEmpaquesBox.getAll().forEach((element) {
       listTipoEmpaques.add(element.tipo);
     });
+    listTipoEmpaques.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
   }
 
   @override

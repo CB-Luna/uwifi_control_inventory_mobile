@@ -57,6 +57,7 @@ class _AgregarProductoInversionJornadaTemporalState
     dataBase.tipoEmpaquesBox.getAll().forEach((element) {
       listTipoEmpaques.add(element.tipo);
     });
+    listTipoEmpaques.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     emprendedor = "";
     if (widget.emprendimiento.emprendedor.target != null) {
       emprendedor =

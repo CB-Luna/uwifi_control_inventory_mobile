@@ -61,6 +61,7 @@ class _AgregarProductoInversionJornadaScreenState
     dataBase.tipoEmpaquesBox.getAll().forEach((element) {
       listTipoEmpaques.add(element.tipo);
     });
+    listTipoEmpaques.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     inversion = dataBase.inversionesBox.get(widget.idInversion);
     if (inversion != null) {
       if (inversion!.emprendimiento.target!.emprendedor.target != null) {

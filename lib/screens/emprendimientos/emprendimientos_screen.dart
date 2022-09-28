@@ -52,6 +52,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
       emprendimientosPDF = [];
       emprendimientos = [];
       dataBase.areaCirculoBox.getAll().forEach((element) {listAreaCirculo.add(element.nombreArea);});
+      listAreaCirculo.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
       emprendimientosPDF = context.read<UsuarioController>().getEmprendimientos();
       emprendimientos = context.read<UsuarioController>().getEmprendimientos();
     });

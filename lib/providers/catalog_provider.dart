@@ -295,8 +295,6 @@ class CatalogProvider extends ChangeNotifier {
         listUnidadMedida.add(getUnidadesMedidaFromMap(element.toString()));
       }
 
-      listUnidadMedida.sort((a, b) => removeDiacritics(a.unidadMedida).compareTo(removeDiacritics(b.unidadMedida)));
-
       print("****Informacion und_medida****");
       for (var i = 0; i < listUnidadMedida.length; i++) {
         if (listUnidadMedida[i].id.isNotEmpty) {
@@ -371,7 +369,7 @@ class CatalogProvider extends ChangeNotifier {
       for (var element in records) {
         listAmbitoConsultoria.add(getAmbitoConsultoriaFromMap(element.toString()));
       }
-      listAmbitoConsultoria.sort((a, b) => removeDiacritics(a.nombreAmbito).compareTo(removeDiacritics(b.nombreAmbito)));
+
       print("****Informacion ambito consultoria****");
       for (var i = 0; i < records.length; i++) {
         print(records[i]);
@@ -379,6 +377,7 @@ class CatalogProvider extends ChangeNotifier {
         final nuevoAmbitoConsultoria = AmbitoConsultoria(
         nombreAmbito: listAmbitoConsultoria[i].nombreAmbito,
         idDBR: listAmbitoConsultoria[i].id,
+        activo: listAmbitoConsultoria[i].activo,
         fechaRegistro: listAmbitoConsultoria[i].updated
         );
         final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
@@ -406,7 +405,6 @@ class CatalogProvider extends ChangeNotifier {
       for (var element in records) {
         listAreaCirculo.add(getAreaCirculoFromMap(element.toString()));
       }
-      listAreaCirculo.sort((a, b) => removeDiacritics(a.nombreArea).compareTo(removeDiacritics(b.nombreArea)));
       print("****Informacion area circulo****");
       for (var i = 0; i < records.length; i++) {
         print(records[i]);
@@ -414,6 +412,7 @@ class CatalogProvider extends ChangeNotifier {
         final nuevaAreaCirculo = AreaCirculo(
         nombreArea: listAreaCirculo[i].nombreArea,
         idDBR: listAreaCirculo[i].id,
+        activo: listAreaCirculo[i].activo,
         fechaRegistro: listAreaCirculo[i].updated
         );
         final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
@@ -441,7 +440,6 @@ class CatalogProvider extends ChangeNotifier {
       for (var element in records) {
         listFasesEmp.add(getFasesEmpFromMap(element.toString()));
       }
-      // listFasesEmp.sort((a, b) => removeDiacritics(a.fase).compareTo(removeDiacritics(b.fase)));
       print("****Informacion fase emp****");
       for (var i = 0; i < records.length; i++) {
         print(records[i]);
@@ -470,13 +468,13 @@ class CatalogProvider extends ChangeNotifier {
       for (var element in records) {
         listTipoEmpaques.add(getTipoEmpaquesFromMap(element.toString()));
       }
-      listTipoEmpaques.sort((a, b) => removeDiacritics(a.tipoEmpaque).compareTo(removeDiacritics(b.tipoEmpaque)));
       print("****Informacion tipo empaque****");
       for (var i = 0; i < records.length; i++) {
         if (listTipoEmpaques[i].id.isNotEmpty) {
         final nuevoTipoEmpaque = TipoEmpaques(
         tipo: listTipoEmpaques[i].tipoEmpaque,
         idDBR: listTipoEmpaques[i].id,
+        activo: listTipoEmpaques[i].activo,
         fechaRegistro: listTipoEmpaques[i].updated
         );
         final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
@@ -498,7 +496,6 @@ class CatalogProvider extends ChangeNotifier {
       for (var element in records) {
         listEstadoInversiones.add(getEstadoInversionesFromMap(element.toString()));
       }
-      listEstadoInversiones.sort((a, b) => removeDiacritics(a.estado).compareTo(removeDiacritics(b.estado)));
       print("****Informacion estado inversiones****");
       for (var i = 0; i < records.length; i++) {
         if (listEstadoInversiones[i].id.isNotEmpty) {
@@ -526,7 +523,6 @@ class CatalogProvider extends ChangeNotifier {
       for (var element in records) {
         listTipoProveedor.add(getTipoProveedorFromMap(element.toString()));
       }
-      listTipoProveedor.sort((a, b) => removeDiacritics(a.tipoProveedor).compareTo(removeDiacritics(b.tipoProveedor)));
       print("****Informacion tipo proveedor****");
       for (var i = 0; i < records.length; i++) {
         if (listTipoProveedor[i].id.isNotEmpty) {
@@ -552,7 +548,7 @@ class CatalogProvider extends ChangeNotifier {
       for (var element in records) {
         listCondicionesPago.add(getCondicionesPagoFromMap(element.toString()));
       }
-      listCondicionesPago.sort((a, b) => removeDiacritics(a.condicionPago).compareTo(removeDiacritics(b.condicionPago)));
+    
       print("****Informacion condición pago****");
       for (var i = 0; i < records.length; i++) {
         if (listCondicionesPago[i].id.isNotEmpty) {
@@ -578,7 +574,6 @@ Future<void> getBancos() async {
       for (var element in records) {
         listBancos.add(getBancosFromMap(element.toString()));
       }
-      listBancos.sort((a, b) => removeDiacritics(a.nombreBanco).compareTo(removeDiacritics(b.nombreBanco)));
       print("****Informacion banco****");
       for (var i = 0; i < records.length; i++) {
         if (listBancos[i].id.isNotEmpty) {
@@ -629,7 +624,7 @@ Future<void> getEstadosProdCotizados() async {
       for (var element in records) {
         listEstadosProdCotizados.add(getEstadosProdCotizadosFromMap(element.toString()));
       }
-      listEstadosProdCotizados.sort((a, b) => removeDiacritics(a.estado).compareTo(removeDiacritics(b.estado)));
+
       print("****Informacion estado prod cotizado****");
       for (var i = 0; i < records.length; i++) {
         if (listEstadosProdCotizados[i].id.isNotEmpty) {
@@ -654,7 +649,6 @@ Future<void> getProveedores() async {
       for (var element in records) {
         listProveedores.add(getProveedoresFromMap(element.toString()));
       }
-      listProveedores.sort((a, b) => removeDiacritics(a.nombreFiscal).compareTo(removeDiacritics(b.nombreFiscal)));
       print("****Informacion proveedor****");
       for (var i = 0; i < records.length; i++) {
         if (listProveedores[i].id.isNotEmpty) {
@@ -696,7 +690,6 @@ Future<void> getProductosProv() async {
       for (var element in records) {
         listProductosProv.add(getProductosProvFromMap(element.toString()));
       }
-      listProductosProv.sort((a, b) => removeDiacritics(a.nombreProdProv).compareTo(removeDiacritics(b.nombreProdProv)));
       print("****Informacion producto prov****");
       for (var i = 0; i < records.length; i++) {
         if (listProductosProv[i].id.isNotEmpty) {
@@ -735,8 +728,6 @@ Future<void> getProductosProv() async {
       for (var element in records) {
         listProdProyecto.add(getProdProyectoFromMap(element.toString()));
       }
-
-      listProdProyecto.sort((a, b) => removeDiacritics(a.producto).compareTo(removeDiacritics(b.producto)));
 
       print("****Informacion prod Proyecto****");
       for (var i = 0; i < records.length; i++) {
