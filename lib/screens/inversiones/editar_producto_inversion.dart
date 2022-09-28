@@ -2,6 +2,7 @@ import 'package:bizpro_app/screens/inversiones/main_tab_opciones.dart';
 import 'package:bizpro_app/screens/inversiones/producto_inversion_actualizado.dart';
 import 'package:bizpro_app/screens/inversiones/producto_inversion_eliminado.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_eliminar_producto.dart';
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
@@ -84,6 +85,7 @@ class _EditarProductoInversionScreenState
     dataBase.familiaProductosBox.getAll().forEach((element) {
       listFamilias.add(element.nombre);
     });
+    listFamilias.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     dataBase.tipoEmpaquesBox.getAll().forEach((element) {
       listTipoEmpaques.add(element.tipo);
     });

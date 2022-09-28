@@ -1,5 +1,6 @@
 import 'package:bizpro_app/screens/jornadas/registros/inversion_jornada_temporal_screen.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_eliminar_producto.dart';
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -86,6 +87,7 @@ class _EditarProductoInversionJornadaTemporalState
     dataBase.familiaProductosBox.getAll().forEach((element) {
       listFamilias.add(element.nombre);
     });
+    listFamilias.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     dataBase.tipoEmpaquesBox.getAll().forEach((element) {
       listTipoEmpaques.add(element.tipo);
     });

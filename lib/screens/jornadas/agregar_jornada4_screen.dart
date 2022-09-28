@@ -10,7 +10,6 @@ import 'package:bizpro_app/database/entitys.dart';
 
 import 'package:bizpro_app/screens/jornadas/jornada_creada.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
 
 import 'package:bizpro_app/providers/database_providers/jornada_controller.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
@@ -45,7 +44,6 @@ class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
     imagenesTemp = [];
     fechaRegistro = TextEditingController();
     fechaRegistro.text = dateTimeFormat('yMMMd', DateTime.now());
-    // dataBase.clasificacionesEmpBox.getAll().forEach((element) {listTipoProyecto.add(element.clasificacion);});
   }
 
   @override
@@ -56,12 +54,6 @@ class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
       emprendedor =
           "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
     }
-    // if (widget.emprendimiento.jornadas.isEmpty) {
-    //   jornadaProvider.numJornada = "1";
-    // }
-    // else {
-    //   jornadaProvider.numJornada = (int.parse(widget.emprendimiento.jornadas.last.numJornada) + 1).toString();
-    // }
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(

@@ -1,3 +1,4 @@
+import 'package:bizpro_app/providers/catalog_provider_recover.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -109,6 +110,10 @@ void main() async {
         ),
         ChangeNotifierProvider<CatalogProvider>(
           create: (context) => CatalogProvider(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<CatalogProviderRecover>(
+          create: (context) => CatalogProviderRecover(),
           lazy: false,
         ),
         ChangeNotifierProvider(
