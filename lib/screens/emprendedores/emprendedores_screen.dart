@@ -500,8 +500,8 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     DetallesEmprendedorScreen(
-                                                        emprendedor:
-                                                            emprendedor),
+                                                        idEmprendedor:
+                                                            emprendedor.id),
                                               ),
                                             );
                                           },

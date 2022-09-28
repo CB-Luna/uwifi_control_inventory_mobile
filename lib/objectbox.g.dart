@@ -80,13 +80,6 @@ final _entities = <ModelEntity>[
             flags: 2080,
             indexId: const IdUid(62, 2735008652274095664)),
         ModelProperty(
-            id: const IdUid(23, 5115364499969904783),
-            name: 'comunidadId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(108, 9172016749357144224),
-            relationTarget: 'Comunidades'),
-        ModelProperty(
             id: const IdUid(24, 9067992503886811416),
             name: 'usuarioId',
             type: 11,
@@ -531,9 +524,7 @@ final _entities = <ModelEntity>[
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
         ModelBacklink(
-            name: 'emprendedores', srcEntity: 'Emprendedores', srcField: ''),
-        ModelBacklink(
-            name: 'emprendimientos', srcEntity: 'Emprendimientos', srcField: '')
+            name: 'emprendedores', srcEntity: 'Emprendedores', srcField: '')
       ]),
   ModelEntity(
       id: const IdUid(21, 311544265460535081),
@@ -2843,7 +2834,8 @@ ModelDefinition getObjectBoxModel() {
         6721811467857329542,
         8251082717356223611,
         2449024482161215302,
-        4751856482932078104
+        4751856482932078104,
+        9172016749357144224
       ],
       retiredPropertyUids: const [
         7079790605743243388,
@@ -3066,7 +3058,8 @@ ModelDefinition getObjectBoxModel() {
         2112559093449404088,
         5332627173857470047,
         7823032235829845864,
-        5194084986301717278
+        5194084986301717278,
+        5115364499969904783
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -3089,7 +3082,6 @@ ModelDefinition getObjectBoxModel() {
         toOneRelations: (Emprendimientos object) => [
               object.emprendedor,
               object.statusSync,
-              object.comunidad,
               object.usuario,
               object.prioridadEmp,
               object.catalogoProyecto
@@ -3134,7 +3126,6 @@ ModelDefinition getObjectBoxModel() {
           fbb.addBool(15, object.activo);
           fbb.addBool(16, object.archivado);
           fbb.addOffset(18, idDBROffset);
-          fbb.addInt64(22, object.comunidad.targetId);
           fbb.addInt64(23, object.usuario.targetId);
           fbb.addInt64(24, object.prioridadEmp.targetId);
           fbb.addInt64(26, object.catalogoProyecto.targetId);
@@ -3170,9 +3161,6 @@ ModelDefinition getObjectBoxModel() {
           object.statusSync.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 32, 0);
           object.statusSync.attach(store);
-          object.comunidad.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 48, 0);
-          object.comunidad.attach(store);
           object.usuario.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 50, 0);
           object.usuario.attach(store);
@@ -3548,10 +3536,7 @@ ModelDefinition getObjectBoxModel() {
         toManyRelations: (Comunidades object) => {
               RelInfo<Emprendedores>.toOneBacklink(21, object.id,
                       (Emprendedores srcObject) => srcObject.comunidad):
-                  object.emprendedores,
-              RelInfo<Emprendimientos>.toOneBacklink(23, object.id,
-                      (Emprendimientos srcObject) => srcObject.comunidad):
-                  object.emprendimientos
+                  object.emprendedores
             },
         getId: (Comunidades object) => object.id,
         setId: (Comunidades object, int id) {
@@ -3597,12 +3582,6 @@ ModelDefinition getObjectBoxModel() {
               store,
               RelInfo<Emprendedores>.toOneBacklink(21, object.id,
                   (Emprendedores srcObject) => srcObject.comunidad),
-              store.box<Comunidades>());
-          InternalToManyAccess.setRelInfo(
-              object.emprendimientos,
-              store,
-              RelInfo<Emprendimientos>.toOneBacklink(23, object.id,
-                  (Emprendimientos srcObject) => srcObject.comunidad),
               store.box<Comunidades>());
           return object;
         }),
@@ -6100,26 +6079,22 @@ class Emprendimientos_ {
   static final idDBR =
       QueryStringProperty<Emprendimientos>(_entities[0].properties[9]);
 
-  /// see [Emprendimientos.comunidad]
-  static final comunidad = QueryRelationToOne<Emprendimientos, Comunidades>(
-      _entities[0].properties[10]);
-
   /// see [Emprendimientos.usuario]
   static final usuario = QueryRelationToOne<Emprendimientos, Usuarios>(
-      _entities[0].properties[11]);
+      _entities[0].properties[10]);
 
   /// see [Emprendimientos.prioridadEmp]
   static final prioridadEmp = QueryRelationToOne<Emprendimientos, PrioridadEmp>(
-      _entities[0].properties[12]);
+      _entities[0].properties[11]);
 
   /// see [Emprendimientos.catalogoProyecto]
   static final catalogoProyecto =
       QueryRelationToOne<Emprendimientos, CatalogoProyecto>(
-          _entities[0].properties[13]);
+          _entities[0].properties[12]);
 
   /// see [Emprendimientos.idInversionJornada]
   static final idInversionJornada =
-      QueryIntegerProperty<Emprendimientos>(_entities[0].properties[14]);
+      QueryIntegerProperty<Emprendimientos>(_entities[0].properties[13]);
 
   /// see [Emprendimientos.jornadas]
   static final jornadas =

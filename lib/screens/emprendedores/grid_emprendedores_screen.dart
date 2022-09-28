@@ -293,7 +293,7 @@ class _GridEmprendedoresScreenState extends State<GridEmprendedoresScreen> {
                                                 MaterialPageRoute(
                                                   builder: (context) =>
                                                       DetallesEmprendedorScreen(
-                                                    emprendedor: emprendedor,
+                                                    idEmprendedor: emprendedor.id,
                                                   ),
                                                 ),
                                               );

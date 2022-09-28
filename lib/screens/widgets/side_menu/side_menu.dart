@@ -8,6 +8,7 @@ import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_cerrar_sesion.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_sincronizar_widget.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/providers/providers.dart';
@@ -210,7 +211,7 @@ class SideMenu extends StatelessWidget {
                         );
                       },
                     ),
-
+                    
                     CustomMenuItem(
                       label: 'Sincronizar',
                       iconData: Icons.sync_rounded,
@@ -243,6 +244,41 @@ class SideMenu extends StatelessWidget {
                             );
                           },
                         );
+                      },
+                    ),
+
+                    CustomMenuItem(
+                      label: 'Catálogos',
+                      iconData: Icons.fact_check_outlined,
+                      lineHeight: 1.2,
+                      onTap: () async {
+                        // final connectivityResult =
+                        //     await (Connectivity().checkConnectivity());
+                        // final bitacora = dataBase.bitacoraBox.getAll().toList();
+                        // print("Tamaño bitacora: ${bitacora.length}");
+                        // await showModalBottomSheet(
+                        //   isScrollControlled: true,
+                        //   backgroundColor: Colors.transparent,
+                        //   context: context,
+                        //   builder: (context) {
+                        //     return Padding(
+                        //       padding: MediaQuery.of(context).viewInsets,
+                        //       child: SizedBox(
+                        //         height:
+                        //             MediaQuery.of(context).size.height * 0.45,
+                        //         child: connectivityResult ==
+                        //                     ConnectivityResult.none ||
+                        //                 bitacora.isEmpty
+                        //             ? const BottomSheetSincronizarWidget(
+                        //                 isVisible: false,
+                        //               )
+                        //             : const BottomSheetSincronizarWidget(
+                        //                 isVisible: true,
+                        //               ),
+                        //       ),
+                        //     );
+                        //   },
+                        // );
                       },
                     ),
 

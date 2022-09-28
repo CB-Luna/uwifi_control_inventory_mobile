@@ -1,13 +1,16 @@
+import 'package:bizpro_app/screens/emprendedores/detalle_emprendedor_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:bizpro_app/theme/theme.dart';
-
-import 'package:bizpro_app/screens/emprendedores/emprendedores_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 class EmprendedorActualizado extends StatefulWidget {
-  const EmprendedorActualizado({Key? key}) : super(key: key);
+  final int idEmprendedor;
+  const EmprendedorActualizado({
+    Key? key, 
+    required this.idEmprendedor
+    }) : super(key: key);
 
   @override
   State<EmprendedorActualizado> createState() => _EmprendedorActualizadoState();
@@ -80,7 +83,9 @@ class _EmprendedorActualizadoState extends State<EmprendedorActualizado> {
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const EmprendedoresScreen(),
+                              builder: (context) => DetallesEmprendedorScreen(
+                                idEmprendedor: widget.idEmprendedor,
+                                ),
                             ),
                           );
                         },

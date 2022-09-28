@@ -1,12 +1,11 @@
+import 'package:bizpro_app/models/temporals/emprendedor_temporal.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/database/entitys.dart';
 class EmprendedorController extends ChangeNotifier {
-
-  List<Emprendedores> emprendedores = [];
-  Emprendedores? emprendedor; 
+  EmprendedorTemporal? emprendedor; 
 
   GlobalKey<FormState> emprendedorFormKey = GlobalKey<FormState>();
 
@@ -44,40 +43,42 @@ class EmprendedorController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addTemporaly() {
-  emprendedor = Emprendedores(
+  void addTemporaly(int idComunidad) {
+  emprendedor = EmprendedorTemporal(
     imagen: imagen,
     nombre: nombre, 
     apellidos: apellidos,
     nacimiento: nacimiento?? DateTime.parse("2000-02-27 13:27:00"), 
     curp: curp, 
-    integrantesFamilia: integrantesFamilia, 
+    integrantesFamilia: int.parse(integrantesFamilia), 
     telefono: telefono, 
     comentarios: comentarios,  
+    idComunidad: idComunidad,
+    fechaRegistro: DateTime.now(),
   );
-  emprendedores.add(emprendedor!);
   asociado = true;
   print('Emprendedor temporal guardado éxitosamente');
   notifyListeners();
 }
 
-  void add(int idEmprendimiento, int idComunidad) {
-    final nuevoEmprendedor = Emprendedores(
-      imagen: imagen,
-      nombre: nombre, 
-      apellidos: apellidos,
-      nacimiento: nacimiento?? DateTime.parse("2000-02-27 13:27:00"), 
-      curp: curp, 
-      integrantesFamilia: integrantesFamilia, 
-      telefono: telefono, 
-      comentarios: comentarios,  
+  void add(int idEmprendimiento) {
+    if (emprendedor != null) {
+      final nuevoEmprendedor = Emprendedores(
+      imagen: emprendedor?.imagen ?? "",
+      nombre: emprendedor!.nombre, 
+      apellidos: emprendedor!.apellidos,
+      nacimiento: emprendedor?.nacimiento ?? DateTime.parse("2000-02-27 13:27:00"), 
+      curp: emprendedor!.curp, 
+      integrantesFamilia: emprendedor!.integrantesFamilia.toString(), 
+      telefono: emprendedor!.telefono, 
+      comentarios: emprendedor!.comentarios,  
       );
 
       final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
       if (emprendimiento != null) {
         final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
         final nuevaInstruccion = Bitacora(instrucciones: 'syncAddEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-        final comunidad = dataBase.comunidadesBox.get(idComunidad);
+        final comunidad = dataBase.comunidadesBox.get(emprendedor!.idComunidad);
         if (comunidad != null) {
           nuevoEmprendedor.comunidad.target = comunidad;
           nuevoEmprendedor.statusSync.target = nuevoSync;
@@ -86,12 +87,15 @@ class EmprendedorController extends ChangeNotifier {
           emprendimiento.emprendedor.target = nuevoEmprendedor;
           dataBase.emprendimientosBox.put(emprendimiento);
           // dataBase.emprendedoresBox.put(nuevoEmprendedor);
-          emprendedores.add(nuevoEmprendedor);
           print('Emprendedor agregado exitosamente');
           clearInformation();
           notifyListeners();
         }
       }
+      
+    } else {
+      
+    }
 
       // dataBase.emprendedoresBox.put(nuevoEmprendedor);
       // emprendedores.add(nuevoEmprendedor);
@@ -129,26 +133,15 @@ class EmprendedorController extends ChangeNotifier {
     notifyListeners(); 
   }
 
-  getAll() {
-    emprendedores = dataBase.emprendedoresBox.getAll();
-    notifyListeners();
-  }
 
   List<Emprendedores> getEmprendedoresActualUser(List<Emprendimientos> emprendimientos) {
-    emprendedores = [];
+    List<Emprendedores> emprendedoresActualUser = [];
     for (var element in emprendimientos) {
       if (element.emprendedor.target != null) {
-        emprendedores.add(element.emprendedor.target!);
+        emprendedoresActualUser.add(element.emprendedor.target!);
       }
     }
-    return emprendedores;
-  }
-
-  void getEmprendedoresByEmprendimiento(Emprendimientos emprendimiento) {
-    emprendedores = [];
-     if (emprendimiento.emprendedor.target != null) {
-        emprendedores.add(emprendimiento.emprendedor.target!);
-      }
+    return emprendedoresActualUser;
   }
   
 }

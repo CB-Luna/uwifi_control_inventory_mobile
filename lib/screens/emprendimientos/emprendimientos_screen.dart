@@ -444,7 +444,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                                     comunidad: 
                                                         jornada
                                                         .emprendimiento.target!
-                                                        .comunidad.target!.nombre,
+                                                        .emprendedor.target!.comunidad.target!.nombre,
                                                     emprendimiento: emp.nombre,
                                                     jornada: 
                                                         jornada.numJornada.toString(),
@@ -492,7 +492,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                                       "${emp.emprendedor.target!.nombre} ${emp.emprendedor.target!.apellidos}",
                                                   emprendimiento: emp.nombre,
                                                   comunidad: emp
-                                                      .comunidad.target!.nombre,
+                                                      .emprendedor.target!.comunidad.target!.nombre,
                                                   tipoProyecto: emp
                                                               .catalogoProyecto
                                                               .target !=
