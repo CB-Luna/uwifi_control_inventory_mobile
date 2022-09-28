@@ -736,7 +736,7 @@ class _RegistroVentaScreenState
                                                                               .spaceBetween,
                                                                       children: [
                                                                         Text(
-                                                                          "Precio: \$ ${currencyFormat.format(prodVendido
+                                                                          "Precio:  ${currencyFormat.format(prodVendido
                                                                                     .precioVenta
                                                                                     .toStringAsFixed(2))}) ",
                                                                           textAlign:
@@ -749,7 +749,7 @@ class _RegistroVentaScreenState
                                                                               ),
                                                                         ),
                                                                         Text(
-                                                                          "Subtotal: \$ ${currencyFormat.format(prodVendido
+                                                                          "Subtotal:  ${currencyFormat.format(prodVendido
                                                                                     .subtotal
                                                                                     .toStringAsFixed(2))}",
                                                                           style: AppTheme.of(context)

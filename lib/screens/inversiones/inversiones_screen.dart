@@ -608,7 +608,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                               0),
                                                                   child: Text(
                                                                     maybeHandleOverflow(
-                                                                    '\$${currencyFormat.format(inversion.totalInversion.toStringAsFixed(2))}'
+                                                                    currencyFormat.format(inversion.totalInversion.toStringAsFixed(2))
                                                                     , 12, "..."
                                                                     ),
                                                                     style: AppTheme.of(
