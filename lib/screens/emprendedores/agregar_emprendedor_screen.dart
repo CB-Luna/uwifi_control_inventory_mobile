@@ -825,6 +825,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                               if (emprendedor != null) {
                                                 final emprendimiento = 
                                                 dataBase.emprendimientosBox.get(emprendedor.emprendimiento.target!.id);
+                                                print("Recover");
                                                 if (emprendimiento != null && emprendedor.emprendimiento.target!.archivado == false) {
                                                   snackbarKey.currentState
                                                       ?.showSnackBar(const SnackBar(
@@ -833,9 +834,6 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                                   ));
                                                 } else {
                                                   emprendimiento!.activo == false;
-                                                  emprendedor.emprendimiento.target == null;
-                                                  emprendimiento.emprendedor.target == null;
-                                                  dataBase.emprendedoresBox.put(emprendedor);
                                                   dataBase.emprendimientosBox.put(emprendimiento);
                                                   emprendedorProvider
                                                         .recoverTemporaly(emprendedor.id);
@@ -848,6 +846,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                                 }
                                               }
                                               else {
+                                                print("ADD");
                                               final idEstado = dataBase.estadosBox
                                                 .query(Estados_.nombre
                                                     .equals(nombreEstado))

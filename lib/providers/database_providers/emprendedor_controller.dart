@@ -121,17 +121,12 @@ class EmprendedorController extends ChangeNotifier {
         emprendimiento.emprendedor.target = recoverEmprendedor;
         dataBase.emprendimientosBox.put(emprendimiento);
         // dataBase.emprendedoresBox.put(nuevoEmprendedor);
-        print('Emprendedor asc¿ociado exitosamente');
+        print('Emprendedor ascociado exitosamente');
         clearInformation();
         notifyListeners();
       }
       
-    } else {
-      
     }
-
-      // dataBase.emprendedoresBox.put(nuevoEmprendedor);
-      // emprendedores.add(nuevoEmprendedor);
   }
 
   void update(int id, String newImagen, String newNombre, String newApellidos, String newCurp, 

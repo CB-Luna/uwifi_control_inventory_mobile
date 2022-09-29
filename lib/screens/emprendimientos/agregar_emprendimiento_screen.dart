@@ -418,6 +418,7 @@ class _AgregarEmprendimientoScreenState
                                         if (emprendimientoProvider
                                                 .validateForm(formKey) &&
                                             emprendedorProvider.asociado) {
+                                              print("ACTION: $accion");
                                           // comunidadProvider.add();
                                                 emprendimientoProvider
                                                     .add();
@@ -429,11 +430,13 @@ class _AgregarEmprendimientoScreenState
                                                         .idEmprendimiento !=
                                                     null) {
                                                   if (accion == "add") {
+                                                    print("Holis soy yo add");
                                                     emprendedorProvider.add(
                                                       emprendimientoProvider
                                                           .idEmprendimiento!);
                                                   }
                                                   if (accion == "recover") {
+                                                    print("Holis soy yo recover");
                                                     emprendedorProvider.asociate(
                                                       emprendimientoProvider
                                                           .idEmprendimiento!);
