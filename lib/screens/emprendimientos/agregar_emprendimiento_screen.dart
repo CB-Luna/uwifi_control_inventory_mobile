@@ -27,6 +27,7 @@ class _AgregarEmprendimientoScreenState
     extends State<AgregarEmprendimientoScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
+  late String accion = "";
   XFile? image;
 
   @override
@@ -34,6 +35,7 @@ class _AgregarEmprendimientoScreenState
     // TODO: implement initState
     super.initState();
     setState(() {
+      accion = "";
     });
   }
 
@@ -367,7 +369,7 @@ class _AgregarEmprendimientoScreenState
                                                 "Ya se ha asociado un emprendedor, no puedes agregar más."),
                                           ));
                                         } else {
-                                          await Navigator.push(
+                                          accion = await Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
@@ -416,6 +418,7 @@ class _AgregarEmprendimientoScreenState
                                         if (emprendimientoProvider
                                                 .validateForm(formKey) &&
                                             emprendedorProvider.asociado) {
+                                              print("ACTION: $accion");
                                           // comunidadProvider.add();
                                                 emprendimientoProvider
                                                     .add();
@@ -426,9 +429,18 @@ class _AgregarEmprendimientoScreenState
                                                 if (emprendimientoProvider
                                                         .idEmprendimiento !=
                                                     null) {
-                                                  emprendedorProvider.add(
+                                                  if (accion == "add") {
+                                                    print("Holis soy yo add");
+                                                    emprendedorProvider.add(
                                                       emprendimientoProvider
                                                           .idEmprendimiento!);
+                                                  }
+                                                  if (accion == "recover") {
+                                                    print("Holis soy yo recover");
+                                                    emprendedorProvider.asociate(
+                                                      emprendimientoProvider
+                                                          .idEmprendimiento!);
+                                                  }
                                                 }
                                                 await Navigator.push(
                                                   context,

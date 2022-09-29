@@ -13,7 +13,6 @@ import 'package:bizpro_app/helpers/constants.dart';
 
 import 'package:bizpro_app/models/get_clasificacion_emp.dart';
 import 'package:bizpro_app/models/get_comunidades.dart';
-import 'package:bizpro_app/models/get_familia_inversion.dart';
 import 'package:bizpro_app/models/get_ambito_consultoria.dart';
 import 'package:bizpro_app/models/get_area_circulo.dart';
 import 'package:bizpro_app/models/get_catalogos_proyectos.dart';
@@ -28,12 +27,10 @@ import 'package:bizpro_app/models/get_tipo_empaques.dart';
 import 'package:bizpro_app/util/util.dart';
 
 import 'package:http/http.dart' as http;
-
 import '../objectbox.g.dart';
 
 class CatalogProvider extends ChangeNotifier {
 
-  
   bool procesoterminado = false;
   bool procesocargando = false;
 
@@ -53,7 +50,6 @@ class CatalogProvider extends ChangeNotifier {
     await getComunidades();
     await getClasificacionesEmp();
     await getCatalogosProyectos();
-    await getFamiliaInversion();
     await getFamiliaProd();
     await getUnidadMedida();
     await getAmbitoConsultoria();
@@ -84,8 +80,6 @@ class CatalogProvider extends ChangeNotifier {
       for (var element in records) {
         listEstados.add(getEstadosFromMap(element.toString()));
       }
-      
-      listEstados.sort((a, b) => removeDiacritics(a.nombreEstado).compareTo(removeDiacritics(b.nombreEstado)));
 
       print("*****Informacion estados*****");
       for (var i = 0; i < listEstados.length; i++) {
@@ -94,6 +88,7 @@ class CatalogProvider extends ChangeNotifier {
         nombre: listEstados[i].nombreEstado,
         activo: listEstados[i].activo,
         idDBR: listEstados[i].id,
+        fechaRegistro: listEstados[i].updated
         );
         final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
         nuevoEstado.statusSync.target = nuevoSync;
@@ -122,8 +117,6 @@ class CatalogProvider extends ChangeNotifier {
         listMunicipios.add(getMunicipiosFromMap(element.toString()));
       }
 
-      listMunicipios.sort((a, b) => removeDiacritics(a.nombreMunicipio).compareTo(removeDiacritics(b.nombreMunicipio)));
-
       print("*****Informacion municipios****");
       for (var i = 0; i < listMunicipios.length; i++) {
         if (listMunicipios[i].id.isNotEmpty) {
@@ -131,6 +124,7 @@ class CatalogProvider extends ChangeNotifier {
         nombre: listMunicipios[i].nombreMunicipio,
         activo: listMunicipios[i].activo,
         idDBR: listMunicipios[i].id,
+        fechaRegistro: listMunicipios[i].updated
         );
         final estado = dataBase.estadosBox.query(Estados_.idDBR.equals(listMunicipios[i].idEstadoFk)).build().findUnique();
         if (estado != null) {
@@ -163,8 +157,6 @@ class CatalogProvider extends ChangeNotifier {
         listComunidades.add(getComunidadesFromMap(element.toString()));
       }
 
-      listComunidades.sort((a, b) => removeDiacritics(a.nombreComunidad).compareTo(removeDiacritics(b.nombreComunidad)));
-
       print("****Informacion comunidades****");
       for (var i = 0; i < records.length; i++) {
         if (listComunidades[i].id.isNotEmpty) {
@@ -172,6 +164,7 @@ class CatalogProvider extends ChangeNotifier {
         nombre: listComunidades[i].nombreComunidad,
         activo: listComunidades[i].activo,
         idDBR: listComunidades[i].id,
+        fechaRegistro: listComunidades[i].updated
         );
         final municipio = dataBase.municipiosBox.query(Municipios_.idDBR.equals(listComunidades[i].idMunicipioFk)).build().findUnique();
         if (municipio != null) {
@@ -193,6 +186,7 @@ class CatalogProvider extends ChangeNotifier {
       notifyListeners();
       }
     }
+
   Future<void> getRoles() async {
     if (dataBase.rolesBox.isEmpty()) {
       final records = await client.records.
@@ -201,8 +195,6 @@ class CatalogProvider extends ChangeNotifier {
       for (var element in records) {
         listRoles.add(getRolesFromMap(element.toString()));
       }
-      
-      listRoles.sort((a, b) => removeDiacritics(a.rol).compareTo(removeDiacritics(b.rol)));
 
       print("*****Informacion roles*****");
       for (var i = 0; i < listRoles.length; i++) {
@@ -210,6 +202,7 @@ class CatalogProvider extends ChangeNotifier {
         final nuevoRol = Roles(
         rol: listRoles[i].rol,
         idDBR: listRoles[i].id,
+        fechaRegistro: listRoles[i].updated
         );
         final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
         nuevoRol.statusSync.target = nuevoSync;
@@ -238,8 +231,6 @@ class CatalogProvider extends ChangeNotifier {
         listClasificacionEmp.add(getClasificacionEmpFromMap(element.toString()));
       }
 
-      listClasificacionEmp.sort((a, b) => removeDiacritics(a.clasificacion).compareTo(removeDiacritics(b.clasificacion)));
-
       print("****Informacion clasificaciones_emp****");
       for (var i = 0; i < listClasificacionEmp.length; i++) {
         if (listClasificacionEmp[i].id.isNotEmpty) {
@@ -247,6 +238,7 @@ class CatalogProvider extends ChangeNotifier {
         clasificacion: listClasificacionEmp[i].clasificacion,
         activo: listClasificacionEmp[i].activo,
         idDBR: listClasificacionEmp[i].id,
+        fechaRegistro: listClasificacionEmp[i].updated
         );
         final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
         nuevaClasificacionEmp.statusSync.target = nuevoSync;
@@ -265,42 +257,6 @@ class CatalogProvider extends ChangeNotifier {
     }    
   }
 
-  Future<void> getFamiliaInversion() async {
-    if (dataBase.familiaInversionBox.isEmpty()) {
-      final records = await client.records.
-      getFullList('familia_inversion', batch: 200, sort: '+nombre_familia_inver');
-      final List<GetFamiliaInversion> listFamiliaInversion = [];
-      for (var element in records) {
-        listFamiliaInversion.add(getFamiliaInversionFromMap(element.toString()));
-      }
-
-      listFamiliaInversion.sort((a, b) => removeDiacritics(a.nombreFamiliaInver).compareTo(removeDiacritics(b.nombreFamiliaInver)));
-
-      print("****Informacion familia_inversion****");
-      for (var i = 0; i < listFamiliaInversion.length; i++) {
-        if (listFamiliaInversion[i].id.isNotEmpty) {
-        final nuevaFamiliaInversion = FamiliaInversion(
-        nombre: listFamiliaInversion[i].nombreFamiliaInver,
-        activo: listFamiliaInversion[i].activo,
-        idDBR: listFamiliaInversion[i].id,
-        );
-        final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
-        nuevaFamiliaInversion.statusSync.target = nuevoSync;
-        dataBase.familiaInversionBox.put(nuevaFamiliaInversion);
-        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-        print('Familia Inversion agregada exitosamente');
-        final record = await client.records.update('familia_inversion', listFamiliaInversion[i].id, body: {
-          'id_status_sync_fk': 'HoI36PzYw1wtbO1',
-        });
-        if (record.id.isNotEmpty) {
-            print('Familia Inversion actualizada en el backend exitosamente');
-          }
-        }
-      }
-      notifyListeners();
-      }
-  }
-
   Future<void> getFamiliaProd() async {
     if (dataBase.familiaProductosBox.isEmpty()) {
       final records = await client.records.
@@ -310,8 +266,6 @@ class CatalogProvider extends ChangeNotifier {
         listFamiliaProductos.add(getFamiliaProductosFromMap(element.toString()));
       }
 
-      listFamiliaProductos.sort((a, b) => removeDiacritics(a.nombreTipoProd).compareTo(removeDiacritics(b.nombreTipoProd)));
-
       print("****Informacion familia_productos****");
       for (var i = 0; i < listFamiliaProductos.length; i++) {
         if (listFamiliaProductos[i].id.isNotEmpty) {
@@ -319,18 +273,13 @@ class CatalogProvider extends ChangeNotifier {
         nombre: listFamiliaProductos[i].nombreTipoProd,
         activo: listFamiliaProductos[i].activo,
         idDBR: listFamiliaProductos[i].id,
+        fechaRegistro: listFamiliaProductos[i].updated
         );
         final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
         nuevaFamiliaProductos.statusSync.target = nuevoSync;
         dataBase.familiaProductosBox.put(nuevaFamiliaProductos);
         print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
         print('Familia Productos agregada exitosamente');
-        // final record = await client.records.update('familia_prod', listFamiliaProductos[i].id, body: {
-        //   'id_status_sync_fk': 'HoI36PzYw1wtbO1',
-        // });
-        // if (record.id.isNotEmpty) {
-        //     print('Familia productos actualizada en el backend exitosamente');
-        //   }
         }
       }
       notifyListeners();
@@ -346,8 +295,6 @@ class CatalogProvider extends ChangeNotifier {
         listUnidadMedida.add(getUnidadesMedidaFromMap(element.toString()));
       }
 
-      listUnidadMedida.sort((a, b) => removeDiacritics(a.unidadMedida).compareTo(removeDiacritics(b.unidadMedida)));
-
       print("****Informacion und_medida****");
       for (var i = 0; i < listUnidadMedida.length; i++) {
         if (listUnidadMedida[i].id.isNotEmpty) {
@@ -355,6 +302,7 @@ class CatalogProvider extends ChangeNotifier {
         unidadMedida: listUnidadMedida[i].unidadMedida,
         activo: listUnidadMedida[i].activo,
         idDBR: listUnidadMedida[i].id,
+        fechaRegistro: listUnidadMedida[i].updated
         );
         final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
         nuevaUnidadMedida.statusSync.target = nuevoSync;
@@ -383,7 +331,6 @@ class CatalogProvider extends ChangeNotifier {
         listCatalogoProyecto.add(getCatalogoProyectosFromMap(element.toString()));
       }
 
-      listCatalogoProyecto.sort((a, b) => removeDiacritics(a.nombreProyecto).compareTo(removeDiacritics(b.nombreProyecto)));
       print("****Informacion catalogos proyectos****");
       for (var i = 0; i < records.length; i++) {
         print(records[i]);
@@ -391,6 +338,7 @@ class CatalogProvider extends ChangeNotifier {
         final nuevoCatalogoProyecto = CatalogoProyecto(
         nombre: listCatalogoProyecto[i].nombreProyecto,
         idDBR: listCatalogoProyecto[i].id,
+        fechaRegistro: listCatalogoProyecto[i].updated
         );
         final clasificacionEmp = dataBase.clasificacionesEmpBox.query(ClasificacionEmp_.idDBR.equals(listCatalogoProyecto[i].idClasificacionEmprendimiento)).build().findUnique();
         if (clasificacionEmp != null) {
@@ -421,7 +369,7 @@ class CatalogProvider extends ChangeNotifier {
       for (var element in records) {
         listAmbitoConsultoria.add(getAmbitoConsultoriaFromMap(element.toString()));
       }
-      listAmbitoConsultoria.sort((a, b) => removeDiacritics(a.nombreAmbito).compareTo(removeDiacritics(b.nombreAmbito)));
+
       print("****Informacion ambito consultoria****");
       for (var i = 0; i < records.length; i++) {
         print(records[i]);
@@ -429,6 +377,8 @@ class CatalogProvider extends ChangeNotifier {
         final nuevoAmbitoConsultoria = AmbitoConsultoria(
         nombreAmbito: listAmbitoConsultoria[i].nombreAmbito,
         idDBR: listAmbitoConsultoria[i].id,
+        activo: listAmbitoConsultoria[i].activo,
+        fechaRegistro: listAmbitoConsultoria[i].updated
         );
         final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
         nuevoAmbitoConsultoria.statusSync.target = nuevoSync;
@@ -455,7 +405,6 @@ class CatalogProvider extends ChangeNotifier {
       for (var element in records) {
         listAreaCirculo.add(getAreaCirculoFromMap(element.toString()));
       }
-      listAreaCirculo.sort((a, b) => removeDiacritics(a.nombreArea).compareTo(removeDiacritics(b.nombreArea)));
       print("****Informacion area circulo****");
       for (var i = 0; i < records.length; i++) {
         print(records[i]);
@@ -463,6 +412,8 @@ class CatalogProvider extends ChangeNotifier {
         final nuevaAreaCirculo = AreaCirculo(
         nombreArea: listAreaCirculo[i].nombreArea,
         idDBR: listAreaCirculo[i].id,
+        activo: listAreaCirculo[i].activo,
+        fechaRegistro: listAreaCirculo[i].updated
         );
         final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
         nuevaAreaCirculo.statusSync.target = nuevoSync;
@@ -489,7 +440,6 @@ class CatalogProvider extends ChangeNotifier {
       for (var element in records) {
         listFasesEmp.add(getFasesEmpFromMap(element.toString()));
       }
-      // listFasesEmp.sort((a, b) => removeDiacritics(a.fase).compareTo(removeDiacritics(b.fase)));
       print("****Informacion fase emp****");
       for (var i = 0; i < records.length; i++) {
         print(records[i]);
@@ -497,6 +447,7 @@ class CatalogProvider extends ChangeNotifier {
         final nuevaFaseEmp = FasesEmp(
         fase: listFasesEmp[i].fase,
         idDBR: listFasesEmp[i].id,
+        fechaRegistro: listFasesEmp[i].updated
         );
         final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
         nuevaFaseEmp.statusSync.target = nuevoSync;
@@ -517,13 +468,14 @@ class CatalogProvider extends ChangeNotifier {
       for (var element in records) {
         listTipoEmpaques.add(getTipoEmpaquesFromMap(element.toString()));
       }
-      listTipoEmpaques.sort((a, b) => removeDiacritics(a.tipoEmpaque).compareTo(removeDiacritics(b.tipoEmpaque)));
       print("****Informacion tipo empaque****");
       for (var i = 0; i < records.length; i++) {
         if (listTipoEmpaques[i].id.isNotEmpty) {
         final nuevoTipoEmpaque = TipoEmpaques(
         tipo: listTipoEmpaques[i].tipoEmpaque,
         idDBR: listTipoEmpaques[i].id,
+        activo: listTipoEmpaques[i].activo,
+        fechaRegistro: listTipoEmpaques[i].updated
         );
         final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
         nuevoTipoEmpaque.statusSync.target = nuevoSync;
@@ -544,13 +496,13 @@ class CatalogProvider extends ChangeNotifier {
       for (var element in records) {
         listEstadoInversiones.add(getEstadoInversionesFromMap(element.toString()));
       }
-      listEstadoInversiones.sort((a, b) => removeDiacritics(a.estado).compareTo(removeDiacritics(b.estado)));
       print("****Informacion estado inversiones****");
       for (var i = 0; i < records.length; i++) {
         if (listEstadoInversiones[i].id.isNotEmpty) {
         final nuevaEstadoInversiones = EstadoInversion(
         estado: listEstadoInversiones[i].estado,
         idDBR: listEstadoInversiones[i].id,
+        fechaRegistro: listEstadoInversiones[i].updated
         );
         final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
         nuevaEstadoInversiones.statusSync.target = nuevoSync;
@@ -571,7 +523,6 @@ class CatalogProvider extends ChangeNotifier {
       for (var element in records) {
         listTipoProveedor.add(getTipoProveedorFromMap(element.toString()));
       }
-      listTipoProveedor.sort((a, b) => removeDiacritics(a.tipoProveedor).compareTo(removeDiacritics(b.tipoProveedor)));
       print("****Informacion tipo proveedor****");
       for (var i = 0; i < records.length; i++) {
         if (listTipoProveedor[i].id.isNotEmpty) {
@@ -579,6 +530,7 @@ class CatalogProvider extends ChangeNotifier {
         tipo: listTipoProveedor[i].tipoProveedor,
         idDBR: listTipoProveedor[i].id,
         activo: listTipoProveedor[i].activo,
+        fechaRegistro: listTipoProveedor[i].updated
         );
         dataBase.tipoProveedorBox.put(nuevoTipoProveedor);
         print('Tipo proveedor agregado exitosamente');
@@ -596,7 +548,7 @@ class CatalogProvider extends ChangeNotifier {
       for (var element in records) {
         listCondicionesPago.add(getCondicionesPagoFromMap(element.toString()));
       }
-      listCondicionesPago.sort((a, b) => removeDiacritics(a.condicionPago).compareTo(removeDiacritics(b.condicionPago)));
+    
       print("****Informacion condición pago****");
       for (var i = 0; i < records.length; i++) {
         if (listCondicionesPago[i].id.isNotEmpty) {
@@ -604,6 +556,7 @@ class CatalogProvider extends ChangeNotifier {
         condicion: listCondicionesPago[i].condicionPago,
         idDBR: listCondicionesPago[i].id,
         activo: listCondicionesPago[i].activo,
+        fechaRegistro: listCondicionesPago[i].updated
         );
         dataBase.condicionesPagoBox.put(nuevaCondicionPago);
         print('Condición pago agregada exitosamente');
@@ -621,7 +574,6 @@ Future<void> getBancos() async {
       for (var element in records) {
         listBancos.add(getBancosFromMap(element.toString()));
       }
-      listBancos.sort((a, b) => removeDiacritics(a.nombreBanco).compareTo(removeDiacritics(b.nombreBanco)));
       print("****Informacion banco****");
       for (var i = 0; i < records.length; i++) {
         if (listBancos[i].id.isNotEmpty) {
@@ -629,6 +581,7 @@ Future<void> getBancos() async {
         banco: listBancos[i].nombreBanco,
         idDBR: listBancos[i].id,
         activo: listBancos[i].activo,
+        fechaRegistro: listBancos[i].updated
         );
         dataBase.bancosBox.put(nuevoBanco);
         print('Banco agregado exitosamente');
@@ -653,6 +606,7 @@ Future<void> getPorcentajeAvance() async {
         porcentajeAvance: listPorcentaje[i].porcentaje,
         idDBR: listPorcentaje[i].id,
         activo: listPorcentaje[i].activo,
+        fechaRegistro: listPorcentaje[i].updated
         );
         dataBase.porcentajeAvanceBox.put(nuevoPorcentaje);
         print('Porcentaje agregado exitosamente');
@@ -670,13 +624,14 @@ Future<void> getEstadosProdCotizados() async {
       for (var element in records) {
         listEstadosProdCotizados.add(getEstadosProdCotizadosFromMap(element.toString()));
       }
-      listEstadosProdCotizados.sort((a, b) => removeDiacritics(a.estado).compareTo(removeDiacritics(b.estado)));
+
       print("****Informacion estado prod cotizado****");
       for (var i = 0; i < records.length; i++) {
         if (listEstadosProdCotizados[i].id.isNotEmpty) {
         final nuevoEstadoProdCotizado = EstadoProdCotizado(
         estado: listEstadosProdCotizados[i].estado,
         idDBR: listEstadosProdCotizados[i].id,
+        fechaRegistro: listEstadosProdCotizados[i].updated
         );
         dataBase.estadosProductoCotizadosBox.put(nuevoEstadoProdCotizado);
         print('Estado prod Cotizado agregado exitosamente');
@@ -694,7 +649,6 @@ Future<void> getProveedores() async {
       for (var element in records) {
         listProveedores.add(getProveedoresFromMap(element.toString()));
       }
-      listProveedores.sort((a, b) => removeDiacritics(a.nombreFiscal).compareTo(removeDiacritics(b.nombreFiscal)));
       print("****Informacion proveedor****");
       for (var i = 0; i < records.length; i++) {
         if (listProveedores[i].id.isNotEmpty) {
@@ -708,6 +662,7 @@ Future<void> getProveedores() async {
           registradoPor: listProveedores[i].registradoPor,
           archivado: listProveedores[i].archivado,
           idDBR: listProveedores[i].id,
+          fechaRegistro: listProveedores[i].updated
           );
           final tipoProveedor = dataBase.tipoProveedorBox.query(TipoProveedor_.idDBR.equals(listProveedores[i].idTipoProveedorFk)).build().findUnique();
           final condicionPago = dataBase.condicionesPagoBox.query(CondicionesPago_.idDBR.equals(listProveedores[i].idCondicionPagoFk)).build().findUnique();
@@ -735,7 +690,6 @@ Future<void> getProductosProv() async {
       for (var element in records) {
         listProductosProv.add(getProductosProvFromMap(element.toString()));
       }
-      listProductosProv.sort((a, b) => removeDiacritics(a.nombreProdProv).compareTo(removeDiacritics(b.nombreProdProv)));
       print("****Informacion producto prov****");
       for (var i = 0; i < records.length; i++) {
         if (listProductosProv[i].id.isNotEmpty) {
@@ -747,6 +701,7 @@ Future<void> getProductosProv() async {
           tiempoEntrega: listProductosProv[i].tiempoEntrega,
           archivado: listProductosProv[i].archivado,
           idDBR: listProductosProv[i].id,
+          fechaRegistro: listProductosProv[i].updated
           );
           final proveedor = dataBase.proveedoresBox.query(Proveedores_.idDBR.equals(listProductosProv[i].idProveedorFk)).build().findUnique();
           final unidadMedida = dataBase.unidadesMedidaBox.query(UnidadMedida_.idDBR.equals(listProductosProv[i].isUndMedidaFk)).build().findUnique();
@@ -774,8 +729,6 @@ Future<void> getProductosProv() async {
         listProdProyecto.add(getProdProyectoFromMap(element.toString()));
       }
 
-      listProdProyecto.sort((a, b) => removeDiacritics(a.producto).compareTo(removeDiacritics(b.producto)));
-
       print("****Informacion prod Proyecto****");
       for (var i = 0; i < records.length; i++) {
         if (listProdProyecto[i].id.isNotEmpty) {
@@ -787,6 +740,7 @@ Future<void> getProductosProv() async {
         cantidad: listProdProyecto[i].cantidad,
         costoEstimado: listProdProyecto[i].costoEstimado,
         idDBR: listProdProyecto[i].id,
+        fechaRegistro: listProdProyecto[i].updated
         );
         final familiaProd = dataBase.familiaProductosBox.query(FamiliaProd_.idDBR.equals(listProdProyecto[i].idFamiliaProdFk)).build().findUnique();
         final tipoEmpaque = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idDBR.equals(listProdProyecto[i].idTipoEmpaquesFk)).build().findUnique();

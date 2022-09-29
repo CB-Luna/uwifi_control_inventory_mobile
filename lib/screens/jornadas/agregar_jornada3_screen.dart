@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:bizpro_app/models/temporals/productos_solicitados_temporal.dart';
 import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -77,11 +78,13 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
     dataBase.clasificacionesEmpBox.getAll().forEach((element) {
       listTipoProyecto.add(element.clasificacion);
     });
+    listTipoProyecto.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     dataBase.catalogoProyectoBox.getAll().forEach((element) {
       if (element.clasificacionEmp.target?.clasificacion == tipoProyecto) {
         listProyectos.add(element.nombre);
       }
     });
+    listProyectos.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     emprendedor = "";
     if (widget.emprendimiento.emprendedor.target != null) {
       emprendedor =
@@ -858,11 +861,9 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                               listProyectos.add(element.nombre);
                                             }
                                           });
+                                          listProyectos.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
                                           print("Entro a tipo proyecto");
                                         }
-                                        print("Tipo Proyecto: $tipoProyecto");
-                                        print(
-                                            "List proyectos: ${listProyectos.length}");
                                       }),
                                       width: double.infinity,
                                       height: 50,

@@ -1,3 +1,4 @@
+import 'package:bizpro_app/providers/catalog_provider_recover.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,7 +19,6 @@ import 'providers/database_providers/jornada_controller.dart';
 import 'package:bizpro_app/providers/catalog_provider.dart';
 import 'package:bizpro_app/providers/database_providers/cotizacion_controller.dart';
 import 'package:bizpro_app/providers/database_providers/inversion_controller.dart';
-import 'package:bizpro_app/providers/database_providers/registro_controller.dart';
 import 'package:bizpro_app/providers/database_providers/inversion_jornada_controller.dart';
 import 'package:bizpro_app/providers/database_providers/producto_emprendedor_controller.dart';
 import 'package:bizpro_app/providers/database_providers/recepcion_y_entrega_inversion_controller.dart';
@@ -71,10 +71,6 @@ void main() async {
           create: (context) => InversionController(),
           lazy: false,
         ),
-        ChangeNotifierProvider<RegistroController>(
-          create: (context) => RegistroController(),
-          lazy: false,
-        ),
         ChangeNotifierProvider<InversionJornadaController>(
           create: (context) => InversionJornadaController(),
           lazy: false,
@@ -109,6 +105,10 @@ void main() async {
         ),
         ChangeNotifierProvider<CatalogProvider>(
           create: (context) => CatalogProvider(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<CatalogProviderRecover>(
+          create: (context) => CatalogProviderRecover(),
           lazy: false,
         ),
         ChangeNotifierProvider(

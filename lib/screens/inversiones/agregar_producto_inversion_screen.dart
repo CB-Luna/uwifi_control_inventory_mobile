@@ -1,3 +1,4 @@
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
@@ -66,9 +67,11 @@ class _AgregarProductoInversionScreenState
     dataBase.familiaProductosBox.getAll().forEach((element) {
       listFamilias.add(element.nombre);
     });
+    listFamilias.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     dataBase.tipoEmpaquesBox.getAll().forEach((element) {
       listTipoEmpaques.add(element.tipo);
     });
+    listTipoEmpaques.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(

@@ -4,8 +4,8 @@ import 'package:bizpro_app/screens/jornadas/registros/editar_inversion_jornada.d
 import 'package:bizpro_app/screens/widgets/bottom_sheet_imagenes_completas.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_validacion_eliminar_imagen.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_eliminar_imagen.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_carousel.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -20,12 +20,9 @@ import 'package:bizpro_app/objectbox.g.dart';
 import 'package:bizpro_app/screens/jornadas/jornada_actualizada.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
-
 import 'package:bizpro_app/providers/database_providers/jornada_controller.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_checkbox_group.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:bizpro_app/screens/jornadas/registros/inversion_jornada_temporal_screen.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
@@ -99,15 +96,17 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
         widget.jornada.emprendimiento.target!.catalogoProyecto.target!.nombre;
     listProyectos = [];
     listTipoProyecto = [];
-    // dataBase.clasificacionesEmpBox.getAll().forEach((element) {listTipoProyecto.add(element.clasificacion);});
     dataBase.clasificacionesEmpBox.getAll().forEach((element) {
       listTipoProyecto.add(element.clasificacion);
     });
+    listTipoProyecto.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+    
     dataBase.catalogoProyectoBox.getAll().forEach((element) {
       if (element.clasificacionEmp.target?.clasificacion == tipoProyecto) {
         listProyectos.add(element.nombre);
       }
     });
+    listProyectos.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     inversion = dataBase.inversionesBox
           .get(widget.jornada.emprendimiento.target?.idInversionJornada ?? -1);
   }
@@ -984,6 +983,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                               listProyectos.add(element.nombre);
                                             }
                                           });
+                                          listProyectos.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
                                           print("Entro a tipo proyecto");
                                         }
                                         print("Tipo Proyecto: $tipoProyecto");

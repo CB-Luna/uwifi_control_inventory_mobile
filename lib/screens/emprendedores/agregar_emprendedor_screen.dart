@@ -1,5 +1,6 @@
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -51,6 +52,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
       dataBase.estadosBox.getAll().forEach((element) {
         listEstados.add(element.nombre);
       });
+      listEstados.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     });
   }
 
@@ -103,7 +105,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                   ),
                                   child: InkWell(
                                     onTap: () async {
-                                      Navigator.pop(context);
+                                      Navigator.pop(context, "atrás");
                                     },
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
@@ -574,6 +576,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                                     .add(element.nombre);
                                               }
                                             });
+                                            listMunicipios.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
                                             print("Entro a con estados");
                                           }
                                           print("Estado: $nombreEstado");
@@ -644,6 +647,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                                     .add(element.nombre);
                                               }
                                             });
+                                            listComunidades.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
                                             print("Entro a con municipios");
                                           }
                                           print("Municipio: $nombreMunicipio");
@@ -817,15 +821,32 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                             if (emprendedorProvider
                                                 .validateForm(emprendedorKey)) {
                                               final emprendedor = 
-                                               dataBase.emprendedoresBox.query(Emprendedores_.curp.equals(emprendedorProvider.curp)).build().findFirst();
-                                              if (emprendedor != null && emprendedor.emprendimiento.target!.activo) {
+                                              dataBase.emprendedoresBox.query(Emprendedores_.curp.equals(emprendedorProvider.curp)).build().findFirst();
+                                              if (emprendedor != null) {
+                                                final emprendimiento = 
+                                                dataBase.emprendimientosBox.get(emprendedor.emprendimiento.target!.id);
+                                                print("Recover");
+                                                if (emprendimiento != null && emprendedor.emprendimiento.target!.archivado == false) {
                                                   snackbarKey.currentState
                                                       ?.showSnackBar(const SnackBar(
                                                     content: Text(
                                                         "El emprendedor ya se encuentra registrado."),
                                                   ));
+                                                } else {
+                                                  emprendimiento!.activo == false;
+                                                  dataBase.emprendimientosBox.put(emprendimiento);
+                                                  emprendedorProvider
+                                                        .recoverTemporaly(emprendedor.id);
+                                                      Navigator.pop(context, "recover");
+                                                      snackbarKey.currentState
+                                                          ?.showSnackBar(const SnackBar(
+                                                        content: Text(
+                                                            "¡Emprendedor asocidado éxitosamente!"),
+                                                      ));
+                                                }
                                               }
                                               else {
+                                                print("ADD");
                                               final idEstado = dataBase.estadosBox
                                                 .query(Estados_.nombre
                                                     .equals(nombreEstado))
@@ -857,7 +878,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                                     if (idComunidad != null) {
                                                       emprendedorProvider
                                                         .addTemporaly(idComunidad);
-                                                      Navigator.pop(context);
+                                                      Navigator.pop(context, "add");
                                                       snackbarKey.currentState
                                                           ?.showSnackBar(const SnackBar(
                                                         content: Text(

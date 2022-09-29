@@ -1,4 +1,5 @@
 import 'package:bizpro_app/screens/emprendedores/detalle_emprendedor_screen.dart';
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -74,16 +75,20 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
     dataBase.estadosBox.getAll().forEach((element) {
       listEstados.add(element.nombre);
     });
+    listEstados.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     dataBase.municipiosBox.getAll().forEach((element) {
       if (element.estados.target?.nombre == nombreEstado) {
         listMunicipios.add(element.nombre);
       }
     });
+    listMunicipios.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     dataBase.comunidadesBox.getAll().forEach((element) {
       if (element.municipios.target?.nombre == nombreMunicipio) {
         listComunidades.add(element.nombre);
       }
     });
+    listComunidades.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+
   }
 
   @override
@@ -593,6 +598,7 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                                     .add(element.nombre);
                                               }
                                             });
+                                            listMunicipios.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
                                             print("Entro a con estados");
                                           }
                                           print("Estado: $nombreEstado");
@@ -664,6 +670,7 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                                     .add(element.nombre);
                                               }
                                             });
+                                            listComunidades.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
                                             print("Entro a con municipios");
                                           }
                                           print("Municipio: $nombreMunicipio");

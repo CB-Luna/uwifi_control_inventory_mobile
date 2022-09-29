@@ -1,3 +1,4 @@
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:provider/provider.dart';
@@ -57,16 +58,13 @@ class _EditarProductoEmprendedorScreenState
     dataBase.unidadesMedidaBox.getAll().forEach((element) {
       listUnidadesMedida.add(element.unidadMedida);
     });
+    listUnidadesMedida.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
   }
 
   @override
   Widget build(BuildContext context) {
     final productoEmprendedorProvider =
         Provider.of<ProductoEmprendedorController>(context);
-    List<String> listUnidadesMedida = [];
-    dataBase.unidadesMedidaBox.getAll().forEach((element) {
-      listUnidadesMedida.add(element.unidadMedida);
-    });
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(

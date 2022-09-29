@@ -7,6 +7,8 @@ import 'package:bizpro_app/database/entitys.dart';
 class EmprendedorController extends ChangeNotifier {
   EmprendedorTemporal? emprendedor; 
 
+  Emprendedores? recoverEmprendedor; 
+
   GlobalKey<FormState> emprendedorFormKey = GlobalKey<FormState>();
 
   //Emprendedor
@@ -34,6 +36,7 @@ class EmprendedorController extends ChangeNotifier {
     apellidos = '';
     nacimiento = null;
     emprendedor = null;
+    recoverEmprendedor = null;
     curp = '';
     integrantesFamilia = '';
     // integrantesFamilia.clear();
@@ -56,6 +59,13 @@ class EmprendedorController extends ChangeNotifier {
     idComunidad: idComunidad,
     fechaRegistro: DateTime.now(),
   );
+  asociado = true;
+  print('Emprendedor temporal guardado éxitosamente');
+  notifyListeners();
+}
+
+ void recoverTemporaly(int idEmprendedor) {
+  recoverEmprendedor = dataBase.emprendedoresBox.get(idEmprendedor);
   asociado = true;
   print('Emprendedor temporal guardado éxitosamente');
   notifyListeners();
@@ -99,6 +109,24 @@ class EmprendedorController extends ChangeNotifier {
 
       // dataBase.emprendedoresBox.put(nuevoEmprendedor);
       // emprendedores.add(nuevoEmprendedor);
+  }
+
+  void asociate(int idEmprendimiento) {
+    if (recoverEmprendedor != null) {
+      final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
+      if (emprendimiento != null) {
+        //final nuevaInstruccion = Bitacora(instrucciones: 'syncAddEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+        // nuevoEmprendedor.bitacora.add(nuevaInstruccion);
+        recoverEmprendedor!.emprendimiento.target = emprendimiento;
+        emprendimiento.emprendedor.target = recoverEmprendedor;
+        dataBase.emprendimientosBox.put(emprendimiento);
+        // dataBase.emprendedoresBox.put(nuevoEmprendedor);
+        print('Emprendedor ascociado exitosamente');
+        clearInformation();
+        notifyListeners();
+      }
+      
+    }
   }
 
   void update(int id, String newImagen, String newNombre, String newApellidos, String newCurp, 

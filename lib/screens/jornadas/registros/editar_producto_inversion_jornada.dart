@@ -3,6 +3,7 @@ import 'package:bizpro_app/screens/jornadas/registros/producto_jornada_eliminado
 import 'package:bizpro_app/screens/widgets/bottom_sheet_eliminar_producto.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
@@ -96,9 +97,11 @@ class _EditarProductoInversionJornadaState
     dataBase.familiaProductosBox.getAll().forEach((element) {
       listFamilias.add(element.nombre);
     });
+    listFamilias.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     dataBase.tipoEmpaquesBox.getAll().forEach((element) {
       listTipoEmpaques.add(element.tipo);
     });
+    listTipoEmpaques.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(

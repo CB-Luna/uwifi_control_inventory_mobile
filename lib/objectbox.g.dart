@@ -5,6 +5,7 @@
 // See also https://docs.objectbox.io/getting-started#generate-objectbox-code
 
 // ignore_for_file: camel_case_types
+// coverage:ignore-file
 
 import 'dart:typed_data';
 
@@ -2758,7 +2759,7 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(60, 794331956868775333),
+      lastEntityId: const IdUid(61, 5712399432718906025),
       lastIndexId: const IdUid(209, 2832474624750008637),
       lastRelationId: const IdUid(68, 5617872246173150113),
       lastSequenceId: const IdUid(0, 0),
@@ -2779,7 +2780,8 @@ ModelDefinition getObjectBoxModel() {
         9001070558566127547,
         4156773254590137275,
         4450301343199944733,
-        8904698342427392465
+        8904698342427392465,
+        5712399432718906025
       ],
       retiredIndexUids: const [
         8990521503430950587,
@@ -3059,7 +3061,13 @@ ModelDefinition getObjectBoxModel() {
         5332627173857470047,
         7823032235829845864,
         5194084986301717278,
-        5115364499969904783
+        5115364499969904783,
+        6009308139323565775,
+        6436825515766324219,
+        8007102102988426437,
+        1496705341694862790,
+        6894534887589015141,
+        4600259317593251919
       ],
       retiredRelationUids: const [
         1226469011453769556,

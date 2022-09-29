@@ -1,35 +1,33 @@
 import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/screens/screens.dart';
+import 'package:bizpro_app/providers/catalog_provider_recover.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:lottie/lottie.dart';
-import 'package:bizpro_app/providers/catalog_provider.dart';
 
+import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
-class CatalogosScreen extends StatefulWidget {
-  const CatalogosScreen({Key? key}) : super(key: key);
+class SincronizacionCatalogosScreen extends StatefulWidget {
+  const SincronizacionCatalogosScreen({Key? key}) : super(key: key);
 
   @override
-  State<CatalogosScreen> createState() => _CatalogosScreenState();
+  State<SincronizacionCatalogosScreen> createState() => _SincronizacionCatalogosScreenState();
 }
 
-class _CatalogosScreenState extends State<CatalogosScreen> {
+class _SincronizacionCatalogosScreenState extends State<SincronizacionCatalogosScreen> {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
-        context.read<CatalogProvider>().getCatalogos();
-      });
+        context.read<CatalogProviderRecover>().getCatalogosAgain();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final catalogoProvider = Provider.of<CatalogProvider>(context);
+    final catalogoRecoverProvider = Provider.of<CatalogProviderRecover>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -68,7 +66,7 @@ class _CatalogosScreenState extends State<CatalogosScreen> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 40, 0, 0),
                               child: Text(
-                                '¡Descargando catálogos!',
+                                '¡Sincronizando Cátalogos!',
                                 textAlign: TextAlign.center,
                                 style: AppTheme.of(context).bodyText1.override(
                                       fontFamily:
@@ -82,9 +80,9 @@ class _CatalogosScreenState extends State<CatalogosScreen> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 10, 0, 0),
                               child: Text(
-                                'Los catálogos de la aplicación se\nestán descargando, por favor, no apague\nla conexión Wi-Fi o datos móviles hasta \nque se complete el proceso.\nEl proceso puede tardar algunos minutos.',
+                                'Los datos de los catálogos se\nestán sincronizando, por favor, no apague\nla conexión Wi-Fi o datos móviles hasta \nque se complete el proceso.',
                                 textAlign: TextAlign.center,
-                                maxLines: 5,
+                                maxLines: 4,
                                 style: AppTheme.of(context).bodyText1.override(
                                       fontFamily:
                                           AppTheme.of(context).bodyText1Family,
@@ -94,13 +92,13 @@ class _CatalogosScreenState extends State<CatalogosScreen> {
                                     ),
                               ),
                             ),
-                            catalogoProvider.procesocargando
+                            catalogoRecoverProvider.procesocargando
                                 ? Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
                                             0, 70, 0, 0),
                                     child: getProgressIndicatorAnimated(
-                                        "Descargando..."),
+                                        "Sincronizando..."),
                                   )
                                 : Padding(
                                     padding:
@@ -116,7 +114,7 @@ class _CatalogosScreenState extends State<CatalogosScreen> {
                                     ),
                                   ),
                             Visibility(
-                              visible: catalogoProvider.procesoterminado,
+                              visible: catalogoRecoverProvider.procesoterminado,
                               child: Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 100, 0, 0),
@@ -129,7 +127,7 @@ class _CatalogosScreenState extends State<CatalogosScreen> {
                                             const EmprendimientosScreen(),
                                       ),
                                     );
-                                    catalogoProvider.procesoTerminado(false);
+                                    catalogoRecoverProvider.procesoTerminado(false);
                                   },
                                   text: 'Listo',
                                   options: FFButtonOptions(
