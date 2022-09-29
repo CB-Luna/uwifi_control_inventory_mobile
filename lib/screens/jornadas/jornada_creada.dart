@@ -51,7 +51,7 @@ class _JornadaCreadaState extends State<JornadaCreada> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: Text(                      
-                        'El registro se ha guaradado con exito.',
+                        'El registro se ha guaradado con éxito.',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',

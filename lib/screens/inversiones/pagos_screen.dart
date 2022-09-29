@@ -1375,7 +1375,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                   .fromSTEB(
                                                                       0, 5, 0, 10),
                                                           child: Text(
-                                                            saldo.text,
+                                                            currencyFormat.format(saldo.text),
                                                             style:
                                                                 AppTheme.of(
                                                                     context)
@@ -1459,7 +1459,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                             ),
                                                                       ),
                                                                       Text(
-                                                                        "\$${pago.montoAbonado.toStringAsFixed(2)}",
+                                                                        currencyFormat.format(pago.montoAbonado.toStringAsFixed(2)),
                                                                         style: AppTheme
                                                                                 .of(context)
                                                                             .bodyText1

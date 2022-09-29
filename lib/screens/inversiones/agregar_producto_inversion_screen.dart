@@ -850,7 +850,7 @@ class _AgregarProductoInversionScreenState
                                             fillColor: const Color(0x49FFFFFF),
                                           ),
                                           keyboardType: TextInputType.number,
-                                          inputFormatters: [currencyFormat],
+                                          inputFormatters:<TextInputFormatter>[currencyFormat],
                                           style: AppTheme.of(context)
                                               .title3
                                               .override(
