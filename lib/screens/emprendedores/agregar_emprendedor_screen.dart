@@ -105,7 +105,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                   ),
                                   child: InkWell(
                                     onTap: () async {
-                                      Navigator.pop(context);
+                                      Navigator.pop(context, "atrás");
                                     },
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
@@ -821,13 +821,31 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                             if (emprendedorProvider
                                                 .validateForm(emprendedorKey)) {
                                               final emprendedor = 
-                                               dataBase.emprendedoresBox.query(Emprendedores_.curp.equals(emprendedorProvider.curp)).build().findFirst();
-                                              if (emprendedor != null && emprendedor.emprendimiento.target!.activo) {
+                                              dataBase.emprendedoresBox.query(Emprendedores_.curp.equals(emprendedorProvider.curp)).build().findFirst();
+                                              if (emprendedor != null) {
+                                                final emprendimiento = 
+                                                dataBase.emprendimientosBox.get(emprendedor.emprendimiento.target!.id);
+                                                if (emprendimiento != null && emprendedor.emprendimiento.target!.archivado == false) {
                                                   snackbarKey.currentState
                                                       ?.showSnackBar(const SnackBar(
                                                     content: Text(
                                                         "El emprendedor ya se encuentra registrado."),
                                                   ));
+                                                } else {
+                                                  emprendimiento!.activo == false;
+                                                  emprendedor.emprendimiento.target == null;
+                                                  emprendimiento.emprendedor.target == null;
+                                                  dataBase.emprendedoresBox.put(emprendedor);
+                                                  dataBase.emprendimientosBox.put(emprendimiento);
+                                                  emprendedorProvider
+                                                        .recoverTemporaly(emprendedor.id);
+                                                      Navigator.pop(context, "recover");
+                                                      snackbarKey.currentState
+                                                          ?.showSnackBar(const SnackBar(
+                                                        content: Text(
+                                                            "¡Emprendedor asocidado éxitosamente!"),
+                                                      ));
+                                                }
                                               }
                                               else {
                                               final idEstado = dataBase.estadosBox
@@ -861,7 +879,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                                     if (idComunidad != null) {
                                                       emprendedorProvider
                                                         .addTemporaly(idComunidad);
-                                                      Navigator.pop(context);
+                                                      Navigator.pop(context, "add");
                                                       snackbarKey.currentState
                                                           ?.showSnackBar(const SnackBar(
                                                         content: Text(

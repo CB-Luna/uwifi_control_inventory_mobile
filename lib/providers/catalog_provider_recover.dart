@@ -24,7 +24,6 @@ import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 
 import 'package:bizpro_app/models/get_estados.dart';
-import 'package:bizpro_app/util/util.dart';
 
 import 'package:http/http.dart' as http;
 import '../objectbox.g.dart';

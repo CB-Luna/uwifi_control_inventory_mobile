@@ -310,14 +310,22 @@ class _ArchivadosScreenState extends State<ArchivadosScreen> {
                                               icon: Icons.file_upload_outlined,
                                               backgroundColor: Colors.black54,
                                               onPressed: (context) async {
-                                                emprendimientoProvider.desarchivarEmprendimiento(emprendimiento.id);
-                                                await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const EmprendimientoDesarchivadoScreen(),
-                                                      ),
-                                                );
+                                                if (emprendimiento.emprendedor.target == null) {
+                                                  snackbarKey.currentState
+                                                      ?.showSnackBar(const SnackBar(
+                                                    content: Text(
+                                                        "No puedes desarchivar este emprendimiento ya que no tiene un emprendedor asociado."),
+                                                  ));
+                                                } else {
+                                                  emprendimientoProvider.desarchivarEmprendimiento(emprendimiento.id);
+                                                  await Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const EmprendimientoDesarchivadoScreen(),
+                                                        ),
+                                                  );
+                                                }                                               
                                               }
                                             ),
                                           ]),
