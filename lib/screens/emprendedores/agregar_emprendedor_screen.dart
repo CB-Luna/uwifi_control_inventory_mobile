@@ -833,8 +833,8 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                                         "El emprendedor ya se encuentra registrado."),
                                                   ));
                                                 } else {
-                                                  emprendimiento!.activo == false;
-                                                  dataBase.emprendimientosBox.put(emprendimiento);
+                                                  // emprendimiento!.activo == false;
+                                                  // dataBase.emprendimientosBox.put(emprendimiento);
                                                   emprendedorProvider
                                                         .recoverTemporaly(emprendedor.id);
                                                       Navigator.pop(context, "recover");

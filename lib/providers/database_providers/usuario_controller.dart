@@ -186,14 +186,14 @@ void update(int id, int newIdRol, String newfotoPerfil, String newNombre, String
 
   void addEmprendimiento(Emprendimientos emprendimiento) {
     usuarioCurrent!.emprendimientos.add(emprendimiento);
-    usuarioCurrent!.emprendimientos.applyToDb();
+    dataBase.usuariosBox.put(usuarioCurrent!);
     print('Emprendimiento modificado exitosamente');
     notifyListeners();
   }
 
   void removeEmprendimiento(Emprendimientos emprendimiento) {
     usuarioCurrent!.emprendimientos.remove(emprendimiento);
-    usuarioCurrent!.emprendimientos.applyToDb();
+    dataBase.usuariosBox.put(usuarioCurrent!);
     print('Emprendimiento actualizado exitosamente');
     notifyListeners();
   }

@@ -418,10 +418,11 @@ class _AgregarEmprendimientoScreenState
                                         if (emprendimientoProvider
                                                 .validateForm(formKey) &&
                                             emprendedorProvider.asociado) {
-                                              print("ACTION: $accion");
                                           // comunidadProvider.add();
+                                          //Se crea emprendimiento sin emprendedor
                                                 emprendimientoProvider
                                                     .add();
+                                          //Se asigna el emprendimiento al usuario actual
                                                 usuarioProvider
                                                     .addEmprendimiento(
                                                         emprendimientoProvider
@@ -430,15 +431,16 @@ class _AgregarEmprendimientoScreenState
                                                         .idEmprendimiento !=
                                                     null) {
                                                   if (accion == "add") {
-                                                    print("Holis soy yo add");
+                                                    print("Holis soy yo el add");
                                                     emprendedorProvider.add(
                                                       emprendimientoProvider
                                                           .idEmprendimiento!);
                                                   }
                                                   if (accion == "recover") {
-                                                    print("Holis soy yo recover");
-                                                    emprendedorProvider.asociate(
-                                                      emprendimientoProvider
+                                                    print("Holis soy yo el recover");
+                                                    // emprendimientoProvider.updateEmprendedores(emprendimientoProvider.idEmprendimiento!, emprendedorProvider.recoverEmprendedor!);
+                                                    emprendedorProvider
+                                                    .recover(emprendimientoProvider
                                                           .idEmprendimiento!);
                                                   }
                                                 }

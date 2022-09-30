@@ -467,7 +467,8 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                             });
                           }
                           return ListView.builder(
-                              padding: EdgeInsets.zero,
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
+                              reverse: true,
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
                               itemCount: emprendedores.length,
@@ -475,7 +476,7 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                 final emprendedor = emprendedores[index];
                                 return Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      5, 10, 5, 0),
+                                      15, 10, 15, 10),
                                   child: Container(
                                     width: double.infinity,
                                     height: 275,
