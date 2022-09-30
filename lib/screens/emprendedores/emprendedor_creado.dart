@@ -51,7 +51,7 @@ class _EmprendedorCreadoState extends State<EmprendedorCreado> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: Text(                      
-                        'El registro se ha guardado con \nexito.',
+                        'El registro se ha guardado con \néxito.',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
