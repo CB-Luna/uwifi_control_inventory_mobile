@@ -51,7 +51,6 @@ class _FrenteTarjetaDescripcionWidgetState extends State<FrenteTarjetaDescripcio
           children: [
             InkWell(
               onTap: () async {
-                print("Es activo: ${widget.emprendimiento.activo}");
                 if (widget.emprendimiento.faseEmp.last.fase != "Detenido" 
                 && widget.emprendimiento.faseEmp.last.fase != "Consolidado") {
                   await Navigator.push(

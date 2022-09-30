@@ -7,8 +7,6 @@ import 'package:bizpro_app/database/entitys.dart';
 class EmprendedorController extends ChangeNotifier {
   EmprendedorTemporal? emprendedor; 
 
-  Emprendedores? recoverEmprendedor; 
-
   GlobalKey<FormState> emprendedorFormKey = GlobalKey<FormState>();
 
   //Emprendedor
@@ -36,7 +34,6 @@ class EmprendedorController extends ChangeNotifier {
     apellidos = '';
     nacimiento = null;
     emprendedor = null;
-    recoverEmprendedor = null;
     curp = '';
     integrantesFamilia = '';
     // integrantesFamilia.clear();
@@ -61,13 +58,6 @@ class EmprendedorController extends ChangeNotifier {
   );
   asociado = true;
   print('Emprendedor temporal guardado éxitosamente');
-  notifyListeners();
-}
-
- void recoverTemporaly(int idEmprendedor) {
-  recoverEmprendedor = dataBase.emprendedoresBox.get(idEmprendedor);
-  asociado = true;
-  print('Emprendedor temporal recuperado éxitosamente');
   notifyListeners();
 }
 
@@ -104,30 +94,6 @@ class EmprendedorController extends ChangeNotifier {
       }
       
     } 
-  }
-//TODO: ARREGALAR ESTE PENDIENTE DE DESARCHIBVAR LUEGO DE ARREGLAR LA LÓGICA DEL SISTEMA
-  void recover(int idEmprendimiento) {
-    if (recoverEmprendedor != null) {
-      final newEmprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
-      final oldEmprendimiento = dataBase.emprendimientosBox.get(recoverEmprendedor!.emprendimiento.target!.id);
-      if (newEmprendimiento != null && oldEmprendimiento != null) {
-        //final nuevaInstruccion = Bitacora(instrucciones: 'syncAddEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-        // nuevoEmprendedor.bitacora.add(nuevaInstruccion);
-        //Se vuelve inactivo el antiguo emprendimiento
-        oldEmprendimiento.activo = false;
-        oldEmprendimiento.emprendedor.target = null;
-        dataBase.emprendimientosBox.put(oldEmprendimiento);
-        //Se actualiza el emprendimiento del emprendedor
-        recoverEmprendedor!.emprendimiento.target = newEmprendimiento;
-        //Se actualiza el nuevo emprendimiento
-        newEmprendimiento.emprendedor.target = dataBase.emprendedoresBox.get(dataBase.emprendedoresBox.put(recoverEmprendedor!));
-        dataBase.emprendimientosBox.put(newEmprendimiento);
-        // dataBase.emprendedoresBox.put(nuevoEmprendedor);
-        print('Emprendedor ascociado exitosamente');
-        clearInformation();
-        notifyListeners();
-      }
-    }
   }
 
   void update(int id, String newImagen, String newNombre, String newApellidos, String newCurp, 

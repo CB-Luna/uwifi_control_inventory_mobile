@@ -198,9 +198,5 @@ class EmprendimientoController extends ChangeNotifier {
     }
   }
 
-  // getAll() {
-  //   emprendimientos = dataBase.emprendimientosBox.getAll();
-  //   notifyListeners();
-  // }
   
 }
