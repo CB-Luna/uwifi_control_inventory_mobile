@@ -226,7 +226,7 @@ class SideMenu extends StatelessWidget {
                     ),
                     
                     CustomMenuItem(
-                      label: 'Sincronizar Info',
+                      label: 'Sinc. Información',
                       iconData: Icons.sync_rounded,
                       lineHeight: 1.2,
                       onTap: () async {
@@ -261,7 +261,7 @@ class SideMenu extends StatelessWidget {
                     ),
 
                     CustomMenuItem(
-                      label: 'Sincronizar Cat.',
+                      label: 'Sinc. Catálogos',
                       iconData: Icons.fact_check_outlined,
                       lineHeight: 1.2,
                       onTap: () async {

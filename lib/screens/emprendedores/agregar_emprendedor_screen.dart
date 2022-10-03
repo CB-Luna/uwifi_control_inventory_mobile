@@ -105,7 +105,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                   ),
                                   child: InkWell(
                                     onTap: () async {
-                                      Navigator.pop(context, "atrás");
+                                      Navigator.pop(context);
                                     },
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
@@ -823,30 +823,13 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                               final emprendedor = 
                                               dataBase.emprendedoresBox.query(Emprendedores_.curp.equals(emprendedorProvider.curp)).build().findFirst();
                                               if (emprendedor != null) {
-                                                final emprendimiento = 
-                                                dataBase.emprendimientosBox.get(emprendedor.emprendimiento.target!.id);
-                                                print("Recover");
-                                                if (emprendimiento != null && emprendedor.emprendimiento.target!.archivado == false) {
                                                   snackbarKey.currentState
                                                       ?.showSnackBar(const SnackBar(
                                                     content: Text(
                                                         "El emprendedor ya se encuentra registrado."),
                                                   ));
-                                                } else {
-                                                  // emprendimiento!.activo == false;
-                                                  // dataBase.emprendimientosBox.put(emprendimiento);
-                                                  emprendedorProvider
-                                                        .recoverTemporaly(emprendedor.id);
-                                                      Navigator.pop(context, "recover");
-                                                      snackbarKey.currentState
-                                                          ?.showSnackBar(const SnackBar(
-                                                        content: Text(
-                                                            "¡Emprendedor asocidado éxitosamente!"),
-                                                      ));
-                                                }
                                               }
                                               else {
-                                                print("ADD");
                                               final idEstado = dataBase.estadosBox
                                                 .query(Estados_.nombre
                                                     .equals(nombreEstado))
@@ -878,7 +861,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                                     if (idComunidad != null) {
                                                       emprendedorProvider
                                                         .addTemporaly(idComunidad);
-                                                      Navigator.pop(context, "add");
+                                                      Navigator.pop(context);
                                                       snackbarKey.currentState
                                                           ?.showSnackBar(const SnackBar(
                                                         content: Text(

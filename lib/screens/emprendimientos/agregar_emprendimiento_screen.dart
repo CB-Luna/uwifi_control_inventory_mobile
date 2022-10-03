@@ -27,16 +27,12 @@ class _AgregarEmprendimientoScreenState
     extends State<AgregarEmprendimientoScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
-  late String accion = "";
   XFile? image;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    setState(() {
-      accion = "";
-    });
   }
 
   @override
@@ -369,7 +365,7 @@ class _AgregarEmprendimientoScreenState
                                                 "Ya se ha asociado un emprendedor, no puedes agregar más."),
                                           ));
                                         } else {
-                                          accion = await Navigator.push(
+                                          await Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
@@ -430,19 +426,10 @@ class _AgregarEmprendimientoScreenState
                                                 if (emprendimientoProvider
                                                         .idEmprendimiento !=
                                                     null) {
-                                                  if (accion == "add") {
-                                                    print("Holis soy yo el add");
+
                                                     emprendedorProvider.add(
                                                       emprendimientoProvider
                                                           .idEmprendimiento!);
-                                                  }
-                                                  if (accion == "recover") {
-                                                    print("Holis soy yo el recover");
-                                                    // emprendimientoProvider.updateEmprendedores(emprendimientoProvider.idEmprendimiento!, emprendedorProvider.recoverEmprendedor!);
-                                                    emprendedorProvider
-                                                    .recover(emprendimientoProvider
-                                                          .idEmprendimiento!);
-                                                  }
                                                 }
                                                 await Navigator.push(
                                                   context,
