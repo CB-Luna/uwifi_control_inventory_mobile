@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bizpro_app/database/entitys.dart';
+import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/providers/database_providers/producto_emprendedor_controller.dart';
 import 'package:bizpro_app/screens/productos/editar_producto_emprendedor.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
@@ -145,17 +146,26 @@ class _DetalleProductoEmprendedorState extends State<DetalleProductoEmprendedor>
                                     ),
                                     child: InkWell(
                                       onTap: () async {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                          builder: (context) =>
-                                              EditarProductoEmprendedorScreen(
-                                                  emprendimiento:
-                                                      widget.productoEmprendedor.
-                                                      emprendimientos.target!,
-                                                  productoEmprendedor: widget.productoEmprendedor
-                                                  ,)),
-                                        );
+                                        if (widget.productoEmprendedor.emprendimientos.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
+                                            widget.productoEmprendedor.emprendimientos.target!.usuario.target!.rol.target!.rol == "Emprendedor") {
+                                          snackbarKey.currentState
+                                              ?.showSnackBar(const SnackBar(
+                                            content: Text(
+                                                "Este usuario no tiene permisos para esta acción."),
+                                          ));
+                                        } else {
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditarProductoEmprendedorScreen(
+                                                    emprendimiento:
+                                                        widget.productoEmprendedor.
+                                                        emprendimientos.target!,
+                                                    productoEmprendedor: widget.productoEmprendedor
+                                                    ,)),
+                                          );
+                                        }
                                       },
                                       child: const Icon(
                                         Icons.edit_rounded,

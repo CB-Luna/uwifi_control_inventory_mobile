@@ -79,7 +79,8 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
         key: scaffoldKey,
         drawer: const SideMenu(),
         backgroundColor: Colors.white,
-        floatingActionButton: userState.rol == Rol.administrador
+        floatingActionButton: (currentUser.rol.target!.rol == "Administrador" ||
+            currentUser.rol.target!.rol == "Promotor")
             ? FloatingActionButton(
                 onPressed: () async {
                   if (listAreaCirculo.isNotEmpty) {
@@ -361,160 +362,168 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                     ),
                                     child: InkWell(
                                       onTap: () async {
-                                        final date = DateTime.now();
-                                        String? option = await showModalBottomSheet(
-                                          context: context,
-                                          builder: (_) => const CustomBottomDownloadInfo(),
-                                        );
-                                        if (option == null) return;
-                                        if (option == "consultorias") {
-                                            final invoice = ConsultoriasInvoice(
-                                            info: InvoiceInfo(
-                                              usuario:
-                                                  '${currentUser.nombre} ${currentUser.apellidoP}',
-                                              fecha: date,
-                                              titulo: 'Consultorias',
-                                              descripcion:
-                                                  'En la siguiente tabla se muestran todas las consultorías creadas hasta el momento.',
-                                            ),
-                                            items: [
-                                              for (var emp in emprendimientos)
-                                                for(var consultoria in emp.consultorias)
-                                                  ConsultoriasItem(
-                                                    id: 
-                                                        consultoria.id,
-                                                    emprendedor:
-                                                        "${emp.emprendedor.target!.nombre} ${emp.emprendedor.target!.apellidos}",
-                                                    ambito: 
-                                                        consultoria
-                                                        .ambitoConsultoria
-                                                        .target!.nombreAmbito,
-                                                    areaCirculo: 
-                                                        consultoria
-                                                        .areaCirculo
-                                                        .target!.nombreArea,
-                                                    avanceObservado: 
-                                                        consultoria
-                                                        .tareas.last.
-                                                        descripcion,
-                                                    porcentajeAvance: 
-                                                        consultoria
-                                                        .tareas.last
-                                                        .porcentaje.toString(),
-                                                    siguientesPasos: 
-                                                        consultoria
-                                                        .tareas.last
-                                                        .descripcion,
-                                                    fechaRevision: 
-                                                        consultoria
-                                                        .tareas.last
-                                                        .fechaRevision,
-                                                    usuario:
-                                                    "${emp.
-                                                    usuario.target!
-                                                    .nombre} ${emp.usuario.
-                                                    target!.apellidoP}",
-                                                    fechaRegistro:
-                                                        consultoria.fechaRegistro,
-                                                  ),
-                                            ],
+                                        if (currentUser.rol.target!.rol == "Voluntario Estratégico") {
+                                          snackbarKey.currentState
+                                              ?.showSnackBar(const SnackBar(
+                                            content: Text(
+                                                "Este usuario no tiene permisos para esta acción."),
+                                          ));
+                                        } else {
+                                          final date = DateTime.now();
+                                          String? option = await showModalBottomSheet(
+                                            context: context,
+                                            builder: (_) => const CustomBottomDownloadInfo(),
                                           );
-                                          final pdfFile =
-                                              await PdfInvoiceConsultorias
-                                                  .generate(invoice);
-                                          PdfApi.openFile(pdfFile);
-                                        }
-                                        if (option == "jornadas") {
-                                            final invoice = JornadasInvoice(
-                                            info: InvoiceInfo(
-                                              usuario:
-                                                  '${currentUser.nombre} ${currentUser.apellidoP}',
-                                              fecha: date,
-                                              titulo: 'Jornadas',
-                                              descripcion:
-                                                  'En la siguiente tabla se muestran todas las jornadas creadas hasta el momento.',
-                                            ),
-                                            items: [
-                                              for (var emp in emprendimientos)
-                                                for(var jornada in emp.jornadas)
-                                                  JornadasItem(
-                                                    id: 
-                                                        jornada.id,
+                                          if (option == null) return;
+                                          if (option == "consultorias") {
+                                              final invoice = ConsultoriasInvoice(
+                                              info: InvoiceInfo(
+                                                usuario:
+                                                    '${currentUser.nombre} ${currentUser.apellidoP}',
+                                                fecha: date,
+                                                titulo: 'Consultorias',
+                                                descripcion:
+                                                    'En la siguiente tabla se muestran todas las consultorías creadas hasta el momento.',
+                                              ),
+                                              items: [
+                                                for (var emp in emprendimientos)
+                                                  for(var consultoria in emp.consultorias)
+                                                    ConsultoriasItem(
+                                                      id: 
+                                                          consultoria.id,
+                                                      emprendedor:
+                                                          "${emp.emprendedor.target!.nombre} ${emp.emprendedor.target!.apellidos}",
+                                                      ambito: 
+                                                          consultoria
+                                                          .ambitoConsultoria
+                                                          .target!.nombreAmbito,
+                                                      areaCirculo: 
+                                                          consultoria
+                                                          .areaCirculo
+                                                          .target!.nombreArea,
+                                                      avanceObservado: 
+                                                          consultoria
+                                                          .tareas.last.
+                                                          descripcion,
+                                                      porcentajeAvance: 
+                                                          consultoria
+                                                          .tareas.last
+                                                          .porcentaje.toString(),
+                                                      siguientesPasos: 
+                                                          consultoria
+                                                          .tareas.last
+                                                          .descripcion,
+                                                      fechaRevision: 
+                                                          consultoria
+                                                          .tareas.last
+                                                          .fechaRevision,
+                                                      usuario:
+                                                      "${emp.
+                                                      usuario.target!
+                                                      .nombre} ${emp.usuario.
+                                                      target!.apellidoP}",
+                                                      fechaRegistro:
+                                                          consultoria.fechaRegistro,
+                                                    ),
+                                              ],
+                                            );
+                                            final pdfFile =
+                                                await PdfInvoiceConsultorias
+                                                    .generate(invoice);
+                                            PdfApi.openFile(pdfFile);
+                                          }
+                                          if (option == "jornadas") {
+                                              final invoice = JornadasInvoice(
+                                              info: InvoiceInfo(
+                                                usuario:
+                                                    '${currentUser.nombre} ${currentUser.apellidoP}',
+                                                fecha: date,
+                                                titulo: 'Jornadas',
+                                                descripcion:
+                                                    'En la siguiente tabla se muestran todas las jornadas creadas hasta el momento.',
+                                              ),
+                                              items: [
+                                                for (var emp in emprendimientos)
+                                                  for(var jornada in emp.jornadas)
+                                                    JornadasItem(
+                                                      id: 
+                                                          jornada.id,
+                                                      emprendedor:
+                                                          "${emp.emprendedor.target!.nombre} ${emp.emprendedor.target!.apellidos}",
+                                                      comunidad: 
+                                                          jornada
+                                                          .emprendimiento.target!
+                                                          .emprendedor.target!.comunidad.target!.nombre,
+                                                      emprendimiento: emp.nombre,
+                                                      jornada: 
+                                                          jornada.numJornada.toString(),
+                                                      tareaRegistrada: 
+                                                          jornada
+                                                          .tarea.target!.tarea,
+                                                      fechaRevision: 
+                                                          jornada
+                                                          .fechaRevision,
+                                                      completada: 
+                                                          jornada
+                                                          .tarea.target!.activo == true ?
+                                                          "No"
+                                                          :
+                                                          "Sí",
+                                                      usuario:
+                                                      "${emp.
+                                                      usuario.target!
+                                                      .nombre} ${emp.usuario.
+                                                      target!.apellidoP}",
+                                                      fechaRegistro:
+                                                          jornada.fechaRegistro,
+                                                    ),
+                                              ],
+                                            );
+                                            final pdfFile =
+                                                await PdfInvoiceJornadas
+                                                    .generate(invoice);
+                                            PdfApi.openFile(pdfFile);
+                                          }
+                                          if (option == "emprendimientos") {
+                                              final invoice = EmprendimientoInvoice(
+                                              info: InvoiceInfo(
+                                                usuario:
+                                                    '${currentUser.nombre} ${currentUser.apellidoP}',
+                                                fecha: date,
+                                                titulo: 'Emprendimientos',
+                                                descripcion:
+                                                    'En la siguiente tabla se muestran todos los emprendimientos creados hasta el momento.',
+                                              ),
+                                              items: [
+                                                for (var emp in emprendimientos)
+                                                  EmprendimientoItem(
                                                     emprendedor:
                                                         "${emp.emprendedor.target!.nombre} ${emp.emprendedor.target!.apellidos}",
-                                                    comunidad: 
-                                                        jornada
-                                                        .emprendimiento.target!
-                                                        .emprendedor.target!.comunidad.target!.nombre,
                                                     emprendimiento: emp.nombre,
-                                                    jornada: 
-                                                        jornada.numJornada.toString(),
-                                                    tareaRegistrada: 
-                                                        jornada
-                                                        .tarea.target!.tarea,
-                                                    fechaRevision: 
-                                                        jornada
-                                                        .fechaRevision,
-                                                    completada: 
-                                                        jornada
-                                                        .tarea.target!.activo == true ?
-                                                        "No"
-                                                        :
-                                                        "Sí",
-                                                    usuario:
-                                                    "${emp.
-                                                    usuario.target!
-                                                    .nombre} ${emp.usuario.
-                                                    target!.apellidoP}",
-                                                    fechaRegistro:
-                                                        jornada.fechaRegistro,
+                                                    comunidad: emp
+                                                        .emprendedor.target!.comunidad.target!.nombre,
+                                                    tipoProyecto: emp
+                                                                .catalogoProyecto
+                                                                .target !=
+                                                            null
+                                                        ? emp
+                                                            .catalogoProyecto
+                                                            .target!
+                                                            .clasificacionEmp
+                                                            .target!
+                                                            .clasificacion
+                                                        : "",
+                                                    fase: emp.faseEmp.last.fase,
                                                   ),
-                                            ],
-                                          );
-                                          final pdfFile =
-                                              await PdfInvoiceJornadas
-                                                  .generate(invoice);
-                                          PdfApi.openFile(pdfFile);
+                                              ],
+                                            );
+                                            final pdfFile =
+                                                await PdfInvoiceEmprendimiento
+                                                    .generate(invoice);
+                                            PdfApi.openFile(pdfFile);
+                                          }
+                                          
                                         }
-                                        if (option == "emprendimientos") {
-                                            final invoice = EmprendimientoInvoice(
-                                            info: InvoiceInfo(
-                                              usuario:
-                                                  '${currentUser.nombre} ${currentUser.apellidoP}',
-                                              fecha: date,
-                                              titulo: 'Emprendimientos',
-                                              descripcion:
-                                                  'En la siguiente tabla se muestran todos los emprendimientos creados hasta el momento.',
-                                            ),
-                                            items: [
-                                              for (var emp in emprendimientos)
-                                                EmprendimientoItem(
-                                                  emprendedor:
-                                                      "${emp.emprendedor.target!.nombre} ${emp.emprendedor.target!.apellidos}",
-                                                  emprendimiento: emp.nombre,
-                                                  comunidad: emp
-                                                      .emprendedor.target!.comunidad.target!.nombre,
-                                                  tipoProyecto: emp
-                                                              .catalogoProyecto
-                                                              .target !=
-                                                          null
-                                                      ? emp
-                                                          .catalogoProyecto
-                                                          .target!
-                                                          .clasificacionEmp
-                                                          .target!
-                                                          .clasificacion
-                                                      : "",
-                                                  fase: emp.faseEmp.last.fase,
-                                                ),
-                                            ],
-                                          );
-                                          final pdfFile =
-                                              await PdfInvoiceEmprendimiento
-                                                  .generate(invoice);
-                                          PdfApi.openFile(pdfFile);
-                                        }
-                                        
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -583,14 +592,24 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                           icon: Icons.play_circle_outlined,
                                           backgroundColor: const Color(0xFF4672FF),
                                           onPressed: (context) async {
-                                            emprendimientoProvider.reactivarOdesconsolidarEmprendimiento(emprendimiento.id);
-                                            await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                            builder: (context) =>
-                                                const EmprendimientoReactivadoScreen(),
-                                                  ),
-                                            );
+                                            if (currentUser.rol.target!.rol == "Voluntario Estratégico" ||
+                                                currentUser.rol.target!.rol == "Amigo del Cambio" ||
+                                                currentUser.rol.target!.rol == "Emprendedor") {
+                                                snackbarKey.currentState
+                                                    ?.showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      "Este usuario no tiene permisos para esta acción."),
+                                                ));
+                                            } else {
+                                              emprendimientoProvider.reactivarOdesconsolidarEmprendimiento(emprendimiento.id);
+                                              await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const EmprendimientoReactivadoScreen(),
+                                                    ),
+                                              );
+                                            }
                                           }
                                         ),
                                         SlidableAction(
@@ -598,14 +617,24 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                           icon: Icons.file_download_outlined,
                                           backgroundColor: const Color.fromARGB(207, 255, 64, 128),
                                           onPressed: (context) async {
-                                            emprendimientoProvider.archivarEmprendimiento(emprendimiento.id);
-                                            await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                            builder: (context) =>
-                                                const EmprendimientoArchivadoScreen(),
-                                                  ),
-                                            );
+                                            if (currentUser.rol.target!.rol == "Voluntario Estratégico" ||
+                                                currentUser.rol.target!.rol == "Amigo del Cambio" ||
+                                                currentUser.rol.target!.rol == "Emprendedor") {
+                                                snackbarKey.currentState
+                                                    ?.showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      "Este usuario no tiene permisos para esta acción."),
+                                                ));
+                                            } else {
+                                              emprendimientoProvider.archivarEmprendimiento(emprendimiento.id);
+                                              await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const EmprendimientoArchivadoScreen(),
+                                                    ),
+                                              );
+                                            }
                                           }
                                         ),
                                       ]),
@@ -653,14 +682,24 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                           icon: Icons.thumb_down_outlined,
                                           backgroundColor: const Color(0xFF4672FF),
                                           onPressed: (context) async {
-                                            emprendimientoProvider.reactivarOdesconsolidarEmprendimiento(emprendimiento.id);
-                                            await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                            builder: (context) =>
-                                                const EmprendimientoRetomadoScreen(),
-                                                  ),
-                                            );
+                                            if (currentUser.rol.target!.rol == "Voluntario Estratégico" ||
+                                                currentUser.rol.target!.rol == "Amigo del Cambio" ||
+                                                currentUser.rol.target!.rol == "Emprendedor") {
+                                                snackbarKey.currentState
+                                                    ?.showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      "Este usuario no tiene permisos para esta acción."),
+                                                ));
+                                            } else {
+                                              emprendimientoProvider.reactivarOdesconsolidarEmprendimiento(emprendimiento.id);
+                                              await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const EmprendimientoRetomadoScreen(),
+                                                    ),
+                                              );
+                                            }
                                           }
                                         ),
                                         SlidableAction(
@@ -668,14 +707,24 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                           icon: Icons.file_download_outlined,
                                           backgroundColor: const Color.fromARGB(207, 38, 128, 55),
                                           onPressed: (context) async {
-                                            emprendimientoProvider.archivarEmprendimiento(emprendimiento.id);
-                                            await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                            builder: (context) =>
-                                                const EmprendimientoArchivadoScreen(),
-                                                  ),
-                                            );
+                                            if (currentUser.rol.target!.rol == "Voluntario Estratégico" ||
+                                                currentUser.rol.target!.rol == "Amigo del Cambio" ||
+                                                currentUser.rol.target!.rol == "Emprendedor") {
+                                                snackbarKey.currentState
+                                                    ?.showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      "Este usuario no tiene permisos para esta acción."),
+                                                ));
+                                            } else {
+                                              emprendimientoProvider.archivarEmprendimiento(emprendimiento.id);
+                                              await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const EmprendimientoArchivadoScreen(),
+                                                    ),
+                                              );
+                                            }
                                           }
                                         ),
                                       ]),

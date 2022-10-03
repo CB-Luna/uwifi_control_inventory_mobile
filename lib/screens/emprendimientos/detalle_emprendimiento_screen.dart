@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimiento_consolidado_screen.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimiento_detenido_screen.dart';
@@ -159,14 +160,24 @@ class _DetalleEmprendimientoScreenState
                                   ),
                                   child: InkWell(
                                     onTap: () async {
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                EditarEmprendimientoScreen(
-                                                    emprendimiento:
-                                                        widget.emprendimiento)),
-                                      );
+                                      if (widget.emprendimiento.usuario.target!.rol.target!.rol == "Voluntario Estratégico" ||
+                                          widget.emprendimiento.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
+                                          widget.emprendimiento.usuario.target!.rol.target!.rol == "Emprendedor") {
+                                        snackbarKey.currentState
+                                            ?.showSnackBar(const SnackBar(
+                                          content: Text(
+                                              "Este usuario no tiene permisos para esta acción."),
+                                        ));
+                                      } else {
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  EditarEmprendimientoScreen(
+                                                      emprendimiento:
+                                                          widget.emprendimiento)),
+                                        );
+                                      }
                                     },
                                     child: const Icon(
                                       Icons.edit_rounded,
@@ -225,24 +236,34 @@ class _DetalleEmprendimientoScreenState
                                         children: [
                                           InkWell(
                                             onTap: () async {
-                                              String? option =
-                                                await showModalBottomSheet(
-                                                context: context,
-                                                builder: (_) =>
-                                                    const BottomSheetDetenerEmprendimiento(),
-                                              );
-                                              if (option == 'aceptar') {
-                                                emprendimientoProvider.detenerEmprendimiento(widget.emprendimiento.id);
-                                                // ignore: use_build_context_synchronously
-                                                await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const EmprendimientoDetenidoScreen(),
-                                                      ),
+                                              if (widget.emprendimiento.usuario.target!.rol.target!.rol == "Voluntario Estratégico" ||
+                                                  widget.emprendimiento.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
+                                                  widget.emprendimiento.usuario.target!.rol.target!.rol == "Emprendedor") {
+                                                snackbarKey.currentState
+                                                    ?.showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      "Este usuario no tiene permisos para esta acción."),
+                                                ));
+                                              } else {
+                                                String? option =
+                                                  await showModalBottomSheet(
+                                                  context: context,
+                                                  builder: (_) =>
+                                                      const BottomSheetDetenerEmprendimiento(),
                                                 );
-                                              } else { //Se aborta la opción
-                                                return;
+                                                if (option == 'aceptar') {
+                                                  emprendimientoProvider.detenerEmprendimiento(widget.emprendimiento.id);
+                                                  // ignore: use_build_context_synchronously
+                                                  await Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const EmprendimientoDetenidoScreen(),
+                                                        ),
+                                                  );
+                                                } else { //Se aborta la opción
+                                                  return;
+                                                }
                                               }
                                             },
                                             child: const Icon(
@@ -279,24 +300,34 @@ class _DetalleEmprendimientoScreenState
                                           children: [
                                             InkWell(
                                               onTap: () async {
-                                                 String? option =
-                                                  await showModalBottomSheet(
-                                                  context: context,
-                                                  builder: (_) =>
-                                                      const BottomSheetConsolidarEmprendimiento(),
-                                                );
-                                                if (option == 'aceptar') {
-                                                  emprendimientoProvider.consolidarEmprendimiento(widget.emprendimiento.id);
-                                                  // ignore: use_build_context_synchronously
-                                                  await Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const EmprendimientoConsolidadoScreen(),
-                                                        ),
-                                                  );
-                                                } else { //Se aborta la opción
-                                                  return;
+                                                if (widget.emprendimiento.usuario.target!.rol.target!.rol == "Voluntario Estratégico" ||
+                                                      widget.emprendimiento.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
+                                                      widget.emprendimiento.usuario.target!.rol.target!.rol == "Emprendedor") {
+                                                    snackbarKey.currentState
+                                                        ?.showSnackBar(const SnackBar(
+                                                      content: Text(
+                                                          "Este usuario no tiene permisos para esta acción."),
+                                                    ));
+                                                  } else {
+                                                    String? option =
+                                                      await showModalBottomSheet(
+                                                      context: context,
+                                                      builder: (_) =>
+                                                          const BottomSheetConsolidarEmprendimiento(),
+                                                    );
+                                                    if (option == 'aceptar') {
+                                                      emprendimientoProvider.consolidarEmprendimiento(widget.emprendimiento.id);
+                                                      // ignore: use_build_context_synchronously
+                                                      await Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const EmprendimientoConsolidadoScreen(),
+                                                            ),
+                                                      );
+                                                    } else { //Se aborta la opción
+                                                      return;
+                                                    }
                                                 }
                                               },
                                               child: const Icon(

@@ -54,7 +54,8 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.white,
-        floatingActionButton: userState.rol == Rol.administrador
+        floatingActionButton: (widget.emprendimiento.usuario.target!.rol.target!.rol == "Administrador" ||
+            widget.emprendimiento.usuario.target!.rol.target!.rol == "Promotor")
             ? FloatingActionButton(
                 onPressed: () async {
                     await Navigator.push(

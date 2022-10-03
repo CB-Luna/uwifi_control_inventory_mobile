@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/screens/emprendedores/editar_emprendedor.dart';
 import 'package:bizpro_app/screens/emprendedores/emprendedores_screen.dart';
@@ -173,15 +174,24 @@ class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
                                 children: [
                                   InkWell(
                                     onTap: () async {
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              EditarEmprendedor(
-                                                  emprendedor:
-                                                      actualEmprendedor!),
-                                        ),
-                                      );
+                                      if (actualEmprendedor!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
+                                          actualEmprendedor!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Emprendedor") {
+                                        snackbarKey.currentState
+                                            ?.showSnackBar(const SnackBar(
+                                          content: Text(
+                                              "Este usuario no tiene permisos para esta acción."),
+                                        ));
+                                      } else {
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditarEmprendedor(
+                                                    emprendedor:
+                                                        actualEmprendedor!),
+                                          ),
+                                        );
+                                      }
                                     },
                                     child: Container(
                                       width: 45,

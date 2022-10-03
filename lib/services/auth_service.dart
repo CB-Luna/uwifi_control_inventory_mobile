@@ -49,13 +49,13 @@ abstract class AuthService {
     try {
 
       print("User ID: $idUser");
-      var url = Uri.parse("https://pocketbase.cbluna-dev.com/api/collections/emi_users/records/?filter=(user='$idUser')");
+      var url = Uri.parse("$baseUrl/api/collections/emi_users/records/?filter=(user='$idUser')");
 
       var response = await get(url);
 
       print(response.body);
 
-      final reverseUserEMIById = EmiUserById.fromJson(
+      final reverseUserEMIById = emiUserByIdFromMap(
           response.body);
 
       print("Resultado del userEMIByID: ${reverseUserEMIById.items?[0].id}");

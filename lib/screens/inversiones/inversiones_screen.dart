@@ -1,3 +1,4 @@
+import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:diacritic/diacritic.dart';
@@ -60,7 +61,8 @@ class _InversionesScreenState extends State<InversionesScreen> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.white,
-        floatingActionButton: userState.rol == Rol.administrador
+        floatingActionButton: (actualEmprendimiento!.usuario.target!.rol.target!.rol == "Administrador" ||
+            actualEmprendimiento!.usuario.target!.rol.target!.rol == "Promotor")
             ? FloatingActionButton(
                 onPressed: () async {
                     await Navigator.push(
@@ -125,15 +127,24 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                     ),
                                     child: InkWell(
                                       onTap: () async {
-                                        await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetalleEmprendimientoScreen(
-                                                    emprendimiento: actualEmprendimiento!,
-                                                    ),
-                                            ),
-                                          );
+                                        if (actualEmprendimiento!.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
+                                            actualEmprendimiento!.usuario.target!.rol.target!.rol == "Emprendedor") {
+                                          snackbarKey.currentState
+                                              ?.showSnackBar(const SnackBar(
+                                            content: Text(
+                                                "Este usuario no tiene permisos para esta acción."),
+                                          ));
+                                        } else {
+                                          await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DetalleEmprendimientoScreen(
+                                                      emprendimiento: actualEmprendimiento!,
+                                                      ),
+                                              ),
+                                            );
+                                        }
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,

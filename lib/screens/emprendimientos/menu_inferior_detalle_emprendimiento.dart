@@ -54,85 +54,94 @@ class _MenuInferiorDetalleEmprendimientoState extends State<MenuInferiorDetalleE
               children: [
                 InkWell(
                   onTap: () async {
-                    if (widget.emprendimiento.emprendedor
-                            .target !=
-                        null) {
-                      if (widget
-                          .emprendimiento.jornadas.isNotEmpty) {
-                        final int numJornada = int.parse(widget
-                            .emprendimiento
-                            .jornadas
-                            .last
-                            .numJornada);
-                        if (numJornada < 4) {
-                          switch (numJornada) {
-                            case 1:
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      AgregarJornada2Screen(
-                                    emprendimiento:
-                                        widget.emprendimiento,
-                                    numJornada: numJornada + 1,
-                                  ),
-                                ),
-                              );
-                              break;
-                            case 2:
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      AgregarJornada3Screen(
-                                    emprendimiento:
-                                        widget.emprendimiento,
-                                    numJornada: numJornada + 1,
-                                  ),
-                                ),
-                              );
-                              break;
-                            case 3:
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      AgregarJornada4Screen(
-                                    emprendimiento:
-                                        widget.emprendimiento,
-                                    numJornada: numJornada + 1,
-                                  ),
-                                ),
-                              );
-                              break;
-                            default:
-                          }
-                        } else {
-                          snackbarKey.currentState
-                              ?.showSnackBar(const SnackBar(
-                            content: Text(
-                                "No se pueden registrar más de 4 jornadas"),
-                          ));
-                        }
-                      } else {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                AgregarJornada1Screen(
-                              emprendimiento:
-                                  widget.emprendimiento,
-                              numJornada: 1,
-                            ),
-                          ),
-                        );
-                      }
-                    } else {
+                    if (widget.emprendimiento.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
+                        widget.emprendimiento.usuario.target!.rol.target!.rol == "Emprendedor") {
                       snackbarKey.currentState
                           ?.showSnackBar(const SnackBar(
                         content: Text(
-                            "Necesitas registrar un emprendedor a este emprendimiento"),
+                            "Este usuario no tiene permisos para esta acción."),
                       ));
+                    } else {
+                      if (widget.emprendimiento.emprendedor
+                              .target !=
+                          null) {
+                        if (widget
+                            .emprendimiento.jornadas.isNotEmpty) {
+                          final int numJornada = int.parse(widget
+                              .emprendimiento
+                              .jornadas
+                              .last
+                              .numJornada);
+                          if (numJornada < 4) {
+                            switch (numJornada) {
+                              case 1:
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        AgregarJornada2Screen(
+                                      emprendimiento:
+                                          widget.emprendimiento,
+                                      numJornada: numJornada + 1,
+                                    ),
+                                  ),
+                                );
+                                break;
+                              case 2:
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        AgregarJornada3Screen(
+                                      emprendimiento:
+                                          widget.emprendimiento,
+                                      numJornada: numJornada + 1,
+                                    ),
+                                  ),
+                                );
+                                break;
+                              case 3:
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        AgregarJornada4Screen(
+                                      emprendimiento:
+                                          widget.emprendimiento,
+                                      numJornada: numJornada + 1,
+                                    ),
+                                  ),
+                                );
+                                break;
+                              default:
+                            }
+                          } else {
+                            snackbarKey.currentState
+                                ?.showSnackBar(const SnackBar(
+                              content: Text(
+                                  "No se pueden registrar más de 4 jornadas"),
+                            ));
+                          }
+                        } else {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  AgregarJornada1Screen(
+                                emprendimiento:
+                                    widget.emprendimiento,
+                                numJornada: 1,
+                              ),
+                            ),
+                          );
+                        }
+                      } else {
+                        snackbarKey.currentState
+                            ?.showSnackBar(const SnackBar(
+                          content: Text(
+                              "Necesitas registrar un emprendedor a este emprendimiento"),
+                        ));
+                      }
                     }
                   },
                   child: Column(
@@ -158,44 +167,60 @@ class _MenuInferiorDetalleEmprendimientoState extends State<MenuInferiorDetalleE
                 ),
                 InkWell(
                   onTap: () async {
-                    if (widget
-                        .emprendimiento.jornadas.isNotEmpty) {
-                      final int numJornada = int.parse(widget
-                          .emprendimiento
-                          .jornadas
-                          .last
-                          .numJornada);
-                      if (numJornada == 4) {
-                        if (widget.emprendimiento.consultorias
-                            .isNotEmpty) {
-                          final int numConsultoria = widget
-                              .emprendimiento.consultorias
-                              .toList()
-                              .length;
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  AgregarConsultoriaScreen(
-                                emprendimiento:
-                                    widget.emprendimiento,
-                                numConsultoria:
-                                    numConsultoria + 1,
+                    if (widget.emprendimiento.usuario.target!.rol.target!.rol == "Voluntario Estratégico" ||
+                        widget.emprendimiento.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
+                        widget.emprendimiento.usuario.target!.rol.target!.rol == "Emprendedor") {
+                      snackbarKey.currentState
+                          ?.showSnackBar(const SnackBar(
+                        content: Text(
+                            "Este usuario no tiene permisos para esta acción."),
+                      ));
+                    } else {
+                      if (widget
+                          .emprendimiento.jornadas.isNotEmpty) {
+                        final int numJornada = int.parse(widget
+                            .emprendimiento
+                            .jornadas
+                            .last
+                            .numJornada);
+                        if (numJornada == 4) {
+                          if (widget.emprendimiento.consultorias
+                              .isNotEmpty) {
+                            final int numConsultoria = widget
+                                .emprendimiento.consultorias
+                                .toList()
+                                .length;
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    AgregarConsultoriaScreen(
+                                  emprendimiento:
+                                      widget.emprendimiento,
+                                  numConsultoria:
+                                      numConsultoria + 1,
+                                ),
                               ),
-                            ),
-                          );
+                            );
+                          } else {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    AgregarConsultoriaScreen(
+                                  emprendimiento:
+                                      widget.emprendimiento,
+                                  numConsultoria: 1,
+                                ),
+                              ),
+                            );
+                          }
                         } else {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  AgregarConsultoriaScreen(
-                                emprendimiento:
-                                    widget.emprendimiento,
-                                numConsultoria: 1,
-                              ),
-                            ),
-                          );
+                          snackbarKey.currentState
+                              ?.showSnackBar(const SnackBar(
+                            content: Text(
+                                "Necesitas tener 4 jornadas registradas"),
+                          ));
                         }
                       } else {
                         snackbarKey.currentState
@@ -204,12 +229,6 @@ class _MenuInferiorDetalleEmprendimientoState extends State<MenuInferiorDetalleE
                               "Necesitas tener 4 jornadas registradas"),
                         ));
                       }
-                    } else {
-                      snackbarKey.currentState
-                          ?.showSnackBar(const SnackBar(
-                        content: Text(
-                            "Necesitas tener 4 jornadas registradas"),
-                      ));
                     }
                   },
                   child: Column(
@@ -235,39 +254,47 @@ class _MenuInferiorDetalleEmprendimientoState extends State<MenuInferiorDetalleE
                 ),
                 InkWell(
                   onTap: () async {
-                    if (widget
-                        .emprendimiento.jornadas.isNotEmpty) {
-                      final int numJornada = int.parse(widget
-                          .emprendimiento
-                          .jornadas
-                          .last
-                          .numJornada);
-                      if (numJornada == 4) {
-                        await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ProductosEmprendedorScreen(
-                                productosEmprendedor:
-                                    widget.emprendimiento.productosEmp.toList(),
-                                  emprendimiento: widget.emprendimiento,
-                              ),
-                            ),
-                          );
-                      } else {
-                        snackbarKey.currentState
-                            ?.showSnackBar(const SnackBar(
-                          content: Text(
-                              "Necesitas tener 4 jornadas registradas"),
-                        ));
-                      }
-                    } else {
+                    if (widget.emprendimiento.usuario.target!.rol.target!.rol == "Voluntario Estratégico") {
                       snackbarKey.currentState
                           ?.showSnackBar(const SnackBar(
                         content: Text(
-                            "Necesitas tener 4 jornadas registradas"),
+                            "Este usuario no tiene permisos para esta acción."),
                       ));
-                    }
+                    } else {
+                        if (widget
+                            .emprendimiento.jornadas.isNotEmpty) {
+                          final int numJornada = int.parse(widget
+                              .emprendimiento
+                              .jornadas
+                              .last
+                              .numJornada);
+                          if (numJornada == 4) {
+                            await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ProductosEmprendedorScreen(
+                                    productosEmprendedor:
+                                        widget.emprendimiento.productosEmp.toList(),
+                                      emprendimiento: widget.emprendimiento,
+                                  ),
+                                ),
+                              );
+                          } else {
+                            snackbarKey.currentState
+                                ?.showSnackBar(const SnackBar(
+                              content: Text(
+                                  "Necesitas tener 4 jornadas registradas"),
+                            ));
+                          }
+                        } else {
+                          snackbarKey.currentState
+                              ?.showSnackBar(const SnackBar(
+                            content: Text(
+                                "Necesitas tener 4 jornadas registradas"),
+                          ));
+                        }
+                      }
                   },
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
@@ -292,25 +319,33 @@ class _MenuInferiorDetalleEmprendimientoState extends State<MenuInferiorDetalleE
                 ),
                 InkWell(
                   onTap: () async {
-                    if (widget
-                        .emprendimiento.productosEmp.isNotEmpty) {
-                        await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => VentasScreen(
-                              ventas: 
-                              widget.emprendimiento.
-                                ventas.toList(),
-                              emprendimiento:
-                                  widget.emprendimiento),
-                        ),
-                      );
-                    } else {
+                    if (widget.emprendimiento.usuario.target!.rol.target!.rol == "Voluntario Estratégico") {
                       snackbarKey.currentState
                           ?.showSnackBar(const SnackBar(
                         content: Text(
-                            "Para poder registrar una Venta es necesario que primero registres los productos del Emprendedor dentro del módulo 'Productos'"),
+                            "Este usuario no tiene permisos para esta acción."),
                       ));
+                    } else {
+                      if (widget
+                          .emprendimiento.productosEmp.isNotEmpty) {
+                          await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => VentasScreen(
+                                ventas: 
+                                widget.emprendimiento.
+                                  ventas.toList(),
+                                emprendimiento:
+                                    widget.emprendimiento),
+                          ),
+                        );
+                      } else {
+                        snackbarKey.currentState
+                            ?.showSnackBar(const SnackBar(
+                          content: Text(
+                              "Para poder registrar una Venta es necesario que primero registres los productos del Emprendedor dentro del módulo 'Productos'"),
+                        ));
+                      }
                     }
                   },
                   child: Column(
@@ -336,36 +371,44 @@ class _MenuInferiorDetalleEmprendimientoState extends State<MenuInferiorDetalleE
                 ),
                 InkWell(
                   onTap: () async {
-                    if (widget
-                        .emprendimiento.jornadas.isNotEmpty) {
-                      final int numJornada = int.parse(widget
-                          .emprendimiento
-                          .jornadas
-                          .last
-                          .numJornada);
-                      if (numJornada == 4) {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => InversionesScreen(
-                                idEmprendimiento:
-                                    widget.emprendimiento.id),
-                          ),
-                        );
+                    if (widget.emprendimiento.usuario.target!.rol.target!.rol == "Voluntario Estratégico") {
+                      snackbarKey.currentState
+                          ?.showSnackBar(const SnackBar(
+                        content: Text(
+                            "Este usuario no tiene permisos para esta acción."),
+                      ));
+                    } else {
+                      if (widget
+                          .emprendimiento.jornadas.isNotEmpty) {
+                        final int numJornada = int.parse(widget
+                            .emprendimiento
+                            .jornadas
+                            .last
+                            .numJornada);
+                        if (numJornada == 4) {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => InversionesScreen(
+                                  idEmprendimiento:
+                                      widget.emprendimiento.id),
+                            ),
+                          );
+                        } else {
+                          snackbarKey.currentState
+                              ?.showSnackBar(const SnackBar(
+                            content: Text(
+                                "Necesitas tener 4 jornadas registradas"),
+                          ));
+                        }
                       } else {
                         snackbarKey.currentState
                             ?.showSnackBar(const SnackBar(
                           content: Text(
                               "Necesitas tener 4 jornadas registradas"),
                         ));
-                      }
-                    } else {
-                      snackbarKey.currentState
-                          ?.showSnackBar(const SnackBar(
-                        content: Text(
-                            "Necesitas tener 4 jornadas registradas"),
-                      ));
-                    } 
+                      } 
+                    }
                   },
                   child: Column(
                     mainAxisSize: MainAxisSize.max,

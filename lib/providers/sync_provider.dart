@@ -934,8 +934,6 @@ return true;
     print("Estoy en El syncAddEmprendimiento");
       try {
 
-      var url = Uri.parse('$baseUrl/api/collections/emprendimientos/records');
-
       print("ID Promotor: ${emprendimiento.usuario.target!.idDBR}");
 
       print("ID Emprendedor: ${emprendimiento.emprendedor.target!.idDBR}");

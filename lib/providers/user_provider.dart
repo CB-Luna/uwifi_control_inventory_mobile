@@ -8,8 +8,6 @@ import 'package:jwt_decode/jwt_decode.dart';
 enum Rol {
   emprendedor,
   promotor,
-  staffLogistica,
-  staffDireccion,
   administrador,
   amigoDelCambio,
   voluntarioEstrategico,
@@ -19,7 +17,7 @@ enum Rol {
 class UserState extends ChangeNotifier {
   //EMAIL
   String _email = '';
-
+  //Almacenar email
   String get email => _email;
   Future<void> setEmail() async {
     _email = emailController.text;
@@ -31,12 +29,20 @@ class UserState extends ChangeNotifier {
 
   //PASSWORD TODO: eliminar?
   String _password = '';
-
+  //Almacenar password
   String get password => _password;
   Future<void> setPassword() async {
     _password = passwordController.text;
     await prefs.setString('password', passwordController.text);
   }
+  //ROL ACTUAL
+  // String _rol = '';
+  // //Almacenar rol
+  // String get rol => _rol;
+  // Future<void> setRol(String rol) async {
+  //   _rol = rol;
+  //   await prefs.setString('rol', rol);
+  // }
 
   //Controlador para LoginScreen
   TextEditingController passwordController = TextEditingController();
@@ -46,7 +52,7 @@ class UserState extends ChangeNotifier {
   //Variables autenticacion
   List<String> token = [];
 
-  Rol rol = Rol.administrador;
+  Rol rolActual = Rol.administrador;
 
   //Constructor de provider
   UserState() {
@@ -112,73 +118,26 @@ class UserState extends ChangeNotifier {
     }
   }
 
-  void setRole(String rol) {
+  void setRolActual(String rol) {
     switch (rol) {
       case 'Emprendedor':
-        this.rol = Rol.emprendedor;
+        rolActual = Rol.emprendedor;
         break;
       case 'Promotor':
-        this.rol = Rol.promotor;
-        break;
-      case 'Staff Logistica':
-        this.rol = Rol.staffLogistica;
-        break;
-      case 'Staff Direccion':
-        this.rol = Rol.staffDireccion;
+        rolActual = Rol.promotor;
         break;
       case 'Administrador':
-        this.rol = Rol.administrador;
+        rolActual = Rol.administrador;
         break;
       case 'Amigo Del Cambio':
-        this.rol = Rol.amigoDelCambio;
+        rolActual = Rol.amigoDelCambio;
         break;
       case 'Voluntario Estrategico':
-        this.rol = Rol.voluntarioEstrategico;
+        rolActual = Rol.voluntarioEstrategico;
         break;
       default:
-        this.rol = Rol.publico;
-    }
-  }
-
-  int getRole(String rol) {
-    switch (rol) {
-      case 'Emprendedor':
-        return 0;
-      case 'Promotor':
-        return 1;
-      case 'Staff Logistica':
-        return 2;
-      case 'Staff Direccion':
-        return 3;
-      case 'Administrador':
-        return 4;
-      case 'Amigo Del Cambio':
-        return 5;
-      case 'Voluntario Estrategico':
-        return 6;
-      default:
-        return 7;
-    }
-  }
-
-  static String getRoleAsString(int rol) {
-    switch (rol) {
-      case 0:
-        return 'Emprendedor';
-      case 1:
-        return 'Promotor';
-      case 2:
-        return 'Staff Logistica';
-      case 3:
-        return 'Staff Direccion';
-      case 4:
-        return 'Administrador';
-      case 5:
-        return 'Amigo Del Cambio';
-      case 6:
-        return 'Voluntario Estrategico';
-      default:
-        return 'Rol';
+        rolActual = Rol.publico;
+        break;
     }
   }
 

@@ -310,6 +310,14 @@ class _ArchivadosScreenState extends State<ArchivadosScreen> {
                                               icon: Icons.file_upload_outlined,
                                               backgroundColor: Colors.black54,
                                               onPressed: (context) async {
+                                                if (emprendimiento.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
+                                                    emprendimiento.usuario.target!.rol.target!.rol == "Emprendedor") {
+                                                  snackbarKey.currentState
+                                                      ?.showSnackBar(const SnackBar(
+                                                    content: Text(
+                                                        "Este usuario no tiene permisos para esta acción."),
+                                                  ));
+                                                } else {
                                                   emprendimientoProvider.desarchivarEmprendimiento(emprendimiento.id);
                                                   await Navigator.push(
                                                   context,
@@ -317,7 +325,8 @@ class _ArchivadosScreenState extends State<ArchivadosScreen> {
                                                   builder: (context) =>
                                                       const EmprendimientoDesarchivadoScreen(),
                                                         ),
-                                                  );                                            
+                                                  );    
+                                                }                                        
                                               }
                                             ),
                                           ]),

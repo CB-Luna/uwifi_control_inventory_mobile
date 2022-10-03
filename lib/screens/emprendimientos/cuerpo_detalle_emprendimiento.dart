@@ -452,211 +452,214 @@ class _CuerpoDetalleEmprendimientoState extends State<CuerpoDetalleEmprendimient
             child: Container(
               width: double.infinity,
               color: const Color(0x00F2F4F8),
-              child: ExpandableNotifier(
-                initialExpanded: false,
-                child: ExpandablePanel(
-                  header: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsetsDirectional
-                            .fromSTEB(0, 0, 8, 0),
-                        child: Icon(
-                          Icons.folder_rounded,
-                          color: AppTheme.of(context)
-                              .secondaryText,
-                          size: 24,
+              child: IgnorePointer(
+                ignoring: widget.emprendimiento.usuario.target!.rol.target!.rol == "Voluntario Estratégico",
+                child: ExpandableNotifier(
+                  initialExpanded: false,
+                  child: ExpandablePanel(
+                    header: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsetsDirectional
+                              .fromSTEB(0, 0, 8, 0),
+                          child: Icon(
+                            Icons.folder_rounded,
+                            color: AppTheme.of(context)
+                                .secondaryText,
+                            size: 24,
+                          ),
                         ),
-                      ),
-                      Text(
-                        'Consultorías',
-                        style: AppTheme.of(context)
-                            .title1
-                            .override(
-                              fontFamily: AppTheme.of(context)
-                                  .title1Family,
-                              color: AppTheme.of(context)
-                                  .primaryText,
-                              fontSize: 20,
-                            ),
-                      ),
-                    ],
-                  ),
-                  collapsed: const Divider(
-                    thickness: 1.5,
-                    color: Color(0xFF8B8B8B),
-                  ),
-                  expanded: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Builder(
-                        builder: (context) {
-                          return ListView.builder(
-                            controller: ScrollController(),
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemCount: consultorias.length,
-                            itemBuilder: (context, index) {
-                              final consultoria =
-                                  consultorias[index];
-                              return Padding(
-                                padding:
-                                    const EdgeInsetsDirectional
-                                            .fromSTEB(
-                                        15, 10, 15, 0),
-                                child: InkWell(
-                                  onTap: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            DetalleConsultoriaScreen(
-                                          consultoria:
-                                              consultoria,
-                                          numConsultoria:
-                                              (index + 1)
-                                                  .toString(),
+                        Text(
+                          'Consultorías',
+                          style: AppTheme.of(context)
+                              .title1
+                              .override(
+                                fontFamily: AppTheme.of(context)
+                                    .title1Family,
+                                color: AppTheme.of(context)
+                                    .primaryText,
+                                fontSize: 20,
+                              ),
+                        ),
+                      ],
+                    ),
+                    collapsed: const Divider(
+                      thickness: 1.5,
+                      color: Color(0xFF8B8B8B),
+                    ),
+                    expanded: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Builder(
+                          builder: (context) {
+                            return ListView.builder(
+                              controller: ScrollController(),
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemCount: consultorias.length,
+                              itemBuilder: (context, index) {
+                                final consultoria =
+                                    consultorias[index];
+                                return Padding(
+                                  padding:
+                                      const EdgeInsetsDirectional
+                                              .fromSTEB(
+                                          15, 10, 15, 0),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              DetalleConsultoriaScreen(
+                                            consultoria:
+                                                consultoria,
+                                            numConsultoria:
+                                                (index + 1)
+                                                    .toString(),
+                                          ),
                                         ),
+                                      );
+                                    },
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 100,
+                                      decoration: BoxDecoration(
+                                        color: const Color(
+                                            0xFF1F68CB),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            blurRadius: 4,
+                                            color: Color(
+                                                0x32000000),
+                                            offset:
+                                                Offset(0, 2),
+                                          )
+                                        ],
+                                        borderRadius:
+                                            BorderRadius
+                                                .circular(8),
                                       ),
-                                    );
-                                  },
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: 100,
-                                    decoration: BoxDecoration(
-                                      color: const Color(
-                                          0xFF1F68CB),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          blurRadius: 4,
-                                          color: Color(
-                                              0x32000000),
-                                          offset:
-                                              Offset(0, 2),
-                                        )
-                                      ],
-                                      borderRadius:
-                                          BorderRadius
-                                              .circular(8),
-                                    ),
-                                    child: Column(
-                                      mainAxisSize:
-                                          MainAxisSize.max,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                  16,
-                                                  5,
-                                                  16,
-                                                  5),
-                                          child: Padding(
+                                      child: Column(
+                                        mainAxisSize:
+                                            MainAxisSize.max,
+                                        children: [
+                                          Padding(
                                             padding:
                                                 const EdgeInsetsDirectional
                                                         .fromSTEB(
-                                                    0,
+                                                    16,
                                                     5,
+                                                    16,
+                                                    5),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                      0,
+                                                      5,
+                                                      0,
+                                                      0),
+                                              child: Text(
+                                                'Consultoría No. ${index + 1}',
+                                                maxLines: 1,
+                                                style: AppTheme.of(
+                                                        context)
+                                                    .title3
+                                                    .override(
+                                                      fontFamily:
+                                                          'Poppins',
+                                                      color: Colors
+                                                          .white,
+                                                      fontSize:
+                                                          18,
+                                                      fontWeight:
+                                                          FontWeight
+                                                              .w500,
+                                                    ),
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                    16,
                                                     0,
-                                                    0),
+                                                    16,
+                                                    5),
                                             child: Text(
-                                              'Consultoría No. ${index + 1}',
+                                              'Emprendedor: ${consultoria.emprendimiento.target?.emprendedor.target?.nombre ?? "Sin Emprendedor"}',
                                               maxLines: 1,
                                               style: AppTheme.of(
                                                       context)
-                                                  .title3
+                                                  .bodyText2
                                                   .override(
                                                     fontFamily:
                                                         'Poppins',
                                                     color: Colors
                                                         .white,
                                                     fontSize:
-                                                        18,
+                                                        13,
                                                     fontWeight:
                                                         FontWeight
-                                                            .w500,
+                                                            .normal,
                                                   ),
                                             ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                  16,
-                                                  0,
-                                                  16,
-                                                  5),
-                                          child: Text(
-                                            'Emprendedor: ${consultoria.emprendimiento.target?.emprendedor.target?.nombre ?? "Sin Emprendedor"}',
-                                            maxLines: 1,
-                                            style: AppTheme.of(
-                                                    context)
-                                                .bodyText2
-                                                .override(
-                                                  fontFamily:
-                                                      'Poppins',
-                                                  color: Colors
-                                                      .white,
-                                                  fontSize:
-                                                      13,
-                                                  fontWeight:
-                                                      FontWeight
-                                                          .normal,
-                                                ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                    16,
+                                                    0,
+                                                    16,
+                                                    5),
+                                            child: Text(
+                                              'Registro: ${dateTimeFormat('dd/MM/yyyy', consultoria.fechaRegistro)}',
+                                              maxLines: 1,
+                                              style: AppTheme.of(
+                                                      context)
+                                                  .bodyText2
+                                                  .override(
+                                                    fontFamily:
+                                                        'Poppins',
+                                                    color: Colors
+                                                        .white,
+                                                    fontSize:
+                                                        13,
+                                                    fontWeight:
+                                                        FontWeight
+                                                            .normal,
+                                                  ),
+                                            ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                  16,
-                                                  0,
-                                                  16,
-                                                  5),
-                                          child: Text(
-                                            'Registro: ${dateTimeFormat('dd/MM/yyyy', consultoria.fechaRegistro)}',
-                                            maxLines: 1,
-                                            style: AppTheme.of(
-                                                    context)
-                                                .bodyText2
-                                                .override(
-                                                  fontFamily:
-                                                      'Poppins',
-                                                  color: Colors
-                                                      .white,
-                                                  fontSize:
-                                                      13,
-                                                  fontWeight:
-                                                      FontWeight
-                                                          .normal,
-                                                ),
-                                          ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: 120,
-                      )
-                    ],
-                  ),
-                  theme: ExpandableThemeData(
-                    tapHeaderToExpand: true,
-                    tapBodyToExpand: false,
-                    tapBodyToCollapse: false,
-                    headerAlignment:
-                        ExpandablePanelHeaderAlignment.center,
-                    hasIcon: true,
-                    iconColor:
-                        AppTheme.of(context).secondaryText,
+                                );
+                              },
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: 120,
+                        )
+                      ],
+                    ),
+                    theme: ExpandableThemeData(
+                      tapHeaderToExpand: true,
+                      tapBodyToExpand: false,
+                      tapBodyToCollapse: false,
+                      headerAlignment:
+                          ExpandablePanelHeaderAlignment.center,
+                      hasIcon: true,
+                      iconColor:
+                          AppTheme.of(context).secondaryText,
+                    ),
                   ),
                 ),
               ),

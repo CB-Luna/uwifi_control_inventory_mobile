@@ -1,8 +1,7 @@
 import 'package:bizpro_app/database/entitys.dart';
+import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
-import 'package:bizpro_app/screens/widgets/custom_button.dart';
-import 'package:bizpro_app/screens/widgets/flutter_icon_button.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/util/util.dart';
@@ -263,7 +262,13 @@ class _GridEmprendimientosScreenState extends State<GridEmprendimientosScreen> {
                                       width: 250,
                                       height: 200,
                                       decoration: BoxDecoration(
-                                        color: const Color(0x83FFFFFF),
+                                        color: emprendimiento.faseEmp.last.fase == "Detenido" ?
+                                        const Color.fromARGB(207, 255, 64, 128)
+                                        :
+                                        emprendimiento.faseEmp.last.fase == "Consolidado" ?
+                                        const Color.fromARGB(207, 38, 128, 55)
+                                        :
+                                        const Color(0xB14672FF),
                                         boxShadow: const [
                                           BoxShadow(
                                             blurRadius: 4,
@@ -281,16 +286,25 @@ class _GridEmprendimientosScreenState extends State<GridEmprendimientosScreen> {
                                         children: [
                                           InkWell(
                                             onTap: () async {
-                                              await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      DetalleEmprendimientoScreen(
-                                                    emprendimiento:
-                                                        emprendimiento,
+                                              if (emprendimiento.faseEmp.last.fase != "Detenido" 
+                                                && emprendimiento.faseEmp.last.fase != "Consolidado") {
+                                                await Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        DetalleEmprendimientoScreen(
+                                                      emprendimiento:
+                                                          emprendimiento,
+                                                    ),
                                                   ),
-                                                ),
-                                              );
+                                                );
+                                              } else {
+                                                snackbarKey.currentState
+                                                    ?.showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      "No se puede editar este emprendimiento."),
+                                                ));
+                                              }
                                             },
                                             child: ClipRRect(
                                               borderRadius:

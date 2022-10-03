@@ -325,7 +325,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                     child: Container(
-                      width: 150,
+                      width: 180,
                       height: 30,
                       decoration: BoxDecoration(
                         color: AppTheme.of(context).secondaryText,

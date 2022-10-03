@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bizpro_app/database/entitys.dart';
+import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/archivados/archivados_screen.dart';
@@ -203,12 +204,20 @@ class SideMenu extends StatelessWidget {
                       label: 'Emprendedores',
                       iconData: Icons.groups,
                       onTap: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const EmprendedoresScreen(),
-                          ),
-                        );
+                        if (currentUser.rol.target!.rol == "Voluntario Estratégico") {
+                          snackbarKey.currentState
+                              ?.showSnackBar(const SnackBar(
+                            content: Text(
+                                "Este usuario no tiene permisos para esta acción."),
+                          ));
+                        } else {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const EmprendedoresScreen(),
+                            ),
+                          );
+                        }
                       },
                     ),
 
@@ -216,12 +225,20 @@ class SideMenu extends StatelessWidget {
                       label: 'Archivados',
                       iconData: Icons.file_download_outlined,
                       onTap: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ArchivadosScreen(),
-                          ),
-                        );
+                        if (currentUser.rol.target!.rol == "Voluntario Estratégico") {
+                          snackbarKey.currentState
+                              ?.showSnackBar(const SnackBar(
+                            content: Text(
+                                "Este usuario no tiene permisos para esta acción."),
+                          ));
+                        } else {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ArchivadosScreen(),
+                            ),
+                          );
+                        }
                       },
                     ),
                     
@@ -230,33 +247,43 @@ class SideMenu extends StatelessWidget {
                       iconData: Icons.sync_rounded,
                       lineHeight: 1.2,
                       onTap: () async {
-                        final connectivityResult =
-                            await (Connectivity().checkConnectivity());
-                        final bitacora = dataBase.bitacoraBox.getAll().toList();
-                        print("Tamaño bitacora: ${bitacora.length}");
-                        await showModalBottomSheet(
-                          isScrollControlled: true,
-                          backgroundColor: Colors.transparent,
-                          context: context,
-                          builder: (context) {
-                            return Padding(
-                              padding: MediaQuery.of(context).viewInsets,
-                              child: SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.45,
-                                child: connectivityResult ==
-                                            ConnectivityResult.none ||
-                                        bitacora.isEmpty
-                                    ? const BottomSheetSincronizarWidget(
-                                        isVisible: false,
-                                      )
-                                    : const BottomSheetSincronizarWidget(
-                                        isVisible: true,
-                                      ),
-                              ),
-                            );
-                          },
-                        );
+                        if (currentUser.rol.target!.rol == "Voluntario Estratégico" ||
+                            currentUser.rol.target!.rol == "Amigo del Cambio" ||
+                            currentUser.rol.target!.rol == "Emprendedor") {
+                          snackbarKey.currentState
+                              ?.showSnackBar(const SnackBar(
+                            content: Text(
+                                "Este usuario no tiene permisos para esta acción."),
+                          ));
+                        } else {
+                          final connectivityResult =
+                              await (Connectivity().checkConnectivity());
+                          final bitacora = dataBase.bitacoraBox.getAll().toList();
+                          print("Tamaño bitacora: ${bitacora.length}");
+                          await showModalBottomSheet(
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            builder: (context) {
+                              return Padding(
+                                padding: MediaQuery.of(context).viewInsets,
+                                child: SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.45,
+                                  child: connectivityResult ==
+                                              ConnectivityResult.none ||
+                                          bitacora.isEmpty
+                                      ? const BottomSheetSincronizarWidget(
+                                          isVisible: false,
+                                        )
+                                      : const BottomSheetSincronizarWidget(
+                                          isVisible: true,
+                                        ),
+                                ),
+                              );
+                            },
+                          );
+                        }
                       },
                     ),
 
@@ -265,30 +292,40 @@ class SideMenu extends StatelessWidget {
                       iconData: Icons.fact_check_outlined,
                       lineHeight: 1.2,
                       onTap: () async {
-                        final connectivityResult =
-                            await (Connectivity().checkConnectivity());
-                        await showModalBottomSheet(
-                          isScrollControlled: true,
-                          backgroundColor: Colors.transparent,
-                          context: context,
-                          builder: (context) {
-                            return Padding(
-                              padding: MediaQuery.of(context).viewInsets,
-                              child: SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.45,
-                                child: connectivityResult ==
-                                            ConnectivityResult.none 
-                                    ? const BottomSheetRecoverCatalogosWidget(
-                                        isVisible: false,
-                                      )
-                                    : const BottomSheetRecoverCatalogosWidget(
-                                        isVisible: true,
-                                      ),
-                              ),
-                            );
-                          },
-                        );
+                        if (currentUser.rol.target!.rol == "Voluntario Estratégico" ||
+                            currentUser.rol.target!.rol == "Amigo del Cambio" ||
+                            currentUser.rol.target!.rol == "Emprendedor") {
+                          snackbarKey.currentState
+                              ?.showSnackBar(const SnackBar(
+                            content: Text(
+                                "Este usuario no tiene permisos para esta acción."),
+                          ));
+                        } else {
+                          final connectivityResult =
+                              await (Connectivity().checkConnectivity());
+                          await showModalBottomSheet(
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            builder: (context) {
+                              return Padding(
+                                padding: MediaQuery.of(context).viewInsets,
+                                child: SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.45,
+                                  child: connectivityResult ==
+                                              ConnectivityResult.none 
+                                      ? const BottomSheetRecoverCatalogosWidget(
+                                          isVisible: false,
+                                        )
+                                      : const BottomSheetRecoverCatalogosWidget(
+                                          isVisible: true,
+                                        ),
+                                ),
+                              );
+                            },
+                          );
+                        }
                       },
                     ),
 

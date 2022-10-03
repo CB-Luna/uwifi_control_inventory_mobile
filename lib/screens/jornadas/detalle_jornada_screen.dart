@@ -189,99 +189,108 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                       ),
                                       child: InkWell(
                                         onTap: () async {
-                                          if (widget
-                                              .jornada.tarea.target!.activo) {
-                                            switch (widget.jornada.numJornada) {
-                                              case "1":
-                                                await Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        EditarJornada1Screen(
-                                                            jornada:
-                                                                widget.jornada),
-                                                  ),
-                                                );
-                                                break;
-                                              case "2":
-                                                await Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        EditarJornada2Screen(
-                                                            jornada:
-                                                                widget.jornada),
-                                                  ),
-                                                );
-                                                break;
-                                              case "3":
-                                                await Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        EditarJornada3Screen(
-                                                            jornada:
-                                                                widget.jornada),
-                                                  ),
-                                                );
-                                                break;
-                                              case "4":
-                                                if (widget.jornada.fechaRegistro
-                                                    .add(const Duration(
-                                                        hours: 24))
-                                                    .isBefore(DateTime.now())) {
-                                                  snackbarKey.currentState
-                                                      ?.showSnackBar(
-                                                          const SnackBar(
-                                                    content: Text(
-                                                        "La jornada ya ha sido registrada, ya no se puede editar."),
-                                                  ));
-                                                  bool? isActivo = dataBase
-                                                      .tareasBox
-                                                      .get(widget.jornada.tarea
-                                                          .target!.id)
-                                                      ?.activo;
-                                                  if (isActivo != null &&
-                                                      isActivo == true) {
-                                                    print(
-                                                        "Entro a actualziar activo de tarea en J4");
-                                                    jornadaProvider
-                                                        .updateJornada4(
-                                                            widget.jornada.id,
-                                                            widget.jornada
-                                                                .fechaRegistro,
-                                                            widget
-                                                                .jornada
-                                                                .tarea
-                                                                .target!
-                                                                .comentarios,
-                                                            listImagenes,
-                                                            imagenes,
-                                                            false,
-                                                            widget.jornada.tarea
-                                                                .target!.id);
-                                                  }
-                                                } else {
+                                          if (widget.jornada.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
+                                              widget.jornada.emprendimiento.target!.usuario.target!.rol.target!.rol == "Emprendedor") {
+                                            snackbarKey.currentState
+                                                ?.showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "Este usuario no tiene permisos para esta acción."),
+                                            ));
+                                          } else {
+                                            if (widget
+                                                .jornada.tarea.target!.activo) {
+                                              switch (widget.jornada.numJornada) {
+                                                case "1":
                                                   await Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) =>
-                                                          EditarJornada4Screen(
-                                                              jornada: widget
-                                                                  .jornada),
+                                                          EditarJornada1Screen(
+                                                              jornada:
+                                                                  widget.jornada),
                                                     ),
                                                   );
-                                                }
-                                                break;
-                                              default:
-                                                break;
+                                                  break;
+                                                case "2":
+                                                  await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          EditarJornada2Screen(
+                                                              jornada:
+                                                                  widget.jornada),
+                                                    ),
+                                                  );
+                                                  break;
+                                                case "3":
+                                                  await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          EditarJornada3Screen(
+                                                              jornada:
+                                                                  widget.jornada),
+                                                    ),
+                                                  );
+                                                  break;
+                                                case "4":
+                                                  if (widget.jornada.fechaRegistro
+                                                      .add(const Duration(
+                                                          hours: 24))
+                                                      .isBefore(DateTime.now())) {
+                                                    snackbarKey.currentState
+                                                        ?.showSnackBar(
+                                                            const SnackBar(
+                                                      content: Text(
+                                                          "La jornada ya ha sido registrada, ya no se puede editar."),
+                                                    ));
+                                                    bool? isActivo = dataBase
+                                                        .tareasBox
+                                                        .get(widget.jornada.tarea
+                                                            .target!.id)
+                                                        ?.activo;
+                                                    if (isActivo != null &&
+                                                        isActivo == true) {
+                                                      print(
+                                                          "Entro a actualziar activo de tarea en J4");
+                                                      jornadaProvider
+                                                          .updateJornada4(
+                                                              widget.jornada.id,
+                                                              widget.jornada
+                                                                  .fechaRegistro,
+                                                              widget
+                                                                  .jornada
+                                                                  .tarea
+                                                                  .target!
+                                                                  .comentarios,
+                                                              listImagenes,
+                                                              imagenes,
+                                                              false,
+                                                              widget.jornada.tarea
+                                                                  .target!.id);
+                                                    }
+                                                  } else {
+                                                    await Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            EditarJornada4Screen(
+                                                                jornada: widget
+                                                                    .jornada),
+                                                      ),
+                                                    );
+                                                  }
+                                                  break;
+                                                default:
+                                                  break;
+                                              }
+                                            } else {
+                                              snackbarKey.currentState
+                                                  ?.showSnackBar(const SnackBar(
+                                                content: Text(
+                                                    "La jornada ya ha sido registrada, ya no se puede editar."),
+                                              ));
                                             }
-                                          } else {
-                                            snackbarKey.currentState
-                                                ?.showSnackBar(const SnackBar(
-                                              content: Text(
-                                                  "La jornada ya ha sido registrada, ya no se puede editar."),
-                                            ));
                                           }
                                         },
                                         child: Row(

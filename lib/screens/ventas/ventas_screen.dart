@@ -1,3 +1,4 @@
+import 'package:bizpro_app/helpers/globals.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -63,7 +64,8 @@ class _VentasScreenState extends State<VentasScreen> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.white,
-        floatingActionButton: userState.rol == Rol.administrador
+        floatingActionButton: (widget.emprendimiento.usuario.target!.rol.target!.rol == "Administrador" ||
+            widget.emprendimiento.usuario.target!.rol.target!.rol == "Promotor")
             ? FloatingActionButton(
                 onPressed: () async {
                     await Navigator.push(
@@ -440,13 +442,22 @@ class _VentasScreenState extends State<VentasScreen> {
                                           listActualVentas[resultadoIndex];
                                       return InkWell(
                                         onTap: () async {
-                                          await Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    EditarVentaScreen(venta: venta,),
-                                              ),
-                                            );
+                                          if (widget.emprendimiento.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
+                                              widget.emprendimiento.usuario.target!.rol.target!.rol == "Emprendedor") {
+                                            snackbarKey.currentState
+                                                ?.showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "Este usuario no tiene permisos para esta acción."),
+                                            ));
+                                          } else {
+                                            await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditarVentaScreen(venta: venta,),
+                                                ),
+                                              );
+                                            }
                                         },
                                         child: Padding(
                                           padding: const EdgeInsetsDirectional.fromSTEB(

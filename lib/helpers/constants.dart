@@ -6,7 +6,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
 
-const String baseUrl = 'https://pocketbase.cbluna-dev.com';
+const String baseUrl = 'https://emi-des.cbluna-dev.com';
 
 final client = PocketBase(baseUrl);
 
