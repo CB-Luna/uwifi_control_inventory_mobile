@@ -8,6 +8,8 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
 
 const String baseUrl = 'https://emi-des.cbluna-dev.com';
 
+const String baseUrlEmiWeb = "http://20.186.180.168:9021/ememi-secure-services/api";
+
 final client = PocketBase(baseUrl);
 
 final nombreCharacters = RegExp(r'^(([A-Z]{1}|[ÁÉÍÓÚÑ]{1})[a-zá-ÿ]+[ ]?)+$');

@@ -542,21 +542,6 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                     .findFirst()
                                     ?.id;
                                 if (idAmbito != null && idAreaCirculo != null) {
-                                  if (!(ambito == "Capacidad" && areaCirculo == "Venta") || 
-                                      !(ambito == "Capacidad" && areaCirculo == "Tecnología")) {
-                                       consultoriaProvider.add(
-                                        widget.emprendimiento.id,
-                                        widget.numConsultoria,
-                                        idAmbito,
-                                        idAreaCirculo);
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const ConsultoriaCreada(),
-                                          ),
-                                        );
-                                  }
                                   if (ambito == "Capacidad" && areaCirculo == "Venta") {
                                     await showDialog(
                                       context: context,
@@ -569,7 +554,6 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                             TextButton(
                                               onPressed: () async {
                                                 Navigator.pop(alertDialogContext);
-                                                print("Holis en ventas");
                                                 if (widget.emprendimiento.productosEmp.isNotEmpty) {
                                                   consultoriaProvider.add(
                                                   widget.emprendimiento.id,
@@ -595,7 +579,6 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                             ),
                                             TextButton(
                                               onPressed: () async {
-                                                print("Holis en no ventas");
                                                 Navigator.pop(alertDialogContext);
                                                 consultoriaProvider.add(
                                                   widget.emprendimiento.id,
@@ -667,6 +650,22 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                       },
                                     );
                                   } 
+                                  if (!(ambito == "Capacidad" && areaCirculo == "Venta") && 
+                                      !(ambito == "Capacidad" && areaCirculo == "Tecnología")) {
+                                       consultoriaProvider.add(
+                                        widget.emprendimiento.id,
+                                        widget.numConsultoria,
+                                        idAmbito,
+                                        idAreaCirculo);
+                                        // ignore: use_build_context_synchronously
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ConsultoriaCreada(),
+                                          ),
+                                        );
+                                  }
                                 }
                               } else {
                                 await showDialog(
