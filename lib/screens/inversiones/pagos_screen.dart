@@ -317,7 +317,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                             ),
                                             IgnorePointer(
                                               ignoring: actualInversion!.estadoInversion.target!.estado != "Comprada" ||
-                                              actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio",
+                                              actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio"
+                                              || actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Emprendedor",
                                               child: Builder(
                                                 builder: (context) {
                                                   return ListView.builder(
@@ -442,7 +443,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                             ),
                                             IgnorePointer(
                                               ignoring: actualInversion!.estadoInversion.target!.estado != "Comprada" || 
-                                              actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio",
+                                              actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio"
+                                              || actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Emprendedor",
                                               child: Container(
                                                 height: 50,
                                                 decoration: BoxDecoration(
@@ -565,6 +567,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                 children: [
                                                   FFButtonWidget(
                                                     onPressed: () async {
+                                                      if (actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol != "Amigo del Cambio"
+                                                          && actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol != "Emprendedor") {
                                                       if (actualInversion!.estadoInversion.target!.estado == "Comprada") {
                                                         if ((!recepcionYentregaProvider
                                                           .prodCotizadosTemp
@@ -618,6 +622,13 @@ class _PagosScreenState extends State<PagosScreen> {
                                                               "No puedes actualizar esta sección."),
                                                           )); 
                                                       }
+                                                    } else {
+                                                            snackbarKey.currentState
+                                                                ?.showSnackBar(const SnackBar(
+                                                              content: Text(
+                                                                  "Este usuario no tiene permisos para esta acción."),
+                                                            ));
+                                                    }
                                                     },
                                                     text: 'Aceptar',
                                                     icon: const Icon(
@@ -827,7 +838,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                     ),
                                                     IgnorePointer(
                                                       ignoring: actualInversion!.estadoInversion.target!.estado != "Entregada al promotor" ||
-                                                      actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio",
+                                                      actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio"
+                                                      || actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Emprendedor",
                                                       child: FFButtonWidget(
                                                         onPressed: () async {
                                                           String? option = await showModalBottomSheet(
@@ -992,7 +1004,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                     ),
                                                     IgnorePointer(
                                                       ignoring: actualInversion!.estadoInversion.target!.estado != "Entregada al promotor" ||
-                                                      actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio",
+                                                      actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio"
+                                                      || actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Emprendedor",
                                                       child: FFButtonWidget(
                                                         onPressed: () async {
                                                           String? option = await showModalBottomSheet(
@@ -1066,6 +1079,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                               children: [
                                                 FFButtonWidget(
                                                   onPressed: () async {
+                                                    if (actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol != "Amigo del Cambio"
+                                                    && actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol != "Emprendedor") {
                                                     if (actualInversion!.estadoInversion.target!.estado == "Entregada al promotor") {
                                                       if (imageFirma != ""  && imageProducto != "") {
                                                         recepcionYentregaProvider.entregaInversion(
@@ -1095,6 +1110,13 @@ class _PagosScreenState extends State<PagosScreen> {
                                                         content: Text(
                                                             "No puedes actualizar esta sección."),
                                                         )); 
+                                                    }
+                                                    } else {
+                                                      snackbarKey.currentState
+                                                          ?.showSnackBar(const SnackBar(
+                                                        content: Text(
+                                                            "Este usuario no tiene permisos para esta acción."),
+                                                      ));
                                                     }
                                                   },
                                                   text: 'Aceptar',
@@ -1285,7 +1307,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                         ),
                                                         IgnorePointer(
                                                           ignoring: actualInversion!.estadoInversion.target!.estado != "Entregada al emprendedor" ||
-                                                          actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio",
+                                                          actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio"
+                                                          || actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Emprendedor",
                                                           child: SizedBox(
                                                             width: 200,
                                                             child: Padding(
@@ -1502,77 +1525,86 @@ class _PagosScreenState extends State<PagosScreen> {
                                                     children: [
                                                       FFButtonWidget(
                                                         onPressed: () async {
+                                                          if (actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol != "Amigo del Cambio"
+                                                          && actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol != "Emprendedor") {
                                                           if (actualInversion!.estadoInversion.target!.estado == "Entregada al emprendedor") {
-                                                            if (recepcionYentregaProvider.validateForm(formKey)) {
-                                                              if (double.parse(
-                                                                montoAbonado.text.replaceAll("\$", "")
-                                                                .replaceAll(",", "")) == double.parse(
-                                                                saldo.text.replaceAll("\$", "")
-                                                                .replaceAll(",", ""))) {
-                                                                  recepcionYentregaProvider.finishPago(
-                                                                    double.parse(
-                                                                    montoAbonado.text.replaceAll("\$", "")
-                                                                    .replaceAll(",", "")), 
-                                                                    actualInversion!.id
-                                                                  );
+                                                              if (recepcionYentregaProvider.validateForm(formKey)) {
+                                                                if (double.parse(
+                                                                  montoAbonado.text.replaceAll("\$", "")
+                                                                  .replaceAll(",", "")) == double.parse(
+                                                                  saldo.text.replaceAll("\$", "")
+                                                                  .replaceAll(",", ""))) {
+                                                                    recepcionYentregaProvider.finishPago(
+                                                                      double.parse(
+                                                                      montoAbonado.text.replaceAll("\$", "")
+                                                                      .replaceAll(",", "")), 
+                                                                      actualInversion!.id
+                                                                    );
+                                                                    await Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                        builder: (context) =>
+                                                                            PagosConcluidos(
+                                                                              idEmprendimiento: 
+                                                                                actualInversion!.emprendimiento.target!.id
+                                                                              ,),
+                                                                      ),
+                                                                    );
+                                                                  
+                                                                }
+                                                                if (double.parse(
+                                                                  montoAbonado.text.replaceAll("\$", "")
+                                                                  .replaceAll(",", "")) < double.parse(
+                                                                  saldo.text.replaceAll("\$", "")
+                                                                  .replaceAll(",", ""))) {
+                                                                    recepcionYentregaProvider.updatePago(
+                                                                      double.parse(
+                                                                      montoAbonado.text.replaceAll("\$", "")
+                                                                      .replaceAll(",", "")), 
+                                                                      actualInversion!.id
+                                                                    );
+                                                                  snackbarKey.currentState
+                                                                    ?.showSnackBar(const SnackBar(
+                                                                  content: Text(
+                                                                      "Pago agregado éxitosamente."),
+                                                                  )); 
+                                                                  // ignore: use_build_context_synchronously
                                                                   await Navigator.push(
-                                                                    context,
-                                                                    MaterialPageRoute(
-                                                                      builder: (context) =>
-                                                                          PagosConcluidos(
-                                                                            idEmprendimiento: 
-                                                                              actualInversion!.emprendimiento.target!.id
-                                                                            ,),
-                                                                    ),
-                                                                  );
-                                                                
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                        builder: (context) =>
+                                                                            InversionesScreen(
+                                                                              idEmprendimiento: 
+                                                                                actualInversion!.emprendimiento.target!.id
+                                                                              ,),
+                                                                      ),
+                                                                    );
+                                                                }
+                                                                if (double.parse(
+                                                                  montoAbonado.text.replaceAll("\$", "")
+                                                                  .replaceAll(",", "")) > double.parse(
+                                                                  saldo.text.replaceAll("\$", "")
+                                                                  .replaceAll(",", ""))) {
+                                                                  snackbarKey.currentState
+                                                                    ?.showSnackBar(const SnackBar(
+                                                                  content: Text(
+                                                                      "El monto abonado no puede ser mayor al saldo restante."),
+                                                                  )); 
+                                                                }
                                                               }
-                                                              if (double.parse(
-                                                                montoAbonado.text.replaceAll("\$", "")
-                                                                .replaceAll(",", "")) < double.parse(
-                                                                saldo.text.replaceAll("\$", "")
-                                                                .replaceAll(",", ""))) {
-                                                                  recepcionYentregaProvider.updatePago(
-                                                                    double.parse(
-                                                                    montoAbonado.text.replaceAll("\$", "")
-                                                                    .replaceAll(",", "")), 
-                                                                    actualInversion!.id
-                                                                  );
-                                                                snackbarKey.currentState
+                                                            } else{
+                                                              snackbarKey.currentState
                                                                   ?.showSnackBar(const SnackBar(
                                                                 content: Text(
-                                                                    "Pago agregado éxitosamente."),
+                                                                    "No puedes actualizar esta sección."),
                                                                 )); 
-                                                                // ignore: use_build_context_synchronously
-                                                                await Navigator.push(
-                                                                    context,
-                                                                    MaterialPageRoute(
-                                                                      builder: (context) =>
-                                                                          InversionesScreen(
-                                                                            idEmprendimiento: 
-                                                                              actualInversion!.emprendimiento.target!.id
-                                                                            ,),
-                                                                    ),
-                                                                  );
-                                                              }
-                                                              if (double.parse(
-                                                                montoAbonado.text.replaceAll("\$", "")
-                                                                .replaceAll(",", "")) > double.parse(
-                                                                saldo.text.replaceAll("\$", "")
-                                                                .replaceAll(",", ""))) {
-                                                                snackbarKey.currentState
-                                                                  ?.showSnackBar(const SnackBar(
-                                                                content: Text(
-                                                                    "El monto abonado no puede ser mayor al saldo restante."),
-                                                                )); 
-                                                              }
                                                             }
-                                                          } else{
+                                                          } else {
                                                             snackbarKey.currentState
                                                                 ?.showSnackBar(const SnackBar(
                                                               content: Text(
-                                                                  "No puedes actualizar esta sección."),
-                                                              )); 
+                                                                  "Este usuario no tiene permisos para esta acción."),
+                                                            ));
                                                           }
                                                         },
                                                         text: 'Aceptar',

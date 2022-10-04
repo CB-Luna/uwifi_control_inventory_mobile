@@ -127,24 +127,15 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                     ),
                                     child: InkWell(
                                       onTap: () async {
-                                        if (actualEmprendimiento!.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
-                                            actualEmprendimiento!.usuario.target!.rol.target!.rol == "Emprendedor") {
-                                          snackbarKey.currentState
-                                              ?.showSnackBar(const SnackBar(
-                                            content: Text(
-                                                "Este usuario no tiene permisos para esta acción."),
-                                          ));
-                                        } else {
-                                          await Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    DetalleEmprendimientoScreen(
-                                                      emprendimiento: actualEmprendimiento!,
-                                                      ),
-                                              ),
-                                            );
-                                        }
+                                        await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DetalleEmprendimientoScreen(
+                                                    emprendimiento: actualEmprendimiento!,
+                                                    ),
+                                            ),
+                                          );
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
