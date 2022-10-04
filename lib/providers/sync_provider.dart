@@ -1526,7 +1526,6 @@ return true;
         "apellido_p": usuario.apellidoP,
         "apellido_m": usuario.apellidoM,
         "telefono": usuario.telefono,
-        "id_rol_fk": usuario.rol.target!.idDBR,
         "avatar": usuario.image.target?.imagenes,
         "id_status_sync_fk": "HoI36PzYw1wtbO1"
       }); 
