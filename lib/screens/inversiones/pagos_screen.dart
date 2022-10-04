@@ -316,7 +316,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                               ),
                                             ),
                                             IgnorePointer(
-                                              ignoring: actualInversion!.estadoInversion.target!.estado != "Comprada",
+                                              ignoring: actualInversion!.estadoInversion.target!.estado != "Comprada" ||
+                                              actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio",
                                               child: Builder(
                                                 builder: (context) {
                                                   return ListView.builder(
@@ -440,7 +441,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                               ),
                                             ),
                                             IgnorePointer(
-                                              ignoring: actualInversion!.estadoInversion.target!.estado != "Comprada",
+                                              ignoring: actualInversion!.estadoInversion.target!.estado != "Comprada" || 
+                                              actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio",
                                               child: Container(
                                                 height: 50,
                                                 decoration: BoxDecoration(
@@ -824,7 +826,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                       ),
                                                     ),
                                                     IgnorePointer(
-                                                      ignoring: actualInversion!.estadoInversion.target!.estado != "Entregada al promotor",
+                                                      ignoring: actualInversion!.estadoInversion.target!.estado != "Entregada al promotor" ||
+                                                      actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio",
                                                       child: FFButtonWidget(
                                                         onPressed: () async {
                                                           String? option = await showModalBottomSheet(
@@ -988,7 +991,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                       ),
                                                     ),
                                                     IgnorePointer(
-                                                      ignoring: actualInversion!.estadoInversion.target!.estado != "Entregada al promotor",
+                                                      ignoring: actualInversion!.estadoInversion.target!.estado != "Entregada al promotor" ||
+                                                      actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio",
                                                       child: FFButtonWidget(
                                                         onPressed: () async {
                                                           String? option = await showModalBottomSheet(
@@ -1280,7 +1284,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                           ),
                                                         ),
                                                         IgnorePointer(
-                                                          ignoring: actualInversion!.estadoInversion.target!.estado != "Entregada al emprendedor",
+                                                          ignoring: actualInversion!.estadoInversion.target!.estado != "Entregada al emprendedor" ||
+                                                          actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio",
                                                           child: SizedBox(
                                                             width: 200,
                                                             child: Padding(

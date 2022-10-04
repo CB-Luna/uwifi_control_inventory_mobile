@@ -692,6 +692,7 @@ with TickerProviderStateMixin {
                           FFButtonWidget(
                             onPressed:
                                 () async {
+                                  if (widget.emprendimiento.usuario.target!.rol.target!.rol == "Amigo del Cambio") {
                                   final connectivityResult =
                                       await (Connectivity().checkConnectivity());
                                   final bitacora = dataBase.bitacoraBox.getAll().toList();
@@ -719,6 +720,13 @@ with TickerProviderStateMixin {
                                       );
                                     },
                                   );
+                                  } else {
+                                    snackbarKey.currentState
+                                        ?.showSnackBar(const SnackBar(
+                                      content: Text(
+                                          "Este usuario no tiene permisos para esta acción."),
+                                    ));
+                                  }
                                 },
                             text: 'Sincronizar',
                             icon: const Icon(
