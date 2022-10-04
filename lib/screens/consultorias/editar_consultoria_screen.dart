@@ -804,7 +804,7 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                     .findFirst()
                                     ?.id;
                                   if (idPorcentajeAvance != null) {
-                                    consultoriaProvider.updateConsultoria(
+                                    consultoriaProvider.updateTareaConsultoria(
                                     widget.consultoria.id,
                                     widget.tarea.id,
                                     idPorcentajeAvance,

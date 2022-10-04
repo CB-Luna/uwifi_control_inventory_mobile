@@ -144,6 +144,7 @@ class _MainTabOpcionesScreenState extends State<MainTabOpcionesScreen>
                                   children: [
                                     InkWell(
                                       onTap: () async {
+                                        
                                         switch (actualInversion!.estadoInversion.target!.estado) {
                                           case "Autorizada":
                                             final connectivityResult =

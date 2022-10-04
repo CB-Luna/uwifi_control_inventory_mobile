@@ -542,7 +542,8 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                     .findFirst()
                                     ?.id;
                                 if (idAmbito != null && idAreaCirculo != null) {
-                                  if (ambito != "Capacidad" && (areaCirculo != "Venta" || areaCirculo != "Tecnología")) {
+                                  if (!(ambito == "Capacidad" && areaCirculo == "Venta") || 
+                                      !(ambito == "Capacidad" && areaCirculo == "Tecnología")) {
                                        consultoriaProvider.add(
                                         widget.emprendimiento.id,
                                         widget.numConsultoria,

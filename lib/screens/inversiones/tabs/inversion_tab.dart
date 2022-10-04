@@ -399,7 +399,8 @@ with TickerProviderStateMixin {
                           ),
                           FFButtonWidget(
                             onPressed:
-                                () async {
+                              () async {
+                                if (widget.emprendimiento.usuario.target!.rol.target!.rol == "Amigo del Cambio") {
                                   if (widget.inversion.estadoInversion.target!.estado == "Solicitada") {
                                     await Navigator
                                     .push(
@@ -419,6 +420,13 @@ with TickerProviderStateMixin {
                                           "Ya no puedes agregar más productos."),
                                     ));
                                   }
+                                } else {
+                                  snackbarKey.currentState
+                                      ?.showSnackBar(const SnackBar(
+                                    content: Text(
+                                        "Este usuario no tiene permisos para esta acción."),
+                                  ));
+                                }
                             },
                             text: 'Producto',
                             icon: const Icon(
@@ -471,6 +479,7 @@ with TickerProviderStateMixin {
                             final productoSolicitado = prodSolicitado[index];
                             return InkWell(
                               onTap: () async {
+                                if (widget.emprendimiento.usuario.target!.rol.target!.rol == "Amigo del Cambio") {
                                   await Navigator
                                   .push(
                                     context,
@@ -482,6 +491,13 @@ with TickerProviderStateMixin {
                                                 prodSolicitado: productoSolicitado,),
                                     ),
                                   );
+                                } else {
+                                    snackbarKey.currentState
+                                          ?.showSnackBar(const SnackBar(
+                                        content: Text(
+                                            "Este usuario no tiene permisos para esta acción."),
+                                      ));
+                                  }
                               },
                               child: Padding(
                                 padding:
