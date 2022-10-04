@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/providers/sync_provider.dart';
+import 'package:bizpro_app/providers/sync_provider_pocketbase.dart';
 import 'package:bizpro_app/screens/sync/sincronizacion_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
@@ -21,7 +21,7 @@ class _BottomSheetSincronizarWidgetState
     extends State<BottomSheetSincronizarWidget> {
   @override
   Widget build(BuildContext context) {
-    final syncProvider = Provider.of<SyncProvider>(context);
+    final syncProviderPocketbase = Provider.of<SyncProviderPocketbase>(context);
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 350,
@@ -148,8 +148,8 @@ class _BottomSheetSincronizarWidgetState
                               visible: widget.isVisible,
                               child: FFButtonWidget(
                                 onPressed: () async {
-                                  syncProvider.procesoCargando(true);
-                                  syncProvider.procesoTerminado(false);
+                                  syncProviderPocketbase.procesoCargando(true);
+                                  syncProviderPocketbase.procesoTerminado(false);
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(

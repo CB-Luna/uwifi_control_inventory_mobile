@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:bizpro_app/providers/sync_provider.dart';
+import 'package:bizpro_app/providers/sync_provider_pocketbase.dart';
 import 'package:bizpro_app/screens/inversiones/inversion_actualizada_exitosamente.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/helpers/globals.dart';
@@ -45,8 +45,8 @@ with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final syncProvider =
-        Provider.of<SyncProvider>(context);
+    final syncProviderPocketbase =
+        Provider.of<SyncProviderPocketbase>(context);
     final List<ProdSolicitado> prodSolicitado = [];
     double totalProyecto = 0;
     for (var element in widget.inversion.prodSolicitados.toList()) {
@@ -799,7 +799,7 @@ with TickerProviderStateMixin {
                                         "Necesitas conexión a internet para aceptar la cotización."),
                                     ));
                                   } else{
-                                    Future<bool?> boolean = syncProvider.cambiarInversionAComprada(widget.inversion);
+                                    Future<bool?> boolean = syncProviderPocketbase.cambiarInversionAComprada(widget.inversion);
                                     if(await boolean != null)
                                     {
                                       if(await boolean == true)

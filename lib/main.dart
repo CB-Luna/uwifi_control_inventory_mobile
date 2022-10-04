@@ -1,4 +1,5 @@
 import 'package:bizpro_app/providers/catalog_provider_recover.dart';
+import 'package:bizpro_app/providers/sync_provider_emi_web.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,7 +23,7 @@ import 'package:bizpro_app/providers/database_providers/inversion_controller.dar
 import 'package:bizpro_app/providers/database_providers/inversion_jornada_controller.dart';
 import 'package:bizpro_app/providers/database_providers/producto_emprendedor_controller.dart';
 import 'package:bizpro_app/providers/database_providers/recepcion_y_entrega_inversion_controller.dart';
-import 'package:bizpro_app/providers/sync_provider.dart';
+import 'package:bizpro_app/providers/sync_provider_pocketbase.dart';
 
 import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/services/navigation_service.dart';
@@ -99,8 +100,12 @@ void main() async {
           create: (context) => RecepcionYEntregaController(),
           lazy: false,
         ),
-        ChangeNotifierProvider<SyncProvider>(
-          create: (context) => SyncProvider(),
+        ChangeNotifierProvider<SyncProviderPocketbase>(
+          create: (context) => SyncProviderPocketbase(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<SyncProviderEmiWeb>(
+          create: (context) => SyncProviderEmiWeb(),
           lazy: false,
         ),
         ChangeNotifierProvider<CatalogProvider>(

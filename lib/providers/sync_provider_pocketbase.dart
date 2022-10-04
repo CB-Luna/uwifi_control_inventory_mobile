@@ -10,7 +10,7 @@ import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/models/get_prod_cotizados.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 
-class SyncProvider extends ChangeNotifier {
+class SyncProviderPocketbase extends ChangeNotifier {
   Random random = new Random();
   bool procesoterminado = false;
   bool procesocargando = false;
@@ -416,10 +416,11 @@ class SyncProvider extends ChangeNotifier {
       }
       
     }
-    print("Proceso terminado");
+    print("Proceso terminado en Pocketbase");
     procesoterminado = true;
     procesocargando = false;
     //Se elimina el contenido de la Bitacora
+    //TODO: Descomentar cuando sólo sea el sync provider pocketbase
     dataBase.bitacoraBox.removeAll();
     notifyListeners();
 

@@ -3,7 +3,7 @@ import 'package:bizpro_app/screens/inversiones/cotizacion_simulada_exitosamente.
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/providers/sync_provider.dart';
+import 'package:bizpro_app/providers/sync_provider_pocketbase.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:bizpro_app/util/util.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -55,8 +55,8 @@ with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final syncProvider =
-        Provider.of<SyncProvider>(context);
+    final syncProviderPocketbase =
+        Provider.of<SyncProviderPocketbase>(context);
     final cotizacionProvider =
         Provider.of<CotizacionController>(context);
     return SingleChildScrollView(
@@ -430,9 +430,9 @@ with TickerProviderStateMixin {
                                         else {
                                           print("Holaaaaaaaa 2");
                                           print(widget.inversionesXprodCotizados.idDBR);
-                                        if (await syncProvider.validateLengthCotizacion(widget.inversionesXprodCotizados)) {
-                                          syncProvider.procesoCargando(true);
-                                          syncProvider.procesoTerminado(false);
+                                        if (await syncProviderPocketbase.validateLengthCotizacion(widget.inversionesXprodCotizados)) {
+                                          syncProviderPocketbase.procesoCargando(true);
+                                          syncProviderPocketbase.procesoTerminado(false);
                                           // ignore: use_build_context_synchronously
                                           await Navigator.push(
                                             context,
@@ -734,14 +734,14 @@ with TickerProviderStateMixin {
                                           "Necesitas conexión a internet para simular la cotización."),
                                       ));
                                     } else{
-                                      if (await syncProvider.validateLengthCotizacion(widget.inversionesXprodCotizados)) {
+                                      if (await syncProviderPocketbase.validateLengthCotizacion(widget.inversionesXprodCotizados)) {
                                         snackbarKey.currentState
                                           ?.showSnackBar(const SnackBar(
                                         content: Text(
                                             "Ya se ha simulado la cotización, ahora presione '+Obtener cotización'."),
                                         ));
                                       } else {
-                                        if(await syncProvider.simularCotizacion(widget.inversion))
+                                        if(await syncProviderPocketbase.simularCotizacion(widget.inversion))
                                          {
                                           // ignore: use_build_context_synchronously
                                           await Navigator

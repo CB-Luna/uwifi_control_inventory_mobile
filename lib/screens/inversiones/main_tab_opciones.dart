@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/providers/sync_provider.dart';
+import 'package:bizpro_app/providers/sync_provider_pocketbase.dart';
 import 'package:bizpro_app/screens/inversiones/tabs/cotizacion_tab.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -45,8 +45,8 @@ class _MainTabOpcionesScreenState extends State<MainTabOpcionesScreen>
 
   @override
   Widget build(BuildContext context) {
-    final syncProvider =
-        Provider.of<SyncProvider>(context);
+    final syncProviderPocketbase =
+        Provider.of<SyncProviderPocketbase>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -158,7 +158,7 @@ class _MainTabOpcionesScreenState extends State<MainTabOpcionesScreen>
                                             }
                                             else {
                                               print(actualInversion!.idDBR);
-                                            if (await syncProvider.validateInversionComprada(actualInversion!)) {
+                                            if (await syncProviderPocketbase.validateInversionComprada(actualInversion!)) {
                                               snackbarKey.currentState
                                                 ?.showSnackBar(const SnackBar(
                                               content: Text(

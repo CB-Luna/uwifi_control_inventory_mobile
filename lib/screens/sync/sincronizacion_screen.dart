@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:lottie/lottie.dart';
 
-import 'package:bizpro_app/providers/sync_provider.dart';
+import 'package:bizpro_app/providers/sync_provider_pocketbase.dart';
 
 import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
@@ -25,7 +25,7 @@ class _SincronizacionScreenState extends State<SincronizacionScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
-        context.read<SyncProvider>().executeInstrucciones(dataBase.bitacoraBox
+        context.read<SyncProviderPocketbase>().executeInstrucciones(dataBase.bitacoraBox
             .getAll()
             .toList()
             .where((element) => element.usuario == prefs.getString("userId")!)
@@ -36,7 +36,7 @@ class _SincronizacionScreenState extends State<SincronizacionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final syncProvider = Provider.of<SyncProvider>(context);
+    final syncProviderPocketbase = Provider.of<SyncProviderPocketbase>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -101,7 +101,7 @@ class _SincronizacionScreenState extends State<SincronizacionScreen> {
                                     ),
                               ),
                             ),
-                            syncProvider.procesocargando
+                            syncProviderPocketbase.procesocargando
                                 ? Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
@@ -123,7 +123,7 @@ class _SincronizacionScreenState extends State<SincronizacionScreen> {
                                     ),
                                   ),
                             Visibility(
-                              visible: syncProvider.procesoterminado,
+                              visible: syncProviderPocketbase.procesoterminado,
                               child: Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 100, 0, 0),
@@ -136,7 +136,7 @@ class _SincronizacionScreenState extends State<SincronizacionScreen> {
                                             const EmprendimientosScreen(),
                                       ),
                                     );
-                                    syncProvider.procesoTerminado(false);
+                                    syncProviderPocketbase.procesoTerminado(false);
                                   },
                                   text: 'Listo',
                                   options: FFButtonOptions(
