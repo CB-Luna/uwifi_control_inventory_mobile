@@ -1,7 +1,7 @@
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/models/emi_user_by_id.dart';
-import 'package:bizpro_app/models/login_response.dart';
+import 'package:bizpro_app/modelsPocketbase/emi_user_by_id.dart';
+import 'package:bizpro_app/modelsPocketbase/login_response.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 

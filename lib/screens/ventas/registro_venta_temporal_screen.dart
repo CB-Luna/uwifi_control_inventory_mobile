@@ -8,7 +8,7 @@ import 'package:bizpro_app/providers/database_providers/producto_venta_controlle
 import 'package:bizpro_app/providers/database_providers/venta_controller.dart';
 import 'package:bizpro_app/screens/ventas/agregar_producto_venta_temporal.dart';
 import 'package:bizpro_app/screens/ventas/editar_producto_venta_temporal.dart';
-import 'package:bizpro_app/models/temporals/productos_vendidos_temporal.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/productos_vendidos_temporal.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';

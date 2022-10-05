@@ -6,6 +6,7 @@ import 'package:bizpro_app/modelsPocketbase/get_prod_proyecto.dart';
 import 'package:bizpro_app/modelsPocketbase/get_productos_prov.dart';
 import 'package:bizpro_app/modelsPocketbase/get_proveedores.dart';
 import 'package:bizpro_app/modelsPocketbase/get_tipo_proveedor.dart';
+import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -27,7 +28,6 @@ import 'package:bizpro_app/modelsPocketbase/get_tipo_empaques.dart';
 import 'package:bizpro_app/util/util.dart';
 
 import 'package:http/http.dart' as http;
-import '../objectbox.g.dart';
 
 class CatalogProvider extends ChangeNotifier {
 
@@ -73,7 +73,9 @@ class CatalogProvider extends ChangeNotifier {
   }
 
   Future<void> getEstados() async {
-    if (dataBase.estadosBox.isEmpty()) {
+    // var url = Uri.parse("$baseUrl/api/collections/emi_users/records/?filter=(user='$idUser')");
+
+    //   var response = await get(url);
       final records = await client.records.
       getFullList('estados', batch: 200, sort: '+nombre_estado');
       final List<GetEstados> listEstados = [];
@@ -105,7 +107,6 @@ class CatalogProvider extends ChangeNotifier {
         }
       }
       notifyListeners();
-      }
   }
 
   Future<void> getMunicipios() async {

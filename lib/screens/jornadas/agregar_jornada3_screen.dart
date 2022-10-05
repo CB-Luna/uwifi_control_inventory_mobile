@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:bizpro_app/models/temporals/productos_solicitados_temporal.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/productos_solicitados_temporal.dart';
 import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';

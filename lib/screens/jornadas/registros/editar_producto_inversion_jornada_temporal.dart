@@ -18,7 +18,7 @@ import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/models/temporals/productos_solicitados_temporal.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/productos_solicitados_temporal.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 

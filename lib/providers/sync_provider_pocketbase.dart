@@ -1,13 +1,13 @@
 import 'dart:math';
 
-import 'package:bizpro_app/models/get_inversion.dart';
-import 'package:bizpro_app/models/get_inversion_x_prod_cotizados.dart';
+import 'package:bizpro_app/modelsPocketbase/get_inversion.dart';
+import 'package:bizpro_app/modelsPocketbase/get_inversion_x_prod_cotizados.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/models/get_prod_cotizados.dart';
+import 'package:bizpro_app/modelsPocketbase/get_prod_cotizados.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 
 class SyncProviderPocketbase extends ChangeNotifier {

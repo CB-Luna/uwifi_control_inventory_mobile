@@ -1,4 +1,4 @@
-import 'package:bizpro_app/models/temporals/emprendedor_temporal.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/emprendedor_temporal.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
