@@ -47,9 +47,9 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
     super.initState();
     rolUsuario = widget.usuario.rol.target!.rol;
     listRoles = [];
-    dataBase.rolesBox.getAll().forEach((element) {
+    for (var element in widget.usuario.roles) {
       listRoles.add(element.rol);
-    });
+    }
     fotoPerfil = widget.usuario.image.target?.imagenes ?? "";
     nombreController = TextEditingController(text: widget.usuario.nombre);
     apellidoPController = TextEditingController(text: widget.usuario.apellidoP);
@@ -60,8 +60,6 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
   @override
   Widget build(BuildContext context) {
     //TODO: como manejar imagen?
-    const String currentUserPhoto =
-        'assets/images/default-user-profile-picture.jpg';
     final usuarioProvider = Provider.of<UsuarioController>(context);
     return WillPopScope(
       onWillPop: () async => false,

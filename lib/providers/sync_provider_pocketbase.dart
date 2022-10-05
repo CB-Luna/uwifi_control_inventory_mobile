@@ -9,10 +9,8 @@ import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/models/get_prod_cotizados.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
-import 'package:bizpro_app/util/util.dart';
 
-
-class SyncProvider extends ChangeNotifier {
+class SyncProviderPocketbase extends ChangeNotifier {
   Random random = new Random();
   bool procesoterminado = false;
   bool procesocargando = false;
@@ -275,19 +273,14 @@ class SyncProvider extends ChangeNotifier {
           }         
           break;
         case "syncUpdateTareaConsultoria":
-          final tareaToSync = getFirstTarea(dataBase.tareasBox.getAll(), instruccionesBitacora[i].id);
+        final tareaToSync = getFirstTarea(dataBase.tareasBox.getAll(), instruccionesBitacora[i].id);
           if(tareaToSync != null){
             if(tareaToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
               print("Entro aqui en el if");
               break;
             } else {
               print("Entro aqui en el else");
-              if (tareaToSync.idDBR != null) {
-                print("Ya ha sido enviado al backend");
                 syncUpdateTareaConsultoria(tareaToSync);
-              } else {
-                print("No ha sido enviado al backend");
-              }
             }   
           }
           break;
@@ -307,6 +300,65 @@ class SyncProvider extends ChangeNotifier {
               }
             }   
           }
+          break;
+        case "syncAddProductoEmprendedor":
+          print("Entro aqui");
+          final prodEmprendedorToSync = getFirstProductoEmprendedor(dataBase.productosEmpBox.getAll(), instruccionesBitacora[i].id);
+          if(prodEmprendedorToSync != null){
+            if(prodEmprendedorToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
+            print("Entro aqui en el if");
+            break;
+          } else {
+            print("Entro aqui en el else");
+            
+            await syncAddProductoEmprendedor(prodEmprendedorToSync);
+          } 
+          }         
+          break;
+        case "syncUpdateProductoEmprendedor":
+          final prodEmprendedorToSync = getFirstInversion(dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
+          if(prodEmprendedorToSync != null){
+            if(prodEmprendedorToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
+              print("Entro aqui en el if");
+              break;
+            } else {
+              print("Entro aqui en el else");
+              if (prodEmprendedorToSync.idDBR != null) {
+                print("Ya ha sido enviado al backend");
+                // syncUpdateProductoEmprendedor(prodEmprendedorToSync);
+              } else {
+                print("No ha sido enviado al backend");
+              }
+            }   
+          }  
+          break;
+        case "syncAddVenta":
+          print("Entro aqui");
+          final ventaToSync = getFirstVenta(dataBase.ventasBox.getAll(), instruccionesBitacora[i].id);
+          if(ventaToSync != null){
+            if(ventaToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
+            print("Entro aqui en el if");
+            break;
+          } else {
+            print("Entro aqui en el else");
+            
+            await syncAddVenta(ventaToSync);
+          } 
+          }         
+          break;
+        case "syncAddProductoVendido":
+          print("Entro aqui");
+          final prodVendidoToSync = getFirstProductoVendido(dataBase.productosVendidosBox.getAll(), instruccionesBitacora[i].id);
+          if(prodVendidoToSync != null){
+            if(prodVendidoToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
+            print("Entro aqui en el if");
+            break;
+          } else {
+            print("Entro aqui en el else");
+            
+            await syncAddProductoVendido(prodVendidoToSync);
+          } 
+          }         
           break;
         case "syncAddInversion":
           print("Entro aqui");
@@ -364,10 +416,11 @@ class SyncProvider extends ChangeNotifier {
       }
       
     }
-    print("Proceso terminado");
+    print("Proceso terminado en Pocketbase");
     procesoterminado = true;
     procesocargando = false;
     //Se elimina el contenido de la Bitacora
+    //TODO: Descomentar cuando sólo sea el sync provider pocketbase
     dataBase.bitacoraBox.removeAll();
     notifyListeners();
 
@@ -464,6 +517,51 @@ class SyncProvider extends ChangeNotifier {
     }
     return null;
   }
+  ProductosEmp? getFirstProductoEmprendedor(List<ProductosEmp> productosEmp, int idInstruccionesBitacora)
+    {
+      for (var i = 0; i < productosEmp.length; i++) {
+        if (productosEmp[i].bitacora.isEmpty) {
+
+        } else {
+          for (var j = 0; j < productosEmp[i].bitacora.length; j++) {
+            if (productosEmp[i].bitacora[j].id == idInstruccionesBitacora) {
+              return productosEmp[i];
+            } 
+          }
+        }
+      }
+      return null;
+    }
+  Ventas? getFirstVenta(List<Ventas> ventas, int idInstruccionesBitacora)
+    {
+      for (var i = 0; i < ventas.length; i++) {
+        if (ventas[i].bitacora.isEmpty) {
+
+        } else {
+          for (var j = 0; j < ventas[i].bitacora.length; j++) {
+            if (ventas[i].bitacora[j].id == idInstruccionesBitacora) {
+              return ventas[i];
+            } 
+          }
+        }
+      }
+      return null;
+    }
+  ProdVendidos? getFirstProductoVendido(List<ProdVendidos> prodVendidos, int idInstruccionesBitacora)
+    {
+      for (var i = 0; i < prodVendidos.length; i++) {
+        if (prodVendidos[i].bitacora.isEmpty) {
+
+        } else {
+          for (var j = 0; j < prodVendidos[i].bitacora.length; j++) {
+            if (prodVendidos[i].bitacora[j].id == idInstruccionesBitacora) {
+              return prodVendidos[i];
+            } 
+          }
+        }
+      }
+      return null;
+    }
   Tareas? getFirstTarea(List<Tareas> tareas, int idInstruccionesBitacora)
     {
       for (var i = 0; i < tareas.length; i++) {
@@ -675,26 +773,24 @@ class SyncProvider extends ChangeNotifier {
 
   Future<bool?> syncAddConsultoria(Consultorias consultoria) async {
     print("Estoy en syncAddConsultoria");
-    final tareaToSync = consultoria.tareas.last;
+    final tareasToSync = consultoria.tareas.toList();
+    List<String> idsDBRTareas = [];
     try {
     //Primero creamos las tareas asociadas a la consultoria
+    for (var i = 0; i < tareasToSync.length; i++) {
       print("Datos");
-      print(tareaToSync.tarea);
-      print(tareaToSync.descripcion);
-      print(tareaToSync.fechaRevision.toUtc().toString());
-      print(tareaToSync.comentarios);
       final recordTarea = await client.records.create('tareas', body: {
-        "tarea": tareaToSync.tarea,
-        "descripcion": tareaToSync.descripcion,
-        "comentarios": tareaToSync.comentarios,
-        "id_porcentaje_fk": tareaToSync.porcentaje.target!.idDBR,
-        "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
+        "tarea": tareasToSync[i].tarea,
+        "descripcion": tareasToSync[i].descripcion,
+        "comentarios": tareasToSync[i].comentarios,
+        "id_porcentaje_fk": tareasToSync[i].porcentaje.target!.idDBR,
+        "fecha_revision": tareasToSync[i].fechaRevision.toUtc().toString(),
         "id_status_sync_fk": "HoI36PzYw1wtbO1"
       });
       if (recordTarea.id.isNotEmpty) {
       //Se actualiza el estado de la tarea
-      String idDBRTarea = recordTarea.id;
-      final statusSyncTarea = dataBase.statusSyncBox.query(StatusSync_.id.equals(tareaToSync.statusSync.target!.id)).build().findUnique();
+      idsDBRTareas.add(recordTarea.id);
+      final statusSyncTarea = dataBase.statusSyncBox.query(StatusSync_.id.equals(tareasToSync[i].statusSync.target!.id)).build().findUnique();
       if (statusSyncTarea != null) {
         statusSyncTarea.status = "HoI36PzYw1wtbO1";
         dataBase.statusSyncBox.put(statusSyncTarea);
@@ -703,35 +799,22 @@ class SyncProvider extends ChangeNotifier {
         print("Actualizacion de estado de la Tarea");
       }
       //Se recupera el idDBR de la tarea
-      final updateTarea = dataBase.tareasBox.query(Tareas_.id.equals(tareaToSync.id)).build().findUnique();
+      final updateTarea = dataBase.tareasBox.query(Tareas_.id.equals(tareasToSync[i].id)).build().findUnique();
       if (updateTarea != null) {
-        updateTarea.idDBR = idDBRTarea;
+        updateTarea.idDBR = recordTarea.id;
         dataBase.tareasBox.put(updateTarea);
         print("Se recupera el idDBR de la Tarea");
       }
       }
-
-      //Segundo actualizamos el ambito de la consultoria
-      //   final record = await client.records.update('emprendimientos', consultoria.idDBR.toString(), body: {
-      //     "id_nombre_proyecto_fk": consultoria.catalogoProyecto.target!.idDBR,
-      //     "id_status_sync_fk": "HoI36PzYw1wtbO1",
-      //   }); 
-      //   if (record.id.isNotEmpty) {
-      //   print("Consultoria updated succesfully");
-      //   var updateEmprendimiento = dataBase.emprendimientosBox.get(consultoria.id);
-      //   if (updateEmprendimiento != null) {
-      //     final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendimiento.statusSync.target!.id)).build().findUnique();
-      //     if (statusSync != null) {
-      //       statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
-      //       dataBase.statusSyncBox.put(statusSync);
-      //   }
-      // }
-      // }
-    //Tercero creamos la consultoria
+    }
+    print("idsDBRSTareas: $idsDBRTareas");
+    //Segundo creamos la consultoria
     final recordConsultoria = await client.records.create('consultorias', body: {
       "id_emprendimiento_fk": consultoria.emprendimiento.target!.idDBR,
-      "id_tarea_fk": recordTarea.id,
+      "id_tarea_fk": idsDBRTareas,
       "id_status_sync_fk": "HoI36PzYw1wtbO1",
+      "id_ambito_fk": consultoria.ambitoConsultoria.target!.idDBR,
+      "id_area_circulo_fk": consultoria.areaCirculo.target!.idDBR,
     });
 
     if (recordConsultoria.id.isNotEmpty) {
@@ -751,15 +834,14 @@ class SyncProvider extends ChangeNotifier {
         updateConsultoria.idDBR = idDBRConsultoria;
         dataBase.consultoriasBox.put(updateConsultoria);
         print("Se recupera el idDBR de la consultoria");
+        return true;
       }
     }
-    return true;
-      } catch (e) {
-        print('ERROR - function syncAddConsultoria(): $e');
-        return false;
-      }
-    
     return null;
+    } catch (e) {
+      print('ERROR - function syncAddConsultoria(): $e');
+      return false;
+    }
 }
 
  Future<bool?> syncAddTareaConsultoria(Tareas tarea) async {
@@ -933,8 +1015,6 @@ return true;
 
     print("Estoy en El syncAddEmprendimiento");
       try {
-
-      var url = Uri.parse('$baseUrl/api/collections/emprendimientos/records');
 
       print("ID Promotor: ${emprendimiento.usuario.target!.idDBR}");
 
@@ -1365,35 +1445,72 @@ return true;
   } 
 
   Future<bool?> syncUpdateTareaConsultoria(Tareas tarea) async {
-
     print("Estoy en El syncUpdateTareaConsultoria");
+    List<String> tareasConsultoria = [];
     try {
-
-      final record = await client.records.update('tareas', tarea.idDBR.toString(), body: {
+      //Primero creamos la tarea asociada a la consultoria
+      final recordTarea = await client.records.create('tareas', body: {
         "tarea": tarea.tarea,
         "descripcion": tarea.descripcion,
         "comentarios": tarea.comentarios,
         "id_porcentaje_fk": tarea.porcentaje.target!.idDBR,
         "fecha_revision": tarea.fechaRevision.toUtc().toString(),
         "id_status_sync_fk": "HoI36PzYw1wtbO1"
-      }); 
-
-      if (record.id.isNotEmpty) {
-        print("Tarea updated succesfully");
-        var updateTarea = dataBase.emprendimientosBox.get(tarea.id);
-        if (updateTarea  != null) {
-          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateTarea.statusSync.target!.id)).build().findUnique();
-          if (statusSync != null) {
-            statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
-            dataBase.statusSyncBox.put(statusSync);
-          }
+      });
+      if (recordTarea.id.isNotEmpty) {
+        //Se actualiza el estado de la tarea
+        String idDBRTarea = recordTarea.id;
+        final statusSyncTarea = dataBase.statusSyncBox.query(StatusSync_.id.equals(tarea.statusSync.target!.id)).build().findUnique();
+        if (statusSyncTarea != null) {
+          statusSyncTarea.status = "HoI36PzYw1wtbO1";
+          dataBase.statusSyncBox.put(statusSyncTarea);
+          print("Se hace el conteo de la tabla statusSync");
+          print(dataBase.statusSyncBox.count());
+          print("Actualizacion de estado de la Tarea");
         }
-      }
-      else{
+        //Se recupera el idDBR de la tarea
+        final updateTarea = dataBase.tareasBox.query(Tareas_.id.equals(tarea.id)).build().findUnique();
+        if (updateTarea != null) {
+          updateTarea.idDBR = recordTarea.id;
+          dataBase.tareasBox.put(updateTarea);
+          print("Se recupera el idDBR de la Tarea");
+        }
+        //Segundo actualizamos la consultoria
+        final consultoria = dataBase.consultoriasBox.get(tarea.consultoria.target!.id);
+        if (consultoria != null) {
+          for (var element in consultoria.tareas.toList()) {
+            if (element.idDBR != null) {
+              tareasConsultoria.add(element.idDBR!);
+            }
+          }
+          tareasConsultoria.add(idDBRTarea);
+          print("IdsDBRTareas: $tareasConsultoria");
+          final recordConsultoria = await client.records.update('consultorias', consultoria.idDBR.toString(), body: {
+            "id_tarea_fk": tareasConsultoria,
+            "id_status_sync_fk": "HoI36PzYw1wtbO1",
+          }); 
+          if (recordConsultoria.id.isNotEmpty) {
+            print("Consultoria updated succesfully");
+            var updateConsultoria = dataBase.consultoriasBox.get(consultoria.id);
+            if (updateConsultoria != null) {
+              final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateConsultoria.statusSync.target!.id)).build().findUnique();
+              if (statusSync != null) {
+                statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado de la consultoria
+                dataBase.statusSyncBox.put(statusSync);
+                return true;
+              }
+            }
+            else{
+              return false;
+            }
+          }  
+          return null;
+        } else {
+          return false;
+        }
+      } else {
         return false;
       }
-      return true;
-
     } catch (e) {
       print('ERROR - function syncUpdateTareaConsultoria(): $e');
       return false;
@@ -1410,7 +1527,6 @@ return true;
         "apellido_p": usuario.apellidoP,
         "apellido_m": usuario.apellidoM,
         "telefono": usuario.telefono,
-        "id_rol_fk": usuario.rol.target!.idDBR,
         "avatar": usuario.image.target?.imagenes,
         "id_status_sync_fk": "HoI36PzYw1wtbO1"
       }); 
@@ -1440,6 +1556,121 @@ return true;
 void deleteBitacora() {
   dataBase.bitacoraBox.removeAll();
   notifyListeners();
+}
+
+  Future<bool?> syncAddProductoEmprendedor(ProductosEmp productoEmp) async {
+    print("Estoy en El syncAddProductoEmp");
+      try {
+      final record = await client.records.create('productos_emp', body: {
+          "nombre_prod_emp": productoEmp.nombre,
+          "descripcion": productoEmp.descripcion,
+          "id_und_medida_fk": productoEmp.unidadMedida.target!.idDBR,
+          "costo_prod_emp": productoEmp.costo,
+          "id_emprendimiento_fk": productoEmp.emprendimientos.target!.idDBR,
+          "archivado": productoEmp.archivado,
+      });
+      if (record.id.isNotEmpty) {
+        String idDBR = record.id;
+        print("Producto Emprendedor created succesfully");
+        var updateProdEmprendedor = dataBase.productosEmpBox.get(productoEmp.id);
+        if (updateProdEmprendedor != null) {
+            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateProdEmprendedor.statusSync.target!.id)).build().findUnique();
+            if (statusSync != null) {
+              statusSync.status = "HoI36PzYw1wtbO1";
+              dataBase.statusSyncBox.put(statusSync);
+            }
+          updateProdEmprendedor.idDBR = idDBR;
+          dataBase.productosEmpBox.put(updateProdEmprendedor);
+          return true;
+        }
+        else {
+          return false;
+        }
+      }
+      else{
+        return false;
+      }
+
+    } catch (e) {
+      print('ERROR - function syncAddProductoEmp(): $e');
+      return false;
+    }
+}
+
+  Future<bool?> syncAddVenta(Ventas venta) async {
+    print("Estoy en El syncAddVenta");
+      try {
+      final record = await client.records.create('ventas', body: {
+          "id_emprendimiento_fk": venta.emprendimiento.target!.idDBR,
+          "fecha_inicio": venta.fechaInicio.toUtc().toString(),
+          "fecha_termino": venta.fechaTermino.toUtc().toString(),
+          "total": venta.total,
+          "archivado": venta.archivado,
+      });
+      if (record.id.isNotEmpty) {
+        String idDBR = record.id;
+        print("Venta created succesfully");
+        var updateVenta = dataBase.ventasBox.get(venta.id);
+        if (updateVenta != null) {
+            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateVenta.statusSync.target!.id)).build().findUnique();
+            if (statusSync != null) {
+              statusSync.status = "HoI36PzYw1wtbO1";
+              dataBase.statusSyncBox.put(statusSync);
+            }
+          updateVenta.idDBR = idDBR;
+          dataBase.ventasBox.put(updateVenta);
+          return true;
+        }
+        else {
+          return false;
+        }
+      }
+      else{
+        return false;
+      }
+
+    } catch (e) {
+      print('ERROR - function syncAddVenta(): $e');
+      return false;
+    }
+}
+
+  Future<bool?> syncAddProductoVendido(ProdVendidos productoVendido) async {
+    print("Estoy en El syncAddProductoVendido");
+      try {
+      final record = await client.records.create('prod_vendidos', body: {
+          "id_productos_emp_fk": productoVendido.productoEmp.target!.idDBR,
+          "cantidad_vendida": productoVendido.cantVendida,
+          "subTotal": productoVendido.subtotal,
+          "precio_venta": productoVendido.precioVenta,
+          "id_venta_fk": productoVendido.venta.target!.idDBR,
+      });
+      if (record.id.isNotEmpty) {
+        String idDBR = record.id;
+        print("Producto Emprendedor created succesfully");
+        var updateProductoVendido = dataBase.productosVendidosBox.get(productoVendido.id);
+        if (updateProductoVendido != null) {
+            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateProductoVendido.statusSync.target!.id)).build().findUnique();
+            if (statusSync != null) {
+              statusSync.status = "HoI36PzYw1wtbO1";
+              dataBase.statusSyncBox.put(statusSync);
+            }
+          updateProductoVendido.idDBR = idDBR;
+          dataBase.productosVendidosBox.put(updateProductoVendido);
+          return true;
+        }
+        else {
+          return false;
+        }
+      }
+      else{
+        return false;
+      }
+
+    } catch (e) {
+      print('ERROR - function syncAddProductoVendido(): $e');
+      return false;
+    }
 }
 
   Future<bool?> syncAddInversion(Inversiones inversion) async {

@@ -90,7 +90,7 @@ void add(int idEmprendimiento, int idVenta) {
         precioVenta: productosVendidos[i].precioVenta
         );
         final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
-        final nuevaInstruccion = Bitacora(instrucciones: 'syncAddProductoVenta', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+        final nuevaInstruccion = Bitacora(instrucciones: 'syncAddProductoVendido', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
         nuevoProdVendido.productoEmp.target = productoEmp;
         nuevoProdVendido.statusSync.target = nuevoSync;
         nuevoProdVendido.venta.target = venta;
@@ -115,7 +115,7 @@ void addSingle(int idVenta, int idProductoEmp, String subTotal, ) {
         precioVenta: double.parse(precioVenta),
       );
       final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
-      final nuevaInstruccion = Bitacora(instrucciones: 'syncAddProductoVenta', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instrucciones: 'syncAddProductoVendido', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       nuevoProdVendido.productoEmp.target = productoEmp;
       nuevoProdVendido.statusSync.target = nuevoSync;
       nuevoProdVendido.venta.target = venta;

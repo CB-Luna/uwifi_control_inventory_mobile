@@ -137,7 +137,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(10, 252808688812742776),
       name: 'Usuarios',
-      lastPropertyId: const IdUid(22, 5834614544621841095),
+      lastPropertyId: const IdUid(24, 6133859733044332540),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -228,11 +228,11 @@ final _entities = <ModelEntity>[
             indexId: const IdUid(148, 915767699699149923),
             relationTarget: 'Imagenes'),
         ModelProperty(
-            id: const IdUid(22, 5834614544621841095),
+            id: const IdUid(24, 6133859733044332540),
             name: 'rolId',
             type: 11,
             flags: 520,
-            indexId: const IdUid(149, 9045688124770187728),
+            indexId: const IdUid(210, 5673280590788867277),
             relationTarget: 'Roles')
       ],
       relations: <ModelRelation>[
@@ -247,7 +247,11 @@ final _entities = <ModelEntity>[
         ModelRelation(
             id: const IdUid(62, 9163628031946481713),
             name: 'pagos',
-            targetId: const IdUid(58, 6428801880818699617))
+            targetId: const IdUid(58, 6428801880818699617)),
+        ModelRelation(
+            id: const IdUid(69, 6600950642535277297),
+            name: 'roles',
+            targetId: const IdUid(39, 5004962762570684805))
       ],
       backlinks: <ModelBacklink>[
         ModelBacklink(
@@ -2760,8 +2764,8 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(61, 5712399432718906025),
-      lastIndexId: const IdUid(209, 2832474624750008637),
-      lastRelationId: const IdUid(68, 5617872246173150113),
+      lastIndexId: const IdUid(210, 5673280590788867277),
+      lastRelationId: const IdUid(69, 6600950642535277297),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
         1366246136666677579,
@@ -2837,7 +2841,8 @@ ModelDefinition getObjectBoxModel() {
         8251082717356223611,
         2449024482161215302,
         4751856482932078104,
-        9172016749357144224
+        9172016749357144224,
+        9045688124770187728
       ],
       retiredPropertyUids: const [
         7079790605743243388,
@@ -3067,7 +3072,9 @@ ModelDefinition getObjectBoxModel() {
         8007102102988426437,
         1496705341694862790,
         6894534887589015141,
-        4600259317593251919
+        4600259317593251919,
+        5834614544621841095,
+        8799259518463538181
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -3236,6 +3243,7 @@ ModelDefinition getObjectBoxModel() {
               RelInfo<Usuarios>.toMany(19, object.id): object.documentos,
               RelInfo<Usuarios>.toMany(30, object.id): object.bitacora,
               RelInfo<Usuarios>.toMany(62, object.id): object.pagos,
+              RelInfo<Usuarios>.toMany(69, object.id): object.roles,
               RelInfo<Emprendimientos>.toOneBacklink(24, object.id,
                       (Emprendimientos srcObject) => srcObject.usuario):
                   object.emprendimientos
@@ -3255,7 +3263,7 @@ ModelDefinition getObjectBoxModel() {
           final imagenOffset = fbb.writeString(object.imagen);
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(23);
+          fbb.startTable(25);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nombreOffset);
           fbb.addOffset(2, apellidoPOffset);
@@ -3272,7 +3280,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(17, object.variablesUsuario.targetId);
           fbb.addBool(18, object.archivado);
           fbb.addInt64(20, object.image.targetId);
-          fbb.addInt64(21, object.rol.targetId);
+          fbb.addInt64(23, object.rol.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -3311,7 +3319,7 @@ ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 44, 0);
           object.image.attach(store);
           object.rol.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 46, 0);
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 50, 0);
           object.rol.attach(store);
           InternalToManyAccess.setRelInfo(object.documentos, store,
               RelInfo<Usuarios>.toMany(19, object.id), store.box<Usuarios>());
@@ -3319,6 +3327,8 @@ ModelDefinition getObjectBoxModel() {
               RelInfo<Usuarios>.toMany(30, object.id), store.box<Usuarios>());
           InternalToManyAccess.setRelInfo(object.pagos, store,
               RelInfo<Usuarios>.toMany(62, object.id), store.box<Usuarios>());
+          InternalToManyAccess.setRelInfo(object.roles, store,
+              RelInfo<Usuarios>.toMany(69, object.id), store.box<Usuarios>());
           InternalToManyAccess.setRelInfo(
               object.emprendimientos,
               store,
@@ -6202,6 +6212,10 @@ class Usuarios_ {
   /// see [Usuarios.pagos]
   static final pagos =
       QueryRelationToMany<Usuarios, Pagos>(_entities[1].relations[2]);
+
+  /// see [Usuarios.roles]
+  static final roles =
+      QueryRelationToMany<Usuarios, Roles>(_entities[1].relations[3]);
 }
 
 /// [Ventas] entity fields to define ObjectBox queries.

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:flutter/material.dart';
@@ -160,18 +161,27 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                       0, 0, 0, 10),
                                   child: InkWell(
                                     onTap: () async {
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              EditarConsultoriaScreen(
-                                            consultoria: widget.consultoria,
-                                            numConsultoria:
-                                                widget.numConsultoria, 
-                                                tarea: widget.consultoria.tareas.last,
+                                      if (widget.consultoria.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
+                                          widget.consultoria.emprendimiento.target!.usuario.target!.rol.target!.rol == "Emprendedor") {
+                                        snackbarKey.currentState
+                                            ?.showSnackBar(const SnackBar(
+                                          content: Text(
+                                              "Este usuario no tiene permisos para esta acción."),
+                                        ));
+                                      } else {
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditarConsultoriaScreen(
+                                              consultoria: widget.consultoria,
+                                              numConsultoria:
+                                                  widget.numConsultoria, 
+                                                  tarea: widget.consultoria.tareas.last,
+                                            ),
                                           ),
-                                        ),
-                                      );
+                                        );
+                                      }
                                     },
                                     child: Container(
                                       width: 45,

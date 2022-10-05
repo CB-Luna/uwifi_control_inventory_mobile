@@ -49,7 +49,7 @@ class ProductoEmprendedorController extends ChangeNotifier {
       final unidadMedidad = dataBase.unidadesMedidaBox.get(idUnidadMedida);
       if (emprendimiento != null && unidadMedidad != null) {
         final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
-        final nuevaInstruccion = Bitacora(instrucciones: 'syncAddCotizacion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+        final nuevaInstruccion = Bitacora(instrucciones: 'syncAddProductoEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
         nuevoProductoEmp.statusSync.target = nuevoSync;
         nuevoProductoEmp.emprendimientos.target = emprendimiento;
         nuevoProductoEmp.unidadMedida.target = unidadMedidad;

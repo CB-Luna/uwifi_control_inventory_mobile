@@ -55,7 +55,7 @@ class UsuarioController extends ChangeNotifier {
       String password,
       String avatar,
       String idDBR,
-      String rolIdDBR,
+      List<String> rolesIdDBR,
       ) {
     final nuevoUsuario = Usuarios(
         nombre: nombre,
@@ -71,11 +71,19 @@ class UsuarioController extends ChangeNotifier {
         );
     final nuevoSyncUsuario = StatusSync(); //Se crea el objeto estatus por dedault //M__ para Usuario
     final nuevaImagenUsuario = Imagenes(imagenes: avatar); //Se crea el objeto imagenes para el Usuario
-    final nuevoRol = dataBase.rolesBox.query(Roles_.idDBR.equals(rolIdDBR)).build().findUnique(); //Se recupera el rol del Usuario
-    if (nuevoRol != null) {
+    //Se agregan los roles
+    for (var i = 0; i < rolesIdDBR.length; i++) {
+      final nuevoRol = dataBase.rolesBox.query(Roles_.idDBR.equals(rolesIdDBR[i])).build().findUnique(); //Se recupera el rol del Usuario
+      if (nuevoRol != null) {
+        nuevoUsuario.roles.add(nuevoRol);
+      }
+    }
+    //Se asiga el rol actual que ocupará
+    final rolActual = dataBase.rolesBox.query(Roles_.idDBR.equals(rolesIdDBR[0])).build().findUnique(); //Se recupera el rol actual del Usuario
+    if (rolActual != null) {
+      nuevoUsuario.rol.target = rolActual;
       nuevoUsuario.statusSync.target = nuevoSyncUsuario;
       nuevoUsuario.image.target = nuevaImagenUsuario;
-      nuevoUsuario.rol.target = nuevoRol;
       //TODO: Verifcar si se ocupa esta tabla
       final nuevaVariablesUsuario = VariablesUsuario();
       nuevoUsuario.variablesUsuario.target = nuevaVariablesUsuario;

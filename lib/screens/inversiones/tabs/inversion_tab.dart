@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:bizpro_app/providers/sync_provider.dart';
+import 'package:bizpro_app/providers/sync_provider_pocketbase.dart';
 import 'package:bizpro_app/screens/inversiones/inversion_actualizada_exitosamente.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/helpers/globals.dart';
@@ -45,8 +45,8 @@ with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final syncProvider =
-        Provider.of<SyncProvider>(context);
+    final syncProviderPocketbase =
+        Provider.of<SyncProviderPocketbase>(context);
     final List<ProdSolicitado> prodSolicitado = [];
     double totalProyecto = 0;
     for (var element in widget.inversion.prodSolicitados.toList()) {
@@ -399,7 +399,9 @@ with TickerProviderStateMixin {
                           ),
                           FFButtonWidget(
                             onPressed:
-                                () async {
+                              () async {
+                                if (widget.emprendimiento.usuario.target!.rol.target!.rol != "Amigo del Cambio"
+                                && widget.emprendimiento.usuario.target!.rol.target!.rol != "Emprendedor") {
                                   if (widget.inversion.estadoInversion.target!.estado == "Solicitada") {
                                     await Navigator
                                     .push(
@@ -419,6 +421,13 @@ with TickerProviderStateMixin {
                                           "Ya no puedes agregar más productos."),
                                     ));
                                   }
+                                } else {
+                                  snackbarKey.currentState
+                                      ?.showSnackBar(const SnackBar(
+                                    content: Text(
+                                        "Este usuario no tiene permisos para esta acción."),
+                                  ));
+                                }
                             },
                             text: 'Producto',
                             icon: const Icon(
@@ -471,6 +480,8 @@ with TickerProviderStateMixin {
                             final productoSolicitado = prodSolicitado[index];
                             return InkWell(
                               onTap: () async {
+                                if (widget.emprendimiento.usuario.target!.rol.target!.rol != "Amigo del Cambio"
+                                && widget.emprendimiento.usuario.target!.rol.target!.rol != "Emprendedor") {
                                   await Navigator
                                   .push(
                                     context,
@@ -482,6 +493,13 @@ with TickerProviderStateMixin {
                                                 prodSolicitado: productoSolicitado,),
                                     ),
                                   );
+                                } else {
+                                    snackbarKey.currentState
+                                          ?.showSnackBar(const SnackBar(
+                                        content: Text(
+                                            "Este usuario no tiene permisos para esta acción."),
+                                      ));
+                                  }
                               },
                               child: Padding(
                                 padding:
@@ -676,6 +694,8 @@ with TickerProviderStateMixin {
                           FFButtonWidget(
                             onPressed:
                                 () async {
+                                  if (widget.emprendimiento.usuario.target!.rol.target!.rol != "Amigo del Cambio"
+                                  && widget.emprendimiento.usuario.target!.rol.target!.rol != "Emprendedor") {
                                   final connectivityResult =
                                       await (Connectivity().checkConnectivity());
                                   final bitacora = dataBase.bitacoraBox.getAll().toList();
@@ -703,6 +723,13 @@ with TickerProviderStateMixin {
                                       );
                                     },
                                   );
+                                  } else {
+                                    snackbarKey.currentState
+                                        ?.showSnackBar(const SnackBar(
+                                      content: Text(
+                                          "Este usuario no tiene permisos para esta acción."),
+                                    ));
+                                  }
                                 },
                             text: 'Sincronizar',
                             icon: const Icon(
@@ -759,49 +786,58 @@ with TickerProviderStateMixin {
                           children: [
                             FFButtonWidget(
                               onPressed:
-                                  () async {
-                                    final connectivityResult =
-                                        await (Connectivity().checkConnectivity());
-                                    if (connectivityResult == ConnectivityResult.none) 
+                              () async {
+                                if (widget.emprendimiento.usuario.target!.rol.target!.rol != "Amigo del Cambio"
+                                && widget.emprendimiento.usuario.target!.rol.target!.rol != "Emprendedor") {
+                                  final connectivityResult =
+                                      await (Connectivity().checkConnectivity());
+                                  if (connectivityResult == ConnectivityResult.none) 
+                                  {
+                                    snackbarKey.currentState
+                                    ?.showSnackBar(const SnackBar(
+                                    content: Text(
+                                        "Necesitas conexión a internet para aceptar la cotización."),
+                                    ));
+                                  } else{
+                                    Future<bool?> boolean = syncProviderPocketbase.cambiarInversionAComprada(widget.inversion);
+                                    if(await boolean != null)
                                     {
+                                      if(await boolean == true)
+                                        {
+                                      // ignore: use_build_context_synchronously
+                                      await Navigator
+                                      .push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder:
+                                              (context) =>
+                                                  InversionActualizadaExitosamente(idEmprendimiento: widget.emprendimiento.id),
+                                        ),
+                                      );
+                                    }
+                                    else{
                                       snackbarKey.currentState
                                       ?.showSnackBar(const SnackBar(
                                       content: Text(
-                                          "Necesitas conexión a internet para aceptar la cotización."),
+                                          "Falló al momento de actualizar el estado en el backend."),
                                       ));
-                                    } else{
-                                      Future<bool?> boolean = syncProvider.cambiarInversionAComprada(widget.inversion);
-                                      if(await boolean != null)
-                                      {
-                                        if(await boolean == true)
-                                         {
-                                        // ignore: use_build_context_synchronously
-                                        await Navigator
-                                        .push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder:
-                                                (context) =>
-                                                    InversionActualizadaExitosamente(idEmprendimiento: widget.emprendimiento.id),
-                                          ),
-                                        );
-                                      }
-                                      else{
-                                        snackbarKey.currentState
-                                        ?.showSnackBar(const SnackBar(
-                                        content: Text(
-                                            "Falló al momento de actualizar el estado en el backend."),
-                                        ));
-                                      }
-                                      } else {
-                                        snackbarKey.currentState
-                                        ?.showSnackBar(const SnackBar(
-                                        content: Text(
-                                            "Ya ha sido actualizado el estado en el backend, para continuar presione el botón 'editar' en la parte superior de la pantalla."),
-                                        ));
-                                      }
                                     }
-                                  },
+                                    } else {
+                                      snackbarKey.currentState
+                                      ?.showSnackBar(const SnackBar(
+                                      content: Text(
+                                          "Ya ha sido actualizado el estado en el backend, para continuar presione el botón 'editar' en la parte superior de la pantalla."),
+                                      ));
+                                    }
+                                  }
+                                    } else {
+                                  snackbarKey.currentState
+                                      ?.showSnackBar(const SnackBar(
+                                    content: Text(
+                                        "Este usuario no tiene permisos para esta acción."),
+                                  ));
+                                }
+                              },
                               text: 'Cambiar a Comprada',
                               icon: const Icon(
                                 Icons.sync_rounded,

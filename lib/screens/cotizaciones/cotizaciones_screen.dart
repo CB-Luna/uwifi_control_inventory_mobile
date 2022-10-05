@@ -4,7 +4,7 @@ import 'package:bizpro_app/theme/theme.dart';
 import 'package:lottie/lottie.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/providers/sync_provider.dart';
+import 'package:bizpro_app/providers/sync_provider_pocketbase.dart';
 import 'package:bizpro_app/screens/inversiones/inversiones_screen.dart';
 
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
@@ -30,7 +30,7 @@ class _CotizacionesScreenState extends State<CotizacionesScreen> {
     // TODO: implement initState
     super.initState();
     setState(() {
-      context.read<SyncProvider>().getCotizacion(
+      context.read<SyncProviderPocketbase>().getCotizacion(
         widget.emprendimiento, 
         widget.inversion,
         widget.inversionesXProdCotizados);
@@ -39,7 +39,7 @@ class _CotizacionesScreenState extends State<CotizacionesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final syncProvider = Provider.of<SyncProvider>(context);
+    final syncProviderPocketbase = Provider.of<SyncProviderPocketbase>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -104,7 +104,7 @@ class _CotizacionesScreenState extends State<CotizacionesScreen> {
                                     ),
                               ),
                             ),
-                            syncProvider.procesocargando
+                            syncProviderPocketbase.procesocargando
                                 ? Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
@@ -126,7 +126,7 @@ class _CotizacionesScreenState extends State<CotizacionesScreen> {
                                     ),
                                   ),
                             Visibility(
-                              visible: syncProvider.procesoterminado,
+                              visible: syncProviderPocketbase.procesoterminado,
                               child: Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 100, 0, 0),
@@ -139,7 +139,7 @@ class _CotizacionesScreenState extends State<CotizacionesScreen> {
                                             InversionesScreen(idEmprendimiento: widget.emprendimiento.id,),
                                       ),
                                     );
-                                    syncProvider.procesoTerminado(false);
+                                    syncProviderPocketbase.procesoTerminado(false);
                                   },
                                   text: 'Listo',
                                   options: FFButtonOptions(

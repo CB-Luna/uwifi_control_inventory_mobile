@@ -521,6 +521,7 @@ class Usuarios {
   final documentos = ToMany<Documentos>();
   final variablesUsuario = ToOne<VariablesUsuario>(); //Importante para evaluar la sincronizacion
   final rol = ToOne<Roles>();
+  final roles = ToMany<Roles>();
   final image = ToOne<Imagenes>();
   final pagos = ToMany<Pagos>();
   @Backlink()

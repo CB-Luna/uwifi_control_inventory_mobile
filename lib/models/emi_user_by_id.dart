@@ -1,5 +1,9 @@
 import 'dart:convert';
 
+EmiUserById emiUserByIdFromMap(String str) => EmiUserById.fromMap(json.decode(str));
+
+String emiUserByIdToMap(EmiUserById data) => json.encode(data.toMap());
+
 class EmiUserById {
     EmiUserById({
         required this.page,
@@ -12,10 +16,6 @@ class EmiUserById {
     final int perPage;
     final int totalItems;
     final List<Item>? items;
-
-    factory EmiUserById.fromJson(String str) => EmiUserById.fromMap(json.decode(str));
-
-    String toJson() => json.encode(toMap());
 
     factory EmiUserById.fromMap(Map<String, dynamic> json) => EmiUserById(
         page: json["page"] == null ? null : json["page"],
@@ -61,17 +61,13 @@ class Item {
     final String celular;
     final DateTime? created;
     final String id;
-    final String idRolFk;
+    final List<String>? idRolFk;
     final String idStatusSyncFk;
     final DateTime? nacimiento;
     final String nombreUsuario;
     final String telefono;
     final DateTime? updated;
     final String user;
-
-    factory Item.fromJson(String str) => Item.fromMap(json.decode(str));
-
-    String toJson() => json.encode(toMap());
 
     factory Item.fromMap(Map<String, dynamic> json) => Item(
         collectionId: json["@collectionId"] == null ? null : json["@collectionId"],
@@ -83,7 +79,7 @@ class Item {
         celular: json["celular"] == null ? null : json["celular"],
         created: json["created"] == null ? null : DateTime.parse(json["created"]),
         id: json["id"] == null ? null : json["id"],
-        idRolFk: json["id_rol_fk"] == null ? null : json["id_rol_fk"],
+        idRolFk: json["id_rol_fk"] == null ? null : List<String>.from(json["id_rol_fk"].map((x) => x)),
         idStatusSyncFk: json["id_status_sync_fk"] == null ? null : json["id_status_sync_fk"],
         nacimiento: json["nacimiento"] == null ? null : DateTime.parse(json["nacimiento"]),
         nombreUsuario: json["nombre_usuario"] == null ? null : json["nombre_usuario"],
@@ -102,7 +98,7 @@ class Item {
         "celular": celular == null ? null : celular,
         "created": created == null ? null : created!.toIso8601String(),
         "id": id == null ? null : id,
-        "id_rol_fk": idRolFk == null ? null : idRolFk,
+        "id_rol_fk": idRolFk == null ? null : List<dynamic>.from(idRolFk!.map((x) => x)),
         "id_status_sync_fk": idStatusSyncFk == null ? null : idStatusSyncFk,
         "nacimiento": nacimiento == null ? null : nacimiento!.toIso8601String(),
         "nombre_usuario": nombreUsuario == null ? null : nombreUsuario,

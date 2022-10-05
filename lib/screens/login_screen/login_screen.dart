@@ -249,7 +249,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               }
                             } else {
                               //Proceso online
-
                               //Login
                               final loginResponse = await AuthService.login(
                                 userState.emailController.text,
@@ -269,8 +268,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               final idDBR = await AuthService.userEMIByID(
                                   loginResponse.user.id);
 
-                              if (emiUser == null) return;
-
+                              print("Hola miro el IdDBR $idDBR");
+                              if (emiUser == null) {
+                                print("Si es null");
+                                return;
+                              }
+                              print("Hola miro el IdDBR post $idDBR");
                               if (usuarioProvider.validateUser(userId)) {
                                 print('Usuario ya existente');
                                 usuarioProvider.getUser(userId);
@@ -303,17 +306,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                   await catalogoProvider.getRoles();
                                 }
                                 usuarioProvider.add(
-                                  emiUser.nombreUsuario,
-                                  emiUser.apellidoP,
-                                  emiUser.apellidoM ?? '',
-                                  emiUser.nacimiento,
-                                  emiUser.telefono ?? "",
-                                  emiUser.celular,
+                                  emiUser.items![0].nombreUsuario,
+                                  emiUser.items![0].apellidoP,
+                                  emiUser.items![0].apellidoM ?? '',
+                                  emiUser.items![0].nacimiento,
+                                  emiUser.items![0].telefono ?? "",
+                                  emiUser.items![0].celular,
                                   loginResponse.user.email,
                                   userState.passwordController.text,
-                                  emiUser.avatar ?? "",
+                                  emiUser.items![0].avatar ?? "",
                                   idDBR ?? "",
-                                  emiUser.idRolFk,
+                                  emiUser.items![0].idRolFk,
                                 );
                                 usuarioProvider
                                     .getUser(loginResponse.user.email);

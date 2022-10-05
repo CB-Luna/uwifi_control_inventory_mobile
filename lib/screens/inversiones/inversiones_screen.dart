@@ -1,3 +1,4 @@
+import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:diacritic/diacritic.dart';
@@ -60,7 +61,8 @@ class _InversionesScreenState extends State<InversionesScreen> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.white,
-        floatingActionButton: userState.rol == Rol.administrador
+        floatingActionButton: (actualEmprendimiento!.usuario.target!.rol.target!.rol == "Administrador" ||
+            actualEmprendimiento!.usuario.target!.rol.target!.rol == "Promotor")
             ? FloatingActionButton(
                 onPressed: () async {
                     await Navigator.push(

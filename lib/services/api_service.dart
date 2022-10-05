@@ -13,25 +13,32 @@ abstract class ApiService {
 
   static Future<EmiUser?> getEmiUser(String id) async {
     try {
+      print("Paso 1");
       var myProfileUri = Uri.parse(
           "$baseUrl/api/collections/emi_users/records/?filter=(user='$id')");
+      print("Paso 2");
       final res = await client.get(myProfileUri);
-
+      print("Paso 3");
       switch (res.statusCode) {
         case 200:
-          final emiUser = EmiUser.fromJson(res.body);
+        print("200");
+        print("El res Body de Emi user: ${res.body}");
+          final emiUser = emiUserFromMap(res.body);
           return emiUser;
         case 403:
+        print("403");
           snackbarKey.currentState?.showSnackBar(const SnackBar(
             content: Text("Solo administradores pueden acceder a esta función"),
           ));
           break;
         case 404:
+        print("404");
           snackbarKey.currentState?.showSnackBar(const SnackBar(
             content: Text("El recurso solicitado no fue encontrado"),
           ));
           break;
         default:
+        print("Default");
           snackbarKey.currentState?.showSnackBar(const SnackBar(
             content: Text("Error al realizar la petición"),
           ));
@@ -39,6 +46,7 @@ abstract class ApiService {
       }
       return null;
     } catch (e) {
+      print("catch");
       snackbarKey.currentState?.showSnackBar(const SnackBar(
         content: Text("Error al realizar la petición"),
       ));

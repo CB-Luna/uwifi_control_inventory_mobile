@@ -3,7 +3,7 @@ import 'package:bizpro_app/screens/inversiones/cotizacion_simulada_exitosamente.
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/providers/sync_provider.dart';
+import 'package:bizpro_app/providers/sync_provider_pocketbase.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:bizpro_app/util/util.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -15,7 +15,6 @@ import 'package:bizpro_app/screens/cotizaciones/cotizaciones_screen.dart';
 import 'package:bizpro_app/screens/inversiones/cotizacion_aceptada.dart';
 import 'package:bizpro_app/screens/inversiones/cotizacion_cancelada.dart';
 import 'package:bizpro_app/screens/inversiones/cotizacion_solicitar_otra.dart';
-import 'package:bizpro_app/screens/inversiones/inversiones_screen.dart';
 import 'package:bizpro_app/providers/database_providers/cotizacion_controller.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
 
@@ -56,8 +55,8 @@ with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final syncProvider =
-        Provider.of<SyncProvider>(context);
+    final syncProviderPocketbase =
+        Provider.of<SyncProviderPocketbase>(context);
     final cotizacionProvider =
         Provider.of<CotizacionController>(context);
     return SingleChildScrollView(
@@ -407,68 +406,77 @@ with TickerProviderStateMixin {
                           FFButtonWidget(
                             onPressed:
                                 () async {
-                              switch (widget.inversion.estadoInversion.target!.estado) {
-                                case "Solicitada":
+                                  if (widget.emprendimiento.usuario.target!.rol.target!.rol != "Amigo del Cambio" 
+                                  && widget.emprendimiento.usuario.target!.rol.target!.rol != "Emprendedor") {
+                                    switch (widget.inversion.estadoInversion.target!.estado) {
+                                      case "Solicitada":
+                                        snackbarKey.currentState
+                                          ?.showSnackBar(const SnackBar(
+                                        content: Text(
+                                            "Primero debes sincronizar tu información."),
+                                        ));
+                                        break;
+                                      case "En cotización":
+                                      print("Holaaaaaaaa");
+                                        final connectivityResult =
+                                          await (Connectivity().checkConnectivity());
+                                        if(connectivityResult == ConnectivityResult.none) {
+                                          snackbarKey.currentState
+                                            ?.showSnackBar(const SnackBar(
+                                          content: Text(
+                                              "Necesitas conexión a internet para obtener la cotización."),
+                                          ));
+                                        }
+                                        else {
+                                          print("Holaaaaaaaa 2");
+                                          print(widget.inversionesXprodCotizados.idDBR);
+                                        if (await syncProviderPocketbase.validateLengthCotizacion(widget.inversionesXprodCotizados)) {
+                                          syncProviderPocketbase.procesoCargando(true);
+                                          syncProviderPocketbase.procesoTerminado(false);
+                                          // ignore: use_build_context_synchronously
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => CotizacionesScreen(
+                                                    emprendimiento: widget.emprendimiento, 
+                                                    inversion: widget.inversion,
+                                                    inversionesXProdCotizados: widget.inversionesXprodCotizados,
+                                              ),
+                                            ),
+                                          );
+                                        } else {
+                                          snackbarKey.currentState
+                                            ?.showSnackBar(const SnackBar(
+                                          content: Text(
+                                              "Aún no hay datos de cotización de esta inversión."),
+                                          ));
+                                        }
+                                        }
+                                        break;
+                                      case "Cotizada":
+                                        snackbarKey.currentState
+                                          ?.showSnackBar(const SnackBar(
+                                        content: Text(
+                                            "Esta inversión ya ha sido cotizada."),
+                                        ));
+                                        break;
+                                      case "Buscar otra cotización":
+                                        snackbarKey.currentState
+                                          ?.showSnackBar(const SnackBar(
+                                        content: Text(
+                                            "Debes volver a sincronizar tu información."),
+                                        ));
+                                        break;
+                                      default:
+                                        break;
+                                    }
+                                } else {
                                   snackbarKey.currentState
-                                    ?.showSnackBar(const SnackBar(
-                                  content: Text(
-                                      "Primero debes sincronizar tu información."),
-                                  ));
-                                  break;
-                                case "En cotización":
-                                print("Holaaaaaaaa");
-                                  final connectivityResult =
-                                    await (Connectivity().checkConnectivity());
-                                  if(connectivityResult == ConnectivityResult.none) {
-                                    snackbarKey.currentState
                                       ?.showSnackBar(const SnackBar(
                                     content: Text(
-                                        "Necesitas conexión a internet para obtener la cotización."),
-                                    ));
-                                  }
-                                  else {
-                                    print("Holaaaaaaaa 2");
-                                    print(widget.inversionesXprodCotizados.idDBR);
-                                  if (await syncProvider.validateLengthCotizacion(widget.inversionesXprodCotizados)) {
-                                    syncProvider.procesoCargando(true);
-                                    syncProvider.procesoTerminado(false);
-                                     // ignore: use_build_context_synchronously
-                                     await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => CotizacionesScreen(
-                                              emprendimiento: widget.emprendimiento, 
-                                              inversion: widget.inversion,
-                                              inversionesXProdCotizados: widget.inversionesXprodCotizados,
-                                        ),
-                                      ),
-                                    );
-                                  } else {
-                                    snackbarKey.currentState
-                                      ?.showSnackBar(const SnackBar(
-                                    content: Text(
-                                        "Aún no hay datos de cotización de esta inversión."),
-                                    ));
-                                  }
-                                  }
-                                  break;
-                                case "Cotizada":
-                                  snackbarKey.currentState
-                                    ?.showSnackBar(const SnackBar(
-                                  content: Text(
-                                      "Esta inversión ya ha sido cotizada."),
+                                        "Este usuario no tiene permisos para esta acción."),
                                   ));
-                                  break;
-                                case "Buscar otra cotización":
-                                  snackbarKey.currentState
-                                    ?.showSnackBar(const SnackBar(
-                                  content: Text(
-                                      "Debes volver a sincronizar tu información."),
-                                  ));
-                                  break;
-                                default:
-                                  break;
-                              }
+                                }
                             },
                             text: 'Obtener Cotización',
                             icon: const Icon(
@@ -713,6 +721,9 @@ with TickerProviderStateMixin {
                             FFButtonWidget(
                               onPressed:
                                   () async {
+                                    if (widget.emprendimiento.usuario.target!.rol.target!.rol != "Amigo del Cambio"
+                                    && widget.emprendimiento.usuario.target!.rol.target!.rol != "Emprendedor")
+                                     {
                                     final connectivityResult =
                                         await (Connectivity().checkConnectivity());
                                     if (connectivityResult == ConnectivityResult.none) 
@@ -723,14 +734,14 @@ with TickerProviderStateMixin {
                                           "Necesitas conexión a internet para simular la cotización."),
                                       ));
                                     } else{
-                                      if (await syncProvider.validateLengthCotizacion(widget.inversionesXprodCotizados)) {
+                                      if (await syncProviderPocketbase.validateLengthCotizacion(widget.inversionesXprodCotizados)) {
                                         snackbarKey.currentState
                                           ?.showSnackBar(const SnackBar(
                                         content: Text(
                                             "Ya se ha simulado la cotización, ahora presione '+Obtener cotización'."),
                                         ));
                                       } else {
-                                        if(await syncProvider.simularCotizacion(widget.inversion))
+                                        if(await syncProviderPocketbase.simularCotizacion(widget.inversion))
                                          {
                                           // ignore: use_build_context_synchronously
                                           await Navigator
@@ -752,6 +763,13 @@ with TickerProviderStateMixin {
                                         }
                                       }
                                     }
+                                    } else {
+                                    snackbarKey.currentState
+                                        ?.showSnackBar(const SnackBar(
+                                      content: Text(
+                                          "Este usuario no tiene permisos para esta acción."),
+                                    ));
+                                  }
                                   },
                               text: 'Simular Cotización',
                               icon: const Icon(
@@ -804,29 +822,38 @@ with TickerProviderStateMixin {
                             children: [
                               FFButtonWidget(
                                 onPressed: () async {
-                                  final connectivityResult =
-                                    await (Connectivity().checkConnectivity());
-                                  if(connectivityResult == ConnectivityResult.none) {
+                                  if (widget.emprendimiento.usuario.target!.rol.target!.rol != "Amigo del Cambio"
+                                  && widget.emprendimiento.usuario.target!.rol.target!.rol != "Emprendedor") {
+                                    final connectivityResult =
+                                      await (Connectivity().checkConnectivity());
+                                    if(connectivityResult == ConnectivityResult.none) {
+                                      snackbarKey.currentState
+                                        ?.showSnackBar(const SnackBar(
+                                      content: Text(
+                                          "Necesitas conexión a internet para aceptar la cotización."),
+                                      ));
+                                    } else
+                                    {
+                                    await cotizacionProvider.acceptCotizacion(
+                                      widget.inversion.id,
+                                      widget.inversionesXprodCotizados.id
+                                      );
+                                    // ignore: use_build_context_synchronously
+                                    await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => CotizacionAceptada(
+                                            idEmprendimiento: widget.emprendimiento.id,
+                                            ),
+                                        ),
+                                      );
+                                    }
+                                  } else {
                                     snackbarKey.currentState
-                                      ?.showSnackBar(const SnackBar(
-                                    content: Text(
-                                        "Necesitas conexión a internet para aceptar la cotización."),
+                                        ?.showSnackBar(const SnackBar(
+                                      content: Text(
+                                          "Este usuario no tiene permisos para esta acción."),
                                     ));
-                                  } else
-                                  {
-                                  await cotizacionProvider.acceptCotizacion(
-                                    widget.inversion.id,
-                                    widget.inversionesXprodCotizados.id
-                                    );
-                                  // ignore: use_build_context_synchronously
-                                  await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => CotizacionAceptada(
-                                          idEmprendimiento: widget.emprendimiento.id,
-                                          ),
-                                      ),
-                                    );
                                   }
                                 },
                                 text: 'Aceptar',
@@ -856,29 +883,38 @@ with TickerProviderStateMixin {
                               ),
                               FFButtonWidget(
                                 onPressed: () async {
-                                  final connectivityResult =
-                                    await (Connectivity().checkConnectivity());
-                                  if(connectivityResult == ConnectivityResult.none) {
+                                  if (widget.emprendimiento.usuario.target!.rol.target!.rol != "Amigo del Cambio"
+                                  && widget.emprendimiento.usuario.target!.rol.target!.rol != "Emprendedor") {
+                                    final connectivityResult =
+                                      await (Connectivity().checkConnectivity());
+                                    if(connectivityResult == ConnectivityResult.none) {
+                                      snackbarKey.currentState
+                                        ?.showSnackBar(const SnackBar(
+                                      content: Text(
+                                          "Necesitas conexión a internet para cancelar la cotización."),
+                                      ));
+                                    } else
+                                    {
+                                    await cotizacionProvider.cancelCotizacion(
+                                      widget.inversion.id,
+                                      widget.inversionesXprodCotizados.id
+                                      );
+                                    // ignore: use_build_context_synchronously
+                                    await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => CotizacionCancelada(
+                                            idEmprendimiento: widget.emprendimiento.id,
+                                            ),
+                                        ),
+                                      );
+                                    }
+                                   } else {
                                     snackbarKey.currentState
-                                      ?.showSnackBar(const SnackBar(
-                                    content: Text(
-                                        "Necesitas conexión a internet para cancelar la cotización."),
+                                        ?.showSnackBar(const SnackBar(
+                                      content: Text(
+                                          "Este usuario no tiene permisos para esta acción."),
                                     ));
-                                  } else
-                                  {
-                                  await cotizacionProvider.cancelCotizacion(
-                                    widget.inversion.id,
-                                    widget.inversionesXprodCotizados.id
-                                    );
-                                  // ignore: use_build_context_synchronously
-                                  await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => CotizacionCancelada(
-                                          idEmprendimiento: widget.emprendimiento.id,
-                                          ),
-                                      ),
-                                    );
                                   }
                                 },
                                 text: 'Rechazar',
@@ -918,28 +954,37 @@ with TickerProviderStateMixin {
                             children: [
                               FFButtonWidget(
                                 onPressed: () async {
-                                  final connectivityResult =
-                                    await (Connectivity().checkConnectivity());
-                                  if(connectivityResult == ConnectivityResult.none) {
+                                  if (widget.emprendimiento.usuario.target!.rol.target!.rol != "Amigo del Cambio"
+                                  && widget.emprendimiento.usuario.target!.rol.target!.rol != "Emprendedor") {
+                                    final connectivityResult =
+                                      await (Connectivity().checkConnectivity());
+                                    if(connectivityResult == ConnectivityResult.none) {
+                                      snackbarKey.currentState
+                                        ?.showSnackBar(const SnackBar(
+                                      content: Text(
+                                          "Necesitas conexión a internet para buscar Otra Cotización."),
+                                      ));
+                                    } else
+                                    {
+                                    await cotizacionProvider.buscarOtraCotizacion(
+                                      widget.inversion.id,
+                                      widget.inversionesXprodCotizados.id);
+                                    // ignore: use_build_context_synchronously
+                                    await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => CotizacionSolicitarOtra(
+                                            idEmprendimiento: widget.emprendimiento.id,
+                                            ),
+                                        ),
+                                      );
+                                    } 
+                                  } else {
                                     snackbarKey.currentState
-                                      ?.showSnackBar(const SnackBar(
-                                    content: Text(
-                                        "Necesitas conexión a internet para buscar Otra Cotización."),
+                                        ?.showSnackBar(const SnackBar(
+                                      content: Text(
+                                          "Este usuario no tiene permisos para esta acción."),
                                     ));
-                                  } else
-                                  {
-                                  await cotizacionProvider.buscarOtraCotizacion(
-                                    widget.inversion.id,
-                                    widget.inversionesXprodCotizados.id);
-                                  // ignore: use_build_context_synchronously
-                                  await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => CotizacionSolicitarOtra(
-                                          idEmprendimiento: widget.emprendimiento.id,
-                                          ),
-                                      ),
-                                    );
                                   }
                                 },
                                 text: 'Solicitar otra cotización',
