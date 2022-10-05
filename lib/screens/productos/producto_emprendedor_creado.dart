@@ -1,3 +1,4 @@
+import 'package:bizpro_app/screens/productos/productos_emprendedor_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -6,7 +7,8 @@ import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 class ProductoEmprendedorCreado extends StatefulWidget {
-  const ProductoEmprendedorCreado({Key? key}) : super(key: key);
+  final int idEmprendimiento;
+  const ProductoEmprendedorCreado({Key? key, required this.idEmprendimiento}) : super(key: key);
 
   @override
   State<ProductoEmprendedorCreado> createState() => _ProductoEmprendedorCreadoState();
@@ -80,7 +82,7 @@ class _ProductoEmprendedorCreadoState extends State<ProductoEmprendedorCreado> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const EmprendimientosScreen(),
+                                   ProductosEmprendedorScreen(idEmprendimiento: widget.idEmprendimiento,),
                             ),
                           );
                         },

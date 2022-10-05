@@ -248,9 +248,7 @@ class _MenuInferiorDetalleEmprendimientoState extends State<MenuInferiorDetalleE
                             MaterialPageRoute(
                               builder: (context) =>
                                   ProductosEmprendedorScreen(
-                                productosEmprendedor:
-                                    widget.emprendimiento.productosEmp.toList(),
-                                  emprendimiento: widget.emprendimiento,
+                                    idEmprendimiento: widget.emprendimiento.id,
                               ),
                             ),
                           );

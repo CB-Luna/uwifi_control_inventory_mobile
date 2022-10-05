@@ -74,7 +74,7 @@ class _CatalogosScreenState extends State<CatalogosScreen> {
                                       fontFamily:
                                           AppTheme.of(context).bodyText1Family,
                                       color: AppTheme.of(context).primaryText,
-                                      fontSize: 30,
+                                      fontSize: 27,
                                     ),
                               ),
                             ),

@@ -50,7 +50,7 @@ class _EmprendimientoCreadoState extends State<EmprendimientoCreado> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: Text(                                
-                        'El registro se ha guadado con exito.',
+                        'El registro se ha guadado con éxito.',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',

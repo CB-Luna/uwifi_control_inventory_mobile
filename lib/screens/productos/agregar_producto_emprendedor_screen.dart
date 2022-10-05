@@ -592,7 +592,7 @@ class _AgregarProductoEmprendedorScreenState
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const ProductoEmprendedorCreado(),
+                                                    ProductoEmprendedorCreado(idEmprendimiento: widget.emprendimiento.id,),
                                               ),
                                             );
                                           }

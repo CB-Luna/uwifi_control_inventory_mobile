@@ -1,3 +1,5 @@
+import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -19,28 +21,32 @@ import '../widgets/get_image_widget.dart';
 
 
 class ProductosEmprendedorScreen extends StatefulWidget {
-  final List<ProductosEmp> productosEmprendedor;
-  final Emprendimientos emprendimiento;
+  
+  final int idEmprendimiento;
   const ProductosEmprendedorScreen({
-    Key? key, 
-    required this.productosEmprendedor, 
-    required this.emprendimiento,
+    Key? key,  
+    required this.idEmprendimiento,
   }) : super(key: key);
-
+  
 
   @override
   _ProductosEmprendedorScreenState createState() => _ProductosEmprendedorScreenState();
+
 }
 
 class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen> {
   TextEditingController searchController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   List<ProductosEmp> listActualProductosEmp = [];
-
+  Emprendimientos? emprendimientoActual;
   @override
   void initState() {
     super.initState();
-    listActualProductosEmp = widget.productosEmprendedor.toList();
+    emprendimientoActual = dataBase.emprendimientosBox.get(widget.idEmprendimiento);
+    if(emprendimientoActual != null)
+    {
+      listActualProductosEmp = emprendimientoActual!.productosEmp.toList();
+    }
   }
 
   @override
@@ -48,7 +54,7 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
     final usuarioProvider = Provider.of<UsuarioController>(context);
     final Usuarios currentUser = usuarioProvider.usuarioCurrent!;
     final UserState userState = Provider.of<UserState>(context);
-    listActualProductosEmp = widget.productosEmprendedor.toList();
+    
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -61,7 +67,7 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            AgregarProductoEmprendedorScreen(emprendimiento: widget.emprendimiento,),
+                            AgregarProductoEmprendedorScreen(emprendimiento: emprendimientoActual!,),
                       ),
                     );
                 },
@@ -117,7 +123,15 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                                     ),
                                     child: InkWell(
                                       onTap: () async {
-                                        Navigator.pop(context);
+                                        await Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        DetalleEmprendimientoScreen(
+                                                      emprendimiento: emprendimientoActual!,
+                                                    ),
+                                                  ),
+                                                );
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -140,6 +154,8 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                                                   color: Colors.white,
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w300,
+                                                  
+                                                  
                                                 ),
                                           ),
                                         ],
@@ -193,10 +209,10 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                                             fecha: date,
                                             titulo: 'Productos de Emprendedor',
                                             descripcion:
-                                                'En la siguiente tabla se muestran todos los productos creados por el emprendedor ${widget.emprendimiento.emprendedor.target!.nombre} hasta el momento.',
+                                                'En la siguiente tabla se muestran todos los productos creados por el emprendedor ${emprendimientoActual!.emprendedor.target!.nombre} hasta el momento.',
                                           ),
                                           items: [
-                                            for (var producto in widget.productosEmprendedor)
+                                            for (var producto in listActualProductosEmp)
                                               ProductosEmprendedorItem(
                                                 id: producto.id,
                                                 emprendedor: 
@@ -534,7 +550,7 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                                                           ),
                                                     ),
                                                     Text(
-                                                      "Costo: \$${productoEmprendedor.costo.toStringAsFixed(2)}",
+                                                      "Costo: \$${currencyFormat.format(productoEmprendedor.costo.toStringAsFixed(2))}",
                                                       style: AppTheme.of(
                                                               context)
                                                           .bodyText1

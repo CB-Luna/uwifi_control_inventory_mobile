@@ -508,7 +508,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       5, 0, 0, 0),
                                   child: Text(
-                                    'La seguridad es nuestra prioridad, para\nello utilizamos los estándares\nmás altos.',
+                                    'La seguridad es nuestra prioridad,\n para ello utilizamos los estándares\nmás altos.',
                                     style:
                                         AppTheme.of(context).bodyText1.override(
                                               fontFamily: 'Poppins',

@@ -304,7 +304,7 @@ class _AgregarProductoVentaState
                                     productoVentaProvider.cantidad = value;
                                      try {
                                       if (value != "" && precioVenta.text != "" ) {
-                                      subTotal.text = (double.parse(value) * double.parse(precioVenta.text.replaceAll("\$", "").replaceAll(",", ""))).toStringAsFixed(2);
+                                      subTotal.text = currencyFormat.format((double.parse(value) * double.parse(precioVenta.text)).toStringAsFixed(2));
                                       }  
                                     } catch (e) {
                                       null;
@@ -439,7 +439,7 @@ class _AgregarProductoVentaState
                                     productoVentaProvider.precioVenta = value.replaceAll("\$", "").replaceAll(",", "");
                                     try {
                                       if (value != "" && cantidadVendida.text != "" ) {
-                                      subTotal.text = (double.parse(value.replaceAll("\$", "").replaceAll(",", "")) * double.parse(cantidadVendida.text)).toStringAsFixed(2);
+                                      subTotal.text = currencyFormat.format((double.parse(value) * double.parse(cantidadVendida.text)).toStringAsFixed(2));
                                     }  
                                     } catch (e) {
                                       null;
