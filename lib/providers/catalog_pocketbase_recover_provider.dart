@@ -374,7 +374,8 @@ Future<void> getAmbitoConsultoriaAgain() async {
         nombreAmbito: listAmbitoConsultoria[i].nombreAmbito,
         activo: listAmbitoConsultoria[i].activo,
         idDBR: listAmbitoConsultoria[i].id,
-        fechaRegistro: listAmbitoConsultoria[i].updated
+        fechaRegistro: listAmbitoConsultoria[i].updated, 
+        idEmiWeb: 0,
         );
         dataBase.ambitoConsultoriaBox.put(nuevoAmbitoConsultoria);
         print('Ambito Consultoria agregado exitosamente');

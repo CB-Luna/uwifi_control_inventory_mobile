@@ -966,7 +966,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(30, 485586835672622394),
       name: 'AmbitoConsultoria',
-      lastPropertyId: const IdUid(7, 4324338883283060091),
+      lastPropertyId: const IdUid(8, 3826283846521524993),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1008,7 +1008,13 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(90, 6525247578997517066),
-            relationTarget: 'Bitacora')
+            relationTarget: 'Bitacora'),
+        ModelProperty(
+            id: const IdUid(8, 3826283846521524993),
+            name: 'idEmiWeb',
+            type: 6,
+            flags: 40,
+            indexId: const IdUid(219, 5376234116005473329))
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -2622,7 +2628,7 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(62, 5967866020755512418),
-      lastIndexId: const IdUid(218, 3240317315633038390),
+      lastIndexId: const IdUid(219, 5376234116005473329),
       lastRelationId: const IdUid(71, 2864929897176631708),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -4188,7 +4194,7 @@ ModelDefinition getObjectBoxModel() {
           final nombreAmbitoOffset = fbb.writeString(object.nombreAmbito);
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(8);
+          fbb.startTable(9);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nombreAmbitoOffset);
           fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
@@ -4196,6 +4202,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(4, idDBROffset);
           fbb.addInt64(5, object.statusSync.targetId);
           fbb.addInt64(6, object.bitacora.targetId);
+          fbb.addInt64(7, object.idEmiWeb);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4212,7 +4219,9 @@ ModelDefinition getObjectBoxModel() {
               activo: const fb.BoolReader()
                   .vTableGet(buffer, rootOffset, 10, false),
               idDBR: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 12));
+                  .vTableGetNullable(buffer, rootOffset, 12),
+              idEmiWeb:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0));
           object.statusSync.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
           object.statusSync.attach(store);
@@ -6383,6 +6392,10 @@ class AmbitoConsultoria_ {
   /// see [AmbitoConsultoria.bitacora]
   static final bitacora = QueryRelationToOne<AmbitoConsultoria, Bitacora>(
       _entities[13].properties[6]);
+
+  /// see [AmbitoConsultoria.idEmiWeb]
+  static final idEmiWeb =
+      QueryIntegerProperty<AmbitoConsultoria>(_entities[13].properties[7]);
 
   /// see [AmbitoConsultoria.consultorias]
   static final consultorias =

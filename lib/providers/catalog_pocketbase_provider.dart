@@ -383,7 +383,8 @@ class CatalogPocketbaseProvider extends ChangeNotifier {
         nombreAmbito: listAmbitoConsultoria[i].nombreAmbito,
         idDBR: listAmbitoConsultoria[i].id,
         activo: listAmbitoConsultoria[i].activo,
-        fechaRegistro: listAmbitoConsultoria[i].updated
+        fechaRegistro: listAmbitoConsultoria[i].updated, 
+        idEmiWeb: 0,
         );
         final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
         nuevoAmbitoConsultoria.statusSync.target = nuevoSync;

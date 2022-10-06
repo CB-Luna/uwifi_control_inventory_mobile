@@ -775,6 +775,8 @@ class AmbitoConsultoria {
   bool activo;
   @Unique()
   String? idDBR;
+  @Unique()
+  int idEmiWeb;
   final consultorias = ToMany<Consultorias>();
   final statusSync = ToOne<StatusSync>();
   final bitacora = ToOne<Bitacora>();
@@ -785,6 +787,7 @@ class AmbitoConsultoria {
     DateTime? fechaRegistro,
     this.activo = true,
     this.idDBR,
+    required this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);

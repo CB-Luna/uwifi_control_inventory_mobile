@@ -1,3 +1,4 @@
+import 'package:bizpro_app/modelsEmiWeb/get_ambito_consultoria_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_catalogo_proyectos_emi_web.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
@@ -22,7 +23,6 @@ import 'package:bizpro_app/modelsPocketbase/get_tipo_proveedor.dart';
 
 import 'package:bizpro_app/modelsPocketbase/get_ambito_consultoria.dart';
 import 'package:bizpro_app/modelsPocketbase/get_area_circulo.dart';
-import 'package:bizpro_app/modelsPocketbase/get_catalogo_proyectos.dart';
 import 'package:bizpro_app/modelsPocketbase/get_roles.dart';
 import 'package:bizpro_app/modelsPocketbase/get_unidades_medida.dart';
 import 'package:bizpro_app/modelsPocketbase/get_estado_inversiones.dart';
@@ -62,10 +62,10 @@ class CatalogEmiWebProvider extends ChangeNotifier {
       banderasExistoSync.add(await getMunicipios());
       banderasExistoSync.add(await getComunidades());
       banderasExistoSync.add(await getTipoProyecto());
-      // await getCatalogosProyectos();
+      banderasExistoSync.add(await getCatalogosProyectos());
       // await getFamiliaProd();
       // await getUnidadMedida();
-      // await getAmbitoConsultoria();
+      banderasExistoSync.add(await getAmbitoConsultoria());
       // await getFasesEmp();
       // await getTipoEmpaque();
       // await getEstadoInversion();
@@ -79,6 +79,7 @@ class CatalogEmiWebProvider extends ChangeNotifier {
       // await getProdProyecto();
       // await getEstadosProdCotizados();
       for (var element in banderasExistoSync) {
+        //Aplicamos una operación and para validar que no haya habido un catálogo con False
         exitoso = exitoso && element;
       }
       //Verificamos que no haya habido errores al sincronizar con las banderas
@@ -336,7 +337,7 @@ class CatalogEmiWebProvider extends ChangeNotifier {
     }
   }
 
-//Función para recuperar el catálogo de catálogos Proyecto desde Emi Web == Tabla "Proyectos" en Emi Web
+//Función para recuperar el catálogo de catálogos proyecto desde Emi Web == Tabla "Proyectos" en Emi Web
   Future<bool> getCatalogosProyectos() async {
     var url = Uri.parse("$baseUrlEmiWebServices/catalogos/proyecto");
     final headers = ({
@@ -384,41 +385,6 @@ class CatalogEmiWebProvider extends ChangeNotifier {
       default:
         return false;
     }
-  }
-
-  Future<void> getRoles() async {
-    if (dataBase.rolesBox.isEmpty()) {
-      final records = await client.records.
-      getFullList('roles', batch: 200, sort: '+rol');
-      final List<GetRoles> listRoles = [];
-      for (var element in records) {
-        listRoles.add(getRolesFromMap(element.toString()));
-      }
-
-      print("*****Informacion roles*****");
-      for (var i = 0; i < listRoles.length; i++) {
-        if (listRoles[i].id.isNotEmpty) {
-        final nuevoRol = Roles(
-        rol: listRoles[i].rol,
-        idDBR: listRoles[i].id,
-        fechaRegistro: listRoles[i].updated
-        );
-        final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
-        nuevoRol.statusSync.target = nuevoSync;
-        dataBase.rolesBox.put(nuevoRol);
-        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-        print('Rol agregado exitosamente');
-        final record = await client.records.update('roles', listRoles[i].id, body: {
-          'id_status_sync_fk': 'HoI36PzYw1wtbO1',
-        });
-        if (record.id.isNotEmpty) {
-            print('Rol actualizado en el backend exitosamente');
-          }
-
-        }
-      }
-      notifyListeners();
-      }
   }
 
   Future<void> getFamiliaProd() async {
@@ -485,42 +451,49 @@ class CatalogEmiWebProvider extends ChangeNotifier {
       }
   }
 
+//Función para recuperar el catálogo de ambito consultoría desde Emi Web 
+  Future<bool> getAmbitoConsultoria() async {
+    var url = Uri.parse("$baseUrlEmiWebServices/catalogos/ambito");
+    final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+    var response = await http.get(
+      url,
+      headers: headers
+    );
 
-  Future<void> getAmbitoConsultoria() async {
-    if (dataBase.ambitoConsultoriaBox.isEmpty()) {
-      final records = await client.records.
-      getFullList('ambito_consultoria', batch: 200, sort: '+nombre_ambito');
-      final List<GetAmbitoConsultoria> listAmbitoConsultoria = [];
-      for (var element in records) {
-        listAmbitoConsultoria.add(getAmbitoConsultoriaFromMap(element.toString()));
-      }
-
-      print("****Informacion ambito consultoria****");
-      for (var i = 0; i < records.length; i++) {
-        print(records[i]);
-        if (listAmbitoConsultoria[i].id.isNotEmpty) {
-        final nuevoAmbitoConsultoria = AmbitoConsultoria(
-        nombreAmbito: listAmbitoConsultoria[i].nombreAmbito,
-        idDBR: listAmbitoConsultoria[i].id,
-        activo: listAmbitoConsultoria[i].activo,
-        fechaRegistro: listAmbitoConsultoria[i].updated
-        );
-        final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
-        nuevoAmbitoConsultoria.statusSync.target = nuevoSync;
-        dataBase.ambitoConsultoriaBox.put(nuevoAmbitoConsultoria);
-        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-        print('Ambito Consultoria agregado exitosamente');
-        final record = await client.records.update('ambito_consultoria', listAmbitoConsultoria[i].id, body: {
-          'id_status_sync_fk': 'HoI36PzYw1wtbO1',
-        });
-        if (record.id.isNotEmpty) {
-            print('Ambito Consultoria actualizado en el backend exitosamente');
-          }
+    switch (response.statusCode) {
+      case 200: //Caso éxitoso
+        final responseListAmbitoConsultoria = getAmbitoConsultoriaEmiWebFromMap(
+        response.body);
+        for (var i = 0; i < responseListAmbitoConsultoria.payload!.length; i++) {
+          final nuevoAmbitoConsultoria = AmbitoConsultoria(
+          nombreAmbito: responseListAmbitoConsultoria.payload![i].ambito,
+          activo: responseListAmbitoConsultoria.payload![i].activo,
+          idEmiWeb: responseListAmbitoConsultoria.payload![i].idCatAmbito,
+          fechaRegistro: DateTime.now(), //Agregamos la fecha de registro actual porque no sabemos la del backend
+          );
+          //Modificamos el estado de sincronización sólo de forma local para ambito consultoria
+          final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_, es nuestra bandera de sincronización por registro
+          nuevoAmbitoConsultoria.statusSync.target = nuevoSync;
+          dataBase.ambitoConsultoriaBox.put(nuevoAmbitoConsultoria);
+          print('Ambito Consultoria Web agregado éxitosamente');
         }
-      }
-      notifyListeners();
+        return true;
+      case 401: //Error de Token incorrecto
+        if(await getTokenOAuth()) {
+          getComunidades();
+          return true;
+        } else{
+          return false;
+        }
+      case 404: //Error de ruta incorrecta
+        return true;
+      default:
+        return false;
     }
-    }
+  }
 
   Future<void> getAreaCirculo() async {
     if (dataBase.areaCirculoBox.isEmpty()) {
@@ -887,4 +860,39 @@ Future<void> getProductosProv() async {
       notifyListeners();
       }
     }
+
+  Future<void> getRoles() async {
+    if (dataBase.rolesBox.isEmpty()) {
+      final records = await client.records.
+      getFullList('roles', batch: 200, sort: '+rol');
+      final List<GetRoles> listRoles = [];
+      for (var element in records) {
+        listRoles.add(getRolesFromMap(element.toString()));
+      }
+
+      print("*****Informacion roles*****");
+      for (var i = 0; i < listRoles.length; i++) {
+        if (listRoles[i].id.isNotEmpty) {
+        final nuevoRol = Roles(
+        rol: listRoles[i].rol,
+        idDBR: listRoles[i].id,
+        fechaRegistro: listRoles[i].updated
+        );
+        final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
+        nuevoRol.statusSync.target = nuevoSync;
+        dataBase.rolesBox.put(nuevoRol);
+        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
+        print('Rol agregado exitosamente');
+        final record = await client.records.update('roles', listRoles[i].id, body: {
+          'id_status_sync_fk': 'HoI36PzYw1wtbO1',
+        });
+        if (record.id.isNotEmpty) {
+            print('Rol actualizado en el backend exitosamente');
+          }
+
+        }
+      }
+      notifyListeners();
+      }
+  }
 }

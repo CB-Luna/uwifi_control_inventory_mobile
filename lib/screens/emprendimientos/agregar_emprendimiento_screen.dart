@@ -414,6 +414,7 @@ class _AgregarEmprendimientoScreenState
                                         if (emprendimientoProvider
                                                 .validateForm(formKey) &&
                                             emprendedorProvider.asociado) {
+                                            print("En asociar emprendedor");
                                           // comunidadProvider.add();
                                           //Se crea emprendimiento sin emprendedor
                                                 emprendimientoProvider
