@@ -1,3 +1,15 @@
+import 'package:bizpro_app/modelsEmiWeb/get_catalogo_proyectos_emi_web.dart';
+import 'package:flutter/material.dart';
+import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/database/entitys.dart';
+import 'package:bizpro_app/objectbox.g.dart';
+import 'package:bizpro_app/helpers/constants.dart';
+
+import 'package:bizpro_app/modelsEmiWeb/get_comunidades_emi_web.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_estados_emi_web.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_municipios_emi_web.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_token_emi_web.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_tipo_proyecto_emi_web.dart';
 import 'package:bizpro_app/modelsPocketbase/get_bancos.dart';
 import 'package:bizpro_app/modelsPocketbase/get_condiciones_pago.dart';
 import 'package:bizpro_app/modelsPocketbase/get_estados_prod_cotizados.dart';
@@ -6,33 +18,28 @@ import 'package:bizpro_app/modelsPocketbase/get_prod_proyecto.dart';
 import 'package:bizpro_app/modelsPocketbase/get_productos_prov.dart';
 import 'package:bizpro_app/modelsPocketbase/get_proveedores.dart';
 import 'package:bizpro_app/modelsPocketbase/get_tipo_proveedor.dart';
-import 'package:flutter/material.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/helpers/constants.dart';
 
-import 'package:bizpro_app/modelsPocketbase/get_clasificacion_emp.dart';
-import 'package:bizpro_app/modelsPocketbase/get_comunidades.dart';
+
 import 'package:bizpro_app/modelsPocketbase/get_ambito_consultoria.dart';
 import 'package:bizpro_app/modelsPocketbase/get_area_circulo.dart';
-import 'package:bizpro_app/modelsPocketbase/get_catalogos_proyectos.dart';
+import 'package:bizpro_app/modelsPocketbase/get_catalogo_proyectos.dart';
 import 'package:bizpro_app/modelsPocketbase/get_roles.dart';
 import 'package:bizpro_app/modelsPocketbase/get_unidades_medida.dart';
-import 'package:bizpro_app/modelsPocketbase/get_estados.dart';
-import 'package:bizpro_app/modelsPocketbase/get_municipios.dart';
 import 'package:bizpro_app/modelsPocketbase/get_estado_inversiones.dart';
 import 'package:bizpro_app/modelsPocketbase/get_familia_productos.dart';
 import 'package:bizpro_app/modelsPocketbase/get_fases_emp.dart';
 import 'package:bizpro_app/modelsPocketbase/get_tipo_empaques.dart';
-import 'package:bizpro_app/util/util.dart';
 
 import 'package:http/http.dart' as http;
-import '../objectbox.g.dart';
 
-class CatalogProvider extends ChangeNotifier {
+class CatalogEmiWebProvider extends ChangeNotifier {
 
-  bool procesoterminado = false;
   bool procesocargando = false;
+  bool procesoterminado = false;
+  bool procesoexitoso = false;
+  String tokenGlobal = "";
+  List<bool> banderasExistoSync = [];
+  bool exitoso = true;
 
   void procesoCargando(bool boleano) {
     procesocargando = boleano;
@@ -44,148 +51,340 @@ class CatalogProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getCatalogos() async {
-    await getEstados();
-    await getMunicipios();
-    await getComunidades();
-    await getClasificacionesEmp();
-    await getCatalogosProyectos();
-    await getFamiliaProd();
-    await getUnidadMedida();
-    await getAmbitoConsultoria();
-    await getFasesEmp();
-    await getTipoEmpaque();
-    await getEstadoInversion();
-    await getAreaCirculo();
-    await getTipoProveedor();
-    await getCondicionesPago();
-    await getBancos();
-    await getPorcentajeAvance();
-    await getProveedores();
-    await getProductosProv();
-    await getProdProyecto();
-    await getEstadosProdCotizados();
-    print("Proceso terminado");
-    procesoterminado = true;
-    procesocargando = false;
+  void procesoExitoso(bool boleano) {
+    procesoexitoso = boleano;
     notifyListeners();
-    
   }
 
-  Future<void> getEstados() async {
-    if (dataBase.estadosBox.isEmpty()) {
-      final records = await client.records.
-      getFullList('estados', batch: 200, sort: '+nombre_estado');
-      final List<GetEstados> listEstados = [];
-      for (var element in records) {
-        listEstados.add(getEstadosFromMap(element.toString()));
+  Future<void> getCatalogosEmiWeb() async {
+    if (await getTokenOAuth()) {
+      banderasExistoSync.add(await getEstados());
+      banderasExistoSync.add(await getMunicipios());
+      banderasExistoSync.add(await getComunidades());
+      banderasExistoSync.add(await getTipoProyecto());
+      // await getCatalogosProyectos();
+      // await getFamiliaProd();
+      // await getUnidadMedida();
+      // await getAmbitoConsultoria();
+      // await getFasesEmp();
+      // await getTipoEmpaque();
+      // await getEstadoInversion();
+      // await getAreaCirculo();
+      // await getTipoProveedor();
+      // await getCondicionesPago();
+      // await getBancos();
+      // await getPorcentajeAvance();
+      // await getProveedores();
+      // await getProductosProv();
+      // await getProdProyecto();
+      // await getEstadosProdCotizados();
+      for (var element in banderasExistoSync) {
+        exitoso = exitoso && element;
       }
-
-      print("*****Informacion estados*****");
-      for (var i = 0; i < listEstados.length; i++) {
-        if (listEstados[i].id.isNotEmpty) {
-        final nuevoEstado = Estados(
-        nombre: listEstados[i].nombreEstado,
-        activo: listEstados[i].activo,
-        idDBR: listEstados[i].id,
-        fechaRegistro: listEstados[i].updated
-        );
-        final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
-        nuevoEstado.statusSync.target = nuevoSync;
-        dataBase.estadosBox.put(nuevoEstado);
-        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-        print('Estado agregado exitosamente');
-        final record = await client.records.update('estados', listEstados[i].id, body: {
-          'id_status_sync_fk': 'HoI36PzYw1wtbO1',
-        });
-        if (record.id.isNotEmpty) {
-            print('Estado actualizado en el backend exitosamente');
-          }
-
-        }
+      //Verificamos que no haya habido errores al sincronizar con las banderas
+      if (exitoso) {
+        procesocargando = false;
+        procesoterminado = true;
+        procesoexitoso = true;
+        notifyListeners();
+      } else {
+        procesocargando = false;
+        procesoterminado = true;
+        procesoexitoso = false;
+        clearDataBase();
+        notifyListeners();
       }
+    } else {
+      procesocargando = false;
+      procesoterminado = true;
+      procesoexitoso = false;
+      clearDataBase();
       notifyListeners();
-      }
-  }
-
-  Future<void> getMunicipios() async {
-    if (dataBase.municipiosBox.isEmpty()) {
-      final records = await client.records.
-      getFullList('municipios', batch: 200, sort: '+nombre_municipio');
-      final List<GetMunicipios> listMunicipios = [];
-      for (var element in records) {
-        listMunicipios.add(getMunicipiosFromMap(element.toString()));
-      }
-
-      print("*****Informacion municipios****");
-      for (var i = 0; i < listMunicipios.length; i++) {
-        if (listMunicipios[i].id.isNotEmpty) {
-        final nuevoMunicipio = Municipios(
-        nombre: listMunicipios[i].nombreMunicipio,
-        activo: listMunicipios[i].activo,
-        idDBR: listMunicipios[i].id,
-        fechaRegistro: listMunicipios[i].updated
-        );
-        final estado = dataBase.estadosBox.query(Estados_.idDBR.equals(listMunicipios[i].idEstadoFk)).build().findUnique();
-        if (estado != null) {
-          final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
-          nuevoMunicipio.statusSync.target = nuevoSync;
-          nuevoMunicipio.estados.target = estado;
-          dataBase.municipiosBox.put(nuevoMunicipio);
-          print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-          print('Municipio agregado exitosamente');
-          final record = await client.records.update('municipios', listMunicipios[i].id, body: {
-            'id_status_sync_fk': 'HoI36PzYw1wtbO1',
-          });
-          if (record.id.isNotEmpty) {
-            print('Municipio actualizado en el backend exitosamente');
-          }
-          }
-        }
-      }
-      notifyListeners();
-      }
-  }
-
-  Future<void> getComunidades() async {
-    if (dataBase.comunidadesBox.isEmpty()) {
-      final records = await client.records.
-      getFullList('comunidades', batch: 200, sort: '+nombre_comunidad');
-
-      final List<GetComunidades> listComunidades = [];
-      for (var element in records) {
-        listComunidades.add(getComunidadesFromMap(element.toString()));
-      }
-
-      print("****Informacion comunidades****");
-      for (var i = 0; i < records.length; i++) {
-        if (listComunidades[i].id.isNotEmpty) {
-        final nuevaComunidad = Comunidades(
-        nombre: listComunidades[i].nombreComunidad,
-        activo: listComunidades[i].activo,
-        idDBR: listComunidades[i].id,
-        fechaRegistro: listComunidades[i].updated
-        );
-        final municipio = dataBase.municipiosBox.query(Municipios_.idDBR.equals(listComunidades[i].idMunicipioFk)).build().findUnique();
-        if (municipio != null) {
-          final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
-          nuevaComunidad.statusSync.target = nuevoSync;
-          nuevaComunidad.municipios.target = municipio;
-          dataBase.comunidadesBox.put(nuevaComunidad);
-          print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-          print('Comunidad agregada exitosamente');
-          final record = await client.records.update('comunidades', listComunidades[i].id, body: {
-            'id_status_sync_fk': 'HoI36PzYw1wtbO1',
-          });
-          if (record.id.isNotEmpty) {
-            print('Comunidad actualizada en el backend exitosamente');
-          }
-          }
-        }
-      }
-      notifyListeners();
-      }
     }
+  }
+
+//Función inicial para recuperar el Token para el llamado de catálogos
+  Future<bool> getTokenOAuth() async {
+
+    var url = Uri.parse("$baseUrlEmiWebSecurity/oauth/token");
+    final headers = ({
+        "Authorization": "Basic Yml6cHJvOmFkbWlu",
+      });
+    final bodyMsg = ({
+        "grant_type": "password",
+        "scope": "webclient",
+        "username": "alozanop@encuentroconmexico.org",
+        "password": "3FFV4lkuqqC9IuP05+K3dQ=="
+      });
+    
+    var response = await http.post(
+      url, 
+      headers: headers,
+      body: bodyMsg
+    );
+
+    print(response.body);
+    print(response.statusCode);
+
+    switch (response.statusCode) {
+        case 200:
+          final responseTokenEmiWeb = getTokenEmiWebFromMap(
+          response.body);
+          tokenGlobal = responseTokenEmiWeb.accessToken;
+          return true;
+        case 401:
+          return false;
+        case 404:
+          return false;
+        default:
+          return false;
+      }
+  }
+
+//Función para limpiar el contenido de registros en las bases de datos para catálogos
+  void clearDataBase() {
+    dataBase.comunidadesBox.removeAll();
+    dataBase.municipiosBox.removeAll();
+    dataBase.estadosBox.removeAll();
+  }
+
+//Función para recuperar el catálogo de estados desde Emi Web
+  Future<bool> getEstados() async {
+    var url = Uri.parse("$baseUrlEmiWebServices/catalogos/estado");
+    final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+    var response = await http.get(
+      url,
+      headers: headers
+    );
+
+    switch (response.statusCode) {
+      case 200: //Caso éxitoso
+        final responseListEstados = getEstadosEmiWebFromMap(
+        response.body);
+        for (var i = 0; i < responseListEstados.payload!.length; i++) {
+          final nuevoEstado = Estados(
+          nombre: responseListEstados.payload![i].estado,
+          activo: responseListEstados.payload![i].activo,
+          idEmiWeb: responseListEstados.payload![i].idCatEstado,
+          fechaRegistro: DateTime.now(), //Agregamos la fecha de registro actual porque no sabemos la del backend
+          );
+          //Modificamos el estado de sincronización sólo de forma local para estados
+          final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_, es nuestra bandera de sincronización por registro
+          nuevoEstado.statusSync.target = nuevoSync;
+          dataBase.estadosBox.put(nuevoEstado);
+          print('Estado Emi Web agregado éxitosamente');
+        }
+        return true;
+      case 401: //Error de Token incorrecto
+        if(await getTokenOAuth()) {
+          getEstados();
+          return true;
+        } else{
+          return false;
+        }
+      case 404: //Error de ruta incorrecta
+        return true;
+      default:
+        return false;
+    }
+  }
+
+//Función para recuperar el catálogo de municipios desde Emi Web
+  Future<bool> getMunicipios() async {
+    var url = Uri.parse("$baseUrlEmiWebServices/catalogos/municipio");
+    final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+    var response = await http.get(
+      url,
+      headers: headers
+    );
+
+    switch (response.statusCode) {
+      case 200: //Caso éxitoso
+        final responseListMunicipios = getMunicipiosEmiWebFromMap(
+        response.body);
+        for (var i = 0; i < responseListMunicipios.payload!.length; i++) {
+          final nuevoMunicipio = Municipios(
+          nombre: responseListMunicipios.payload![i].municipio,
+          activo: responseListMunicipios.payload![i].activo,
+          idEmiWeb: responseListMunicipios.payload![i].idCatMunicipio,
+          fechaRegistro: DateTime.now(), //Agregamos la fecha de registro actual porque no sabemos la del backend
+          );
+          //Modificamos el estado de sincronización sólo de forma local para municipios y lo asociamos a su estado correspondiente
+          final estado = dataBase.estadosBox.query(Estados_.idEmiWeb.equals(responseListMunicipios.payload![i].idCatEstado)).build().findUnique();
+          if (estado != null) {
+            final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_, es nuestra bandera de sincronización por registro
+            nuevoMunicipio.statusSync.target = nuevoSync;
+            nuevoMunicipio.estados.target = estado;
+            dataBase.municipiosBox.put(nuevoMunicipio);
+            print('Municipio Emi Web agregado éxitosamente');
+          } else{
+            return false;
+          }
+        }
+        return true;
+      case 401: //Error de Token incorrecto
+        if(await getTokenOAuth()) {
+          getMunicipios();
+          return true;
+        } else{
+          return false;
+        }
+      case 404: //Error de ruta incorrecta
+        return true;
+      default:
+        return false;
+    }
+  }
+
+//Función para recuperar el catálogo de comunidades desde Emi Web
+  Future<bool> getComunidades() async {
+    var url = Uri.parse("$baseUrlEmiWebServices/catalogos/comunidad");
+    final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+    var response = await http.get(
+      url,
+      headers: headers
+    );
+
+    switch (response.statusCode) {
+      case 200: //Caso éxitoso
+        final responseListComunidades = getComunidadesEmiWebFromMap(
+        response.body);
+        for (var i = 0; i < responseListComunidades.payload!.length; i++) {
+          final nuevaComunidad = Comunidades(
+          nombre: responseListComunidades.payload![i].comunidad,
+          activo: responseListComunidades.payload![i].activo,
+          idEmiWeb: responseListComunidades.payload![i].idCatComunidad,
+          fechaRegistro: DateTime.now(), //Agregamos la fecha de registro actual porque no sabemos la del backend
+          );
+          //Modificamos el estado de sincronización sólo de forma local para comunidades y lo asociamos a su municipio correspondiente
+          final municipio = dataBase.municipiosBox.query(Municipios_.idEmiWeb.equals(responseListComunidades.payload![i].idCatMunicipio)).build().findUnique();
+          if (municipio != null) {
+            final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_, es nuestra bandera de sincronización por registro
+            nuevaComunidad.statusSync.target = nuevoSync;
+            nuevaComunidad.municipios.target = municipio;
+            dataBase.comunidadesBox.put(nuevaComunidad);
+            print('Comunidad Emi Web agregada éxitosamente');
+          } else{
+            return false;
+          }
+        }
+        return true;
+      case 401: //Error de Token incorrecto
+        if(await getTokenOAuth()) {
+          getComunidades();
+          return true;
+        } else{
+          return false;
+        }
+      case 404: //Error de ruta incorrecta
+        return true;
+      default:
+        return false;
+    }
+  }
+
+//Función para recuperar el catálogo de tipos de Proyecto desde Emi Web
+  Future<bool> getTipoProyecto() async {
+    var url = Uri.parse("$baseUrlEmiWebServices/catalogos/tipoProyecto");
+    final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+    var response = await http.get(
+      url,
+      headers: headers
+    );
+
+    switch (response.statusCode) {
+      case 200: //Caso éxitoso
+        final responseListTipoProyecto = getTipoProyectoEmiWebFromMap(
+        response.body);
+        for (var i = 0; i < responseListTipoProyecto.payload!.length; i++) {
+          final nuevoTipoProyecto = TipoProyecto(
+          tipoProyecto: responseListTipoProyecto.payload![i].tipoProyecto,
+          activo: responseListTipoProyecto.payload![i].activo,
+          idEmiWeb: responseListTipoProyecto.payload![i].idCatTipoProyecto,
+          fechaRegistro: DateTime.now(), //Agregamos la fecha de registro actual porque no sabemos la del backend
+          );
+          //Modificamos el estado de sincronización sólo de forma local para tipos de proyecto
+          final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_, es nuestra bandera de sincronización por registro
+          nuevoTipoProyecto.statusSync.target = nuevoSync;
+          dataBase.tipoProyectoBox.put(nuevoTipoProyecto);
+          print('Tipo Proyecto Emi Web agregada éxitosamente');
+        }
+        return true;
+      case 401: //Error de Token incorrecto
+        if(await getTokenOAuth()) {
+          getComunidades();
+          return true;
+        } else{
+          return false;
+        }
+      case 404: //Error de ruta incorrecta
+        return true;
+      default:
+        return false;
+    }
+  }
+
+//Función para recuperar el catálogo de catálogos Proyecto desde Emi Web == Tabla "Proyectos" en Emi Web
+  Future<bool> getCatalogosProyectos() async {
+    var url = Uri.parse("$baseUrlEmiWebServices/catalogos/proyecto");
+    final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+    var response = await http.get(
+      url,
+      headers: headers
+    );
+
+    switch (response.statusCode) {
+      case 200: //Caso éxitoso
+        final responseListCatalogoProyecto = getCatalogoProyectosEmiWebFromMap(
+        response.body);
+        for (var i = 0; i < responseListCatalogoProyecto.payload!.length; i++) {
+          final nuevoCatalogoProyecto = CatalogoProyecto(
+          nombre: responseListCatalogoProyecto.payload![i].proyecto,
+          activo: responseListCatalogoProyecto.payload![i].activo,
+          idEmiWeb: responseListCatalogoProyecto.payload![i].idCatProyecto,
+          fechaRegistro: DateTime.now(), //Agregamos la fecha de registro actual porque no sabemos la del backend
+          );
+          //Modificamos el estado de sincronización sólo de forma local para catalogo proyecto y lo asociamos a su tipo de proyecto
+          final tipoProyecto = dataBase.tipoProyectoBox.query(TipoProyecto_.idEmiWeb.equals(responseListCatalogoProyecto.payload![i].catTipoProyecto!.idCatTipoProyecto)).build().findUnique();
+          if (tipoProyecto != null) {
+            final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_, es nuestra bandera de sincronización por registro
+            nuevoCatalogoProyecto.statusSync.target = nuevoSync;
+            nuevoCatalogoProyecto.tipoProyecto.target = tipoProyecto;
+            dataBase.catalogoProyectoBox.put(nuevoCatalogoProyecto);
+            print('Catalogo Proyecto Web agregado éxitosamente');
+          } else{
+            return false;
+          }
+        }
+        return true;
+      case 401: //Error de Token incorrecto
+        if(await getTokenOAuth()) {
+          getComunidades();
+          return true;
+        } else{
+          return false;
+        }
+      case 404: //Error de ruta incorrecta
+        return true;
+      default:
+        return false;
+    }
+  }
 
   Future<void> getRoles() async {
     if (dataBase.rolesBox.isEmpty()) {
@@ -220,41 +419,6 @@ class CatalogProvider extends ChangeNotifier {
       }
       notifyListeners();
       }
-  }
-
-  Future<void> getClasificacionesEmp() async {
-    if (dataBase.clasificacionesEmpBox.isEmpty()) {
-      final records = await client.records.
-        getFullList('clasificaciones_emp', batch: 200, sort: '+clasificacion');
-      final List<GetClasificacionEmp> listClasificacionEmp = [];
-      for (var element in records) {
-        listClasificacionEmp.add(getClasificacionEmpFromMap(element.toString()));
-      }
-
-      print("****Informacion clasificaciones_emp****");
-      for (var i = 0; i < listClasificacionEmp.length; i++) {
-        if (listClasificacionEmp[i].id.isNotEmpty) {
-        final nuevaClasificacionEmp = ClasificacionEmp(
-        clasificacion: listClasificacionEmp[i].clasificacion,
-        activo: listClasificacionEmp[i].activo,
-        idDBR: listClasificacionEmp[i].id,
-        fechaRegistro: listClasificacionEmp[i].updated
-        );
-        final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
-        nuevaClasificacionEmp.statusSync.target = nuevoSync;
-        dataBase.clasificacionesEmpBox.put(nuevaClasificacionEmp);
-        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-        print('Clasificacion Emp agregado exitosamente');
-        final record = await client.records.update('clasificaciones_emp', listClasificacionEmp[i].id, body: {
-          'id_status_sync_fk': 'HoI36PzYw1wtbO1',
-        });
-        if (record.id.isNotEmpty) {
-            print('Clasificacion Emp actualizado en el backend exitosamente');
-          }
-        }
-      }
-      notifyListeners();
-    }    
   }
 
   Future<void> getFamiliaProd() async {
@@ -321,45 +485,6 @@ class CatalogProvider extends ChangeNotifier {
       }
   }
 
-
-  Future<void> getCatalogosProyectos() async {
-    if (dataBase.catalogoProyectoBox.isEmpty()) {
-      final records = await client.records.
-      getFullList('cat_proyecto', batch: 200, sort: '+nombre_proyecto');
-      final List<GetCatalogoProyectos> listCatalogoProyecto = [];
-      for (var element in records) {
-        listCatalogoProyecto.add(getCatalogoProyectosFromMap(element.toString()));
-      }
-
-      print("****Informacion catalogos proyectos****");
-      for (var i = 0; i < records.length; i++) {
-        print(records[i]);
-        if (listCatalogoProyecto[i].id.isNotEmpty) {
-        final nuevoCatalogoProyecto = CatalogoProyecto(
-        nombre: listCatalogoProyecto[i].nombreProyecto,
-        idDBR: listCatalogoProyecto[i].id,
-        fechaRegistro: listCatalogoProyecto[i].updated
-        );
-        final clasificacionEmp = dataBase.clasificacionesEmpBox.query(ClasificacionEmp_.idDBR.equals(listCatalogoProyecto[i].idClasificacionEmprendimiento)).build().findUnique();
-        if (clasificacionEmp != null) {
-          final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
-          nuevoCatalogoProyecto.statusSync.target = nuevoSync;
-          nuevoCatalogoProyecto.clasificacionEmp.target = clasificacionEmp;
-          dataBase.catalogoProyectoBox.put(nuevoCatalogoProyecto);
-          print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-          print('Catalogo Proyecto agregado exitosamente');
-          final record = await client.records.update('cat_proyecto', listCatalogoProyecto[i].id, body: {
-            'id_status_sync_fk': 'HoI36PzYw1wtbO1',
-          });
-          if (record.id.isNotEmpty) {
-            print('Catalogo Proyecto actualizado en el backend exitosamente');
-          }
-          }
-        }
-      }
-      notifyListeners();
-    }
-  }
 
   Future<void> getAmbitoConsultoria() async {
     if (dataBase.ambitoConsultoriaBox.isEmpty()) {
@@ -752,7 +877,7 @@ Future<void> getProductosProv() async {
           nuevoProdProyecto.tipoEmpaques.target = tipoEmpaque;
           nuevoProdProyecto.catalogoProyecto.target = catalogoProyecto;
           // dataBase.productosProyectoBox.put(nuevoProdProyecto);
-          catalogoProyecto.proProyecto.add(nuevoProdProyecto);
+          catalogoProyecto.prodProyecto.add(nuevoProdProyecto);
           dataBase.catalogoProyectoBox.put(catalogoProyecto);
           print("TAMANÑO PROD PROYECTO: ${dataBase.productosProyectoBox.getAll().length}");
           print('Prod Proyecto agregado exitosamente');

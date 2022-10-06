@@ -83,7 +83,9 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
             currentUser.rol.target!.rol == "Promotor")
             ? FloatingActionButton(
                 onPressed: () async {
-                  if (listAreaCirculo.isNotEmpty) {
+                  //TODO: Colocar el último catálogo que se descargue
+                  List<Comunidades> listComunidades = dataBase.comunidadesBox.getAll();
+                  if (listComunidades.isNotEmpty) {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -509,9 +511,9 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                                         ? emp
                                                             .catalogoProyecto
                                                             .target!
-                                                            .clasificacionEmp
+                                                            .tipoProyecto
                                                             .target!
-                                                            .clasificacion
+                                                            .tipoProyecto
                                                         : "",
                                                     fase: emp.faseEmp.last.fase,
                                                   ),

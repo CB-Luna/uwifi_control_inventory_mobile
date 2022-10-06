@@ -91,18 +91,18 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
         TextEditingController(text: widget.jornada.tarea.target!.descripcion);
     activoController = widget.jornada.tarea.target!.activo;
     tipoProyecto = widget.jornada.emprendimiento.target!.catalogoProyecto
-        .target!.clasificacionEmp.target!.clasificacion;
+        .target!.tipoProyecto.target!.tipoProyecto;
     proyecto =
         widget.jornada.emprendimiento.target!.catalogoProyecto.target!.nombre;
     listProyectos = [];
     listTipoProyecto = [];
-    dataBase.clasificacionesEmpBox.getAll().forEach((element) {
-      listTipoProyecto.add(element.clasificacion);
+    dataBase.tipoProyectoBox.getAll().forEach((element) {
+      listTipoProyecto.add(element.tipoProyecto);
     });
     listTipoProyecto.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     
     dataBase.catalogoProyectoBox.getAll().forEach((element) {
-      if (element.clasificacionEmp.target?.clasificacion == tipoProyecto) {
+      if (element.tipoProyecto.target?.tipoProyecto == tipoProyecto) {
         listProyectos.add(element.nombre);
       }
     });
@@ -977,8 +977,8 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                           dataBase.catalogoProyectoBox
                                               .getAll()
                                               .forEach((element) {
-                                            if (element.clasificacionEmp.target!
-                                                    .clasificacion ==
+                                            if (element.tipoProyecto.target!
+                                                    .tipoProyecto ==
                                                 tipoProyecto) {
                                               listProyectos.add(element.nombre);
                                             }
@@ -1233,9 +1233,9 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                             .target!
                                             .catalogoProyecto
                                             .target!
-                                            .clasificacionEmp
+                                            .tipoProyecto
                                             .target!
-                                            .clasificacion ||
+                                            .tipoProyecto ||
                                     proyecto !=
                                         widget.jornada.emprendimiento.target!
                                             .catalogoProyecto.target!.nombre ||
@@ -1245,8 +1245,8 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                     newAnalisisFinanciero !=
                                         oldAnalisisFinanciero) {
                                   final idTipoProyecto = dataBase
-                                      .clasificacionesEmpBox
-                                      .query(ClasificacionEmp_.clasificacion
+                                      .tipoProyectoBox
+                                      .query(TipoProyecto_.tipoProyecto
                                           .equals(tipoProyecto))
                                       .build()
                                       .findFirst()
@@ -1255,7 +1255,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                     final idProyecto = dataBase
                                         .catalogoProyectoBox
                                         .query(CatalogoProyecto_
-                                            .clasificacionEmp
+                                            .tipoProyecto
                                             .equals(idTipoProyecto)
                                             .and(CatalogoProyecto_.nombre
                                                 .equals(proyecto)))

@@ -18,8 +18,7 @@ class ObjectBoxDatabase {
   late final Box<Municipios> municipiosBox;
   late final Box<Comunidades> comunidadesBox;
   late final Box<Tareas> tareasBox;
-  late final Box<ClasificacionEmp> clasificacionesEmpBox;
-  late final Box<FamiliaInversion> familiaInversionBox;
+  late final Box<TipoProyecto> tipoProyectoBox;
   late final Box<FamiliaProd> familiaProductosBox;
   late final Box<CatalogoProyecto> catalogoProyectoBox;
   late final Box<ProductosEmp> productosEmpBox;
@@ -60,8 +59,7 @@ class ObjectBoxDatabase {
     municipiosBox = Box<Municipios>(store);
     comunidadesBox = Box<Comunidades>(store);
     tareasBox = Box<Tareas>(store);
-    clasificacionesEmpBox = Box<ClasificacionEmp>(store);
-    familiaInversionBox = Box<FamiliaInversion>(store);
+    tipoProyectoBox = Box<TipoProyecto>(store);
     familiaProductosBox = Box<FamiliaProd>(store);
     catalogoProyectoBox = Box<CatalogoProyecto>(store);
     productosEmpBox = Box<ProductosEmp>(store);

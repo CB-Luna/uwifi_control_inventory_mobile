@@ -6,17 +6,16 @@ import 'package:bizpro_app/modelsPocketbase/get_prod_proyecto.dart';
 import 'package:bizpro_app/modelsPocketbase/get_productos_prov.dart';
 import 'package:bizpro_app/modelsPocketbase/get_proveedores.dart';
 import 'package:bizpro_app/modelsPocketbase/get_tipo_proveedor.dart';
-import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 
-import 'package:bizpro_app/modelsPocketbase/get_clasificacion_emp.dart';
+import 'package:bizpro_app/modelsPocketbase/get_tipo_proyecto.dart';
 import 'package:bizpro_app/modelsPocketbase/get_comunidades.dart';
 import 'package:bizpro_app/modelsPocketbase/get_ambito_consultoria.dart';
 import 'package:bizpro_app/modelsPocketbase/get_area_circulo.dart';
-import 'package:bizpro_app/modelsPocketbase/get_catalogos_proyectos.dart';
+import 'package:bizpro_app/modelsPocketbase/get_catalogo_proyectos.dart';
 import 'package:bizpro_app/modelsPocketbase/get_roles.dart';
 import 'package:bizpro_app/modelsPocketbase/get_unidades_medida.dart';
 import 'package:bizpro_app/modelsPocketbase/get_estados.dart';
@@ -28,8 +27,9 @@ import 'package:bizpro_app/modelsPocketbase/get_tipo_empaques.dart';
 import 'package:bizpro_app/util/util.dart';
 
 import 'package:http/http.dart' as http;
+import '../objectbox.g.dart';
 
-class CatalogProvider extends ChangeNotifier {
+class CatalogPocketbaseProvider extends ChangeNotifier {
 
   bool procesoterminado = false;
   bool procesocargando = false;
@@ -48,7 +48,7 @@ class CatalogProvider extends ChangeNotifier {
     await getEstados();
     await getMunicipios();
     await getComunidades();
-    await getClasificacionesEmp();
+    await getTipoProyecto();
     await getCatalogosProyectos();
     await getFamiliaProd();
     await getUnidadMedida();
@@ -73,9 +73,7 @@ class CatalogProvider extends ChangeNotifier {
   }
 
   Future<void> getEstados() async {
-    // var url = Uri.parse("$baseUrl/api/collections/emi_users/records/?filter=(user='$idUser')");
-
-    //   var response = await get(url);
+    if (dataBase.estadosBox.isEmpty()) {
       final records = await client.records.
       getFullList('estados', batch: 200, sort: '+nombre_estado');
       final List<GetEstados> listEstados = [];
@@ -90,7 +88,8 @@ class CatalogProvider extends ChangeNotifier {
         nombre: listEstados[i].nombreEstado,
         activo: listEstados[i].activo,
         idDBR: listEstados[i].id,
-        fechaRegistro: listEstados[i].updated
+        fechaRegistro: listEstados[i].updated, 
+        idEmiWeb: 0,
         );
         final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
         nuevoEstado.statusSync.target = nuevoSync;
@@ -107,6 +106,7 @@ class CatalogProvider extends ChangeNotifier {
         }
       }
       notifyListeners();
+      }
   }
 
   Future<void> getMunicipios() async {
@@ -125,7 +125,8 @@ class CatalogProvider extends ChangeNotifier {
         nombre: listMunicipios[i].nombreMunicipio,
         activo: listMunicipios[i].activo,
         idDBR: listMunicipios[i].id,
-        fechaRegistro: listMunicipios[i].updated
+        fechaRegistro: listMunicipios[i].updated, 
+        idEmiWeb: 0,
         );
         final estado = dataBase.estadosBox.query(Estados_.idDBR.equals(listMunicipios[i].idEstadoFk)).build().findUnique();
         if (estado != null) {
@@ -165,7 +166,8 @@ class CatalogProvider extends ChangeNotifier {
         nombre: listComunidades[i].nombreComunidad,
         activo: listComunidades[i].activo,
         idDBR: listComunidades[i].id,
-        fechaRegistro: listComunidades[i].updated
+        fechaRegistro: listComunidades[i].updated, 
+        idEmiWeb: 0,
         );
         final municipio = dataBase.municipiosBox.query(Municipios_.idDBR.equals(listComunidades[i].idMunicipioFk)).build().findUnique();
         if (municipio != null) {
@@ -223,34 +225,35 @@ class CatalogProvider extends ChangeNotifier {
       }
   }
 
-  Future<void> getClasificacionesEmp() async {
-    if (dataBase.clasificacionesEmpBox.isEmpty()) {
+  Future<void> getTipoProyecto() async {
+    if (dataBase.tipoProyectoBox.isEmpty()) {
       final records = await client.records.
-        getFullList('clasificaciones_emp', batch: 200, sort: '+clasificacion');
-      final List<GetClasificacionEmp> listClasificacionEmp = [];
+        getFullList('tipo_proyecto', batch: 200, sort: '+tipo_proyecto');
+      final List<GetTipoProyecto> listTipoProyecto = [];
       for (var element in records) {
-        listClasificacionEmp.add(getClasificacionEmpFromMap(element.toString()));
+        listTipoProyecto.add(getTipoProyectoFromMap(element.toString()));
       }
 
-      print("****Informacion clasificaciones_emp****");
-      for (var i = 0; i < listClasificacionEmp.length; i++) {
-        if (listClasificacionEmp[i].id.isNotEmpty) {
-        final nuevaClasificacionEmp = ClasificacionEmp(
-        clasificacion: listClasificacionEmp[i].clasificacion,
-        activo: listClasificacionEmp[i].activo,
-        idDBR: listClasificacionEmp[i].id,
-        fechaRegistro: listClasificacionEmp[i].updated
+      print("****Informacion tipo_proyecto****");
+      for (var i = 0; i < listTipoProyecto.length; i++) {
+        if (listTipoProyecto[i].id.isNotEmpty) {
+        final nuevoTipoProyecto = TipoProyecto(
+        tipoProyecto: listTipoProyecto[i].tipoProyecto,
+        activo: listTipoProyecto[i].activo,
+        idDBR: listTipoProyecto[i].id,
+        fechaRegistro: listTipoProyecto[i].updated,
+        idEmiWeb: 0,
         );
         final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
-        nuevaClasificacionEmp.statusSync.target = nuevoSync;
-        dataBase.clasificacionesEmpBox.put(nuevaClasificacionEmp);
+        nuevoTipoProyecto.statusSync.target = nuevoSync;
+        dataBase.tipoProyectoBox.put(nuevoTipoProyecto);
         print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-        print('Clasificacion Emp agregado exitosamente');
-        final record = await client.records.update('clasificaciones_emp', listClasificacionEmp[i].id, body: {
+        print('Tipo Proyecto agregado exitosamente');
+        final record = await client.records.update('tipo_proyecto', listTipoProyecto[i].id, body: {
           'id_status_sync_fk': 'HoI36PzYw1wtbO1',
         });
         if (record.id.isNotEmpty) {
-            print('Clasificacion Emp actualizado en el backend exitosamente');
+            print('Tipo Proyecto actualizado en el backend exitosamente');
           }
         }
       }
@@ -339,13 +342,14 @@ class CatalogProvider extends ChangeNotifier {
         final nuevoCatalogoProyecto = CatalogoProyecto(
         nombre: listCatalogoProyecto[i].nombreProyecto,
         idDBR: listCatalogoProyecto[i].id,
-        fechaRegistro: listCatalogoProyecto[i].updated
+        fechaRegistro: listCatalogoProyecto[i].updated, 
+        idEmiWeb: 0,
         );
-        final clasificacionEmp = dataBase.clasificacionesEmpBox.query(ClasificacionEmp_.idDBR.equals(listCatalogoProyecto[i].idClasificacionEmprendimiento)).build().findUnique();
+        final clasificacionEmp = dataBase.tipoProyectoBox.query(TipoProyecto_.idDBR.equals(listCatalogoProyecto[i].idTipoProyecto)).build().findUnique();
         if (clasificacionEmp != null) {
           final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
           nuevoCatalogoProyecto.statusSync.target = nuevoSync;
-          nuevoCatalogoProyecto.clasificacionEmp.target = clasificacionEmp;
+          nuevoCatalogoProyecto.tipoProyecto.target = clasificacionEmp;
           dataBase.catalogoProyectoBox.put(nuevoCatalogoProyecto);
           print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
           print('Catalogo Proyecto agregado exitosamente');
@@ -753,7 +757,7 @@ Future<void> getProductosProv() async {
           nuevoProdProyecto.tipoEmpaques.target = tipoEmpaque;
           nuevoProdProyecto.catalogoProyecto.target = catalogoProyecto;
           // dataBase.productosProyectoBox.put(nuevoProdProyecto);
-          catalogoProyecto.proProyecto.add(nuevoProdProyecto);
+          catalogoProyecto.prodProyecto.add(nuevoProdProyecto);
           dataBase.catalogoProyectoBox.put(catalogoProyecto);
           print("TAMANÑO PROD PROYECTO: ${dataBase.productosProyectoBox.getAll().length}");
           print('Prod Proyecto agregado exitosamente');
