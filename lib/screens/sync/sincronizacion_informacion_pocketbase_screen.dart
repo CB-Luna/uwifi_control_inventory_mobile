@@ -11,14 +11,14 @@ import 'package:bizpro_app/providers/sync_provider_pocketbase.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
-class SincronizacionScreen extends StatefulWidget {
-  const SincronizacionScreen({Key? key}) : super(key: key);
+class SincronizacionInformacionPocketbaseScreen extends StatefulWidget {
+  const SincronizacionInformacionPocketbaseScreen({Key? key}) : super(key: key);
 
   @override
-  State<SincronizacionScreen> createState() => _SincronizacionScreenState();
+  State<SincronizacionInformacionPocketbaseScreen> createState() => _SincronizacionInformacionPocketbaseScreenState();
 }
 
-class _SincronizacionScreenState extends State<SincronizacionScreen> {
+class _SincronizacionInformacionPocketbaseScreenState extends State<SincronizacionInformacionPocketbaseScreen> {
   @override
   void initState() {
     // TODO: implement initState

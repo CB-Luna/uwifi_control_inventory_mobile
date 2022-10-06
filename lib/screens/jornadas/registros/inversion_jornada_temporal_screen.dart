@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/models/temporals/productos_solicitados_temporal.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/productos_solicitados_temporal.dart';
 import 'package:bizpro_app/providers/database_providers/producto_inversion_jornada_controller.dart';
 import 'package:bizpro_app/screens/jornadas/registros/agregar_primer_producto_inversion_jornada_temporal.dart';
 import 'package:bizpro_app/screens/jornadas/registros/agregar_producto_inversion_jornada_temporal.dart';

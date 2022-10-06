@@ -1,4 +1,4 @@
-import 'package:bizpro_app/models/temporals/productos_vendidos_temporal.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/productos_vendidos_temporal.dart';
 import 'package:bizpro_app/screens/ventas/registro_venta_temporal_screen.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_eliminar_producto.dart';
 import 'package:flutter/material.dart';

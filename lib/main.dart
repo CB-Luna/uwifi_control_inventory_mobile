@@ -1,5 +1,3 @@
-import 'package:bizpro_app/providers/catalog_provider_recover.dart';
-import 'package:bizpro_app/providers/sync_provider_emi_web.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,7 +15,10 @@ import 'providers/database_providers/producto_venta_controller.dart';
 import 'providers/database_providers/producto_inversion_jornada_controller.dart';
 import 'providers/database_providers/usuario_controller.dart';
 import 'providers/database_providers/jornada_controller.dart';
-import 'package:bizpro_app/providers/catalog_provider.dart';
+import 'package:bizpro_app/providers/catalog_emi_web_provider.dart';
+import 'package:bizpro_app/providers/catalog_pocketbase_recover_provider.dart';
+import 'package:bizpro_app/providers/sync_provider_emi_web.dart';
+import 'package:bizpro_app/providers/catalog_pocketbase_provider.dart';
 import 'package:bizpro_app/providers/database_providers/cotizacion_controller.dart';
 import 'package:bizpro_app/providers/database_providers/inversion_controller.dart';
 import 'package:bizpro_app/providers/database_providers/inversion_jornada_controller.dart';
@@ -108,12 +109,16 @@ void main() async {
           create: (context) => SyncProviderEmiWeb(),
           lazy: false,
         ),
-        ChangeNotifierProvider<CatalogProvider>(
-          create: (context) => CatalogProvider(),
+        ChangeNotifierProvider<CatalogPocketbaseProvider>(
+          create: (context) => CatalogPocketbaseProvider(),
           lazy: false,
         ),
-        ChangeNotifierProvider<CatalogProviderRecover>(
-          create: (context) => CatalogProviderRecover(),
+        ChangeNotifierProvider<CatalogEmiWebProvider>(
+          create: (context) => CatalogEmiWebProvider(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<CatalogPocketbaseRecoverProvider>(
+          create: (context) => CatalogPocketbaseRecoverProvider(),
           lazy: false,
         ),
         ChangeNotifierProvider(

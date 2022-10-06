@@ -1,6 +1,6 @@
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/models/emi_user.dart';
+import 'package:bizpro_app/modelsPocketbase/emi_user.dart';
 import 'package:bizpro_app/services/api_interceptor.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';

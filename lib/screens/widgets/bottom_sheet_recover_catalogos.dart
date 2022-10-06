@@ -1,5 +1,5 @@
-import 'package:bizpro_app/providers/catalog_provider_recover.dart';
-import 'package:bizpro_app/screens/sync/sincronizacion_catalogos_screen.dart';
+import 'package:bizpro_app/providers/catalog_pocketbase_recover_provider.dart';
+import 'package:bizpro_app/screens/sync/recover_catalogos_pocketbase_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:lottie/lottie.dart';
@@ -21,7 +21,7 @@ class _BottomSheetRecoverCatalogosWidgetState
     extends State<BottomSheetRecoverCatalogosWidget> {
   @override
   Widget build(BuildContext context) {
-    final catalogoRecoverProvider = Provider.of<CatalogProviderRecover>(context);
+    final catalogoRecoverProvider = Provider.of<CatalogPocketbaseRecoverProvider>(context);
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 350,
@@ -154,7 +154,7 @@ class _BottomSheetRecoverCatalogosWidgetState
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          const SincronizacionCatalogosScreen(),
+                                          const RecoverCatalogosPocketbaseScreen(),
                                     ),
                                   );
                                 },

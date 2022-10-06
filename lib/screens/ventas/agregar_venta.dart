@@ -10,7 +10,7 @@ import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/providers/database_providers/venta_controller.dart';
 import 'package:bizpro_app/providers/database_providers/producto_venta_controller.dart';
 import 'package:badges/badges.dart';
-import 'package:bizpro_app/models/temporals/productos_vendidos_temporal.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/productos_vendidos_temporal.dart';
 import 'package:bizpro_app/screens/ventas/venta_creada.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:bizpro_app/screens/ventas/registro_venta_temporal_screen.dart';

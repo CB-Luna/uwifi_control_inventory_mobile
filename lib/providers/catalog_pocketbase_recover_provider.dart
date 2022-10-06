@@ -1,36 +1,36 @@
-import 'package:bizpro_app/models/get_ambito_consultoria.dart';
-import 'package:bizpro_app/models/get_area_circulo.dart';
-import 'package:bizpro_app/models/get_bancos.dart';
-import 'package:bizpro_app/models/get_catalogos_proyectos.dart';
-import 'package:bizpro_app/models/get_clasificacion_emp.dart';
-import 'package:bizpro_app/models/get_comunidades.dart';
-import 'package:bizpro_app/models/get_condiciones_pago.dart';
-import 'package:bizpro_app/models/get_estado_inversiones.dart';
-import 'package:bizpro_app/models/get_estados_prod_cotizados.dart';
-import 'package:bizpro_app/models/get_familia_productos.dart';
-import 'package:bizpro_app/models/get_fases_emp.dart';
-import 'package:bizpro_app/models/get_municipios.dart';
-import 'package:bizpro_app/models/get_porcentaje_avance.dart';
-import 'package:bizpro_app/models/get_prod_proyecto.dart';
-import 'package:bizpro_app/models/get_productos_prov.dart';
-import 'package:bizpro_app/models/get_proveedores.dart';
-import 'package:bizpro_app/models/get_roles.dart';
-import 'package:bizpro_app/models/get_tipo_empaques.dart';
-import 'package:bizpro_app/models/get_tipo_proveedor.dart';
-import 'package:bizpro_app/models/get_unidades_medida.dart';
+import 'package:bizpro_app/modelsPocketbase/get_ambito_consultoria.dart';
+import 'package:bizpro_app/modelsPocketbase/get_area_circulo.dart';
+import 'package:bizpro_app/modelsPocketbase/get_bancos.dart';
+import 'package:bizpro_app/modelsPocketbase/get_catalogo_proyectos.dart';
+import 'package:bizpro_app/modelsPocketbase/get_tipo_proyecto.dart';
+import 'package:bizpro_app/modelsPocketbase/get_comunidades.dart';
+import 'package:bizpro_app/modelsPocketbase/get_condiciones_pago.dart';
+import 'package:bizpro_app/modelsPocketbase/get_estado_inversiones.dart';
+import 'package:bizpro_app/modelsPocketbase/get_estados_prod_cotizados.dart';
+import 'package:bizpro_app/modelsPocketbase/get_familia_productos.dart';
+import 'package:bizpro_app/modelsPocketbase/get_fases_emp.dart';
+import 'package:bizpro_app/modelsPocketbase/get_municipios.dart';
+import 'package:bizpro_app/modelsPocketbase/get_porcentaje_avance.dart';
+import 'package:bizpro_app/modelsPocketbase/get_prod_proyecto.dart';
+import 'package:bizpro_app/modelsPocketbase/get_productos_prov.dart';
+import 'package:bizpro_app/modelsPocketbase/get_proveedores.dart';
+import 'package:bizpro_app/modelsPocketbase/get_roles.dart';
+import 'package:bizpro_app/modelsPocketbase/get_tipo_empaques.dart';
+import 'package:bizpro_app/modelsPocketbase/get_tipo_proveedor.dart';
+import 'package:bizpro_app/modelsPocketbase/get_unidades_medida.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 
-import 'package:bizpro_app/models/get_estados.dart';
+import 'package:bizpro_app/modelsPocketbase/get_estados.dart';
 
 import 'package:http/http.dart' as http;
 import '../objectbox.g.dart';
 
 //Este provider sólo funciona para cuando se agregan o actualizan registros en los catálogos del backend
 
-class CatalogProviderRecover extends ChangeNotifier {
+class CatalogPocketbaseRecoverProvider extends ChangeNotifier {
 
   bool procesoterminado = false;
   bool procesocargando = false;
@@ -50,7 +50,7 @@ class CatalogProviderRecover extends ChangeNotifier {
     await getMunicipiosAgain();
     await getComunidadesAgain();
     await getRolesAgain();
-    await getClasificacionesEmpAgain();
+    await getTipoProyectoAgain();
     await getCatalogosProyectosAgain();
     await getFamiliaProdAgain();
     await getUnidadMedidaAgain();
@@ -90,7 +90,8 @@ class CatalogProviderRecover extends ChangeNotifier {
             final nuevoEstado = Estados(
             nombre: listEstados[i].nombreEstado,
             activo: listEstados[i].activo,
-            idDBR: listEstados[i].id,
+            idDBR: listEstados[i].id, 
+            idEmiWeb: 0,
             );
             dataBase.estadosBox.put(nuevoEstado);
             print('Estado agregado exitosamente');
@@ -125,7 +126,8 @@ class CatalogProviderRecover extends ChangeNotifier {
         final nuevoMunicipio = Municipios(
         nombre: listMunicipios[i].nombreMunicipio,
         activo: listMunicipios[i].activo,
-        idDBR: listMunicipios[i].id,
+        idDBR: listMunicipios[i].id, 
+        idEmiWeb: 0,
         );
         if (estado != null) {
           nuevoMunicipio.estados.target = estado;
@@ -164,7 +166,8 @@ class CatalogProviderRecover extends ChangeNotifier {
         final nuevaComunidad = Comunidades(
         nombre: listComunidades[i].nombreComunidad,
         activo: listComunidades[i].activo,
-        idDBR: listComunidades[i].id,
+        idDBR: listComunidades[i].id, 
+        idEmiWeb: 0,
         );
         if (municipio != null) {
           nuevaComunidad.municipios.target = municipio;
@@ -216,32 +219,33 @@ class CatalogProviderRecover extends ChangeNotifier {
       }
   }
 
-  Future<void> getClasificacionesEmpAgain() async {
-    if (!dataBase.clasificacionesEmpBox.isEmpty()) {
+  Future<void> getTipoProyectoAgain() async {
+    if (!dataBase.tipoProyectoBox.isEmpty()) {
       final records = await client.records.
-        getFullList('clasificaciones_emp', batch: 200, sort: '+clasificacion');
-      final List<GetClasificacionEmp> listClasificacionEmp = [];
+        getFullList('tipo_proyecto', batch: 200, sort: '+tipo_proyecto');
+      final List<GetTipoProyecto> listTipoProyecto = [];
       for (var element in records) {
-        listClasificacionEmp.add(getClasificacionEmpFromMap(element.toString()));
+        listTipoProyecto.add(getTipoProyectoFromMap(element.toString()));
       }
 
-      print("****Informacion clasificaciones_emp****");
-      for (var i = 0; i < listClasificacionEmp.length; i++) {
-        final clasificacionEmpExistente = dataBase.clasificacionesEmpBox.query(ClasificacionEmp_.idDBR.equals(listClasificacionEmp[i].id)).build().findUnique();
-        if (clasificacionEmpExistente == null) {
-        final nuevaClasificacionEmp = ClasificacionEmp(
-        clasificacion: listClasificacionEmp[i].clasificacion,
-        activo: listClasificacionEmp[i].activo,
-        idDBR: listClasificacionEmp[i].id,
+      print("****Informacion tipo_proyecto****");
+      for (var i = 0; i < listTipoProyecto.length; i++) {
+        final tipoProyectoExistente = dataBase.tipoProyectoBox.query(TipoProyecto_.idDBR.equals(listTipoProyecto[i].id)).build().findUnique();
+        if (tipoProyectoExistente == null) {
+        final nuevaClasificacionEmp = TipoProyecto(
+        tipoProyecto: listTipoProyecto[i].tipoProyecto,
+        activo: listTipoProyecto[i].activo,
+        idDBR: listTipoProyecto[i].id,
+        idEmiWeb: 0,
         );
-        dataBase.clasificacionesEmpBox.put(nuevaClasificacionEmp);
-        print('Clasificacion Emp agregado exitosamente');
+        dataBase.tipoProyectoBox.put(nuevaClasificacionEmp);
+        print('Tipo Proyecto agregado exitosamente');
         } else {
-          if (clasificacionEmpExistente.fechaRegistro != listClasificacionEmp[i].updated) {
-            clasificacionEmpExistente.clasificacion = listClasificacionEmp[i].clasificacion;
-            clasificacionEmpExistente.activo = listClasificacionEmp[i].activo;
-            clasificacionEmpExistente.fechaRegistro = listClasificacionEmp[i].updated!;
-            dataBase.clasificacionesEmpBox.put(clasificacionEmpExistente);
+          if (tipoProyectoExistente.fechaRegistro != listTipoProyecto[i].updated) {
+            tipoProyectoExistente.tipoProyecto = listTipoProyecto[i].tipoProyecto;
+            tipoProyectoExistente.activo = listTipoProyecto[i].activo;
+            tipoProyectoExistente.fechaRegistro = listTipoProyecto[i].updated!;
+            dataBase.tipoProyectoBox.put(tipoProyectoExistente);
           }
         }
       }
@@ -260,21 +264,22 @@ class CatalogProviderRecover extends ChangeNotifier {
 
       print("****Informacion catalogos proyectos****");
       for (var i = 0; i < records.length; i++) {
-        final clasificacionEmp = dataBase.clasificacionesEmpBox.query(ClasificacionEmp_.idDBR.equals(listCatalogoProyecto[i].idClasificacionEmprendimiento)).build().findUnique();
+        final tipoProyecto = dataBase.tipoProyectoBox.query(TipoProyecto_.idDBR.equals(listCatalogoProyecto[i].idTipoProyecto)).build().findUnique();
         final catalogoProyectoExistente = dataBase.catalogoProyectoBox.query(CatalogoProyecto_.idDBR.equals(listCatalogoProyecto[i].id)).build().findUnique();
         if (catalogoProyectoExistente == null) {
         final nuevoCatalogoProyecto = CatalogoProyecto(
         nombre: listCatalogoProyecto[i].nombreProyecto,
-        idDBR: listCatalogoProyecto[i].id,
+        idDBR: listCatalogoProyecto[i].id, 
+        idEmiWeb: 0,
         );
-        if (clasificacionEmp != null) {
-          nuevoCatalogoProyecto.clasificacionEmp.target = clasificacionEmp;
+        if (tipoProyecto != null) {
+          nuevoCatalogoProyecto.tipoProyecto.target = tipoProyecto;
           dataBase.catalogoProyectoBox.put(nuevoCatalogoProyecto);
           }
         } else {
-          if (catalogoProyectoExistente.fechaRegistro != listCatalogoProyecto[i].updated && clasificacionEmp != null) {
+          if (catalogoProyectoExistente.fechaRegistro != listCatalogoProyecto[i].updated && tipoProyecto != null) {
             catalogoProyectoExistente.nombre = listCatalogoProyecto[i].nombreProyecto;
-            catalogoProyectoExistente.clasificacionEmp.target = clasificacionEmp;
+            catalogoProyectoExistente.tipoProyecto.target = tipoProyecto;
             catalogoProyectoExistente.fechaRegistro = listCatalogoProyecto[i].updated!;
             dataBase.catalogoProyectoBox.put(catalogoProyectoExistente);
           }
@@ -369,7 +374,8 @@ Future<void> getAmbitoConsultoriaAgain() async {
         nombreAmbito: listAmbitoConsultoria[i].nombreAmbito,
         activo: listAmbitoConsultoria[i].activo,
         idDBR: listAmbitoConsultoria[i].id,
-        fechaRegistro: listAmbitoConsultoria[i].updated
+        fechaRegistro: listAmbitoConsultoria[i].updated, 
+        idEmiWeb: 0,
         );
         dataBase.ambitoConsultoriaBox.put(nuevoAmbitoConsultoria);
         print('Ambito Consultoria agregado exitosamente');
@@ -787,7 +793,7 @@ Future<void> getProductosProvAgain() async {
           nuevoProdProyecto.familiaProducto.target = familiaProd;
           nuevoProdProyecto.tipoEmpaques.target = tipoEmpaque;
           nuevoProdProyecto.catalogoProyecto.target = catalogoProyecto;
-          catalogoProyecto.proProyecto.add(nuevoProdProyecto);
+          catalogoProyecto.prodProyecto.add(nuevoProdProyecto);
           dataBase.catalogoProyectoBox.put(catalogoProyecto);
           print('Prod Proyecto agregado exitosamente');
           }

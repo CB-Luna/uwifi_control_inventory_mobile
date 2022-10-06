@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:bizpro_app/models/temporals/productos_solicitados_temporal.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/productos_solicitados_temporal.dart';
 import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
@@ -74,13 +74,12 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
     descripcionController = TextEditingController(text: context.read<JornadaController>().descripcion);
     listProyectos = [];
     listTipoProyecto = [];
-    // dataBase.clasificacionesEmpBox.getAll().forEach((element) {listTipoProyecto.add(element.clasificacion);});
-    dataBase.clasificacionesEmpBox.getAll().forEach((element) {
-      listTipoProyecto.add(element.clasificacion);
+    dataBase.tipoProyectoBox.getAll().forEach((element) {
+      listTipoProyecto.add(element.tipoProyecto);
     });
     listTipoProyecto.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     dataBase.catalogoProyectoBox.getAll().forEach((element) {
-      if (element.clasificacionEmp.target?.clasificacion == tipoProyecto) {
+      if (element.tipoProyecto.target?.tipoProyecto == tipoProyecto) {
         listProyectos.add(element.nombre);
       }
     });
@@ -855,8 +854,8 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                           dataBase.catalogoProyectoBox
                                               .getAll()
                                               .forEach((element) {
-                                            if (element.clasificacionEmp.target!
-                                                    .clasificacion ==
+                                            if (element.tipoProyecto.target!
+                                                    .tipoProyecto ==
                                                 tipoProyecto) {
                                               listProyectos.add(element.nombre);
                                             }
@@ -1050,7 +1049,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                                 .equals(proyecto))
                                             .build()
                                             .findFirst();
-                                            if (actualProyecto != null && actualProyecto.proProyecto.isNotEmpty) {
+                                            if (actualProyecto != null && actualProyecto.prodProyecto.isNotEmpty) {
                                               await showDialog(
                                                 context: context,
                                                 builder: (alertDialogContext) {
@@ -1061,7 +1060,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                                     actions: [
                                                       TextButton(
                                                         onPressed: () async {
-                                                          List<ProdProyecto> listProdProyecto = actualProyecto.proProyecto.toList();
+                                                          List<ProdProyecto> listProdProyecto = actualProyecto.prodProyecto.toList();
                                                           inversionJornadaProvider.porcentajePago = "50";
                                                           inversionJornadaProvider
                                                                 .addTemporal(

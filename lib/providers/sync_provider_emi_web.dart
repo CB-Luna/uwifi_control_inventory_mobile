@@ -1,10 +1,10 @@
-import 'package:bizpro_app/models/get_inversion.dart';
+import 'package:bizpro_app/modelsPocketbase/get_inversion.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/models/get_prod_cotizados.dart';
+import 'package:bizpro_app/modelsPocketbase/get_prod_cotizados.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:http/http.dart';
 
@@ -12,7 +12,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
   bool procesoterminado = false;
   bool procesocargando = false; 
   static final crearEmprendedorUri =
-      Uri.parse('$baseUrlEmiWeb/emprendedores/registro/crear');
+      Uri.parse('$baseUrlEmiWebServices/emprendedores/registro/crear');
 
   void procesoCargando(bool boleano) {
     procesocargando = boleano;
