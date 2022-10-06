@@ -246,8 +246,8 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                   productoSol.costoEstimado == null ?
                                                   ""
                                                   :
-                                                  "\$${productoSol.
-                                                    costoEstimado}",
+                                                  currencyFormat.format(productoSol.
+                                                    costoEstimado!.toStringAsFixed(2)),
                                                 porcentajePago: 
                                                   "%${productoSol.
                                                     inversion.target!.

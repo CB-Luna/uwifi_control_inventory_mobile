@@ -19,22 +19,20 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 import '../widgets/get_image_widget.dart';
 
-
 class ProductosEmprendedorScreen extends StatefulWidget {
-  
   final int idEmprendimiento;
   const ProductosEmprendedorScreen({
-    Key? key,  
+    Key? key,
     required this.idEmprendimiento,
   }) : super(key: key);
-  
 
   @override
-  _ProductosEmprendedorScreenState createState() => _ProductosEmprendedorScreenState();
-
+  _ProductosEmprendedorScreenState createState() =>
+      _ProductosEmprendedorScreenState();
 }
 
-class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen> {
+class _ProductosEmprendedorScreenState
+    extends State<ProductosEmprendedorScreen> {
   TextEditingController searchController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   List<ProductosEmp> listActualProductosEmp = [];
@@ -42,9 +40,9 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
   @override
   void initState() {
     super.initState();
-    emprendimientoActual = dataBase.emprendimientosBox.get(widget.idEmprendimiento);
-    if(emprendimientoActual != null)
-    {
+    emprendimientoActual =
+        dataBase.emprendimientosBox.get(widget.idEmprendimiento);
+    if (emprendimientoActual != null) {
       listActualProductosEmp = emprendimientoActual!.productosEmp.toList();
     }
   }
@@ -54,23 +52,27 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
     final usuarioProvider = Provider.of<UsuarioController>(context);
     final Usuarios currentUser = usuarioProvider.usuarioCurrent!;
     final UserState userState = Provider.of<UserState>(context);
-    
+
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.white,
-        floatingActionButton: (emprendimientoActual!.usuario.target!.rol.target!.rol == "Administrador" ||
-            emprendimientoActual!.usuario.target!.rol.target!.rol == "Promotor")
+        floatingActionButton: (emprendimientoActual!
+                        .usuario.target!.rol.target!.rol ==
+                    "Administrador" ||
+                emprendimientoActual!.usuario.target!.rol.target!.rol ==
+                    "Promotor")
             ? FloatingActionButton(
                 onPressed: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            AgregarProductoEmprendedorScreen(emprendimiento: emprendimientoActual!,),
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AgregarProductoEmprendedorScreen(
+                        emprendimiento: emprendimientoActual!,
                       ),
-                    );
+                    ),
+                  );
                 },
                 backgroundColor: const Color(0xFF4672FF),
                 elevation: 8,
@@ -105,34 +107,34 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(20, 10, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                20, 10, 0, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding:
-                                      const EdgeInsetsDirectional.fromSTEB(
-                                          0, 35, 0, 0),
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 35, 0, 0),
                                   child: Container(
                                     width: 80,
                                     height: 40,
                                     decoration: BoxDecoration(
-                                      color:
-                                          AppTheme.of(context).secondaryText,
+                                      color: AppTheme.of(context).secondaryText,
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: InkWell(
                                       onTap: () async {
                                         await Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        DetalleEmprendimientoScreen(
-                                                      emprendimiento: emprendimientoActual!,
-                                                    ),
-                                                  ),
-                                                );
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                DetalleEmprendimientoScreen(
+                                              emprendimiento:
+                                                  emprendimientoActual!,
+                                            ),
+                                          ),
+                                        );
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -155,8 +157,6 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                                                   color: Colors.white,
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w300,
-                                                  
-                                                  
                                                 ),
                                           ),
                                         ],
@@ -167,25 +167,33 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       10, 35, 0, 0),
-                                  child: Text(
-                                    'Productos de Emprendedores',
-                                    style: AppTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: AppTheme.of(context)
-                                              .bodyText1Family,
-                                          color: AppTheme.of(context)
-                                              .primaryText,
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.w600,
+                                  child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Productos de Emprendedores',
+                                          style: AppTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: AppTheme.of(context)
+                                                    .bodyText1Family,
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w600,
+                                              ),
                                         ),
-                                  ),
+                                      ],
+                                      ),
                                 ),
                               ],
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 10, 0, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
@@ -196,14 +204,14 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                                     width: 45,
                                     height: 45,
                                     decoration: BoxDecoration(
-                                      color: AppTheme.of(context)
-                                          .secondaryText,
+                                      color: AppTheme.of(context).secondaryText,
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     child: InkWell(
                                       onTap: () async {
                                         final date = DateTime.now();
-                                        final invoice = ProductosEmprendedorInvoice(
+                                        final invoice =
+                                            ProductosEmprendedorInvoice(
                                           info: InvoiceInfo(
                                             usuario:
                                                 '${currentUser.nombre} ${currentUser.apellidoP}',
@@ -213,36 +221,34 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                                                 'En la siguiente tabla se muestran todos los productos creados por el emprendedor ${emprendimientoActual!.emprendedor.target!.nombre} hasta el momento.',
                                           ),
                                           items: [
-                                            for (var producto in listActualProductosEmp)
+                                            for (var producto
+                                                in listActualProductosEmp)
                                               ProductosEmprendedorItem(
                                                 id: producto.id,
-                                                emprendedor: 
-                                                  "${producto.
-                                                  emprendimientos.target!.
-                                                  emprendedor.target!.nombre} ${producto.
-                                                  emprendimientos.target!.
-                                                  emprendedor.target!.apellidos}",
-                                                tipoProyecto: 
-                                                  producto.
-                                                  emprendimientos.target!.
-                                                  catalogoProyecto.target!.nombre,
-                                                  emprendimiento: producto.
-                                                  emprendimientos.target!.nombre,
-                                                producto:
-                                                  producto.nombre,
-                                                descripcion: 
-                                                  producto.descripcion,
-                                                unidadMedida: 
-                                                  producto.unidadMedida.target!.
-                                                    unidadMedida,
-                                                costo:
-                                                  currencyFormat.format(producto.
-                                                    costo.toStringAsFixed(2)),
+                                                emprendedor:
+                                                    "${producto.emprendimientos.target!.emprendedor.target!.nombre} ${producto.emprendimientos.target!.emprendedor.target!.apellidos}",
+                                                tipoProyecto: producto
+                                                    .emprendimientos
+                                                    .target!
+                                                    .catalogoProyecto
+                                                    .target!
+                                                    .nombre,
+                                                emprendimiento: producto
+                                                    .emprendimientos
+                                                    .target!
+                                                    .nombre,
+                                                producto: producto.nombre,
+                                                descripcion:
+                                                    producto.descripcion,
+                                                unidadMedida: producto
+                                                    .unidadMedida
+                                                    .target!
+                                                    .unidadMedida,
+                                                costo: currencyFormat.format(
+                                                    producto.costo
+                                                        .toStringAsFixed(2)),
                                                 usuario:
-                                                    "${producto.emprendimientos.target!.
-                                                    usuario.target!.nombre} ${producto.
-                                                    emprendimientos.target!.usuario.
-                                                    target!.apellidoP}",
+                                                    "${producto.emprendimientos.target!.usuario.target!.nombre} ${producto.emprendimientos.target!.usuario.target!.apellidoP}",
                                                 fechaRegistro:
                                                     producto.fechaRegistro,
                                               ),
@@ -258,7 +264,7 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
-                                        children: const[
+                                        children: const [
                                           FaIcon(
                                             FontAwesomeIcons.fileArrowDown,
                                             color: Colors.white,
@@ -270,38 +276,37 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                                   ),
                                 ),
                                 Container(
-                                  width: MediaQuery.of(context).size.width * 0.75,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.75,
                                   height: 50,
                                   decoration: BoxDecoration(
                                     color: const Color(0x49FFFFFF),
-                                    boxShadow: const[
+                                    boxShadow: const [
                                       BoxShadow(
-                                          color: Color(0x39000000),
-                                        ) 
+                                        color: Color(0x39000000),
+                                      )
                                     ],
                                     borderRadius: BorderRadius.circular(40),
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        4, 4, 0, 4),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            4, 4, 0, 4),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Expanded(
                                           child: Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional
-                                                    .fromSTEB(4, 0, 4, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(4, 0, 4, 0),
                                             child: TextFormField(
                                               controller: searchController,
                                               obscureText: false,
-                                              onChanged: (_) =>
-                                                  setState(() {}),
+                                              onChanged: (_) => setState(() {}),
                                               decoration: InputDecoration(
                                                 labelText:
                                                     'Ingresa búsqueda...',
-                                                labelStyle: AppTheme.of(
-                                                        context)
+                                                labelStyle: AppTheme.of(context)
                                                     .bodyText2
                                                     .override(
                                                       fontFamily: 'Poppins',
@@ -312,25 +317,21 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                                                     ),
                                                 enabledBorder:
                                                     OutlineInputBorder(
-                                                  borderSide:
-                                                      const BorderSide(
+                                                  borderSide: const BorderSide(
                                                     color: Color(0x00000000),
                                                     width: 2,
                                                   ),
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                          8),
+                                                      BorderRadius.circular(8),
                                                 ),
                                                 focusedBorder:
                                                     OutlineInputBorder(
-                                                  borderSide:
-                                                      const BorderSide(
+                                                  borderSide: const BorderSide(
                                                     color: Color(0x00000000),
                                                     width: 2,
                                                   ),
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                          8),
+                                                      BorderRadius.circular(8),
                                                 ),
                                                 prefixIcon: const Icon(
                                                   Icons.search_sharp,
@@ -351,8 +352,8 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsetsDirectional.fromSTEB(
-                                              0, 0, 10, 0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(0, 0, 10, 0),
                                           child: FFButtonWidget(
                                             onPressed: () async {
                                               setState(() {});
@@ -367,19 +368,17 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                                               height: 40,
                                               color: AppTheme.of(context)
                                                   .secondaryText,
-                                              textStyle:
-                                                  AppTheme.of(context)
-                                                      .subtitle2
-                                                      .override(
-                                                        fontFamily:
-                                                            AppTheme.of(
-                                                                    context)
-                                                                .subtitle2Family,
-                                                        color: Colors.white,
-                                                        fontSize: 9,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
+                                              textStyle: AppTheme.of(context)
+                                                  .subtitle2
+                                                  .override(
+                                                    fontFamily:
+                                                        AppTheme.of(context)
+                                                            .subtitle2Family,
+                                                    color: Colors.white,
+                                                    fontSize: 9,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
                                               borderSide: const BorderSide(
                                                 color: Colors.transparent,
                                                 width: 1,
@@ -398,32 +397,40 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                           ),
                           Expanded(
                             child: Padding(
-                              padding:
-                                  const EdgeInsetsDirectional.fromSTEB(0, 25, 0, 6),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 25, 0, 6),
                               child: Builder(
                                 builder: (context) {
-                                     //Busqueda
-                                    if (searchController.text != '') {
-                                      listActualProductosEmp.removeWhere((element) {
-                                        final nombreProducto =
-                                            removeDiacritics(element.nombre)
-                                                .toLowerCase();
-                                        final tipoProyecto = removeDiacritics(
-                                                element.emprendimientos.target?.catalogoProyecto.target?.nombre ?? '')
-                                            .toLowerCase();
-                                        final costo = removeDiacritics(
-                                                element.costo.toStringAsFixed(2))
-                                            .toLowerCase();
-                                        final tempBusqueda =
-                                            removeDiacritics(searchController.text)
-                                                .toLowerCase();
-                                        if (nombreProducto.contains(tempBusqueda) ||
-                                            tipoProyecto.contains(tempBusqueda) ||
-                                            costo.contains(tempBusqueda)) {
-                                          return false;
-                                        }
-                                        return true;
-                                      });
+                                  //Busqueda
+                                  if (searchController.text != '') {
+                                    listActualProductosEmp
+                                        .removeWhere((element) {
+                                      final nombreProducto =
+                                          removeDiacritics(element.nombre)
+                                              .toLowerCase();
+                                      final tipoProyecto = removeDiacritics(
+                                              element
+                                                      .emprendimientos
+                                                      .target
+                                                      ?.catalogoProyecto
+                                                      .target
+                                                      ?.nombre ??
+                                                  '')
+                                          .toLowerCase();
+                                      final costo = removeDiacritics(
+                                              element.costo.toStringAsFixed(2))
+                                          .toLowerCase();
+                                      final tempBusqueda = removeDiacritics(
+                                              searchController.text)
+                                          .toLowerCase();
+                                      if (nombreProducto
+                                              .contains(tempBusqueda) ||
+                                          tipoProyecto.contains(tempBusqueda) ||
+                                          costo.contains(tempBusqueda)) {
+                                        return false;
+                                      }
+                                      return true;
+                                    });
                                   }
                                   return ListView.builder(
                                     padding: EdgeInsets.zero,
@@ -432,144 +439,173 @@ class _ProductosEmprendedorScreenState extends State<ProductosEmprendedorScreen>
                                     itemCount: listActualProductosEmp.length,
                                     itemBuilder: (context, resultadoIndex) {
                                       final productoEmprendedor =
-                                          listActualProductosEmp[resultadoIndex];
+                                          listActualProductosEmp[
+                                              resultadoIndex];
                                       return InkWell(
                                         onTap: () async {
-                                           await Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        DetalleProductoEmprendedor(
-                                                      productoEmprendedor: productoEmprendedor,
-                                                    ),
-                                                  ),
-                                                );
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DetalleProductoEmprendedor(
+                                                productoEmprendedor:
+                                                    productoEmprendedor,
+                                              ),
+                                            ),
+                                          );
                                         },
                                         child: Padding(
-                                          padding: const EdgeInsetsDirectional.fromSTEB(
-                                              15, 10, 15, 0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(15, 10, 15, 0),
                                           child: Container(
                                             width: double.infinity,
                                             height: 250,
                                             decoration: BoxDecoration(
-                                              color: const Color(
-                                                0x374672FF),
-                                              borderRadius: BorderRadius.circular(8),
+                                              color: const Color(0x374672FF),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
                                             ),
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 ClipRRect(
-                                                  borderRadius: const BorderRadius.only(
-                                                    bottomLeft: Radius.circular(0),
-                                                    bottomRight: Radius.circular(0),
+                                                  borderRadius:
+                                                      const BorderRadius.only(
+                                                    bottomLeft:
+                                                        Radius.circular(0),
+                                                    bottomRight:
+                                                        Radius.circular(0),
                                                     topLeft: Radius.circular(8),
-                                                    topRight: Radius.circular(8),
+                                                    topRight:
+                                                        Radius.circular(8),
                                                   ),
                                                   child:
                                                       getWidgetContainerImage(
-                                                        productoEmprendedor.imagen,
-                                                        150,
-                                                        double.infinity),
+                                                          productoEmprendedor
+                                                              .imagen,
+                                                          150,
+                                                          double.infinity),
                                                 ),
                                                 Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional.fromSTEB(
-                                                        16, 12, 16, 8),
-                                                child: Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(0, 0, 5, 0),
-                                                  child: Text(
-                                                    productoEmprendedor.nombre,
-                                                    style: AppTheme.of(
-                                                            context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily:
-                                                              AppTheme.of(
-                                                                      context)
-                                                                  .bodyText1Family,
-                                                          color: AppTheme.of(context)
-                                                                          .primaryText,
-                                                          fontSize: 15,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                          16, 12, 16, 8),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                            0, 0, 5, 0),
+                                                    child: Text(
+                                                      productoEmprendedor
+                                                          .nombre,
+                                                      style:
+                                                          AppTheme.of(context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily: AppTheme.of(
+                                                                        context)
+                                                                    .bodyText1Family,
+                                                                color: AppTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                              ),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional.fromSTEB(
-                                                        16, 0, 16, 8),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.max,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Text(
-                                                        productoEmprendedor.emprendimientos.target?.catalogoProyecto.target?.nombre ?? "SIN TIPO DE PROYECTO",
-                                                        style: AppTheme.of(
-                                                                context)
-                                                            .bodyText2
-                                                            .override(
-                                                              fontFamily: 'Outfit',
-                                                              color: AppTheme.of(context)
-                                                                          .secondaryText,
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight.normal,
-                                                            ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                          16, 0, 16, 8),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Expanded(
+                                                        child: Text(
+                                                          productoEmprendedor
+                                                                  .emprendimientos
+                                                                  .target
+                                                                  ?.catalogoProyecto
+                                                                  .target
+                                                                  ?.nombre ??
+                                                              "SIN TIPO DE PROYECTO",
+                                                          style: AppTheme.of(
+                                                                  context)
+                                                              .bodyText2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Outfit',
+                                                                color: AppTheme.of(
+                                                                        context)
+                                                                    .secondaryText,
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional.fromSTEB(
-                                                        16, 0, 16, 8),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.max,
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      "Und: ${productoEmprendedor.unidadMedida.target!.unidadMedida}",
-                                                      style: AppTheme.of(
-                                                              context)
-                                                          .bodyText1
-                                                          .override(
-                                                            fontFamily:
-                                                                AppTheme.of(
-                                                                        context)
-                                                                    .bodyText1Family,
-                                                            color: AppTheme.of(context)
-                                                                          .secondaryText,
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                          ),
-                                                    ),
-                                                    Text(
-                                                      "Costo: \$${currencyFormat.format(productoEmprendedor.costo.toStringAsFixed(2))}",
-                                                      style: AppTheme.of(
-                                                              context)
-                                                          .bodyText1
-                                                          .override(
-                                                            fontFamily:
-                                                                AppTheme.of(
-                                                                        context)
-                                                                    .bodyText1Family,
-                                                            color: AppTheme.of(context)
-                                                                          .primaryText,
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                          ),
-                                                    ),
-                                                  ],
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                          16, 0, 16, 8),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        "Und: ${productoEmprendedor.unidadMedida.target!.unidadMedida}",
+                                                        style:
+                                                            AppTheme.of(context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily: AppTheme.of(
+                                                                          context)
+                                                                      .bodyText1Family,
+                                                                  color: AppTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                      ),
+                                                      Text(
+                                                        "Costo: ${currencyFormat.format(productoEmprendedor.costo.toStringAsFixed(2))}",
+                                                        style:
+                                                            AppTheme.of(context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily: AppTheme.of(
+                                                                          context)
+                                                                      .bodyText1Family,
+                                                                  color: AppTheme.of(
+                                                                          context)
+                                                                      .primaryText,
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
                                               ],
                                             ),
                                           ),

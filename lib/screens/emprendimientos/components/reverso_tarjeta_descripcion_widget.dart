@@ -76,7 +76,7 @@ class _ReversoTarjetaDescripcionWidgetState extends State<ReversoTarjetaDescripc
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween,
+                      MainAxisAlignment.spaceEvenly,
                   children: [
                     Column(
                       mainAxisSize: MainAxisSize.max,

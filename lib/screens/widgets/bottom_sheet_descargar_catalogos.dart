@@ -68,7 +68,7 @@ class _BottomSheetDescargarCatalogosState
                                       fontFamily:
                                           AppTheme.of(context).title2Family,
                                       color: AppTheme.of(context).primaryText,
-                                      fontSize: 19,
+                                      fontSize: 14,
                                     ),
                               ),
                             ),
@@ -84,7 +84,7 @@ class _BottomSheetDescargarCatalogosState
                           children: const[
                             Icon(
                               Icons.warning_amber_outlined,
-                              size: 80,
+                              size: 50,
                               color: Color(0xFF221573),
                             ),
                           ],
