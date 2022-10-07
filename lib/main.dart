@@ -15,10 +15,10 @@ import 'providers/database_providers/producto_venta_controller.dart';
 import 'providers/database_providers/producto_inversion_jornada_controller.dart';
 import 'providers/database_providers/usuario_controller.dart';
 import 'providers/database_providers/jornada_controller.dart';
-import 'package:bizpro_app/providers/catalog_emi_web_provider.dart';
+import 'package:bizpro_app/providers/catalogo_emi_web_provider.dart';
 import 'package:bizpro_app/providers/catalog_pocketbase_recover_provider.dart';
 import 'package:bizpro_app/providers/sync_provider_emi_web.dart';
-import 'package:bizpro_app/providers/catalog_pocketbase_provider.dart';
+import 'package:bizpro_app/providers/catalogo_pocketbase_provider.dart';
 import 'package:bizpro_app/providers/database_providers/cotizacion_controller.dart';
 import 'package:bizpro_app/providers/database_providers/inversion_controller.dart';
 import 'package:bizpro_app/providers/database_providers/inversion_jornada_controller.dart';
@@ -109,12 +109,12 @@ void main() async {
           create: (context) => SyncProviderEmiWeb(),
           lazy: false,
         ),
-        ChangeNotifierProvider<CatalogPocketbaseProvider>(
-          create: (context) => CatalogPocketbaseProvider(),
+        ChangeNotifierProvider<CatalogoPocketbaseProvider>(
+          create: (context) => CatalogoPocketbaseProvider(),
           lazy: false,
         ),
-        ChangeNotifierProvider<CatalogEmiWebProvider>(
-          create: (context) => CatalogEmiWebProvider(),
+        ChangeNotifierProvider<CatalogoEmiWebProvider>(
+          create: (context) => CatalogoEmiWebProvider(),
           lazy: false,
         ),
         ChangeNotifierProvider<CatalogPocketbaseRecoverProvider>(

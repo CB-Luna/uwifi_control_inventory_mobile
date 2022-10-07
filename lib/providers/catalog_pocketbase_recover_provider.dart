@@ -74,16 +74,18 @@ class CatalogPocketbaseRecoverProvider extends ChangeNotifier {
     
   }
 
-  Future<void> getEstadosAgain() async {
-    if (!dataBase.estadosBox.isEmpty()) {
-      final records = await client.records.
-      getFullList('estados', batch: 200, sort: '+nombre_estado');
+  Future<bool> getEstadosAgain() async {
+    //Se recupera toda la colección de estados en Pocketbase
+    final records = await client.records.
+    getFullList('estados', batch: 200, sort: '+nombre_estado');
+    if (records.isNotEmpty) {
+      //Existen datos de estados en Pocketbase
       final List<GetEstados> listEstados = [];
       for (var element in records) {
         listEstados.add(getEstadosFromMap(element.toString()));
       }
-      print("*****Informacion estados*****");
       for (var i = 0; i < listEstados.length; i++) {
+        //Se valida que el nuevo estado aún no existe en Objectbox
         final estadoExistente = dataBase.estadosBox.query(Estados_.idDBR.equals(listEstados[i].id)).build().findUnique();
         if (estadoExistente == null) {
           if (listEstados[i].id.isNotEmpty) {
@@ -91,13 +93,15 @@ class CatalogPocketbaseRecoverProvider extends ChangeNotifier {
             nombre: listEstados[i].nombreEstado,
             activo: listEstados[i].activo,
             idDBR: listEstados[i].id, 
-            idEmiWeb: 0,
+            idEmiWeb: "0",
             );
             dataBase.estadosBox.put(nuevoEstado);
-            print('Estado agregado exitosamente');
+            print('Estado Nuevo agregado exitosamente');
           }
         } else {
+          //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
           if (estadoExistente.fechaRegistro != listEstados[i].updated) {
+            //Se actualiza el registro en Objectbox
             estadoExistente.nombre = listEstados[i].nombreEstado;
             estadoExistente.activo = listEstados[i].activo;
             estadoExistente.fechaRegistro = listEstados[i].updated!;
@@ -105,8 +109,11 @@ class CatalogPocketbaseRecoverProvider extends ChangeNotifier {
           }
         }
       }
-      notifyListeners();
-      }
+      return true;
+    } else {
+      //No existen datos de estados en Pocketbase
+      return false;
+    }
   }
 
   Future<void> getMunicipiosAgain() async {
@@ -127,7 +134,7 @@ class CatalogPocketbaseRecoverProvider extends ChangeNotifier {
         nombre: listMunicipios[i].nombreMunicipio,
         activo: listMunicipios[i].activo,
         idDBR: listMunicipios[i].id, 
-        idEmiWeb: 0,
+        idEmiWeb: "0",
         );
         if (estado != null) {
           nuevoMunicipio.estados.target = estado;
@@ -167,7 +174,7 @@ class CatalogPocketbaseRecoverProvider extends ChangeNotifier {
         nombre: listComunidades[i].nombreComunidad,
         activo: listComunidades[i].activo,
         idDBR: listComunidades[i].id, 
-        idEmiWeb: 0,
+        idEmiWeb: "0",
         );
         if (municipio != null) {
           nuevaComunidad.municipios.target = municipio;
@@ -236,7 +243,7 @@ class CatalogPocketbaseRecoverProvider extends ChangeNotifier {
         tipoProyecto: listTipoProyecto[i].tipoProyecto,
         activo: listTipoProyecto[i].activo,
         idDBR: listTipoProyecto[i].id,
-        idEmiWeb: 0,
+        idEmiWeb: "0",
         );
         dataBase.tipoProyectoBox.put(nuevaClasificacionEmp);
         print('Tipo Proyecto agregado exitosamente');
@@ -264,13 +271,13 @@ class CatalogPocketbaseRecoverProvider extends ChangeNotifier {
 
       print("****Informacion catalogos proyectos****");
       for (var i = 0; i < records.length; i++) {
-        final tipoProyecto = dataBase.tipoProyectoBox.query(TipoProyecto_.idDBR.equals(listCatalogoProyecto[i].idTipoProyecto)).build().findUnique();
+        final tipoProyecto = dataBase.tipoProyectoBox.query(TipoProyecto_.idDBR.equals(listCatalogoProyecto[i].idTipoProyectoFk)).build().findUnique();
         final catalogoProyectoExistente = dataBase.catalogoProyectoBox.query(CatalogoProyecto_.idDBR.equals(listCatalogoProyecto[i].id)).build().findUnique();
         if (catalogoProyectoExistente == null) {
         final nuevoCatalogoProyecto = CatalogoProyecto(
         nombre: listCatalogoProyecto[i].nombreProyecto,
         idDBR: listCatalogoProyecto[i].id, 
-        idEmiWeb: 0,
+        idEmiWeb: "0",
         );
         if (tipoProyecto != null) {
           nuevoCatalogoProyecto.tipoProyecto.target = tipoProyecto;
@@ -306,7 +313,8 @@ class CatalogPocketbaseRecoverProvider extends ChangeNotifier {
         nombre: listFamiliaProductos[i].nombreTipoProd,
         activo: listFamiliaProductos[i].activo,
         idDBR: listFamiliaProductos[i].id,
-        fechaRegistro: listFamiliaProductos[i].updated
+        fechaRegistro: listFamiliaProductos[i].updated, 
+        idEmiWeb: "0",
         );
         dataBase.familiaProductosBox.put(nuevaFamiliaProductos);
         print('Familia Productos agregada exitosamente');
@@ -340,7 +348,8 @@ Future<void> getUnidadMedidaAgain() async {
         unidadMedida: listUnidadMedida[i].unidadMedida,
         activo: listUnidadMedida[i].activo,
         idDBR: listUnidadMedida[i].id,
-        fechaRegistro: listUnidadMedida[i].updated
+        fechaRegistro: listUnidadMedida[i].updated, 
+        idEmiWeb: "0",
         );
         dataBase.unidadesMedidaBox.put(nuevaUnidadMedida);
         print('Unidad Medida agregada exitosamente');
@@ -375,7 +384,7 @@ Future<void> getAmbitoConsultoriaAgain() async {
         activo: listAmbitoConsultoria[i].activo,
         idDBR: listAmbitoConsultoria[i].id,
         fechaRegistro: listAmbitoConsultoria[i].updated, 
-        idEmiWeb: 0,
+        idEmiWeb: "0",
         );
         dataBase.ambitoConsultoriaBox.put(nuevoAmbitoConsultoria);
         print('Ambito Consultoria agregado exitosamente');
@@ -408,7 +417,8 @@ Future<void> getFasesEmpAgain() async {
         final nuevaFaseEmp = FasesEmp(
         fase: listFasesEmp[i].fase,
         idDBR: listFasesEmp[i].id,
-        fechaRegistro: listFasesEmp[i].updated
+        fechaRegistro: listFasesEmp[i].updated, 
+        idEmiWeb: "0",
         );
         dataBase.fasesEmpBox.put(nuevaFaseEmp);
         print('Fase emp agregada exitosamente');
@@ -503,7 +513,8 @@ Future<void> getAreaCirculoAgain() async {
         final nuevaAreaCirculo = AreaCirculo(
         nombreArea: listAreaCirculo[i].nombreArea,
         idDBR: listAreaCirculo[i].id,
-        fechaRegistro: listAreaCirculo[i].updated
+        fechaRegistro: listAreaCirculo[i].updated, 
+        idEmiWeb: "0",
         );
         dataBase.areaCirculoBox.put(nuevaAreaCirculo);
         print('Area circulo agregado exitosamente');

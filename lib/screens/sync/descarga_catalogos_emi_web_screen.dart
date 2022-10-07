@@ -1,12 +1,11 @@
-import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/providers/catalog_emi_web_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:bizpro_app/providers/catalogo_emi_web_provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
-import 'package:lottie/lottie.dart';
-
-import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
+import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:bizpro_app/screens/sync/descarga_catalogos_pocketbase_screen.dart';
+import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 
 class DescargaCatalogosEmiWebScreen extends StatefulWidget {
   const DescargaCatalogosEmiWebScreen({Key? key}) : super(key: key);
@@ -21,13 +20,28 @@ class _DescargaCatalogosEmiWebScreenState extends State<DescargaCatalogosEmiWebS
     // TODO: implement initState
     super.initState();
       setState(() {
-        context.read<CatalogEmiWebProvider>().getCatalogosEmiWeb();
+        context.read<CatalogoEmiWebProvider>().procesoCargando(true);
+        context.read<CatalogoEmiWebProvider>().procesoTerminado(false);
+        context.read<CatalogoEmiWebProvider>().procesoExitoso(false);
+        Future<bool> booleano = context.read<CatalogoEmiWebProvider>().getCatalogosEmiWeb();
+        Future(() async {
+          if (await booleano) {
+            print("Se ha realizado con éxito el proceso de Descarga Emi Web");
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    const DescargaCatalogosPocketbaseScreen(),
+              ),
+            );
+          }
+        });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final catalogoEmiWebProvider = Provider.of<CatalogEmiWebProvider>(context);
+    final catalogoEmiWebProvider = Provider.of<CatalogoEmiWebProvider>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -66,7 +80,7 @@ class _DescargaCatalogosEmiWebScreenState extends State<DescargaCatalogosEmiWebS
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 40, 0, 0),
                               child: Text(
-                                '¡Descargando catálogos!',
+                                '¡Conectando a\ncatálogos de EMI Web!',
                                 textAlign: TextAlign.center,
                                 style: AppTheme.of(context).bodyText1.override(
                                       fontFamily:
@@ -80,7 +94,7 @@ class _DescargaCatalogosEmiWebScreenState extends State<DescargaCatalogosEmiWebS
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 10, 0, 0),
                               child: Text(
-                                'Los catálogos de la aplicación se\nestán descargando, por favor, no apague\nla conexión Wi-Fi o datos móviles hasta \nque se complete el proceso.\nEl proceso puede tardar algunos minutos.',
+                                'Se está realizando la conexión\na EMI Web, por favor, no apague\nla conexión Wi-Fi o datos móviles hasta \nque se complete el proceso.\nEl proceso puede tardar algunos minutos.',
                                 textAlign: TextAlign.center,
                                 maxLines: 5,
                                 style: AppTheme.of(context).bodyText1.override(
@@ -100,27 +114,20 @@ class _DescargaCatalogosEmiWebScreenState extends State<DescargaCatalogosEmiWebS
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0, 70, 0, 0),
                                       child: getProgressIndicatorAnimated(
-                                          "Descargando..."),
+                                          "Conectando..."),
                                     ),
                                 )
                                 : 
                                 catalogoEmiWebProvider.procesoexitoso
                                 ? Visibility(
                                   visible: !catalogoEmiWebProvider.procesocargando,
-                                  child: Padding(
+                                  child: const Padding(
                                       padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
+                                          EdgeInsetsDirectional.fromSTEB(
                                               0, 70, 0, 0),
-                                      child: Lottie.asset(
-                                        'assets/lottie_animations/elemento-creado.json',
-                                        width: 250,
-                                        height: 180,
-                                        fit: BoxFit.cover,
-                                        repeat: false,
-                                        animate: true,
-                                      ),
+                                      child: SizedBox(),
                                     ),
-                                )
+                                  )
                                   :
                                   Visibility(
                                     visible: !catalogoEmiWebProvider.procesocargando,
@@ -136,42 +143,6 @@ class _DescargaCatalogosEmiWebScreenState extends State<DescargaCatalogosEmiWebS
                                     ),
                                   ),
                             Visibility(
-                              visible: catalogoEmiWebProvider.procesoterminado && catalogoEmiWebProvider.procesoexitoso,
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 100, 0, 0),
-                                child: FFButtonWidget(
-                                  onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const EmprendimientosScreen(),
-                                      ),
-                                    );
-                                    catalogoEmiWebProvider.procesoTerminado(false);
-                                  },
-                                  text: 'Listo',
-                                  options: FFButtonOptions(
-                                    width: 130,
-                                    height: 45,
-                                    color: AppTheme.of(context).secondaryText,
-                                    textStyle:
-                                        AppTheme.of(context).subtitle2.override(
-                                              fontFamily: AppTheme.of(context)
-                                                  .subtitle2Family,
-                                              color: Colors.white,
-                                            ),
-                                    borderSide: const BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Visibility(
                               visible: catalogoEmiWebProvider.procesoterminado && (catalogoEmiWebProvider.procesoexitoso == false),
                               child: Column(
                                 children: [
@@ -179,7 +150,7 @@ class _DescargaCatalogosEmiWebScreenState extends State<DescargaCatalogosEmiWebS
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         0, 50, 0, 0),
                                     child: Text(
-                                      'Error al sincronizar.\nLa sincronización no se hizo con éxito.\nVuelva a probar más tarde.',
+                                      'Error al conectar.\nLa conexión con EMI Web no se hizo con éxito.\nVuelva a probar más tarde.',
                                       textAlign: TextAlign.center,
                                       maxLines: 4,
                                       style: AppTheme.of(context).bodyText1.override(
