@@ -1269,7 +1269,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                   .fromSTEB(
                                                                       0, 5, 0, 10),
                                                           child: Text(
-                                                            montoPagar.text,
+                                                            currencyFormat.format(montoPagar.text),
                                                             style:
                                                                 AppTheme.of(
                                                                     context)

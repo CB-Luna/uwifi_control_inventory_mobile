@@ -38,12 +38,12 @@ class _InversionActualizadaExitosamenteState extends State<InversionActualizadaE
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                       child: Text(
-                        '¡Inversión Actualizada\na Compraba en el backend!',
+                        '¡Inversión Actualizada\na Comprada en el backend!',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
                               color: Colors.black,
-                              fontSize: 30,
+                              fontSize: 27,
                             ),
                       ),
                     ),

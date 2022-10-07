@@ -136,7 +136,7 @@ class _AgregarProductoEmprendedorScreenState
                                 style: AppTheme.of(context).bodyText1.override(
                                       fontFamily: 'Poppins',
                                       color: const Color(0xFF221573),
-                                      fontSize: 20,
+                                      fontSize: 17,
                                     ),
                               ),
                             ],

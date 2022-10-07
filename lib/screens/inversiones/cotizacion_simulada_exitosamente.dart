@@ -43,7 +43,7 @@ class _CotizacionSimuladaExitosamenteState extends State<CotizacionSimuladaExito
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
                               color: Colors.black,
-                              fontSize: 30,
+                              fontSize: 27,
                             ),
                       ),
                     ),
