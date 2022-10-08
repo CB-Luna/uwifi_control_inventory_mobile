@@ -968,7 +968,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
             "id_prioridad_fk": "yuEVuBv9rxLM4cR",
             "id_nombre_proyecto_fk": "xXVloemN098DiKW",
             "id_proveedor_fk": "",
-            "id_fase_emp_fk": emprendimientoToSync.faseEmp.last.idDBR,
+            "id_fase_emp_fk": emprendimientoToSync.faseEmp.firstWhere((element) => element.fase == emprendimientoToSync.faseActual).idDBR,
             "id_status_sync_fk": "HoI36PzYw1wtbO1",
             "id_emprendedor_fk": emprendimientoToSync.emprendedor.target!.idDBR,
           });
@@ -1030,7 +1030,7 @@ return true;
           "id_prioridad_fk": "yuEVuBv9rxLM4cR",
           "id_nombre_proyecto_fk": "xXVloemN098DiKW",
           "id_proveedor_fk": "",
-          "id_fase_emp_fk": emprendimiento.faseEmp.last.fase,
+          "id_fase_emp_fk": emprendimiento.faseEmp.firstWhere((element) => element.fase == emprendimiento.faseActual).idDBR,
           "id_status_sync_fk": "HoI36PzYw1wtbO1",
           "id_emprendedor_fk": emprendimiento.emprendedor.target!.idDBR,
       });

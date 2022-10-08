@@ -515,7 +515,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                                             .target!
                                                             .tipoProyecto
                                                         : "",
-                                                    fase: emp.faseEmp.last.fase,
+                                                    fase: emp.faseActual,
                                                   ),
                                               ],
                                             );
@@ -584,7 +584,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                 final emprendimiento =
                                     emprendimientos[resultadoIndex];
                                 while (!emprendimiento.archivado) {
-                                  return emprendimiento.faseEmp.last.fase == "Detenido" ? 
+                                  return emprendimiento.faseActual == "Detenido" ? 
                                   Slidable(
                                     startActionPane: ActionPane(
                                       motion: const DrawerMotion(), 
@@ -674,7 +674,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                     ),
                                   )
                                   :
-                                  emprendimiento.faseEmp.last.fase == "Consolidado" ? 
+                                  emprendimiento.faseActual == "Consolidado" ? 
                                   Slidable(
                                     startActionPane: ActionPane(
                                       motion: const DrawerMotion(), 

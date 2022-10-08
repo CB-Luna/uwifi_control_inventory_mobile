@@ -60,8 +60,8 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
     banderasExistoSync.add(await getAmbitoConsultoria());
     banderasExistoSync.add(await getAreaCirculo());
     banderasExistoSync.add(await getFasesEmp());
-    // await getTipoEmpaque();
-    // await getEstadoInversion();
+    banderasExistoSync.add(await getTipoEmpaque());
+    banderasExistoSync.add(await getEstadoInversion());
     // await getTipoProveedor();
     // await getCondicionesPago();
     // await getBancos();
@@ -525,7 +525,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
     }
   }
 
-//Función para recuperar el catálogo de fases de emprendimeinto desde Pocketbase
+//Función para recuperar el catálogo de fases de emprendimiento desde Pocketbase
   Future<bool> getFasesEmp() async {
     //Se recupera toda la colección de fases de emprendimiento en Pocketbase
     final records = await client.records.
@@ -556,6 +556,90 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
             faseEmprendimientoExistente.fase = listFasesEmp[i].fase;
             faseEmprendimientoExistente.fechaRegistro = listFasesEmp[i].updated!;
             dataBase.fasesEmpBox.put(faseEmprendimientoExistente);
+          }
+        }
+      }
+      return true;
+    } else {
+      //No existen datos de estados en Pocketbase
+      return false;
+    }
+  }
+
+//Función para recuperar el catálogo de tipo de empaque desde Pocketbase
+  Future<bool> getTipoEmpaque() async {
+    //Se recupera toda la colección de tipo de empaque en Pocketbase
+    final records = await client.records.
+      getFullList('tipo_empaques', batch: 200, sort: '+tipo_empaque');
+    if (records.isNotEmpty) {
+      //Existen datos de tipo de empaque en Pocketbase
+      final List<GetTipoEmpaques> listTipoEmpaques = [];
+      for (var element in records) {
+        listTipoEmpaques.add(getTipoEmpaquesFromMap(element.toString()));
+      }
+      for (var i = 0; i < listTipoEmpaques.length; i++) {
+        //Se valida que el nuevo tipo empaque aún no existe en Objectbox
+        final tipoEmpaqueExistente = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idDBR.equals(listTipoEmpaques[i].id)).build().findUnique();
+        if (tipoEmpaqueExistente == null) {
+          if (listTipoEmpaques[i].id.isNotEmpty) {
+            final nuevaFaseEmp = TipoEmpaques(
+            tipo: listTipoEmpaques[i].tipoEmpaque,
+            idDBR: listTipoEmpaques[i].id, 
+            activo: listTipoEmpaques[i].activo,
+            idEmiWeb: listTipoEmpaques[i].idEmiWeb,
+            );
+            dataBase.tipoEmpaquesBox.put(nuevaFaseEmp);
+            print('Tipo Empaque Nuevo agregado exitosamente');
+          }
+        } else {
+          //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
+          if (tipoEmpaqueExistente.fechaRegistro != listTipoEmpaques[i].updated) {
+            //Se actualiza el registro en Objectbox
+            tipoEmpaqueExistente.tipo = listTipoEmpaques[i].tipoEmpaque;
+            tipoEmpaqueExistente.activo = listTipoEmpaques[i].activo;
+            tipoEmpaqueExistente.fechaRegistro = listTipoEmpaques[i].updated!;
+            dataBase.tipoEmpaquesBox.put(tipoEmpaqueExistente);
+          }
+        }
+      }
+      return true;
+    } else {
+      //No existen datos de estados en Pocketbase
+      return false;
+    }
+  }
+
+//Función para recuperar el catálogo de estado de inversión desde Pocketbase
+  Future<bool> getEstadoInversion() async {
+    //Se recupera toda la colección de estado de inversión en Pocketbase
+    final records = await client.records.
+      getFullList('estado_inversiones', batch: 200, sort: '+estado');
+    if (records.isNotEmpty) {
+      //Existen datos de estado de inversión en Pocketbase
+      final List<GetEstadoInversiones> listEstadoInversiones = [];
+      for (var element in records) {
+        listEstadoInversiones.add(getEstadoInversionesFromMap(element.toString()));
+      }
+      for (var i = 0; i < listEstadoInversiones.length; i++) {
+        //Se valida que el nuevo estado de inversión aún no existe en Objectbox
+        final estadoInversionExistente = dataBase.estadoInversionBox.query(EstadoInversion_.idDBR.equals(listEstadoInversiones[i].id)).build().findUnique();
+        if (estadoInversionExistente == null) {
+          if (listEstadoInversiones[i].id.isNotEmpty) {
+            final nuevaFaseEmp = EstadoInversion(
+            estado: listEstadoInversiones[i].estado,
+            idDBR: listEstadoInversiones[i].id, 
+            idEmiWeb: listEstadoInversiones[i].idEmiWeb,
+            );
+            dataBase.estadoInversionBox.put(nuevaFaseEmp);
+            print('Estado de Inversión Nuevo agregado exitosamente');
+          }
+        } else {
+          //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
+          if (estadoInversionExistente.fechaRegistro != listEstadoInversiones[i].updated) {
+            //Se actualiza el registro en Objectbox
+            estadoInversionExistente.estado = listEstadoInversiones[i].estado;
+            estadoInversionExistente.fechaRegistro = listEstadoInversiones[i].updated!;
+            dataBase.estadoInversionBox.put(estadoInversionExistente);
           }
         }
       }
@@ -599,61 +683,6 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
       }
       notifyListeners();
       }
-  }
-
-  Future<void> getTipoEmpaque() async {
-    if (dataBase.tipoEmpaquesBox.isEmpty()) {
-      final records = await client.records.
-      getFullList('tipo_empaques', batch: 200, sort: '+tipo_empaque');
-      final List<GetTipoEmpaques> listTipoEmpaques = [];
-      for (var element in records) {
-        listTipoEmpaques.add(getTipoEmpaquesFromMap(element.toString()));
-      }
-      print("****Informacion tipo empaque****");
-      for (var i = 0; i < records.length; i++) {
-        if (listTipoEmpaques[i].id.isNotEmpty) {
-        final nuevoTipoEmpaque = TipoEmpaques(
-        tipo: listTipoEmpaques[i].tipoEmpaque,
-        idDBR: listTipoEmpaques[i].id,
-        activo: listTipoEmpaques[i].activo,
-        fechaRegistro: listTipoEmpaques[i].updated
-        );
-        final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
-        nuevoTipoEmpaque.statusSync.target = nuevoSync;
-        dataBase.tipoEmpaquesBox.put(nuevoTipoEmpaque);
-        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-        print('Tipo empaque agregado exitosamente');
-        }
-      }
-      notifyListeners();
-    }
-  }
-  
-  Future<void> getEstadoInversion() async {
-    if (dataBase.estadoInversionBox.isEmpty()) {
-      final records = await client.records.
-      getFullList('estado_inversiones', batch: 200, sort: '+estado');
-      final List<GetEstadoInversiones> listEstadoInversiones = [];
-      for (var element in records) {
-        listEstadoInversiones.add(getEstadoInversionesFromMap(element.toString()));
-      }
-      print("****Informacion estado inversiones****");
-      for (var i = 0; i < records.length; i++) {
-        if (listEstadoInversiones[i].id.isNotEmpty) {
-        final nuevaEstadoInversiones = EstadoInversion(
-        estado: listEstadoInversiones[i].estado,
-        idDBR: listEstadoInversiones[i].id,
-        fechaRegistro: listEstadoInversiones[i].updated
-        );
-        final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
-        nuevaEstadoInversiones.statusSync.target = nuevoSync;
-        dataBase.estadoInversionBox.put(nuevaEstadoInversiones);
-        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-        print('Estado inversion agregado exitosamente');
-        }
-      }
-      notifyListeners();
-    }
   }
 
   Future<void> getTipoProveedor() async {

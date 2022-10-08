@@ -450,7 +450,7 @@ Future<void> getTipoEmpaqueAgain() async {
         tipo: listTipoEmpaques[i].tipoEmpaque,
         idDBR: listTipoEmpaques[i].id,
         activo: listTipoEmpaques[i].activo,
-        fechaRegistro: listTipoEmpaques[i].updated
+        fechaRegistro: listTipoEmpaques[i].updated, idEmiWeb: ''
         );
         dataBase.tipoEmpaquesBox.put(nuevoTipoEmpaque);
         print('Tipo empaque agregado exitosamente');
@@ -482,7 +482,7 @@ Future<void> getEstadoInversionAgain() async {
         final nuevaEstadoInversiones = EstadoInversion(
         estado: listEstadoInversiones[i].estado,
         idDBR: listEstadoInversiones[i].id,
-        fechaRegistro: listEstadoInversiones[i].updated
+        fechaRegistro: listEstadoInversiones[i].updated, idEmiWeb: ''
         );
         dataBase.estadoInversionBox.put(nuevaEstadoInversiones);
         print('Estado inversion agregado exitosamente');

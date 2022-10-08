@@ -285,8 +285,8 @@ class _DetalleEmprendimientoScreenState
                                       ),
                                     ),
                                     Visibility(
-                                      visible: widget.emprendimiento.faseEmp.last.fase == "Jornada 4" ||
-                                      widget.emprendimiento.faseEmp.last.fase == "Consultoría",
+                                      visible: widget.emprendimiento.faseActual == "Jornada 4" ||
+                                      widget.emprendimiento.faseActual == "Consultorías",
                                       child: Container(
                                         width: 60,
                                         height: 50,

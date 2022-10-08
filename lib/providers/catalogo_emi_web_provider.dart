@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:bizpro_app/modelsEmiWeb/get_ambito_consultoria_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_area_circulo_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_catalogo_proyectos_emi_web.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_estado_inversiones_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_familia_producto_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_fase_emprendimiento_emi_web.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_tipo_empaques_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_unidad_medida_emi_web.dart';
 import 'package:bizpro_app/modelsPocketbase/get_catalogo_proyectos.dart';
 import 'package:bizpro_app/modelsPocketbase/get_comunidades.dart';
@@ -79,8 +81,8 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
       banderasExistoSync.add(await getAmbitoConsultoria());
       banderasExistoSync.add(await getAreaCirculo());
       banderasExistoSync.add(await getFasesEmp());
-      // await getTipoEmpaque();
-      // await getEstadoInversion();
+      banderasExistoSync.add(await getTipoEmpaque());
+      banderasExistoSync.add(await getEstadoInversion());
       // await getTipoProveedor();
       // await getCondicionesPago();
       // await getBancos();
@@ -859,62 +861,135 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
       default:
         return false;
     }
-
   }
 
+//Función para recuperar el catálogo de tipo de empaques desde Emi Web 
+  Future<bool> getTipoEmpaque() async {
+    var url = Uri.parse("$baseUrlEmiWebServices/catalogos/tipoempaque");
+    final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+    var response = await http.get(
+      url,
+      headers: headers
+    );
 
-  Future<void> getTipoEmpaque() async {
-    if (dataBase.tipoEmpaquesBox.isEmpty()) {
-      final records = await client.records.
-      getFullList('tipo_empaques', batch: 200, sort: '+tipo_empaque');
-      final List<GetTipoEmpaques> listTipoEmpaques = [];
-      for (var element in records) {
-        listTipoEmpaques.add(getTipoEmpaquesFromMap(element.toString()));
-      }
-      print("****Informacion tipo empaque****");
-      for (var i = 0; i < records.length; i++) {
-        if (listTipoEmpaques[i].id.isNotEmpty) {
-        final nuevoTipoEmpaque = TipoEmpaques(
-        tipo: listTipoEmpaques[i].tipoEmpaque,
-        idDBR: listTipoEmpaques[i].id,
-        activo: listTipoEmpaques[i].activo,
-        fechaRegistro: listTipoEmpaques[i].updated
-        );
-        final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
-        nuevoTipoEmpaque.statusSync.target = nuevoSync;
-        dataBase.tipoEmpaquesBox.put(nuevoTipoEmpaque);
-        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-        print('Tipo empaque agregado exitosamente');
+    switch (response.statusCode) {
+      case 200: //Caso éxitoso
+        final responseListTipoEmpaques = getTipoEmpaquesEmiWebFromMap(
+        const Utf8Decoder().convert(response.bodyBytes));
+        for (var i = 0; i < responseListTipoEmpaques.payload!.length; i++) {
+          //Verificamos que el nuevo tipo de empaque no exista en Pocketbase
+          final recordFaseEmprendimiento = await client.records.getFullList(
+            'tipo_empaques', 
+            batch: 200, 
+            filter: "id_emi_web='${responseListTipoEmpaques.payload![i].tipoEmpaque}'");
+          if (recordFaseEmprendimiento.isEmpty) {
+            //Se agrega lo tipo de empaque como nuevo en la colección de Pocketbase
+            final newRecordTipoEmpaque = await client.records.create('tipo_empaques', body: {
+            "tipo_empaque": responseListTipoEmpaques.payload![i].tipoEmpaque,
+            "id_emi_web": responseListTipoEmpaques.payload![i].idCatTipoEmpaque.toString(),
+            });
+            if (newRecordTipoEmpaque.id.isNotEmpty) {
+              print('Tipo Empaque Emi Web agregado éxitosamente en Pocketbase');
+            } else {
+              return false;
+            }
+          } else {
+            //Se actualiza el estado en la colección de Pocketbase
+            final recordTipoEmpaqueParse = getTipoEmpaquesFromMap(recordFaseEmprendimiento.first.toString());
+            //Verificamos que los campos de este registro sean diferentes para actualizarlo
+            if (recordTipoEmpaqueParse.tipoEmpaque != responseListTipoEmpaques.payload![i].tipoEmpaque) {
+                final updateRecordTipoEmpaque = await client.records.update('tipo_empaques', recordTipoEmpaqueParse.id, 
+                body: {
+                  "tipo_empaque": recordTipoEmpaqueParse.tipoEmpaque,
+                });
+                if (updateRecordTipoEmpaque.id.isNotEmpty) {
+                  print('Tipo Empaque Emi Web actualizado éxitosamente en Pocketbase');
+                } else {
+                  return false;
+                }
+            }
+          }
         }
-      }
-      notifyListeners();
+        return true;
+      case 401: //Error de Token incorrecto
+        if(await getTokenOAuth()) {
+          getComunidades();
+          return true;
+        } else{
+          return false;
+        }
+      case 404: //Error de ruta incorrecta
+        return true;
+      default:
+        return false;
     }
   }
-  
-  Future<void> getEstadoInversion() async {
-    if (dataBase.estadoInversionBox.isEmpty()) {
-      final records = await client.records.
-      getFullList('estado_inversiones', batch: 200, sort: '+estado');
-      final List<GetEstadoInversiones> listEstadoInversiones = [];
-      for (var element in records) {
-        listEstadoInversiones.add(getEstadoInversionesFromMap(element.toString()));
-      }
-      print("****Informacion estado inversiones****");
-      for (var i = 0; i < records.length; i++) {
-        if (listEstadoInversiones[i].id.isNotEmpty) {
-        final nuevaEstadoInversiones = EstadoInversion(
-        estado: listEstadoInversiones[i].estado,
-        idDBR: listEstadoInversiones[i].id,
-        fechaRegistro: listEstadoInversiones[i].updated
-        );
-        final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
-        nuevaEstadoInversiones.statusSync.target = nuevoSync;
-        dataBase.estadoInversionBox.put(nuevaEstadoInversiones);
-        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-        print('Estado inversion agregado exitosamente');
+
+//Función para recuperar el catálogo de estado de inversion desde Emi Web 
+  Future<bool> getEstadoInversion() async {
+    var url = Uri.parse("$baseUrlEmiWebServices/catalogos/estadoinversion");
+    final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+    var response = await http.get(
+      url,
+      headers: headers
+    );
+
+    switch (response.statusCode) {
+      case 200: //Caso éxitoso
+        final responseListEstadoInversion = getEstadoInversionesEmiWebFromMap(
+        const Utf8Decoder().convert(response.bodyBytes));
+        for (var i = 0; i < responseListEstadoInversion.payload!.length; i++) {
+          //Verificamos que el nuevo estado de inversión no exista en Pocketbase
+          final recordEstadoInversion = await client.records.getFullList(
+            'estado_inversiones', 
+            batch: 200, 
+            filter: "id_emi_web='${responseListEstadoInversion.payload![i].idCatEstadoInversion}'");
+          if (recordEstadoInversion.isEmpty) {
+            //Se agrega el estado de inversión como nuevo en la colección de Pocketbase
+            final newRecordEstadoInversion = await client.records.create('estado_inversiones', body: {
+            "estado": responseListEstadoInversion.payload![i].estadoInversion,
+            "id_emi_web": responseListEstadoInversion.payload![i].idCatEstadoInversion.toString(),
+            });
+            if (newRecordEstadoInversion.id.isNotEmpty) {
+              print('Estado Inversión Emi Web agregado éxitosamente en Pocketbase');
+            } else {
+              return false;
+            }
+          } else {
+            //Se actualiza el estado de inversión en la colección de Pocketbase
+            final recordEstadoInversionParse = getEstadoInversionesFromMap(recordEstadoInversion.first.toString());
+            //Verificamos que los campos de este registro sean diferentes para actualizarlo
+            if (recordEstadoInversionParse.estado!= responseListEstadoInversion.payload![i].estadoInversion) {
+                final updateRecordEstado = await client.records.update('estado_inversiones', recordEstadoInversionParse.id, 
+                body: {
+                  "estado": recordEstadoInversionParse.estado,
+                });
+                if (updateRecordEstado.id.isNotEmpty) {
+                  print('Estado Inversión Emi Web actualizado éxitosamente en Pocketbase');
+                } else {
+                  return false;
+                }
+            }
+          }
         }
-      }
-      notifyListeners();
+        return true;
+      case 401: //Error de Token incorrecto
+        if(await getTokenOAuth()) {
+          getComunidades();
+          return true;
+        } else{
+          return false;
+        }
+      case 404: //Error de ruta incorrecta
+        return true;
+      default:
+        return false;
     }
   }
 

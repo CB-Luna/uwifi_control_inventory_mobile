@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "8:804684152773215409",
-      "lastPropertyId": "29:51738632601896353",
+      "lastPropertyId": "31:6585524487399118671",
       "name": "Emprendimientos",
       "properties": [
         {
@@ -95,6 +95,16 @@
           "id": "28:8555609759623119270",
           "name": "idInversionJornada",
           "type": 6
+        },
+        {
+          "id": "30:6903190290684851827",
+          "name": "faseActual",
+          "type": 9
+        },
+        {
+          "id": "31:6585524487399118671",
+          "name": "faseAnterior",
+          "type": 9
         }
       ],
       "relations": [
@@ -2055,7 +2065,7 @@
     },
     {
       "id": "52:8669365513736941915",
-      "lastPropertyId": "5:8975130600421841117",
+      "lastPropertyId": "6:4613301727320737404",
       "name": "EstadoInversion",
       "properties": [
         {
@@ -2088,6 +2098,13 @@
           "flags": 520,
           "indexId": "172:7213593374400816024",
           "relationTarget": "StatusSync"
+        },
+        {
+          "id": "6:4613301727320737404",
+          "name": "idEmiWeb",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "224:4199179398059258901"
         }
       ],
       "relations": [
@@ -2100,7 +2117,7 @@
     },
     {
       "id": "53:2607346891989518545",
-      "lastPropertyId": "6:3471162061504283542",
+      "lastPropertyId": "7:4169353112900453047",
       "name": "TipoEmpaques",
       "properties": [
         {
@@ -2138,6 +2155,13 @@
           "flags": 520,
           "indexId": "176:4402712870398339367",
           "relationTarget": "StatusSync"
+        },
+        {
+          "id": "7:4169353112900453047",
+          "name": "idEmiWeb",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "225:4339553839706179839"
         }
       ],
       "relations": [
@@ -2694,7 +2718,7 @@
     }
   ],
   "lastEntityId": "62:5967866020755512418",
-  "lastIndexId": "223:8268084001766566545",
+  "lastIndexId": "225:4339553839706179839",
   "lastRelationId": "71:2864929897176631708",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

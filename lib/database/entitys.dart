@@ -5,6 +5,8 @@ import 'package:objectbox/objectbox.dart';
 @Entity()
 class Emprendimientos {
   int id;
+  String faseActual;
+  String faseAnterior;
   int? idInversionJornada;
   String imagen;
   String nombre;
@@ -34,6 +36,8 @@ class Emprendimientos {
   
   Emprendimientos({
     this.id = 0,
+    required this.faseActual,
+    required this.faseAnterior,
     this.idInversionJornada,
     required this.imagen,
     required this.nombre,
@@ -373,6 +377,8 @@ class EstadoInversion {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
+  @Unique()
+  String idEmiWeb;
   final emprendimientos = ToMany<Inversiones>();
   final statusSync = ToOne<StatusSync>();
 
@@ -381,6 +387,7 @@ class EstadoInversion {
     required this.estado,
     DateTime? fechaRegistro,
     this.idDBR,
+    required this.idEmiWeb,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -678,6 +685,8 @@ class TipoEmpaques {
   bool activo;
   @Unique()
   String? idDBR;
+  @Unique()
+  String idEmiWeb;
   final statusSync = ToOne<StatusSync>();
   final prodSolicitados = ToMany<ProdSolicitado>();
   final prodProyecto = ToMany<ProdProyecto>();
@@ -688,6 +697,7 @@ class TipoEmpaques {
     DateTime? fechaRegistro,
     this.activo = true,
     this.idDBR,
+    required this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);

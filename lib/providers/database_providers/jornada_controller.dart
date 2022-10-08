@@ -64,6 +64,8 @@ class JornadaController extends ChangeNotifier {
       //Se actualiza la fase del Emprendimiento
       //TODO actualizar en el backend.
       emprendimiento.faseEmp.add(faseEmp);
+      emprendimiento.faseAnterior = faseEmp.fase;
+      emprendimiento.faseActual = faseEmp.fase;
       nuevaJornada.statusSync.target = nuevoSyncJornada;
       nuevaJornada.tarea.target = nuevaTarea;
       nuevaJornada.emprendimiento.target = emprendimiento;
@@ -141,6 +143,8 @@ class JornadaController extends ChangeNotifier {
       //Se actualiza la fase del Emprendimiento
       //TODO actualizar en el backend.
       emprendimiento.faseEmp.add(faseEmp);
+      emprendimiento.faseAnterior = faseEmp.fase;
+      emprendimiento.faseActual = faseEmp.fase;
       nuevaJornada.statusSync.target = nuevoSyncJornada;
       nuevaJornada.tarea.target = nuevaTarea;
       nuevaJornada.emprendimiento.target = emprendimiento;
@@ -234,6 +238,8 @@ class JornadaController extends ChangeNotifier {
       //Se actualiza la fase del Emprendimiento
       //TODO actualizar en el backend.
       emprendimiento.faseEmp.add(faseEmp);
+      emprendimiento.faseAnterior = faseEmp.fase;
+      emprendimiento.faseActual = faseEmp.fase;
       nuevaJornada.statusSync.target = nuevoSyncJornada;
       nuevaJornada.tarea.target = nuevaTarea;
       nuevaJornada.emprendimiento.target = emprendimiento;
@@ -367,6 +373,8 @@ class JornadaController extends ChangeNotifier {
       //Se actualiza la fase del Emprendimiento
       //TODO actualizar en el backend.
       emprendimiento.faseEmp.add(faseEmp);
+      emprendimiento.faseAnterior = faseEmp.fase;
+      emprendimiento.faseActual = faseEmp.fase;
       nuevaJornada.statusSync.target = nuevoSyncJornada;
       nuevaJornada.tarea.target = nuevaTarea;
       nuevaJornada.emprendimiento.target = emprendimiento;
