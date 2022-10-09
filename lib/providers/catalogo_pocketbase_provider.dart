@@ -99,7 +99,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
   
 //Función para recuperar el catálogo de estados desde Pocketbase
   Future<bool> getEstados() async {
-    // try {
+    try {
       //Se recupera toda la colección de estados en Pocketbase
       final records = await client.records.
       getFullList('estados', batch: 200, sort: '+nombre_estado');
@@ -139,14 +139,14 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
         //No existen datos de estados en Pocketbase
         return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de municipios desde Pocketbase
   Future<bool> getMunicipios() async {
-    // try {
+    try {
       //Se recupera toda la colección de municipios en Pocketbase
       final records = await client.records.
         getFullList('municipios', batch: 200, sort: '+nombre_municipio');
@@ -200,14 +200,14 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
         //No existen datos de estados en Pocketbase
         return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de comunidades desde Pocketbase
   Future<bool> getComunidades() async {
-    // try {
+    try {
       //Se recupera toda la colección de comunidades en Pocketbase
       final records = await client.records.
         getFullList('comunidades', batch: 200, sort: '+nombre_comunidad');
@@ -261,14 +261,14 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
         //No existen datos de estados en Pocketbase
         return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de tipo de proyectos desde Pocketbase
   Future<bool> getTipoProyecto() async {
-    // try {
+    try {
       //Se recupera toda la colección de tipo de proyecto en Pocketbase
       final records = await client.records.
           getFullList('tipo_proyecto', batch: 200, sort: '+tipo_proyecto');
@@ -308,14 +308,14 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
         //No existen datos de estados en Pocketbase
         return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de catalogo proyecto desde Pocketbase
   Future<bool> getCatalogosProyectos() async {
-    // try {
+    try {
       //Se recupera toda la colección de catalogo proyecto en Pocketbase
       final records = await client.records.
         getFullList('cat_proyecto', batch: 200, sort: '+nombre_proyecto');
@@ -369,14 +369,14 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
         //No existen datos de estados en Pocketbase
         return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de familia de producto desde Pocketbase
   Future<bool> getFamiliaProd() async {
-    // try {
+    try {
       //Se recupera toda la colección de familia producto en Pocketbase
       final records = await client.records.
         getFullList('familia_prod', batch: 200, sort: '+nombre_tipo_prod');
@@ -416,14 +416,14 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
         //No existen datos de estados en Pocketbase
         return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de unidad de medida desde Pocketbase
   Future<bool> getUnidadMedida() async {
-    // try {
+    try {
       //Se recupera toda la colección de unidad de medida en Pocketbase
       final records = await client.records.
         getFullList('und_medida', batch: 200, sort: '+unidad_medida');
@@ -463,14 +463,14 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
         //No existen datos de estados en Pocketbase
         return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de ámbito consultoría desde Pocketbase
   Future<bool> getAmbitoConsultoria() async {
-    // try {
+    try {
       //Se recupera toda la colección de ámbito consultoría en Pocketbase
       final records = await client.records.
         getFullList('ambito_consultoria', batch: 200, sort: '+nombre_ambito');
@@ -510,14 +510,14 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
         //No existen datos de estados en Pocketbase
         return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de área círculo desde Pocketbase
   Future<bool> getAreaCirculo() async {
-    // try {
+    try {
       //Se recupera toda la colección de área círculo en Pocketbase
       final records = await client.records.
         getFullList('area_circulo', batch: 200, sort: '+nombre_area');
@@ -557,14 +557,14 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
         //No existen datos de estados en Pocketbase
         return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de fases de emprendimiento desde Pocketbase
   Future<bool> getFasesEmp() async {
-    // try {
+    try {
       //Se recupera toda la colección de fases de emprendimiento en Pocketbase
       final records = await client.records.
         getFullList('fases_emp', batch: 200);
@@ -602,14 +602,14 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
         //No existen datos de estados en Pocketbase
         return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de tipo de empaque desde Pocketbase
   Future<bool> getTipoEmpaque() async {
-    // try {
+    try {
       //Se recupera toda la colección de tipo de empaque en Pocketbase
       final records = await client.records.
         getFullList('tipo_empaques', batch: 200, sort: '+tipo_empaque');
@@ -649,14 +649,14 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
         //No existen datos de estados en Pocketbase
         return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de estado de inversión desde Pocketbase
   Future<bool> getEstadoInversion() async {
-    // try {
+    try {
       //Se recupera toda la colección de estado de inversión en Pocketbase
       final records = await client.records.
         getFullList('estado_inversiones', batch: 200, sort: '+estado');
@@ -694,14 +694,14 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
         //No existen datos de estados en Pocketbase
         return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de tipo de proveedor desde Pocketbase
   Future<bool> getTipoProveedor() async {
-    // try {
+    try {
       //Se recupera toda la colección de tipo de proveedor en Pocketbase
       final records = await client.records.
         getFullList('tipo_proveedor', batch: 200, sort: '+tipo_proveedor');
@@ -741,14 +741,14 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
         //No existen datos de estados en Pocketbase
         return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de condiciones de pago desde Pocketbase
   Future<bool> getCondicionesPago() async {
-    // try {
+    try {
       //Se recupera toda la colección de condición de pago en Pocketbase
       final records = await client.records.
       getFullList('condiciones_pago', batch: 200, sort: '+condicion_pago');
@@ -788,14 +788,14 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
         //No existen datos de estados en Pocketbase
         return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de bancos desde Pocketbase
 Future<bool> getBancos() async {
-  // try {
+  try {
       //Se recupera toda la colección de bancos en Pocketbase
       final records = await client.records.
       getFullList('bancos', batch: 200, sort: '+nombre_banco');
@@ -835,14 +835,14 @@ Future<bool> getBancos() async {
         //No existen datos de estados en Pocketbase
         return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de porcentaje avance desde Pocketbase
 Future<bool> getPorcentajeAvance() async {
-  // try {
+  try {
     //Se recupera toda la colección de porcentaje avance en Pocketbase
     final records = await client.records.
       getFullList('porcentaje_avance', batch: 200, sort: '+porcentaje');
@@ -880,9 +880,9 @@ Future<bool> getPorcentajeAvance() async {
       //No existen datos de estados en Pocketbase
       return false;
     }
-  // } catch (e) {
-  //   return false;
-  // }
+  } catch (e) {
+    return false;
+  }
   }
 
 Future<void> getEstadosProdCotizados() async {

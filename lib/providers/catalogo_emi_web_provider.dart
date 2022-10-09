@@ -124,7 +124,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
 
 //Función inicial para recuperar el Token para el llamado de catálogos
   Future<bool> getTokenOAuth() async {
-    // try {
+    try {
       var url = Uri.parse("$baseUrlEmiWebSecurity/oauth/token");
       final headers = ({
           "Authorization": "Basic Yml6cHJvOmFkbWlu",
@@ -157,14 +157,14 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
           default:
             return false;
         }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de estados desde Emi Web
   Future<bool> getEstados() async {
-    // try {
+    try {
       var url = Uri.parse("$baseUrlEmiWebServices/catalogos/estado");
       final headers = ({
           "Content-Type": "application/json",
@@ -229,14 +229,14 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
         default:
           return false;
       }  
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de municipios desde Emi Web
   Future<bool> getMunicipios() async {
-    // try {
+    try {
       var url = Uri.parse("$baseUrlEmiWebServices/catalogos/municipio");
       final headers = ({
           "Content-Type": "application/json",
@@ -311,14 +311,14 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
         default:
           return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de comunidades desde Emi Web
   Future<bool> getComunidades() async {
-    // try {
+    try {
       var url = Uri.parse("$baseUrlEmiWebServices/catalogos/comunidad");
       final headers = ({
           "Content-Type": "application/json",
@@ -393,14 +393,14 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
         default:
           return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de tipos de Proyecto desde Emi Web
   Future<bool> getTipoProyecto() async {
-    // try {
+    try {
       var url = Uri.parse("$baseUrlEmiWebServices/catalogos/tipoProyecto");
       final headers = ({
           "Content-Type": "application/json",
@@ -465,14 +465,14 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
         default:
           return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de catálogos proyecto desde Emi Web == Tabla "Proyectos" en Emi Web
   Future<bool> getCatalogosProyectos() async {
-    // try {
+    try {
       var url = Uri.parse("$baseUrlEmiWebServices/catalogos/proyecto");
       final headers = ({
           "Content-Type": "application/json",
@@ -547,14 +547,14 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
         default:
           return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de Familia Producto desde Emi Web
   Future<bool> getFamiliaProd() async {
-    // try {
+    try {
       var url = Uri.parse("$baseUrlEmiWebServices/catalogos/familiainversion");
       final headers = ({
           "Content-Type": "application/json",
@@ -619,14 +619,14 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
         default:
           return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de unidad de medida proyecto desde Emi Web
   Future<bool> getUnidadMedida() async {
-    // try {
+    try {
       var url = Uri.parse("$baseUrlEmiWebServices/catalogos/unidadMedidaEmprendedor");
       final headers = ({
           "Content-Type": "application/json",
@@ -691,14 +691,14 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
         default:
           return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de ambito consultoría desde Emi Web 
   Future<bool> getAmbitoConsultoria() async {
-    // try {
+    try {
       var url = Uri.parse("$baseUrlEmiWebServices/catalogos/ambito");
       final headers = ({
           "Content-Type": "application/json",
@@ -763,14 +763,14 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
         default:
           return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de área círculo desde Emi Web 
   Future<bool> getAreaCirculo() async {
-    // try {
+    try {
       var url = Uri.parse("$baseUrlEmiWebServices/catalogos/areadelcirculo");
       final headers = ({
           "Content-Type": "application/json",
@@ -835,15 +835,15 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
         default:
           return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 
 //Función para recuperar el catálogo de fases de emprendimiento desde Emi Web 
   Future<bool> getFasesEmp() async {
-    // try {
+    try {
       var url = Uri.parse("$baseUrlEmiWebServices/catalogos/fase");
       final headers = ({
           "Content-Type": "application/json",
@@ -905,14 +905,14 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
         default:
           return false;
       }  
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de tipo de empaques desde Emi Web 
   Future<bool> getTipoEmpaque() async {
-    // try {
+    try {
       var url = Uri.parse("$baseUrlEmiWebServices/catalogos/tipoempaque");
       final headers = ({
           "Content-Type": "application/json",
@@ -974,14 +974,14 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
         default:
           return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de estado de inversion desde Emi Web 
   Future<bool> getEstadoInversion() async {
-    // try {
+    try {
       var url = Uri.parse("$baseUrlEmiWebServices/catalogos/estadoinversion");
       final headers = ({
           "Content-Type": "application/json",
@@ -1043,14 +1043,14 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
         default:
           return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de tipo de proveedor de inversion desde Emi Web 
   Future<bool> getTipoProveedor() async {
-    // try {
+    try {
       var url = Uri.parse("$baseUrlEmiWebServices/catalogos/tipoProveedor");
       final headers = ({
           "Content-Type": "application/json",
@@ -1114,14 +1114,14 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
         default:
           return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de condiciones de pago desde Emi Web 
   Future<bool> getCondicionesPago() async {
-    // try {
+    try {
       var url = Uri.parse("$baseUrlEmiWebServices/catalogos/condicionPago");
       final headers = ({
           "Content-Type": "application/json",
@@ -1185,14 +1185,14 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
         default:
           return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de bancos desde Emi Web 
 Future<bool> getBancos() async {
-  // try {
+  try {
       var url = Uri.parse("$baseUrlEmiWebServices/catalogos/bancos");
       final headers = ({
           "Content-Type": "application/json",
@@ -1256,14 +1256,14 @@ Future<bool> getBancos() async {
         default:
           return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de porcentaje avance desde Emi Web 
 Future<bool> getPorcentajeAvance() async {
-  //  try {
+   try {
       var url = Uri.parse("$baseUrlEmiWebServices/catalogos/porcentajeavance");
       final headers = ({
           "Content-Type": "application/json",
@@ -1325,9 +1325,9 @@ Future<bool> getPorcentajeAvance() async {
         default:
           return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 Future<void> getEstadosProdCotizados() async {
