@@ -639,7 +639,6 @@ class ProdCotizados {
   String? idDBR;
   final statusSync = ToOne<StatusSync>();
   final inversionXprodCotizados = ToOne<InversionesXProdCotizados>();
-  final estadoProdCotizado = ToOne<EstadoProdCotizado>();
   final productosProv = ToOne<ProductosProv>();
   final bitacora = ToMany<Bitacora>();
 
@@ -655,27 +654,6 @@ class ProdCotizados {
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
 
 }
-
-@Entity()
-class EstadoProdCotizado {
-  int id;
-  String estado;
-  DateTime fechaRegistro;
-  @Unique()
-  String? idDBR;
-  final prodCotizados = ToMany<ProdCotizados>();
-  final statusSync = ToOne<StatusSync>();
-
-  EstadoProdCotizado({
-    this.id = 0,
-    required this.estado,
-    DateTime? fechaRegistro,
-    this.idDBR,
-    }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
-
 
 @Entity()
 class TipoEmpaques {

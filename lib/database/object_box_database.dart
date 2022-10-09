@@ -40,7 +40,6 @@ class ObjectBoxDatabase {
   late final Box<Bancos> bancosBox;
   late final Box<Proveedores> proveedoresBox;
   late final Box<ProductosProv> productosProvBox;
-  late final Box<EstadoProdCotizado> estadosProductoCotizadosBox;
   late final Box<InversionesXProdCotizados> inversionesXprodCotizadosBox;
   late final Box<PorcentajeAvance> porcentajeAvanceBox;
 
@@ -81,7 +80,6 @@ class ObjectBoxDatabase {
     bancosBox = Box<Bancos>(store);
     proveedoresBox = Box<Proveedores>(store);
     productosProvBox = Box<ProductosProv>(store);
-    estadosProductoCotizadosBox = Box<EstadoProdCotizado>(store);
     inversionesXprodCotizadosBox = Box<InversionesXProdCotizados>(store);
     porcentajeAvanceBox = Box<PorcentajeAvance>(store);
   }

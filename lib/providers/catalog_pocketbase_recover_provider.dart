@@ -6,7 +6,6 @@ import 'package:bizpro_app/modelsPocketbase/get_tipo_proyecto.dart';
 import 'package:bizpro_app/modelsPocketbase/get_comunidades.dart';
 import 'package:bizpro_app/modelsPocketbase/get_condiciones_pago.dart';
 import 'package:bizpro_app/modelsPocketbase/get_estado_inversiones.dart';
-import 'package:bizpro_app/modelsPocketbase/get_estados_prod_cotizados.dart';
 import 'package:bizpro_app/modelsPocketbase/get_familia_productos.dart';
 import 'package:bizpro_app/modelsPocketbase/get_fases_emp.dart';
 import 'package:bizpro_app/modelsPocketbase/get_municipios.dart';
@@ -66,7 +65,6 @@ class CatalogPocketbaseRecoverProvider extends ChangeNotifier {
     await getProveedoresAgain();
     await getProductosProvAgain();
     await getProdProyectoAgain();
-    await getEstadosProdCotizadosAgain();
     print("Proceso terminado");
     procesoterminado = true;
     procesocargando = false;
@@ -826,36 +824,5 @@ Future<void> getProductosProvAgain() async {
       notifyListeners();
       }
     }
-
-Future<void> getEstadosProdCotizadosAgain() async {
-    if (!dataBase.estadosProductoCotizadosBox.isEmpty()) {
-      final records = await client.records.
-      getFullList('estado_prod_cotizados', batch: 200, sort: '+estado');
-      final List<GetEstadosProdCotizados> listEstadosProdCotizados = [];
-      for (var element in records) {
-        listEstadosProdCotizados.add(getEstadosProdCotizadosFromMap(element.toString()));
-      }
-      print("****Informacion estado prod cotizado****");
-      for (var i = 0; i < records.length; i++) {
-        final estadoProdCotizadoExistente = dataBase.estadosProductoCotizadosBox.query(EstadoProdCotizado_.idDBR.equals(listEstadosProdCotizados[i].id)).build().findUnique();
-        if (estadoProdCotizadoExistente == null) {
-        final nuevoEstadoProdCotizado = EstadoProdCotizado(
-        estado: listEstadosProdCotizados[i].estado,
-        idDBR: listEstadosProdCotizados[i].id,
-        fechaRegistro: listEstadosProdCotizados[i].updated
-        );
-        dataBase.estadosProductoCotizadosBox.put(nuevoEstadoProdCotizado);
-        print('Estado prod Cotizado agregado exitosamente');
-        } else {
-          if (estadoProdCotizadoExistente.fechaRegistro != listEstadosProdCotizados[i].updated) {
-            estadoProdCotizadoExistente.estado = listEstadosProdCotizados[i].estado;
-            estadoProdCotizadoExistente.fechaRegistro = listEstadosProdCotizados[i].updated!;
-            dataBase.estadosProductoCotizadosBox.put(estadoProdCotizadoExistente);
-          }
-        }
-      }
-      notifyListeners();
-    }
-  }
 
 }

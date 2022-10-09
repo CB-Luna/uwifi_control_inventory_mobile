@@ -32,54 +32,24 @@ class CotizacionController extends ChangeNotifier {
     notifyListeners();
   }
 
-  // void add(int idEmprendimiento, int idInversion, int idProductoProv) {
-  //   final nuevoProductoCot = ProdCotizados(
-  //     cantidad: cantidad,
-  //     costoTotal: costoTotal,
-  //     );
-  //     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
-  //     final inversion = dataBase.inversionesBox.get(idInversion);
-  //     final productoProv = dataBase.productosProvBox.get(idProductoProv);
-  //     if (emprendimiento != null && inversion != null && productoProv != null) {
-  //       final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
-  //       final nuevaInstruccion = Bitacora(instrucciones: 'syncRecoverCotizacion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-  //       nuevoProductoCot.statusSync.target = nuevoSync;
-  //       nuevoProductoCot.inversion.target = inversion;
-  //       nuevoProductoCot.productosProv.target = productoProv;
-  //       nuevoProductoCot.bitacora.add(nuevaInstruccion);
-  //       inversion.prodCotizados.add(nuevoProductoCot);
-  //       dataBase.inversionesBox.put(inversion);
-  //       print('ProductoCot agregado exitosamente');
-  //       clearInformation();
-  //       notifyListeners();
-  //     }
-  // }
-
   Future<void> acceptCotizacion(int idInversion, int idInversionesXProdCotizados) async {
     double montoPagarYSaldoInicial = 0.0;
     //Se actualiza es el estado de los prod Cotizados
     final inversionXprodCotizados = dataBase.inversionesXprodCotizadosBox.get(idInversionesXProdCotizados);
-    final newEstadoProdCotizado = dataBase.estadosProductoCotizadosBox.query(EstadoProdCotizado_.estado.equals("Aceptado")).build().findFirst();
-    if (newEstadoProdCotizado != null && inversionXprodCotizados != null) {
+    if (inversionXprodCotizados != null) {
       final listProdCotizados = inversionXprodCotizados.prodCotizados.toList();
       for (var i = 0; i < listProdCotizados.length; i++) {
-        final record = await client.records.update('productos_cotizados', listProdCotizados[i].idDBR.toString(), body: {
-        "id_estado_prod_cotizado_fk": newEstadoProdCotizado.idDBR,
-        }); 
-        if (record.id.isNotEmpty) {
-        print("Prod Cotizado updated succesfully");
         var updateProdCotizado = dataBase.productosCotBox.get(listProdCotizados[i].id);
         if (updateProdCotizado != null) {
-            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateProdCotizado.statusSync.target!.id)).build().findUnique();
-            if (statusSync != null) {
-              statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del prod Cotizado
-              dataBase.statusSyncBox.put(statusSync);
-              updateProdCotizado.estadoProdCotizado.target = newEstadoProdCotizado;
-              dataBase.productosCotBox.put(updateProdCotizado);
-            }
-            //Se suma el total del Prod Cotizado al monto a pagar y saldo
-            montoPagarYSaldoInicial += updateProdCotizado.costoTotal;
+          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateProdCotizado.statusSync.target!.id)).build().findUnique();
+          if (statusSync != null) {
+            statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del prod Cotizado
+            dataBase.statusSyncBox.put(statusSync);
+            dataBase.productosCotBox.put(updateProdCotizado);
+            print("Prod Cotizado updated succesfully");
           }
+          //Se suma el total del Prod Cotizado al monto a pagar y saldo
+          montoPagarYSaldoInicial += updateProdCotizado.costoTotal;
         }
       }
     }
@@ -133,24 +103,17 @@ class CotizacionController extends ChangeNotifier {
     }
     //Se actualiza es el estado de los prod Cotizados
     final inversionXprodCotizados = dataBase.inversionesXprodCotizadosBox.get(idInversionesXProdCotizados);
-    final newEstadoProdCotizado = dataBase.estadosProductoCotizadosBox.query(EstadoProdCotizado_.estado.equals("Rechazado")).build().findFirst();
-    if (newEstadoProdCotizado != null && inversionXprodCotizados != null) {
+    if (inversionXprodCotizados != null) {
       final listProdCotizados = inversionXprodCotizados.prodCotizados.toList();
       for (var i = 0; i < listProdCotizados.length; i++) {
-        final record = await client.records.update('productos_cotizados', listProdCotizados[i].idDBR.toString(), body: {
-        "id_estado_prod_cotizado_fk": newEstadoProdCotizado.idDBR,
-        }); 
-        if (record.id.isNotEmpty) {
-        print("Prod Cotizado updated succesfully");
         var updateProdCotizado = dataBase.productosCotBox.get(listProdCotizados[i].id);
         if (updateProdCotizado != null) {
-            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateProdCotizado.statusSync.target!.id)).build().findUnique();
-            if (statusSync != null) {
-              statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del prod Cotizado
-              dataBase.statusSyncBox.put(statusSync);
-              updateProdCotizado.estadoProdCotizado.target = newEstadoProdCotizado;
-              dataBase.productosCotBox.put(updateProdCotizado);
-            }
+          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateProdCotizado.statusSync.target!.id)).build().findUnique();
+          if (statusSync != null) {
+            statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del prod Cotizado
+            dataBase.statusSyncBox.put(statusSync);
+            dataBase.productosCotBox.put(updateProdCotizado);
+            print("Prod Cotizado updated succesfully");
           }
         }
       }
@@ -188,24 +151,17 @@ class CotizacionController extends ChangeNotifier {
     }
     //Se actualiza es el estado de los prod Cotizados
     final inversionXprodCotizados = dataBase.inversionesXprodCotizadosBox.get(idInversionesXProdCotizados);
-    final newEstadoProdCotizado = dataBase.estadosProductoCotizadosBox.query(EstadoProdCotizado_.estado.equals("Solicitar Otra Cotización")).build().findFirst();
-    if (newEstadoProdCotizado != null && inversionXprodCotizados != null) {
+    if (inversionXprodCotizados != null) {
       final listProdCotizados = inversionXprodCotizados.prodCotizados.toList();
       for (var i = 0; i < listProdCotizados.length; i++) {
-        final record = await client.records.update('productos_cotizados', listProdCotizados[i].idDBR.toString(), body: {
-        "id_estado_prod_cotizado_fk": newEstadoProdCotizado.idDBR,
-        }); 
-        if (record.id.isNotEmpty) {
         print("Prod Cotizado updated succesfully");
         var updateProdCotizado = dataBase.productosCotBox.get(listProdCotizados[i].id);
         if (updateProdCotizado != null) {
-            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateProdCotizado.statusSync.target!.id)).build().findUnique();
-            if (statusSync != null) {
-              statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del prod Cotizado
-              dataBase.statusSyncBox.put(statusSync);
-              updateProdCotizado.estadoProdCotizado.target = newEstadoProdCotizado;
-              dataBase.productosCotBox.put(updateProdCotizado);
-            }
+          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateProdCotizado.statusSync.target!.id)).build().findUnique();
+          if (statusSync != null) {
+            statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del prod Cotizado
+            dataBase.statusSyncBox.put(statusSync);
+            dataBase.productosCotBox.put(updateProdCotizado);
           }
         }
       }

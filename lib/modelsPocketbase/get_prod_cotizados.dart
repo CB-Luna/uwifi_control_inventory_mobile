@@ -13,7 +13,6 @@ class GetProdCotizados {
         required this.updated,
         required this.cantidad,
         required this.costoTotal,
-        required this.idEstadoProdCotizadoFk,
         required this.idProductoProvFk,
         required this.idInversionXProdCotizadosFk,
         required this.aceptado,
@@ -26,7 +25,6 @@ class GetProdCotizados {
     final DateTime? updated;
     final int cantidad;
     final double costoTotal;
-    final String idEstadoProdCotizadoFk;
     final String idProductoProvFk;
     final String idInversionXProdCotizadosFk;
     final bool aceptado;
@@ -39,7 +37,6 @@ class GetProdCotizados {
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
         cantidad: json["cantidad"],
         costoTotal: json["costo_total"],
-        idEstadoProdCotizadoFk: json["id_estado_prod_cotizado_fk"],
         idProductoProvFk: json["id_producto_prov_fk"],
         idInversionXProdCotizadosFk: json["id_inversion_x_prod_cotizados_fk"],
         aceptado: json["aceptado"],
@@ -53,7 +50,6 @@ class GetProdCotizados {
         "updated": updated == null ? null : updated!.toIso8601String(),
         "cantidad": cantidad,
         "costo_total": costoTotal,
-        "id_estado_prod_cotizado_fk": idEstadoProdCotizadoFk,
         "id_producto_prov_fk": idProductoProvFk,
         "id_inversion_x_prod_cotizados_fk": idInversionXProdCotizadosFk,
         "aceptado": aceptado,

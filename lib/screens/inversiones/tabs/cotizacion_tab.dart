@@ -429,7 +429,7 @@ with TickerProviderStateMixin {
                                         else {
                                           print("Holaaaaaaaa 2");
                                           print(widget.inversionesXprodCotizados.idDBR);
-                                        if (await syncProviderPocketbase.validateLengthCotizacion(widget.inversionesXprodCotizados)) {
+                                        if (await syncProviderPocketbase.validateLengthCotizacion(widget.inversionesXprodCotizados, widget.inversion)) {
                                           syncProviderPocketbase.procesoCargando(true);
                                           syncProviderPocketbase.procesoTerminado(false);
                                           // ignore: use_build_context_synchronously
@@ -733,7 +733,7 @@ with TickerProviderStateMixin {
                                           "Necesitas conexión a internet para simular la cotización."),
                                       ));
                                     } else{
-                                      if (await syncProviderPocketbase.validateLengthCotizacion(widget.inversionesXprodCotizados)) {
+                                      if (await syncProviderPocketbase.validateLengthCotizacion(widget.inversionesXprodCotizados, widget.inversion)) {
                                         snackbarKey.currentState
                                           ?.showSnackBar(const SnackBar(
                                         content: Text(

@@ -30,7 +30,6 @@ import 'package:bizpro_app/modelsEmiWeb/get_token_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_tipo_proyecto_emi_web.dart';
 import 'package:bizpro_app/modelsPocketbase/get_bancos.dart';
 import 'package:bizpro_app/modelsPocketbase/get_condiciones_pago.dart';
-import 'package:bizpro_app/modelsPocketbase/get_estados_prod_cotizados.dart';
 import 'package:bizpro_app/modelsPocketbase/get_porcentaje_avance.dart';
 import 'package:bizpro_app/modelsPocketbase/get_prod_proyecto.dart';
 import 'package:bizpro_app/modelsPocketbase/get_productos_prov.dart';
@@ -91,7 +90,6 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
       banderasExistoSync.add(await getCondicionesPago());
       banderasExistoSync.add(await getBancos());
       banderasExistoSync.add(await getPorcentajeAvance());
-      // await getEstadosProdCotizados();
       // await getProveedores();
       // await getProductosProv();
       // await getProdProyecto();
@@ -1327,31 +1325,6 @@ Future<bool> getPorcentajeAvance() async {
       }
     } catch (e) {
       return false;
-    }
-  }
-
-Future<void> getEstadosProdCotizados() async {
-    if (dataBase.estadosProductoCotizadosBox.isEmpty()) {
-      final records = await client.records.
-      getFullList('estado_prod_cotizados', batch: 200, sort: '+estado');
-      final List<GetEstadosProdCotizados> listEstadosProdCotizados = [];
-      for (var element in records) {
-        listEstadosProdCotizados.add(getEstadosProdCotizadosFromMap(element.toString()));
-      }
-
-      print("****Informacion estado prod cotizado****");
-      for (var i = 0; i < records.length; i++) {
-        if (listEstadosProdCotizados[i].id.isNotEmpty) {
-        final nuevoEstadoProdCotizado = EstadoProdCotizado(
-        estado: listEstadosProdCotizados[i].estado,
-        idDBR: listEstadosProdCotizados[i].id,
-        fechaRegistro: listEstadosProdCotizados[i].updated
-        );
-        dataBase.estadosProductoCotizadosBox.put(nuevoEstadoProdCotizado);
-        print('Estado prod Cotizado agregado exitosamente');
-        }
-      }
-      notifyListeners();
     }
   }
 

@@ -1,6 +1,5 @@
 import 'package:bizpro_app/modelsPocketbase/get_bancos.dart';
 import 'package:bizpro_app/modelsPocketbase/get_condiciones_pago.dart';
-import 'package:bizpro_app/modelsPocketbase/get_estados_prod_cotizados.dart';
 import 'package:bizpro_app/modelsPocketbase/get_porcentaje_avance.dart';
 import 'package:bizpro_app/modelsPocketbase/get_prod_proyecto.dart';
 import 'package:bizpro_app/modelsPocketbase/get_productos_prov.dart';
@@ -66,10 +65,9 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
     banderasExistoSync.add(await getCondicionesPago());
     banderasExistoSync.add(await getBancos());
     banderasExistoSync.add(await getPorcentajeAvance());
-    // await getEstadosProdCotizados();
-    // await getProveedores();
-    // await getProductosProv();
-    // await getProdProyecto();
+    await getProveedores();
+    await getProductosProv();
+    await getProdProyecto();
     for (var element in banderasExistoSync) {
       //Aplicamos una operación and para validar que no haya habido un catálogo con False
       exitoso = exitoso && element;
@@ -885,66 +883,6 @@ Future<bool> getPorcentajeAvance() async {
   }
   }
 
-Future<void> getEstadosProdCotizados() async {
-    if (dataBase.estadosProductoCotizadosBox.isEmpty()) {
-      final records = await client.records.
-      getFullList('estado_prod_cotizados', batch: 200, sort: '+estado');
-      final List<GetEstadosProdCotizados> listEstadosProdCotizados = [];
-      for (var element in records) {
-        listEstadosProdCotizados.add(getEstadosProdCotizadosFromMap(element.toString()));
-      }
-
-      print("****Informacion estado prod cotizado****");
-      for (var i = 0; i < records.length; i++) {
-        if (listEstadosProdCotizados[i].id.isNotEmpty) {
-        final nuevoEstadoProdCotizado = EstadoProdCotizado(
-        estado: listEstadosProdCotizados[i].estado,
-        idDBR: listEstadosProdCotizados[i].id,
-        fechaRegistro: listEstadosProdCotizados[i].updated
-        );
-        dataBase.estadosProductoCotizadosBox.put(nuevoEstadoProdCotizado);
-        print('Estado prod Cotizado agregado exitosamente');
-        }
-      }
-      notifyListeners();
-    }
-  }
-
-  Future<void> getRoles() async {
-    if (dataBase.rolesBox.isEmpty()) {
-      final records = await client.records.
-      getFullList('roles', batch: 200, sort: '+rol');
-      final List<GetRoles> listRoles = [];
-      for (var element in records) {
-        listRoles.add(getRolesFromMap(element.toString()));
-      }
-
-      print("*****Informacion roles*****");
-      for (var i = 0; i < listRoles.length; i++) {
-        if (listRoles[i].id.isNotEmpty) {
-        final nuevoRol = Roles(
-        rol: listRoles[i].rol,
-        idDBR: listRoles[i].id,
-        fechaRegistro: listRoles[i].updated
-        );
-        final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
-        nuevoRol.statusSync.target = nuevoSync;
-        dataBase.rolesBox.put(nuevoRol);
-        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-        print('Rol agregado exitosamente');
-        final record = await client.records.update('roles', listRoles[i].id, body: {
-          'id_status_sync_fk': 'HoI36PzYw1wtbO1',
-        });
-        if (record.id.isNotEmpty) {
-            print('Rol actualizado en el backend exitosamente');
-          }
-
-        }
-      }
-      notifyListeners();
-      }
-  }
-
 Future<void> getProveedores() async {
     if (dataBase.proveedoresBox.isEmpty()) {
       final records = await client.records.
@@ -1066,4 +1004,39 @@ Future<void> getProductosProv() async {
       notifyListeners();
       }
     }
+
+  Future<void> getRoles() async {
+    if (dataBase.rolesBox.isEmpty()) {
+      final records = await client.records.
+      getFullList('roles', batch: 200, sort: '+rol');
+      final List<GetRoles> listRoles = [];
+      for (var element in records) {
+        listRoles.add(getRolesFromMap(element.toString()));
+      }
+
+      print("*****Informacion roles*****");
+      for (var i = 0; i < listRoles.length; i++) {
+        if (listRoles[i].id.isNotEmpty) {
+        final nuevoRol = Roles(
+        rol: listRoles[i].rol,
+        idDBR: listRoles[i].id,
+        fechaRegistro: listRoles[i].updated
+        );
+        final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
+        nuevoRol.statusSync.target = nuevoSync;
+        dataBase.rolesBox.put(nuevoRol);
+        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
+        print('Rol agregado exitosamente');
+        final record = await client.records.update('roles', listRoles[i].id, body: {
+          'id_status_sync_fk': 'HoI36PzYw1wtbO1',
+        });
+        if (record.id.isNotEmpty) {
+            print('Rol actualizado en el backend exitosamente');
+          }
+
+        }
+      }
+      notifyListeners();
+      }
+  }
 }
