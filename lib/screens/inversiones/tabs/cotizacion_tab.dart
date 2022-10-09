@@ -416,8 +416,7 @@ with TickerProviderStateMixin {
                                             "Primero debes sincronizar tu información."),
                                         ));
                                         break;
-                                      case "En cotización":
-                                      print("Holaaaaaaaa");
+                                      case "En Cotización":
                                         final connectivityResult =
                                           await (Connectivity().checkConnectivity());
                                         if(connectivityResult == ConnectivityResult.none) {
@@ -460,7 +459,7 @@ with TickerProviderStateMixin {
                                             "Esta inversión ya ha sido cotizada."),
                                         ));
                                         break;
-                                      case "Buscar otra cotización":
+                                      case "Buscar Otra Cotización":
                                         snackbarKey.currentState
                                           ?.showSnackBar(const SnackBar(
                                         content: Text(
@@ -705,7 +704,7 @@ with TickerProviderStateMixin {
                       },
                     ),
                     Visibility(
-                      visible: widget.inversion.estadoInversion.target!.estado == "En cotización",
+                      visible: widget.inversion.estadoInversion.target!.estado == "En Cotización",
                       child: Padding(
                         padding:
                             const EdgeInsetsDirectional

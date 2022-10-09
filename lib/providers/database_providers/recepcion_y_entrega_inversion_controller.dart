@@ -100,7 +100,7 @@ class RecepcionYEntregaController extends ChangeNotifier {
       }
 
     //Se actualiza el estado de la inversión
-    final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Entregada al promotor")).build().findFirst();
+    final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Entregada Al Promotor")).build().findFirst();
     final updateInversion = dataBase.inversionesBox.get(inversionXProdCotizadosTemp!.inversion.target!.id);
     if (newEstadoInversion != null && updateInversion != null) {
       final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateInversion.statusSync.target!.id)).build().findUnique();
@@ -126,7 +126,7 @@ class RecepcionYEntregaController extends ChangeNotifier {
       final nuevaImagenProducto = Imagenes(imagenes: imagenProducto); //Se crea el objeto imagenes para el Producto
       updateInversion.imagenes.add(nuevaImagenProducto);
       //Se actualiza el estado de la inversión
-      final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Entregada al emprendedor")).build().findFirst();
+      final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Entregada Al Emprendedor")).build().findFirst();
       if (newEstadoInversion != null) {
         final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateInversion.statusSync.target!.id)).build().findUnique();
         if (statusSync != null) {
@@ -183,7 +183,7 @@ void updatePago(double newMontoAbonado, int idInversion) {
     updateInversion.saldo = 0.0;
     updateInversion.bitacora.add(nuevaInstruccion);
     //Se actualiza el estado de la inversión
-    final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Pagada")).build().findFirst();
+    final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Pagado")).build().findFirst();
     final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateInversion.statusSync.target!.id)).build().findUnique();
     if (statusSync != null && newEstadoInversion != null) {
       statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la inversion

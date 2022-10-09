@@ -685,7 +685,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                     width: double.infinity,
                                     color: const Color(0x00F2F4F8),
                                     child: ExpandableNotifier(
-                                      initialExpanded: actualInversion!.estadoInversion.target!.estado == "Entregada al promotor",
+                                      initialExpanded: actualInversion!.estadoInversion.target!.estado == "Entregada Al Promotor",
                                       child: ExpandablePanel(
                                         header: Row(
                                           mainAxisSize: MainAxisSize.max,
@@ -837,7 +837,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                       ),
                                                     ),
                                                     IgnorePointer(
-                                                      ignoring: actualInversion!.estadoInversion.target!.estado != "Entregada al promotor" ||
+                                                      ignoring: actualInversion!.estadoInversion.target!.estado != "Entregada Al Promotor" ||
                                                       actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio"
                                                       || actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Emprendedor",
                                                       child: FFButtonWidget(
@@ -1003,7 +1003,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                       ),
                                                     ),
                                                     IgnorePointer(
-                                                      ignoring: actualInversion!.estadoInversion.target!.estado != "Entregada al promotor" ||
+                                                      ignoring: actualInversion!.estadoInversion.target!.estado != "Entregada Al Promotor" ||
                                                       actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio"
                                                       || actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Emprendedor",
                                                       child: FFButtonWidget(
@@ -1081,7 +1081,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                   onPressed: () async {
                                                     if (actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol != "Amigo del Cambio"
                                                     && actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol != "Emprendedor") {
-                                                    if (actualInversion!.estadoInversion.target!.estado == "Entregada al promotor") {
+                                                    if (actualInversion!.estadoInversion.target!.estado == "Entregada Al Promotor") {
                                                       if (imageFirma != ""  && imageProducto != "") {
                                                         recepcionYentregaProvider.entregaInversion(
                                                             imageFirma,
@@ -1182,7 +1182,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                     width: double.infinity,
                                     color: const Color(0x00F2F4F8),
                                     child: ExpandableNotifier(
-                                      initialExpanded: actualInversion!.estadoInversion.target!.estado == "Entregada al emprendedor",
+                                      initialExpanded: actualInversion!.estadoInversion.target!.estado == "Entregada Al Emprendedor",
                                       child: ExpandablePanel(
                                         header: Row(
                                           mainAxisSize: MainAxisSize.max,
@@ -1306,7 +1306,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                           ),
                                                         ),
                                                         IgnorePointer(
-                                                          ignoring: actualInversion!.estadoInversion.target!.estado != "Entregada al emprendedor" ||
+                                                          ignoring: actualInversion!.estadoInversion.target!.estado != "Entregada Al Emprendedor" ||
                                                           actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio"
                                                           || actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Emprendedor",
                                                           child: SizedBox(
@@ -1527,7 +1527,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                         onPressed: () async {
                                                           if (actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol != "Amigo del Cambio"
                                                           && actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol != "Emprendedor") {
-                                                          if (actualInversion!.estadoInversion.target!.estado == "Entregada al emprendedor") {
+                                                          if (actualInversion!.estadoInversion.target!.estado == "Entregada Al Emprendedor") {
                                                               if (recepcionYentregaProvider.validateForm(formKey)) {
                                                                 if (double.parse(
                                                                   montoAbonado.text.replaceAll("\$", "")

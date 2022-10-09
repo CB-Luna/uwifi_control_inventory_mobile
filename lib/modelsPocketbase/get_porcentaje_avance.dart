@@ -12,7 +12,7 @@ class GetPorcentajeAvance {
         required this.created,
         required this.updated,
         required this.porcentaje,
-        required this.activo,
+        required this.idEmiWeb,
     });
 
     final String collectionId;
@@ -20,8 +20,8 @@ class GetPorcentajeAvance {
     final String id;
     final DateTime? created;
     final DateTime? updated;
-    final int porcentaje;
-    final bool activo;
+    final String porcentaje;
+    final String idEmiWeb;
 
     factory GetPorcentajeAvance.fromMap(Map<String, dynamic> json) => GetPorcentajeAvance(
         collectionId: json["@collectionId"],
@@ -30,7 +30,7 @@ class GetPorcentajeAvance {
         created: json["created"] == null ? null : DateTime.parse(json["created"]),
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
         porcentaje: json["porcentaje"],
-        activo: json["activo"],
+        idEmiWeb: json["id_emi_web"],
     );
 
     Map<String, dynamic> toMap() => {
@@ -40,7 +40,6 @@ class GetPorcentajeAvance {
         "created": created == null ? null : created!.toIso8601String(),
         "updated": updated == null ? null : updated!.toIso8601String(),
         "porcentaje": porcentaje,
-        "activo": activo,
+        "id_emi_web": idEmiWeb,
     };
 }
-

@@ -1006,6 +1006,8 @@ class Bancos {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
+  @Unique()
+  String idEmiWeb;
   @Backlink()
   final proveedores = ToMany<Proveedores>();
 
@@ -1015,6 +1017,7 @@ class Bancos {
     this.activo = true,
     DateTime? fechaRegistro,
     this.idDBR,
+    required this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -1029,6 +1032,8 @@ class CondicionesPago {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
+  @Unique()
+  String idEmiWeb;
   @Backlink()
   final proveedores = ToMany<Proveedores>();
 
@@ -1038,6 +1043,7 @@ class CondicionesPago {
     this.activo = true,
     DateTime? fechaRegistro,
     this.idDBR,
+    required this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -1051,6 +1057,8 @@ class TipoProveedor {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
+  @Unique()
+  String idEmiWeb;
   final proveedores = ToMany<Proveedores>();
 
   TipoProveedor({
@@ -1059,6 +1067,7 @@ class TipoProveedor {
     this.activo = true,
     DateTime? fechaRegistro,
     this.idDBR,
+    required this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -1171,20 +1180,21 @@ class Imagenes {
 @Entity()
 class PorcentajeAvance {
   int id;
-  int porcentajeAvance;
-  bool activo;
+  String porcentajeAvance;
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
+  @Unique()
+  String idEmiWeb;
   @Backlink()
   final tareas = ToMany<Tareas>();
 
   PorcentajeAvance({
     this.id = 0,
     required this.porcentajeAvance,
-    this.activo = true,
     DateTime? fechaRegistro,
     this.idDBR,
+    required this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);

@@ -160,7 +160,7 @@ class CotizacionController extends ChangeNotifier {
   Future<void> buscarOtraCotizacion(int idInversion, int idInversionesXProdCotizados) async {
     //Se actualiza el estado de la inversión y se agrega un nuevo inversion x prod Cotizados
     final inversion = dataBase.inversionesBox.get(idInversion);
-    final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Buscar otra cotización")).build().findFirst();
+    final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Buscar Otra Cotización")).build().findFirst();
     if (newEstadoInversion != null && inversion != null) {
       final nuevaInversionXprodCotizados = InversionesXProdCotizados(); //Se crea la instancia inversion x prod Cotizados
       final nuevoSyncInversionXprodCotizados = StatusSync(); //Se crea el objeto estatus por dedault //M__
@@ -240,7 +240,7 @@ class CotizacionController extends ChangeNotifier {
   Future<void> estadoEnCotizacion(int idInversion, int idInversionesXProdCotizados) async {
     //Se actualiza el estado de la inversión
     final inversion = dataBase.inversionesBox.get(idInversion);
-    final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En cotización")).build().findFirst();
+    final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En Cotización")).build().findFirst();
     if (newEstadoInversion != null && inversion != null) {
       final record = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
         "id_estado_inversion_fk": newEstadoInversion.idDBR,

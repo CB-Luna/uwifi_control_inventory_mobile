@@ -13,6 +13,7 @@ class GetTipoProveedor {
         required this.updated,
         required this.tipoProveedor,
         required this.activo,
+        required this.idEmiWeb,
     });
 
     final String collectionId;
@@ -22,6 +23,7 @@ class GetTipoProveedor {
     final DateTime? updated;
     final String tipoProveedor;
     final bool activo;
+    final String idEmiWeb;
 
     factory GetTipoProveedor.fromMap(Map<String, dynamic> json) => GetTipoProveedor(
         collectionId: json["@collectionId"],
@@ -31,6 +33,7 @@ class GetTipoProveedor {
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
         tipoProveedor: json["tipo_proveedor"],
         activo: json["activo"],
+        idEmiWeb: json["id_emi_web"],
     );
 
     Map<String, dynamic> toMap() => {
@@ -41,5 +44,6 @@ class GetTipoProveedor {
         "updated": updated == null ? null : updated!.toIso8601String(),
         "tipo_proveedor": tipoProveedor,
         "activo": activo,
+        "id_emi_web": idEmiWeb,
     };
 }

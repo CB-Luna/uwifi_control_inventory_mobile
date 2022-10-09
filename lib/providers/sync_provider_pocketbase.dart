@@ -1677,8 +1677,8 @@ void deleteBitacora() {
     try {
       print("Estoy en syncAddInversion");
       //Primero creamos la inversion  
-      //Se busca el estado de inversión 'En cotización'
-      final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En cotización")).build().findFirst();
+      //Se busca el estado de inversión 'En Cotización'
+      final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En Cotización")).build().findFirst();
       if (newEstadoInversion != null) {
         print("Datos inversion");
         print(inversion.estadoInversion);
@@ -1797,8 +1797,8 @@ void deleteBitacora() {
   Future<bool?> syncUpdateInversion(Inversiones inversion) async {
     try {
       print("Estoy en syncUpdateInversion"); 
-      //Se busca el estado de inversión 'En cotización'
-      final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En cotización")).build().findFirst();
+      //Se busca el estado de inversión 'En Cotización'
+      final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En Cotización")).build().findFirst();
       if (newEstadoInversion != null) {
         print("Datos inversion");
         print(inversion.estadoInversion);

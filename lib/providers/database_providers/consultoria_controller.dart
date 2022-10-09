@@ -45,7 +45,7 @@ class ConsultoriaController extends ChangeNotifier {
     final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
     nuevaTarea.statusSync.target = nuevoSyncTarea;
     //Se recupera el primer porcentaje de la Tarea
-    final porcentajeAvance = dataBase.porcentajeAvanceBox.query(PorcentajeAvance_.porcentajeAvance.equals(1)).build().findFirst();
+    final porcentajeAvance = dataBase.porcentajeAvanceBox.query(PorcentajeAvance_.porcentajeAvance.equals("1")).build().findFirst();
     if (porcentajeAvance != null) {
       nuevaTarea.porcentaje.target = porcentajeAvance;
     }

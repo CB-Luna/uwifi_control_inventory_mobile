@@ -546,7 +546,7 @@ Future<void> getTipoProveedorAgain() async {
         tipo: listTipoProveedor[i].tipoProveedor,
         idDBR: listTipoProveedor[i].id,
         activo: listTipoProveedor[i].activo,
-        fechaRegistro: listTipoProveedor[i].updated
+        fechaRegistro: listTipoProveedor[i].updated, idEmiWeb: ''
         );
         dataBase.tipoProveedorBox.put(nuevoTipoProveedor);
         print('Tipo proveedor agregado exitosamente');
@@ -579,7 +579,7 @@ Future<void> getCondicionesPagoAgain() async {
         condicion: listCondicionesPago[i].condicionPago,
         idDBR: listCondicionesPago[i].id,
         activo: listCondicionesPago[i].activo,
-        fechaRegistro: listCondicionesPago[i].updated
+        fechaRegistro: listCondicionesPago[i].updated, idEmiWeb: ''
         );
         dataBase.condicionesPagoBox.put(nuevaCondicionPago);
         print('Condición pago agregada exitosamente');
@@ -612,7 +612,7 @@ Future<void> getCondicionesPagoAgain() async {
         banco: listBancos[i].nombreBanco,
         idDBR: listBancos[i].id,
         activo: listBancos[i].activo,
-        fechaRegistro: listBancos[i].updated
+        fechaRegistro: listBancos[i].updated, idEmiWeb: ''
         );
         dataBase.bancosBox.put(nuevoBanco);
         print('Banco agregado exitosamente');
@@ -644,8 +644,8 @@ Future<void> getPorcentajeAvanceAgain() async {
         final nuevoPorcentaje = PorcentajeAvance(
         porcentajeAvance: listPorcentaje[i].porcentaje,
         idDBR: listPorcentaje[i].id,
-        activo: listPorcentaje[i].activo,
-        fechaRegistro: listPorcentaje[i].updated
+        fechaRegistro: listPorcentaje[i].updated, 
+        idEmiWeb: ''
         );
         dataBase.porcentajeAvanceBox.put(nuevoPorcentaje);
         print('Porcentaje agregado exitosamente');
@@ -653,7 +653,6 @@ Future<void> getPorcentajeAvanceAgain() async {
           if (porcentajeExistente.fechaRegistro != listPorcentaje[i].updated) {
             porcentajeExistente.porcentajeAvance = listPorcentaje[i].porcentaje;
             porcentajeExistente.fechaRegistro = listPorcentaje[i].updated!;
-            porcentajeExistente.activo = listPorcentaje[i].activo;
             dataBase.porcentajeAvanceBox.put(porcentajeExistente);
           }
         }

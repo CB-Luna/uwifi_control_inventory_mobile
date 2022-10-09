@@ -13,6 +13,7 @@ class GetCondicionesPago {
         required this.updated,
         required this.condicionPago,
         required this.activo,
+        required this.idEmiWeb,
     });
 
     final String collectionId;
@@ -22,6 +23,7 @@ class GetCondicionesPago {
     final DateTime? updated;
     final String condicionPago;
     final bool activo;
+    final String idEmiWeb;
 
     factory GetCondicionesPago.fromMap(Map<String, dynamic> json) => GetCondicionesPago(
         collectionId: json["@collectionId"],
@@ -31,6 +33,7 @@ class GetCondicionesPago {
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
         condicionPago: json["condicion_pago"],
         activo: json["activo"],
+        idEmiWeb: json["id_emi_web"],
     );
 
     Map<String, dynamic> toMap() => {
@@ -41,5 +44,6 @@ class GetCondicionesPago {
         "updated": updated == null ? null : updated!.toIso8601String(),
         "condicion_pago": condicionPago,
         "activo": activo,
+        "id_emi_web": idEmiWeb,
     };
 }
