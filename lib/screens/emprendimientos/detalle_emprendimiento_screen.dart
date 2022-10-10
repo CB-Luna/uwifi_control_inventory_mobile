@@ -295,7 +295,7 @@ Emprendimientos? emprendimientoActual;
                                     ),
                                     Visibility(
                                       visible: emprendimientoActual!.faseEmp.last.fase == "Jornada 4" ||
-                                      emprendimientoActual!.faseEmp.last.fase == "Consultoría",
+                                      emprendimientoActual!.faseEmp.last.fase == "Consultorías",
                                       child: Container(
                                         width: 60,
                                         height: 50,

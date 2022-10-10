@@ -5,6 +5,8 @@ import 'package:objectbox/objectbox.dart';
 @Entity()
 class Emprendimientos {
   int id;
+  String faseActual;
+  String faseAnterior;
   int? idInversionJornada;
   String imagen;
   String nombre;
@@ -34,6 +36,8 @@ class Emprendimientos {
   
   Emprendimientos({
     this.id = 0,
+    required this.faseActual,
+    required this.faseAnterior,
     this.idInversionJornada,
     required this.imagen,
     required this.nombre,
@@ -302,7 +306,7 @@ class TipoProyecto {
   @Unique()
   String? idDBR;
   @Unique()
-  int idEmiWeb;
+  String idEmiWeb;
   final categoriasProyecto = ToMany<CatalogoProyecto>();
   final statusSync = ToOne<StatusSync>();
   
@@ -327,7 +331,7 @@ class CatalogoProyecto {
   @Unique()
   String? idDBR;
   @Unique()
-  int idEmiWeb;
+  String idEmiWeb;
   final emprendimientos = ToMany<Emprendimientos>();
   final tipoProyecto = ToOne<TipoProyecto>();
   final prodProyecto = ToMany<ProdProyecto>();
@@ -373,6 +377,8 @@ class EstadoInversion {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
+  @Unique()
+  String idEmiWeb;
   final emprendimientos = ToMany<Inversiones>();
   final statusSync = ToOne<StatusSync>();
 
@@ -381,6 +387,7 @@ class EstadoInversion {
     required this.estado,
     DateTime? fechaRegistro,
     this.idDBR,
+    required this.idEmiWeb,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -393,6 +400,8 @@ class FasesEmp {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
+  @Unique()
+  String idEmiWeb;
   final emprendimientos = ToMany<Emprendimientos>();
   final statusSync = ToOne<StatusSync>();
 
@@ -401,6 +410,7 @@ class FasesEmp {
     required this.fase,
     DateTime? fechaRegistro,
     this.idDBR,
+    required this.idEmiWeb,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -629,7 +639,6 @@ class ProdCotizados {
   String? idDBR;
   final statusSync = ToOne<StatusSync>();
   final inversionXprodCotizados = ToOne<InversionesXProdCotizados>();
-  final estadoProdCotizado = ToOne<EstadoProdCotizado>();
   final productosProv = ToOne<ProductosProv>();
   final bitacora = ToMany<Bitacora>();
 
@@ -647,27 +656,6 @@ class ProdCotizados {
 }
 
 @Entity()
-class EstadoProdCotizado {
-  int id;
-  String estado;
-  DateTime fechaRegistro;
-  @Unique()
-  String? idDBR;
-  final prodCotizados = ToMany<ProdCotizados>();
-  final statusSync = ToOne<StatusSync>();
-
-  EstadoProdCotizado({
-    this.id = 0,
-    required this.estado,
-    DateTime? fechaRegistro,
-    this.idDBR,
-    }) : fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-}
-
-
-@Entity()
 class TipoEmpaques {
   int id;
   String tipo;
@@ -675,6 +663,8 @@ class TipoEmpaques {
   bool activo;
   @Unique()
   String? idDBR;
+  @Unique()
+  String idEmiWeb;
   final statusSync = ToOne<StatusSync>();
   final prodSolicitados = ToMany<ProdSolicitado>();
   final prodProyecto = ToMany<ProdProyecto>();
@@ -685,6 +675,7 @@ class TipoEmpaques {
     DateTime? fechaRegistro,
     this.activo = true,
     this.idDBR,
+    required this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -699,6 +690,8 @@ class FamiliaProd {
   bool activo;
   @Unique()
   String? idDBR;
+  @Unique()
+  String idEmiWeb;
   final statusSync = ToOne<StatusSync>();
   final prodSolicitados = ToMany<ProdSolicitado>();
   final productosEmp = ToMany<ProductosEmp>();
@@ -711,6 +704,7 @@ class FamiliaProd {
     DateTime? fechaRegistro,
     this.activo = true,
     this.idDBR,
+    required this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -751,6 +745,8 @@ class AreaCirculo {
   bool activo;
   @Unique()
   String? idDBR;
+  @Unique()
+  String idEmiWeb;
   final consultoria = ToOne<Consultorias>();
   final statusSync = ToOne<StatusSync>();
   final bitacora = ToOne<Bitacora>();
@@ -761,6 +757,7 @@ class AreaCirculo {
     DateTime? fechaRegistro,
     this.activo = true,
     this.idDBR,
+    required this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -776,7 +773,7 @@ class AmbitoConsultoria {
   @Unique()
   String? idDBR;
   @Unique()
-  int idEmiWeb;
+  String idEmiWeb;
   final consultorias = ToMany<Consultorias>();
   final statusSync = ToOne<StatusSync>();
   final bitacora = ToOne<Bitacora>();
@@ -803,7 +800,7 @@ class Comunidades {
   @Unique()
   String? idDBR;
   @Unique()
-  int idEmiWeb;
+  String idEmiWeb;
   final municipios = ToOne<Municipios>();
   final statusSync = ToOne<StatusSync>();
   @Backlink()
@@ -831,7 +828,7 @@ class Municipios {
   @Unique()
   String? idDBR;
   @Unique()
-  int idEmiWeb;
+  String idEmiWeb;
   final estados = ToOne<Estados>();
   final statusSync = ToOne<StatusSync>();
   @Backlink()
@@ -859,7 +856,7 @@ class Estados {
   @Unique()
   String? idDBR;
   @Unique()
-  int idEmiWeb;
+  String idEmiWeb;
   final statusSync = ToOne<StatusSync>();
   @Backlink()
   final municipios = ToMany<Municipios>();
@@ -959,6 +956,8 @@ class UnidadMedida {
   bool activo;
   @Unique()
   String? idDBR;
+  @Unique()
+  String idEmiWeb;
   final statusSync = ToOne<StatusSync>();
   final productosEmp = ToMany<ProductosEmp>();
   final prodSolicitados = ToMany<ProdSolicitado>();
@@ -970,6 +969,7 @@ class UnidadMedida {
     DateTime? fechaRegistro,
     this.activo = true,
     this.idDBR,
+    required this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -984,6 +984,8 @@ class Bancos {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
+  @Unique()
+  String idEmiWeb;
   @Backlink()
   final proveedores = ToMany<Proveedores>();
 
@@ -993,6 +995,7 @@ class Bancos {
     this.activo = true,
     DateTime? fechaRegistro,
     this.idDBR,
+    required this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -1007,6 +1010,8 @@ class CondicionesPago {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
+  @Unique()
+  String idEmiWeb;
   @Backlink()
   final proveedores = ToMany<Proveedores>();
 
@@ -1016,6 +1021,7 @@ class CondicionesPago {
     this.activo = true,
     DateTime? fechaRegistro,
     this.idDBR,
+    required this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -1029,6 +1035,8 @@ class TipoProveedor {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
+  @Unique()
+  String idEmiWeb;
   final proveedores = ToMany<Proveedores>();
 
   TipoProveedor({
@@ -1037,6 +1045,7 @@ class TipoProveedor {
     this.activo = true,
     DateTime? fechaRegistro,
     this.idDBR,
+    required this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -1149,20 +1158,21 @@ class Imagenes {
 @Entity()
 class PorcentajeAvance {
   int id;
-  int porcentajeAvance;
-  bool activo;
+  String porcentajeAvance;
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
+  @Unique()
+  String idEmiWeb;
   @Backlink()
   final tareas = ToMany<Tareas>();
 
   PorcentajeAvance({
     this.id = 0,
     required this.porcentajeAvance,
-    this.activo = true,
     DateTime? fechaRegistro,
     this.idDBR,
+    required this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);

@@ -11,7 +11,7 @@ import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/services/auth_service.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:bizpro_app/providers/catalog_pocketbase_provider.dart';
+import 'package:bizpro_app/providers/catalogo_pocketbase_provider.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/util/custom_functions.dart';
@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final UserState userState = Provider.of<UserState>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
-    final catalogoPocketbaseProvider = Provider.of<CatalogPocketbaseProvider>(context);
+    final catalogoPocketbaseProvider = Provider.of<CatalogoPocketbaseProvider>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(

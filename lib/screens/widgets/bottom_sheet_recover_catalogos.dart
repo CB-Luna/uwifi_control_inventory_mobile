@@ -1,11 +1,10 @@
-import 'package:bizpro_app/providers/catalog_pocketbase_recover_provider.dart';
-import 'package:bizpro_app/screens/sync/recover_catalogos_pocketbase_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:lottie/lottie.dart';
-
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:bizpro_app/providers/catalog_pocketbase_recover_provider.dart';
+import 'package:bizpro_app/screens/sync/descarga_catalogos_emi_web_screen.dart';
 
 class BottomSheetRecoverCatalogosWidget extends StatefulWidget {
   final bool isVisible;
@@ -154,7 +153,7 @@ class _BottomSheetRecoverCatalogosWidgetState
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          const RecoverCatalogosPocketbaseScreen(),
+                                          const DescargaCatalogosEmiWebScreen(),
                                     ),
                                   );
                                 },

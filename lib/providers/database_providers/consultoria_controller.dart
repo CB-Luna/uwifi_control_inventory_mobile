@@ -45,12 +45,12 @@ class ConsultoriaController extends ChangeNotifier {
     final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
     nuevaTarea.statusSync.target = nuevoSyncTarea;
     //Se recupera el primer porcentaje de la Tarea
-    final porcentajeAvance = dataBase.porcentajeAvanceBox.query(PorcentajeAvance_.porcentajeAvance.equals(1)).build().findFirst();
+    final porcentajeAvance = dataBase.porcentajeAvanceBox.query(PorcentajeAvance_.porcentajeAvance.equals("1")).build().findFirst();
     if (porcentajeAvance != null) {
       nuevaTarea.porcentaje.target = porcentajeAvance;
     }
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
-    final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Consultoría")).build().findFirst();
+    final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Consultorías")).build().findFirst();
     //Se recupera el ambito y el area del circulo
     final ambito = dataBase.ambitoConsultoriaBox.get(idAmbito);
     final areaCirculo = dataBase.areaCirculoBox.get(idAreaCirculo);
@@ -69,6 +69,8 @@ class ConsultoriaController extends ChangeNotifier {
       //Se actualiza la fase del Emprendimiento
       //TODO actualizar en el backend.
       emprendimiento.faseEmp.add(faseEmp);
+      emprendimiento.faseAnterior = faseEmp.fase;
+      emprendimiento.faseActual = faseEmp.fase;
       emprendimiento.faseEmp.toList().forEach((element) {print(element.fase);});
       dataBase.emprendimientosBox.put(emprendimiento);
       consultorias.add(nuevaConsultoria);

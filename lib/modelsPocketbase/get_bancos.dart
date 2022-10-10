@@ -13,6 +13,7 @@ class GetBancos {
         required this.updated,
         required this.nombreBanco,
         required this.activo,
+        required this.idEmiWeb,
     });
 
     final String collectionId;
@@ -22,6 +23,7 @@ class GetBancos {
     final DateTime? updated;
     final String nombreBanco;
     final bool activo;
+    final String idEmiWeb;
 
     factory GetBancos.fromMap(Map<String, dynamic> json) => GetBancos(
         collectionId: json["@collectionId"],
@@ -31,6 +33,7 @@ class GetBancos {
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
         nombreBanco: json["nombre_banco"],
         activo: json["activo"],
+        idEmiWeb: json["id_emi_web"],
     );
 
     Map<String, dynamic> toMap() => {
@@ -41,5 +44,6 @@ class GetBancos {
         "updated": updated == null ? null : updated!.toIso8601String(),
         "nombre_banco": nombreBanco,
         "activo": activo,
+        "id_emi_web": idEmiWeb,
     };
 }

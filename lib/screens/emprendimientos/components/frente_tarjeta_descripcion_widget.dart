@@ -29,10 +29,10 @@ class _FrenteTarjetaDescripcionWidgetState extends State<FrenteTarjetaDescripcio
         width: double.infinity,
         height: 275,
         decoration: BoxDecoration(
-          color: widget.emprendimiento.faseEmp.last.fase == "Detenido" ?
+          color: widget.emprendimiento.faseActual == "Detenido" ?
           const Color.fromARGB(207, 255, 64, 128)
           :
-          widget.emprendimiento.faseEmp.last.fase == "Consolidado" ?
+          widget.emprendimiento.faseActual == "Consolidado" ?
           const Color.fromARGB(207, 38, 128, 55)
           :
           const Color(0xB14672FF),
@@ -51,8 +51,8 @@ class _FrenteTarjetaDescripcionWidgetState extends State<FrenteTarjetaDescripcio
           children: [
             InkWell(
               onTap: () async {
-                if (widget.emprendimiento.faseEmp.last.fase != "Detenido" 
-                && widget.emprendimiento.faseEmp.last.fase != "Consolidado") {
+                if (widget.emprendimiento.faseActual != "Detenido" 
+                && widget.emprendimiento.faseActual != "Consolidado") {
                   await Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -103,7 +103,7 @@ class _FrenteTarjetaDescripcionWidgetState extends State<FrenteTarjetaDescripcio
                   ),
                   Text(
                     widget.emprendimiento
-                            .faseEmp.last.fase,
+                            .faseActual,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTheme.of(context)
@@ -164,9 +164,9 @@ class _FrenteTarjetaDescripcionWidgetState extends State<FrenteTarjetaDescripcio
                   ),
                 ),
                 Visibility(
-                  visible: widget.emprendimiento.faseEmp.last.fase != "Inscrito" &&
-                  widget.emprendimiento.faseEmp.last.fase != "Jornada 1" &&
-                  widget.emprendimiento.faseEmp.last.fase != "Jornada 2" &&
+                  visible: widget.emprendimiento.faseActual != "Inscrito" &&
+                  widget.emprendimiento.faseActual != "Jornada 1" &&
+                  widget.emprendimiento.faseActual != "Jornada 2" &&
                   widget.emprendimiento.archivado != true,
                   child: const Padding(
                     padding: EdgeInsetsDirectional

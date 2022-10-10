@@ -6,7 +6,6 @@ import 'package:bizpro_app/modelsPocketbase/get_tipo_proyecto.dart';
 import 'package:bizpro_app/modelsPocketbase/get_comunidades.dart';
 import 'package:bizpro_app/modelsPocketbase/get_condiciones_pago.dart';
 import 'package:bizpro_app/modelsPocketbase/get_estado_inversiones.dart';
-import 'package:bizpro_app/modelsPocketbase/get_estados_prod_cotizados.dart';
 import 'package:bizpro_app/modelsPocketbase/get_familia_productos.dart';
 import 'package:bizpro_app/modelsPocketbase/get_fases_emp.dart';
 import 'package:bizpro_app/modelsPocketbase/get_municipios.dart';
@@ -66,7 +65,6 @@ class CatalogPocketbaseRecoverProvider extends ChangeNotifier {
     await getProveedoresAgain();
     await getProductosProvAgain();
     await getProdProyectoAgain();
-    await getEstadosProdCotizadosAgain();
     print("Proceso terminado");
     procesoterminado = true;
     procesocargando = false;
@@ -74,16 +72,18 @@ class CatalogPocketbaseRecoverProvider extends ChangeNotifier {
     
   }
 
-  Future<void> getEstadosAgain() async {
-    if (!dataBase.estadosBox.isEmpty()) {
-      final records = await client.records.
-      getFullList('estados', batch: 200, sort: '+nombre_estado');
+  Future<bool> getEstadosAgain() async {
+    //Se recupera toda la colección de estados en Pocketbase
+    final records = await client.records.
+    getFullList('estados', batch: 200, sort: '+nombre_estado');
+    if (records.isNotEmpty) {
+      //Existen datos de estados en Pocketbase
       final List<GetEstados> listEstados = [];
       for (var element in records) {
         listEstados.add(getEstadosFromMap(element.toString()));
       }
-      print("*****Informacion estados*****");
       for (var i = 0; i < listEstados.length; i++) {
+        //Se valida que el nuevo estado aún no existe en Objectbox
         final estadoExistente = dataBase.estadosBox.query(Estados_.idDBR.equals(listEstados[i].id)).build().findUnique();
         if (estadoExistente == null) {
           if (listEstados[i].id.isNotEmpty) {
@@ -91,13 +91,15 @@ class CatalogPocketbaseRecoverProvider extends ChangeNotifier {
             nombre: listEstados[i].nombreEstado,
             activo: listEstados[i].activo,
             idDBR: listEstados[i].id, 
-            idEmiWeb: 0,
+            idEmiWeb: "0",
             );
             dataBase.estadosBox.put(nuevoEstado);
-            print('Estado agregado exitosamente');
+            print('Estado Nuevo agregado exitosamente');
           }
         } else {
+          //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
           if (estadoExistente.fechaRegistro != listEstados[i].updated) {
+            //Se actualiza el registro en Objectbox
             estadoExistente.nombre = listEstados[i].nombreEstado;
             estadoExistente.activo = listEstados[i].activo;
             estadoExistente.fechaRegistro = listEstados[i].updated!;
@@ -105,8 +107,11 @@ class CatalogPocketbaseRecoverProvider extends ChangeNotifier {
           }
         }
       }
-      notifyListeners();
-      }
+      return true;
+    } else {
+      //No existen datos de estados en Pocketbase
+      return false;
+    }
   }
 
   Future<void> getMunicipiosAgain() async {
@@ -127,7 +132,7 @@ class CatalogPocketbaseRecoverProvider extends ChangeNotifier {
         nombre: listMunicipios[i].nombreMunicipio,
         activo: listMunicipios[i].activo,
         idDBR: listMunicipios[i].id, 
-        idEmiWeb: 0,
+        idEmiWeb: "0",
         );
         if (estado != null) {
           nuevoMunicipio.estados.target = estado;
@@ -167,7 +172,7 @@ class CatalogPocketbaseRecoverProvider extends ChangeNotifier {
         nombre: listComunidades[i].nombreComunidad,
         activo: listComunidades[i].activo,
         idDBR: listComunidades[i].id, 
-        idEmiWeb: 0,
+        idEmiWeb: "0",
         );
         if (municipio != null) {
           nuevaComunidad.municipios.target = municipio;
@@ -236,7 +241,7 @@ class CatalogPocketbaseRecoverProvider extends ChangeNotifier {
         tipoProyecto: listTipoProyecto[i].tipoProyecto,
         activo: listTipoProyecto[i].activo,
         idDBR: listTipoProyecto[i].id,
-        idEmiWeb: 0,
+        idEmiWeb: "0",
         );
         dataBase.tipoProyectoBox.put(nuevaClasificacionEmp);
         print('Tipo Proyecto agregado exitosamente');
@@ -264,13 +269,13 @@ class CatalogPocketbaseRecoverProvider extends ChangeNotifier {
 
       print("****Informacion catalogos proyectos****");
       for (var i = 0; i < records.length; i++) {
-        final tipoProyecto = dataBase.tipoProyectoBox.query(TipoProyecto_.idDBR.equals(listCatalogoProyecto[i].idTipoProyecto)).build().findUnique();
+        final tipoProyecto = dataBase.tipoProyectoBox.query(TipoProyecto_.idDBR.equals(listCatalogoProyecto[i].idTipoProyectoFk)).build().findUnique();
         final catalogoProyectoExistente = dataBase.catalogoProyectoBox.query(CatalogoProyecto_.idDBR.equals(listCatalogoProyecto[i].id)).build().findUnique();
         if (catalogoProyectoExistente == null) {
         final nuevoCatalogoProyecto = CatalogoProyecto(
         nombre: listCatalogoProyecto[i].nombreProyecto,
         idDBR: listCatalogoProyecto[i].id, 
-        idEmiWeb: 0,
+        idEmiWeb: "0",
         );
         if (tipoProyecto != null) {
           nuevoCatalogoProyecto.tipoProyecto.target = tipoProyecto;
@@ -306,7 +311,8 @@ class CatalogPocketbaseRecoverProvider extends ChangeNotifier {
         nombre: listFamiliaProductos[i].nombreTipoProd,
         activo: listFamiliaProductos[i].activo,
         idDBR: listFamiliaProductos[i].id,
-        fechaRegistro: listFamiliaProductos[i].updated
+        fechaRegistro: listFamiliaProductos[i].updated, 
+        idEmiWeb: "0",
         );
         dataBase.familiaProductosBox.put(nuevaFamiliaProductos);
         print('Familia Productos agregada exitosamente');
@@ -340,7 +346,8 @@ Future<void> getUnidadMedidaAgain() async {
         unidadMedida: listUnidadMedida[i].unidadMedida,
         activo: listUnidadMedida[i].activo,
         idDBR: listUnidadMedida[i].id,
-        fechaRegistro: listUnidadMedida[i].updated
+        fechaRegistro: listUnidadMedida[i].updated, 
+        idEmiWeb: "0",
         );
         dataBase.unidadesMedidaBox.put(nuevaUnidadMedida);
         print('Unidad Medida agregada exitosamente');
@@ -375,7 +382,7 @@ Future<void> getAmbitoConsultoriaAgain() async {
         activo: listAmbitoConsultoria[i].activo,
         idDBR: listAmbitoConsultoria[i].id,
         fechaRegistro: listAmbitoConsultoria[i].updated, 
-        idEmiWeb: 0,
+        idEmiWeb: "0",
         );
         dataBase.ambitoConsultoriaBox.put(nuevoAmbitoConsultoria);
         print('Ambito Consultoria agregado exitosamente');
@@ -408,7 +415,8 @@ Future<void> getFasesEmpAgain() async {
         final nuevaFaseEmp = FasesEmp(
         fase: listFasesEmp[i].fase,
         idDBR: listFasesEmp[i].id,
-        fechaRegistro: listFasesEmp[i].updated
+        fechaRegistro: listFasesEmp[i].updated, 
+        idEmiWeb: "0",
         );
         dataBase.fasesEmpBox.put(nuevaFaseEmp);
         print('Fase emp agregada exitosamente');
@@ -440,7 +448,7 @@ Future<void> getTipoEmpaqueAgain() async {
         tipo: listTipoEmpaques[i].tipoEmpaque,
         idDBR: listTipoEmpaques[i].id,
         activo: listTipoEmpaques[i].activo,
-        fechaRegistro: listTipoEmpaques[i].updated
+        fechaRegistro: listTipoEmpaques[i].updated, idEmiWeb: ''
         );
         dataBase.tipoEmpaquesBox.put(nuevoTipoEmpaque);
         print('Tipo empaque agregado exitosamente');
@@ -472,7 +480,7 @@ Future<void> getEstadoInversionAgain() async {
         final nuevaEstadoInversiones = EstadoInversion(
         estado: listEstadoInversiones[i].estado,
         idDBR: listEstadoInversiones[i].id,
-        fechaRegistro: listEstadoInversiones[i].updated
+        fechaRegistro: listEstadoInversiones[i].updated, idEmiWeb: ''
         );
         dataBase.estadoInversionBox.put(nuevaEstadoInversiones);
         print('Estado inversion agregado exitosamente');
@@ -503,7 +511,8 @@ Future<void> getAreaCirculoAgain() async {
         final nuevaAreaCirculo = AreaCirculo(
         nombreArea: listAreaCirculo[i].nombreArea,
         idDBR: listAreaCirculo[i].id,
-        fechaRegistro: listAreaCirculo[i].updated
+        fechaRegistro: listAreaCirculo[i].updated, 
+        idEmiWeb: "0",
         );
         dataBase.areaCirculoBox.put(nuevaAreaCirculo);
         print('Area circulo agregado exitosamente');
@@ -535,7 +544,7 @@ Future<void> getTipoProveedorAgain() async {
         tipo: listTipoProveedor[i].tipoProveedor,
         idDBR: listTipoProveedor[i].id,
         activo: listTipoProveedor[i].activo,
-        fechaRegistro: listTipoProveedor[i].updated
+        fechaRegistro: listTipoProveedor[i].updated, idEmiWeb: ''
         );
         dataBase.tipoProveedorBox.put(nuevoTipoProveedor);
         print('Tipo proveedor agregado exitosamente');
@@ -568,7 +577,7 @@ Future<void> getCondicionesPagoAgain() async {
         condicion: listCondicionesPago[i].condicionPago,
         idDBR: listCondicionesPago[i].id,
         activo: listCondicionesPago[i].activo,
-        fechaRegistro: listCondicionesPago[i].updated
+        fechaRegistro: listCondicionesPago[i].updated, idEmiWeb: ''
         );
         dataBase.condicionesPagoBox.put(nuevaCondicionPago);
         print('Condición pago agregada exitosamente');
@@ -601,7 +610,7 @@ Future<void> getCondicionesPagoAgain() async {
         banco: listBancos[i].nombreBanco,
         idDBR: listBancos[i].id,
         activo: listBancos[i].activo,
-        fechaRegistro: listBancos[i].updated
+        fechaRegistro: listBancos[i].updated, idEmiWeb: ''
         );
         dataBase.bancosBox.put(nuevoBanco);
         print('Banco agregado exitosamente');
@@ -633,8 +642,8 @@ Future<void> getPorcentajeAvanceAgain() async {
         final nuevoPorcentaje = PorcentajeAvance(
         porcentajeAvance: listPorcentaje[i].porcentaje,
         idDBR: listPorcentaje[i].id,
-        activo: listPorcentaje[i].activo,
-        fechaRegistro: listPorcentaje[i].updated
+        fechaRegistro: listPorcentaje[i].updated, 
+        idEmiWeb: ''
         );
         dataBase.porcentajeAvanceBox.put(nuevoPorcentaje);
         print('Porcentaje agregado exitosamente');
@@ -642,7 +651,6 @@ Future<void> getPorcentajeAvanceAgain() async {
           if (porcentajeExistente.fechaRegistro != listPorcentaje[i].updated) {
             porcentajeExistente.porcentajeAvance = listPorcentaje[i].porcentaje;
             porcentajeExistente.fechaRegistro = listPorcentaje[i].updated!;
-            porcentajeExistente.activo = listPorcentaje[i].activo;
             dataBase.porcentajeAvanceBox.put(porcentajeExistente);
           }
         }
@@ -816,36 +824,5 @@ Future<void> getProductosProvAgain() async {
       notifyListeners();
       }
     }
-
-Future<void> getEstadosProdCotizadosAgain() async {
-    if (!dataBase.estadosProductoCotizadosBox.isEmpty()) {
-      final records = await client.records.
-      getFullList('estado_prod_cotizados', batch: 200, sort: '+estado');
-      final List<GetEstadosProdCotizados> listEstadosProdCotizados = [];
-      for (var element in records) {
-        listEstadosProdCotizados.add(getEstadosProdCotizadosFromMap(element.toString()));
-      }
-      print("****Informacion estado prod cotizado****");
-      for (var i = 0; i < records.length; i++) {
-        final estadoProdCotizadoExistente = dataBase.estadosProductoCotizadosBox.query(EstadoProdCotizado_.idDBR.equals(listEstadosProdCotizados[i].id)).build().findUnique();
-        if (estadoProdCotizadoExistente == null) {
-        final nuevoEstadoProdCotizado = EstadoProdCotizado(
-        estado: listEstadosProdCotizados[i].estado,
-        idDBR: listEstadosProdCotizados[i].id,
-        fechaRegistro: listEstadosProdCotizados[i].updated
-        );
-        dataBase.estadosProductoCotizadosBox.put(nuevoEstadoProdCotizado);
-        print('Estado prod Cotizado agregado exitosamente');
-        } else {
-          if (estadoProdCotizadoExistente.fechaRegistro != listEstadosProdCotizados[i].updated) {
-            estadoProdCotizadoExistente.estado = listEstadosProdCotizados[i].estado;
-            estadoProdCotizadoExistente.fechaRegistro = listEstadosProdCotizados[i].updated!;
-            dataBase.estadosProductoCotizadosBox.put(estadoProdCotizadoExistente);
-          }
-        }
-      }
-      notifyListeners();
-    }
-  }
 
 }

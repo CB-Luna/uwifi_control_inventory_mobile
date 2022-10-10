@@ -22,9 +22,9 @@ class _TargetaDescripcionWidgetState extends State<TargetaDescripcionWidget> {
   @override
   Widget build(BuildContext context) {
     return FlipCard(
-      flipOnTouch: widget.emprendimiento.faseEmp.last.fase != "Inscrito" &&
-      widget.emprendimiento.faseEmp.last.fase != "Jornada 1" &&
-      widget.emprendimiento.faseEmp.last.fase != "Jornada 2" &&
+      flipOnTouch: widget.emprendimiento.faseActual != "Inscrito" &&
+      widget.emprendimiento.faseActual != "Jornada 1" &&
+      widget.emprendimiento.faseActual != "Jornada 2" &&
       widget.emprendimiento.archivado != true,
       front: FrenteTarjetaDescripcionWidget(emprendimiento: widget.emprendimiento), 
       back: ReversoTarjetaDescripcionWidget(

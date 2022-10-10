@@ -5,8 +5,6 @@ import 'package:bizpro_app/objectbox.g.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/modelsPocketbase/get_prod_cotizados.dart';
-import 'package:bizpro_app/util/flutter_flow_util.dart';
-import 'package:http/http.dart';
 
 class SyncProviderEmiWeb extends ChangeNotifier {
   bool procesoterminado = false;
@@ -1052,7 +1050,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           "id_prioridad_fk": "yuEVuBv9rxLM4cR",
           "id_nombre_proyecto_fk": "xXVloemN098DiKW",
           "id_proveedor_fk": "",
-          "id_fase_emp_fk": emprendimiento.faseEmp.last.fase,
+          "id_fase_emp_fk": emprendimiento.faseEmp.firstWhere((element) => element.fase == emprendimiento.faseActual).idDBR,
           "id_status_sync_fk": "HoI36PzYw1wtbO1",
           "id_emprendedor_fk": emprendimiento.emprendedor.target!.idDBR,
       });
@@ -1699,8 +1697,8 @@ void deleteBitacora() {
     try {
       print("Estoy en syncAddInversion");
       //Primero creamos la inversion  
-      //Se busca el estado de inversión 'En cotización'
-      final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En cotización")).build().findFirst();
+      //Se busca el estado de inversión 'En Cotización'
+      final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En Cotización")).build().findFirst();
       if (newEstadoInversion != null) {
         print("Datos inversion");
         print(inversion.estadoInversion);
@@ -1819,8 +1817,8 @@ void deleteBitacora() {
   Future<bool?> syncUpdateInversion(Inversiones inversion) async {
     try {
       print("Estoy en syncUpdateInversion"); 
-      //Se busca el estado de inversión 'En cotización'
-      final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En cotización")).build().findFirst();
+      //Se busca el estado de inversión 'En Cotización'
+      final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En Cotización")).build().findFirst();
       if (newEstadoInversion != null) {
         print("Datos inversion");
         print(inversion.estadoInversion);
@@ -1919,24 +1917,18 @@ void deleteBitacora() {
 // VALIDAR QUE HAYA INFO EN EK BACKEND
   Future<bool> validateLengthCotizacion(InversionesXProdCotizados inversionXprodCotizados) async {
     print("Id Inversion: ${inversionXprodCotizados.idDBR}");
-    final estadoProdCotizado = dataBase.estadosProductoCotizadosBox.query(EstadoProdCotizado_.estado.equals("Creado")).build().findUnique();
-    if (estadoProdCotizado != null) {
       final records = await client.records.
       getFullList('productos_cotizados', 
       batch: 200, 
       filter: "id_inversion_x_prod_cotizados_fk='${
         inversionXprodCotizados.idDBR
-        }' && id_estado_prod_cotizado_fk='${
-          estadoProdCotizado.idDBR}'");
+        }'");
       if (records.isEmpty) {
         return false;
       } else {
         print("No está vacio");
         print("tamaño: ${records.length}");
         return true;
-    }
-    } else {
-      return false;
     }
   }
 
@@ -1981,14 +1973,12 @@ void deleteBitacora() {
   Future<void> getCotizacion(Emprendimientos emprendimiento, Inversiones inversion, InversionesXProdCotizados inversionXprodCotizados) async {
     //obtenemos los productos cotizados
     print("Tamaño ProdCotizados al principio: ${dataBase.productosCotBox.getAll().length}");
-    final estadoProdCotizado = dataBase.estadosProductoCotizadosBox.query(EstadoProdCotizado_.estado.equals("Creado")).build().findUnique();
     final records = await client.records.
       getFullList('productos_cotizados', 
       batch: 200, 
       filter: "id_inversion_x_prod_cotizados_fk='${
         inversionXprodCotizados.idDBR
-        }' && id_estado_prod_cotizado_fk='${
-          estadoProdCotizado!.idDBR}'");
+        }'");
     final List<GetProdCotizados> listProdCotizados = [];
     for (var element in records) {
       listProdCotizados.add(getProdCotizadosFromMap(element.toString()));
@@ -2005,10 +1995,8 @@ void deleteBitacora() {
       );
       final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
       final productoProv = dataBase.productosProvBox.query(ProductosProv_.idDBR.equals(listProdCotizados[i].idProductoProvFk)).build().findUnique();
-      final estadoProdCotizado = dataBase.estadosProductoCotizadosBox.query(EstadoProdCotizado_.idDBR.equals(listProdCotizados[i].idEstadoProdCotizadoFk)).build().findUnique();
-      if (productoProv != null && estadoProdCotizado != null) {
+      if (productoProv != null) {
         nuevoProductoCotizado.statusSync.target = nuevoSync;
-        nuevoProductoCotizado.estadoProdCotizado.target = estadoProdCotizado;
         nuevoProductoCotizado.inversionXprodCotizados.target = inversionXprodCotizados;
         nuevoProductoCotizado.productosProv.target = productoProv;
         dataBase.productosCotBox.put(nuevoProductoCotizado);

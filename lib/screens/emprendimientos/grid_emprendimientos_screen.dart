@@ -262,10 +262,10 @@ class _GridEmprendimientosScreenState extends State<GridEmprendimientosScreen> {
                                       width: 250,
                                       height: 200,
                                       decoration: BoxDecoration(
-                                        color: emprendimiento.faseEmp.last.fase == "Detenido" ?
+                                        color: emprendimiento.faseActual == "Detenido" ?
                                         const Color.fromARGB(207, 255, 64, 128)
                                         :
-                                        emprendimiento.faseEmp.last.fase == "Consolidado" ?
+                                        emprendimiento.faseActual == "Consolidado" ?
                                         const Color.fromARGB(207, 38, 128, 55)
                                         :
                                         const Color(0xB14672FF),
@@ -286,8 +286,8 @@ class _GridEmprendimientosScreenState extends State<GridEmprendimientosScreen> {
                                         children: [
                                           InkWell(
                                             onTap: () async {
-                                              if (emprendimiento.faseEmp.last.fase != "Detenido" 
-                                                && emprendimiento.faseEmp.last.fase != "Consolidado") {
+                                              if (emprendimiento.faseActual != "Detenido" 
+                                                && emprendimiento.faseActual != "Consolidado") {
                                                 await Navigator.push(
                                                   context,
                                                   MaterialPageRoute(

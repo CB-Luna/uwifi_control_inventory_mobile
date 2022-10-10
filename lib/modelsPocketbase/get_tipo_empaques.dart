@@ -13,6 +13,7 @@ class GetTipoEmpaques {
         required this.updated,
         required this.tipoEmpaque,
         required this.activo,
+        required this.idEmiWeb,
     });
 
     final String collectionId;
@@ -22,6 +23,7 @@ class GetTipoEmpaques {
     final DateTime? updated;
     final String tipoEmpaque;
     final bool activo;
+    final String idEmiWeb;
 
     factory GetTipoEmpaques.fromMap(Map<String, dynamic> json) => GetTipoEmpaques(
         collectionId: json["@collectionId"],
@@ -31,6 +33,7 @@ class GetTipoEmpaques {
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
         tipoEmpaque: json["tipo_empaque"],
         activo: json["activo"],
+        idEmiWeb: json["id_emi_web"],
     );
 
     Map<String, dynamic> toMap() => {
@@ -41,5 +44,6 @@ class GetTipoEmpaques {
         "updated": updated == null ? null : updated!.toIso8601String(),
         "tipo_empaque": tipoEmpaque,
         "activo": activo,
+        "id_emi_web": idEmiWeb,
     };
 }

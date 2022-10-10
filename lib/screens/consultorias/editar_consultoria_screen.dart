@@ -799,7 +799,7 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                   final idPorcentajeAvance = dataBase.porcentajeAvanceBox
                                     .query(PorcentajeAvance_
                                     .porcentajeAvance.
-                                    equals(int.parse(consultoriaProvider.porcentaje)))
+                                    equals(consultoriaProvider.porcentaje))
                                     .build()
                                     .findFirst()
                                     ?.id;

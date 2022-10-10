@@ -128,9 +128,9 @@ class _MainTabOpcionesScreenState extends State<MainTabOpcionesScreen>
                             Visibility(
                               visible: actualInversion!.estadoInversion.target!.estado == "Autorizada" ||
                               actualInversion!.estadoInversion.target!.estado == "Comprada" || 
-                              actualInversion!.estadoInversion.target!.estado == "Entregada al promotor" ||
-                              actualInversion!.estadoInversion.target!.estado == "Entregada al emprendedor" ||
-                              actualInversion!.estadoInversion.target!.estado == "Pagada",
+                              actualInversion!.estadoInversion.target!.estado == "Entregada Al Promotor" ||
+                              actualInversion!.estadoInversion.target!.estado == "Entregada Al Emprendedor" ||
+                              actualInversion!.estadoInversion.target!.estado == "Pagado",
                               child: Container(
                                 width: 45,
                                 height: 40,

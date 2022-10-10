@@ -14,6 +14,8 @@ class GetTipoProyecto {
         required this.tipoProyecto,
         required this.idStatusSyncFk,
         required this.activo,
+        required this.field,
+        required this.idEmiWeb,
     });
 
     final String collectionId;
@@ -24,6 +26,8 @@ class GetTipoProyecto {
     final String tipoProyecto;
     final String idStatusSyncFk;
     final bool activo;
+    final String field;
+    final String idEmiWeb;
 
     factory GetTipoProyecto.fromMap(Map<String, dynamic> json) => GetTipoProyecto(
         collectionId: json["@collectionId"],
@@ -34,6 +38,8 @@ class GetTipoProyecto {
         tipoProyecto: json["tipo_proyecto"],
         idStatusSyncFk: json["id_status_sync_fk"],
         activo: json["activo"],
+        field: json["field"],
+        idEmiWeb: json["id_emi_web"],
     );
 
     Map<String, dynamic> toMap() => {
@@ -45,5 +51,7 @@ class GetTipoProyecto {
         "tipo_proyecto": tipoProyecto,
         "id_status_sync_fk": idStatusSyncFk,
         "activo": activo,
+        "field": field,
+        "id_emi_web": idEmiWeb,
     };
 }
