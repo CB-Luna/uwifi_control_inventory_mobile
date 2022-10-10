@@ -132,7 +132,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   DetalleEmprendimientoScreen(
-                                                    emprendimiento: actualEmprendimiento!,
+                                                    idEmprendimiento: actualEmprendimiento!.id,
                                                     ),
                                             ),
                                           );

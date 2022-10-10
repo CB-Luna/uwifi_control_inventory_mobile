@@ -790,7 +790,7 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const JornadaCreada(),
+                                    builder: (context) =>  JornadaCreada(idEmprendimiento:widget.emprendimiento.id),
                                   ),
                                 );
                               } else {

@@ -142,8 +142,8 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     DetalleEmprendimientoScreen(
-                                                        emprendimiento:
-                                                            widget.jornada.emprendimiento.target!),
+                                                        idEmprendimiento:
+                                                            widget.jornada.emprendimiento.target!.id),
                                               ),
                                             );
                                         },

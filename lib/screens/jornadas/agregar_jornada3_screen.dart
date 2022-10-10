@@ -189,7 +189,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                           MaterialPageRoute(
                                           builder: (context) =>
                                               DetalleEmprendimientoScreen(
-                                                emprendimiento: widget.emprendimiento,
+                                                idEmprendimiento: widget.emprendimiento.id,
                                                 ),
                                               ),
                                           );
@@ -1219,7 +1219,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          const JornadaCreada(),
+                                           JornadaCreada(idEmprendimiento: widget.emprendimiento.id,),
                                     ),
                                   );
                                 }

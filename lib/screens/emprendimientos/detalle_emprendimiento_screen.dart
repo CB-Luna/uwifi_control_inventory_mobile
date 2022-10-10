@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimiento_consolidado_screen.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimiento_detenido_screen.dart';
@@ -15,11 +16,11 @@ import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/emprendimientos/editar_emprendimiento.dart';
 
 class DetalleEmprendimientoScreen extends StatefulWidget {
-  final Emprendimientos emprendimiento;
+  final int idEmprendimiento;
 
   const DetalleEmprendimientoScreen({
     Key? key,
-    required this.emprendimiento,
+    required this.idEmprendimiento,
   }) : super(key: key);
 
   @override
@@ -30,21 +31,29 @@ class DetalleEmprendimientoScreen extends StatefulWidget {
 class _DetalleEmprendimientoScreenState
     extends State<DetalleEmprendimientoScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
+Emprendimientos? emprendimientoActual;
+  @override
+  void initState() {
+    super.initState();
+    emprendimientoActual =
+        dataBase.emprendimientosBox.get(widget.idEmprendimiento);
+    if (emprendimientoActual != null) {
+    }
+  }
   @override
   Widget build(BuildContext context) {
     final emprendimientoProvider = Provider.of<EmprendimientoController>(context);
     String emprendedor = "";
-    if (widget.emprendimiento.emprendedor.target != null) {
+    if (emprendimientoActual!.emprendedor.target != null) {
       emprendedor =
-          "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
+          "${emprendimientoActual!.emprendedor.target!.nombre} ${emprendimientoActual!.emprendedor.target!.apellidos}";
     }
     final List<Jornadas> jornadas = [];
-    for (var element in widget.emprendimiento.jornadas) {
+    for (var element in emprendimientoActual!.jornadas) {
       jornadas.add(element);
     }
     final List<Consultorias> consultorias = [];
-    for (var element in widget.emprendimiento.consultorias) {
+    for (var element in emprendimientoActual!.consultorias) {
       consultorias.add(element);
     }
     return WillPopScope(
@@ -81,7 +90,7 @@ class _DetalleEmprendimientoScreenState
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 image: FileImage(
-                                    File(widget.emprendimiento.imagen)),
+                                    File(emprendimientoActual!.imagen)),
                                 fit: BoxFit.cover,
                                 filterQuality: FilterQuality.high,
                               ),
@@ -160,9 +169,9 @@ class _DetalleEmprendimientoScreenState
                                   ),
                                   child: InkWell(
                                     onTap: () async {
-                                      if (widget.emprendimiento.usuario.target!.rol.target!.rol == "Voluntario Estratégico" ||
-                                          widget.emprendimiento.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
-                                          widget.emprendimiento.usuario.target!.rol.target!.rol == "Emprendedor") {
+                                      if (emprendimientoActual!.usuario.target!.rol.target!.rol == "Voluntario Estratégico" ||
+                                          emprendimientoActual!.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
+                                          emprendimientoActual!.usuario.target!.rol.target!.rol == "Emprendedor") {
                                         snackbarKey.currentState
                                             ?.showSnackBar(const SnackBar(
                                           content: Text(
@@ -175,7 +184,7 @@ class _DetalleEmprendimientoScreenState
                                               builder: (context) =>
                                                   EditarEmprendimientoScreen(
                                                       emprendimiento:
-                                                          widget.emprendimiento)),
+                                                          emprendimientoActual!)),
                                         );
                                       }
                                     },
@@ -200,7 +209,7 @@ class _DetalleEmprendimientoScreenState
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Text(
-                                  widget.emprendimiento.nombre,
+                                  emprendimientoActual!.nombre,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style:
@@ -236,9 +245,9 @@ class _DetalleEmprendimientoScreenState
                                         children: [
                                           InkWell(
                                             onTap: () async {
-                                              if (widget.emprendimiento.usuario.target!.rol.target!.rol == "Voluntario Estratégico" ||
-                                                  widget.emprendimiento.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
-                                                  widget.emprendimiento.usuario.target!.rol.target!.rol == "Emprendedor") {
+                                              if (emprendimientoActual!.usuario.target!.rol.target!.rol == "Voluntario Estratégico" ||
+                                                  emprendimientoActual!.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
+                                                  emprendimientoActual!.usuario.target!.rol.target!.rol == "Emprendedor") {
                                                 snackbarKey.currentState
                                                     ?.showSnackBar(const SnackBar(
                                                   content: Text(
@@ -252,7 +261,7 @@ class _DetalleEmprendimientoScreenState
                                                       const BottomSheetDetenerEmprendimiento(),
                                                 );
                                                 if (option == 'aceptar') {
-                                                  emprendimientoProvider.detenerEmprendimiento(widget.emprendimiento.id);
+                                                  emprendimientoProvider.detenerEmprendimiento(emprendimientoActual!.id);
                                                   // ignore: use_build_context_synchronously
                                                   await Navigator.push(
                                                   context,
@@ -285,8 +294,8 @@ class _DetalleEmprendimientoScreenState
                                       ),
                                     ),
                                     Visibility(
-                                      visible: widget.emprendimiento.faseEmp.last.fase == "Jornada 4" ||
-                                      widget.emprendimiento.faseEmp.last.fase == "Consultoría",
+                                      visible: emprendimientoActual!.faseEmp.last.fase == "Jornada 4" ||
+                                      emprendimientoActual!.faseEmp.last.fase == "Consultoría",
                                       child: Container(
                                         width: 60,
                                         height: 50,
@@ -300,9 +309,9 @@ class _DetalleEmprendimientoScreenState
                                           children: [
                                             InkWell(
                                               onTap: () async {
-                                                if (widget.emprendimiento.usuario.target!.rol.target!.rol == "Voluntario Estratégico" ||
-                                                      widget.emprendimiento.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
-                                                      widget.emprendimiento.usuario.target!.rol.target!.rol == "Emprendedor") {
+                                                if (emprendimientoActual!.usuario.target!.rol.target!.rol == "Voluntario Estratégico" ||
+                                                      emprendimientoActual!.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
+                                                      emprendimientoActual!.usuario.target!.rol.target!.rol == "Emprendedor") {
                                                     snackbarKey.currentState
                                                         ?.showSnackBar(const SnackBar(
                                                       content: Text(
@@ -316,7 +325,7 @@ class _DetalleEmprendimientoScreenState
                                                           const BottomSheetConsolidarEmprendimiento(),
                                                     );
                                                     if (option == 'aceptar') {
-                                                      emprendimientoProvider.consolidarEmprendimiento(widget.emprendimiento.id);
+                                                      emprendimientoProvider.consolidarEmprendimiento(emprendimientoActual!.id);
                                                       // ignore: use_build_context_synchronously
                                                       await Navigator.push(
                                                       context,
@@ -358,7 +367,7 @@ class _DetalleEmprendimientoScreenState
                       ),
                       CuerpoDetalleEmprendimiento(
                         emprendimiento: 
-                        widget.emprendimiento
+                        emprendimientoActual!
                       ),
                     ],
                   ),
@@ -366,7 +375,7 @@ class _DetalleEmprendimientoScreenState
                 //Menu inferior
                 MenuInferiorDetalleEmprendimiento(
                   emprendimiento: 
-                  widget.emprendimiento
+                  emprendimientoActual!
                   ),
               ],
             ),

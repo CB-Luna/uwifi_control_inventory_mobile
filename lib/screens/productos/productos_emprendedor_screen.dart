@@ -130,8 +130,8 @@ class _ProductosEmprendedorScreenState
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 DetalleEmprendimientoScreen(
-                                              emprendimiento:
-                                                  emprendimientoActual!,
+                                              idEmprendimiento:
+                                                  emprendimientoActual!.id,
                                             ),
                                           ),
                                         );

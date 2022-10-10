@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:bizpro_app/theme/theme.dart';
-
+import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
-class JornadaCreada extends StatefulWidget {
-  const JornadaCreada({Key? key}) : super(key: key);
+import '../emprendimientos/detalle_emprendimiento_screen.dart';
 
+class JornadaCreada extends StatefulWidget {
+  final int idEmprendimiento;
+  const JornadaCreada({Key? key,required this.idEmprendimiento}) : super(key: key);
+  
   @override
   State<JornadaCreada> createState() => _JornadaCreadaState();
 }
@@ -16,6 +19,7 @@ class JornadaCreada extends StatefulWidget {
 class _JornadaCreadaState extends State<JornadaCreada> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -81,7 +85,7 @@ class _JornadaCreadaState extends State<JornadaCreada> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const EmprendimientosScreen(),
+                                   DetalleEmprendimientoScreen(idEmprendimiento: widget.idEmprendimiento),
                             ),
                           );
                         },

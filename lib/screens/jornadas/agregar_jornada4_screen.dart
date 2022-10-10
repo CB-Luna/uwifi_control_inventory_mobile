@@ -646,7 +646,7 @@ class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          const JornadaCreada(),
+                                           JornadaCreada(idEmprendimiento: widget.emprendimiento.id,),
                                     ));
                               } else {
                                 await showDialog(

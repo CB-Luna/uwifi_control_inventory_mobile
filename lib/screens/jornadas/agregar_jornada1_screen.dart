@@ -48,6 +48,7 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
     final jornadaProvider = Provider.of<JornadaController>(context);
     final emprendimientoProvider =
         Provider.of<EmprendimientoController>(context);
+    
     String emprendedor = "";
     if (widget.emprendimiento.emprendedor.target != null) {
       emprendedor =
@@ -557,7 +558,7 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const JornadaCreada(),
+                                    builder: (context) =>  JornadaCreada(idEmprendimiento: widget.emprendimiento.id),
                                   ),
                                 );
                               } else {

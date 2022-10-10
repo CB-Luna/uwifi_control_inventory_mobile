@@ -58,7 +58,7 @@ class _FrenteTarjetaDescripcionWidgetState extends State<FrenteTarjetaDescripcio
                   MaterialPageRoute(
                     builder: (context) =>
                         DetalleEmprendimientoScreen(
-                      emprendimiento: widget.emprendimiento,
+                      idEmprendimiento: widget.emprendimiento.id,
                     ),
                   ),
                 );
