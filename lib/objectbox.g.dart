@@ -1728,7 +1728,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(48, 5212286852224162052),
       name: 'Inversiones',
-      lastPropertyId: const IdUid(13, 5805002687075125842),
+      lastPropertyId: const IdUid(14, 1754855625365573914),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -2998,7 +2998,8 @@ ModelDefinition getObjectBoxModel() {
         329513595407028238,
         8604127764333477699,
         3921580369470275470,
-        4505898125473094823
+        4505898125473094823,
+        1754855625365573914
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -4973,7 +4974,7 @@ ModelDefinition getObjectBoxModel() {
         objectToFB: (Inversiones object, fb.Builder fbb) {
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(14);
+          fbb.startTable(15);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.fechaCompra?.millisecondsSinceEpoch);
           fbb.addInt64(2, object.porcentajePago);

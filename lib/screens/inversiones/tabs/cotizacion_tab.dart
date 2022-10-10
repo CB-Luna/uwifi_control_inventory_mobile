@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/screens/inversiones/cotizacion_simulada_exitosamente.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -410,49 +411,51 @@ with TickerProviderStateMixin {
                                   && widget.emprendimiento.usuario.target!.rol.target!.rol != "Emprendedor") {
                                     switch (widget.inversion.estadoInversion.target!.estado) {
                                       case "Solicitada":
-                                        snackbarKey.currentState
-                                          ?.showSnackBar(const SnackBar(
-                                        content: Text(
-                                            "Primero debes sincronizar tu información."),
-                                        ));
-                                        break;
-                                      case "En Cotización":
-                                        final connectivityResult =
+                                        if(widget.inversion.idDBR != null){
+                                          final connectivityResult =
                                           await (Connectivity().checkConnectivity());
-                                        if(connectivityResult == ConnectivityResult.none) {
-                                          snackbarKey.currentState
-                                            ?.showSnackBar(const SnackBar(
-                                          content: Text(
-                                              "Necesitas conexión a internet para obtener la cotización."),
-                                          ));
-                                        }
-                                        else {
-                                          print("Holaaaaaaaa 2");
-                                          print(widget.inversionesXprodCotizados.idDBR);
-                                        if (await syncProviderPocketbase.validateLengthCotizacion(widget.inversionesXprodCotizados, widget.inversion)) {
-                                          syncProviderPocketbase.procesoCargando(true);
-                                          syncProviderPocketbase.procesoTerminado(false);
-                                          // ignore: use_build_context_synchronously
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => CotizacionesScreen(
-                                                    emprendimiento: widget.emprendimiento, 
-                                                    inversion: widget.inversion,
-                                                    inversionesXProdCotizados: widget.inversionesXprodCotizados,
-                                              ),
-                                            ),
-                                          );
+                                          if(connectivityResult == ConnectivityResult.none) {
+                                            snackbarKey.currentState
+                                              ?.showSnackBar(const SnackBar(
+                                            content: Text(
+                                                "Necesitas conexión a internet para obtener la cotización."),
+                                            ));
+                                          }
+                                          else {
+                                            print("Holaaaaaaaa 2");
+                                            print(widget.inversionesXprodCotizados.idDBR);
+                                            if (await syncProviderPocketbase.validateLengthCotizacion(widget.inversionesXprodCotizados, widget.inversion)) {
+                                              syncProviderPocketbase.procesoCargando(true);
+                                              syncProviderPocketbase.procesoTerminado(false);
+                                              // ignore: use_build_context_synchronously
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => CotizacionesScreen(
+                                                        emprendimiento: widget.emprendimiento, 
+                                                        inversion: widget.inversion,
+                                                        inversionesXProdCotizados: widget.inversionesXprodCotizados,
+                                                  ),
+                                                ),
+                                              );
+                                            } else {
+                                              snackbarKey.currentState
+                                                ?.showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "Aún no hay datos de cotización de esta inversión."),
+                                              ));
+                                            }
+                                          }
+                                          break;
                                         } else {
                                           snackbarKey.currentState
-                                            ?.showSnackBar(const SnackBar(
+                                          ?.showSnackBar(const SnackBar(
                                           content: Text(
-                                              "Aún no hay datos de cotización de esta inversión."),
+                                              "Primero debes sincronizar tu información."),
                                           ));
+                                          break;
                                         }
-                                        }
-                                        break;
-                                      case "Cotizada":
+                                      case "En Cotización":
                                         snackbarKey.currentState
                                           ?.showSnackBar(const SnackBar(
                                         content: Text(
@@ -704,7 +707,7 @@ with TickerProviderStateMixin {
                       },
                     ),
                     Visibility(
-                      visible: widget.inversion.estadoInversion.target!.estado == "En Cotización",
+                      visible: widget.inversion.estadoInversion.target!.estado == "Solicitada",
                       child: Padding(
                         padding:
                             const EdgeInsetsDirectional
@@ -723,45 +726,53 @@ with TickerProviderStateMixin {
                                     if (widget.emprendimiento.usuario.target!.rol.target!.rol != "Amigo del Cambio"
                                     && widget.emprendimiento.usuario.target!.rol.target!.rol != "Emprendedor")
                                      {
-                                    final connectivityResult =
+                                      if(widget.inversion.idDBR != null){
+                                        final connectivityResult =
                                         await (Connectivity().checkConnectivity());
-                                    if (connectivityResult == ConnectivityResult.none) 
-                                    {
-                                      snackbarKey.currentState
-                                      ?.showSnackBar(const SnackBar(
-                                      content: Text(
-                                          "Necesitas conexión a internet para simular la cotización."),
-                                      ));
-                                    } else{
-                                      if (await syncProviderPocketbase.validateLengthCotizacion(widget.inversionesXprodCotizados, widget.inversion)) {
+                                      if (connectivityResult == ConnectivityResult.none) 
+                                      {
                                         snackbarKey.currentState
-                                          ?.showSnackBar(const SnackBar(
+                                        ?.showSnackBar(const SnackBar(
                                         content: Text(
-                                            "Ya se ha simulado la cotización, ahora presione '+Obtener cotización'."),
+                                            "Necesitas conexión a internet para simular la cotización."),
                                         ));
-                                      } else {
-                                        if(await syncProviderPocketbase.simularCotizacion(widget.inversion))
-                                         {
-                                          // ignore: use_build_context_synchronously
-                                          await Navigator
-                                          .push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder:
-                                                  (context) =>
-                                                      CotizacionSimuladaExitosamente(idEmprendimiento: widget.emprendimiento.id),
-                                            ),
-                                          );
-                                        }
-                                        else{
+                                      } else{
+                                        if (await syncProviderPocketbase.validateLengthCotizacion(widget.inversionesXprodCotizados, widget.inversion)) {
                                           snackbarKey.currentState
-                                          ?.showSnackBar(const SnackBar(
+                                            ?.showSnackBar(const SnackBar(
                                           content: Text(
-                                              "Falló al momento de simular la cotización."),
+                                              "Ya se ha simulado la cotización, ahora presione '+Obtener cotización'."),
                                           ));
+                                        } else {
+                                          if(await syncProviderPocketbase.simularCotizacion(widget.inversion))
+                                          {
+                                            // ignore: use_build_context_synchronously
+                                            await Navigator
+                                            .push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder:
+                                                    (context) =>
+                                                        CotizacionSimuladaExitosamente(idEmprendimiento: widget.emprendimiento.id),
+                                              ),
+                                            );
+                                          }
+                                          else{
+                                            snackbarKey.currentState
+                                            ?.showSnackBar(const SnackBar(
+                                            content: Text(
+                                                "Falló al momento de simular la cotización."),
+                                            ));
+                                          }
                                         }
                                       }
-                                    }
+                                      } else {
+                                        snackbarKey.currentState
+                                          ?.showSnackBar(const SnackBar(
+                                          content: Text(
+                                              "Primero debes sincronizar tu información."),
+                                          ));
+                                      }
                                     } else {
                                     snackbarKey.currentState
                                         ?.showSnackBar(const SnackBar(
@@ -809,7 +820,7 @@ with TickerProviderStateMixin {
                       ),
                     ),
                     Visibility(
-                      visible: widget.inversion.estadoInversion.target!.estado == "Cotizada",
+                      visible: widget.inversion.estadoInversion.target!.estado == "En Cotización",
                       child: Column(
                         children: [
                         Padding(

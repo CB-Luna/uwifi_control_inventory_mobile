@@ -402,7 +402,8 @@ with TickerProviderStateMixin {
                               () async {
                                 if (widget.emprendimiento.usuario.target!.rol.target!.rol != "Amigo del Cambio"
                                 && widget.emprendimiento.usuario.target!.rol.target!.rol != "Emprendedor") {
-                                  if (widget.inversion.estadoInversion.target!.estado == "Solicitada") {
+                                  if (widget.inversion.estadoInversion.target!.estado == "Solicitada" 
+                                  && widget.inversion.idDBR == null) {
                                     await Navigator
                                     .push(
                                       context,
