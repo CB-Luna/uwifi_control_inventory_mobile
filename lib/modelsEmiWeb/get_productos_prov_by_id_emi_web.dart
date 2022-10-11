@@ -44,7 +44,7 @@ class Payload {
     final int idCatTipoProducto;
     final String marca;
     final String descripcion;
-    final int costoUnidadMedida;
+    final double costoUnidadMedida;
     final int tiempoEntrega;
     final int idUnidadMedida;
     final bool archivado;

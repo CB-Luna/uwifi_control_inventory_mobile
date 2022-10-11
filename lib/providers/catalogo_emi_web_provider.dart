@@ -1586,7 +1586,7 @@ Future<bool> getProveedoresArchivados() async {
               break;
             case 401: //Error de Token incorrecto
               if(await getTokenOAuth()) {
-                getProveedoresNoArchivados();
+                getProveedoresArchivados();
                 return true;
               } else{
                 return false;
@@ -1600,7 +1600,7 @@ Future<bool> getProveedoresArchivados() async {
           return true;
         case 401: //Error de Token incorrecto
           if(await getTokenOAuth()) {
-            getProveedoresNoArchivados();
+            getProveedoresArchivados();
             return true;
           } else{
             return false;

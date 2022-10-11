@@ -49,7 +49,7 @@ class GetProductosProv {
         descripcionProdProv: json["descripcion_prod_prov"],
         marca: json["marca"],
         isUndMedidaFk: json["is_und_medida_fk"],
-        costoProdProv: json["costo_prod_prov"],
+        costoProdProv: json["costo_prod_prov"] == null ? null : json["costo_prod_prov"]!.toDouble(),
         idProveedorFk: json["id_proveedor_fk"],
         idFamiliaProdFk: json["id_familia_prod_fk"],
         tiempoEntrega: json["tiempo_entrega"],
