@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:lottie/lottie.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:bizpro_app/providers/catalog_pocketbase_recover_provider.dart';
 import 'package:bizpro_app/screens/sync/descarga_catalogos_emi_web_screen.dart';
 
 class BottomSheetRecoverCatalogosWidget extends StatefulWidget {
@@ -20,7 +18,6 @@ class _BottomSheetRecoverCatalogosWidgetState
     extends State<BottomSheetRecoverCatalogosWidget> {
   @override
   Widget build(BuildContext context) {
-    final catalogoRecoverProvider = Provider.of<CatalogPocketbaseRecoverProvider>(context);
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 350,
@@ -147,8 +144,6 @@ class _BottomSheetRecoverCatalogosWidgetState
                               visible: widget.isVisible,
                               child: FFButtonWidget(
                                 onPressed: () async {
-                                  catalogoRecoverProvider.procesoCargando(true);
-                                  catalogoRecoverProvider.procesoTerminado(false);
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(

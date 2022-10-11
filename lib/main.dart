@@ -16,7 +16,6 @@ import 'providers/database_providers/producto_inversion_jornada_controller.dart'
 import 'providers/database_providers/usuario_controller.dart';
 import 'providers/database_providers/jornada_controller.dart';
 import 'package:bizpro_app/providers/catalogo_emi_web_provider.dart';
-import 'package:bizpro_app/providers/catalog_pocketbase_recover_provider.dart';
 import 'package:bizpro_app/providers/sync_provider_emi_web.dart';
 import 'package:bizpro_app/providers/catalogo_pocketbase_provider.dart';
 import 'package:bizpro_app/providers/database_providers/cotizacion_controller.dart';
@@ -115,10 +114,6 @@ void main() async {
         ),
         ChangeNotifierProvider<CatalogoEmiWebProvider>(
           create: (context) => CatalogoEmiWebProvider(),
-          lazy: false,
-        ),
-        ChangeNotifierProvider<CatalogPocketbaseRecoverProvider>(
-          create: (context) => CatalogPocketbaseRecoverProvider(),
           lazy: false,
         ),
         ChangeNotifierProvider(

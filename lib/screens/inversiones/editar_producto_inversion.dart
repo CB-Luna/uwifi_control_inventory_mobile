@@ -190,7 +190,8 @@ class _EditarProductoInversionScreenState
                                 ),
                                 child: InkWell(
                                   onTap: () async {
-                                    if (widget.inversion.estadoInversion.target!.estado == "Solicitada") {
+                                    if (widget.inversion.estadoInversion.target!.estado == "Solicitada"
+                                    && widget.inversion.idDBR == null) {
                                     String? option =
                                         await showModalBottomSheet(
                                       context: context,
@@ -1001,7 +1002,8 @@ class _EditarProductoInversionScreenState
                                       0, 20, 0, 20),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      if (widget.inversion.estadoInversion.target!.estado == "Solicitada") {
+                                      if (widget.inversion.estadoInversion.target!.estado == "Solicitada" 
+                                      && widget.inversion.idDBR == null) {
                                         if (inversionProvider
                                           .validateForm(formKey)) {
                                           if (newImagen != 

@@ -1676,8 +1676,8 @@ void deleteBitacora() {
     try {
       print("Estoy en syncAddInversion");
       //Primero creamos la inversion  
-      //Se busca el estado de inversión 'En Cotización'
-      final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En Cotización")).build().findFirst();
+      //Se busca el estado de inversión 'Solicitada'
+      final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Solicitada")).build().findFirst();
       if (newEstadoInversion != null) {
         print("Datos inversion");
         print(inversion.estadoInversion);
@@ -1706,13 +1706,12 @@ void deleteBitacora() {
             print(dataBase.statusSyncBox.count());
             print("Actualizacion de estado de la inversion");
           }
-          //Se recupera el idDBR de la inversion y el estado-inversion de la misma
+          //Se recupera el idDBR de la inversion
           final updateInversion = dataBase.inversionesBox.query(Inversiones_.id.equals(inversion.id)).build().findUnique();
           if (updateInversion != null) {
             updateInversion.idDBR = idDBRInversion;
-            updateInversion.estadoInversion.target = newEstadoInversion;
             dataBase.inversionesBox.put(updateInversion);
-            print("Se recupera el idDBR de la inversion y su estado-inversión");
+            print("Se recupera el idDBR de la inversion");
           }
         }
 
@@ -1796,8 +1795,8 @@ void deleteBitacora() {
   Future<bool?> syncUpdateInversion(Inversiones inversion) async {
     try {
       print("Estoy en syncUpdateInversion"); 
-      //Se busca el estado de inversión 'En Cotización'
-      final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En Cotización")).build().findFirst();
+      //Se busca el estado de inversión 'Solicitada'
+      final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Solicitada")).build().findFirst();
       if (newEstadoInversion != null) {
         print("Datos inversion");
         print(inversion.estadoInversion);
@@ -1894,6 +1893,8 @@ void deleteBitacora() {
 }
 
 // VALIDAR QUE HAYA INFO EN EL BACKEND
+//False se simula
+//True ya ha sido simulada
   Future<bool> validateLengthCotizacion(InversionesXProdCotizados inversionXprodCotizados, Inversiones inversion) async {
     print("Id Inversion: ${inversionXprodCotizados.idDBR}");
     final recordInversion = await client.records.
@@ -1905,7 +1906,7 @@ void deleteBitacora() {
     filter: "id_inversion_x_prod_cotizados_fk='${
       inversionXprodCotizados.idDBR
       }'");
-    if (recordProdCotizados.isEmpty || recordInversion.id.isEmpty) {
+    if (recordProdCotizados.isEmpty && recordInversion.id.isEmpty) {
       return false;
     } else {
       print("No está vacio");
@@ -2011,7 +2012,7 @@ void deleteBitacora() {
             }
           }
           //Se actualiza el estado de la inversión
-          final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Cotizada")).build().findFirst();
+          final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En Cotización")).build().findFirst();
           if (newEstadoInversion != null) {
             final record = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
               "id_estado_inversion_fk": newEstadoInversion.idDBR,
@@ -2094,13 +2095,27 @@ void deleteBitacora() {
         await client.records.create('productos_cotizados', body: {
           "cantidad": random.nextInt(12) + 1,
           "costo_total": costos[random.nextInt(5)],
-          "id_estado_prod_cotizado_fk": "4J4BMuv4VnqYSou",  //Creado
           "id_producto_prov_fk":prodCotizados[random.nextInt(6)].idDBR,
           "id_inversion_x_prod_cotizados_fk": lastInversionXProdCotizados.id,
           "aceptado": false
         });
       }
-      return true;
+      //Se cambia el estado a En Cotización en la colección de inversiones
+      final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En Cotización")).build().findUnique();
+      if (newEstadoInversion != null) {
+        print("No está actualizada Inversion Comprada");
+        //Se actuzaliza a Inversión Comprada
+        final updateInversion = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
+        "id_estado_inversion_fk": newEstadoInversion.idDBR,
+        }); 
+        if (updateInversion.id.isNotEmpty) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
       
     } catch (e) {
       print("Error en simularCotizacion: $e");

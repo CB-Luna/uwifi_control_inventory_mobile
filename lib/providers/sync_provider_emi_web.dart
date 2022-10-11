@@ -2009,7 +2009,7 @@ void deleteBitacora() {
       }
     }
     //Se actualiza el estado de la inversión
-    final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Cotizada")).build().findFirst();
+    final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En Cotización")).build().findFirst();
     if (newEstadoInversion != null) {
       final record = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
         "id_estado_inversion_fk": newEstadoInversion.idDBR,
