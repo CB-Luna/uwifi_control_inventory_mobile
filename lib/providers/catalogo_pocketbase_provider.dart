@@ -66,7 +66,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
     banderasExistoSync.add(await getBancos());
     banderasExistoSync.add(await getPorcentajeAvance());
     banderasExistoSync.add(await getProveedores());
-    await getProductosProv();
+    banderasExistoSync.add(await getProductosProv());
     await getProdProyecto();
     for (var element in banderasExistoSync) {
       //Aplicamos una operación and para validar que no haya habido un catálogo con False
@@ -961,41 +961,81 @@ Future<bool> getProveedores() async {
   }
   }
 
-Future<void> getProductosProv() async {
-    if (dataBase.productosProvBox.isEmpty()) {
-      final records = await client.records.
-      getFullList('productos_prov', batch: 200, sort: '+nombre_prod_prov');
+//Función para recuperar el catálogo de productos proveedores desde Pocketbase
+Future<bool> getProductosProv() async {
+  try {
+    //Se recupera toda la colección de productos proveedores en Pocketbase
+    final records = await client.records.
+    getFullList('productos_prov', batch: 200, sort: '+nombre_prod_prov');
+    if (records.isNotEmpty) {
+      //Existen datos de productos proveedores en Pocketbase
       final List<GetProductosProv> listProductosProv = [];
       for (var element in records) {
         listProductosProv.add(getProductosProvFromMap(element.toString()));
       }
-      print("****Informacion producto prov****");
-      for (var i = 0; i < records.length; i++) {
-        if (listProductosProv[i].id.isNotEmpty) {
-          final nuevoProductoProv = ProductosProv(
-          nombre: listProductosProv[i].nombreProdProv,
-          descripcion: listProductosProv[i].descripcionProdProv,
-          marca: listProductosProv[i].marca,
-          costo: listProductosProv[i].costoProdProv,
-          tiempoEntrega: listProductosProv[i].tiempoEntrega,
-          archivado: listProductosProv[i].archivado,
-          idDBR: listProductosProv[i].id,
-          fechaRegistro: listProductosProv[i].updated
-          );
-          final proveedor = dataBase.proveedoresBox.query(Proveedores_.idDBR.equals(listProductosProv[i].idProveedorFk)).build().findUnique();
-          final unidadMedida = dataBase.unidadesMedidaBox.query(UnidadMedida_.idDBR.equals(listProductosProv[i].isUndMedidaFk)).build().findUnique();
-          final familiaProd = dataBase.familiaProductosBox.query(FamiliaProd_.idDBR.equals(listProductosProv[i].idFamiliaProdFk)).build().findUnique();
-          if (proveedor != null && unidadMedida != null && familiaProd != null) {
-            nuevoProductoProv.unidadMedida.target = unidadMedida;
-            nuevoProductoProv.familiaProducto.target = familiaProd;
-            nuevoProductoProv.proveedor.target = proveedor;
-            dataBase.productosProvBox.put(nuevoProductoProv);
-            print('Prducto Prov agregado exitosamente');
+      for (var i = 0; i < listProductosProv.length; i++) {
+        //Se valida que el nuevo producto proveedor aún no existe en Objectbox
+        final proveedor = dataBase.proveedoresBox.query(Proveedores_.idDBR.equals(listProductosProv[i].idProveedorFk)).build().findUnique();
+        final familiaProd = dataBase.familiaProductosBox.query(FamiliaProd_.idDBR.equals(listProductosProv[i].idFamiliaProdFk)).build().findUnique();
+        final unidadMedida = dataBase.unidadesMedidaBox.query(UnidadMedida_.idDBR.equals(listProductosProv[i].isUndMedidaFk)).build().findUnique();
+        final productoProveedorExistente = dataBase.productosProvBox.query(ProductosProv_.idDBR.equals(listProductosProv[i].id)).build().findUnique();
+        if (productoProveedorExistente == null) {
+          if (listProductosProv[i].id.isNotEmpty) {
+            final nuevoProductoProveedor = ProductosProv(
+              nombre: listProductosProv[i].nombreProdProv,
+              descripcion: listProductosProv[i].descripcionProdProv,
+              marca: listProductosProv[i].marca,
+              costo: listProductosProv[i].costoProdProv,
+              tiempoEntrega: listProductosProv[i].tiempoEntrega,
+              idDBR: listProductosProv[i].id,
+              fechaRegistro: listProductosProv[i].updated, 
+              idEmiWeb: listProductosProv[i].idEmiWeb, 
+              archivado: listProductosProv[i].archivado,
+              );
+            if (proveedor != null && familiaProd != null
+                && unidadMedida != null) {
+              nuevoProductoProveedor.proveedor.target = proveedor;
+              nuevoProductoProveedor.familiaProducto.target = familiaProd;
+              nuevoProductoProveedor.unidadMedida.target = unidadMedida;
+              dataBase.productosProvBox.put(nuevoProductoProveedor);
+              print('Producto Proveedor Nuevo agregado éxitosamente');
+            }
+            else {
+              return false;
+            }
+          }
+        } else {
+          //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
+          if (productoProveedorExistente.fechaRegistro != listProductosProv[i].updated) {
+            if (proveedor != null && familiaProd != null
+                && unidadMedida != null) {
+              //Se actualiza el registro en Objectbox
+              productoProveedorExistente.nombre = listProductosProv[i].nombreProdProv;
+              productoProveedorExistente.descripcion = listProductosProv[i].descripcionProdProv;
+              productoProveedorExistente.marca = listProductosProv[i].marca;
+              productoProveedorExistente.costo = listProductosProv[i].costoProdProv;
+              productoProveedorExistente.tiempoEntrega = listProductosProv[i].tiempoEntrega;
+              productoProveedorExistente.fechaRegistro = listProductosProv[i].updated!;
+              productoProveedorExistente.archivado = listProductosProv[i].archivado;
+              productoProveedorExistente.proveedor.target = proveedor;
+              productoProveedorExistente.familiaProducto.target = familiaProd;
+              productoProveedorExistente.unidadMedida.target = unidadMedida;
+              dataBase.productosProvBox.put(productoProveedorExistente);
+            }
+            else {
+              return false;
+            }
           }
         }
       }
-      notifyListeners();
+      return true;
+    } else {
+      //No existen datos de estados en Pocketbase
+      return false;
     }
+  } catch (e) {
+    return false;
+  }
   }
 
   Future<void> getProdProyecto() async {

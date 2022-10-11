@@ -2235,7 +2235,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(56, 7277108221751789003),
       name: 'ProductosProv',
-      lastPropertyId: const IdUid(14, 2161445370582181331),
+      lastPropertyId: const IdUid(15, 5902996508639511542),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -2318,7 +2318,13 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(193, 2068950816938160691),
-            relationTarget: 'UnidadMedida')
+            relationTarget: 'UnidadMedida'),
+        ModelProperty(
+            id: const IdUid(15, 5902996508639511542),
+            name: 'idEmiWeb',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(231, 7607441243011446895))
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -2645,7 +2651,7 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(62, 5967866020755512418),
-      lastIndexId: const IdUid(230, 3649472208462848043),
+      lastIndexId: const IdUid(231, 7607441243011446895),
       lastRelationId: const IdUid(71, 2864929897176631708),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -5471,7 +5477,8 @@ ModelDefinition getObjectBoxModel() {
           final marcaOffset = fbb.writeString(object.marca);
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(15);
+          final idEmiWebOffset = fbb.writeString(object.idEmiWeb);
+          fbb.startTable(16);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nombreOffset);
           fbb.addOffset(2, descripcionOffset);
@@ -5486,6 +5493,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(11, object.familiaProducto.targetId);
           fbb.addInt64(12, object.imagen.targetId);
           fbb.addInt64(13, object.unidadMedida.targetId);
+          fbb.addOffset(14, idEmiWebOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -5510,7 +5518,8 @@ ModelDefinition getObjectBoxModel() {
               archivado: const fb.BoolReader()
                   .vTableGet(buffer, rootOffset, 18, false),
               idDBR: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 20));
+                  .vTableGetNullable(buffer, rootOffset, 20),
+              idEmiWeb: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 32, ''));
           object.statusSync.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
           object.statusSync.attach(store);
@@ -7311,6 +7320,10 @@ class ProductosProv_ {
   /// see [ProductosProv.unidadMedida]
   static final unidadMedida = QueryRelationToOne<ProductosProv, UnidadMedida>(
       _entities[33].properties[13]);
+
+  /// see [ProductosProv.idEmiWeb]
+  static final idEmiWeb =
+      QueryStringProperty<ProductosProv>(_entities[33].properties[14]);
 
   /// see [ProductosProv.prodCotizados]
   static final prodCotizados =

@@ -926,6 +926,8 @@ class ProductosProv{
   bool archivado;
   @Unique()
   String? idDBR;
+  @Unique()
+  String idEmiWeb;
   final statusSync = ToOne<StatusSync>();
   final proveedor = ToOne<Proveedores>();
   final prodCotizados = ToMany<ProdCotizados>();
@@ -943,6 +945,7 @@ class ProductosProv{
     DateTime? fechaRegistro,
     required this.archivado,
     this.idDBR,
+    required this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);

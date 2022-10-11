@@ -2273,7 +2273,7 @@
     },
     {
       "id": "56:7277108221751789003",
-      "lastPropertyId": "14:2161445370582181331",
+      "lastPropertyId": "15:5902996508639511542",
       "name": "ProductosProv",
       "properties": [
         {
@@ -2363,6 +2363,13 @@
           "flags": 520,
           "indexId": "193:2068950816938160691",
           "relationTarget": "UnidadMedida"
+        },
+        {
+          "id": "15:5902996508639511542",
+          "name": "idEmiWeb",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "231:7607441243011446895"
         }
       ],
       "relations": [
@@ -2690,7 +2697,7 @@
     }
   ],
   "lastEntityId": "62:5967866020755512418",
-  "lastIndexId": "230:3649472208462848043",
+  "lastIndexId": "231:7607441243011446895",
   "lastRelationId": "71:2864929897176631708",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

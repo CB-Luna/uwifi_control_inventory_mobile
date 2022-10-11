@@ -9,6 +9,8 @@ import 'package:bizpro_app/modelsEmiWeb/get_estado_inversiones_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_familia_producto_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_fase_emprendimiento_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_porcentaje_avance_emi_web.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_productos_prov_by_id_emi_web.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_productos_prov_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_proveedores_by_id_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_proveedores_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_tipo_empaques_emi_web.dart';
@@ -94,7 +96,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
       banderasExistoSync.add(await getPorcentajeAvance());
       banderasExistoSync.add(await getProveedoresNoArchivados());
       banderasExistoSync.add(await getProveedoresArchivados());
-      // await getProductosProv();
+      banderasExistoSync.add(await getProductosProv());
       // await getProdProyecto();
       for (var element in banderasExistoSync) {
         //Aplicamos una operación and para validar que no haya habido un catálogo con False
@@ -1333,7 +1335,7 @@ Future<bool> getPorcentajeAvance() async {
 
 //Función para recuperar el catálogo de proveedores no archivados desde Emi Web 
 Future<bool> getProveedoresNoArchivados() async {
-  // try {
+  try {
       var url = Uri.parse("$baseUrlEmiWebServices/proveedores?archivado=false");
       final headers = ({
           "Content-Type": "application/json",
@@ -1467,14 +1469,14 @@ Future<bool> getProveedoresNoArchivados() async {
         default:
           return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
 //Función para recuperar el catálogo de proveedores archivados desde Emi Web 
 Future<bool> getProveedoresArchivados() async {
-  // try {
+  try {
       var url = Uri.parse("$baseUrlEmiWebServices/proveedores?archivado=true");
       final headers = ({
           "Content-Type": "application/json",
@@ -1608,45 +1610,142 @@ Future<bool> getProveedoresArchivados() async {
         default:
           return false;
       }
-    // } catch (e) {
-    //   return false;
-    // }
+    } catch (e) {
+      return false;
+    }
   }
 
-Future<void> getProductosProv() async {
-    if (dataBase.productosProvBox.isEmpty()) {
-      final records = await client.records.
-      getFullList('productos_prov', batch: 200, sort: '+nombre_prod_prov');
-      final List<GetProductosProv> listProductosProv = [];
-      for (var element in records) {
-        listProductosProv.add(getProductosProvFromMap(element.toString()));
-      }
-      print("****Informacion producto prov****");
-      for (var i = 0; i < records.length; i++) {
-        if (listProductosProv[i].id.isNotEmpty) {
-          final nuevoProductoProv = ProductosProv(
-          nombre: listProductosProv[i].nombreProdProv,
-          descripcion: listProductosProv[i].descripcionProdProv,
-          marca: listProductosProv[i].marca,
-          costo: listProductosProv[i].costoProdProv,
-          tiempoEntrega: listProductosProv[i].tiempoEntrega,
-          archivado: listProductosProv[i].archivado,
-          idDBR: listProductosProv[i].id,
-          fechaRegistro: listProductosProv[i].updated
+//Función para recuperar el catálogo de productos proveedores desde Emi Web 
+Future<bool> getProductosProv() async {
+   try {
+      var url = Uri.parse("$baseUrlEmiWebServices/productos/proveedores/filtros");
+      final headers = ({
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $tokenGlobal',
+        });
+      var response = await http.get(
+        url,
+        headers: headers
+      );
+
+      switch (response.statusCode) {
+        case 200: //Caso éxitoso
+          final responseListProductosProv = getProductosProvEmiWebFromMap(
+            const Utf8Decoder().convert(response.bodyBytes)
           );
-          final proveedor = dataBase.proveedoresBox.query(Proveedores_.idDBR.equals(listProductosProv[i].idProveedorFk)).build().findUnique();
-          final unidadMedida = dataBase.unidadesMedidaBox.query(UnidadMedida_.idDBR.equals(listProductosProv[i].isUndMedidaFk)).build().findUnique();
-          final familiaProd = dataBase.familiaProductosBox.query(FamiliaProd_.idDBR.equals(listProductosProv[i].idFamiliaProdFk)).build().findUnique();
-          if (proveedor != null && unidadMedida != null && familiaProd != null) {
-            nuevoProductoProv.unidadMedida.target = unidadMedida;
-            nuevoProductoProv.familiaProducto.target = familiaProd;
-            nuevoProductoProv.proveedor.target = proveedor;
-            dataBase.productosProvBox.put(nuevoProductoProv);
-            print('Prducto Prov agregado exitosamente');
+          for(var i = 0; i < responseListProductosProv.payload!.ids!.length; i++) {
+            var url = Uri.parse("$baseUrlEmiWebServices/productos/proveedores/registro/${responseListProductosProv.payload!.ids![i]}");
+            final headers = ({
+                "Content-Type": "application/json",
+                'Authorization': 'Bearer $tokenGlobal',
+              });
+            var response = await http.get(
+              url,
+              headers: headers
+            );
+            switch (response.statusCode) {
+              case 200: //Caso éxitoso
+              final responseProductoProveedor = getProductosProvByIdEmiWebFromMap(
+              const Utf8Decoder().convert(response.bodyBytes));
+              //Verificamos que el nuevo producto proveedor no exista en Pocketbase
+              final recordProductoProveedor = await client.records.getFullList(
+                'productos_prov', 
+                batch: 200, 
+                filter: "id_emi_web='${responseProductoProveedor.payload!.idProductosProveedor}'");
+              if (recordProductoProveedor.isEmpty) {
+                //Se recupera el id del proveedor, familia producto y unidad de medida en Pocketbase y se acocia con el nuevo Producto Proveedor
+                final recordProveedor = await client.records.getFullList(
+                  'proveedores', 
+                  batch: 200, 
+                  filter: "id_emi_web='${responseProductoProveedor.payload!.idProveedor}'");
+                final recordFamiliaProd = await client.records.getFullList(
+                  'familia_prod', 
+                  batch: 200, 
+                  filter: "id_emi_web='${responseProductoProveedor.payload!.idCatTipoProducto}'");
+                final recordUnidadMedida = await client.records.getFullList(
+                  'und_medida', 
+                  batch: 200, 
+                  filter: "id_emi_web='${responseProductoProveedor.payload!.idUnidadMedida}'");
+                if (recordProveedor.isNotEmpty && recordFamiliaProd.isNotEmpty 
+                    && recordUnidadMedida.isNotEmpty) {
+                    //Se agrega el producto proveedor como nuevo en la colección de Pocketbase
+                    final recordProductoProveedor = await client.records.create('productos_prov', body: {
+                    "nombre_prod_prov": responseProductoProveedor.payload!.producto,
+                    "descripcion_prod_prov": responseProductoProveedor.payload!.descripcion,
+                    "marca": responseProductoProveedor.payload!.marca,
+                    "is_und_medida_fk": recordUnidadMedida.first.id,
+                    "costo_prod_prov": responseProductoProveedor.payload!.costoUnidadMedida,
+                    "id_proveedor_fk": recordProveedor.first.id,
+                    "id_familia_prod_fk": recordFamiliaProd.first.id,
+                    "tiempo_entrega": responseProductoProveedor.payload!.tiempoEntrega,
+                    "archivado": responseProductoProveedor.payload!.archivado,
+                    "id_emi_web": responseProductoProveedor.payload!.idProductosProveedor.toString(),
+                    });
+                    if (recordProductoProveedor.id.isNotEmpty) {
+                      print('Producto Proveedor Emi Web agregado éxitosamente a Pocketbase');
+                    } else {
+                      return false;
+                    }
+                } else {
+                  return false;
+                }
+              } else {
+                //Se actualiza el producto proveedor en la colección de Pocketbase
+                final recordProductoProveedorParse = getProductosProvFromMap(recordProductoProveedor.first.toString());
+                //Verificamos que los campos de este registro sean diferentes para actualizarlo
+                if (recordProductoProveedorParse.nombreProdProv != responseProductoProveedor.payload!.producto ||
+                    recordProductoProveedorParse.descripcionProdProv != responseProductoProveedor.payload!.descripcion||
+                    recordProductoProveedorParse.marca != responseProductoProveedor.payload!.marca ||
+                    recordProductoProveedorParse.costoProdProv != responseProductoProveedor.payload!.costoUnidadMedida ||
+                    recordProductoProveedorParse.tiempoEntrega != responseProductoProveedor.payload!.tiempoEntrega ||
+                    recordProductoProveedorParse.archivado != responseProductoProveedor.payload!.archivado
+                    ) {
+                    final updateRecordProductoProveedor = await client.records.update('productos_prov', recordProductoProveedorParse.id, 
+                    body: {
+                      "nombre_prod_prov": responseProductoProveedor.payload!.producto,
+                      "descripcion_prod_prov": responseProductoProveedor.payload!.descripcion,
+                      "marca": responseProductoProveedor.payload!.marca,
+                      "costo_prod_prov": responseProductoProveedor.payload!.costoUnidadMedida,
+                      "tiempo_entrega": responseProductoProveedor.payload!.tiempoEntrega,
+                      "archivado": responseProductoProveedor.payload!.archivado,
+                      "id_emi_web": responseProductoProveedor.payload!.idProductosProveedor.toString(),
+                    });
+                    if (updateRecordProductoProveedor.id.isNotEmpty) {
+                      print('Producto Proveedor Emi Web actualizado éxitosamente en Pocketbase');
+                    } else {
+                      return false;
+                    }
+                }
+              }
+              break;
+            case 401: //Error de Token incorrecto
+              if(await getTokenOAuth()) {
+                getProductosProv();
+                return true;
+              } else{
+                return false;
+              }
+            case 404: //Error de ruta incorrecta
+              return false;
+            default:
+              return false;
+            }
           }
-        }
+          return true;
+        case 401: //Error de Token incorrecto
+          if(await getTokenOAuth()) {
+            getProductosProv();
+            return true;
+          } else{
+            return false;
+          }
+        case 404: //Error de ruta incorrecta
+          return false;
+        default:
+          return false;
       }
-      notifyListeners();
+    } catch (e) {
+      return false;
     }
   }
 
