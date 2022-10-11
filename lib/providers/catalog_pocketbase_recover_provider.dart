@@ -682,10 +682,9 @@ Future<void> getProveedoresAgain() async {
           nombreEncargado: listProveedores[i].nombreEncargado,
           clabe: listProveedores[i].clabe,
           telefono: listProveedores[i].telefono,
-          registradoPor: listProveedores[i].registradoPor,
           archivado: listProveedores[i].archivado,
           idDBR: listProveedores[i].id,
-          fechaRegistro: listProveedores[i].updated
+          fechaRegistro: listProveedores[i].updated, idEmiWeb: ''
           );
           if (tipoProveedor != null && condicionPago != null && banco != null && comunidad != null) {
             nuevoProveedor.tipoProveedor.target = tipoProveedor;
@@ -707,7 +706,6 @@ Future<void> getProveedoresAgain() async {
             proveedorExistente.nombreEncargado = listProveedores[i].nombreEncargado;
             proveedorExistente.clabe = listProveedores[i].clabe;
             proveedorExistente.telefono = listProveedores[i].telefono;
-            proveedorExistente.registradoPor = listProveedores[i].registradoPor;
             proveedorExistente.archivado = listProveedores[i].archivado;
             proveedorExistente.fechaRegistro = listProveedores[i].updated!;
             dataBase.proveedoresBox.put(proveedorExistente);

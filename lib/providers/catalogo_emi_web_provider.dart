@@ -9,6 +9,8 @@ import 'package:bizpro_app/modelsEmiWeb/get_estado_inversiones_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_familia_producto_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_fase_emprendimiento_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_porcentaje_avance_emi_web.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_proveedores_by_id_emi_web.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_proveedores_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_tipo_empaques_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_tipo_tipo_proveedor_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_unidad_medida_emi_web.dart';
@@ -90,7 +92,8 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
       banderasExistoSync.add(await getCondicionesPago());
       banderasExistoSync.add(await getBancos());
       banderasExistoSync.add(await getPorcentajeAvance());
-      // await getProveedores();
+      banderasExistoSync.add(await getProveedoresNoArchivados());
+      banderasExistoSync.add(await getProveedoresArchivados());
       // await getProductosProv();
       // await getProdProyecto();
       for (var element in banderasExistoSync) {
@@ -203,8 +206,8 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                   recordEstadoParse.activo != responseListEstados.payload![i].activo) {
                   final updateRecordEstado = await client.records.update('estados', recordEstadoParse.id, 
                   body: {
-                    "nombre_estado": recordEstadoParse.nombreEstado,
-                    "activo": recordEstadoParse.activo,
+                    "nombre_estado": responseListEstados.payload![i].estado,
+                    "activo": responseListEstados.payload![i].activo,
                   });
                   if (updateRecordEstado.id.isNotEmpty) {
                     print('Estado Emi Web actualizado éxitosamente en Pocketbase');
@@ -223,7 +226,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
             return false;
           }
         case 404: //Error de ruta incorrecta
-          return true;
+          return false;
         default:
           return false;
       }  
@@ -285,8 +288,8 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                   recordMunicipioParse.activo != responseListMunicipios.payload![i].activo) {
                   final updateRecordMunicipio = await client.records.update('municipios', recordMunicipioParse.id, 
                   body: {
-                    "nombre_municipio": recordMunicipioParse.nombreMunicipio,
-                    "activo": recordMunicipioParse.activo,
+                    "nombre_municipio": responseListMunicipios.payload![i].municipio,
+                    "activo": responseListMunicipios.payload![i].activo,
                   });
                   if (updateRecordMunicipio.id.isNotEmpty) {
                     print('Municipio Emi Web actualizado éxitosamente en Pocketbase');
@@ -305,7 +308,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
             return false;
           }
         case 404: //Error de ruta incorrecta
-          return true;
+          return false;
         default:
           return false;
       }
@@ -367,8 +370,8 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                   recordComunidadParse.activo != responseListComunidades.payload![i].activo) {
                   final updateRecordComunidad = await client.records.update('comunidades', recordComunidadParse.id, 
                   body: {
-                    "nombre_comunidad": recordComunidadParse.nombreComunidad,
-                    "activo": recordComunidadParse.activo,
+                    "nombre_comunidad": responseListComunidades.payload![i].comunidad,
+                    "activo": responseListComunidades.payload![i].activo,
                   });
                   if (updateRecordComunidad.id.isNotEmpty) {
                     print('Comunidad Emi Web actualizado éxitosamente en Pocketbase');
@@ -387,7 +390,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
             return false;
           }
         case 404: //Error de ruta incorrecta
-          return true;
+          return false;
         default:
           return false;
       }
@@ -439,8 +442,8 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                   recordTipoProyectoParse.activo != responseListTipoProyecto.payload![i].activo) {
                   final updateRecordEstado = await client.records.update('tipo_proyecto', recordTipoProyectoParse.id, 
                   body: {
-                    "tipo_proyecto": recordTipoProyectoParse.tipoProyecto,
-                    "activo": recordTipoProyectoParse.activo,
+                    "tipo_proyecto": responseListTipoProyecto.payload![i].tipoProyecto,
+                    "activo": responseListTipoProyecto.payload![i].activo,
                   });
                   if (updateRecordEstado.id.isNotEmpty) {
                     print('Tipo Proyecto Emi Web actualizado éxitosamente en Pocketbase');
@@ -459,7 +462,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
             return false;
           }
         case 404: //Error de ruta incorrecta
-          return true;
+          return false;
         default:
           return false;
       }
@@ -521,8 +524,8 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                   recordCatalogoProyectoParse.activo != responseListCatalogoProyecto.payload![i].activo) {
                   final updateRecordCatalogoProyecto = await client.records.update('cat_proyecto', recordCatalogoProyectoParse.id, 
                   body: {
-                    "nombre_proyecto": recordCatalogoProyectoParse.nombreProyecto,
-                    "activo": recordCatalogoProyectoParse.activo,
+                    "nombre_proyecto": responseListCatalogoProyecto.payload![i].proyecto,
+                    "activo": responseListCatalogoProyecto.payload![i].activo,
                   });
                   if (updateRecordCatalogoProyecto.id.isNotEmpty) {
                     print('Comunidad Emi Web actualizado éxitosamente en Pocketbase');
@@ -541,7 +544,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
             return false;
           }
         case 404: //Error de ruta incorrecta
-          return true;
+          return false;
         default:
           return false;
       }
@@ -593,8 +596,8 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                   recordFamiliaProductoParse.activo != responseListFamiliaProducto.payload![i].activo) {
                   final updateRecordFamiliaProducto = await client.records.update('familia_prod', recordFamiliaProductoParse.id, 
                   body: {
-                    "nombre_tipo_prod": recordFamiliaProductoParse.nombreTipoProd,
-                    "activo": recordFamiliaProductoParse.activo,
+                    "nombre_tipo_prod": responseListFamiliaProducto.payload![i].familiaInversionNecesaria,
+                    "activo": responseListFamiliaProducto.payload![i].activo,
                   });
                   if (updateRecordFamiliaProducto.id.isNotEmpty) {
                     print('Familia Producto Emi Web actualizado éxitosamente en Pocketbase');
@@ -613,7 +616,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
             return false;
           }
         case 404: //Error de ruta incorrecta
-          return true;
+          return false;
         default:
           return false;
       }
@@ -665,8 +668,8 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                   recordUnidadMedidaParse.activo != responseListUnidadMedida.payload![i].activo) {
                   final updateRecordUnidadMedida = await client.records.update('und_medida', recordUnidadMedidaParse.id, 
                   body: {
-                    "unidad_medida": recordUnidadMedidaParse.unidadMedida,
-                    "activo": recordUnidadMedidaParse.activo,
+                    "unidad_medida": responseListUnidadMedida.payload![i].unidadMedida,
+                    "activo": responseListUnidadMedida.payload![i].activo,
                   });
                   if (updateRecordUnidadMedida.id.isNotEmpty) {
                     print('Unidad de Medida Emi Web actualizado éxitosamente en Pocketbase');
@@ -685,7 +688,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
             return false;
           }
         case 404: //Error de ruta incorrecta
-          return true;
+          return false;
         default:
           return false;
       }
@@ -737,8 +740,8 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                   recordAmbitoConsultoriaParse.activo != responseListAmbitoConsultoria.payload![i].activo) {
                   final updateRecordAmbitoConsultoria = await client.records.update('ambito_consultoria', recordAmbitoConsultoriaParse.id, 
                   body: {
-                    "nombre_ambito": recordAmbitoConsultoriaParse.nombreAmbito,
-                    "activo": recordAmbitoConsultoriaParse.activo,
+                    "nombre_ambito": responseListAmbitoConsultoria.payload![i].ambito,
+                    "activo": responseListAmbitoConsultoria.payload![i].activo,
                   });
                   if (updateRecordAmbitoConsultoria.id.isNotEmpty) {
                     print('Ámbito Consultoría Emi Web actualizado éxitosamente en Pocketbase');
@@ -757,7 +760,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
             return false;
           }
         case 404: //Error de ruta incorrecta
-          return true;
+          return false;
         default:
           return false;
       }
@@ -809,8 +812,8 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                   recordAreaCirculoParse.activo != responseListAreaCirculo.payload![i].activo) {
                   final updateRecordAmbitoConsultoria = await client.records.update('area_circulo', recordAreaCirculoParse.id, 
                   body: {
-                    "nombre_area": recordAreaCirculoParse.nombreArea,
-                    "activo": recordAreaCirculoParse.activo,
+                    "nombre_area": responseListAreaCirculo.payload![i].areaCirculo,
+                    "activo": responseListAreaCirculo.payload![i].activo,
                   });
                   if (updateRecordAmbitoConsultoria.id.isNotEmpty) {
                     print('Ámbito Consultoría Emi Web actualizado éxitosamente en Pocketbase');
@@ -829,7 +832,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
             return false;
           }
         case 404: //Error de ruta incorrecta
-          return true;
+          return false;
         default:
           return false;
       }
@@ -880,7 +883,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
               if (recordFaseEmprendimientoParse.fase != responseListFaseEmprendimiento.payload![i].fase) {
                   final updateRecordEstado = await client.records.update('fases_emp', recordFaseEmprendimientoParse.id, 
                   body: {
-                    "fase": recordFaseEmprendimientoParse.fase,
+                    "fase": responseListFaseEmprendimiento.payload![i].fase,
                   });
                   if (updateRecordEstado.id.isNotEmpty) {
                     print('Fase Emprendimiento Emi Web actualizado éxitosamente en Pocketbase');
@@ -899,7 +902,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
             return false;
           }
         case 404: //Error de ruta incorrecta
-          return true;
+          return false;
         default:
           return false;
       }  
@@ -949,7 +952,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
               if (recordTipoEmpaqueParse.tipoEmpaque != responseListTipoEmpaques.payload![i].tipoEmpaque) {
                   final updateRecordTipoEmpaque = await client.records.update('tipo_empaques', recordTipoEmpaqueParse.id, 
                   body: {
-                    "tipo_empaque": recordTipoEmpaqueParse.tipoEmpaque,
+                    "tipo_empaque": responseListTipoEmpaques.payload![i].tipoEmpaque,
                   });
                   if (updateRecordTipoEmpaque.id.isNotEmpty) {
                     print('Tipo Empaque Emi Web actualizado éxitosamente en Pocketbase');
@@ -968,7 +971,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
             return false;
           }
         case 404: //Error de ruta incorrecta
-          return true;
+          return false;
         default:
           return false;
       }
@@ -1018,7 +1021,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
               if (recordEstadoInversionParse.estado!= responseListEstadoInversion.payload![i].estadoInversion) {
                   final updateRecordEstado = await client.records.update('estado_inversiones', recordEstadoInversionParse.id, 
                   body: {
-                    "estado": recordEstadoInversionParse.estado,
+                    "estado": responseListEstadoInversion.payload![i].estadoInversion,
                   });
                   if (updateRecordEstado.id.isNotEmpty) {
                     print('Estado Inversión Emi Web actualizado éxitosamente en Pocketbase');
@@ -1037,7 +1040,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
             return false;
           }
         case 404: //Error de ruta incorrecta
-          return true;
+          return false;
         default:
           return false;
       }
@@ -1088,8 +1091,8 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
               if (recordTipoProveedorParse.tipoProveedor != responseListTipoProveedor.payload![i].tipoProveedor) {
                   final updateRecordTipoProveedor = await client.records.update('tipo_proveedor', recordTipoProveedorParse.id, 
                   body: {
-                    "tipo_proveedor": recordTipoProveedorParse.tipoProveedor,
-                    "activo": recordTipoProveedorParse.activo,
+                    "tipo_proveedor": responseListTipoProveedor.payload![i].tipoProveedor,
+                    "activo": responseListTipoProveedor.payload![i].activo,
                   });
                   if (updateRecordTipoProveedor.id.isNotEmpty) {
                     print('Tipo Proveedor Emi Web actualizado éxitosamente en Pocketbase');
@@ -1108,7 +1111,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
             return false;
           }
         case 404: //Error de ruta incorrecta
-          return true;
+          return false;
         default:
           return false;
       }
@@ -1159,8 +1162,8 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
               if (recordCondicionPagoParse.condicionPago != responseListCondicionPago.payload![i].condicionesPago) {
                   final updateRecordTipoProveedor = await client.records.update('condiciones_pago', recordCondicionPagoParse.id, 
                   body: {
-                    "condicion_pago": recordCondicionPagoParse.condicionPago,
-                    "activo": recordCondicionPagoParse.activo,
+                    "condicion_pago": responseListCondicionPago.payload![i].condicionesPago,
+                    "activo": responseListCondicionPago.payload![i].activo,
                   });
                   if (updateRecordTipoProveedor.id.isNotEmpty) {
                     print('Condición Pago Emi Web actualizado éxitosamente en Pocketbase');
@@ -1179,7 +1182,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
             return false;
           }
         case 404: //Error de ruta incorrecta
-          return true;
+          return false;
         default:
           return false;
       }
@@ -1230,8 +1233,8 @@ Future<bool> getBancos() async {
               if (recordBancoParse.nombreBanco != responseListBancos.payload![i].banco) {
                   final updateRecordBanco = await client.records.update('bancos', recordBancoParse.id, 
                   body: {
-                    "nombre_banco": recordBancoParse.nombreBanco,
-                    "activo": recordBancoParse.activo,
+                    "nombre_banco": responseListBancos.payload![i].banco,
+                    "activo": responseListBancos.payload![i].activo,
                   });
                   if (updateRecordBanco.id.isNotEmpty) {
                     print('Banco Emi Web actualizado éxitosamente en Pocketbase');
@@ -1250,7 +1253,7 @@ Future<bool> getBancos() async {
             return false;
           }
         case 404: //Error de ruta incorrecta
-          return true;
+          return false;
         default:
           return false;
       }
@@ -1300,7 +1303,7 @@ Future<bool> getPorcentajeAvance() async {
               if (recordPorcentajeAvanceParse.porcentaje != responseListPorcentajeAvance.payload![i].porcentajeAvance) {
                   final updateRecordPorcentajeAvance = await client.records.update('porcentaje_avance', recordPorcentajeAvanceParse.id, 
                   body: {
-                    "porcentaje": recordPorcentajeAvanceParse.porcentaje,
+                    "porcentaje": responseListPorcentajeAvance.payload![i].porcentajeAvance,
                   });
                   if (updateRecordPorcentajeAvance.id.isNotEmpty) {
                     print('Porcentaje Avance Emi Web actualizado éxitosamente en Pocketbase');
@@ -1319,7 +1322,7 @@ Future<bool> getPorcentajeAvance() async {
             return false;
           }
         case 404: //Error de ruta incorrecta
-          return true;
+          return false;
         default:
           return false;
       }
@@ -1328,45 +1331,286 @@ Future<bool> getPorcentajeAvance() async {
     }
   }
 
-Future<void> getProveedores() async {
-    if (dataBase.proveedoresBox.isEmpty()) {
-      final records = await client.records.
-      getFullList('proveedores', batch: 200, sort: '+nombre_fiscal');
-      final List<GetProveedores> listProveedores = [];
-      for (var element in records) {
-        listProveedores.add(getProveedoresFromMap(element.toString()));
-      }
-      print("****Informacion proveedor****");
-      for (var i = 0; i < records.length; i++) {
-        if (listProveedores[i].id.isNotEmpty) {
-          final nuevoProveedor = Proveedores(
-          nombreFiscal: listProveedores[i].nombreFiscal,
-          rfc: listProveedores[i].rfc,
-          direccion: listProveedores[i].direccion,
-          nombreEncargado: listProveedores[i].nombreEncargado,
-          clabe: listProveedores[i].clabe,
-          telefono: listProveedores[i].telefono,
-          registradoPor: listProveedores[i].registradoPor,
-          archivado: listProveedores[i].archivado,
-          idDBR: listProveedores[i].id,
-          fechaRegistro: listProveedores[i].updated
+//Función para recuperar el catálogo de proveedores no archivados desde Emi Web 
+Future<bool> getProveedoresNoArchivados() async {
+  // try {
+      var url = Uri.parse("$baseUrlEmiWebServices/proveedores?archivado=false");
+      final headers = ({
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $tokenGlobal',
+        });
+      var response = await http.get(
+        url,
+        headers: headers
+      );
+
+      switch (response.statusCode) {
+        case 200: //Caso éxitoso
+          final responseListProveedores = getProveedoresEmiWebFromMap(
+            const Utf8Decoder().convert(response.bodyBytes)
           );
-          final tipoProveedor = dataBase.tipoProveedorBox.query(TipoProveedor_.idDBR.equals(listProveedores[i].idTipoProveedorFk)).build().findUnique();
-          final condicionPago = dataBase.condicionesPagoBox.query(CondicionesPago_.idDBR.equals(listProveedores[i].idCondicionPagoFk)).build().findUnique();
-          final banco = dataBase.bancosBox.query(Bancos_.idDBR.equals(listProveedores[i].idBancoFk)).build().findUnique();
-          final comunidad = dataBase.comunidadesBox.query(Comunidades_.idDBR.equals(listProveedores[i].idComunidadFk)).build().findUnique();
-          if (tipoProveedor != null && condicionPago != null && banco != null && comunidad != null) {
-            nuevoProveedor.tipoProveedor.target = tipoProveedor;
-            nuevoProveedor.condicionPago.target = condicionPago;
-            nuevoProveedor.banco.target = banco;
-            nuevoProveedor.comunidades.target = comunidad;
-            dataBase.proveedoresBox.put(nuevoProveedor);
-            print('Proveedor agregado exitosamente');
+          for(var i = 0; i < responseListProveedores.payload!.length; i++) {
+            var url = Uri.parse("$baseUrlEmiWebServices/proveedores/registro/${responseListProveedores.payload![i].id}");
+            final headers = ({
+                "Content-Type": "application/json",
+                'Authorization': 'Bearer $tokenGlobal',
+              });
+            var response = await http.get(
+              url,
+              headers: headers
+            );
+            switch (response.statusCode) {
+              case 200: //Caso éxitoso
+              final responseProveedor = getProveedorByIdEmiWebFromMap(
+              const Utf8Decoder().convert(response.bodyBytes));
+              //Verificamos que el nuevo proveedor no exista en Pocketbase
+              final recordProveedor = await client.records.getFullList(
+                'proveedores', 
+                batch: 200, 
+                filter: "id_emi_web='${responseProveedor.payload!.idProveedor}'");
+              if (recordProveedor.isEmpty) {
+                //Se recupera el id del tipoProveedor, condicionPago, banco y comunidad en Pocketbase y se acocia con el nuevo Proveedor
+                final recordTipoProveedor = await client.records.getFullList(
+                  'tipo_proveedor', 
+                  batch: 200, 
+                  filter: "id_emi_web='${responseProveedor.payload!.idTipoProveedor}'");
+                final recordCondicionPago = await client.records.getFullList(
+                  'condiciones_pago', 
+                  batch: 200, 
+                  filter: "id_emi_web='${responseProveedor.payload!.idCondicionesPago}'");
+                final recordBanco = await client.records.getFullList(
+                  'bancos', 
+                  batch: 200, 
+                  filter: "id_emi_web='${responseProveedor.payload!.idBanco}'");
+                final recordComunidad = await client.records.getFullList(
+                  'comunidades', 
+                  batch: 200, 
+                  filter: "id_emi_web='${responseProveedor.payload!.idCatComunidad}'");
+                if (recordTipoProveedor.isNotEmpty && recordCondicionPago.isNotEmpty 
+                    && recordBanco.isNotEmpty && recordComunidad.isNotEmpty) {
+                    //Se agrega el proveedor como nuevo en la colección de Pocketbase
+                    final recordProveedor = await client.records.create('proveedores', body: {
+                    "nombre_fiscal": responseProveedor.payload!.nombreFiscal,
+                    "rfc": responseProveedor.payload!.rfc,
+                    "id_tipo_proveedor_fk": recordTipoProveedor.first.id,
+                    "direccion": responseProveedor.payload!.direccion,
+                    "id_comunidad_fk": recordComunidad.first.id,
+                    "nombre_encargado": responseProveedor.payload!.nombreEncargado,
+                    "id_condicion_pago_fk": recordCondicionPago.first.id,
+                    "clabe": responseProveedor.payload!.cuentaClabe,
+                    "telefono": responseProveedor.payload!.telefono,
+                    "id_banco_fk": recordBanco.first.id,
+                    "archivado": responseProveedor.payload!.archivado,
+                    "id_emi_web": responseProveedor.payload!.idProveedor.toString(),
+                    });
+                    if (recordProveedor.id.isNotEmpty) {
+                      print('Proveedor Emi Web agregado éxitosamente a Pocketbase');
+                    } else {
+                      return false;
+                    }
+                } else {
+                  return false;
+                }
+              } else {
+                //Se actualiza el proveedor en la colección de Pocketbase
+                final recordProveedorParse = getProveedoresFromMap(recordProveedor.first.toString());
+                //Verificamos que los campos de este registro sean diferentes para actualizarlo
+                if (recordProveedorParse.nombreFiscal != responseProveedor.payload!.nombreFiscal ||
+                    recordProveedorParse.rfc != responseProveedor.payload!.rfc ||
+                    recordProveedorParse.direccion != responseProveedor.payload!.direccion ||
+                    recordProveedorParse.nombreEncargado != responseProveedor.payload!.nombreEncargado ||
+                    recordProveedorParse.clabe != responseProveedor.payload!.cuentaClabe ||
+                    recordProveedorParse.telefono != responseProveedor.payload!.telefono ||
+                    recordProveedorParse.archivado != responseProveedor.payload!.archivado
+                    ) {
+                    final updateRecordProveedor = await client.records.update('proveedores', recordProveedorParse.id, 
+                    body: {
+                      "nombre_fiscal": responseProveedor.payload!.nombreFiscal,
+                      "rfc": responseProveedor.payload!.rfc,
+                      "direccion": responseProveedor.payload!.direccion,
+                      "nombre_encargado": responseProveedor.payload!.nombreEncargado,
+                      "clabe": responseProveedor.payload!.cuentaClabe,
+                      "telefono": responseProveedor.payload!.telefono,
+                      "archivado": responseProveedor.payload!.archivado,
+                    });
+                    if (updateRecordProveedor.id.isNotEmpty) {
+                      print('Proveedor Emi Web actualizado éxitosamente en Pocketbase');
+                    } else {
+                      return false;
+                    }
+                }
+              }
+              break;
+            case 401: //Error de Token incorrecto
+              if(await getTokenOAuth()) {
+                getProveedoresNoArchivados();
+                return true;
+              } else{
+                return false;
+              }
+            case 404: //Error de ruta incorrecta
+              return false;
+            default:
+              return false;
+            }
           }
-        }
+          return true;
+        case 401: //Error de Token incorrecto
+          if(await getTokenOAuth()) {
+            getProveedoresNoArchivados();
+            return true;
+          } else{
+            return false;
+          }
+        case 404: //Error de ruta incorrecta
+          return false;
+        default:
+          return false;
       }
-      notifyListeners();
-    }
+    // } catch (e) {
+    //   return false;
+    // }
+  }
+
+//Función para recuperar el catálogo de proveedores archivados desde Emi Web 
+Future<bool> getProveedoresArchivados() async {
+  // try {
+      var url = Uri.parse("$baseUrlEmiWebServices/proveedores?archivado=true");
+      final headers = ({
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $tokenGlobal',
+        });
+      var response = await http.get(
+        url,
+        headers: headers
+      );
+
+      switch (response.statusCode) {
+        case 200: //Caso éxitoso
+          final responseListProveedores = getProveedoresEmiWebFromMap(
+            const Utf8Decoder().convert(response.bodyBytes)
+          );
+          for(var i = 0; i < responseListProveedores.payload!.length; i++) {
+            var url = Uri.parse("$baseUrlEmiWebServices/proveedores/registro/${responseListProveedores.payload![i].id}");
+            final headers = ({
+                "Content-Type": "application/json",
+                'Authorization': 'Bearer $tokenGlobal',
+              });
+            var response = await http.get(
+              url,
+              headers: headers
+            );
+            switch (response.statusCode) {
+              case 200: //Caso éxitoso
+              final responseProveedor = getProveedorByIdEmiWebFromMap(
+              const Utf8Decoder().convert(response.bodyBytes));
+              //Verificamos que el nuevo proveedor no exista en Pocketbase
+              final recordProveedor = await client.records.getFullList(
+                'proveedores', 
+                batch: 200, 
+                filter: "id_emi_web='${responseProveedor.payload!.idProveedor}'");
+              if (recordProveedor.isEmpty) {
+                //Se recupera el id del tipoProveedor, condicionPago, banco y comunidad en Pocketbase y se acocia con el nuevo Proveedor
+                final recordTipoProveedor = await client.records.getFullList(
+                  'tipo_proveedor', 
+                  batch: 200, 
+                  filter: "id_emi_web='${responseProveedor.payload!.idTipoProveedor}'");
+                final recordCondicionPago = await client.records.getFullList(
+                  'condiciones_pago', 
+                  batch: 200, 
+                  filter: "id_emi_web='${responseProveedor.payload!.idCondicionesPago}'");
+                final recordBanco = await client.records.getFullList(
+                  'bancos', 
+                  batch: 200, 
+                  filter: "id_emi_web='${responseProveedor.payload!.idBanco}'");
+                final recordComunidad = await client.records.getFullList(
+                  'comunidades', 
+                  batch: 200, 
+                  filter: "id_emi_web='${responseProveedor.payload!.idCatComunidad}'");
+                if (recordTipoProveedor.isNotEmpty && recordCondicionPago.isNotEmpty 
+                    && recordBanco.isNotEmpty && recordComunidad.isNotEmpty) {
+                    //Se agrega el proveedor como nuevo en la colección de Pocketbase
+                    final recordProveedor = await client.records.create('proveedores', body: {
+                    "nombre_fiscal": responseProveedor.payload!.nombreFiscal,
+                    "rfc": responseProveedor.payload!.rfc,
+                    "id_tipo_proveedor_fk": recordTipoProveedor.first.id,
+                    "direccion": responseProveedor.payload!.direccion,
+                    "id_comunidad_fk": recordComunidad.first.id,
+                    "nombre_encargado": responseProveedor.payload!.nombreEncargado,
+                    "id_condicion_pago_fk": recordCondicionPago.first.id,
+                    "clabe": responseProveedor.payload!.cuentaClabe,
+                    "telefono": responseProveedor.payload!.telefono,
+                    "id_banco_fk": recordBanco.first.id,
+                    "archivado": responseProveedor.payload!.archivado,
+                    "id_emi_web": responseProveedor.payload!.idProveedor.toString(),
+                    });
+                    if (recordProveedor.id.isNotEmpty) {
+                      print('Proveedor Emi Web agregado éxitosamente a Pocketbase');
+                    } else {
+                      return false;
+                    }
+                } else {
+                  return false;
+                }
+              } else {
+                //Se actualiza el proveedor en la colección de Pocketbase
+                final recordProveedorParse = getProveedoresFromMap(recordProveedor.first.toString());
+                //Verificamos que los campos de este registro sean diferentes para actualizarlo
+                if (recordProveedorParse.nombreFiscal != responseProveedor.payload!.nombreFiscal ||
+                    recordProveedorParse.rfc != responseProveedor.payload!.rfc ||
+                    recordProveedorParse.direccion != responseProveedor.payload!.direccion ||
+                    recordProveedorParse.nombreEncargado != responseProveedor.payload!.nombreEncargado ||
+                    recordProveedorParse.clabe != responseProveedor.payload!.cuentaClabe ||
+                    recordProveedorParse.telefono != responseProveedor.payload!.telefono ||
+                    recordProveedorParse.archivado != responseProveedor.payload!.archivado
+                    ) {
+                    final updateRecordProveedor = await client.records.update('proveedores', recordProveedorParse.id, 
+                    body: {
+                      "nombre_fiscal": responseProveedor.payload!.nombreFiscal,
+                      "rfc": responseProveedor.payload!.rfc,
+                      "direccion": responseProveedor.payload!.direccion,
+                      "nombre_encargado": responseProveedor.payload!.nombreEncargado,
+                      "clabe": responseProveedor.payload!.cuentaClabe,
+                      "telefono": responseProveedor.payload!.telefono,
+                      "archivado": responseProveedor.payload!.archivado,
+                    });
+                    if (updateRecordProveedor.id.isNotEmpty) {
+                      print('Proveedor Emi Web actualizado éxitosamente en Pocketbase');
+                    } else {
+                      return false;
+                    }
+                }
+              }
+              break;
+            case 401: //Error de Token incorrecto
+              if(await getTokenOAuth()) {
+                getProveedoresNoArchivados();
+                return true;
+              } else{
+                return false;
+              }
+            case 404: //Error de ruta incorrecta
+              return false;
+            default:
+              return false;
+            }
+          }
+          return true;
+        case 401: //Error de Token incorrecto
+          if(await getTokenOAuth()) {
+            getProveedoresNoArchivados();
+            return true;
+          } else{
+            return false;
+          }
+        case 404: //Error de ruta incorrecta
+          return false;
+        default:
+          return false;
+      }
+    // } catch (e) {
+    //   return false;
+    // }
   }
 
 Future<void> getProductosProv() async {

@@ -880,12 +880,13 @@ class Proveedores {
   String nombreFiscal;
   String rfc;
   String direccion;
-  String nombreEncargado;
+  String? nombreEncargado;
   String clabe;
   String telefono;
   DateTime fechaRegistro;
-  int registradoPor;
   bool archivado;
+  @Unique()
+  String idEmiWeb;
   @Unique()
   String? idDBR;
   final statusSync = ToOne<StatusSync>();
@@ -900,12 +901,12 @@ class Proveedores {
     required this.nombreFiscal,
     required this.rfc,
     required this.direccion,
-    required this.nombreEncargado,
+    this.nombreEncargado,
     required this.clabe,
     required this.telefono,
     DateTime? fechaRegistro,
-    required this.registradoPor,
     required this.archivado,
+    required this.idEmiWeb,
     this.idDBR,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 

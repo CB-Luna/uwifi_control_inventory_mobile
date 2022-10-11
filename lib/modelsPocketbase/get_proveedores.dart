@@ -22,7 +22,7 @@ class GetProveedores {
         required this.telefono,
         required this.idBancoFk,
         required this.archivado,
-        required this.registradoPor,
+        required this.idEmiWeb,
     });
 
     final String collectionId;
@@ -35,13 +35,13 @@ class GetProveedores {
     final String idTipoProveedorFk;
     final String direccion;
     final String idComunidadFk;
-    final String nombreEncargado;
+    final String? nombreEncargado;
     final String idCondicionPagoFk;
     final String clabe;
     final String telefono;
     final String idBancoFk;
     final bool archivado;
-    final int registradoPor;
+    final String idEmiWeb;
 
     factory GetProveedores.fromMap(Map<String, dynamic> json) => GetProveedores(
         collectionId: json["@collectionId"],
@@ -60,7 +60,7 @@ class GetProveedores {
         telefono: json["telefono"],
         idBancoFk: json["id_banco_fk"],
         archivado: json["archivado"],
-        registradoPor: json["registrado_por"],
+        idEmiWeb: json["id_emi_web"],
     );
 
     Map<String, dynamic> toMap() => {
@@ -80,6 +80,6 @@ class GetProveedores {
         "telefono": telefono,
         "id_banco_fk": idBancoFk,
         "archivado": archivado,
-        "registrado_por": registradoPor,
+        "id_emi_web": idEmiWeb,
     };
 }

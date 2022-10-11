@@ -20,6 +20,7 @@ class GetProductosProv {
         required this.idFamiliaProdFk,
         required this.tiempoEntrega,
         required this.archivado,
+        required this.idEmiWeb,
     });
 
     final String collectionId;
@@ -36,6 +37,7 @@ class GetProductosProv {
     final String idFamiliaProdFk;
     final int tiempoEntrega;
     final bool archivado;
+    final String idEmiWeb;
 
     factory GetProductosProv.fromMap(Map<String, dynamic> json) => GetProductosProv(
         collectionId: json["@collectionId"],
@@ -52,6 +54,7 @@ class GetProductosProv {
         idFamiliaProdFk: json["id_familia_prod_fk"],
         tiempoEntrega: json["tiempo_entrega"],
         archivado: json["archivado"],
+        idEmiWeb: json["id_emi_web"],
     );
 
     Map<String, dynamic> toMap() => {
@@ -69,5 +72,6 @@ class GetProductosProv {
         "id_familia_prod_fk": idFamiliaProdFk,
         "tiempo_entrega": tiempoEntrega,
         "archivado": archivado,
+        "id_emi_web": idEmiWeb,
     };
 }
