@@ -6,8 +6,11 @@ import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
+import '../emprendimientos/detalle_emprendimiento_screen.dart';
+
 class JornadaActualizada extends StatefulWidget {
-  const JornadaActualizada({Key? key}) : super(key: key);
+  final int emprendimientoId;
+  const JornadaActualizada({Key? key, required this.emprendimientoId}) : super(key: key);
 
   @override
   State<JornadaActualizada> createState() => _JornadaActualizadaState();
@@ -81,7 +84,7 @@ class _JornadaActualizadaState extends State<JornadaActualizada> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const EmprendimientosScreen(),
+                                   DetalleEmprendimientoScreen(idEmprendimiento: widget.emprendimientoId,),
                             ),
                           );
                         },

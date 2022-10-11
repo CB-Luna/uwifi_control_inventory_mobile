@@ -19,7 +19,7 @@ class ReversoTarjetaDescripcionWidget extends StatefulWidget {
 DataRow _getDataRow(ProdSolicitado prodSolicitado){
   return DataRow(cells: <DataCell>[
         
-        DataCell(Text(prodSolicitado.producto) ),
+        DataCell(Text(prodSolicitado.producto,) ),
         DataCell(Text(prodSolicitado.proveedorSugerido ?? '')),
         DataCell(Text(prodSolicitado.marcaSugerida ?? '')),
         DataCell(Text(prodSolicitado.unidadMedida.target?.unidadMedida ?? "-")),
@@ -57,6 +57,7 @@ class _ReversoTarjetaDescripcionWidgetState
 
   @override
   Widget build(BuildContext context) {
+    double size = 8.0;
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(
           15, 10, 15, 10),
@@ -87,18 +88,18 @@ class _ReversoTarjetaDescripcionWidgetState
             'Producto',
             style: AppTheme.of(context).bodyText1.override(
                 fontFamily: AppTheme.of(context).bodyText1Family,
-                fontSize: 10,
+                fontSize: 10.0,
                 useGoogleFonts: GoogleFonts.asMap()
                     .containsKey(AppTheme.of(context).bodyText1Family),
                 color: Colors.black),
           ))),
           DataColumn(
             label: Expanded(
-                child: Text('Proveedor \nSugerido',
+                child: Text('Proveedor\nSugerido',
                     textAlign: TextAlign.center,
                     style: AppTheme.of(context).bodyText1.override(
                         fontFamily: AppTheme.of(context).bodyText1Family,
-                        fontSize: 10,
+                        fontSize: size,
                         useGoogleFonts: GoogleFonts.asMap()
                             .containsKey(AppTheme.of(context).bodyText1Family),
                         color: Colors.black))),
@@ -106,7 +107,7 @@ class _ReversoTarjetaDescripcionWidgetState
           DataColumn(
             label:Expanded(
               child:Text(
-                'Marca \nSugerida',
+                'Marca\nSugerida',
                               textAlign: TextAlign.center,
                               style: AppTheme.of(
                                       context)
@@ -116,7 +117,7 @@ class _ReversoTarjetaDescripcionWidgetState
                                         AppTheme.of(
                                                 context)
                                             .bodyText1Family,
-                                    fontSize: 10,
+                                    fontSize: size,
                                     useGoogleFonts: GoogleFonts
                                             .asMap()
                                         .containsKey(
@@ -130,11 +131,11 @@ class _ReversoTarjetaDescripcionWidgetState
           ),
           DataColumn(
               label: Expanded(
-                  child: Text('Unidad de \nmedida',
+                  child: Text('Unidad de\nmedida',
                       textAlign: TextAlign.center,
                       style: AppTheme.of(context).bodyText1.override(
                           fontFamily: AppTheme.of(context).bodyText1Family,
-                          fontSize: 10,
+                          fontSize: size,
                           useGoogleFonts: GoogleFonts.asMap()
                               .containsKey(AppTheme.of(context).bodyText1Family),
                           color: Colors.black)))),
@@ -144,7 +145,7 @@ class _ReversoTarjetaDescripcionWidgetState
             'Cantidad',
             style: AppTheme.of(context).bodyText1.override(
                 fontFamily: AppTheme.of(context).bodyText1Family,
-                fontSize: 10,
+                fontSize: size,
                 useGoogleFonts: GoogleFonts.asMap()
                     .containsKey(AppTheme.of(context).bodyText1Family),
                 color: Colors.black),
@@ -156,7 +157,7 @@ class _ReversoTarjetaDescripcionWidgetState
             textAlign: TextAlign.center,
             style: AppTheme.of(context).bodyText1.override(
                 fontFamily: AppTheme.of(context).bodyText1Family,
-                fontSize: 10,
+                fontSize: size,
                 useGoogleFonts: GoogleFonts.asMap()
                     .containsKey(AppTheme.of(context).bodyText1Family),
                 color: Colors.black),

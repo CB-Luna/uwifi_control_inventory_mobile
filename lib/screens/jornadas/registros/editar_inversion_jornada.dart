@@ -13,11 +13,11 @@ import 'package:bizpro_app/theme/theme.dart';
 class EditarInversionJornadaScreen extends StatefulWidget {
   final Inversiones inversion;
   final Jornadas jornada;
-
+  final Emprendimientos emprendimiento;
   const EditarInversionJornadaScreen({
     Key? key,
     required this.inversion, 
-    required this.jornada,
+    required this.jornada, required this.emprendimiento,
   }) : super(key: key);
 
   @override
@@ -30,7 +30,7 @@ class _EditarInversionJornadaScreenState
   final scaffoldKey = GlobalKey<ScaffoldState>();
   double totalProyecto = 0.0;
   List<ProdSolicitado> prodSolicitados = [];
-
+  
   @override
   void initState() {
     super.initState();
@@ -99,7 +99,7 @@ class _EditarInversionJornadaScreenState
                                         builder: (context) =>
                                             EditarJornada3Screen(
                                                 jornada:
-                                                    widget.jornada),
+                                                    widget.jornada, emprendimiento: widget.emprendimiento,),
                                       ),
                                     );
                                   },
@@ -333,7 +333,7 @@ class _EditarInversionJornadaScreenState
                                                                 ),
                                                               ),
                                                               Text(
-                                                                '\$ ${totalProyecto.toStringAsFixed(2)}',
+                                                                currencyFormat.format(totalProyecto.toStringAsFixed(2)),
                                                                 style: AppTheme.of(
                                                                         context)
                                                                     .bodyText1
@@ -534,7 +534,8 @@ class _EditarInversionJornadaScreenState
                                                               productoSol:
                                                                   prodSolicitado, 
                                                               jornada: 
-                                                                  widget.jornada,),
+                                                                  widget.jornada,
+                                                              emprendimientoActual: widget.emprendimiento,),
                                                     ),
                                                   );
                                                 },

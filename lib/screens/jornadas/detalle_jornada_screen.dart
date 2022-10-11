@@ -18,9 +18,10 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_carousel.dart';
 
 class DetalleJornadaScreen extends StatefulWidget {
   final Jornadas jornada;
+  final Emprendimientos empActual;
   const DetalleJornadaScreen({
     Key? key,
-    required this.jornada,
+    required this.jornada, required this.empActual,
   }) : super(key: key);
 
   @override
@@ -207,7 +208,7 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                                       builder: (context) =>
                                                           EditarJornada1Screen(
                                                               jornada:
-                                                                  widget.jornada),
+                                                                  widget.jornada,emprendimiento: widget.empActual,),
                                                     ),
                                                   );
                                                   break;
@@ -218,7 +219,7 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                                       builder: (context) =>
                                                           EditarJornada2Screen(
                                                               jornada:
-                                                                  widget.jornada),
+                                                                  widget.jornada,emprendimiento: widget.empActual),
                                                     ),
                                                   );
                                                   break;
@@ -229,7 +230,7 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                                       builder: (context) =>
                                                           EditarJornada3Screen(
                                                               jornada:
-                                                                  widget.jornada),
+                                                                  widget.jornada,emprendimiento: widget.empActual),
                                                     ),
                                                   );
                                                   break;
@@ -276,7 +277,7 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                                         builder: (context) =>
                                                             EditarJornada4Screen(
                                                                 jornada: widget
-                                                                    .jornada),
+                                                                    .jornada,emprendimiento: widget.empActual),
                                                       ),
                                                     );
                                                   }

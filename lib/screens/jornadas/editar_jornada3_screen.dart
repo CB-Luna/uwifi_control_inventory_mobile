@@ -28,10 +28,10 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class EditarJornada3Screen extends StatefulWidget {
   final Jornadas jornada;
-
+  final Emprendimientos emprendimiento;
   const EditarJornada3Screen({
     Key? key,
-    required this.jornada,
+    required this.jornada, required this.emprendimiento,
   }) : super(key: key);
 
   @override
@@ -204,7 +204,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                               builder: (context) =>
                                                   DetalleJornadaScreen(
                                                       jornada:
-                                                          widget.jornada),
+                                                          widget.jornada,empActual:widget.emprendimiento,),
                                             ),
                                           );
                                         },
@@ -1175,7 +1175,9 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                                 builder: (context) =>
                                                     EditarInversionJornadaScreen(
                                                         inversion: inversion!, 
-                                                        jornada: widget.jornada,),
+                                                        jornada: widget.jornada,
+                                                        emprendimiento: widget.emprendimiento,
+                                                        ),
                                               ),
                                             );
                                           }
@@ -1281,7 +1283,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const JornadaActualizada(),
+                                               JornadaActualizada(emprendimientoId: widget.emprendimiento.id,),
                                         ),
                                       );
                                     }

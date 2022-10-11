@@ -24,10 +24,10 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class EditarJornada2Screen extends StatefulWidget {
   final Jornadas jornada;
-
+  final Emprendimientos emprendimiento;
   const EditarJornada2Screen({
     Key? key,
-    required this.jornada,
+    required this.jornada, required this.emprendimiento,
   }) : super(key: key);
 
   @override
@@ -942,7 +942,7 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          const JornadaActualizada(),
+                                           JornadaActualizada(emprendimientoId: widget.emprendimiento.id,),
                                     ),
                                   );
                                 }

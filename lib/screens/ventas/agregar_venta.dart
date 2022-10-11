@@ -509,7 +509,7 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          const VentaCreadaScreen(),
+                                           VentaCreadaScreen(empVenta: widget.idEmprendimiento,),
                                     ),
                                   );
                               } else {

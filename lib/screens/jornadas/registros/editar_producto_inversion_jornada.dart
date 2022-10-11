@@ -26,11 +26,12 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 class EditarProductoInversionJornada extends StatefulWidget {
   final ProdSolicitado productoSol;
   final Jornadas jornada;
+  final Emprendimientos emprendimientoActual;
 
   const EditarProductoInversionJornada({
     Key? key,
     required this.productoSol, 
-    required this.jornada,
+    required this.jornada, required this.emprendimientoActual,
   }) : super(key: key);
 
   @override
@@ -157,7 +158,8 @@ class _EditarProductoInversionJornadaState
                                                     inversion: 
                                                         widget.productoSol.inversion.target!,
                                                     jornada:
-                                                        widget.jornada),
+                                                        widget.jornada,
+                                                    emprendimiento: widget.emprendimientoActual),
                                           ),
                                         );
                                       },
@@ -230,6 +232,7 @@ class _EditarProductoInversionJornadaState
                                       builder: (context) =>
                                            ProductoJornadaEliminado(jornada: 
                                               widget.jornada,
+                                              emprendimientoActual: widget.emprendimientoActual,
                                               ),
                                             ),
                                       );

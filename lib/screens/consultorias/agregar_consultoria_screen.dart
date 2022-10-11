@@ -589,7 +589,7 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        const ConsultoriaCreada(),
+                                                         ConsultoriaCreada(empConsultoria: widget.emprendimiento,),
                                                   ),
                                                 );
                                               },
@@ -639,7 +639,7 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        const ConsultoriaCreada(),
+                                                         ConsultoriaCreada(empConsultoria: widget.emprendimiento,),
                                                   ),
                                                 );
                                               },
@@ -662,7 +662,7 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                const ConsultoriaCreada(),
+                                                 ConsultoriaCreada(empConsultoria: widget.emprendimiento,),
                                           ),
                                         );
                                   }

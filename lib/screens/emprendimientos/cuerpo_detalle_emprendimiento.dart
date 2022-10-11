@@ -319,7 +319,7 @@ class _CuerpoDetalleEmprendimientoState extends State<CuerpoDetalleEmprendimient
                                   MaterialPageRoute(
                                     builder: (context) =>
                                         DetalleJornadaScreen(
-                                      jornada: jornada,
+                                      jornada: jornada,empActual: widget.emprendimiento,
                                     ),
                                   ),
                                 );
@@ -519,6 +519,7 @@ class _CuerpoDetalleEmprendimientoState extends State<CuerpoDetalleEmprendimient
                                             numConsultoria:
                                                 (index + 1)
                                                     .toString(),
+                                                    emprendimientoActual: widget.emprendimiento,
                                           ),
                                         ),
                                       );

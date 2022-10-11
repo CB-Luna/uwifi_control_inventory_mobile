@@ -16,10 +16,11 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class EditarVentaScreen extends StatefulWidget {
   final Ventas venta;
-
+  final Emprendimientos idEmp;
   const EditarVentaScreen({
     Key? key,
-    required this.venta,
+    required this.venta, 
+    required this.idEmp,
   }) : super(key: key);
 
   @override
@@ -444,7 +445,7 @@ class _EditarVentaScreenState extends State<EditarVentaScreen> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  RegistroVentaScreen(venta: widget.venta,),
+                                                  RegistroVentaScreen(venta: widget.venta,emprendimiento: widget.idEmp,),
                                             ),
                                           );
                                         },
@@ -505,7 +506,7 @@ class _EditarVentaScreenState extends State<EditarVentaScreen> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const VentaActualizadaScreen(),
+                                               VentaActualizadaScreen(empVentaActualizada: widget.idEmp.id,),
                                         ),
                                       );
                                   }
