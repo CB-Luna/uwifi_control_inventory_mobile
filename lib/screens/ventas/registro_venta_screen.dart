@@ -340,7 +340,8 @@ class _RegistroVentaScreenState
                                                                     ),
                                                               ),
                                                             ),
-                                                            Text(currencyFormat.format(totalProyecto.toStringAsFixed(2)),
+                                                            Text(
+                                                              currencyFormat.format(totalProyecto.toStringAsFixed(2)),
                                                               style: AppTheme.of(
                                                                       context)
                                                                   .bodyText1
