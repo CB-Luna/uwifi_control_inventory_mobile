@@ -21,8 +21,8 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_checkbox_group.dart';
 
 class EditarJornada4Screen extends StatefulWidget {
   final Jornadas jornada;
-
-  const EditarJornada4Screen({Key? key, required this.jornada})
+  final Emprendimientos emprendimiento;
+  const EditarJornada4Screen({Key? key, required this.jornada, required this.emprendimiento})
       : super(key: key);
 
   @override
@@ -754,7 +754,7 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            const JornadaActualizada(),
+                                             JornadaActualizada(emprendimientoId: widget.emprendimiento.id,),
                                       ));
                                 }
                               } else {

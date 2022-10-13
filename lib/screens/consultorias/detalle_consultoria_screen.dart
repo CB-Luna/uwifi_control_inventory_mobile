@@ -15,11 +15,12 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
 class DetalleConsultoriaScreen extends StatefulWidget {
   final Consultorias consultoria;
   final String numConsultoria;
+  final Emprendimientos emprendimientoActual;
 
   const DetalleConsultoriaScreen({
     Key? key,
     required this.consultoria,
-    required this.numConsultoria,
+    required this.numConsultoria, required this.emprendimientoActual,
   }) : super(key: key);
 
   @override
@@ -179,7 +180,8 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                                 consultoria: widget.consultoria,
                                                 numConsultoria:
                                                     widget.numConsultoria, 
-                                                    tarea: widget.consultoria.tareas.last,
+                                                    tarea: widget.consultoria.tareas.last, 
+                                                emprendimientoEditar: widget.emprendimientoActual,
                                               ),
                                             ),
                                           );

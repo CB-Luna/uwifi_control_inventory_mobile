@@ -338,7 +338,7 @@ class _InversionJornadaTemporalScreenState
                                                                 ),
                                                               ),
                                                               Text(
-                                                                '\$ ${totalProyecto.toStringAsFixed(2)}',
+                                                                currencyFormat.format(totalProyecto.toStringAsFixed(2)),
                                                                 style: AppTheme.of(
                                                                         context)
                                                                     .bodyText1
@@ -402,7 +402,7 @@ class _InversionJornadaTemporalScreenState
                                                                       color: Colors
                                                                           .white,
                                                                       fontSize:
-                                                                          12,
+                                                                          10,
                                                                     ),
                                                               ),
                                                             ),
@@ -680,7 +680,7 @@ class _InversionJornadaTemporalScreenState
                                                                                 ),
                                                                           ),
                                                                           Text(
-                                                                            "\$ ${prodSolicitado.costoEstimado == null ? 0 : (prodSolicitado.costoEstimado! * prodSolicitado.cantidad).toStringAsFixed(2)}",
+                                                                            "\$ ${prodSolicitado.costoEstimado == null ? 0 : currencyFormat.format((prodSolicitado.costoEstimado! * prodSolicitado.cantidad).toStringAsFixed(2))}",
                                                                             textAlign:
                                                                                 TextAlign.end,
                                                                             style: AppTheme.of(context)

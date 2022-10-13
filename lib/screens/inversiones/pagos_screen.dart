@@ -1467,7 +1467,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                     children: [
                                                                       Text(
                                                                         dateTimeFormat(
-                                                                        'dd/MMM/yyyy',
+                                                                        'dd/MMM/yyyy ',
                                                                         pago.fechaMovimiento),
                                                                         style: AppTheme
                                                                                 .of(context)

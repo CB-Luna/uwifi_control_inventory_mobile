@@ -15,10 +15,11 @@ import 'package:bizpro_app/theme/theme.dart';
 
 class RegistroVentaScreen extends StatefulWidget {
   final Ventas venta;
-
+  final Emprendimientos emprendimiento;
   const RegistroVentaScreen({
     Key? key,
-    required this.venta,
+    required this.venta, 
+    required this.emprendimiento,
   }) : super(key: key);
 
   @override
@@ -107,6 +108,7 @@ class _RegistroVentaScreenState
                                       builder: (context) =>
                                           EditarVentaScreen(
                                             venta: widget.venta,
+                                            idEmp: widget.emprendimiento ,
                                           ),
                                     ),
                                   );
@@ -338,7 +340,8 @@ class _RegistroVentaScreenState
                                                                     ),
                                                               ),
                                                             ),
-                                                            Text(currencyFormat.format(totalProyecto.toStringAsFixed(2)),
+                                                            Text(
+                                                              currencyFormat.format(totalProyecto.toStringAsFixed(2)),
                                                               style: AppTheme.of(
                                                                       context)
                                                                   .bodyText1

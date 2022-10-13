@@ -250,7 +250,7 @@ class _EditarProductoVentaState
                                             if (element.nombre ==
                                                 producto) {
                                               costoUnitario.text = 
-                                                "\$${element.costo.toStringAsFixed(2)}";
+                                                currencyFormat.format(element.costo.toStringAsFixed(2));
                                               unidadMedida.text = 
                                                 element.unidadMedida.target!.unidadMedida;
                                               idProductoEmp = 
@@ -362,8 +362,8 @@ class _EditarProductoVentaState
                                   onChanged: (value) {
                                      try {
                                       if (value != "" && precioVenta.text != "" ) {
-                                      subTotal.text = (double.parse(value) * double.parse(precioVenta.text.replaceAll("\$", "").replaceAll(",", "")))
-                                      .toStringAsFixed(2);
+                                      subTotal.text = currencyFormat.format((double.parse(value) * double.parse(precioVenta.text.replaceAll("\$", "").replaceAll(",", "")))
+                                      .toStringAsFixed(2));
                                       }  
                                     } catch (e) {
                                       null;
@@ -497,7 +497,7 @@ class _EditarProductoVentaState
                                   onChanged: (value) {
                                     try {
                                       if (value != "" && cantidadVendida.text != "" ) {
-                                      subTotal.text = (double.parse(value.replaceAll("\$", "").replaceAll(",", "")) * double.parse(cantidadVendida.text)).toStringAsFixed(2);
+                                      subTotal.text = currencyFormat.format((double.parse(value.replaceAll("\$", "").replaceAll(",", "")) * double.parse(cantidadVendida.text)).toStringAsFixed(2));
                                     }  
                                     } catch (e) {
                                       null;
@@ -587,7 +587,7 @@ class _EditarProductoVentaState
                                     || precioVenta.text == "") ? 
                                     "\$0.00"
                                     :
-                                    "\$${subTotal.text}",
+                                    currencyFormat.format(subTotal.text),
                                     style: AppTheme.of(context)
                                         .bodyText1
                                         .override(

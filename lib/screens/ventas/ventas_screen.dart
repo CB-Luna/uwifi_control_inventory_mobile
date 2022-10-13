@@ -454,7 +454,7 @@ class _VentasScreenState extends State<VentasScreen> {
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      EditarVentaScreen(venta: venta,),
+                                                      EditarVentaScreen(venta: venta,idEmp: widget.emprendimiento,),
                                                 ),
                                               );
                                             }

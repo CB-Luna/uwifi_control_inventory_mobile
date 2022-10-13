@@ -7,10 +7,10 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 class ProductoJornadaEliminado extends StatefulWidget {
   final Jornadas jornada;
-  
+  final Emprendimientos emprendimientoActual;
   const ProductoJornadaEliminado({
     Key? key, 
-    required this.jornada
+    required this.jornada, required this.emprendimientoActual
     }) : super(key: key);
 
   @override
@@ -88,7 +88,7 @@ class _ProductoJornadaEliminadoState
                             MaterialPageRoute(
                               builder: (context) =>
                                   DetalleJornadaScreen(
-                                    jornada: widget.jornada
+                                    jornada: widget.jornada, empActual: widget.emprendimientoActual
                                   ,),
                             ),
                           );

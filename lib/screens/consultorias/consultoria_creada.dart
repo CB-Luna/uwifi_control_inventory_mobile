@@ -1,3 +1,4 @@
+import 'package:bizpro_app/database/entitys.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -6,8 +7,11 @@ import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
+import '../emprendimientos/detalle_emprendimiento_screen.dart';
+
 class ConsultoriaCreada extends StatefulWidget {
-  const ConsultoriaCreada({Key? key}) : super(key: key);
+  final Emprendimientos empConsultoria;
+  const ConsultoriaCreada({Key? key, required this.empConsultoria}) : super(key: key);
 
   @override
   State<ConsultoriaCreada> createState() => _ConsultoriaCreadaState();
@@ -81,7 +85,7 @@ class _ConsultoriaCreadaState extends State<ConsultoriaCreada> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const EmprendimientosScreen(),
+                                   DetalleEmprendimientoScreen(idEmprendimiento: widget.empConsultoria.id ,),
                             ),
                           );
                         },

@@ -326,7 +326,7 @@ class _CuerpoDetalleEmprendimientoState extends State<CuerpoDetalleEmprendimient
                                   MaterialPageRoute(
                                     builder: (context) =>
                                         DetalleJornadaScreen(
-                                      jornada: jornada,
+                                      jornada: jornada,empActual: widget.emprendimiento,
                                     ),
                                   ),
                                 );
@@ -509,6 +509,7 @@ class _CuerpoDetalleEmprendimientoState extends State<CuerpoDetalleEmprendimient
                               itemBuilder: (context, index) {
                                 final consultoria =
                                     consultorias[index];
+<<<<<<< HEAD
                                 return 
                                 consultoria.archivado ? 
                                 Slidable(
@@ -528,6 +529,85 @@ class _CuerpoDetalleEmprendimientoState extends State<CuerpoDetalleEmprendimient
                                                 MaterialPageRoute(
                                                 builder: (context) =>
                                                       ConsultoriaDesarchivadaScreen(idEmprendimiento: widget.emprendimiento.id,),
+=======
+                                return Padding(
+                                  padding:
+                                      const EdgeInsetsDirectional
+                                              .fromSTEB(
+                                          15, 10, 15, 0),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              DetalleConsultoriaScreen(
+                                            consultoria:
+                                                consultoria,
+                                            numConsultoria:
+                                                (index + 1)
+                                                    .toString(),
+                                                    emprendimientoActual: widget.emprendimiento,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 100,
+                                      decoration: BoxDecoration(
+                                        color: const Color(
+                                            0xFF1F68CB),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            blurRadius: 4,
+                                            color: Color(
+                                                0x32000000),
+                                            offset:
+                                                Offset(0, 2),
+                                          )
+                                        ],
+                                        borderRadius:
+                                            BorderRadius
+                                                .circular(8),
+                                      ),
+                                      child: Column(
+                                        mainAxisSize:
+                                            MainAxisSize.max,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                    16,
+                                                    5,
+                                                    16,
+                                                    5),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                      0,
+                                                      5,
+                                                      0,
+                                                      0),
+                                              child: Text(
+                                                'Consultoría No. ${index + 1}',
+                                                maxLines: 1,
+                                                style: AppTheme.of(
+                                                        context)
+                                                    .title3
+                                                    .override(
+                                                      fontFamily:
+                                                          'Poppins',
+                                                      color: Colors
+                                                          .white,
+                                                      fontSize:
+                                                          18,
+                                                      fontWeight:
+                                                          FontWeight
+                                                              .w500,
+>>>>>>> e657cd2686c10f75bdb32197d6e350bb7077cc81
                                                     ),
                                                 );
                                             } else {

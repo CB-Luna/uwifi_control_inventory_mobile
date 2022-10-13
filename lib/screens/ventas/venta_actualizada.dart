@@ -6,8 +6,11 @@ import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
+import '../emprendimientos/detalle_emprendimiento_screen.dart';
+
 class VentaActualizadaScreen extends StatefulWidget {
-  const VentaActualizadaScreen({Key? key}) : super(key: key);
+  final int empVentaActualizada;
+  const VentaActualizadaScreen({Key? key, required this.empVentaActualizada}) : super(key: key);
 
   @override
   State<VentaActualizadaScreen> createState() => _VentaActualizadaScreenState();
@@ -81,7 +84,7 @@ class _VentaActualizadaScreenState extends State<VentaActualizadaScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const EmprendimientosScreen(),
+                                   DetalleEmprendimientoScreen(idEmprendimiento: widget.empVentaActualizada,),
                             ),
                           );
                         },

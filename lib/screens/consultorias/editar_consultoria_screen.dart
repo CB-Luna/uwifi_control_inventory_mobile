@@ -22,12 +22,14 @@ class EditarConsultoriaScreen extends StatefulWidget {
   final Consultorias consultoria;
   final String numConsultoria;
   final Tareas tarea;
+  final Emprendimientos emprendimientoEditar;
 
   const EditarConsultoriaScreen({
     Key? key,
     required this.consultoria,
     required this.numConsultoria, 
-    required this.tarea,
+    required this.tarea, 
+    required this.emprendimientoEditar,
   }) : super(key: key);
 
   @override
@@ -813,7 +815,7 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          const ConsultoriaActualizada(),
+                                           ConsultoriaActualizada(idEmp: widget.emprendimientoEditar.id),
                                     ),
                                   );
                                   }
