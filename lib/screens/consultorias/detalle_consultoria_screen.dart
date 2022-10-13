@@ -561,6 +561,21 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                             ),
                                   ),
                                 ),
+                                (tareas.length  - 1 ) == 0 ?
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 5, 0, 10),
+                                  child: Text(
+                                    "Sin SubTareas",
+                                    style:
+                                        AppTheme.of(context).bodyText1.override(
+                                              fontFamily: AppTheme.of(context)
+                                                  .bodyText1Family,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                  ),
+                                )
+                                :
                                 ListView.builder(
                                   padding: EdgeInsets.zero,
                                   primary: false,

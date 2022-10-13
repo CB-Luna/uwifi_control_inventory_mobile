@@ -58,7 +58,7 @@ class _TarjetaDescripcionConsultoriaState extends State<TarjetaDescripcionConsul
         },
         child: Container(
           width: double.infinity,
-          height: 100,
+          height: 120,
           decoration: BoxDecoration(
             color: widget.backgroundColor,
             boxShadow: const [
@@ -124,6 +124,33 @@ class _TarjetaDescripcionConsultoriaState extends State<TarjetaDescripcionConsul
                         5),
                 child: Text(
                   'Ámbito: ${widget.consultoria.ambitoConsultoria.target?.nombreAmbito ?? "Sin Ámbito"}',
+                  maxLines: 1,
+                  style: AppTheme.of(
+                          context)
+                      .bodyText2
+                      .override(
+                        fontFamily:
+                            'Poppins',
+                        color: Colors
+                            .white,
+                        fontSize:
+                            13,
+                        fontWeight:
+                            FontWeight
+                                .normal,
+                      ),
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsetsDirectional
+                            .fromSTEB(
+                        16,
+                        0,
+                        16,
+                        5),
+                child: Text(
+                  'Área Círculo: ${widget.consultoria.areaCirculo.target?.nombreArea ?? "Sin Área Círculo"}',
                   maxLines: 1,
                   style: AppTheme.of(
                           context)

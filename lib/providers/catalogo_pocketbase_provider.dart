@@ -1039,47 +1039,47 @@ Future<bool> getProductosProv() async {
   }
 
   Future<void> getProdProyecto() async {
-    // if (dataBase.productosProyectoBox.isEmpty()) {
-    //   final records = await client.records.
-    //   getFullList('prod_proyecto', batch: 200, sort: '+producto');
+    if (dataBase.productosProyectoBox.isEmpty()) {
+      final records = await client.records.
+      getFullList('prod_proyecto', batch: 200, sort: '+producto');
 
-    //   final List<GetProdProyecto> listProdProyecto = [];
-    //   for (var element in records) {
-    //     listProdProyecto.add(getProdProyectoFromMap(element.toString()));
-    //   }
+      final List<GetProdProyecto> listProdProyecto = [];
+      for (var element in records) {
+        listProdProyecto.add(getProdProyectoFromMap(element.toString()));
+      }
 
-    //   print("****Informacion prod Proyecto****");
-    //   for (var i = 0; i < records.length; i++) {
-    //     if (listProdProyecto[i].id.isNotEmpty) {
-    //     final nuevoProdProyecto = ProdProyecto(
-    //     producto: listProdProyecto[i].producto,
-    //     marcaSugerida: listProdProyecto[i].marcaSugerida,
-    //     descripcion: listProdProyecto[i].descripcion,
-    //     proveedorSugerido: listProdProyecto[i].proveedorSugerido,
-    //     cantidad: listProdProyecto[i].cantidad,
-    //     costoEstimado: listProdProyecto[i].costoEstimado,
-    //     idDBR: listProdProyecto[i].id,
-    //     fechaRegistro: listProdProyecto[i].updated
-    //     );
-    //     final familiaProd = dataBase.familiaProductosBox.query(FamiliaProd_.idDBR.equals(listProdProyecto[i].idFamiliaProdFk)).build().findUnique();
-    //     final tipoEmpaque = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idDBR.equals(listProdProyecto[i].idTipoEmpaquesFk)).build().findUnique();
-    //     final catalogoProyecto = dataBase.catalogoProyectoBox.query(CatalogoProyecto_.idDBR.equals(listProdProyecto[i].idCatalogoProyectoFk)).build().findUnique();
-    //     if (familiaProd != null && tipoEmpaque != null && catalogoProyecto != null) {
-    //       final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
-    //       nuevoProdProyecto.statusSync.target = nuevoSync;
-    //       nuevoProdProyecto.familiaProducto.target = familiaProd;
-    //       nuevoProdProyecto.tipoEmpaques.target = tipoEmpaque;
-    //       nuevoProdProyecto.catalogoProyecto.target = catalogoProyecto;
-    //       // dataBase.productosProyectoBox.put(nuevoProdProyecto);
-    //       catalogoProyecto.prodProyecto.add(nuevoProdProyecto);
-    //       dataBase.catalogoProyectoBox.put(catalogoProyecto);
-    //       print("TAMANÑO PROD PROYECTO: ${dataBase.productosProyectoBox.getAll().length}");
-    //       print('Prod Proyecto agregado exitosamente');
-    //       }
-    //     }
-    //   }
-    //   notifyListeners();
-    //   }
+      print("****Informacion prod Proyecto****");
+      for (var i = 0; i < records.length; i++) {
+        if (listProdProyecto[i].id.isNotEmpty) {
+        final nuevoProdProyecto = ProdProyecto(
+        producto: listProdProyecto[i].producto,
+        marcaSugerida: listProdProyecto[i].marcaSugerida,
+        descripcion: listProdProyecto[i].descripcion,
+        proveedorSugerido: listProdProyecto[i].proveedorSugerido,
+        cantidad: listProdProyecto[i].cantidad,
+        costoEstimado: listProdProyecto[i].costoEstimado,
+        idDBR: listProdProyecto[i].id,
+        fechaRegistro: listProdProyecto[i].updated
+        );
+        final familiaProd = dataBase.familiaProductosBox.query(FamiliaProd_.idDBR.equals(listProdProyecto[i].idFamiliaProdFk)).build().findUnique();
+        final tipoEmpaque = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idDBR.equals(listProdProyecto[i].idTipoEmpaqueFk)).build().findUnique();
+        final catalogoProyecto = dataBase.catalogoProyectoBox.query(CatalogoProyecto_.idDBR.equals(listProdProyecto[i].idCatalogoProyectoFk)).build().findUnique();
+        if (familiaProd != null && tipoEmpaque != null && catalogoProyecto != null) {
+          final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
+          nuevoProdProyecto.statusSync.target = nuevoSync;
+          nuevoProdProyecto.familiaProducto.target = familiaProd;
+          nuevoProdProyecto.tipoEmpaques.target = tipoEmpaque;
+          nuevoProdProyecto.catalogoProyecto.target = catalogoProyecto;
+          // dataBase.productosProyectoBox.put(nuevoProdProyecto);
+          catalogoProyecto.prodProyecto.add(nuevoProdProyecto);
+          dataBase.catalogoProyectoBox.put(catalogoProyecto);
+          print("TAMANÑO PROD PROYECTO: ${dataBase.productosProyectoBox.getAll().length}");
+          print('Prod Proyecto agregado exitosamente');
+          }
+        }
+      }
+      notifyListeners();
+      }
     }
 
   Future<void> getRoles() async {
