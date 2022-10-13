@@ -49,7 +49,8 @@ class _TarjetaDescripcionConsultoriaState extends State<TarjetaDescripcionConsul
                     widget.consultoria,
                 numConsultoria:
                     (widget.index + 1)
-                        .toString(),
+                        .toString(), 
+                        emprendimientoActual: widget.consultoria.emprendimiento.target!,
               ),
             ),
           );
