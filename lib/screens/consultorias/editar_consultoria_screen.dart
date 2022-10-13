@@ -17,7 +17,6 @@ import 'package:bizpro_app/screens/consultorias/consultoria_actualizada.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:uuid/uuid.dart';
 
 class EditarConsultoriaScreen extends StatefulWidget {
   final Consultorias consultoria;
@@ -796,6 +795,7 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                               print("Siguientes pasos: ${consultoriaProvider.tarea}");
                               print("Fecha proxima revision: ${fechaRevision.text}");
                               if (consultoriaProvider.validateForm(formKey)) {
+                                print("Chi");
                                   final idPorcentajeAvance = dataBase.porcentajeAvanceBox
                                     .query(PorcentajeAvance_
                                     .porcentajeAvance.

@@ -862,7 +862,7 @@ class _EditarProductoInversionScreenState
                                               .onUserInteraction,
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            labelText: 'Costo total estimado',
+                                            labelText: 'Costo por unidad estimado',
                                             labelStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(
@@ -873,7 +873,7 @@ class _EditarProductoInversionScreenState
                                                   fontWeight: FontWeight.normal,
                                                 ),
                                             hintText:
-                                                'Ingresa costo total estimado...',
+                                                'Ingresa costo por unidad estimado...',
                                             hintStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(

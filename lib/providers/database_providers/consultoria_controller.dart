@@ -83,12 +83,13 @@ class ConsultoriaController extends ChangeNotifier {
   void updateTareaConsultoria(int id, int idOldTarea, int idPorcentajeAvance) {
     var oldTarea  = dataBase.tareasBox.get(idOldTarea);
     if (oldTarea != null) {
+      print("Dentro de old Tarea");
       final nuevaTarea = Tareas(
       tarea: tarea == "" ? oldTarea.tarea : tarea,
       descripcion: avanceObservado,
       activo: activo,
       fechaRevision: fechaRevision!);
-      //Se agrega la imagen a la Tarea
+      // Se agrega la imagen a la Tarea
       final nuevaImagenTarea = Imagenes(imagenes: imagen); //Se crea el objeto imagenes para la Tarea
       nuevaTarea.imagenes.add(nuevaImagenTarea);
       final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
@@ -96,6 +97,7 @@ class ConsultoriaController extends ChangeNotifier {
       //Se actualiza el porcentaje de la Tarea
       final porcentajeAvance = dataBase.porcentajeAvanceBox.get(idPorcentajeAvance);
       if (porcentajeAvance != null) {
+        print("Se actualiza porcentaje");
         nuevaTarea.porcentaje.target = porcentajeAvance;
       }
       var updateConsultoria = dataBase.consultoriasBox.get(id);
@@ -109,6 +111,7 @@ class ConsultoriaController extends ChangeNotifier {
           statusSyncConsultoria.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la consultoria
           dataBase.statusSyncBox.put(statusSyncConsultoria);
         }
+        dataBase.consultoriasBox.put(updateConsultoria);
         nuevaTarea.bitacora.add(nuevaInstruccion);
         dataBase.tareasBox.put(nuevaTarea);
         print('Tarea de Consultoría actualizada exitosamente');
@@ -145,25 +148,39 @@ class ConsultoriaController extends ChangeNotifier {
     }
   }
 
-  // void updateTareaConsultoria(int idTarea, String newTarea, DateTime newFechaRevision, String newComentarios, String newDescripcion, bool newActivo) {
-  //   var updateTarea  = dataBase.tareasBox.get(idTarea);
-  //   if (updateTarea != null) {
-  //     final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateTareaConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-  //     updateTarea.fechaRevision = newFechaRevision;
-  //     updateTarea.tarea = newTarea;
-  //     updateTarea.descripcion = newDescripcion;
-  //     updateTarea.activo = newActivo;
-  //     final statusSyncTarea = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateTarea.statusSync.target!.id)).build().findUnique();
-  //     if (statusSyncTarea != null) {
-  //       statusSyncTarea.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la tarea
-  //       dataBase.statusSyncBox.put(statusSyncTarea);
-  //     }
-  //     updateTarea.bitacora.add(nuevaInstruccion);
-  //     dataBase.tareasBox.put(updateTarea);
-  //     notifyListeners();
-  //     print('Tarea Consultoria actualizada exitosamente');
-  //   }
-  // }
+    void archivarConsultoria(int idConsultoria) {
+    final consultoria = dataBase.consultoriasBox.get(idConsultoria);
+    if (consultoria != null) {
+      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      //Se actualiza el estado de la Consultoria
+      consultoria.archivado = true;
+      final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(consultoria.statusSync.target!.id)).build().findUnique();
+      if (statusSync != null) {
+        statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del consultoria
+        dataBase.statusSyncBox.put(statusSync);
+      }
+      consultoria.bitacora.add(nuevaInstruccion);
+      dataBase.consultoriasBox.put(consultoria);
+      print('Consultoria actualizada exitosamente');
+    }
+  }
+
+  void desarchivarConsultoria(int idConsultoria) {
+    final consultoria = dataBase.consultoriasBox.get(idConsultoria);
+    if (consultoria != null) {
+      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      //Se actualiza el estado de la Consultoria
+      consultoria.archivado = false;
+      final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(consultoria.statusSync.target!.id)).build().findUnique();
+      if (statusSync != null) {
+        statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del consultoria
+        dataBase.statusSyncBox.put(statusSync);
+      }
+      consultoria.bitacora.add(nuevaInstruccion);
+      dataBase.consultoriasBox.put(consultoria);
+      print('Consultoria actualizada exitosamente');
+    }
+  }
 
   void remove(Consultorias consultoria) {
     dataBase.consultoriasBox.remove(consultoria.id);

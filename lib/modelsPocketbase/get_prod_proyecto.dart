@@ -12,14 +12,15 @@ class GetProdProyecto {
         required this.created,
         required this.updated,
         required this.producto,
-        this.marcaSugerida,
+        required this.marcaSugerida,
         required this.descripcion,
-        this.proveedorSugerido,
+        required this.proveedorSugerido,
         required this.cantidad,
-        this.costoEstimado,
+        required this.costoEstimado,
         required this.idFamiliaProdFk,
-        required this.idTipoEmpaquesFk,
+        required this.idUnidadMedidaFk,
         required this.idCatalogoProyectoFk,
+        required this.idEmiWeb,
     });
 
     final String collectionId;
@@ -28,14 +29,15 @@ class GetProdProyecto {
     final DateTime? created;
     final DateTime? updated;
     final String producto;
-    final String? marcaSugerida;
+    final String marcaSugerida;
     final String descripcion;
-    final String? proveedorSugerido;
+    final String proveedorSugerido;
     final int cantidad;
-    final double? costoEstimado;
+    final double costoEstimado;
     final String idFamiliaProdFk;
-    final String idTipoEmpaquesFk;
+    final String idUnidadMedidaFk;
     final String idCatalogoProyectoFk;
+    final String idEmiWeb;
 
     factory GetProdProyecto.fromMap(Map<String, dynamic> json) => GetProdProyecto(
         collectionId: json["@collectionId"],
@@ -44,14 +46,15 @@ class GetProdProyecto {
         created: json["created"] == null ? null : DateTime.parse(json["created"]),
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
         producto: json["producto"],
-        marcaSugerida: json["marca_sugerida"] == null ? null : json["marca_sugerida"]!,
+        marcaSugerida: json["marca_sugerida"],
         descripcion: json["descripcion"],
-        proveedorSugerido: json["proveedor_sugerido"] == null ? null : json["proveedor_sugerido"]!,
+        proveedorSugerido: json["proveedor_sugerido"],
         cantidad: json["cantidad"],
-        costoEstimado: json["costo_estimado"] == null ? null : json["costo_estimado"]!.toDouble(),
+        costoEstimado: json["costo_estimado"] == null ? null : json["costo_estimado"].toDouble(),
         idFamiliaProdFk: json["id_familia_prod_fk"],
-        idTipoEmpaquesFk: json["id_tipo_empaques_fk"],
+        idUnidadMedidaFk: json["id_unidad_medida_fk"],
         idCatalogoProyectoFk: json["id_catalogo_proyecto_fk"],
+        idEmiWeb: json["id_emi_web"],
     );
 
     Map<String, dynamic> toMap() => {
@@ -61,13 +64,14 @@ class GetProdProyecto {
         "created": created == null ? null : created!.toIso8601String(),
         "updated": updated == null ? null : updated!.toIso8601String(),
         "producto": producto,
-        "marca_sugerida": marcaSugerida == null ? null : marcaSugerida!,
+        "marca_sugerida": marcaSugerida,
         "descripcion": descripcion,
-        "proveedor_sugerido": proveedorSugerido == null ? null : proveedorSugerido!,
+        "proveedor_sugerido": proveedorSugerido,
         "cantidad": cantidad,
-        "costo_estimado": costoEstimado == null ? null : costoEstimado!,
+        "costo_estimado": costoEstimado,
         "id_familia_prod_fk": idFamiliaProdFk,
-        "id_tipo_empaques_fk": idTipoEmpaquesFk,
+        "id_unidad_medida_fk": idUnidadMedidaFk,
         "id_catalogo_proyecto_fk": idCatalogoProyectoFk,
+        "id_emi_web": idEmiWeb,
     };
 }

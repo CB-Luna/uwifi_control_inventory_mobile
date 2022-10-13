@@ -16,6 +16,8 @@ class Emprendimientos {
   bool archivado;
   @Unique()
   String? idDBR;
+  @Unique()
+  String? idEmiWeb;
   final usuario = ToOne<Usuarios>(); //Promotor en Diagrama E-R
   final prioridadEmp = ToOne<PrioridadEmp>();
   final catalogoProyecto = ToOne<CatalogoProyecto>();
@@ -46,6 +48,7 @@ class Emprendimientos {
     DateTime? fechaRegistro,
     this.archivado = false,
     this.idDBR,
+    this.idEmiWeb,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -274,6 +277,8 @@ class Emprendedores {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
+  @Unique()
+  String? idEmiWeb;
   final comunidad = ToOne<Comunidades>();
   final emprendimiento = ToOne<Emprendimientos>();
   final statusSync = ToOne<StatusSync>();
@@ -291,6 +296,7 @@ class Emprendedores {
     required this.comentarios,
     DateTime? fechaRegistro,
     this.idDBR,
+    this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -424,6 +430,8 @@ class Jornadas {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
+  @Unique()
+  String? idEmiWeb;
   final emprendimiento = ToOne<Emprendimientos>();
   final tarea = ToOne<Tareas>();
   final statusSync = ToOne<StatusSync>();
@@ -434,6 +442,7 @@ class Jornadas {
     required this.fechaRevision,
     DateTime? fechaRegistro,
     this.idDBR,
+    this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -451,6 +460,8 @@ class Tareas {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
+  @Unique()
+  String? idEmiWeb;
   final jornada = ToOne<Jornadas>();
   final consultoria = ToOne<Consultorias>();
   final statusSync = ToOne<StatusSync>();
@@ -466,6 +477,7 @@ class Tareas {
     required this.fechaRevision,
     DateTime? fechaRegistro,
     this.idDBR,
+    this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -720,6 +732,7 @@ class Consultorias {
   List<String>? documentos; //TODO preguntar que es un arraystring
   @Unique()
   String? idDBR;
+  bool archivado;
   final emprendimiento = ToOne<Emprendimientos>();
   final areaCirculo = ToOne<AreaCirculo>();
   final ambitoConsultoria = ToOne<AmbitoConsultoria>();
@@ -731,6 +744,7 @@ class Consultorias {
     DateTime? fechaRegistro,
     this.documentos,
     this.idDBR,
+    this.archivado = false,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);

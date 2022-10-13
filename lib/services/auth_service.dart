@@ -19,6 +19,7 @@ abstract class AuthService {
 
   static Future<LoginResponse?> login(String email, String password) async {
     try {
+      //Primero verificamos las credenciales en Pocketbase
       final res = await post(loginUri, body: {
         "email": email,
         "password": password,

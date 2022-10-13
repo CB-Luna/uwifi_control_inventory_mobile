@@ -176,7 +176,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (!formKey.currentState!.validate()) {
                               return;
                             }
-
                             //TODO: revisar status de red y si es la primera vez
                             //TODO: hacer push a pantalla de loading
                             final connectivityResult =

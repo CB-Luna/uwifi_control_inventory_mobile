@@ -9,6 +9,7 @@ import 'package:bizpro_app/modelsEmiWeb/get_estado_inversiones_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_familia_producto_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_fase_emprendimiento_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_porcentaje_avance_emi_web.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_prod_proyecto_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_productos_prov_by_id_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_productos_prov_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_proveedores_by_id_emi_web.dart';
@@ -1749,48 +1750,135 @@ Future<bool> getProductosProv() async {
     }
   }
 
-  Future<void> getProdProyecto() async {
-    if (dataBase.productosProyectoBox.isEmpty()) {
-      final records = await client.records.
-      getFullList('prod_proyecto', batch: 200, sort: '+producto');
+//Función para recuperar el catálogo de productos del proyecto desde Emi Web 
+  Future<bool> getProdProyecto() async {
+    return true;
+    // try {
+    //   var url = Uri.parse("$baseUrlEmiWebServices/catalogos/inversionxproyecto");
+    //   final headers = ({
+    //       "Content-Type": "application/json",
+    //       'Authorization': 'Bearer $tokenGlobal',
+    //     });
+    //   var response = await http.get(
+    //     url,
+    //     headers: headers
+    //   );
 
-      final List<GetProdProyecto> listProdProyecto = [];
-      for (var element in records) {
-        listProdProyecto.add(getProdProyectoFromMap(element.toString()));
-      }
-
-      print("****Informacion prod Proyecto****");
-      for (var i = 0; i < records.length; i++) {
-        if (listProdProyecto[i].id.isNotEmpty) {
-        final nuevoProdProyecto = ProdProyecto(
-        producto: listProdProyecto[i].producto,
-        marcaSugerida: listProdProyecto[i].marcaSugerida,
-        descripcion: listProdProyecto[i].descripcion,
-        proveedorSugerido: listProdProyecto[i].proveedorSugerido,
-        cantidad: listProdProyecto[i].cantidad,
-        costoEstimado: listProdProyecto[i].costoEstimado,
-        idDBR: listProdProyecto[i].id,
-        fechaRegistro: listProdProyecto[i].updated
-        );
-        final familiaProd = dataBase.familiaProductosBox.query(FamiliaProd_.idDBR.equals(listProdProyecto[i].idFamiliaProdFk)).build().findUnique();
-        final tipoEmpaque = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idDBR.equals(listProdProyecto[i].idTipoEmpaquesFk)).build().findUnique();
-        final catalogoProyecto = dataBase.catalogoProyectoBox.query(CatalogoProyecto_.idDBR.equals(listProdProyecto[i].idCatalogoProyectoFk)).build().findUnique();
-        if (familiaProd != null && tipoEmpaque != null && catalogoProyecto != null) {
-          final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
-          nuevoProdProyecto.statusSync.target = nuevoSync;
-          nuevoProdProyecto.familiaProducto.target = familiaProd;
-          nuevoProdProyecto.tipoEmpaques.target = tipoEmpaque;
-          nuevoProdProyecto.catalogoProyecto.target = catalogoProyecto;
-          // dataBase.productosProyectoBox.put(nuevoProdProyecto);
-          catalogoProyecto.prodProyecto.add(nuevoProdProyecto);
-          dataBase.catalogoProyectoBox.put(catalogoProyecto);
-          print("TAMANÑO PROD PROYECTO: ${dataBase.productosProyectoBox.getAll().length}");
-          print('Prod Proyecto agregado exitosamente');
-          }
-        }
-      }
-      notifyListeners();
-      }
+    //   switch (response.statusCode) {
+    //     case 200: //Caso éxitoso
+    //       final responseListProdProyecto = getProdProyectoEmiWebFromMap(
+    //         const Utf8Decoder().convert(response.bodyBytes)
+    //       );
+    //       for(var i = 0; i < responseListProdProyecto.payload!.length; i++) {
+    //         var url = Uri.parse("$baseUrlEmiWebServices/productos/proveedores/registro/${responseListProdProyecto.payload![i].producto!.idProductosProveedor}");
+    //         final headers = ({
+    //             "Content-Type": "application/json",
+    //             'Authorization': 'Bearer $tokenGlobal',
+    //           });
+    //         var response = await http.get(
+    //           url,
+    //           headers: headers
+    //         );
+    //         switch (response.statusCode) {
+    //           case 200: //Caso éxitoso
+    //           final responseProductoProveedor = getProductosProvByIdEmiWebFromMap(
+    //           const Utf8Decoder().convert(response.bodyBytes));
+    //           //Verificamos que el nuevo producto del proyecto no exista en Pocketbase
+    //           final recordProductoProyecto = await client.records.getFullList(
+    //             'prod_proyecto', 
+    //             batch: 200, 
+    //             filter: "id_emi_web='${responseListProdProyecto.payload![i].idCatInversionProyecto}'");
+    //           if (recordProductoProyecto.isEmpty) {
+    //             //Se recupera el id familia producto, catalogo proyecto y tipo empaque en Pocketbase y se acocia con el nuevo Producto Proyecto
+    //             final recordFamiliaProd = await client.records.getFullList(
+    //               'familia_prod', 
+    //               batch: 200, 
+    //               filter: "id_emi_web='${responseListProdProyecto.payload![i].familiaInversion!.idCatFamiliaInversion}'");
+    //             final recordUnidadMedida = await client.records.getFullList(
+    //               'und_medida', 
+    //               batch: 200, 
+    //               filter: "id_emi_web='${responseListProdProyecto.payload![i].}'");
+    //             if (recordProveedor.isNotEmpty && recordFamiliaProd.isNotEmpty 
+    //                 && recordUnidadMedida.isNotEmpty) {
+    //                 //Se agrega el producto proveedor como nuevo en la colección de Pocketbase
+    //                 final recordProductoProyecto = await client.records.create('prod_proyecto', body: {
+    //                 "nombre_prod_prov": responseProductoProveedor.payload!.producto,
+    //                 "descripcion_prod_prov": responseProductoProveedor.payload!.descripcion,
+    //                 "marca": responseProductoProveedor.payload!.marca,
+    //                 "is_und_medida_fk": recordUnidadMedida.first.id,
+    //                 "costo_prod_prov": responseProductoProveedor.payload!.costoUnidadMedida,
+    //                 "id_proveedor_fk": recordProveedor.first.id,
+    //                 "id_familia_prod_fk": recordFamiliaProd.first.id,
+    //                 "tiempo_entrega": responseProductoProveedor.payload!.tiempoEntrega,
+    //                 "archivado": responseProductoProveedor.payload!.archivado,
+    //                 "id_emi_web": responseProductoProveedor.payload!.idProductosProveedor.toString(),
+    //                 });
+    //                 if (recordProductoProyecto.id.isNotEmpty) {
+    //                   print('Producto Proveedor Emi Web agregado éxitosamente a Pocketbase');
+    //                 } else {
+    //                   return false;
+    //                 }
+    //             } else {
+    //               return false;
+    //             }
+    //           } else {
+    //             //Se actualiza el producto proveedor en la colección de Pocketbase
+    //             final recordProductoProyectoParse = getProductosProvFromMap(recordProductoProyecto.first.toString());
+    //             //Verificamos que los campos de este registro sean diferentes para actualizarlo
+    //             if (recordProductoProyectoParse.nombreProdProv != responseProductoProveedor.payload!.producto ||
+    //                 recordProductoProyectoParse.descripcionProdProv != responseProductoProveedor.payload!.descripcion||
+    //                 recordProductoProyectoParse.marca != responseProductoProveedor.payload!.marca ||
+    //                 recordProductoProyectoParse.costoProdProv != responseProductoProveedor.payload!.costoUnidadMedida ||
+    //                 recordProductoProyectoParse.tiempoEntrega != responseProductoProveedor.payload!.tiempoEntrega ||
+    //                 recordProductoProyectoParse.archivado != responseProductoProveedor.payload!.archivado
+    //                 ) {
+    //                 final updateRecordProductoProveedor = await client.records.update('productos_prov', recordProductoProyectoParse.id, 
+    //                 body: {
+    //                   "nombre_prod_prov": responseProductoProveedor.payload!.producto,
+    //                   "descripcion_prod_prov": responseProductoProveedor.payload!.descripcion,
+    //                   "marca": responseProductoProveedor.payload!.marca,
+    //                   "costo_prod_prov": responseProductoProveedor.payload!.costoUnidadMedida,
+    //                   "tiempo_entrega": responseProductoProveedor.payload!.tiempoEntrega,
+    //                   "archivado": responseProductoProveedor.payload!.archivado,
+    //                   "id_emi_web": responseProductoProveedor.payload!.idProductosProveedor.toString(),
+    //                 });
+    //                 if (updateRecordProductoProveedor.id.isNotEmpty) {
+    //                   print('Producto Proveedor Emi Web actualizado éxitosamente en Pocketbase');
+    //                 } else {
+    //                   return false;
+    //                 }
+    //             }
+    //           }
+    //           break;
+    //         case 401: //Error de Token incorrecto
+    //           if(await getTokenOAuth()) {
+    //             getProdProyecto();
+    //             return true;
+    //           } else{
+    //             return false;
+    //           }
+    //         case 404: //Error de ruta incorrecta
+    //           return false;
+    //         default:
+    //           return false;
+    //         }
+    //       }
+    //       return true;
+    //     case 401: //Error de Token incorrecto
+    //       if(await getTokenOAuth()) {
+    //         getProdProyecto();
+    //         return true;
+    //       } else{
+    //         return false;
+    //       }
+    //     case 404: //Error de ruta incorrecta
+    //       return false;
+    //     default:
+    //       return false;
+    //   }
+    // } catch (e) {
+    //   return false;
+    // }
     }
 
   Future<void> getRoles() async {

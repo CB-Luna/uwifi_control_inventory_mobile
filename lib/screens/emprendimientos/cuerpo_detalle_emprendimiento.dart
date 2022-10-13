@@ -1,6 +1,12 @@
 
 
+import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/providers/database_providers/consultoria_controller.dart';
+import 'package:bizpro_app/screens/consultorias/consultoria_archivada_screen.dart';
+import 'package:bizpro_app/screens/consultorias/consultoria_desarchivada_screen.dart';
+import 'package:bizpro_app/screens/consultorias/widgets/tarjeta_descripcion_consultoria.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -28,6 +34,7 @@ class _CuerpoDetalleEmprendimientoState extends State<CuerpoDetalleEmprendimient
   @override
   Widget build(BuildContext context) {
     final usuarioProvider = Provider.of<UsuarioController>(context);
+    final consultoriaProvider = Provider.of<ConsultoriaController>(context);
     String emprendedor = "";
     if (widget.emprendimiento.emprendedor.target != null) {
       emprendedor =
@@ -502,145 +509,78 @@ class _CuerpoDetalleEmprendimientoState extends State<CuerpoDetalleEmprendimient
                               itemBuilder: (context, index) {
                                 final consultoria =
                                     consultorias[index];
-                                return Padding(
-                                  padding:
-                                      const EdgeInsetsDirectional
-                                              .fromSTEB(
-                                          15, 10, 15, 0),
-                                  child: InkWell(
-                                    onTap: () async {
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              DetalleConsultoriaScreen(
-                                            consultoria:
-                                                consultoria,
-                                            numConsultoria:
-                                                (index + 1)
-                                                    .toString(),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    child: Container(
-                                      width: double.infinity,
-                                      height: 100,
-                                      decoration: BoxDecoration(
-                                        color: const Color(
-                                            0xFF1F68CB),
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            blurRadius: 4,
-                                            color: Color(
-                                                0x32000000),
-                                            offset:
-                                                Offset(0, 2),
-                                          )
-                                        ],
-                                        borderRadius:
-                                            BorderRadius
-                                                .circular(8),
-                                      ),
-                                      child: Column(
-                                        mainAxisSize:
-                                            MainAxisSize.max,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                    16,
-                                                    5,
-                                                    16,
-                                                    5),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                      0,
-                                                      5,
-                                                      0,
-                                                      0),
-                                              child: Text(
-                                                'Consultoría No. ${index + 1}',
-                                                maxLines: 1,
-                                                style: AppTheme.of(
-                                                        context)
-                                                    .title3
-                                                    .override(
-                                                      fontFamily:
-                                                          'Poppins',
-                                                      color: Colors
-                                                          .white,
-                                                      fontSize:
-                                                          18,
-                                                      fontWeight:
-                                                          FontWeight
-                                                              .w500,
+                                return 
+                                consultoria.archivado ? 
+                                Slidable(
+                                    startActionPane: ActionPane(
+                                      motion: const DrawerMotion(), 
+                                      children: [
+                                        SlidableAction(
+                                          label: "Desarchivar",
+                                          icon: Icons.file_upload_outlined,
+                                          backgroundColor: const Color(0xFFBA0000),
+                                          onPressed: (context) async {
+                                            if (usuarioProvider.usuarioCurrent!.rol.target!.rol == "Administrador" ||
+                                                usuarioProvider.usuarioCurrent!.rol.target!.rol == "Promotor") {
+                                                consultoriaProvider.desarchivarConsultoria(consultoria.id);
+                                                await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                builder: (context) =>
+                                                      ConsultoriaDesarchivadaScreen(idEmprendimiento: widget.emprendimiento.id,),
                                                     ),
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                    16,
-                                                    0,
-                                                    16,
-                                                    5),
-                                            child: Text(
-                                              'Emprendedor: ${consultoria.emprendimiento.target?.emprendedor.target?.nombre ?? "Sin Emprendedor"}',
-                                              maxLines: 1,
-                                              style: AppTheme.of(
-                                                      context)
-                                                  .bodyText2
-                                                  .override(
-                                                    fontFamily:
-                                                        'Poppins',
-                                                    color: Colors
-                                                        .white,
-                                                    fontSize:
-                                                        13,
-                                                    fontWeight:
-                                                        FontWeight
-                                                            .normal,
-                                                  ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                    16,
-                                                    0,
-                                                    16,
-                                                    5),
-                                            child: Text(
-                                              'Registro: ${dateTimeFormat('dd/MM/yyyy', consultoria.fechaRegistro)}',
-                                              maxLines: 1,
-                                              style: AppTheme.of(
-                                                      context)
-                                                  .bodyText2
-                                                  .override(
-                                                    fontFamily:
-                                                        'Poppins',
-                                                    color: Colors
-                                                        .white,
-                                                    fontSize:
-                                                        13,
-                                                    fontWeight:
-                                                        FontWeight
-                                                            .normal,
-                                                  ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                );
+                                                );
+                                            } else {
+                                              snackbarKey.currentState
+                                                    ?.showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      "Este usuario no tiene permisos para esta acción."),
+                                                ));
+                                            }
+                                          }
+                                        ),
+                                      ]),
+                                    child: TarjetaDescripcionConsultoria(
+                                      consultoria: consultoria,
+                                      index: index, 
+                                      backgroundColor: const Color(0xFFBA0000)),
+                                )
+                                :
+                                Slidable(
+                                    startActionPane: ActionPane(
+                                      motion: const DrawerMotion(), 
+                                      children: [
+                                        SlidableAction(
+                                          label: "Archivar",
+                                          icon: Icons.file_download_outlined,
+                                          backgroundColor: const Color(0xFF1F68CB),
+                                          onPressed: (context) async {
+                                            if (usuarioProvider.usuarioCurrent!.rol.target!.rol == "Administrador" ||
+                                                usuarioProvider.usuarioCurrent!.rol.target!.rol == "Promotor") {
+                                                consultoriaProvider.archivarConsultoria(consultoria.id);
+                                                await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                builder: (context) =>
+                                                      ConsultoriaArchivadaScreen(idEmprendimiento: widget.emprendimiento.id,),
+                                                    ),
+                                                );
+                                            } else {
+                                              snackbarKey.currentState
+                                                    ?.showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      "Este usuario no tiene permisos para esta acción."),
+                                                ));
+                                            }
+                                          }
+                                        ),
+                                      ]),
+                                    child: TarjetaDescripcionConsultoria(
+                                      consultoria: consultoria,
+                                      index: index, 
+                                      backgroundColor: const Color(0xFF1F68CB)),
+                                )
+                                ;
                               },
                             );
                           },

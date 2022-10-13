@@ -1,58 +1,42 @@
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/screens/sync/sincronizacion_informacion_emi_web_screen.dart';
+import 'package:bizpro_app/providers/sync_provider_emi_web.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
-
-import 'package:bizpro_app/providers/sync_provider_pocketbase.dart';
+import 'package:lottie/lottie.dart';
 
 import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
-class SincronizacionInformacionPocketbaseScreen extends StatefulWidget {
-  const SincronizacionInformacionPocketbaseScreen({Key? key}) : super(key: key);
+class SincronizacionInformacionEmiWebScreen extends StatefulWidget {
+  const SincronizacionInformacionEmiWebScreen({Key? key}) : super(key: key);
 
   @override
-  State<SincronizacionInformacionPocketbaseScreen> createState() => _SincronizacionInformacionPocketbaseScreenState();
+  State<SincronizacionInformacionEmiWebScreen> createState() => _SincronizacionInformacionEmiWebScreenState();
 }
 
-class _SincronizacionInformacionPocketbaseScreenState extends State<SincronizacionInformacionPocketbaseScreen> {
+class _SincronizacionInformacionEmiWebScreenState extends State<SincronizacionInformacionEmiWebScreen> {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
       setState(() {
-        context.read<SyncProviderPocketbase>().procesoCargando(true);
-        context.read<SyncProviderPocketbase>().procesoTerminado(false);
-        context.read<SyncProviderPocketbase>().procesoExitoso(false);
-         Future<bool> booleano = context.read<SyncProviderPocketbase>().executeInstrucciones(
-          dataBase.bitacoraBox
+        context.read<SyncProviderEmiWeb>().procesoCargando(true);
+        context.read<SyncProviderEmiWeb>().procesoTerminado(false);
+        context.read<SyncProviderEmiWeb>().procesoExitoso(false);
+        context.read<SyncProviderEmiWeb>().executeInstrucciones(dataBase.bitacoraBox
             .getAll()
             .toList()
             .where((element) => element.usuario == prefs.getString("userId")!)
-            .toList()
-         );
-        Future(() async {
-          if (await booleano) {
-            print("Se ha realizado con éxito el proceso de Sincronización con Pocketbase");
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    const SincronizacionInformacionEmiWebScreen(),
-                    // const EmprendimientosScreen()
-              ),
-            );
-          }
-        });
+            .toList());
       });
   }
 
   @override
   Widget build(BuildContext context) {
-    final syncProviderPocketbase = Provider.of<SyncProviderPocketbase>(context);
+    final syncProviderEmiWeb = Provider.of<SyncProviderEmiWeb>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -91,7 +75,7 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 40, 0, 0),
                               child: Text(
-                                '¡Sincronizando información!',
+                                '¡Sincronizando a Emi Web!',
                                 textAlign: TextAlign.center,
                                 style: AppTheme.of(context).bodyText1.override(
                                       fontFamily:
@@ -105,7 +89,7 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 10, 0, 0),
                               child: Text(
-                                'Los datos de los emprendimientos\nse están sincronizando a la\nbase de Datos, no apague la\nconexión Wi-Fi o datos móviles hasta\nque se complete el proceso.',
+                                'Los datos de los emprendimientos\nse están sincronizando a Emi Web,\npor favor no apague la conexión\nWi-Fi o datos móviles hasta \nque se complete el proceso.',
                                 textAlign: TextAlign.center,
                                 maxLines: 5,
                                 style: AppTheme.of(context).bodyText1.override(
@@ -117,31 +101,38 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
                                     ),
                               ),
                             ),
-                            syncProviderPocketbase.procesocargando
+                            syncProviderEmiWeb.procesocargando
                                 ? Visibility(
-                                  visible: syncProviderPocketbase.procesocargando,
+                                  visible: syncProviderEmiWeb.procesocargando,
                                   child: Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0, 70, 0, 0),
-                                      child: getProgressIndicatorAnimated(
+                                      child: getSyncIndicatorAnimated(
                                           "Sincronizando..."),
                                     ),
                                 )
                                 : 
-                                syncProviderPocketbase.procesoexitoso
+                                syncProviderEmiWeb.procesoexitoso
                                 ? Visibility(
-                                  visible: !syncProviderPocketbase.procesocargando,
-                                  child: const Padding(
+                                  visible: !syncProviderEmiWeb.procesocargando,
+                                  child: Padding(
                                       padding:
-                                          EdgeInsetsDirectional.fromSTEB(
+                                          const EdgeInsetsDirectional.fromSTEB(
                                               0, 70, 0, 0),
-                                      child: SizedBox(),
+                                      child: Lottie.asset(
+                                        'assets/lottie_animations/elemento-creado.json',
+                                        width: 250,
+                                        height: 180,
+                                        fit: BoxFit.cover,
+                                        repeat: false,
+                                        animate: true,
+                                      ),
                                     ),
-                                  )
+                                )
                                   :
                                   Visibility(
-                                    visible: !syncProviderPocketbase.procesocargando,
+                                    visible: !syncProviderEmiWeb.procesocargando,
                                     child: const Padding(
                                       padding:
                                           EdgeInsetsDirectional.fromSTEB(
@@ -154,14 +145,50 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
                                     ),
                                   ),
                             Visibility(
-                              visible: syncProviderPocketbase.procesoterminado && (syncProviderPocketbase.procesoexitoso == false),
+                              visible: syncProviderEmiWeb.procesoterminado && syncProviderEmiWeb.procesoexitoso,
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 100, 0, 0),
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const EmprendimientosScreen(),
+                                      ),
+                                    );
+                                    syncProviderEmiWeb.procesoTerminado(false);
+                                  },
+                                  text: 'Listo',
+                                  options: FFButtonOptions(
+                                    width: 130,
+                                    height: 45,
+                                    color: AppTheme.of(context).secondaryText,
+                                    textStyle:
+                                        AppTheme.of(context).subtitle2.override(
+                                              fontFamily: AppTheme.of(context)
+                                                  .subtitle2Family,
+                                              color: Colors.white,
+                                            ),
+                                    borderSide: const BorderSide(
+                                      color: Colors.transparent,
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Visibility(
+                              visible: syncProviderEmiWeb.procesoterminado && (syncProviderEmiWeb.procesoexitoso == false),
                               child: Column(
                                 children: [
                                   Padding(
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         0, 50, 0, 0),
                                     child: Text(
-                                      'Error al sincronizar.\nLa conexión con la base de datos falló.\nVuelva a probar más tarde.',
+                                      'Error al sincronizar con Emi Web.\nLa sincronización no se hizo con éxito.\nVuelva a probar más tarde.',
                                       textAlign: TextAlign.center,
                                       maxLines: 4,
                                       style: AppTheme.of(context).bodyText1.override(
@@ -185,7 +212,7 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
                                                 const EmprendimientosScreen(),
                                           ),
                                         );
-                                        syncProviderPocketbase.procesoTerminado(false);
+                                        syncProviderEmiWeb.procesoTerminado(false);
                                       },
                                       text: 'Cerrar',
                                       options: FFButtonOptions(

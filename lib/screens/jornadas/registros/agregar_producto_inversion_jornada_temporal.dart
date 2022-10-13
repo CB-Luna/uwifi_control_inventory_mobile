@@ -813,7 +813,7 @@ class _AgregarProductoInversionJornadaTemporalState
                                           },
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            labelText: 'Costo estimado*',
+                                            labelText: 'Costo por unidad estimado*',
                                             labelStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(
@@ -824,7 +824,7 @@ class _AgregarProductoInversionJornadaTemporalState
                                                   fontWeight: FontWeight.normal,
                                                 ),
                                             hintText:
-                                                'Ingresa costo estimado...',
+                                                'Ingresa costo por unidad estimado...',
                                             hintStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(

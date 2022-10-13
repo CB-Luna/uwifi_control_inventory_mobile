@@ -106,6 +106,42 @@ Column getDownloadIndicatorAnimated(String message) {
   );
 }
 
+Column getSyncIndicatorAnimated(String message) {
+  return Column(
+    mainAxisSize: MainAxisSize.max,
+    children: [
+      SpinKitWave(
+        size: 100,
+        itemBuilder: (context, index) {
+          final colors = [
+            const Color(0xFF221573),
+            const Color(0xffB6D9F9)
+          ];
+          final color = colors[index % colors.length];
+          return DecoratedBox(
+            decoration:
+                BoxDecoration(color: color, shape: BoxShape.rectangle),
+          );
+        },
+      ),
+      const SizedBox(height: 25,),
+      SizedBox(
+        child: DefaultTextStyle(
+          style: const TextStyle(
+            fontFamily: 'Work Sans',
+            color: Color(0xFF040404),
+            fontSize: 20,
+          ),
+          child:
+              AnimatedTextKit(repeatForever: true, animatedTexts: [
+            FadeAnimatedText(message),
+          ]),
+        ),
+      ),
+    ],
+  );
+}
+
 final animationsMap = {
     'containerOnPageLoadAnimation1': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
