@@ -218,6 +218,8 @@ class Bitacora{
   int id;
   String usuario;
   String instrucciones;
+  String? instruccionAdicional;
+  bool executePocketbase;
   String? idDBR;
   DateTime fechaRegistro;
   DateTime? fechaSync;
@@ -254,6 +256,8 @@ class Bitacora{
     this.id = 0,
     required this.usuario,
     required this.instrucciones,
+    this.instruccionAdicional,
+    this.executePocketbase = false,
     this.idDBR,
     DateTime? fechaRegistro,
     this.fechaSync,

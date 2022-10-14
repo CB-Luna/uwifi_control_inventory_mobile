@@ -907,7 +907,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(27, 1774905738150923512),
       name: 'Bitacora',
-      lastPropertyId: const IdUid(12, 3377021311219989159),
+      lastPropertyId: const IdUid(14, 2308969436247945089),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -939,6 +939,16 @@ final _entities = <ModelEntity>[
             id: const IdUid(12, 3377021311219989159),
             name: 'idDBR',
             type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(13, 4185118097964001351),
+            name: 'instruccionAdicional',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(14, 2308969436247945089),
+            name: 'executePocketbase',
+            type: 1,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -4133,13 +4143,18 @@ ModelDefinition getObjectBoxModel() {
           final usuarioOffset = fbb.writeString(object.usuario);
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(13);
+          final instruccionAdicionalOffset = object.instruccionAdicional == null
+              ? null
+              : fbb.writeString(object.instruccionAdicional!);
+          fbb.startTable(15);
           fbb.addInt64(0, object.id);
           fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addInt64(3, object.fechaSync?.millisecondsSinceEpoch);
           fbb.addOffset(8, instruccionesOffset);
           fbb.addOffset(10, usuarioOffset);
           fbb.addOffset(11, idDBROffset);
+          fbb.addOffset(12, instruccionAdicionalOffset);
+          fbb.addBool(13, object.executePocketbase);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4154,6 +4169,10 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 24, ''),
               instrucciones: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 20, ''),
+              instruccionAdicional: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 28),
+              executePocketbase: const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 30, false),
               idDBR: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 26),
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
@@ -6463,6 +6482,14 @@ class Bitacora_ {
   /// see [Bitacora.idDBR]
   static final idDBR =
       QueryStringProperty<Bitacora>(_entities[11].properties[5]);
+
+  /// see [Bitacora.instruccionAdicional]
+  static final instruccionAdicional =
+      QueryStringProperty<Bitacora>(_entities[11].properties[6]);
+
+  /// see [Bitacora.executePocketbase]
+  static final executePocketbase =
+      QueryBooleanProperty<Bitacora>(_entities[11].properties[7]);
 }
 
 /// [VariablesUsuario] entity fields to define ObjectBox queries.

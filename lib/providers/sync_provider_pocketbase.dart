@@ -122,7 +122,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
             if(jornadaToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") { 
               continue;
             } else {
-              final boolSyncAddJornada3 = await syncAddJornada12y4(jornadaToSync);
+              final boolSyncAddJornada3 = await syncAddJornada3(jornadaToSync);
               if (boolSyncAddJornada3) {
                 banderasExistoSync.add(boolSyncAddJornada3);
                 continue;
@@ -185,6 +185,32 @@ class SyncProviderPocketbase extends ChangeNotifier {
             }   
           }  
           continue;
+        case "syncUpdateFaseEmprendimiento":
+          print("Entro al caso de syncUpdateFaseEmprendimiento Pocketbase");
+          final emprendimientoToSync = getFirstEmprendimiento(dataBase.emprendimientosBox.getAll(), instruccionesBitacora[i].id);
+          if(emprendimientoToSync != null){
+            if(instruccionesBitacora[i].executePocketbase) { 
+              print("Ya se ha ha ejecutado en Pocketbase");
+              continue;
+            } else {
+              final boolSyncUpdateFaseEmprendimiento = await syncUpdateFaseEmprendimiento(emprendimientoToSync, instruccionesBitacora[i]);
+              if (boolSyncUpdateFaseEmprendimiento) {
+                print("La respuesta es: $boolSyncUpdateFaseEmprendimiento");
+                banderasExistoSync.add(boolSyncUpdateFaseEmprendimiento);
+                continue;
+              } else {
+                //Salimos del bucle
+                banderasExistoSync.add(boolSyncUpdateFaseEmprendimiento);
+                i = instruccionesBitacora.length;
+                break;
+              }
+            }          
+          } else {
+            //Salimos del bucle
+            banderasExistoSync.add(false);
+            i = instruccionesBitacora.length;
+            break;
+          }
         case "syncUpdateNameEmprendimiento":
           final emprendimientoToSync = getFirstEmprendimiento(dataBase.emprendimientosBox.getAll(), instruccionesBitacora[i].id);
           if(emprendimientoToSync != null){
@@ -682,7 +708,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
     print("Estoy en El syncAddEmprendedor de Pocketbase");
     try {
       final emprendimientoToSync = dataBase.emprendimientosBox.query(Emprendimientos_.emprendedor.equals(emprendedor.id)).build().findUnique();
-      if (emprendimientoToSync != null) {
+      final faseInscricto = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Inscrito")).build().findUnique();
+      if (emprendimientoToSync != null && faseInscricto != null) {
         if (emprendedor.idDBR == null && emprendimientoToSync.idDBR == null) {
           print("Primero creamos al emprendedor asociado");
           //Primero creamos el emprendedor asociado al emprendimiento
@@ -736,7 +763,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
               "id_promotor_fk": emprendimientoToSync.usuario.target!.idDBR,
               "id_prioridad_fk": "yuEVuBv9rxLM4cR",
               "id_proveedor_fk": "",
-              "id_fase_emp_fk": emprendimientoToSync.faseEmp.firstWhere((element) => element.fase == emprendimientoToSync.faseActual).idDBR,
+              "id_fase_emp_fk": faseInscricto.idDBR,
               "id_status_sync_fk": "HoI36PzYw1wtbO1",
               "id_emprendedor_fk": emprendimientoToSync.emprendedor.target!.idDBR,
             });
@@ -1113,6 +1140,38 @@ class SyncProviderPocketbase extends ChangeNotifier {
     
     return null;
 }
+
+  Future<bool> syncUpdateFaseEmprendimiento(Emprendimientos emprendimiento, Bitacora bitacora) async {
+    print("Estoy en El syncUpdateFaseEmprendimiento en Pocketbase");
+    try {
+      print("Instrucción Adicional: ${bitacora.instruccionAdicional}");
+      final faseActual = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals(bitacora.instruccionAdicional!)).build().findUnique();
+      if (faseActual != null) {
+        print("ID Promotor: ${emprendimiento.usuario.target!.idDBR}");
+        print("ID Emprendedor: ${emprendimiento.emprendedor.target!.idDBR}");
+
+        final record = await client.records.update('emprendimientos', emprendimiento.idDBR.toString(), body: {
+            "id_fase_emp_fk": faseActual.idDBR,
+        }); 
+
+        if (record.id.isNotEmpty) {
+          print("Emprendimiento updated succesfully");
+          bitacora.executePocketbase = true;
+          dataBase.bitacoraBox.put(bitacora);
+          print("Se marca como realizada en Pocketbase la instrucción en Bitacora");
+          return true;
+        }
+        else{
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('ERROR - function syncUpdateFaseEmprendimiento(): $e');
+      return false;
+    }
+  } 
 
   Future<bool?> syncUpdateEmprendimiento(Emprendimientos emprendimiento) async {
 

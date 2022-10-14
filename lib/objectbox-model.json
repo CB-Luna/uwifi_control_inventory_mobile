@@ -885,7 +885,7 @@
     },
     {
       "id": "27:1774905738150923512",
-      "lastPropertyId": "12:3377021311219989159",
+      "lastPropertyId": "14:2308969436247945089",
       "name": "Bitacora",
       "properties": [
         {
@@ -918,6 +918,16 @@
           "id": "12:3377021311219989159",
           "name": "idDBR",
           "type": 9
+        },
+        {
+          "id": "13:4185118097964001351",
+          "name": "instruccionAdicional",
+          "type": 9
+        },
+        {
+          "id": "14:2308969436247945089",
+          "name": "executePocketbase",
+          "type": 1
         }
       ],
       "relations": []

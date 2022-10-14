@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bizpro_app/modelsEmiWeb/get_token_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/post_registro_exitoso_emi_web.dart';
+import 'package:bizpro_app/objectbox.g.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
@@ -86,20 +87,64 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             if(emprendedorToSync != null){
               banderasExistoSync.add(await syncAddEmprendedor(emprendedorToSync, instruccionesBitacora[i].id));         
             continue;
+            } else {
+              //Salimos del bucle
+              banderasExistoSync.add(false);
+              i = instruccionesBitacora.length;
+              break;
             }
-            continue;
           case "syncAddEmprendimiento":
             print("Entro al caso de syncAddEmprendimiento Emi Web");
             banderasExistoSync.add(syncAddEmprendimiento(instruccionesBitacora[i].id));
             continue;
-           case "syncAddJornada12y4":
-            print("Entro al caso de syncAddJornada12y4 Emi Web");
+          case "syncAddJornada1":
+            print("Entro al caso de syncAddJornada1 Emi Web");
             final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
             if(jornadaToSync != null){
               banderasExistoSync.add(await syncAddJornada12y4(jornadaToSync, instruccionesBitacora[i].id));         
             continue;
+            } else {
+              //Salimos del bucle
+              banderasExistoSync.add(false);
+              i = instruccionesBitacora.length;
+              break;
             }
+          case "syncAddJornada2":
+            print("Entro al caso de syncAddJornada2 Emi Web");
+            final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
+            if(jornadaToSync != null){
+              banderasExistoSync.add(await syncAddJornada12y4(jornadaToSync, instruccionesBitacora[i].id));         
             continue;
+            } else {
+              //Salimos del bucle
+              banderasExistoSync.add(false);
+              i = instruccionesBitacora.length;
+              break;
+            }
+          case "syncAddJornada3":
+            print("Entro al caso de syncAddJornada3 Emi Web");
+            final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
+            if(jornadaToSync != null){
+              banderasExistoSync.add(await syncAddJornada3(jornadaToSync, instruccionesBitacora[i].id));         
+            continue;
+            } else {
+              //Salimos del bucle
+              banderasExistoSync.add(false);
+              i = instruccionesBitacora.length;
+              break;
+            }
+          case "syncUpdateFaseEmprendimiento":
+            print("Entro al caso de syncUpdateFaseEmprendimiento Emi Web");
+            final emprendimientoToSync = getFirstEmprendimiento(dataBase.emprendimientosBox.getAll(), instruccionesBitacora[i].id);
+            if(emprendimientoToSync != null){
+              banderasExistoSync.add(await syncUpdateFaseEmprendimiento(emprendimientoToSync, instruccionesBitacora[i]));         
+            continue;
+            } else {
+              //Salimos del bucle
+              banderasExistoSync.add(false);
+              i = instruccionesBitacora.length;
+              break;
+            }
           default:
             continue;
         }
@@ -518,5 +563,49 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       return false;
     }
 }
+
+  Future<bool> syncUpdateFaseEmprendimiento(Emprendimientos emprendimiento, Bitacora bitacora) async {
+    print("Estoy en El syncUpdateFaseEmprendimiento en Emi Web");
+    try {
+      final faseActual = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals(bitacora.instruccionAdicional!)).build().findUnique();
+      if (faseActual != null) {
+        // Primero creamos el API para realizar la actualización
+          final actualizarFaseEmprendimientoUri =
+            Uri.parse('$baseUrlEmiWebServices/proyectos/fase');
+          final headers = ({
+            "Content-Type": "application/json",
+            'Authorization': 'Bearer $tokenGlobal',
+          });
+          print("Fase Actual: ${faseActual.fase}");
+          print("Id Emprendimiento: ${emprendimiento.idEmiWeb}");
+          final responsePostUpdateFaseEmprendimiento = await put(actualizarFaseEmprendimientoUri, 
+          headers: headers,
+          body: jsonEncode({
+            "idUsuarioRegistra": 1,
+            "usuarioRegistra": "Álvaro Lozano Platonoff",
+            "id": emprendimiento.idEmiWeb,
+            "idCatFase": faseActual.idEmiWeb,
+          }));
+          print(responsePostUpdateFaseEmprendimiento.statusCode);
+          print(responsePostUpdateFaseEmprendimiento.body);
+          print("Respuesta Post Update Fase Emprendimiento");
+          switch (responsePostUpdateFaseEmprendimiento.statusCode) {
+            case 200:
+            print("Caso 200 en Emi Web Update Fase Emprendimiento");
+            //Se elimina la instrucción de la bitacora
+            dataBase.bitacoraBox.remove(bitacora.id);
+            return true;
+            default: //No se realizo con éxito el post
+              print("Error en actualizar fase emprendimiento Emi Web");
+              return false;
+          }  
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('ERROR - function syncUpdateFaseEmprendimiento(): $e');
+      return false;
+    }
+  }
 
 }
