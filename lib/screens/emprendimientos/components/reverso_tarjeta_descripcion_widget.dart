@@ -81,100 +81,101 @@ class _ReversoTarjetaDescripcionWidgetState
           ],
           borderRadius: BorderRadius.circular(8),
         ),
-      child: 
-        Container(
-          alignment: Alignment.topLeft,
-          margin: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-          child: DataTable(
-            
-            columnSpacing: 5.0,
-              columns: <DataColumn>[
-              DataColumn(
+      child: Container(
+            alignment: Alignment.topLeft,
+            margin: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+            child: DataTable(
+              
+              columnSpacing: 5.0,
+                columns: <DataColumn>[
+                DataColumn(
+                    label: Expanded(
+                        child: Text(
+                  'Producto',
+                  style: AppTheme.of(context).bodyText1.override(
+                      fontFamily: AppTheme.of(context).bodyText1Family,
+                      fontSize: size,
+                      useGoogleFonts: GoogleFonts.asMap()
+                          .containsKey(AppTheme.of(context).bodyText1Family),
+                      color: Colors.white),
+                ))),
+                DataColumn(
                   label: Expanded(
-                      child: Text(
-                'Producto',
-                style: AppTheme.of(context).bodyText1.override(
-                    fontFamily: AppTheme.of(context).bodyText1Family,
-                    fontSize: size,
-                    useGoogleFonts: GoogleFonts.asMap()
-                        .containsKey(AppTheme.of(context).bodyText1Family),
-                    color: Colors.white),
-              ))),
-              DataColumn(
-                label: Expanded(
-                    child: Text('Proveedor\nSugerido',
-                        textAlign: TextAlign.center,
-                        style: AppTheme.of(context).bodyText1.override(
-                            fontFamily: AppTheme.of(context).bodyText1Family,
-                            fontSize: size,
-                            useGoogleFonts: GoogleFonts.asMap()
-                                .containsKey(AppTheme.of(context).bodyText1Family),
-                            color: Colors.white))),
-              ),
-              DataColumn(
-                label:Expanded(
-                  child:Text(
-                    'Marca\nSugerida',
-                                  textAlign: TextAlign.center,
-                                  style: AppTheme.of(
-                                          context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily:
-                                            AppTheme.of(
-                                                    context)
-                                                .bodyText1Family,
-                                        fontSize: size,
-                                        useGoogleFonts: GoogleFonts
-                                                .asMap()
-                                            .containsKey(
-                                                AppTheme.of(
-                                                        context)
-                                                    .bodyText1Family),
-                                        color: Colors.white
-                                      ),
-                  )
-                )
-              ),
-              DataColumn(
-                  label: Expanded(
-                      child: Text('Unidad\n de medida',
+                      child: Text('Proveedor\nSugerido',
                           textAlign: TextAlign.center,
                           style: AppTheme.of(context).bodyText1.override(
                               fontFamily: AppTheme.of(context).bodyText1Family,
                               fontSize: size,
                               useGoogleFonts: GoogleFonts.asMap()
                                   .containsKey(AppTheme.of(context).bodyText1Family),
-                              color: Colors.white)))),
-              DataColumn(
-                  label: Expanded(
-                      child: Text(
-                'Cantidad',
-                style: AppTheme.of(context).bodyText1.override(
-                    fontFamily: AppTheme.of(context).bodyText1Family,
-                    fontSize: size,
-                    useGoogleFonts: GoogleFonts.asMap()
-                        .containsKey(AppTheme.of(context).bodyText1Family),
-                    color: Colors.white),
-              ))),
-              DataColumn(
-                  label: Expanded(
-                      child: Text(
-                'Costo\nEstimado',
-                textAlign: TextAlign.center,
-                style: AppTheme.of(context).bodyText1.override(
-                    fontFamily: AppTheme.of(context).bodyText1Family,
-                    fontSize: size,
-                    useGoogleFonts: GoogleFonts.asMap()
-                        .containsKey(AppTheme.of(context).bodyText1Family),
-                    color: Colors.white),
-              ))),
+                              color: Colors.white))),
+                ),
+                DataColumn(
+                  label:Expanded(
+                    child:Text(
+                      'Marca\nSugerida',
+                                    textAlign: TextAlign.center,
+                                    style: AppTheme.of(
+                                            context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily:
+                                              AppTheme.of(
+                                                      context)
+                                                  .bodyText1Family,
+                                          fontSize: size,
+                                          useGoogleFonts: GoogleFonts
+                                                  .asMap()
+                                              .containsKey(
+                                                  AppTheme.of(
+                                                          context)
+                                                      .bodyText1Family),
+                                          color: Colors.white
+                                        ),
+                    )
+                  )
+                ),
+                DataColumn(
+                    label: Expanded(
+                        child: Text('Unidad\n de medida',
+                            textAlign: TextAlign.center,
+                            style: AppTheme.of(context).bodyText1.override(
+                                fontFamily: AppTheme.of(context).bodyText1Family,
+                                fontSize: size,
+                                useGoogleFonts: GoogleFonts.asMap()
+                                    .containsKey(AppTheme.of(context).bodyText1Family),
+                                color: Colors.white)))),
+                DataColumn(
+                    label: Expanded(
+                        child: Text(
+                  'Cantidad',
+                  style: AppTheme.of(context).bodyText1.override(
+                      fontFamily: AppTheme.of(context).bodyText1Family,
+                      fontSize: size,
+                      useGoogleFonts: GoogleFonts.asMap()
+                          .containsKey(AppTheme.of(context).bodyText1Family),
+                      color: Colors.white),
+                ))),
+                DataColumn(
+                    label: Expanded(
+                        child: Text(
+                  'Costo\nEstimado',
+                  textAlign: TextAlign.center,
+                  style: AppTheme.of(context).bodyText1.override(
+                      fontFamily: AppTheme.of(context).bodyText1Family,
+                      fontSize: size,
+                      useGoogleFonts: GoogleFonts.asMap()
+                          .containsKey(AppTheme.of(context).bodyText1Family),
+                      color: Colors.white),
+                ))),
       
-            ], rows:
-                List.generate(listProdSolicitados.length, (index) => _getDataRow(listProdSolicitados[index])),),
-        ),
+              ], rows:
+                  List.generate(listProdSolicitados.length, (index) => _getDataRow(listProdSolicitados[index])),),
+          ),
       ),
+      
     );
+    
     
   }
 }
