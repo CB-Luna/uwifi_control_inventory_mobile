@@ -659,7 +659,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                               ),
                                             ),
                                           ],
-                                        ),
+                                        ), //final de la tabla, cambiar todo para una datatable y todo esto dentro
                                         theme: ExpandableThemeData(
                                           tapHeaderToExpand: true,
                                           tapBodyToExpand: false,
@@ -1466,9 +1466,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                             .spaceBetween,
                                                                     children: [
                                                                       Text(
-                                                                        dateTimeFormat(
-                                                                        'dd/MMM/yyyy ',
-                                                                        pago.fechaMovimiento),
+                                                                        "${dateTimeFormat('dd/MMM/yyyy', pago.fechaMovimiento)} \n ${currencyFormat.format(pago.montoAbonado.toStringAsFixed(2))} ",
                                                                         style: AppTheme
                                                                                 .of(context)
                                                                             .bodyText1
@@ -1486,25 +1484,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                                           .bodyText1Family),
                                                                             ),
                                                                       ),
-                                                                      Text(
-                                                                        currencyFormat.format(pago.montoAbonado.toStringAsFixed(2)),
-                                                                        style: AppTheme
-                                                                                .of(context)
-                                                                            .bodyText1
-                                                                            .override(
-                                                                              fontFamily: AppTheme.of(
-                                                                                      context)
-                                                                                  .bodyText1Family,
-                                                                              fontWeight:
-                                                                                  FontWeight
-                                                                                      .w600,
-                                                                              useGoogleFonts: GoogleFonts
-                                                                                      .asMap()
-                                                                                  .containsKey(
-                                                                                      AppTheme.of(context)
-                                                                                          .bodyText1Family),
-                                                                            ),
-                                                                      ),
+                                                                      
                                                                     ],
                                                                   );
                                                                 },
