@@ -493,10 +493,9 @@ class Usuarios {
   int id;
   String nombre;
   String apellidoP;
-  String apellidoM;
-  DateTime nacimiento;
+  String? apellidoM;
   String telefono;
-  String celular;
+  String? celular;
   String correo;
   String password;
   String imagen;
@@ -504,9 +503,10 @@ class Usuarios {
   bool archivado;
   @Unique()
   String? idDBR;
+  @Unique()
+  String idEmiWeb;
   final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
-  final variablesUsuario = ToOne<VariablesUsuario>(); //Importante para evaluar la sincronizacion
   final rol = ToOne<Roles>();
   final roles = ToMany<Roles>();
   final image = ToOne<Imagenes>();
@@ -519,16 +519,16 @@ class Usuarios {
     this.id = 0,
     required this.nombre,
     required this.apellidoP,
-    required this.apellidoM,
-    required this.nacimiento,
+    this.apellidoM,
     required this.telefono,
-    required this.celular,
+    this.celular,
     required this.correo,
     required this.password,
     required this.imagen,
     DateTime? fechaRegistro,
     this.archivado = false,
     this.idDBR,
+    required this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -541,6 +541,8 @@ class Roles {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
+  @Unique()
+  String idEmiWeb;
   final statusSync = ToOne<StatusSync>();
   final bitacora = ToOne<Bitacora>();
   final usuarios = ToMany<Usuarios>();
@@ -550,6 +552,7 @@ class Roles {
     required this.rol,
     DateTime? fechaRegistro,
     this.idDBR,
+    required this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -1134,25 +1137,6 @@ class StatusSync {
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-
-}
-
-@Entity()
-class VariablesUsuario {
-  int id;
-  bool emprendedores;
-  bool emprendimientos;
-  DateTime fechaActualizacion;
-  @Backlink()
-  final usuarios = ToMany<Usuarios>();
-  VariablesUsuario({
-    this.id = 0,
-    this.emprendedores = false,
-    this.emprendimientos = false,
-    DateTime? fechaActualizacion,
-    }): fechaActualizacion = fechaActualizacion ?? DateTime.now();
-
-  String get fechaActualizacionFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaActualizacion);
 
 }
 

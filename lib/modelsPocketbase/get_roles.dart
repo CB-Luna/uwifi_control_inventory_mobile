@@ -12,7 +12,7 @@ class GetRoles {
         required this.created,
         required this.updated,
         required this.rol,
-        required this.idStatusSyncFk,
+        required this.idEmiWeb,
     });
 
     final String collectionId;
@@ -21,7 +21,7 @@ class GetRoles {
     final DateTime? created;
     final DateTime? updated;
     final String rol;
-    final String idStatusSyncFk;
+    final String idEmiWeb;
 
     factory GetRoles.fromMap(Map<String, dynamic> json) => GetRoles(
         collectionId: json["@collectionId"],
@@ -30,7 +30,7 @@ class GetRoles {
         created: json["created"] == null ? null : DateTime.parse(json["created"]),
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
         rol: json["rol"],
-        idStatusSyncFk: json["id_status_sync_fk"],
+        idEmiWeb: json["id_emi_web"],
     );
 
     Map<String, dynamic> toMap() => {
@@ -40,6 +40,6 @@ class GetRoles {
         "created": created == null ? null : created!.toIso8601String(),
         "updated": updated == null ? null : updated!.toIso8601String(),
         "rol": rol,
-        "id_status_sync_fk": idStatusSyncFk,
+        "id_emi_web": idEmiWeb,
     };
 }

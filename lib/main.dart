@@ -18,6 +18,8 @@ import 'providers/database_providers/jornada_controller.dart';
 import 'package:bizpro_app/providers/catalogo_emi_web_provider.dart';
 import 'package:bizpro_app/providers/sync_provider_emi_web.dart';
 import 'package:bizpro_app/providers/catalogo_pocketbase_provider.dart';
+import 'package:bizpro_app/providers/roles_emi_web_provider.dart';
+import 'package:bizpro_app/providers/roles_pocketbase_provider.dart';
 import 'package:bizpro_app/providers/database_providers/cotizacion_controller.dart';
 import 'package:bizpro_app/providers/database_providers/inversion_controller.dart';
 import 'package:bizpro_app/providers/database_providers/inversion_jornada_controller.dart';
@@ -114,6 +116,14 @@ void main() async {
         ),
         ChangeNotifierProvider<CatalogoEmiWebProvider>(
           create: (context) => CatalogoEmiWebProvider(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<RolesPocketbaseProvider>(
+          create: (context) => RolesPocketbaseProvider(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<RolesEmiWebProvider>(
+          create: (context) => RolesEmiWebProvider(),
           lazy: false,
         ),
         ChangeNotifierProvider(

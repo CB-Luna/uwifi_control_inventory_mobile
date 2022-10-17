@@ -1,17 +1,16 @@
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/objectbox.g.dart';
-import 'package:bizpro_app/services/api_service.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/providers/providers.dart';
 import 'package:bizpro_app/theme/theme.dart';
-
+import 'package:bizpro_app/helpers/process_encryption.dart';
+import 'package:bizpro_app/providers/roles_emi_web_provider.dart';
+import 'package:bizpro_app/providers/roles_pocketbase_provider.dart';
+import 'package:bizpro_app/services/api_service.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/services/auth_service.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:bizpro_app/providers/catalogo_pocketbase_provider.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/util/custom_functions.dart';
@@ -36,7 +35,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final UserState userState = Provider.of<UserState>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
-    final catalogoPocketbaseProvider = Provider.of<CatalogoPocketbaseProvider>(context);
+    final rolesPocketbaseProvider = Provider.of<RolesPocketbaseProvider>(context);
+    final rolesEmiWebProvider = Provider.of<RolesEmiWebProvider>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -167,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
 
-                      //BOTON
+                      //BOTÓN INGRESAR
                       Padding(
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
@@ -176,45 +176,25 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (!formKey.currentState!.validate()) {
                               return;
                             }
-                            //TODO: revisar status de red y si es la primera vez
-                            //TODO: hacer push a pantalla de loading
+                            // print("Encrypted: ${encryptAESCryptoJS(userState.passwordController.text, 'HuxR1bZVNumSBLEN')}");
+                            //Se revisa el estatus de la Red
                             final connectivityResult =
                                 await (Connectivity().checkConnectivity());
-                            // if(esPrimeraVez) {} else {}
                             if (connectivityResult == ConnectivityResult.none) {
-                              //offline
-                              // loginOffline(email, contrasena);
+                              print("Proceso offline");
+                              //Proceso Offline
                               if (usuarioProvider.validateUserOffline(
                                   userState.emailController.text,
                                   userState.passwordController.text)) {
                                 print('Usuario ya existente');
-                                //Se guarda el ID DEL USUARIO (correo)
+                                //Se guarda el ID DEL USUARIO (correo electrónico)
                                 prefs.setString(
                                     "userId", userState.emailController.text);
+                                //Se guarda el Password encriptado
+                                prefs.setString(
+                                    "passEncrypted", userState.passwordController.text);
                                 usuarioProvider
                                     .getUser(prefs.getString("userId")!);
-                                //Se almacena el ID Variables Usuario
-                                final lastUsuario = dataBase.usuariosBox
-                                    .query(Usuarios_.correo
-                                        .equals(prefs.getString("userId")!))
-                                    .build()
-                                    .findUnique();
-                                if (lastUsuario != null) {
-                                  print(
-                                      "NOMBRE USUARIO: ${lastUsuario.nombre}");
-                                  print(
-                                      "ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
-                                  print(
-                                      "Tamaño VariablesUser: ${dataBase.variablesUsuarioBox.getAll().length}");
-                                  if (lastUsuario.variablesUsuario.target?.id !=
-                                      null) {
-                                    print("Se guarda ID DE VARIABLES USUARIO");
-                                    prefs.setInt(
-                                        "idVariablesUser",
-                                        lastUsuario
-                                            .variablesUsuario.target!.id);
-                                  }
-                                }
 
                                 if (userState.recuerdame == true) {
                                   await userState.setEmail();
@@ -236,132 +216,226 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 );
                               } else {
-                                print('Usuario no existente');
+                                print('Usuario no existente localmente');
                                 snackbarKey.currentState
                                     ?.showSnackBar(const SnackBar(
                                   content: Text(
                                       "Credenciales incorrectas o no ha sido registrado al sistema"),
                                 ));
-
-                                //TODO Verificar como es el rol
-                                // print("Rol ${loginResponse.user.profile.idRolFk.toString()}");
                               }
                             } else {
+                              print("Proceso online");
                               //Proceso online
-                              //Login
-                              final loginResponse = await AuthService.login(
+                              //Login a Pocketbase
+                              final loginResponsePocketbase = await AuthService.loginPocketbase(
                                 userState.emailController.text,
                                 userState.passwordController.text,
                               );
-                              if (loginResponse == null) return;
-                              await userState.setToken(loginResponse.token);
-                              final userId = loginResponse.user.email;
-
-                              //Se guarda el ID DEL USUARIO (correo)
-                              prefs.setString("userId", userId);
-
-                              //User Query
-                              final emiUser = await ApiService.getEmiUser(
-                                  loginResponse.user.id);
-
-                              final idDBR = await AuthService.userEMIByID(
-                                  loginResponse.user.id);
-
-                              print("Hola miro el IdDBR $idDBR");
-                              if (emiUser == null) {
-                                print("Si es null");
-                                return;
-                              }
-                              print("Hola miro el IdDBR post $idDBR");
-                              if (usuarioProvider.validateUser(userId)) {
-                                print('Usuario ya existente');
-                                usuarioProvider.getUser(userId);
-                                usuarioProvider.updatePasswordLocal(
-                                    userState.passwordController.text);
-                                //Se almacena el ID Variables Usuario
-                                final lastUsuario = dataBase.usuariosBox
-                                    .query(Usuarios_.correo.equals(userId))
-                                    .build()
-                                    .findUnique();
-                                if (lastUsuario != null) {
-                                  print(
-                                      "NOMBRE USUARIO: ${lastUsuario.nombre}");
-                                  print(
-                                      "ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
-                                  print(
-                                      "Tamaño VariablesUser: ${dataBase.variablesUsuarioBox.getAll().length}");
-                                  if (lastUsuario.variablesUsuario.target?.id !=
-                                      null) {
-                                    print("Se guarda ID DE VARIABLES USUARIO");
-                                    prefs.setInt(
-                                        "idVariablesUser",
-                                        lastUsuario
-                                            .variablesUsuario.target!.id);
-                                  }
-                                }
-                              } else {
-                                print('Usuario no existente');
-                                if (dataBase.catalogoProyectoBox.isEmpty()) {
-                                  await catalogoPocketbaseProvider.getRoles();
-                                }
-                                usuarioProvider.add(
-                                  emiUser.items![0].nombreUsuario,
-                                  emiUser.items![0].apellidoP,
-                                  emiUser.items![0].apellidoM ?? '',
-                                  emiUser.items![0].nacimiento,
-                                  emiUser.items![0].telefono ?? "",
-                                  emiUser.items![0].celular,
-                                  loginResponse.user.email,
+                              if (loginResponsePocketbase == null) {
+                                //Login a Emi Web
+                                final loginResponseEmiWeb = await AuthService.loginEmiWeb(
+                                  userState.emailController.text,
                                   userState.passwordController.text,
-                                  emiUser.items![0].avatar ?? "",
-                                  idDBR ?? "",
-                                  emiUser.items![0].idRolFk,
                                 );
-                                usuarioProvider
-                                    .getUser(loginResponse.user.email);
-                                //Se almacena el ID Variables Usuario
-                                final lastUsuario = dataBase.usuariosBox
-                                    .query(Usuarios_.correo.equals(userId))
-                                    .build()
-                                    .findUnique();
-                                if (lastUsuario != null) {
-                                  print(
-                                      "NOMBRE USUARIO: ${lastUsuario.nombre}");
-                                  print(
-                                      "ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
-                                  print(
-                                      "Emprendedores: ${lastUsuario.variablesUsuario.target?.emprendedores ?? 'none'}");
-                                  print(
-                                      "Tamaño VariablesUser: ${dataBase.variablesUsuarioBox.getAll().length}");
-                                  if (lastUsuario.variablesUsuario.target?.id !=
-                                      null) {
-                                    print("Se guarda ID DE VARIABLES USUARIO");
-                                    prefs.setInt(
-                                        "idVariablesUser",
-                                        lastUsuario
-                                            .variablesUsuario.target!.id);
-                                  }
-                                }
-                              }
-                              if (userState.recuerdame == true) {
-                                await userState.setEmail();
-                                //TODO: quitar?
-                                await userState.setPassword();
-                              } else {
-                                userState.emailController.text = '';
-                                userState.passwordController.text = '';
-                                await prefs.remove('email');
-                                await prefs.remove('password');
-                              }
+                                if (loginResponseEmiWeb != null) {
+                                  //Se descargan los roles desde Emi Web
+                                  rolesEmiWebProvider.procesoCargando(true);
+                                  rolesEmiWebProvider.procesoTerminado(false);
+                                  rolesEmiWebProvider.procesoExitoso(false);
+                                  Future<bool> booleanoEmiWeb = rolesEmiWebProvider.getRolesEmiWeb(
+                                    userState.emailController.text,
+                                    userState.passwordController.text);
+                                  if (await booleanoEmiWeb) {
+                                    //Se descargan los roles desde Pocketbase
+                                    print("Se ha realizado con éxito el proceso de Roles Emi Web");
+                                    rolesPocketbaseProvider.procesoCargando(true);
+                                    rolesPocketbaseProvider.procesoTerminado(false);
+                                    rolesPocketbaseProvider.procesoExitoso(false);
+                                    Future<bool> booleanoPocketbase = rolesPocketbaseProvider.getRolesPocketbase();
+                                    if (await booleanoPocketbase) {
+                                      print("Se ha realizado con éxito el proceso de getRolesPocketbase");
+                                      //Se postea el Usuario en Pocketbase
+                                      if (await AuthService.postUsuarioPocketbase(
+                                        loginResponseEmiWeb, 
+                                        userState.emailController.text,
+                                        userState.passwordController.text)
+                                      ) {
+                                        //Login a Pocketbase Nuevamente
+                                        final loginResponsePocketbase = await AuthService.loginPocketbase(
+                                          userState.emailController.text,
+                                          userState.passwordController.text,
+                                        );
+                                        if (loginResponsePocketbase != null) {
+                                          await userState.setTokenPocketbase(loginResponsePocketbase.token);
+                                          final userId = loginResponsePocketbase.user.email;
 
-                              if (!mounted) return;
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const EmprendimientosScreen(),
-                                ),
-                              );
+                                          //Se guarda el ID DEL USUARIO (correo)
+                                          prefs.setString("userId", userId);
+                                          //Se guarda el Password encriptado
+                                          prefs.setString(
+                                              "passEncrypted", userState.passwordController.text);
+                                          //User Query
+                                          final emiUser = await ApiService.getEmiUserPocketbase(
+                                              loginResponsePocketbase.user.id);
+
+                                          final idDBR = await AuthService.userEMIByID(
+                                              loginResponsePocketbase.user.id);
+
+                                          print("Hola miro el IdDBR $idDBR");
+                                          if (emiUser == null) {
+                                            print("Si es null");
+                                            return;
+                                          }
+                                          print("Hola miro el IdDBR post $idDBR");
+                                          if (usuarioProvider.validateUser(userId)) {
+                                            print('Usuario ya existente');
+                                            usuarioProvider.getUser(userId);
+                                            usuarioProvider.updatePasswordLocal(
+                                                userState.passwordController.text);
+                                          } else {
+                                            // print('Usuario no existente');
+                                            // if (dataBase.catalogoProyectoBox.isEmpty()) {
+                                            //   await catalogoPocketbaseProvider.getRoles();
+                                            // }
+                                            usuarioProvider.add(
+                                              emiUser.items![0].nombreUsuario,
+                                              emiUser.items![0].apellidoP,
+                                              emiUser.items![0].apellidoM,
+                                              emiUser.items![0].telefono,
+                                              emiUser.items![0].celular,
+                                              loginResponsePocketbase.user.email,
+                                              userState.passwordController.text,
+                                              emiUser.items![0].avatar ?? "",
+                                              idDBR,
+                                              emiUser.items![0].idRolesFk ?? [],
+                                              emiUser.items![0].idEmiWeb
+                                            );
+                                            usuarioProvider
+                                                .getUser(loginResponsePocketbase.user.email);
+                                          }
+                                          if (userState.recuerdame == true) {
+                                            await userState.setEmail();
+                                            //TODO: quitar?
+                                            await userState.setPassword();
+                                          } else {
+                                            userState.emailController.text = '';
+                                            userState.passwordController.text = '';
+                                            await prefs.remove('email');
+                                            await prefs.remove('password');
+                                          }
+
+                                          if (!mounted) return;
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const EmprendimientosScreen(),
+                                            ),
+                                          );
+                                        } else {
+                                          snackbarKey.currentState
+                                              ?.showSnackBar(const SnackBar(
+                                            content: Text(
+                                                "Usuario ingresado inexistente."),
+                                          ));
+                                        }
+                                      } else {
+                                        snackbarKey.currentState
+                                            ?.showSnackBar(const SnackBar(
+                                          content: Text(
+                                              "Falló al recuperar Usuario."),
+                                        ));
+                                      }
+                                    } else {
+                                      snackbarKey.currentState
+                                          ?.showSnackBar(const SnackBar(
+                                        content: Text(
+                                            "Falló al descargar roles de Pocketbase."),
+                                      ));
+                                    }
+                                  } else{
+                                    snackbarKey.currentState
+                                        ?.showSnackBar(const SnackBar(
+                                      content: Text(
+                                          "Falló al descargar roles de Emi Web."),
+                                    ));
+                                  }
+                                } else {
+                                  snackbarKey.currentState
+                                      ?.showSnackBar(const SnackBar(
+                                    content: Text(
+                                        "Correo electrónico y/o contraseña incorrectos."),
+                                  ));
+                                }
+                              } else {
+                                await userState.setTokenPocketbase(loginResponsePocketbase.token);
+                                final userId = loginResponsePocketbase.user.email;
+
+                                //Se guarda el ID DEL USUARIO (correo)
+                                prefs.setString("userId", userId);
+                                //Se guarda el Password encriptado
+                                prefs.setString(
+                                    "passEncrypted", userState.passwordController.text);
+
+                                //User Query
+                                final emiUser = await ApiService.getEmiUserPocketbase(
+                                    loginResponsePocketbase.user.id);
+
+                                final idDBR = await AuthService.userEMIByID(
+                                    loginResponsePocketbase.user.id);
+
+                                print("Hola miro el IdDBR $idDBR");
+                                if (emiUser == null) {
+                                  print("Si es null");
+                                  return;
+                                }
+                                print("Hola miro el IdDBR post $idDBR");
+                                if (usuarioProvider.validateUser(userId)) {
+                                  print('Usuario ya existente');
+                                  usuarioProvider.getUser(userId);
+                                  usuarioProvider.updatePasswordLocal(
+                                      userState.passwordController.text);
+                                } else {
+                                  // print('Usuario no existente');
+                                  // if (dataBase.catalogoProyectoBox.isEmpty()) {
+                                  //   await catalogoPocketbaseProvider.getRoles();
+                                  // }
+                                  usuarioProvider.add(
+                                    emiUser.items![0].nombreUsuario,
+                                    emiUser.items![0].apellidoP,
+                                    emiUser.items![0].apellidoM,
+                                    emiUser.items![0].telefono,
+                                    emiUser.items![0].celular,
+                                    loginResponsePocketbase.user.email,
+                                    userState.passwordController.text,
+                                    emiUser.items![0].avatar ?? "",
+                                    idDBR,
+                                    emiUser.items![0].idRolesFk ?? [],
+                                    emiUser.items![0].idEmiWeb
+                                  );
+                                  usuarioProvider
+                                      .getUser(loginResponsePocketbase.user.email);
+                                }
+                                if (userState.recuerdame == true) {
+                                  await userState.setEmail();
+                                  //TODO: quitar?
+                                  await userState.setPassword();
+                                } else {
+                                  userState.emailController.text = '';
+                                  userState.passwordController.text = '';
+                                  await prefs.remove('email');
+                                  await prefs.remove('password');
+                                }
+
+                                if (!mounted) return;
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const EmprendimientosScreen(),
+                                  ),
+                                );
+                              }
                             }
                           },
                           text: 'Ingresar',

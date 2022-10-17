@@ -56,7 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
               } else {
                 return FutureBuilder(
                   future: Future.wait([
-                    userState.readToken(),
+                    userState.readTokenPocketbase(),
                     displaySplashImage,
                   ]),
                   builder: (_, AsyncSnapshot<List> snapshot) {

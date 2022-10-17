@@ -47,27 +47,27 @@ class UsuarioController extends ChangeNotifier {
   void add(
       String nombre,
       String apellidoP,
-      String apellidoM,
-      DateTime nacimiento,
+      String? apellidoM,
       String telefono,
-      String celular,
+      String? celular,
       String correo,
       String password,
       String avatar,
-      String idDBR,
+      String? idDBR,
       List<String> rolesIdDBR,
+      String idEmiWeb,
       ) {
     final nuevoUsuario = Usuarios(
         nombre: nombre,
         apellidoP: apellidoP,
         apellidoM: apellidoM,
-        nacimiento: nacimiento,
         telefono: telefono,
         celular: celular,
         correo: correo,
         password: password,
         imagen: avatar,
-        idDBR: idDBR,
+        idDBR: idDBR, 
+        idEmiWeb: idEmiWeb,
         );
     final nuevoSyncUsuario = StatusSync(); //Se crea el objeto estatus por dedault //M__ para Usuario
     final nuevaImagenUsuario = Imagenes(imagenes: avatar); //Se crea el objeto imagenes para el Usuario
@@ -84,19 +84,9 @@ class UsuarioController extends ChangeNotifier {
       nuevoUsuario.rol.target = rolActual;
       nuevoUsuario.statusSync.target = nuevoSyncUsuario;
       nuevoUsuario.image.target = nuevaImagenUsuario;
-      //TODO: Verifcar si se ocupa esta tabla
-      final nuevaVariablesUsuario = VariablesUsuario();
-      nuevoUsuario.variablesUsuario.target = nuevaVariablesUsuario;
 
       dataBase.usuariosBox.put(nuevoUsuario);
       usuarios.add(nuevoUsuario);
-      final lastUsuario = dataBase.usuariosBox.query(Usuarios_.correo.equals(correo)).build().findUnique();
-      if (lastUsuario != null) {
-        print("NOMBRE USUARIO: ${lastUsuario.nombre}");
-        print("ID DE VARIABLES USUARIO: ${lastUsuario.variablesUsuario.target?.id ?? 'none'}");
-        print("Emprendedores: ${lastUsuario.variablesUsuario.target?.emprendedores ?? 'none'}");
-        print("Tamaño VariablesUser: ${dataBase.variablesUsuarioBox.getAll().length}");
-      }
       print('Usuario agregado exitosamente');
       notifyListeners();
     }
@@ -186,23 +176,10 @@ void update(int id, int newIdRol, String newfotoPerfil, String newNombre, String
     }
   }
 
-  // void addEmprendimiento(Emprendimientos nuevoEmprendimiento, int idCurrentUser) {
-
-  //   usuarioCurrent!.emprendimientos.add(nuevoEmprendimiento);
-
-  // }
-
   void addEmprendimiento(Emprendimientos emprendimiento) {
     usuarioCurrent!.emprendimientos.add(emprendimiento);
     dataBase.usuariosBox.put(usuarioCurrent!);
     print('Emprendimiento modificado exitosamente');
-    notifyListeners();
-  }
-
-  void removeEmprendimiento(Emprendimientos emprendimiento) {
-    usuarioCurrent!.emprendimientos.remove(emprendimiento);
-    dataBase.usuariosBox.put(usuarioCurrent!);
-    print('Emprendimiento actualizado exitosamente');
     notifyListeners();
   }
 

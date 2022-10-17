@@ -5,14 +5,6 @@ import 'package:flutter/material.dart';
 
 import 'package:jwt_decode/jwt_decode.dart';
 
-enum Rol {
-  emprendedor,
-  promotor,
-  administrador,
-  amigoDelCambio,
-  voluntarioEstrategico,
-  publico,
-}
 
 class UserState extends ChangeNotifier {
   //EMAIL
@@ -35,25 +27,14 @@ class UserState extends ChangeNotifier {
     _password = passwordController.text;
     await prefs.setString('password', passwordController.text);
   }
-  //ROL ACTUAL
-  // String _rol = '';
-  // //Almacenar rol
-  // String get rol => _rol;
-  // Future<void> setRol(String rol) async {
-  //   _rol = rol;
-  //   await prefs.setString('rol', rol);
-  // }
-
   //Controlador para LoginScreen
   TextEditingController passwordController = TextEditingController();
 
   bool recuerdame = false;
 
   //Variables autenticacion
-  List<String> token = [];
-
-  Rol rolActual = Rol.administrador;
-
+  List<String> tokenPocketbase = [];
+  String tokenEmiWeb = "";
   //Constructor de provider
   UserState() {
     recuerdame = prefs.getBool('recuerdame') ?? false;
@@ -65,11 +46,6 @@ class UserState extends ChangeNotifier {
 
     emailController.text = _email;
     passwordController.text = _password;
-
-    //TODO Inicializar usuario activo
-    // final String? posibleUsuario = prefs.getString('usuarioActivo');
-    // if (posibleUsuario == null) return;
-    // usuarioActivo = UsuarioActivo.fromJson(posibleUsuario);
   }
 
   void updateRecuerdame() async {
@@ -87,28 +63,47 @@ class UserState extends ChangeNotifier {
   }
 
   //Funciones de autenticacion
-  Future<void> setToken(String jwt) async {
-    token.clear();
-    token.add(jwt);
-    await storage.write(key: 'token', value: jwt);
+  Future<void> setTokenPocketbase(String jwt) async {
+    tokenPocketbase.clear();
+    tokenPocketbase.add(jwt);
+    await storage.write(key: 'tokenPocketbase', value: jwt);
     notifyListeners();
   }
 
-  Future<String> readToken() async {
-    final jwt = await storage.read(key: 'token') ?? '';
+  Future<void> setTokenEmiWeb(String jwt) async {
+    tokenEmiWeb = "";
+    tokenEmiWeb = jwt;
+    await storage.write(key: 'tokenEmiWeb', value: jwt);
+    notifyListeners();
+  }
+
+  Future<String> readTokenPocketbase() async {
+    final jwt = await storage.read(key: 'tokenPocketbase') ?? '';
     if (jwt != '') {
       if (isTokenExpired(jwt)) {
         await logout(false);
         return '';
       }
-      token.add(jwt);
+      tokenPocketbase.add(jwt);
     }
     return jwt;
   }
 
+  Future<String?> readTokenEmiWeb() async {
+    final jwt = await storage.read(key: 'tokenEmiWeb');
+    if (jwt != null) {
+      return jwt;
+    } else
+    {
+      return null;
+    }
+  }
+
   Future<void> logout([bool remove = true]) async {
-    await storage.delete(key: 'token');
-    token.clear();
+    await storage.delete(key: 'tokenPocketbase');
+    await storage.delete(key: 'tokenEmiWeb');
+    tokenEmiWeb = "";
+    tokenPocketbase.clear();
     if (remove) {
       await NavigationService.removeTo(MaterialPageRoute(
         builder: (context) => const SplashScreen(
@@ -118,28 +113,6 @@ class UserState extends ChangeNotifier {
     }
   }
 
-  void setRolActual(String rol) {
-    switch (rol) {
-      case 'Emprendedor':
-        rolActual = Rol.emprendedor;
-        break;
-      case 'Promotor':
-        rolActual = Rol.promotor;
-        break;
-      case 'Administrador':
-        rolActual = Rol.administrador;
-        break;
-      case 'Amigo Del Cambio':
-        rolActual = Rol.amigoDelCambio;
-        break;
-      case 'Voluntario Estrategico':
-        rolActual = Rol.voluntarioEstrategico;
-        break;
-      default:
-        rolActual = Rol.publico;
-        break;
-    }
-  }
 
   @override
   void dispose() {

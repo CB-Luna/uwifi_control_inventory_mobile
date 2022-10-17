@@ -36,74 +36,75 @@ class Item {
     Item({
         required this.collectionId,
         required this.collectionName,
-        this.apellidoM,
-        required this.apellidoP,
-        required this.archivado,
-        this.avatar,
-        required this.celular,
-        required this.created,
         required this.id,
-        required this.idRolFk,
-        required this.idStatusSyncFk,
-        required this.nacimiento,
-        required this.nombreUsuario,
-        this.telefono,
+        required this.created,
         required this.updated,
+        required this.nombreUsuario,
+        required this.apellidoP,
+        this.apellidoM,
+        required this.telefono,
+        this.celular,
+        this.avatar,
+        required this.idRolesFk,
+        required this.idStatusSyncFk,
+        required this.archivado,
         required this.user,
+        required this.idEmiWeb,
     });
 
     final String collectionId;
     final String collectionName;
-    final String? apellidoM;
-    final String apellidoP;
-    final bool archivado;
-    final String? avatar;
-    final String celular;
-    final DateTime? created;
     final String id;
-    final List<String> idRolFk;
-    final String idStatusSyncFk;
-    final DateTime nacimiento;
-    final String nombreUsuario;
-    final String? telefono;
+    final DateTime? created;
     final DateTime? updated;
+    final String nombreUsuario;
+    final String apellidoP;
+    final String? apellidoM;
+    final String telefono;
+    final String? celular;
+    final String? avatar;
+    final List<String>? idRolesFk;
+    final String idStatusSyncFk;
+    final bool archivado;
     final String user;
+    final String idEmiWeb;
+
 
     factory Item.fromMap(Map<String, dynamic> json) => Item(
-        collectionId: json["@collectionId"],
+         collectionId: json["@collectionId"],
         collectionName: json["@collectionName"],
-        apellidoM: json["apellido_m"] == null ? null : json["apellido_m"]!,
-        apellidoP: json["apellido_p"],
-        archivado: json["archivado"],
-        avatar: json["avatar"] == null ? null : json["avatar"]!,
-        celular: json["celular"],
-        created: json["created"] == null ? null : DateTime.parse(json["created"]),
         id: json["id"],
-        idRolFk: List<String>.from(json["id_rol_fk"].map((x) => x)),
-        idStatusSyncFk: json["id_status_sync_fk"],
-        nacimiento: DateTime.parse(json["nacimiento"]),
-        nombreUsuario: json["nombre_usuario"],
-        telefono: json["telefono"],
+        created: json["created"] == null ? null : DateTime.parse(json["created"]),
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
+        nombreUsuario: json["nombre_usuario"],
+        apellidoP: json["apellido_p"],
+        apellidoM: json["apellido_m"],
+        telefono: json["telefono"],
+        celular: json["celular"],
+        avatar: json["avatar"],
+        idRolesFk: json["id_roles_fk"] == null ? null : List<String>.from(json["id_roles_fk"].map((x) => x)),
+        idStatusSyncFk: json["id_status_sync_fk"],
+        archivado: json["archivado"],
         user: json["user"],
+        idEmiWeb: json["id_emi_web"],
     );
 
     Map<String, dynamic> toMap() => {
-        "@collectionId": collectionId,
+         "@collectionId": collectionId,
         "@collectionName": collectionName,
-        "apellido_m": apellidoM,
-        "apellido_p": apellidoP,
-        "archivado": archivado,
-        "avatar": avatar,
-        "celular": celular,
-        "created": created == null ? null : created!.toIso8601String(),
         "id": id,
-        "id_rol_fk": List<dynamic>.from(idRolFk.map((x) => x)),
-        "id_status_sync_fk": idStatusSyncFk,
-        "nacimiento": nacimiento.toIso8601String(),
-        "nombre_usuario": nombreUsuario,
-        "telefono": telefono == null ? null : telefono!,
+        "created": created == null ? null : created!.toIso8601String(),
         "updated": updated == null ? null : updated!.toIso8601String(),
+        "nombre_usuario": nombreUsuario,
+        "apellido_p": apellidoP,
+        "apellido_m": apellidoM,
+        "telefono": telefono,
+        "celular": celular,
+        "avatar": avatar,
+        "id_roles_fk": idRolesFk == null ? null : List<dynamic>.from(idRolesFk!.map((x) => x)),
+        "id_status_sync_fk": idStatusSyncFk,
+        "archivado": archivado,
         "user": user,
+        "id_emi_web": idEmiWeb, 
     };
 }

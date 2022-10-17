@@ -11,7 +11,7 @@ abstract class ApiService {
     ApiInterceptor(),
   ]);
 
-  static Future<EmiUser?> getEmiUser(String id) async {
+  static Future<EmiUser?> getEmiUserPocketbase(String id) async {
     try {
       print("Paso 1");
       var myProfileUri = Uri.parse(
@@ -53,49 +53,6 @@ abstract class ApiService {
       return null;
     }
   }
-
-  // Future<Response> getUserList() async {
-  //   var userUrl = Uri.parse('${Constants.BASE_URL}/users');
-  //   final res = await client.get(userUrl);
-  //   return res;
-  // }
-
-  // Future<Response> getUserById(String id) async {
-  //   var userUrl = Uri.parse('${Constants.BASE_URL}/users/$id');
-  //   final res = await client.get(userUrl);
-  //   return res;
-  // }
-
-  // Future<Response> addUser(int roleId, String email, String password,
-  //     String fullname, String phone) async {
-  //   var userUrl = Uri.parse('${Constants.BASE_URL}/users');
-  //   final res = await client.post(userUrl, body: {
-  //     "role_id": roleId.toString(),
-  //     "email": email,
-  //     "password": password,
-  //     "fullname": fullname,
-  //     "phone": phone
-  //   });
-  //   return res;
-  // }
-
-  // Future<Response> updateUser(
-  //     int? id, int roleId, String email, String fullname, String phone) async {
-  //   var userUrl = Uri.parse('${Constants.BASE_URL}/users/$id');
-  //   final res = await client.put(userUrl, body: {
-  //     "role_id": roleId.toString(),
-  //     "email": email,
-  //     "fullname": fullname,
-  //     "phone": phone
-  //   });
-  //   return res;
-  // }
-
-  // Future<Response> deleteUser(String id) async {
-  //   var userUrl = Uri.parse('${Constants.BASE_URL}/users/$id');
-  //   final res = await client.delete(userUrl);
-  //   return res;
-  // }
 
   void dispose() {
     client.close();

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_token_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/post_registro_exitoso_emi_web.dart';
 import 'package:bizpro_app/objectbox.g.dart';
@@ -44,8 +45,8 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       final bodyMsg = ({
           "grant_type": "password",
           "scope": "webclient",
-          "username": "alozanop@encuentroconmexico.org",
-          "password": "3FFV4lkuqqC9IuP05+K3dQ=="
+          "username": prefs.getString("userId"),
+          "password": prefs.getString("passEncrypted"),
         });
       
       var response = await post(
@@ -354,7 +355,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           final responsePostEmprendedor = await post(crearEmprendedorUri, 
           headers: headers,
           body: jsonEncode({
-            "idUsuario": 1, //TODO: Cambiar a usuario correcto
+            "idUsuario": emprendedor.emprendimiento.target!.usuario.target!.idEmiWeb, //TODO: Cambiar a usuario correcto
             "nombreUsuario": "${emprendedor.emprendimiento
             .target!.usuario.target!.nombre} ${emprendedor.emprendimiento
             .target!.usuario.target!.apellidoP} ${emprendedor.emprendimiento
@@ -442,7 +443,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           final responsePostJornada = await post(crearJornadaUri, 
           headers: headers,
           body: jsonEncode({
-            "idUsuario": 1, //TODO: Cambiar a usuario correcto
+            "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb, //TODO: Cambiar a usuario correcto
             "nombreUsuario": "${jornada.emprendimiento
             .target!.usuario.target!.nombre} ${jornada.emprendimiento
             .target!.usuario.target!.apellidoP} ${jornada.emprendimiento
@@ -513,7 +514,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           final responsePostJornada = await post(crearJornadaUri, 
           headers: headers,
           body: jsonEncode({
-            "idUsuario": 1, //TODO: Cambiar a usuario correcto
+            "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb, //TODO: Cambiar a usuario correcto
             "nombreUsuario": "${jornada.emprendimiento
             .target!.usuario.target!.nombre} ${jornada.emprendimiento
             .target!.usuario.target!.apellidoP} ${jornada.emprendimiento
@@ -581,8 +582,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           final responsePostUpdateFaseEmprendimiento = await put(actualizarFaseEmprendimientoUri, 
           headers: headers,
           body: jsonEncode({
-            "idUsuarioRegistra": 1,
-            "usuarioRegistra": "Álvaro Lozano Platonoff",
+            "idUsuarioRegistra": emprendimiento.usuario.target!.idEmiWeb,
+            "usuarioRegistra": "${emprendimiento
+            .usuario.target!.nombre} ${emprendimiento
+            .usuario.target!.apellidoP} ${emprendimiento
+            .usuario.target!.apellidoM}",
             "id": emprendimiento.idEmiWeb,
             "idCatFase": faseActual.idEmiWeb,
           }));
