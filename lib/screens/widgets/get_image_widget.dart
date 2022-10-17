@@ -119,7 +119,7 @@ Widget getWidgetCoverImage(String? image) {
     return Container(
       color: Colors.grey,
       child: const Image(
-        image: AssetImage("assets/images/default_image.jpeg"),
+        image: AssetImage("assets/images/default_image.png"),
         fit: BoxFit.cover,
       ),
     );
@@ -142,7 +142,7 @@ Widget getWidgetContainImage(String? image) {
     return Container(
       color: Colors.transparent,
       child: const Image(
-        image: AssetImage("assets/images/default_image.jpeg"),
+        image: AssetImage("assets/images/default_image.png"),
         fit: BoxFit.contain,
       ),
     );
@@ -168,7 +168,7 @@ Widget? getWidgetContainerImage(String? image, double height, double width) {
       width: width,
       color: Colors.grey,
       child: const Image(
-        image: AssetImage("assets/images/default_image.jpeg"),
+        image: AssetImage("assets/images/default_image.png"),
         fit: BoxFit.cover,
       ),
     );

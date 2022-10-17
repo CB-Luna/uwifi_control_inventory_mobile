@@ -532,22 +532,15 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                   MainAxisAlignment
                                                                       .spaceAround,
                                                               children: [
-                                                                Container(
-                                                                  width: 30,
-                                                                  height: 30,
-                                                                  clipBehavior:
-                                                                      Clip.antiAlias,
-                                                                  decoration:
-                                                                      const BoxDecoration(
-                                                                    shape:
-                                                                        BoxShape.circle,
+                                                                
+                                                                  Padding(
+                                                                    padding: const EdgeInsets.all(8.0),
+                                                                    child: Text(dateTimeFormat("dd/MMM/yyyy", 
+                                                                    actualEmprendimiento!.emprendedor.target!.fechaRegistro),
+                                                                        
+                                                                    ),
                                                                   ),
-                                                                  child: getWidgetImageEmprendedor(
-                                                                    actualEmprendimiento!.
-                                                                      emprendedor.target!.imagen,
-                                                                    30,
-                                                                    30),
-                                                                ),
+                                                                
                                                                 Padding(
                                                                   padding:
                                                                       const EdgeInsetsDirectional
