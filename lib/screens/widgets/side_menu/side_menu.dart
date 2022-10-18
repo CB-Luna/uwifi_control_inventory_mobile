@@ -172,7 +172,6 @@ class SideMenu extends StatelessWidget {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 5, 0, 0),
                               child: Text(
-                                
                                 maybeHandleOverflow("${usuarioProvider.usuarioCurrent!.nombre} ${usuarioProvider.usuarioCurrent!.apellidoP}", 16, "..."),
                                 maxLines: 2,
                                 style: AppTheme.of(context).bodyText1.override(
