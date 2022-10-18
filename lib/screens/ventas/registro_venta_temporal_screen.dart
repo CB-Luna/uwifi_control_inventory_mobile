@@ -743,9 +743,9 @@ class _RegistroVentaTemporalScreenState
                                                                               ),
                                                                         ),
                                                                         Text(
-                                                                          "Subtotal: ${currencyFormat.format(prodVendido
+                                                                          maybeHandleOverflow("Subtotal: ${currencyFormat.format(prodVendido
                                                                                     .subTotal
-                                                                                    .toStringAsFixed(2))}",
+                                                                                    .toStringAsFixed(2))}",16,"..."),
                                                                           style: AppTheme.of(context)
                                                                               .bodyText1
                                                                               .override(
