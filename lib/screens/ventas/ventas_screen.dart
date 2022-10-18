@@ -1,4 +1,5 @@
 import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -514,21 +515,21 @@ class _VentasScreenState extends State<VentasScreen> {
                                                               MainAxisAlignment
                                                                   .spaceAround,
                                                           children: [
-                                                            Container(
+                                                            SizedBox(
                                                               width: 30,
                                                               height: 30,
-                                                              clipBehavior:
-                                                                  Clip.antiAlias,
-                                                              decoration:
-                                                                  const BoxDecoration(
-                                                                shape:
-                                                                    BoxShape.circle,
+                                                              
+                                                              child: Text(
+                                                                dateTimeFormat("dd/MMM/yyyy", venta.fechaInicio)
+                                                              )
+                                                            ),
+                                                            SizedBox(
+                                                              width:30,
+                                                              height:30,
+                                                              
+                                                              child: Text(
+                                                                dateTimeFormat("dd/MMM/yyyy", venta.fechaTermino)
                                                               ),
-                                                              child: getWidgetImageEmprendedor(
-                                                                widget.emprendimiento.
-                                                                  emprendedor.target!.imagen,
-                                                                30,
-                                                                30),
                                                             ),
                                                             Padding(
                                                               padding:

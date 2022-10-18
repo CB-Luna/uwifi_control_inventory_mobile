@@ -547,7 +547,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                           .fromSTEB(5,
                                                                               0, 0, 0),
                                                                   child: Text(
-                                                                    maybeHandleOverflow(emprendedor, 25, "..."),
+                                                                    maybeHandleOverflow(emprendedor, 16, "..."),
                                                                     style: AppTheme.of(
                                                                             context)
                                                                         .bodyText1
@@ -604,7 +604,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                   child: Text(
                                                                     maybeHandleOverflow(
                                                                     currencyFormat.format(inversion.totalInversion.toStringAsFixed(2))
-                                                                    , 12, "..."
+                                                                    , 6, "..."
                                                                     ),
                                                                     style: AppTheme.of(
                                                                             context)

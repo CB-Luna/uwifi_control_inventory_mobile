@@ -741,25 +741,25 @@ class _RegistroVentaScreenState
                                                                         Text(
                                                                           "Precio:  ${currencyFormat.format(prodVendido
                                                                                     .precioVenta
-                                                                                    .toStringAsFixed(2))}) ",
+                                                                                    .toStringAsFixed(2))} ",
                                                                           textAlign:
                                                                               TextAlign.end,
                                                                           style: AppTheme.of(context)
                                                                               .subtitle2
                                                                               .override(
-                                                                                fontFamily: AppTheme.of(context).subtitle2Family,
+                                                                                fontFamily: AppTheme.of(context).bodyText1Family,
                                                                                 color: AppTheme.of(context).primaryText,
                                                                               ),
                                                                         ),
                                                                         Text(
-                                                                          "Subtotal:  ${currencyFormat.format(prodVendido
+                                                                          maybeHandleOverflow("Subtotal:  ${currencyFormat.format(prodVendido
                                                                                     .subtotal
-                                                                                    .toStringAsFixed(2))}",
+                                                                                    .toStringAsFixed(2))}",16,"..."),
                                                                           style: AppTheme.of(context)
                                                                               .bodyText1
                                                                               .override(
                                                                                 fontFamily: AppTheme.of(context).bodyText1Family,
-                                                                                color: AppTheme.of(context).secondaryText,
+                                                                                color: AppTheme.of(context).primaryText,
                                                                               ),
                                                                         ),
                                                                       ],
