@@ -105,8 +105,10 @@ class ProdProyecto {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
+  @Unique()
+  String? idEmiWeb;
   final familiaProducto = ToOne<FamiliaProd>();
-  final tipoEmpaques = ToOne<TipoEmpaques>();
+  final unidadMedida = ToOne<UnidadMedida>();
   final catalogoProyecto = ToOne<CatalogoProyecto>();
   final imagen = ToOne<Imagenes>();
   final statusSync = ToOne<StatusSync>();
@@ -121,6 +123,7 @@ class ProdProyecto {
     this.costoEstimado,
     DateTime? fechaRegistro,
     this.idDBR,
+    required this.idEmiWeb,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -137,6 +140,7 @@ class Inversiones {
   double totalInversion;
   bool inversionRecibida;
   DateTime fechaRegistro;
+  bool jornada3;
   @Unique()
   String? idDBR;
   final statusSync = ToOne<StatusSync>();
@@ -157,6 +161,7 @@ class Inversiones {
     this.totalInversion = 0.0,
     this.inversionRecibida = false,
     DateTime? fechaRegistro,
+    this.jornada3 = false,
     this.idDBR,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
@@ -686,7 +691,6 @@ class TipoEmpaques {
   String idEmiWeb;
   final statusSync = ToOne<StatusSync>();
   final prodSolicitados = ToMany<ProdSolicitado>();
-  final prodProyecto = ToMany<ProdProyecto>();
 
   TipoEmpaques({
     this.id = 0,
@@ -987,6 +991,7 @@ class UnidadMedida {
   final productosEmp = ToMany<ProductosEmp>();
   final prodSolicitados = ToMany<ProdSolicitado>();
   final productosProv = ToMany<ProductosProv>();
+  final prodProyecto = ToMany<ProdProyecto>();
 
   UnidadMedida({
     this.id = 0,

@@ -176,23 +176,26 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (!formKey.currentState!.validate()) {
                               return;
                             }
-                            // print("Encrypted: ${encryptAESCryptoJS(userState.passwordController.text, 'HuxR1bZVNumSBLEN')}");
                             //Se revisa el estatus de la Red
                             final connectivityResult =
                                 await (Connectivity().checkConnectivity());
                             if (connectivityResult == ConnectivityResult.none) {
                               print("Proceso offline");
                               //Proceso Offline
+                              final passwordEncrypted = processEncryption(userState.passwordController.text);
+                              if (passwordEncrypted == null) {
+                                return;
+                              }
                               if (usuarioProvider.validateUserOffline(
                                   userState.emailController.text,
-                                  userState.passwordController.text)) {
+                                  passwordEncrypted)) {
                                 print('Usuario ya existente');
                                 //Se guarda el ID DEL USUARIO (correo electrónico)
                                 prefs.setString(
                                     "userId", userState.emailController.text);
                                 //Se guarda el Password encriptado
                                 prefs.setString(
-                                    "passEncrypted", userState.passwordController.text);
+                                    "passEncrypted", passwordEncrypted);
                                 usuarioProvider
                                     .getUser(prefs.getString("userId")!);
 
@@ -226,16 +229,24 @@ class _LoginScreenState extends State<LoginScreen> {
                             } else {
                               print("Proceso online");
                               //Proceso online
+                              final passwordEncrypted = processEncryption(userState.passwordController.text);
+                              if (passwordEncrypted == null) {
+                                return;
+                              }
                               //Login a Pocketbase
                               final loginResponsePocketbase = await AuthService.loginPocketbase(
                                 userState.emailController.text,
-                                userState.passwordController.text,
+                                passwordEncrypted,
                               );
                               if (loginResponsePocketbase == null) {
                                 //Login a Emi Web
+                                final passwordEncrypted = processEncryption(userState.passwordController.text);
+                                if (passwordEncrypted == null) {
+                                  return;
+                                }
                                 final loginResponseEmiWeb = await AuthService.loginEmiWeb(
                                   userState.emailController.text,
-                                  userState.passwordController.text,
+                                  passwordEncrypted,
                                 );
                                 if (loginResponseEmiWeb != null) {
                                   //Se descargan los roles desde Emi Web
@@ -244,7 +255,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   rolesEmiWebProvider.procesoExitoso(false);
                                   Future<bool> booleanoEmiWeb = rolesEmiWebProvider.getRolesEmiWeb(
                                     userState.emailController.text,
-                                    userState.passwordController.text);
+                                    passwordEncrypted);
                                   if (await booleanoEmiWeb) {
                                     //Se descargan los roles desde Pocketbase
                                     print("Se ha realizado con éxito el proceso de Roles Emi Web");
@@ -258,22 +269,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                       if (await AuthService.postUsuarioPocketbase(
                                         loginResponseEmiWeb, 
                                         userState.emailController.text,
-                                        userState.passwordController.text)
+                                        passwordEncrypted)
                                       ) {
                                         //Login a Pocketbase Nuevamente
                                         final loginResponsePocketbase = await AuthService.loginPocketbase(
                                           userState.emailController.text,
-                                          userState.passwordController.text,
+                                          passwordEncrypted,
                                         );
                                         if (loginResponsePocketbase != null) {
                                           await userState.setTokenPocketbase(loginResponsePocketbase.token);
                                           final userId = loginResponsePocketbase.user.email;
-
                                           //Se guarda el ID DEL USUARIO (correo)
                                           prefs.setString("userId", userId);
                                           //Se guarda el Password encriptado
                                           prefs.setString(
-                                              "passEncrypted", userState.passwordController.text);
+                                              "passEncrypted", passwordEncrypted);
                                           //User Query
                                           final emiUser = await ApiService.getEmiUserPocketbase(
                                               loginResponsePocketbase.user.id);
@@ -291,7 +301,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             print('Usuario ya existente');
                                             usuarioProvider.getUser(userId);
                                             usuarioProvider.updatePasswordLocal(
-                                                userState.passwordController.text);
+                                                passwordEncrypted);
                                           } else {
                                             // print('Usuario no existente');
                                             // if (dataBase.catalogoProyectoBox.isEmpty()) {
@@ -304,7 +314,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               emiUser.items![0].telefono,
                                               emiUser.items![0].celular,
                                               loginResponsePocketbase.user.email,
-                                              userState.passwordController.text,
+                                              passwordEncrypted,
                                               emiUser.items![0].avatar ?? "",
                                               idDBR,
                                               emiUser.items![0].idRolesFk ?? [],
@@ -368,6 +378,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ));
                                 }
                               } else {
+                                //Login a Pocketbase
                                 await userState.setTokenPocketbase(loginResponsePocketbase.token);
                                 final userId = loginResponsePocketbase.user.email;
 
@@ -375,7 +386,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 prefs.setString("userId", userId);
                                 //Se guarda el Password encriptado
                                 prefs.setString(
-                                    "passEncrypted", userState.passwordController.text);
+                                    "passEncrypted", passwordEncrypted);
 
                                 //User Query
                                 final emiUser = await ApiService.getEmiUserPocketbase(
@@ -394,7 +405,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   print('Usuario ya existente');
                                   usuarioProvider.getUser(userId);
                                   usuarioProvider.updatePasswordLocal(
-                                      userState.passwordController.text);
+                                      passwordEncrypted);
                                 } else {
                                   // print('Usuario no existente');
                                   // if (dataBase.catalogoProyectoBox.isEmpty()) {
@@ -407,7 +418,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     emiUser.items![0].telefono,
                                     emiUser.items![0].celular,
                                     loginResponsePocketbase.user.email,
-                                    userState.passwordController.text,
+                                    passwordEncrypted,
                                     emiUser.items![0].avatar ?? "",
                                     idDBR,
                                     emiUser.items![0].idRolesFk ?? [],

@@ -44,7 +44,7 @@ class Payload {
     final ProveedorSugerido? proveedorSugerido;
     final Producto? producto;
     final int cantidad;
-    final int costoEstimado;
+    final double costoEstimado;
     final bool activo;
 
     factory Payload.fromMap(Map<String, dynamic> json) => Payload(
@@ -55,7 +55,7 @@ class Payload {
         proveedorSugerido: json["proveedorSugerido"] == null ? null : ProveedorSugerido.fromMap(json["proveedorSugerido"]),
         producto: json["producto"] == null ? null : Producto.fromMap(json["producto"]),
         cantidad: json["cantidad"],
-        costoEstimado: json["costoEstimado"],
+        costoEstimado: json["costoEstimado"].toDouble(),
         activo: json["activo"],
     );
 

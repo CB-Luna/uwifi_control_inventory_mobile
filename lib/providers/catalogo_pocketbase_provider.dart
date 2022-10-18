@@ -15,7 +15,6 @@ import 'package:bizpro_app/modelsPocketbase/get_comunidades.dart';
 import 'package:bizpro_app/modelsPocketbase/get_ambito_consultoria.dart';
 import 'package:bizpro_app/modelsPocketbase/get_area_circulo.dart';
 import 'package:bizpro_app/modelsPocketbase/get_catalogo_proyectos.dart';
-import 'package:bizpro_app/modelsPocketbase/get_roles.dart';
 import 'package:bizpro_app/modelsPocketbase/get_unidades_medida.dart';
 import 'package:bizpro_app/modelsPocketbase/get_estados.dart';
 import 'package:bizpro_app/modelsPocketbase/get_municipios.dart';
@@ -67,7 +66,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
     banderasExistoSync.add(await getPorcentajeAvance());
     banderasExistoSync.add(await getProveedores());
     banderasExistoSync.add(await getProductosProv());
-    await getProdProyecto();
+    banderasExistoSync.add(await getProdProyecto());
     for (var element in banderasExistoSync) {
       //Aplicamos una operación and para validar que no haya habido un catálogo con False
       exitoso = exitoso && element;
@@ -977,7 +976,7 @@ Future<bool> getProductosProv() async {
         //Se valida que el nuevo producto proveedor aún no existe en Objectbox
         final proveedor = dataBase.proveedoresBox.query(Proveedores_.idDBR.equals(listProductosProv[i].idProveedorFk)).build().findUnique();
         final familiaProd = dataBase.familiaProductosBox.query(FamiliaProd_.idDBR.equals(listProductosProv[i].idFamiliaProdFk)).build().findUnique();
-        final unidadMedida = dataBase.unidadesMedidaBox.query(UnidadMedida_.idDBR.equals(listProductosProv[i].isUndMedidaFk)).build().findUnique();
+        final unidadMedida = dataBase.unidadesMedidaBox.query(UnidadMedida_.idDBR.equals(listProductosProv[i].idUndMedidaFk)).build().findUnique();
         final productoProveedorExistente = dataBase.productosProvBox.query(ProductosProv_.idDBR.equals(listProductosProv[i].id)).build().findUnique();
         if (productoProveedorExistente == null) {
           if (listProductosProv[i].id.isNotEmpty) {
@@ -1038,47 +1037,80 @@ Future<bool> getProductosProv() async {
   }
   }
 
-  Future<void> getProdProyecto() async {
-    if (dataBase.productosProyectoBox.isEmpty()) {
+//Función para recuperar el catálogo de productos proyecto desde Pocketbase
+  Future<bool> getProdProyecto() async {
+    try {
+      //Se recupera toda la colección de productos proveedores en Pocketbase
       final records = await client.records.
-      getFullList('prod_proyecto', batch: 200, sort: '+producto');
-
-      final List<GetProdProyecto> listProdProyecto = [];
-      for (var element in records) {
-        listProdProyecto.add(getProdProyectoFromMap(element.toString()));
-      }
-
-      print("****Informacion prod Proyecto****");
-      for (var i = 0; i < records.length; i++) {
-        if (listProdProyecto[i].id.isNotEmpty) {
-        final nuevoProdProyecto = ProdProyecto(
-        producto: listProdProyecto[i].producto,
-        marcaSugerida: listProdProyecto[i].marcaSugerida,
-        descripcion: listProdProyecto[i].descripcion,
-        proveedorSugerido: listProdProyecto[i].proveedorSugerido,
-        cantidad: listProdProyecto[i].cantidad,
-        costoEstimado: listProdProyecto[i].costoEstimado,
-        idDBR: listProdProyecto[i].id,
-        fechaRegistro: listProdProyecto[i].updated
-        );
-        final familiaProd = dataBase.familiaProductosBox.query(FamiliaProd_.idDBR.equals(listProdProyecto[i].idFamiliaProdFk)).build().findUnique();
-        final tipoEmpaque = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idDBR.equals(listProdProyecto[i].idTipoEmpaqueFk)).build().findUnique();
-        final catalogoProyecto = dataBase.catalogoProyectoBox.query(CatalogoProyecto_.idDBR.equals(listProdProyecto[i].idCatalogoProyectoFk)).build().findUnique();
-        if (familiaProd != null && tipoEmpaque != null && catalogoProyecto != null) {
-          final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
-          nuevoProdProyecto.statusSync.target = nuevoSync;
-          nuevoProdProyecto.familiaProducto.target = familiaProd;
-          nuevoProdProyecto.tipoEmpaques.target = tipoEmpaque;
-          nuevoProdProyecto.catalogoProyecto.target = catalogoProyecto;
-          // dataBase.productosProyectoBox.put(nuevoProdProyecto);
-          catalogoProyecto.prodProyecto.add(nuevoProdProyecto);
-          dataBase.catalogoProyectoBox.put(catalogoProyecto);
-          print("TAMANÑO PROD PROYECTO: ${dataBase.productosProyectoBox.getAll().length}");
-          print('Prod Proyecto agregado exitosamente');
+        getFullList('prod_proyecto', batch: 200, sort: '+producto');
+      if (records.isNotEmpty) {
+        //Existen datos de productos proyecto en Pocketbase
+        final List<GetProdProyecto> listProdProyecto = [];
+        for (var element in records) {
+          listProdProyecto.add(getProdProyectoFromMap(element.toString()));
+        }
+        for (var i = 0; i < listProdProyecto.length; i++) {
+          //Se valida que el nuevo producto proyecto aún no existe en Objectbox
+          final catalogoProyecto = dataBase.catalogoProyectoBox.query(CatalogoProyecto_.idDBR.equals(listProdProyecto[i].idCatalogoProyectoFk)).build().findUnique();
+          final familiaProd = dataBase.familiaProductosBox.query(FamiliaProd_.idDBR.equals(listProdProyecto[i].idFamiliaProdFk)).build().findUnique();
+          final unidadMedida = dataBase.unidadesMedidaBox.query(UnidadMedida_.idDBR.equals(listProdProyecto[i].idUnidadMedidaFk)).build().findUnique();
+          final productoProyectoExistente = dataBase.productosProyectoBox.query(ProdProyecto_.idDBR.equals(listProdProyecto[i].id)).build().findUnique();
+          if (productoProyectoExistente == null) {
+            if (listProdProyecto[i].id.isNotEmpty) {
+              final nuevoProductoProyecto = ProdProyecto(
+                producto: listProdProyecto[i].producto,
+                marcaSugerida: listProdProyecto[i].marcaSugerida,
+                descripcion: listProdProyecto[i].descripcion,
+                proveedorSugerido: listProdProyecto[i].proveedorSugerido,
+                cantidad: listProdProyecto[i].cantidad,
+                costoEstimado: listProdProyecto[i].costoEstimado,
+                fechaRegistro: listProdProyecto[i].updated, 
+                idDBR: listProdProyecto[i].id, 
+                idEmiWeb: listProdProyecto[i].idEmiWeb,
+                );
+              if (catalogoProyecto != null && familiaProd != null
+                  && unidadMedida != null) {
+                nuevoProductoProyecto.catalogoProyecto.target = catalogoProyecto;
+                nuevoProductoProyecto.familiaProducto.target = familiaProd;
+                nuevoProductoProyecto.unidadMedida.target = unidadMedida;
+                dataBase.productosProyectoBox.put(nuevoProductoProyecto);
+                print('Producto Proyecto Nuevo agregado éxitosamente');
+              }
+              else {
+                return false;
+              }
+            }
+          } else {
+            //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
+            if (productoProyectoExistente.fechaRegistro != listProdProyecto[i].updated) {
+              if (catalogoProyecto != null && familiaProd != null
+                  && unidadMedida != null) {
+                //Se actualiza el registro en Objectbox
+                productoProyectoExistente.producto = listProdProyecto[i].producto;
+                productoProyectoExistente.marcaSugerida = listProdProyecto[i].marcaSugerida;
+                productoProyectoExistente.descripcion = listProdProyecto[i].descripcion;
+                productoProyectoExistente.proveedorSugerido = listProdProyecto[i].proveedorSugerido;
+                productoProyectoExistente.cantidad = listProdProyecto[i].cantidad;
+                productoProyectoExistente.fechaRegistro = listProdProyecto[i].updated!;
+                productoProyectoExistente.costoEstimado = listProdProyecto[i].costoEstimado;
+                productoProyectoExistente.catalogoProyecto.target = catalogoProyecto;
+                productoProyectoExistente.familiaProducto.target = familiaProd;
+                productoProyectoExistente.unidadMedida.target = unidadMedida;
+                dataBase.productosProyectoBox.put(productoProyectoExistente);
+              }
+              else {
+                return false;
+              }
+            }
           }
         }
+        return true;
+      } else {
+        //No existen datos de estados en Pocketbase
+        return false;
       }
-      notifyListeners();
-      }
+    } catch (e) {
+      return false;
     }
+  }
 }

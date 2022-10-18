@@ -84,8 +84,8 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
             ? FloatingActionButton(
                 onPressed: () async {
                   //TODO: Colocar el último catálogo que se descargue
-                  List<PorcentajeAvance> listPorcentajeAvance = dataBase.porcentajeAvanceBox.getAll();
-                  if (listPorcentajeAvance.isNotEmpty) {
+                  List<ProdProyecto> listProdProyecto = dataBase.productosProyectoBox.getAll();
+                  if (listProdProyecto.isNotEmpty) {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(

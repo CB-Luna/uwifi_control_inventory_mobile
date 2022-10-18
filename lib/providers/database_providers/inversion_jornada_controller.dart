@@ -46,6 +46,7 @@ class InversionJornadaController extends ChangeNotifier {
       saldo: saldo,
       totalInversion: totalInversion,
       inversionRecibida: inversionRecibida,
+      jornada3: true,
       );
       final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
       if (emprendimiento != null) {
@@ -73,12 +74,12 @@ class InversionJornadaController extends ChangeNotifier {
       final nuevoSyncInversionXprodCotizados = StatusSync(); //Se crea el objeto estatus por dedault //M__
       nuevaInversionXprodCotizados.statusSync.target = nuevoSyncInversionXprodCotizados;
       nuevaInversionXprodCotizados.inversion.target = inversion;
-      final nuevaInstruccion = Bitacora(instrucciones: 'syncAddInversion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      // final nuevaInstruccion = Bitacora(instrucciones: 'syncAddInversion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       inversion!.inversionXprodCotizados.add(nuevaInversionXprodCotizados); //Se agrega la nueva inversion x prod Cotizados
       inversion!.statusSync.target = nuevoSyncInversion;
       inversion!.estadoInversion.target = estadoInversion;
       inversion!.emprendimiento.target = emprendimiento;
-      inversion!.bitacora.add(nuevaInstruccion);
+      // inversion!.bitacora.add(nuevaInstruccion);
       idInversion = dataBase.inversionesBox.put(inversion!);
       emprendimiento.inversiones.add(inversion!);
       emprendimiento.idInversionJornada = idInversion;

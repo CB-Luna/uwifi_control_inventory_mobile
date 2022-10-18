@@ -24,9 +24,6 @@ import 'package:bizpro_app/modelsPocketbase/get_estados.dart';
 import 'package:bizpro_app/modelsPocketbase/get_municipios.dart';
 import 'package:bizpro_app/modelsPocketbase/get_tipo_proyecto.dart';
 import 'package:flutter/material.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/objectbox.g.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 
 import 'package:bizpro_app/modelsEmiWeb/get_comunidades_emi_web.dart';
@@ -45,7 +42,6 @@ import 'package:bizpro_app/modelsPocketbase/get_tipo_proveedor.dart';
 
 import 'package:bizpro_app/modelsPocketbase/get_ambito_consultoria.dart';
 import 'package:bizpro_app/modelsPocketbase/get_area_circulo.dart';
-import 'package:bizpro_app/modelsPocketbase/get_roles.dart';
 import 'package:bizpro_app/modelsPocketbase/get_unidades_medida.dart';
 import 'package:bizpro_app/modelsPocketbase/get_estado_inversiones.dart';
 import 'package:bizpro_app/modelsPocketbase/get_familia_productos.dart';
@@ -99,7 +95,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
       banderasExistoSync.add(await getProveedoresNoArchivados());
       banderasExistoSync.add(await getProveedoresArchivados());
       banderasExistoSync.add(await getProductosProv());
-      // await getProdProyecto();
+      banderasExistoSync.add(await getProdProyecto());
       for (var element in banderasExistoSync) {
         //Aplicamos una operación and para validar que no haya habido un catálogo con False
         exitoso = exitoso && element;
@@ -1753,132 +1749,135 @@ Future<bool> getProductosProv() async {
 
 //Función para recuperar el catálogo de productos del proyecto desde Emi Web 
   Future<bool> getProdProyecto() async {
-    return true;
-    // try {
-    //   var url = Uri.parse("$baseUrlEmiWebServices/catalogos/inversionxproyecto");
-    //   final headers = ({
-    //       "Content-Type": "application/json",
-    //       'Authorization': 'Bearer $tokenGlobal',
-    //     });
-    //   var response = await http.get(
-    //     url,
-    //     headers: headers
-    //   );
+    try {
+      var url = Uri.parse("$baseUrlEmiWebServices/catalogos/inversionxproyecto");
+      final headers = ({
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $tokenGlobal',
+        });
+      var response = await http.get(
+        url,
+        headers: headers
+      );
 
-    //   switch (response.statusCode) {
-    //     case 200: //Caso éxitoso
-    //       final responseListProdProyecto = getProdProyectoEmiWebFromMap(
-    //         const Utf8Decoder().convert(response.bodyBytes)
-    //       );
-    //       for(var i = 0; i < responseListProdProyecto.payload!.length; i++) {
-    //         var url = Uri.parse("$baseUrlEmiWebServices/productos/proveedores/registro/${responseListProdProyecto.payload![i].producto!.idProductosProveedor}");
-    //         final headers = ({
-    //             "Content-Type": "application/json",
-    //             'Authorization': 'Bearer $tokenGlobal',
-    //           });
-    //         var response = await http.get(
-    //           url,
-    //           headers: headers
-    //         );
-    //         switch (response.statusCode) {
-    //           case 200: //Caso éxitoso
-    //           final responseProductoProveedor = getProductosProvByIdEmiWebFromMap(
-    //           const Utf8Decoder().convert(response.bodyBytes));
-    //           //Verificamos que el nuevo producto del proyecto no exista en Pocketbase
-    //           final recordProductoProyecto = await client.records.getFullList(
-    //             'prod_proyecto', 
-    //             batch: 200, 
-    //             filter: "id_emi_web='${responseListProdProyecto.payload![i].idCatInversionProyecto}'");
-    //           if (recordProductoProyecto.isEmpty) {
-    //             //Se recupera el id familia producto, catalogo proyecto y tipo empaque en Pocketbase y se acocia con el nuevo Producto Proyecto
-    //             final recordFamiliaProd = await client.records.getFullList(
-    //               'familia_prod', 
-    //               batch: 200, 
-    //               filter: "id_emi_web='${responseListProdProyecto.payload![i].familiaInversion!.idCatFamiliaInversion}'");
-    //             final recordUnidadMedida = await client.records.getFullList(
-    //               'und_medida', 
-    //               batch: 200, 
-    //               filter: "id_emi_web='${responseListProdProyecto.payload![i].}'");
-    //             if (recordProveedor.isNotEmpty && recordFamiliaProd.isNotEmpty 
-    //                 && recordUnidadMedida.isNotEmpty) {
-    //                 //Se agrega el producto proveedor como nuevo en la colección de Pocketbase
-    //                 final recordProductoProyecto = await client.records.create('prod_proyecto', body: {
-    //                 "nombre_prod_prov": responseProductoProveedor.payload!.producto,
-    //                 "descripcion_prod_prov": responseProductoProveedor.payload!.descripcion,
-    //                 "marca": responseProductoProveedor.payload!.marca,
-    //                 "is_und_medida_fk": recordUnidadMedida.first.id,
-    //                 "costo_prod_prov": responseProductoProveedor.payload!.costoUnidadMedida,
-    //                 "id_proveedor_fk": recordProveedor.first.id,
-    //                 "id_familia_prod_fk": recordFamiliaProd.first.id,
-    //                 "tiempo_entrega": responseProductoProveedor.payload!.tiempoEntrega,
-    //                 "archivado": responseProductoProveedor.payload!.archivado,
-    //                 "id_emi_web": responseProductoProveedor.payload!.idProductosProveedor.toString(),
-    //                 });
-    //                 if (recordProductoProyecto.id.isNotEmpty) {
-    //                   print('Producto Proveedor Emi Web agregado éxitosamente a Pocketbase');
-    //                 } else {
-    //                   return false;
-    //                 }
-    //             } else {
-    //               return false;
-    //             }
-    //           } else {
-    //             //Se actualiza el producto proveedor en la colección de Pocketbase
-    //             final recordProductoProyectoParse = getProductosProvFromMap(recordProductoProyecto.first.toString());
-    //             //Verificamos que los campos de este registro sean diferentes para actualizarlo
-    //             if (recordProductoProyectoParse.nombreProdProv != responseProductoProveedor.payload!.producto ||
-    //                 recordProductoProyectoParse.descripcionProdProv != responseProductoProveedor.payload!.descripcion||
-    //                 recordProductoProyectoParse.marca != responseProductoProveedor.payload!.marca ||
-    //                 recordProductoProyectoParse.costoProdProv != responseProductoProveedor.payload!.costoUnidadMedida ||
-    //                 recordProductoProyectoParse.tiempoEntrega != responseProductoProveedor.payload!.tiempoEntrega ||
-    //                 recordProductoProyectoParse.archivado != responseProductoProveedor.payload!.archivado
-    //                 ) {
-    //                 final updateRecordProductoProveedor = await client.records.update('productos_prov', recordProductoProyectoParse.id, 
-    //                 body: {
-    //                   "nombre_prod_prov": responseProductoProveedor.payload!.producto,
-    //                   "descripcion_prod_prov": responseProductoProveedor.payload!.descripcion,
-    //                   "marca": responseProductoProveedor.payload!.marca,
-    //                   "costo_prod_prov": responseProductoProveedor.payload!.costoUnidadMedida,
-    //                   "tiempo_entrega": responseProductoProveedor.payload!.tiempoEntrega,
-    //                   "archivado": responseProductoProveedor.payload!.archivado,
-    //                   "id_emi_web": responseProductoProveedor.payload!.idProductosProveedor.toString(),
-    //                 });
-    //                 if (updateRecordProductoProveedor.id.isNotEmpty) {
-    //                   print('Producto Proveedor Emi Web actualizado éxitosamente en Pocketbase');
-    //                 } else {
-    //                   return false;
-    //                 }
-    //             }
-    //           }
-    //           break;
-    //         case 401: //Error de Token incorrecto
-    //           if(await getTokenOAuth()) {
-    //             getProdProyecto();
-    //             return true;
-    //           } else{
-    //             return false;
-    //           }
-    //         case 404: //Error de ruta incorrecta
-    //           return false;
-    //         default:
-    //           return false;
-    //         }
-    //       }
-    //       return true;
-    //     case 401: //Error de Token incorrecto
-    //       if(await getTokenOAuth()) {
-    //         getProdProyecto();
-    //         return true;
-    //       } else{
-    //         return false;
-    //       }
-    //     case 404: //Error de ruta incorrecta
-    //       return false;
-    //     default:
-    //       return false;
-    //   }
-    // } catch (e) {
-    //   return false;
-    // }
+      switch (response.statusCode) {
+        case 200: //Caso éxitoso
+          final responseListProdProyecto = getProdProyectoEmiWebFromMap(
+            const Utf8Decoder().convert(response.bodyBytes)
+          );
+          for(var i = 0; i < responseListProdProyecto.payload!.length; i++) {
+            var url = Uri.parse("$baseUrlEmiWebServices/productos/proveedores/registro/${responseListProdProyecto.payload![i].producto!.idProductosProveedor}");
+            final headers = ({
+                "Content-Type": "application/json",
+                'Authorization': 'Bearer $tokenGlobal',
+              });
+            var response = await http.get(
+              url,
+              headers: headers
+            );
+            switch (response.statusCode) {
+              case 200: //Caso éxitoso
+              final responseProductoProveedor = getProductosProvByIdEmiWebFromMap(
+              const Utf8Decoder().convert(response.bodyBytes));
+              //Verificamos que el nuevo producto del proyecto no exista en Pocketbase
+              final recordProductoProyecto = await client.records.getFullList(
+                'prod_proyecto', 
+                batch: 200, 
+                filter: "id_emi_web='${responseListProdProyecto.payload![i].idCatInversionProyecto}'");
+              if (recordProductoProyecto.isEmpty) {
+                //Se recupera el id familia producto, catalogo proyecto y tipo empaque en Pocketbase y se acocia con el nuevo Producto Proyecto
+                final recordFamiliaProd = await client.records.getFullList(
+                  'familia_prod', 
+                  batch: 200, 
+                  filter: "id_emi_web='${responseListProdProyecto.payload![i].familiaInversion!.idCatFamiliaInversion}'");
+                final recordCatalogoProyecto = await client.records.getFullList(
+                  'cat_proyecto', 
+                  batch: 200, 
+                  filter: "id_emi_web='${responseListProdProyecto.payload![i].idCatProyecto}'");
+                final recordUnidadMedida = await client.records.getFullList(
+                  'und_medida', 
+                  batch: 200, 
+                  filter: "id_emi_web='${responseProductoProveedor.payload!.idUnidadMedida}'");
+                if (recordFamiliaProd.isNotEmpty && recordCatalogoProyecto.isNotEmpty
+                    && recordUnidadMedida.isNotEmpty) {
+                    //Se agrega el producto proveedor como nuevo en la colección de Pocketbase
+                    final recordProductoProyecto = await client.records.create('prod_proyecto', body: {
+                    "producto": responseListProdProyecto.payload![i].producto!.producto,
+                    "marca_sugerida": responseProductoProveedor.payload!.marca,
+                    "descripcion": responseProductoProveedor.payload!.descripcion,
+                    "proveedor_sugerido": responseListProdProyecto.payload![i].proveedorSugerido!.nombreFiscal,
+                    "cantidad": responseListProdProyecto.payload![i].cantidad,
+                    "costo_estimado": responseListProdProyecto.payload![i].costoEstimado,
+                    "id_familia_prod_fk": recordFamiliaProd.first.id,
+                    "id_unidad_medida_fk": recordUnidadMedida.first.id,
+                    "id_catalogo_proyecto_fk": recordCatalogoProyecto.first.id,
+                    "id_emi_web": responseListProdProyecto.payload![i].idCatInversionProyecto,
+                    });
+                    if (recordProductoProyecto.id.isNotEmpty) {
+                      print('Producto Proveedor Emi Web agregado éxitosamente a Pocketbase');
+                    } else {
+                      return false;
+                    }
+                } else {
+                  return false;
+                }
+              } else {
+                //Se actualiza el producto proveedor en la colección de Pocketbase
+                final recordProductoProyectoParse = getProdProyectoFromMap(recordProductoProyecto.first.toString());
+                //Verificamos que los campos de este registro sean diferentes para actualizarlo
+                if (recordProductoProyectoParse.producto != responseListProdProyecto.payload![i].producto!.producto ||
+                    recordProductoProyectoParse.descripcion != responseProductoProveedor.payload!.descripcion||
+                    recordProductoProyectoParse.marcaSugerida != responseProductoProveedor.payload!.marca ||
+                    recordProductoProyectoParse.proveedorSugerido != responseListProdProyecto.payload![i].proveedorSugerido!.nombreFiscal ||
+                    recordProductoProyectoParse.cantidad != responseListProdProyecto.payload![i].cantidad ||
+                    recordProductoProyectoParse.costoEstimado != responseListProdProyecto.payload![i].costoEstimado
+                    ) {
+                    final updateRecordProductoProyecto = await client.records.update('prod_proyecto', recordProductoProyectoParse.id, 
+                    body: {
+                      "producto": responseListProdProyecto.payload![i].producto!.producto,
+                      "marca_sugerida": responseProductoProveedor.payload!.marca,
+                      "descripcion": responseProductoProveedor.payload!.descripcion,
+                      "proveedor_sugerido": responseListProdProyecto.payload![i].proveedorSugerido!.nombreFiscal,
+                      "cantidad": responseListProdProyecto.payload![i].cantidad,
+                      "costo_estimado": responseListProdProyecto.payload![i].costoEstimado,
+                      "id_emi_web": responseListProdProyecto.payload![i].producto!.idProductosProveedor.toString(),
+                    });
+                    if (updateRecordProductoProyecto.id.isNotEmpty) {
+                      print('Producto Proveedor Emi Web actualizado éxitosamente en Pocketbase');
+                    } else {
+                      return false;
+                    }
+                }
+              }
+              break;
+            case 401: //Error de Token incorrecto
+              if(await getTokenOAuth()) {
+                getProdProyecto();
+                return true;
+              } else{
+                return false;
+              }
+            case 404: //Error de ruta incorrecta
+              return false;
+            default:
+              return false;
+            }
+          }
+          return true;
+        case 401: //Error de Token incorrecto
+          if(await getTokenOAuth()) {
+            getProdProyecto();
+            return true;
+          } else{
+            return false;
+          }
+        case 404: //Error de ruta incorrecta
+          return false;
+        default:
+          return false;
+      }
+    } catch (e) {
+      return false;
+    }
     }
 }

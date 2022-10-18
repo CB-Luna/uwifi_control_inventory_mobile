@@ -29,17 +29,15 @@ class Payload {
         required this.idUsuario,
         required this.nombre,
         required this.apellidoPaterno,
-        required this.apellidoMaterno,
+        this.apellidoMaterno,
         required this.telefono,
-        required this.iniciales,
     });
 
     final int idUsuario;
     final String nombre;
     final String apellidoPaterno;
-    final String apellidoMaterno;
+    final String? apellidoMaterno;
     final String telefono;
-    final String iniciales;
 
     factory Payload.fromMap(Map<String, dynamic> json) => Payload(
         idUsuario: json["idUsuario"],
@@ -47,7 +45,6 @@ class Payload {
         apellidoPaterno: json["apellidoPaterno"],
         apellidoMaterno: json["apellidoMaterno"],
         telefono: json["telefono"],
-        iniciales: json["iniciales"],
     );
 
     Map<String, dynamic> toMap() => {
@@ -56,6 +53,5 @@ class Payload {
         "apellidoPaterno": apellidoPaterno,
         "apellidoMaterno": apellidoMaterno,
         "telefono": telefono,
-        "iniciales": iniciales,
     };
 }

@@ -1,8 +1,3 @@
-// To parse this JSON data, do
-//
-//     final getProdProyecto = getProdProyectoFromMap(jsonString);
-
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 GetProdProyecto getProdProyectoFromMap(String str) => GetProdProyecto.fromMap(json.decode(str));
@@ -23,7 +18,7 @@ class GetProdProyecto {
         required this.cantidad,
         required this.costoEstimado,
         required this.idFamiliaProdFk,
-        required this.idTipoEmpaqueFk,
+        required this.idUnidadMedidaFk,
         required this.idCatalogoProyectoFk,
         required this.idEmiWeb,
     });
@@ -40,7 +35,7 @@ class GetProdProyecto {
     final int cantidad;
     final double costoEstimado;
     final String idFamiliaProdFk;
-    final String idTipoEmpaqueFk;
+    final String idUnidadMedidaFk;
     final String idCatalogoProyectoFk;
     final String idEmiWeb;
 
@@ -55,9 +50,9 @@ class GetProdProyecto {
         descripcion: json["descripcion"],
         proveedorSugerido: json["proveedor_sugerido"],
         cantidad: json["cantidad"],
-        costoEstimado: json["costo_estimado"] == null ? null : json["costo_estimado"].toDouble(),
+        costoEstimado: json["costo_estimado"].toDouble(),
         idFamiliaProdFk: json["id_familia_prod_fk"],
-        idTipoEmpaqueFk: json["id_tipo_empaque_fk"],
+        idUnidadMedidaFk: json["id_unidad_medida_fk"],
         idCatalogoProyectoFk: json["id_catalogo_proyecto_fk"],
         idEmiWeb: json["id_emi_web"],
     );
@@ -75,7 +70,7 @@ class GetProdProyecto {
         "cantidad": cantidad,
         "costo_estimado": costoEstimado,
         "id_familia_prod_fk": idFamiliaProdFk,
-        "id_tipo_empaque_fk": idTipoEmpaqueFk,
+        "id_unidad_medida_fk": idUnidadMedidaFk,
         "id_catalogo_proyecto_fk": idCatalogoProyectoFk,
         "id_emi_web": idEmiWeb,
     };

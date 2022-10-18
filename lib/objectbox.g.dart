@@ -1682,7 +1682,11 @@ final _entities = <ModelEntity>[
         ModelRelation(
             id: const IdUid(56, 3150796807169985253),
             name: 'productosProv',
-            targetId: const IdUid(56, 7277108221751789003))
+            targetId: const IdUid(56, 7277108221751789003)),
+        ModelRelation(
+            id: const IdUid(72, 6096914602419360853),
+            name: 'prodProyecto',
+            targetId: const IdUid(60, 794331956868775333))
       ],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
@@ -1737,7 +1741,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(48, 5212286852224162052),
       name: 'Inversiones',
-      lastPropertyId: const IdUid(14, 1754855625365573914),
+      lastPropertyId: const IdUid(15, 4929476139671102849),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1806,7 +1810,12 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(173, 1856912266704407521),
-            relationTarget: 'EstadoInversion')
+            relationTarget: 'EstadoInversion'),
+        ModelProperty(
+            id: const IdUid(15, 4929476139671102849),
+            name: 'jornada3',
+            type: 1,
+            flags: 0)
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -2167,11 +2176,7 @@ final _entities = <ModelEntity>[
         ModelRelation(
             id: const IdUid(44, 4935766962611062723),
             name: 'prodSolicitados',
-            targetId: const IdUid(49, 100215042722630549)),
-        ModelRelation(
-            id: const IdUid(68, 5617872246173150113),
-            name: 'prodProyecto',
-            targetId: const IdUid(60, 794331956868775333))
+            targetId: const IdUid(49, 100215042722630549))
       ],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
@@ -2496,7 +2501,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(60, 794331956868775333),
       name: 'ProdProyecto',
-      lastPropertyId: const IdUid(14, 1451691398555027008),
+      lastPropertyId: const IdUid(16, 4152954067029024740),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -2553,13 +2558,6 @@ final _entities = <ModelEntity>[
             indexId: const IdUid(205, 6763248896344001454),
             relationTarget: 'FamiliaProd'),
         ModelProperty(
-            id: const IdUid(11, 2551966599607042405),
-            name: 'tipoEmpaquesId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(206, 7511884360991073275),
-            relationTarget: 'TipoEmpaques'),
-        ModelProperty(
             id: const IdUid(12, 2137914798752697607),
             name: 'catalogoProyectoId',
             type: 11,
@@ -2579,7 +2577,20 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(209, 2832474624750008637),
-            relationTarget: 'StatusSync')
+            relationTarget: 'StatusSync'),
+        ModelProperty(
+            id: const IdUid(15, 6268936666042370793),
+            name: 'unidadMedidaId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(238, 2602398023047257003),
+            relationTarget: 'UnidadMedida'),
+        ModelProperty(
+            id: const IdUid(16, 4152954067029024740),
+            name: 'idEmiWeb',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(239, 452351417968063305))
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
@@ -2659,8 +2670,8 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(62, 5967866020755512418),
-      lastIndexId: const IdUid(237, 5916027695817265200),
-      lastRelationId: const IdUid(71, 2864929897176631708),
+      lastIndexId: const IdUid(239, 452351417968063305),
+      lastRelationId: const IdUid(72, 6096914602419360853),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
         1366246136666677579,
@@ -2747,7 +2758,8 @@ ModelDefinition getObjectBoxModel() {
         4686570526947596743,
         2390143391685661460,
         4184900663065585925,
-        5311167113567925142
+        5311167113567925142,
+        7511884360991073275
       ],
       retiredPropertyUids: const [
         7079790605743243388,
@@ -3023,7 +3035,8 @@ ModelDefinition getObjectBoxModel() {
         2773772202661284417,
         2001355623132513549,
         7664581841173068663,
-        6160806538756599358
+        6160806538756599358,
+        2551966599607042405
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -3037,7 +3050,8 @@ ModelDefinition getObjectBoxModel() {
         9210369731160851167,
         844143373802489165,
         803629559452567645,
-        3709026006801487301
+        3709026006801487301,
+        5617872246173150113
       ],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -4868,7 +4882,8 @@ ModelDefinition getObjectBoxModel() {
               RelInfo<UnidadMedida>.toMany(23, object.id): object.productosEmp,
               RelInfo<UnidadMedida>.toMany(45, object.id):
                   object.prodSolicitados,
-              RelInfo<UnidadMedida>.toMany(56, object.id): object.productosProv
+              RelInfo<UnidadMedida>.toMany(56, object.id): object.productosProv,
+              RelInfo<UnidadMedida>.toMany(72, object.id): object.prodProyecto
             },
         getId: (UnidadMedida object) => object.id,
         setId: (UnidadMedida object, int id) {
@@ -4923,6 +4938,11 @@ ModelDefinition getObjectBoxModel() {
               object.productosProv,
               store,
               RelInfo<UnidadMedida>.toMany(56, object.id),
+              store.box<UnidadMedida>());
+          InternalToManyAccess.setRelInfo(
+              object.prodProyecto,
+              store,
+              RelInfo<UnidadMedida>.toMany(72, object.id),
               store.box<UnidadMedida>());
           return object;
         }),
@@ -4994,7 +5014,7 @@ ModelDefinition getObjectBoxModel() {
         objectToFB: (Inversiones object, fb.Builder fbb) {
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(15);
+          fbb.startTable(16);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.fechaCompra?.millisecondsSinceEpoch);
           fbb.addInt64(2, object.porcentajePago);
@@ -5007,6 +5027,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(9, object.statusSync.targetId);
           fbb.addInt64(10, object.emprendimiento.targetId);
           fbb.addInt64(12, object.estadoInversion.targetId);
+          fbb.addBool(14, object.jornada3);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -5032,6 +5053,8 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 16, false),
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0)),
+              jornada3: const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 32, false),
               idDBR: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 20));
           object.statusSync.targetId =
@@ -5349,8 +5372,7 @@ ModelDefinition getObjectBoxModel() {
         toOneRelations: (TipoEmpaques object) => [object.statusSync],
         toManyRelations: (TipoEmpaques object) => {
               RelInfo<TipoEmpaques>.toMany(44, object.id):
-                  object.prodSolicitados,
-              RelInfo<TipoEmpaques>.toMany(68, object.id): object.prodProyecto
+                  object.prodSolicitados
             },
         getId: (TipoEmpaques object) => object.id,
         setId: (TipoEmpaques object, int id) {
@@ -5395,11 +5417,6 @@ ModelDefinition getObjectBoxModel() {
               object.prodSolicitados,
               store,
               RelInfo<TipoEmpaques>.toMany(44, object.id),
-              store.box<TipoEmpaques>());
-          InternalToManyAccess.setRelInfo(
-              object.prodProyecto,
-              store,
-              RelInfo<TipoEmpaques>.toMany(68, object.id),
               store.box<TipoEmpaques>());
           return object;
         }),
@@ -5712,10 +5729,10 @@ ModelDefinition getObjectBoxModel() {
         model: _entities[36],
         toOneRelations: (ProdProyecto object) => [
               object.familiaProducto,
-              object.tipoEmpaques,
               object.catalogoProyecto,
               object.imagen,
-              object.statusSync
+              object.statusSync,
+              object.unidadMedida
             ],
         toManyRelations: (ProdProyecto object) => {},
         getId: (ProdProyecto object) => object.id,
@@ -5733,7 +5750,10 @@ ModelDefinition getObjectBoxModel() {
               : fbb.writeString(object.proveedorSugerido!);
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(15);
+          final idEmiWebOffset = object.idEmiWeb == null
+              ? null
+              : fbb.writeString(object.idEmiWeb!);
+          fbb.startTable(17);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, productoOffset);
           fbb.addOffset(2, marcaSugeridaOffset);
@@ -5744,10 +5764,11 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(7, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addOffset(8, idDBROffset);
           fbb.addInt64(9, object.familiaProducto.targetId);
-          fbb.addInt64(10, object.tipoEmpaques.targetId);
           fbb.addInt64(11, object.catalogoProyecto.targetId);
           fbb.addInt64(12, object.imagen.targetId);
           fbb.addInt64(13, object.statusSync.targetId);
+          fbb.addInt64(14, object.unidadMedida.targetId);
+          fbb.addOffset(15, idEmiWebOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -5771,13 +5792,11 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGetNullable(buffer, rootOffset, 16),
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0)),
-              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 20));
+              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 20),
+              idEmiWeb: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 34));
           object.familiaProducto.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
           object.familiaProducto.attach(store);
-          object.tipoEmpaques.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
-          object.tipoEmpaques.attach(store);
           object.catalogoProyecto.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0);
           object.catalogoProyecto.attach(store);
@@ -5787,6 +5806,9 @@ ModelDefinition getObjectBoxModel() {
           object.statusSync.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0);
           object.statusSync.attach(store);
+          object.unidadMedida.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 32, 0);
+          object.unidadMedida.attach(store);
           return object;
         }),
     TipoProyecto: EntityDefinition<TipoProyecto>(
@@ -6886,6 +6908,10 @@ class UnidadMedida_ {
   /// see [UnidadMedida.productosProv]
   static final productosProv = QueryRelationToMany<UnidadMedida, ProductosProv>(
       _entities[23].relations[2]);
+
+  /// see [UnidadMedida.prodProyecto]
+  static final prodProyecto = QueryRelationToMany<UnidadMedida, ProdProyecto>(
+      _entities[23].relations[3]);
 }
 
 /// [Imagenes] entity fields to define ObjectBox queries.
@@ -6977,6 +7003,10 @@ class Inversiones_ {
   static final estadoInversion =
       QueryRelationToOne<Inversiones, EstadoInversion>(
           _entities[25].properties[11]);
+
+  /// see [Inversiones.jornada3]
+  static final jornada3 =
+      QueryBooleanProperty<Inversiones>(_entities[25].properties[12]);
 
   /// see [Inversiones.bitacora]
   static final bitacora =
@@ -7230,10 +7260,6 @@ class TipoEmpaques_ {
   static final prodSolicitados =
       QueryRelationToMany<TipoEmpaques, ProdSolicitado>(
           _entities[30].relations[0]);
-
-  /// see [TipoEmpaques.prodProyecto]
-  static final prodProyecto = QueryRelationToMany<TipoEmpaques, ProdProyecto>(
-      _entities[30].relations[1]);
 }
 
 /// [ProdCotizados] entity fields to define ObjectBox queries.
@@ -7489,22 +7515,26 @@ class ProdProyecto_ {
   static final familiaProducto = QueryRelationToOne<ProdProyecto, FamiliaProd>(
       _entities[36].properties[9]);
 
-  /// see [ProdProyecto.tipoEmpaques]
-  static final tipoEmpaques = QueryRelationToOne<ProdProyecto, TipoEmpaques>(
-      _entities[36].properties[10]);
-
   /// see [ProdProyecto.catalogoProyecto]
   static final catalogoProyecto =
       QueryRelationToOne<ProdProyecto, CatalogoProyecto>(
-          _entities[36].properties[11]);
+          _entities[36].properties[10]);
 
   /// see [ProdProyecto.imagen]
   static final imagen =
-      QueryRelationToOne<ProdProyecto, Imagenes>(_entities[36].properties[12]);
+      QueryRelationToOne<ProdProyecto, Imagenes>(_entities[36].properties[11]);
 
   /// see [ProdProyecto.statusSync]
   static final statusSync = QueryRelationToOne<ProdProyecto, StatusSync>(
+      _entities[36].properties[12]);
+
+  /// see [ProdProyecto.unidadMedida]
+  static final unidadMedida = QueryRelationToOne<ProdProyecto, UnidadMedida>(
       _entities[36].properties[13]);
+
+  /// see [ProdProyecto.idEmiWeb]
+  static final idEmiWeb =
+      QueryStringProperty<ProdProyecto>(_entities[36].properties[14]);
 }
 
 /// [TipoProyecto] entity fields to define ObjectBox queries.

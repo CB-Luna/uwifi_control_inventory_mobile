@@ -1076,8 +1076,8 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                                               cantidad: element.cantidad, 
                                                               idFamiliaProd: element.familiaProducto.target!.id, 
                                                               familiaProd: element.familiaProducto.target!.nombre, 
-                                                              idTipoEmpaques: element.tipoEmpaques.target!.id, 
-                                                              tipoEmpaques: element.tipoEmpaques.target!.tipo, 
+                                                              idUnidadMedida: element.unidadMedida.target!.id, 
+                                                              unidadMedida: element.unidadMedida.target!.unidadMedida, 
                                                               fechaRegistro: DateTime.now()
                                                               );
                                                             productoInversionJornadaController.productosSolicitados.add(nuevoProdSolicitadoTemporal);

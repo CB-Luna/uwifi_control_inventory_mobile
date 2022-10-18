@@ -669,7 +669,7 @@ class _InversionJornadaTemporalScreenState
                                                                                 ),
                                                                           ),
                                                                           Text(
-                                                                            prodSolicitado.tipoEmpaques,
+                                                                            prodSolicitado.unidadMedida ?? "",
                                                                             style: AppTheme.of(context)
                                                                                 .subtitle1
                                                                                 .override(

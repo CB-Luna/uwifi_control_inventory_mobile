@@ -483,17 +483,25 @@ with TickerProviderStateMixin {
                               onTap: () async {
                                 if (widget.emprendimiento.usuario.target!.rol.target!.rol != "Amigo del Cambio"
                                 && widget.emprendimiento.usuario.target!.rol.target!.rol != "Emprendedor") {
-                                  await Navigator
-                                  .push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder:
-                                          (context) =>
-                                              EditarProductoInversionScreen(
-                                                inversion: widget.inversion,
-                                                prodSolicitado: productoSolicitado,),
-                                    ),
-                                  );
+                                  if (widget.inversion.jornada3) {
+                                    snackbarKey.currentState
+                                          ?.showSnackBar(const SnackBar(
+                                        content: Text(
+                                            "No se puede hacer seguimiento a esta inversión."),
+                                      ));
+                                  } else {
+                                    await Navigator
+                                    .push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) =>
+                                                EditarProductoInversionScreen(
+                                                  inversion: widget.inversion,
+                                                  prodSolicitado: productoSolicitado,),
+                                      ),
+                                    );
+                                  }
                                 } else {
                                     snackbarKey.currentState
                                           ?.showSnackBar(const SnackBar(
@@ -697,33 +705,41 @@ with TickerProviderStateMixin {
                                 () async {
                                   if (widget.emprendimiento.usuario.target!.rol.target!.rol != "Amigo del Cambio"
                                   && widget.emprendimiento.usuario.target!.rol.target!.rol != "Emprendedor") {
-                                  final connectivityResult =
+                                    if (widget.inversion.jornada3) {
+                                      snackbarKey.currentState
+                                          ?.showSnackBar(const SnackBar(
+                                        content: Text(
+                                            "No se puede hacer seguimiento a esta inversión."),
+                                      ));
+                                    } else {
+                                      final connectivityResult =
                                       await (Connectivity().checkConnectivity());
-                                  final bitacora = dataBase.bitacoraBox.getAll().toList();
-                                  print("Tamaño bitacora: ${bitacora.length}");
-                                  await showModalBottomSheet(
-                                    isScrollControlled: true,
-                                    backgroundColor: Colors.transparent,
-                                    context: context,
-                                    builder: (context) {
-                                      return Padding(
-                                        padding: MediaQuery.of(context).viewInsets,
-                                        child: SizedBox(
-                                          height:
-                                              MediaQuery.of(context).size.height * 0.45,
-                                          child: connectivityResult ==
-                                                      ConnectivityResult.none ||
-                                                  bitacora.isEmpty
-                                              ? const BottomSheetSincronizarWidget(
-                                                  isVisible: false,
-                                                )
-                                              : const BottomSheetSincronizarWidget(
-                                                  isVisible: true,
-                                                ),
-                                        ),
+                                      final bitacora = dataBase.bitacoraBox.getAll().toList();
+                                      print("Tamaño bitacora: ${bitacora.length}");
+                                      await showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        context: context,
+                                        builder: (context) {
+                                          return Padding(
+                                            padding: MediaQuery.of(context).viewInsets,
+                                            child: SizedBox(
+                                              height:
+                                                  MediaQuery.of(context).size.height * 0.45,
+                                              child: connectivityResult ==
+                                                          ConnectivityResult.none ||
+                                                      bitacora.isEmpty
+                                                  ? const BottomSheetSincronizarWidget(
+                                                      isVisible: false,
+                                                    )
+                                                  : const BottomSheetSincronizarWidget(
+                                                      isVisible: true,
+                                                    ),
+                                            ),
+                                          );
+                                        },
                                       );
-                                    },
-                                  );
+                                    }
                                   } else {
                                     snackbarKey.currentState
                                         ?.showSnackBar(const SnackBar(

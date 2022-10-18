@@ -14,7 +14,7 @@ class GetProductosProv {
         required this.nombreProdProv,
         required this.descripcionProdProv,
         required this.marca,
-        required this.isUndMedidaFk,
+        required this.idUndMedidaFk,
         required this.costoProdProv,
         required this.idProveedorFk,
         required this.idFamiliaProdFk,
@@ -31,7 +31,7 @@ class GetProductosProv {
     final String nombreProdProv;
     final String descripcionProdProv;
     final String marca;
-    final String isUndMedidaFk;
+    final String idUndMedidaFk;
     final double costoProdProv;
     final String idProveedorFk;
     final String idFamiliaProdFk;
@@ -48,7 +48,7 @@ class GetProductosProv {
         nombreProdProv: json["nombre_prod_prov"],
         descripcionProdProv: json["descripcion_prod_prov"],
         marca: json["marca"],
-        isUndMedidaFk: json["is_und_medida_fk"],
+        idUndMedidaFk: json["id_und_medida_fk"],
         costoProdProv: json["costo_prod_prov"] == null ? null : json["costo_prod_prov"]!.toDouble(),
         idProveedorFk: json["id_proveedor_fk"],
         idFamiliaProdFk: json["id_familia_prod_fk"],
@@ -66,7 +66,7 @@ class GetProductosProv {
         "nombre_prod_prov": nombreProdProv,
         "descripcion_prod_prov": descripcionProdProv,
         "marca": marca,
-        "is_und_medida_fk": isUndMedidaFk,
+        "id_und_medida_fk": idUndMedidaFk,
         "costo_prod_prov": costoProdProv,
         "id_proveedor_fk": idProveedorFk,
         "id_familia_prod_fk": idFamiliaProdFk,

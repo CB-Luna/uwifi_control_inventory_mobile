@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/screens/perfil_usuario/device_information_widget.dart';
+import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -167,7 +168,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                                         const EdgeInsetsDirectional.fromSTEB(
                                             25, 0, 0, 0),
                                     child: AutoSizeText(
-                                      'Perfil de ${currentUser.nombre} ${currentUser.apellidoP}',
+                                      "Perfil de ${maybeHandleOverflow('${currentUser.nombre} ${currentUser.apellidoP}', 18, '...')}",
                                       maxLines: 2,
                                       style: AppTheme.of(context)
                                           .bodyText1
