@@ -1,3 +1,4 @@
+import 'package:bizpro_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -407,10 +408,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                   usuarioProvider.updatePasswordLocal(
                                       passwordEncrypted);
                                 } else {
-                                  // print('Usuario no existente');
-                                  // if (dataBase.catalogoProyectoBox.isEmpty()) {
-                                  //   await catalogoPocketbaseProvider.getRoles();
-                                  // }
+                                  print('Usuario no existente');
+                                  if (dataBase.catalogoProyectoBox.isEmpty()) {
+                                    rolesPocketbaseProvider.procesoCargando(true);
+                                    rolesPocketbaseProvider.procesoTerminado(false);
+                                    rolesPocketbaseProvider.procesoExitoso(false);
+                                    Future<bool> booleanoPocketbase = rolesPocketbaseProvider.getRolesPocketbase();
+                                    if (await booleanoPocketbase == false) {
+                                      snackbarKey.currentState
+                                          ?.showSnackBar(const SnackBar(
+                                        content: Text(
+                                            "Falló al intentar recuperar los roles."),
+                                      ));
+                                      return;
+                                    }
+                                  }
                                   usuarioProvider.add(
                                     emiUser.items![0].nombreUsuario,
                                     emiUser.items![0].apellidoP,

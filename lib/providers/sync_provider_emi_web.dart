@@ -86,7 +86,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             print("Entro al caso de syncAddEmprendedor Emi Web");
             final emprendedorToSync = getFirstEmprendedor(dataBase.emprendedoresBox.getAll(), instruccionesBitacora[i].id);
             if(emprendedorToSync != null){
-              banderasExistoSync.add(await syncAddEmprendedor(emprendedorToSync, instruccionesBitacora[i].id));         
+              var result = await syncAddEmprendedor(emprendedorToSync, instruccionesBitacora[i].id);
+              print("Result en syncAddEmprendedor es: $result");
+              banderasExistoSync.add(result);         
             continue;
             } else {
               //Salimos del bucle
@@ -96,13 +98,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             }
           case "syncAddEmprendimiento":
             print("Entro al caso de syncAddEmprendimiento Emi Web");
-            banderasExistoSync.add(syncAddEmprendimiento(instruccionesBitacora[i].id));
+            var result = syncAddEmprendimiento(instruccionesBitacora[i].id);
+            print("Result en syncAddEmprendimiento es: $result");
+            banderasExistoSync.add(result);
             continue;
           case "syncAddJornada1":
             print("Entro al caso de syncAddJornada1 Emi Web");
             final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
             if(jornadaToSync != null){
-              banderasExistoSync.add(await syncAddJornada12y4(jornadaToSync, instruccionesBitacora[i].id));         
+              var result = await syncAddJornada12y4(jornadaToSync, instruccionesBitacora[i].id);
+              print("Result en syncAddJornada1 es: $result");
+              banderasExistoSync.add(result);         
             continue;
             } else {
               //Salimos del bucle
@@ -114,7 +120,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             print("Entro al caso de syncAddJornada2 Emi Web");
             final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
             if(jornadaToSync != null){
-              banderasExistoSync.add(await syncAddJornada12y4(jornadaToSync, instruccionesBitacora[i].id));         
+              var result = await syncAddJornada12y4(jornadaToSync, instruccionesBitacora[i].id);
+              print("Result en syncAddJornada2 es: $result");
+              banderasExistoSync.add(result);         
             continue;
             } else {
               //Salimos del bucle
@@ -126,7 +134,23 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             print("Entro al caso de syncAddJornada3 Emi Web");
             final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
             if(jornadaToSync != null){
-              banderasExistoSync.add(await syncAddJornada3(jornadaToSync, instruccionesBitacora[i].id));         
+              var result = await syncAddJornada3(jornadaToSync, instruccionesBitacora[i].id);
+              print("Result en syncAddJornada3 es: $result");
+              banderasExistoSync.add(result);         
+            continue;
+            } else {
+              //Salimos del bucle
+              banderasExistoSync.add(false);
+              i = instruccionesBitacora.length;
+              break;
+            }
+          case "syncAddJornada4":
+            print("Entro al caso de syncAddJornada4 Emi Web");
+            final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
+            if(jornadaToSync != null){
+              var result = await syncAddJornada12y4(jornadaToSync, instruccionesBitacora[i].id);
+              print("Result en syncAddJornada4 es: $result");
+              banderasExistoSync.add(result);         
             continue;
             } else {
               //Salimos del bucle
@@ -138,7 +162,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             print("Entro al caso de syncUpdateFaseEmprendimiento Emi Web");
             final emprendimientoToSync = getFirstEmprendimiento(dataBase.emprendimientosBox.getAll(), instruccionesBitacora[i].id);
             if(emprendimientoToSync != null){
-              banderasExistoSync.add(await syncUpdateFaseEmprendimiento(emprendimientoToSync, instruccionesBitacora[i]));         
+              var result = await syncUpdateFaseEmprendimiento(emprendimientoToSync, instruccionesBitacora[i]);
+              print("Result en syncUpdateFaseEmprendimiento es: $result");
+              banderasExistoSync.add(result);         
             continue;
             } else {
               //Salimos del bucle
@@ -157,7 +183,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       }
       //Verificamos que no haya habido errores al sincronizar con las banderas
       if (exitoso) {
-        print("Porceso de sync Emi Web exitoso");
+        print("Proceso de sync Emi Web exitoso");
         procesocargando = false;
         procesoterminado = true;
         procesoexitoso = true;
@@ -165,7 +191,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         notifyListeners();
         return exitoso;
       } else {
-        print("Porceso de sync Emi Web fallido");
+        print("Proceso de sync Emi Web fallido");
         procesocargando = false;
         procesoterminado = true;
         procesoexitoso = false;
@@ -173,7 +199,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         return exitoso;
       }
     } else {
-      print("Porceso de sync Emi Web fallido por Token");
+      print("Proceso de sync Emi Web fallido por Token");
       procesocargando = false;
       procesoterminado = true;
       procesoexitoso = false;
@@ -352,6 +378,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           });
           print("Nombre: ${emprendedor.nombre}");
           print("Fecha: ${DateFormat("yyyy-MM-ddTHH:mm:ss").format(emprendedor.fechaRegistro)}");
+          print("idUsuario: ${emprendedor.emprendimiento.target!.usuario.target!.idEmiWeb}");
+          print("nombreUsuario: ${emprendedor.emprendimiento
+            .target!.usuario.target!.nombre} ${emprendedor.emprendimiento
+            .target!.usuario.target!.apellidoP} ${emprendedor.emprendimiento
+            .target!.usuario.target!.apellidoM}");
+          print("Telefono: ${emprendedor.telefono}");
           final responsePostEmprendedor = await post(crearEmprendedorUri, 
           headers: headers,
           body: jsonEncode({
@@ -368,7 +400,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             "estado": emprendedor.comunidad.target!.municipios.target!.estados.target!.idEmiWeb,
             "municipio": emprendedor.comunidad.target!.municipios.target!.idEmiWeb,
             "emprendimiento": emprendedor.emprendimiento.target!.nombre,
-            "telefono": emprendedor.telefono,
+            "telefono": emprendedor.telefono?.replaceAll("-", ""),
             "comentarios": emprendedor.comentarios,
             "fechaRegistro": (DateFormat("yyyy-MM-ddTHH:mm:ss").format(emprendedor.fechaRegistro)).toString(),
             "archivado": false
@@ -406,6 +438,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         return false;
       }
     } catch (e) { //Fallo en el momento se sincronizar
+    print("Error es: ${e}");
       return false;
     }
 }
@@ -466,14 +499,19 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             //Se recupera el id Emi Web de la Jornada que será el mismo id para la Tarea
             final responsePostJornadaParse = postRegistroExitosoEmiWebFromMap(
             const Utf8Decoder().convert(responsePostJornada.bodyBytes));
+            print("Se convierte a utf8 exitosamente");
             jornada.idEmiWeb = responsePostJornadaParse.payload!.id.toString();
+             print("Se recupera el idEmiWeb");
             dataBase.jornadasBox.put(jornada);
+            print("Se hace put a la jornada");
             //Segundo creamos la Tarea
             //Se recupera el id Emi Web de la Tarea
             tareaToSync.idEmiWeb = responsePostJornadaParse.payload!.id.toString();
             dataBase.tareasBox.put(tareaToSync);
             //Se elimina la instrucción de la bitacora
+            print("Antes de remover la instrucción");
             dataBase.bitacoraBox.remove(idInstruccionBitacora);
+            print("Después de remover la instrucción");
             return true;
             default: //No se realizo con éxito el post
               print("Error en postear jornada Emi Web");
@@ -487,9 +525,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         }
       } else {
         //No existe una tarea asociada a la jornada de forma local
+        print("No existe una tarea asociada a la jornada de forma local");
         return false;
       }
     } catch (e) { //Fallo en el momento se sincronizar
+     print("Catch de syncAddJornada12y4: $e");
       return false;
     }
 }
@@ -539,13 +579,40 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             const Utf8Decoder().convert(responsePostJornada.bodyBytes));
             jornada.idEmiWeb = responsePostJornadaParse.payload!.id.toString();
             dataBase.jornadasBox.put(jornada);
-            //Segundo creamos la Tarea
-            //Se recupera el id Emi Web de la Tarea
-            tareaToSync.idEmiWeb = responsePostJornadaParse.payload!.id.toString();
-            dataBase.tareasBox.put(tareaToSync);
-            //Se elimina la instrucción de la bitacora
-            dataBase.bitacoraBox.remove(idInstruccionBitacora);
-            return true;
+            //Segundo actualizamos el tipo de proyecto del emprendimiento
+            final updateTipoProyectoEmprendimientoUri =
+            Uri.parse('$baseUrlEmiWebServices/proyectos/catProyectos/');
+            final headers = ({
+              "Content-Type": "application/json",
+              'Authorization': 'Bearer $tokenGlobal',
+            });
+            final responseUpdateTipoProyectoEmprendimiento = await put(updateTipoProyectoEmprendimientoUri, 
+            headers: headers,
+            body: jsonEncode({
+              "idUsuarioRegistra": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
+              "usuarioRegistra": "${jornada.emprendimiento
+              .target!.usuario.target!.nombre} ${jornada.emprendimiento
+              .target!.usuario.target!.apellidoP} ${jornada.emprendimiento
+              .target!.usuario.target!.apellidoM}",
+              "id": jornada.emprendimiento.target!.idEmiWeb,
+              "idCatProyecto": jornada.emprendimiento.target!.catalogoProyecto.target!.idEmiWeb,
+              "idCatTipoProyecto": jornada.emprendimiento.target!.catalogoProyecto.target!.tipoProyecto.target!.idEmiWeb,
+            }));
+            print("Response Status Code: ${responseUpdateTipoProyectoEmprendimiento.statusCode}");
+            print("Body Status Code: ${responseUpdateTipoProyectoEmprendimiento.body}");
+            switch (responseUpdateTipoProyectoEmprendimiento.statusCode) {
+              case 200:
+              //Tercero creamos la Tarea
+              //Se recupera el id Emi Web de la Tarea
+              tareaToSync.idEmiWeb = responsePostJornadaParse.payload!.id.toString();
+              dataBase.tareasBox.put(tareaToSync);
+              //Se elimina la instrucción de la bitacora
+              dataBase.bitacoraBox.remove(idInstruccionBitacora);
+              return true;
+              default: //No se realizo con éxito el post
+                print("Error en actualizar tipo proyecto de emprendimiento");
+                return false;
+            }    
             default: //No se realizo con éxito el post
               print("Error en postear jornada Emi Web");
               return false;

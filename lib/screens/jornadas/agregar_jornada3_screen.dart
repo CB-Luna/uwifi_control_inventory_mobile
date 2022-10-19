@@ -1044,6 +1044,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                           if (productoInversionJornadaController.productosSolicitados.isEmpty) {
                                             if (proyecto != "" && tipoProyecto != "") {
                                             print("Proyecto: $proyecto");
+                                            print("HOLIS");
                                             final actualProyecto = dataBase.catalogoProyectoBox
                                             .query(CatalogoProyecto_.nombre
                                                 .equals(proyecto))
