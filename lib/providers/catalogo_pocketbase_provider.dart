@@ -1073,7 +1073,9 @@ Future<bool> getProductosProv() async {
                 nuevoProductoProyecto.catalogoProyecto.target = catalogoProyecto;
                 nuevoProductoProyecto.familiaProducto.target = familiaProd;
                 nuevoProductoProyecto.unidadMedida.target = unidadMedida;
-                dataBase.productosProyectoBox.put(nuevoProductoProyecto);
+                //Se agrega desde catálogo proyecto para visualizarlo en pantallas
+                catalogoProyecto.prodProyecto.add(nuevoProductoProyecto);
+                dataBase.catalogoProyectoBox.put(catalogoProyecto);
                 print('Producto Proyecto Nuevo agregado éxitosamente');
               }
               else {

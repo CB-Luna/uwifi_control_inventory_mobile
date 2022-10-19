@@ -402,25 +402,33 @@ with TickerProviderStateMixin {
                               () async {
                                 if (widget.emprendimiento.usuario.target!.rol.target!.rol != "Amigo del Cambio"
                                 && widget.emprendimiento.usuario.target!.rol.target!.rol != "Emprendedor") {
-                                  if (widget.inversion.estadoInversion.target!.estado == "Solicitada" 
-                                  && widget.inversion.idDBR == null) {
-                                    await Navigator
-                                    .push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder:
-                                            (context) =>
-                                                AgregarProductoInversionScreen(
-                                                  emprendimiento: widget.emprendimiento,
-                                                  inversion: widget.inversion,),
-                                      ),
-                                    );
-                                  } else {
+                                  if (widget.inversion.jornada3) {
                                     snackbarKey.currentState
-                                        ?.showSnackBar(const SnackBar(
-                                      content: Text(
-                                          "Ya no puedes agregar más productos."),
-                                    ));
+                                          ?.showSnackBar(const SnackBar(
+                                        content: Text(
+                                            "No se puede hacer seguimiento a esta inversión."),
+                                      ));
+                                  } else {
+                                    if (widget.inversion.estadoInversion.target!.estado == "Solicitada" 
+                                    && widget.inversion.idDBR == null) {
+                                      await Navigator
+                                      .push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder:
+                                              (context) =>
+                                                  AgregarProductoInversionScreen(
+                                                    emprendimiento: widget.emprendimiento,
+                                                    inversion: widget.inversion,),
+                                        ),
+                                      );
+                                    } else {
+                                      snackbarKey.currentState
+                                          ?.showSnackBar(const SnackBar(
+                                        content: Text(
+                                            "Ya no puedes agregar más productos."),
+                                      ));
+                                    }
                                   }
                                 } else {
                                   snackbarKey.currentState

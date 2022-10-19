@@ -410,7 +410,13 @@ with TickerProviderStateMixin {
                                   if (widget.emprendimiento.usuario.target!.rol.target!.rol != "Amigo del Cambio" 
                                   && widget.emprendimiento.usuario.target!.rol.target!.rol != "Emprendedor") {
                                     if (widget.inversion.jornada3) {
-                                      switch (widget.inversion.estadoInversion.target!.estado) {
+                                      snackbarKey.currentState
+                                          ?.showSnackBar(const SnackBar(
+                                        content: Text(
+                                            "No se puede hacer seguimiento a esta inversión."),
+                                      ));
+                                    } else {
+                                        switch (widget.inversion.estadoInversion.target!.estado) {
                                         case "Solicitada":
                                           if(widget.inversion.idDBR != null){
                                             final connectivityResult =
@@ -473,12 +479,6 @@ with TickerProviderStateMixin {
                                         default:
                                           break;
                                       }
-                                    } else {
-                                      snackbarKey.currentState
-                                          ?.showSnackBar(const SnackBar(
-                                        content: Text(
-                                            "No se puede hacer seguimiento a esta inversión."),
-                                      ));
                                     }
                                 } else {
                                   snackbarKey.currentState

@@ -144,6 +144,20 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               i = instruccionesBitacora.length;
               break;
             }
+          case "syncAddJornada4":
+            print("Entro al caso de syncAddJornada4 Emi Web");
+            final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
+            if(jornadaToSync != null){
+              var result = await syncAddJornada12y4(jornadaToSync, instruccionesBitacora[i].id);
+              print("Result en syncAddJornada4 es: $result");
+              banderasExistoSync.add(result);         
+            continue;
+            } else {
+              //Salimos del bucle
+              banderasExistoSync.add(false);
+              i = instruccionesBitacora.length;
+              break;
+            }
           case "syncUpdateFaseEmprendimiento":
             print("Entro al caso de syncUpdateFaseEmprendimiento Emi Web");
             final emprendimientoToSync = getFirstEmprendimiento(dataBase.emprendimientosBox.getAll(), instruccionesBitacora[i].id);
@@ -565,13 +579,40 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             const Utf8Decoder().convert(responsePostJornada.bodyBytes));
             jornada.idEmiWeb = responsePostJornadaParse.payload!.id.toString();
             dataBase.jornadasBox.put(jornada);
-            //Segundo creamos la Tarea
-            //Se recupera el id Emi Web de la Tarea
-            tareaToSync.idEmiWeb = responsePostJornadaParse.payload!.id.toString();
-            dataBase.tareasBox.put(tareaToSync);
-            //Se elimina la instrucción de la bitacora
-            dataBase.bitacoraBox.remove(idInstruccionBitacora);
-            return true;
+            //Segundo actualizamos el tipo de proyecto del emprendimiento
+            final updateTipoProyectoEmprendimientoUri =
+            Uri.parse('$baseUrlEmiWebServices/proyectos/catProyectos/');
+            final headers = ({
+              "Content-Type": "application/json",
+              'Authorization': 'Bearer $tokenGlobal',
+            });
+            final responseUpdateTipoProyectoEmprendimiento = await put(updateTipoProyectoEmprendimientoUri, 
+            headers: headers,
+            body: jsonEncode({
+              "idUsuarioRegistra": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
+              "usuarioRegistra": "${jornada.emprendimiento
+              .target!.usuario.target!.nombre} ${jornada.emprendimiento
+              .target!.usuario.target!.apellidoP} ${jornada.emprendimiento
+              .target!.usuario.target!.apellidoM}",
+              "id": jornada.emprendimiento.target!.idEmiWeb,
+              "idCatProyecto": jornada.emprendimiento.target!.catalogoProyecto.target!.idEmiWeb,
+              "idCatTipoProyecto": jornada.emprendimiento.target!.catalogoProyecto.target!.tipoProyecto.target!.idEmiWeb,
+            }));
+            print("Response Status Code: ${responseUpdateTipoProyectoEmprendimiento.statusCode}");
+            print("Body Status Code: ${responseUpdateTipoProyectoEmprendimiento.body}");
+            switch (responseUpdateTipoProyectoEmprendimiento.statusCode) {
+              case 200:
+              //Tercero creamos la Tarea
+              //Se recupera el id Emi Web de la Tarea
+              tareaToSync.idEmiWeb = responsePostJornadaParse.payload!.id.toString();
+              dataBase.tareasBox.put(tareaToSync);
+              //Se elimina la instrucción de la bitacora
+              dataBase.bitacoraBox.remove(idInstruccionBitacora);
+              return true;
+              default: //No se realizo con éxito el post
+                print("Error en actualizar tipo proyecto de emprendimiento");
+                return false;
+            }    
             default: //No se realizo con éxito el post
               print("Error en postear jornada Emi Web");
               return false;
