@@ -4,6 +4,8 @@ import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+
+
 class ReversoTarjetaDescripcionWidget extends StatefulWidget {
   final Emprendimientos emprendimiento;
   const ReversoTarjetaDescripcionWidget({
@@ -16,20 +18,22 @@ class ReversoTarjetaDescripcionWidget extends StatefulWidget {
       _ReversoTarjetaDescripcionWidgetState();
 }
 
-DataRow _getDataRow(ProdSolicitado prodSolicitado){
-  return DataRow(cells: <DataCell>[
-        
-        DataCell(Text(prodSolicitado.producto,) ),
-        DataCell(Text(prodSolicitado.proveedorSugerido ?? '')),
-        DataCell(Text(prodSolicitado.marcaSugerida ?? '')),
-        DataCell(Text(prodSolicitado.unidadMedida.target?.unidadMedida ?? "-")),
-        DataCell(Text(prodSolicitado.cantidad.toString())),
-        DataCell(Text(prodSolicitado.costoEstimado != null ? 
-                                  currencyFormat.format(prodSolicitado.costoEstimado!.toStringAsFixed(2))
-                                  :
-                                  "-")),
-      ],
-      );
+DataRow _getDataRow(ProdSolicitado prodSolicitado) {
+  return DataRow(
+    cells: <DataCell>[
+      DataCell(Text(
+        prodSolicitado.producto,
+      )),
+      DataCell(Text(prodSolicitado.proveedorSugerido ?? '')),
+      DataCell(Text(prodSolicitado.marcaSugerida ?? '')),
+      DataCell(Text(prodSolicitado.unidadMedida.target?.unidadMedida ?? "-")),
+      DataCell(Text(prodSolicitado.cantidad.toString())),
+      DataCell(Text(prodSolicitado.costoEstimado != null
+          ? currencyFormat
+              .format(prodSolicitado.costoEstimado!.toStringAsFixed(2))
+          : "-")),
+    ],
+  );
 }
 
 class _ReversoTarjetaDescripcionWidgetState
@@ -59,19 +63,16 @@ class _ReversoTarjetaDescripcionWidgetState
   Widget build(BuildContext context) {
     double size = 7.0;
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(
-          15, 10, 15, 10),
+      padding: const EdgeInsetsDirectional.fromSTEB(15, 10, 15, 10),
       child: Container(
         width: double.infinity,
         height: 275,
         decoration: BoxDecoration(
-          color: widget.emprendimiento.faseEmp.last.fase == "Detenido" ?
-          const Color.fromARGB(207, 255, 64, 128)
-          :
-          widget.emprendimiento.faseEmp.last.fase == "Consolidado" ?
-          const Color.fromARGB(207, 38, 128, 55)
-          :
-          const Color(0xB14672FF),
+          color: widget.emprendimiento.faseEmp.last.fase == "Detenido"
+              ? const Color.fromARGB(207, 255, 64, 128)
+              : widget.emprendimiento.faseEmp.last.fase == "Consolidado"
+                  ? const Color.fromARGB(207, 38, 128, 55)
+                  : const Color(0xB14672FF),
           boxShadow: const [
             BoxShadow(
               blurRadius: 4,
@@ -81,13 +82,11 @@ class _ReversoTarjetaDescripcionWidgetState
           ],
           borderRadius: BorderRadius.circular(8),
         ),
-      child: Container(
-            alignment: Alignment.topLeft,
-            margin: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-            child: DataTable(
-              
+        child: Column(
+          children: [
+            DataTable(
               columnSpacing: 5.0,
-                columns: <DataColumn>[
+              columns: <DataColumn>[
                 DataColumn(
                     label: Expanded(
                         child: Text(
@@ -106,44 +105,32 @@ class _ReversoTarjetaDescripcionWidgetState
                           style: AppTheme.of(context).bodyText1.override(
                               fontFamily: AppTheme.of(context).bodyText1Family,
                               fontSize: size,
-                              useGoogleFonts: GoogleFonts.asMap()
-                                  .containsKey(AppTheme.of(context).bodyText1Family),
+                              useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                  AppTheme.of(context).bodyText1Family),
                               color: Colors.white))),
                 ),
                 DataColumn(
-                  label:Expanded(
-                    child:Text(
-                      'Marca\nSugerida',
-                                    textAlign: TextAlign.center,
-                                    style: AppTheme.of(
-                                            context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily:
-                                              AppTheme.of(
-                                                      context)
-                                                  .bodyText1Family,
-                                          fontSize: size,
-                                          useGoogleFonts: GoogleFonts
-                                                  .asMap()
-                                              .containsKey(
-                                                  AppTheme.of(
-                                                          context)
-                                                      .bodyText1Family),
-                                          color: Colors.white
-                                        ),
-                    )
-                  )
-                ),
+                    label: Expanded(
+                        child: Text(
+                  'Marca\nSugerida',
+                  textAlign: TextAlign.center,
+                  style: AppTheme.of(context).bodyText1.override(
+                      fontFamily: AppTheme.of(context).bodyText1Family,
+                      fontSize: size,
+                      useGoogleFonts: GoogleFonts.asMap()
+                          .containsKey(AppTheme.of(context).bodyText1Family),
+                      color: Colors.white),
+                ))),
                 DataColumn(
                     label: Expanded(
                         child: Text('Unidad\n de medida',
                             textAlign: TextAlign.center,
                             style: AppTheme.of(context).bodyText1.override(
-                                fontFamily: AppTheme.of(context).bodyText1Family,
+                                fontFamily:
+                                    AppTheme.of(context).bodyText1Family,
                                 fontSize: size,
-                                useGoogleFonts: GoogleFonts.asMap()
-                                    .containsKey(AppTheme.of(context).bodyText1Family),
+                                useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                    AppTheme.of(context).bodyText1Family),
                                 color: Colors.white)))),
                 DataColumn(
                     label: Expanded(
@@ -168,14 +155,27 @@ class _ReversoTarjetaDescripcionWidgetState
                           .containsKey(AppTheme.of(context).bodyText1Family),
                       color: Colors.white),
                 ))),
-      
-              ], rows:
-                  List.generate(listProdSolicitados.length, (index) => _getDataRow(listProdSolicitados[index])),),
-          ),
+              ],
+              rows: List.generate(listProdSolicitados.length,
+                  (index) => _getDataRow(listProdSolicitados[index])),
+            ),
+            Text(
+              "Monto Total:${inversionJornada3 != null ?
+              currencyFormat.format(inversionJornada3!.totalInversion.toStringAsFixed(2) ): "-"}",
+              
+              textAlign: TextAlign.end,
+              style:
+              AppTheme.of(context).bodyText1.override(
+                fontFamily: AppTheme.of(context).bodyText1Family,
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                useGoogleFonts: GoogleFonts.asMap().containsKey(AppTheme.of(context).bodyText1Family),
+                color: Colors.white,
+              )
+            ),
+          ],
+        ),
       ),
-      
     );
-    
-    
   }
 }
