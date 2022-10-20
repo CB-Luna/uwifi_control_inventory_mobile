@@ -266,12 +266,44 @@ class _LoginScreenState extends State<LoginScreen> {
                                     Future<bool> booleanoPocketbase = rolesPocketbaseProvider.getRolesPocketbase();
                                     if (await booleanoPocketbase) {
                                       print("Se ha realizado con éxito el proceso de getRolesPocketbase");
-                                      //Se postea el Usuario en Pocketbase
-                                      if (await AuthService.postUsuarioPocketbase(
-                                        loginResponseEmiWeb, 
-                                        userState.emailController.text,
-                                        passwordEncrypted)
-                                      ) {
+                                      var stringValidateUsuario =  AuthService.validateUsuarioInPocketbase(userState.emailController.text);
+                                      if (await stringValidateUsuario == "Null") {
+                                        print("Es null");
+                                        snackbarKey.currentState
+                                            ?.showSnackBar(const SnackBar(
+                                          content: Text(
+                                              "Falló al validar Usuario."),
+                                        ));
+                                      } else {
+                                        if (await stringValidateUsuario == "NoUserExist") {
+                                          print("Es NoUserExist");
+                                          //Se postea el Usuario en Pocketbase
+                                          if (!await AuthService.postUsuarioPocketbase(
+                                            loginResponseEmiWeb, 
+                                            userState.emailController.text,
+                                            passwordEncrypted)
+                                          ) {
+                                            snackbarKey.currentState
+                                                ?.showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "Falló al recuperar Usuario."),
+                                            ));
+                                            return;
+                                          }
+                                        } else {
+                                          //Se actualiza Usuario en Pocketbase                       
+                                          if (!await AuthService.updateUsuarioPasswordPocketbase(
+                                            await stringValidateUsuario, 
+                                            passwordEncrypted)
+                                          ) {
+                                            snackbarKey.currentState
+                                                ?.showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "Falló al actualizar password de Usuario."),
+                                            ));
+                                            return;
+                                          }
+                                        }
                                         //Login a Pocketbase Nuevamente
                                         final loginResponsePocketbase = await AuthService.loginPocketbase(
                                           userState.emailController.text,
@@ -350,12 +382,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 "Usuario ingresado inexistente."),
                                           ));
                                         }
-                                      } else {
-                                        snackbarKey.currentState
-                                            ?.showSnackBar(const SnackBar(
-                                          content: Text(
-                                              "Falló al recuperar Usuario."),
-                                        ));
                                       }
                                     } else {
                                       snackbarKey.currentState

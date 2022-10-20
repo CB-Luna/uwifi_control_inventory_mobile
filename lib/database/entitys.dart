@@ -743,6 +743,8 @@ class Consultorias {
   List<String>? documentos; //TODO preguntar que es un arraystring
   @Unique()
   String? idDBR;
+  @Unique()
+  String? idEmiWeb;
   bool archivado;
   final emprendimiento = ToOne<Emprendimientos>();
   final areaCirculo = ToOne<AreaCirculo>();
@@ -756,6 +758,7 @@ class Consultorias {
     this.documentos,
     this.idDBR,
     this.archivado = false,
+    this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);

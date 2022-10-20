@@ -56,15 +56,17 @@ class ConsultoriaController extends ChangeNotifier {
     final areaCirculo = dataBase.areaCirculoBox.get(idAreaCirculo);
     if (emprendimiento != null && ambito != null && areaCirculo != null && faseEmp != null) {
       final nuevoSyncConsultoria = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Consultoria
-      final nuevaInstruccion = Bitacora(instrucciones: 'syncAddConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionConsultoria = Bitacora(instrucciones: 'syncAddConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionEmprendimiento = Bitacora(instrucciones: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Consultorías", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       nuevaConsultoria.statusSync.target = nuevoSyncConsultoria;
       //Se asigna un ambito y un area del circulo a la nuevaConsultoria
       nuevaConsultoria.ambitoConsultoria.target = ambito;
       nuevaConsultoria.areaCirculo.target = areaCirculo;
       nuevaConsultoria.tareas.add(nuevaTarea);
       nuevaConsultoria.emprendimiento.target = emprendimiento;
-      nuevaConsultoria.bitacora.add(nuevaInstruccion);
+      nuevaConsultoria.bitacora.add(nuevaInstruccionConsultoria);
       //Indispensable para que se muestre en la lista de consultorias
+      emprendimiento.bitacora.add(nuevaInstruccionEmprendimiento);
       emprendimiento.consultorias.add(nuevaConsultoria);
       //Se actualiza la fase del Emprendimiento
       //TODO actualizar en el backend.

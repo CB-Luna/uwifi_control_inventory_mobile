@@ -87,8 +87,14 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             final emprendedorToSync = getFirstEmprendedor(dataBase.emprendedoresBox.getAll(), instruccionesBitacora[i].id);
             if(emprendedorToSync != null){
               var result = await syncAddEmprendedor(emprendedorToSync, instruccionesBitacora[i].id);
-              print("Result en syncAddEmprendedor es: $result");
-              banderasExistoSync.add(result);         
+              if (result) {
+                banderasExistoSync.add(result);     
+              } else {
+                //Salimos del bucle
+                banderasExistoSync.add(false);
+                i = instruccionesBitacora.length;
+                break;
+              } 
             continue;
             } else {
               //Salimos del bucle
@@ -99,7 +105,6 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           case "syncAddEmprendimiento":
             print("Entro al caso de syncAddEmprendimiento Emi Web");
             var result = syncAddEmprendimiento(instruccionesBitacora[i].id);
-            print("Result en syncAddEmprendimiento es: $result");
             banderasExistoSync.add(result);
             continue;
           case "syncAddJornada1":
@@ -107,9 +112,15 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
             if(jornadaToSync != null){
               var result = await syncAddJornada12y4(jornadaToSync, instruccionesBitacora[i].id);
-              print("Result en syncAddJornada1 es: $result");
-              banderasExistoSync.add(result);         
-            continue;
+              if (result) {
+                banderasExistoSync.add(result);    
+                continue; 
+              } else {
+                //Salimos del bucle
+                banderasExistoSync.add(false);
+                i = instruccionesBitacora.length;
+                break;
+              }       
             } else {
               //Salimos del bucle
               banderasExistoSync.add(false);
@@ -121,9 +132,15 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
             if(jornadaToSync != null){
               var result = await syncAddJornada12y4(jornadaToSync, instruccionesBitacora[i].id);
-              print("Result en syncAddJornada2 es: $result");
-              banderasExistoSync.add(result);         
-            continue;
+              if (result) {
+                banderasExistoSync.add(result); 
+                continue;    
+              } else {
+                //Salimos del bucle
+                banderasExistoSync.add(false);
+                i = instruccionesBitacora.length;
+                break;
+              }         
             } else {
               //Salimos del bucle
               banderasExistoSync.add(false);
@@ -135,9 +152,15 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
             if(jornadaToSync != null){
               var result = await syncAddJornada3(jornadaToSync, instruccionesBitacora[i].id);
-              print("Result en syncAddJornada3 es: $result");
-              banderasExistoSync.add(result);         
-            continue;
+              if (result) {
+                banderasExistoSync.add(result);  
+                continue;   
+              } else {
+                //Salimos del bucle
+                banderasExistoSync.add(false);
+                i = instruccionesBitacora.length;
+                break;
+              }         
             } else {
               //Salimos del bucle
               banderasExistoSync.add(false);
@@ -149,9 +172,35 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
             if(jornadaToSync != null){
               var result = await syncAddJornada12y4(jornadaToSync, instruccionesBitacora[i].id);
-              print("Result en syncAddJornada4 es: $result");
-              banderasExistoSync.add(result);         
-            continue;
+              if (result) {
+                banderasExistoSync.add(result);     
+                continue;
+              } else {
+                //Salimos del bucle
+                banderasExistoSync.add(false);
+                i = instruccionesBitacora.length;
+                break;
+              }         
+            } else {
+              //Salimos del bucle
+              banderasExistoSync.add(false);
+              i = instruccionesBitacora.length;
+              break;
+            }
+          case "syncAddConsultoria":
+            print("Entro al caso de syncAddConsultoria Emi Web");
+            final consultoriaToSync = getFirstConsultoria(dataBase.consultoriasBox.getAll(), instruccionesBitacora[i].id);
+            if(consultoriaToSync != null){
+              var result = await syncAddConsultoria(consultoriaToSync, instruccionesBitacora[i].id);
+              if (result) {
+                banderasExistoSync.add(result);   
+                continue;  
+              } else {
+                //Salimos del bucle
+                banderasExistoSync.add(false);
+                i = instruccionesBitacora.length;
+                break;
+              }         
             } else {
               //Salimos del bucle
               banderasExistoSync.add(false);
@@ -163,9 +212,69 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             final emprendimientoToSync = getFirstEmprendimiento(dataBase.emprendimientosBox.getAll(), instruccionesBitacora[i].id);
             if(emprendimientoToSync != null){
               var result = await syncUpdateFaseEmprendimiento(emprendimientoToSync, instruccionesBitacora[i]);
-              print("Result en syncUpdateFaseEmprendimiento es: $result");
-              banderasExistoSync.add(result);         
-            continue;
+              if (result) {
+                banderasExistoSync.add(result);     
+                continue;
+              } else {
+                //Salimos del bucle
+                banderasExistoSync.add(false);
+                i = instruccionesBitacora.length;
+                break;
+              }         
+            } else {
+              //Salimos del bucle
+              banderasExistoSync.add(false);
+              i = instruccionesBitacora.length;
+              break;
+            }
+          case "syncUpdateJornada1":
+            print("Entro al caso de syncAddJornada1 Emi Web");
+            final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
+            if(jornadaToSync != null){
+              if (jornadaToSync.idEmiWeb != null) {
+                //Ya se ha enviado al backend la jornada y se puede actualizar
+                final boolSyncUpdateJornada1 = await syncUpdateJornada1(jornadaToSync, instruccionesBitacora[i]);
+                if (boolSyncUpdateJornada1) {
+                  banderasExistoSync.add(boolSyncUpdateJornada1);
+                  continue;
+                } else {
+                  //Salimos del bucle
+                  banderasExistoSync.add(boolSyncUpdateJornada1);
+                  i = instruccionesBitacora.length;
+                  break;
+                }
+              } else {
+                //No se ha enviado al backend la jornada y por lo tanto no se puede actualizar
+                banderasExistoSync.add(true);
+                continue;
+              } 
+            } else {
+              //Salimos del bucle
+              banderasExistoSync.add(false);
+              i = instruccionesBitacora.length;
+              break;
+            }
+          case "syncUpdateJornada2":
+            print("Entro al caso de syncAddJornada2 Emi Web");
+            final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
+            if(jornadaToSync != null){
+              if (jornadaToSync.idEmiWeb != null) {
+                //Ya se ha enviado al backend la jornada y se puede actualizar
+                final boolSyncUpdateJornada1 = await syncUpdateJornada2(jornadaToSync, instruccionesBitacora[i]);
+                if (boolSyncUpdateJornada1) {
+                  banderasExistoSync.add(boolSyncUpdateJornada1);
+                  continue;
+                } else {
+                  //Salimos del bucle
+                  banderasExistoSync.add(boolSyncUpdateJornada1);
+                  i = instruccionesBitacora.length;
+                  break;
+                }
+              } else {
+                //No se ha enviado al backend la jornada y por lo tanto no se puede actualizar
+                banderasExistoSync.add(true);
+                continue;
+              } 
             } else {
               //Salimos del bucle
               banderasExistoSync.add(false);
@@ -461,7 +570,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     try {
       final tareaToSync = dataBase.tareasBox.get(jornada.tarea.target!.id);
       if (tareaToSync != null) {
-        //Verificamos que no se haya posteado anteriormente el emprendedor y emprendimiento
+        //Verificamos que no se haya posteado anteriormente el jornada y tarea
         if (jornada.idEmiWeb == null && tareaToSync.idEmiWeb == null) {
           // Primero creamos la jornada asociada a la tarea
           final crearJornadaUri =
@@ -539,7 +648,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     try {
       final tareaToSync = dataBase.tareasBox.get(jornada.tarea.target!.id);
       if (tareaToSync != null) {
-        //Verificamos que no se haya posteado anteriormente el emprendedor y emprendimiento
+        //Verificamos que no se haya posteado anteriormente el jornada y tarea
         if (jornada.idEmiWeb == null && tareaToSync.idEmiWeb == null) {
           // Primero creamos la jornada asociada a la tarea
           final crearJornadaUri =
@@ -632,6 +741,79 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     }
 }
 
+ Future<bool> syncAddConsultoria(Consultorias consultoria, int idInstruccionBitacora) async {
+    print("Estoy en El syncAddConsultoria de Emi Web");
+    try {
+      final tareaToSync = dataBase.tareasBox.get(consultoria.tareas.first.id);
+      if (tareaToSync != null) {
+        //Verificamos que no se haya posteado anteriormente la consultoría y tarea
+        if (consultoria.idEmiWeb == null && tareaToSync.idEmiWeb == null) {
+          //Creamos la consultoria asociada a la primera tarea creada
+          final crearConsultoriaUri =
+            Uri.parse('$baseUrlEmiWebServices/consultorias');
+          final headers = ({
+            "Content-Type": "application/json",
+            'Authorization': 'Bearer $tokenGlobal',
+          });
+          final responsePostConsultoria = await post(crearConsultoriaUri, 
+          headers: headers,
+          body: jsonEncode({   
+            "idUsuario": consultoria.emprendimiento.target!.usuario.target!.idEmiWeb,
+            "nombreUsuario": "${consultoria.emprendimiento
+            .target!.usuario.target!.nombre} ${consultoria.emprendimiento
+            .target!.usuario.target!.apellidoP} ${consultoria.emprendimiento
+            .target!.usuario.target!.apellidoM}",
+            "idCatAmbito": consultoria.ambitoConsultoria.target!.idEmiWeb,
+            "idCatAreaCirculo": consultoria.areaCirculo.target!.idEmiWeb,
+            "asignarTarea": consultoria.tareas.first.tarea,
+            "proximaVisita": DateFormat("yyyy-MM-dd").format(consultoria.tareas.first.fechaRevision),
+            "idProyecto": consultoria.emprendimiento.target!.idEmiWeb,
+            "archivado": false, //Es falso por que apenas la estamos dando de alta
+            "fechaRegistro": DateFormat("yyyy-MM-ddTHH:mm:ss").format(consultoria.tareas.first.fechaRegistro),
+          }));
+          print(responsePostConsultoria.statusCode);
+          print(responsePostConsultoria.body);
+          print("Respuesta Post Consultoria");
+          switch (responsePostConsultoria.statusCode) {
+            case 200:
+            print("Caso 200 en Emi Web Consultoría");
+            //Se recupera el id Emi Web de la Consultoría que será el mismo id para la Tarea
+            final responsePostConsultoriaParse = postRegistroExitosoEmiWebFromMap(
+            const Utf8Decoder().convert(responsePostConsultoria.bodyBytes));
+            print("Se convierte a utf8 exitosamente");
+            consultoria.idEmiWeb = responsePostConsultoriaParse.payload!.id.toString();
+             print("Se recupera el idEmiWeb");
+            dataBase.consultoriasBox.put(consultoria);
+            print("Se hace put a la consultoria");
+            //Segundo creamos la Tarea
+            //Se recupera el id Emi Web de la Tarea
+            tareaToSync.idEmiWeb = responsePostConsultoriaParse.payload!.id.toString();
+            dataBase.tareasBox.put(tareaToSync);
+            //Se elimina la instrucción de la bitacora
+            dataBase.bitacoraBox.remove(idInstruccionBitacora);
+            print("Se ha removido la instrucción");
+            return true;
+            default: //No se realizo con éxito el post
+              print("Error en postear jornada Emi Web");
+              return false;
+          }       
+        } else {
+          //Ya se ha posteado anteriormente
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(idInstruccionBitacora);
+          return true;
+        }
+      } else {
+        //No existe una tarea asociada a la jornada de forma local
+        print("No existe una tarea asociada a la jornada de forma local");
+        return false;
+      }
+    } catch (e) { //Fallo en el momento se sincronizar
+     print("Catch de syncAddConsultoria: $e");
+      return false;
+    }
+}
+
   Future<bool> syncUpdateFaseEmprendimiento(Emprendimientos emprendimiento, Bitacora bitacora) async {
     print("Estoy en El syncUpdateFaseEmprendimiento en Emi Web");
     try {
@@ -678,5 +860,95 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       return false;
     }
   }
+
+    Future<bool> syncUpdateJornada1(Jornadas jornada, Bitacora bitacora) async {
+    print("Estoy en El syncUpdateJornada1() en Emi Web");
+    try {
+      // Primero creamos el API para realizar la actualización
+      final actualizarJornada1Uri =
+        Uri.parse('$baseUrlEmiWebServices/jornadas?id=${jornada.idEmiWeb}&jornada=${jornada.numJornada}');
+      final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+      final responsePostUpdateJornada1 = await put(actualizarJornada1Uri, 
+      headers: headers,
+      body: jsonEncode({
+        "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
+        "nombreUsuario": "${jornada.emprendimiento
+            .target!.usuario.target!.nombre} ${jornada.emprendimiento
+            .target!.usuario.target!.apellidoP} ${jornada.emprendimiento
+            .target!.usuario.target!.apellidoM}",
+        "fechaRegistro": DateFormat("yyyy-MM-ddTHH:mm:ss").format(jornada.fechaRegistro),
+        "registrarTarea": jornada.tarea.target!.tarea,
+        "fechaRevision": DateFormat("yyyy-MM-ddTHH:mm:ss").format(jornada.fechaRevision),
+        "comentarios": jornada.tarea.target!.comentarios,
+        "tareaCompletada": !jornada.tarea.target!.activo,
+        "descripcion": jornada.tarea.target!.descripcion,
+        "idProyecto": jornada.emprendimiento.target!.idEmiWeb,
+        "nombreEmprendimiento": jornada.emprendimiento.target!.nombre,
+      }));
+      print(responsePostUpdateJornada1.statusCode);
+      print(responsePostUpdateJornada1.body);
+      switch (responsePostUpdateJornada1.statusCode) {
+        case 200:
+        print("Caso 200 en Emi Web Update Fase Emprendimiento");
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
+          return true;
+        default: //No se realizo con éxito el post
+          print("Error en actualizar fase emprendimiento Emi Web");
+          return false;
+      }  
+    } catch (e) {
+      print('ERROR - function syncUpdateJornada1(): $e');
+      return false;
+    }
+  } 
+
+    Future<bool> syncUpdateJornada2(Jornadas jornada, Bitacora bitacora) async {
+    print("Estoy en El syncUpdateJornada2() en Emi Web");
+    try {
+      // Primero creamos el API para realizar la actualización
+      final actualizarJornada1Uri =
+        Uri.parse('$baseUrlEmiWebServices/jornadas?id=${jornada.idEmiWeb}&jornada=${jornada.numJornada}');
+      final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+      final responsePostUpdateJornada2 = await put(actualizarJornada1Uri, 
+      headers: headers,
+      body: jsonEncode({
+        "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
+        "nombreUsuario": "${jornada.emprendimiento
+            .target!.usuario.target!.nombre} ${jornada.emprendimiento
+            .target!.usuario.target!.apellidoP} ${jornada.emprendimiento
+            .target!.usuario.target!.apellidoM}",
+        "fechaRegistro": DateFormat("yyyy-MM-ddTHH:mm:ss").format(jornada.fechaRegistro),
+        "registrarTarea": jornada.tarea.target!.tarea,
+        "fechaRevision": DateFormat("yyyy-MM-ddTHH:mm:ss").format(jornada.fechaRevision),
+        "comentarios": jornada.tarea.target!.comentarios,
+        "tareaCompletada": !jornada.tarea.target!.activo,
+        "descripcion": jornada.tarea.target!.descripcion,
+        "idProyecto": jornada.emprendimiento.target!.idEmiWeb,
+        "nombreEmprendimiento": jornada.emprendimiento.target!.nombre,
+      }));
+      print(responsePostUpdateJornada2.statusCode);
+      print(responsePostUpdateJornada2.body);
+      switch (responsePostUpdateJornada2.statusCode) {
+        case 200:
+        print("Caso 200 en Emi Web Update Fase Emprendimiento");
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
+          return true;
+        default: //No se realizo con éxito el post
+          print("Error en actualizar fase emprendimiento Emi Web");
+          return false;
+      }  
+    } catch (e) {
+      print('ERROR - function syncUpdateJornada2(): $e');
+      return false;
+    }
+  } 
 
 }

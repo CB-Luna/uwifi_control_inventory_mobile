@@ -1,3 +1,4 @@
+import 'package:bizpro_app/screens/login_screen/login_screen.dart';
 import 'package:bizpro_app/screens/widgets/custom_button.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -73,7 +74,14 @@ class _PasswordEmailSentScreenState extends State<PasswordEmailSentScreen> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 100, 0, 0),
                       child: CustomButton(
-                        onPressed: () => Navigator.pop(context),
+                        onPressed: () async {
+                          await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginScreen(),
+                          ),
+                        );
+                        },
                         text: 'Listo',
                         options: ButtonOptions(
                           width: 200,

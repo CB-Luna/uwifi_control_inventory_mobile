@@ -1,6 +1,8 @@
+import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/screens/widgets/custom_button.dart';
 import 'package:bizpro_app/services/auth_service.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -39,7 +41,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         appBar: AppBar(
           backgroundColor: const Color(0xFF0B75F5),
           iconTheme: const IconThemeData(color: Colors.white),
-          automaticallyImplyLeading: true,
+          automaticallyImplyLeading: false,
           title: Text(
             'Recuperar Contraseña',
             style: AppTheme.of(context).bodyText1.override(
@@ -48,7 +50,28 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   fontSize: 18,
                 ),
           ),
-          actions: const [],
+          leading: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment:
+                MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(
+                        15, 0, 0, 0),
+                child: InkWell(
+                  onTap: () async {
+                    Navigator.pop(context);
+                  },
+                  child: const Icon(
+                    Icons.arrow_back_outlined,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                ),
+              ),
+            ],
+          ),
           centerTitle: true,
           elevation: 4,
         ),
@@ -176,20 +199,30 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       if (!formKey.currentState!.validate()) {
                         return;
                       }
+                      final connectivityResult =
+                        await (Connectivity().checkConnectivity());
+                      if(connectivityResult == ConnectivityResult.none) {
+                        snackbarKey.currentState
+                          ?.showSnackBar(const SnackBar(
+                        content: Text(
+                            "Necesitas conexión a internet para validar el estado de la Inversión."),
+                        ));
+                      }
+                      else {
+                        final res = await AuthService.requestPasswordReset(
+                          emailAddressController.text,
+                        );
+                        
+                        if (res == false) return;
 
-                      final res = await AuthService.requestPasswordReset(
-                        emailAddressController.text,
-                      );
-
-                      if (res == false) return;
-
-                      if (!mounted) return;
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const PasswordEmailSentScreen(),
-                        ),
-                      );
+                        if (!mounted) return;
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const PasswordEmailSentScreen(),
+                          ),
+                        );
+                      }
                     },
                     text: 'Enviar enlace de acceso',
                     options: ButtonOptions(

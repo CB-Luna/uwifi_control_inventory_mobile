@@ -797,7 +797,6 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                               print("Siguientes pasos: ${consultoriaProvider.tarea}");
                               print("Fecha proxima revision: ${fechaRevision.text}");
                               if (consultoriaProvider.validateForm(formKey)) {
-                                print("Chi");
                                   final idPorcentajeAvance = dataBase.porcentajeAvanceBox
                                     .query(PorcentajeAvance_
                                     .porcentajeAvance.

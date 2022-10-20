@@ -10,6 +10,7 @@ const String baseUrl = 'https://emi-des.cbluna-dev.com';
 
 const String baseUrlEmiWebServices = "http://20.186.180.168:9021/ememi-secure-services/api";
 const String baseUrlEmiWebSecurity = "http://20.186.180.168:9021/ememi-secure-security/api";
+const String baseUrlEmiWebNonSecure = "http://20.186.180.168:9023/ememi-nonsecure-services/api";
 
 final client = PocketBase(baseUrl);
 

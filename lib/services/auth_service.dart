@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
@@ -18,8 +17,6 @@ import 'package:http/http.dart';
 
 abstract class AuthService {
   static final loginUri = Uri.parse('$baseUrl/api/users/auth-via-email');
-  static final requestPasswordResetUri =
-      Uri.parse('$baseUrl/api/users/request-password-reset');
   static final confirmPasswordRequestUri =
       Uri.parse('$baseUrl/api/users/confirm-password-reset');
   // final registerUri = Uri.parse('$baseUrl/auth/signup');
@@ -135,6 +132,26 @@ abstract class AuthService {
     }
   }
 
+ static Future<String> validateUsuarioInPocketbase(String email) async {
+    try {
+      // admin authentication via email/pass
+      await client.admins.authViaEmail('uzziel.palma@cbluna.com', 'cbluna2021\$');
+      //Verificamos que el usuario no exista en Pocketbase
+      final recordUsuario = await client.users.getFullList(
+        batch: 200, 
+        filter: "email='$email'");
+      if (recordUsuario.isNotEmpty) {
+        return recordUsuario.first.id;
+      } else {
+        return "NoUserExist";
+      }
+    } catch (e) {
+      print("Catch en validateUsuarioInPocketbase");
+      print("Error: ${e}");
+      return "Null";
+    }
+  }
+
   static Future<bool> postUsuarioPocketbase(GetUsuarioEmiWeb responseUsuarioEmiWeb, String email, String password) async {
     try {
       print("Entramos a crear el Usuario en postUsuarioPocketbase");
@@ -171,7 +188,7 @@ abstract class AuthService {
               'passwordConfirm': password,
           });
           if(nuevoUsuario.id.isNotEmpty) {
-            print("Se crea el Uusuario en Pocketbase");
+            print("Se crea el Usuario en Pocketbase");
             //Se crea Usuario emi_users nuevo en colección de pocketbase
             final newRecordEmiUser = await client.records.create('emi_users', body: {
               "nombre_usuario": responseUsuarioEmiWeb.payload!.nombre,
@@ -193,7 +210,7 @@ abstract class AuthService {
             }
             return true;
           } else {
-            print("No se crea el Uusuario en Pocketbase");
+            print("No se crea el Usuario en Pocketbase");
             return false;
           }
         case 401: //Error de Token incorrecto
@@ -213,6 +230,31 @@ abstract class AuthService {
       }
     } catch (e) {
       print("Catch en postUsuarioPocketbase");
+      print("Error: ${e}");
+      return false;
+    }
+  }
+
+  static Future<bool> updateUsuarioPasswordPocketbase(String idDBR, String password) async {
+    try {
+      //Usuario ya existe en objectBox
+      print("Entramos a actualizar password Usuario en updateUsuarioPasswordPocketbase");
+      //Se actualiza Usuario nuevo en Pocketbase
+      final usuarioUpdated = await client.users.update(
+        idDBR,
+        body: {
+          'password': password,
+          'passwordConfirm': password,
+      });
+      if(usuarioUpdated.id.isNotEmpty) {
+        print("Se actualiza el Usuario en Pocketbase");
+        return true;
+      } else {
+        print("No se actualiza el Usuario en Pocketbase");
+        return false;
+      }
+    } catch (e) {
+      print("Catch en updateUsuarioPasswordPocketbase");
       print("Error: ${e}");
       return false;
     }
@@ -250,23 +292,34 @@ abstract class AuthService {
     String email,
   ) async {
     try {
-      final res = await post(requestPasswordResetUri, body: {
-        "email": email,
-      });
+      //Se recupera la información del password del usuario desde Emi Web
+      var url = Uri.parse("$baseUrlEmiWebNonSecure/usuarios/recuperar?correo=$email");
+      final headers = ({
+          "Content-Type": "application/json",
+        });
+      var response = await get(
+        url,
+        headers: headers
+      );
 
-      switch (res.statusCode) {
-        case 204:
+      switch (response.statusCode) {
+        case 200:
           return true;
+        case 202:
+          snackbarKey.currentState?.showSnackBar(const SnackBar(
+            content: Text("El Usuario aún no tiene una contraseña asignada, comuníquese con el Administrador."),
+          ));
+          break;
         default:
           snackbarKey.currentState?.showSnackBar(const SnackBar(
-            content: Text("Ocurrió un error"),
+            content: Text("Ocurrió un error."),
           ));
           break;
       }
       return false;
     } catch (e) {
       snackbarKey.currentState?.showSnackBar(const SnackBar(
-        content: Text("Error al realizar la petición"),
+        content: Text("Error al realizar la petición."),
       ));
       return false;
     }
