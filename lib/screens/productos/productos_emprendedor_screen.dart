@@ -51,7 +51,7 @@ class _ProductosEmprendedorScreenState
   Widget build(BuildContext context) {
     final usuarioProvider = Provider.of<UsuarioController>(context);
     final Usuarios currentUser = usuarioProvider.usuarioCurrent!;
-    final UserState userState = Provider.of<UserState>(context);
+    listActualProductosEmp = emprendimientoActual?.productosEmp.toList() ?? [];
 
     return WillPopScope(
       onWillPop: () async => false,

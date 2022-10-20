@@ -614,7 +614,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                               AppTheme.of(context)
                                                                                   .bodyText1Family,
                                                                           fontSize:
-                                                                              16,
+                                                                              12,
                                                                         ),
                                                                   ),
                                                                 ),

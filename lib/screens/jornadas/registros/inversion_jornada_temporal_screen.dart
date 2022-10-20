@@ -680,7 +680,7 @@ class _InversionJornadaTemporalScreenState
                                                                                 ),
                                                                           ),
                                                                           Text(
-                                                                            "\$ ${prodSolicitado.costoEstimado == null ? 0 : currencyFormat.format((prodSolicitado.costoEstimado! * prodSolicitado.cantidad).toStringAsFixed(2))}",
+                                                                            "${prodSolicitado.costoEstimado == null ? 0 : currencyFormat.format((prodSolicitado.costoEstimado! * prodSolicitado.cantidad).toStringAsFixed(2))}",
                                                                             textAlign:
                                                                                 TextAlign.end,
                                                                             style: AppTheme.of(context)
