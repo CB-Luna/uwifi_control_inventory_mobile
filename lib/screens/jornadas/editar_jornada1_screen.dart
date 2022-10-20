@@ -48,7 +48,7 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
         text: dateTimeFormat('yMMMd', widget.jornada.fechaRegistro));
     tareaController =
         TextEditingController(text: widget.jornada.tarea.target!.tarea);
-    activoController = widget.jornada.tarea.target!.activo;
+    activoController = !widget.jornada.completada;
     nombreController = TextEditingController(
         text: widget.jornada.emprendimiento.target!.nombre);
   }
@@ -588,7 +588,7 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
                                     tareaController.text !=
                                         widget.jornada.tarea.target!.tarea ||
                                     activoController !=
-                                        widget.jornada.tarea.target!.activo ||
+                                        !widget.jornada.completada ||
                                     nombreController.text !=
                                         widget.jornada.emprendimiento.target!
                                             .nombre) {
@@ -605,7 +605,7 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
                                       fechaRegistro,
                                       fechaRevision,
                                       tareaController.text,
-                                      activoController,
+                                      !activoController,
                                       widget.jornada.tarea.target!.id);
                                   await Navigator.push(
                                     context,

@@ -891,6 +891,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
             "proxima_visita": jornada.fechaRevision.toUtc().toString(),
             "id_emprendimiento_fk": jornada.emprendimiento.target!.idDBR,
             "id_status_sync_fk": "HoI36PzYw1wtbO1",
+            "completada": jornada.completada,
           });
 
           if (recordJornada.id.isNotEmpty) {
@@ -992,6 +993,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   "proxima_visita": jornada.fechaRevision.toUtc().toString(),
                   "id_emprendimiento_fk": jornada.emprendimiento.target!.idDBR,
                   "id_status_sync_fk": "HoI36PzYw1wtbO1",
+                  "completada": jornada.completada,
                 });
 
                 if (recordJornada.id.isNotEmpty) {

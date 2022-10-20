@@ -467,10 +467,10 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                                           .fechaRevision,
                                                       completada: 
                                                           jornada
-                                                          .tarea.target!.activo == true ?
-                                                          "No"
+                                                          .completada == true ?
+                                                          "Sí"
                                                           :
-                                                          "Sí",
+                                                          "No",
                                                       usuario:
                                                       "${emp.
                                                       usuario.target!

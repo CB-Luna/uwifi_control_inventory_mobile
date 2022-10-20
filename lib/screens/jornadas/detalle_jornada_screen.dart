@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -199,7 +198,7 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                             ));
                                           } else {
                                             if (widget
-                                                .jornada.tarea.target!.activo) {
+                                                .jornada.completada == false) {
                                               switch (widget.jornada.numJornada) {
                                                 case "1":
                                                   await Navigator.push(
@@ -245,15 +244,9 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                                       content: Text(
                                                           "La jornada ya ha sido registrada, ya no se puede editar."),
                                                     ));
-                                                    bool? isActivo = dataBase
-                                                        .tareasBox
-                                                        .get(widget.jornada.tarea
-                                                            .target!.id)
-                                                        ?.activo;
-                                                    if (isActivo != null &&
-                                                        isActivo == true) {
+                                                    if (widget.jornada.completada == false) {
                                                       print(
-                                                          "Entro a actualziar activo de tarea en J4");
+                                                          "Entro a actualizar activo de tarea en J4");
                                                       jornadaProvider
                                                           .updateJornada4(
                                                               widget.jornada.id,
@@ -266,7 +259,7 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                                                   .comentarios,
                                                               listImagenes,
                                                               imagenes,
-                                                              false,
+                                                              true,
                                                               widget.jornada.tarea
                                                                   .target!.id);
                                                     }

@@ -437,6 +437,7 @@ class Jornadas {
   String numJornada;
   DateTime fechaRevision;
   DateTime fechaRegistro;
+  bool completada;
   @Unique()
   String? idDBR;
   @Unique()
@@ -450,6 +451,7 @@ class Jornadas {
     required this.numJornada,
     required this.fechaRevision,
     DateTime? fechaRegistro,
+    required this.completada,
     this.idDBR,
     this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
@@ -464,7 +466,6 @@ class Tareas {
   String tarea;
   String descripcion;
   String? comentarios;
-  bool activo;
   DateTime fechaRevision;
   DateTime fechaRegistro;
   @Unique()
@@ -482,7 +483,6 @@ class Tareas {
     required this.tarea,
     required this.descripcion,
     this.comentarios,
-    this.activo = true,
     required this.fechaRevision,
     DateTime? fechaRegistro,
     this.idDBR,

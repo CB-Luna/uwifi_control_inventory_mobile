@@ -334,7 +334,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(12, 5075853906068129300),
       name: 'Consultorias',
-      lastPropertyId: const IdUid(15, 2561056730102834673),
+      lastPropertyId: const IdUid(16, 3843038384942165449),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -390,7 +390,13 @@ final _entities = <ModelEntity>[
             id: const IdUid(15, 2561056730102834673),
             name: 'archivado',
             type: 1,
-            flags: 0)
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(16, 3843038384942165449),
+            name: 'idEmiWeb',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(240, 6874025484378531555))
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -460,11 +466,6 @@ final _entities = <ModelEntity>[
             id: const IdUid(17, 3679854591609531040),
             name: 'tarea',
             type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(18, 7293987934442232642),
-            name: 'activo',
-            type: 1,
             flags: 0),
         ModelProperty(
             id: const IdUid(20, 195209596343901530),
@@ -762,7 +763,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(24, 6358146304075079104),
       name: 'Jornadas',
-      lastPropertyId: const IdUid(13, 1735839774357730150),
+      lastPropertyId: const IdUid(14, 6450285659452861803),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -817,7 +818,12 @@ final _entities = <ModelEntity>[
             name: 'idEmiWeb',
             type: 9,
             flags: 2080,
-            indexId: const IdUid(234, 6054000220007838196))
+            indexId: const IdUid(234, 6054000220007838196)),
+        ModelProperty(
+            id: const IdUid(14, 6450285659452861803),
+            name: 'completada',
+            type: 1,
+            flags: 0)
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -2670,7 +2676,7 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(62, 5967866020755512418),
-      lastIndexId: const IdUid(239, 452351417968063305),
+      lastIndexId: const IdUid(240, 6874025484378531555),
       lastRelationId: const IdUid(72, 6096914602419360853),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -3036,7 +3042,8 @@ ModelDefinition getObjectBoxModel() {
         2001355623132513549,
         7664581841173068663,
         6160806538756599358,
-        2551966599607042405
+        2551966599607042405,
+        7293987934442232642
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -3390,7 +3397,10 @@ ModelDefinition getObjectBoxModel() {
                   .toList(growable: false));
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(16);
+          final idEmiWebOffset = object.idEmiWeb == null
+              ? null
+              : fbb.writeString(object.idEmiWeb!);
+          fbb.startTable(17);
           fbb.addInt64(0, object.id);
           fbb.addOffset(2, documentosOffset);
           fbb.addInt64(3, object.fechaRegistro.millisecondsSinceEpoch);
@@ -3400,6 +3410,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(11, object.areaCirculo.targetId);
           fbb.addInt64(12, object.ambitoConsultoria.targetId);
           fbb.addBool(14, object.archivado);
+          fbb.addOffset(15, idEmiWebOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -3418,7 +3429,9 @@ ModelDefinition getObjectBoxModel() {
               idDBR: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 22),
               archivado: const fb.BoolReader()
-                  .vTableGet(buffer, rootOffset, 32, false));
+                  .vTableGet(buffer, rootOffset, 32, false),
+              idEmiWeb: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 34));
           object.emprendimiento.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
           object.emprendimiento.attach(store);
@@ -3480,7 +3493,6 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(12, object.statusSync.targetId);
           fbb.addOffset(14, idDBROffset);
           fbb.addOffset(16, tareaOffset);
-          fbb.addBool(17, object.activo);
           fbb.addInt64(19, object.porcentaje.targetId);
           fbb.addOffset(20, comentariosOffset);
           fbb.addOffset(21, idEmiWebOffset);
@@ -3499,15 +3511,14 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 8, ''),
               comentarios: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 44),
-              activo: const fb.BoolReader()
-                  .vTableGet(buffer, rootOffset, 38, false),
               fechaRevision: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0)),
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0)),
-              idDBR:
-                  const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 32),
-              idEmiWeb: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 46));
+              idDBR: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 32),
+              idEmiWeb:
+                  const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 46));
           object.jornada.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
           object.jornada.attach(store);
@@ -3804,7 +3815,7 @@ ModelDefinition getObjectBoxModel() {
           final idEmiWebOffset = object.idEmiWeb == null
               ? null
               : fbb.writeString(object.idEmiWeb!);
-          fbb.startTable(14);
+          fbb.startTable(15);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, numJornadaOffset);
           fbb.addInt64(3, object.fechaRegistro.millisecondsSinceEpoch);
@@ -3814,6 +3825,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(9, idDBROffset);
           fbb.addInt64(11, object.fechaRevision.millisecondsSinceEpoch);
           fbb.addOffset(12, idEmiWebOffset);
+          fbb.addBool(13, object.completada);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -3829,6 +3841,8 @@ ModelDefinition getObjectBoxModel() {
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0)),
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0)),
+              completada: const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 30, false),
               idDBR: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 22),
               idEmiWeb: const fb.StringReader(asciiOptimization: true)
@@ -6119,6 +6133,10 @@ class Consultorias_ {
   static final archivado =
       QueryBooleanProperty<Consultorias>(_entities[3].properties[8]);
 
+  /// see [Consultorias.idEmiWeb]
+  static final idEmiWeb =
+      QueryStringProperty<Consultorias>(_entities[3].properties[9]);
+
   /// see [Consultorias.bitacora]
   static final bitacora =
       QueryRelationToMany<Consultorias, Bitacora>(_entities[3].relations[0]);
@@ -6163,21 +6181,17 @@ class Tareas_ {
   /// see [Tareas.tarea]
   static final tarea = QueryStringProperty<Tareas>(_entities[4].properties[8]);
 
-  /// see [Tareas.activo]
-  static final activo =
-      QueryBooleanProperty<Tareas>(_entities[4].properties[9]);
-
   /// see [Tareas.porcentaje]
   static final porcentaje =
-      QueryRelationToOne<Tareas, PorcentajeAvance>(_entities[4].properties[10]);
+      QueryRelationToOne<Tareas, PorcentajeAvance>(_entities[4].properties[9]);
 
   /// see [Tareas.comentarios]
   static final comentarios =
-      QueryStringProperty<Tareas>(_entities[4].properties[11]);
+      QueryStringProperty<Tareas>(_entities[4].properties[10]);
 
   /// see [Tareas.idEmiWeb]
   static final idEmiWeb =
-      QueryStringProperty<Tareas>(_entities[4].properties[12]);
+      QueryStringProperty<Tareas>(_entities[4].properties[11]);
 
   /// see [Tareas.bitacora]
   static final bitacora =
@@ -6391,6 +6405,10 @@ class Jornadas_ {
   /// see [Jornadas.idEmiWeb]
   static final idEmiWeb =
       QueryStringProperty<Jornadas>(_entities[9].properties[8]);
+
+  /// see [Jornadas.completada]
+  static final completada =
+      QueryBooleanProperty<Jornadas>(_entities[9].properties[9]);
 
   /// see [Jornadas.bitacora]
   static final bitacora =

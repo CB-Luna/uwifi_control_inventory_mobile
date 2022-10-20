@@ -1,15 +1,11 @@
 import 'dart:io';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/providers/database_providers/consultoria_controller.dart';
 
 
 import 'package:bizpro_app/util/flutter_flow_util.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class DetalleTareaConsultoriaScreen extends StatefulWidget {
   final Consultorias consultoria;
@@ -30,12 +26,10 @@ class _DetalleTareaConsultoriaScreenState
     extends State<DetalleTareaConsultoriaScreen> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  late bool activoController;
 
   @override
   void initState() {
     super.initState();
-    activoController = widget.tarea.activo;
   }
 
   @override
@@ -488,38 +482,6 @@ class _DetalleTareaConsultoriaScreenState
                                   ),
                                 ],
                               ),
-                              // Padding(
-                              //   padding: const EdgeInsetsDirectional.fromSTEB(
-                              //       5, 0, 5, 10),
-                              //   child: Row(
-                              //     mainAxisSize: MainAxisSize.max,
-                              //     children: [
-                              //       Expanded(
-                              //         child: FlutterFlowCheckboxGroup(
-                              //           initiallySelected: !activoController,
-                              //           options: '¿Tarea Completada?',
-                              //           onChanged: (val) => setState(() {
-                              //             print(val);
-                              //             activoController = val;
-                              //             print(activoController);
-                              //           }),
-                              //           activeColor:
-                              //               AppTheme.of(context).primaryColor,
-                              //           checkColor: Colors.white,
-                              //           checkboxBorderColor:
-                              //               const Color(0xFF95A1AC),
-                              //           textStyle: AppTheme.of(context)
-                              //               .bodyText1
-                              //               .override(
-                              //                 fontFamily: AppTheme.of(context)
-                              //                     .bodyText1Family,
-                              //                 fontWeight: FontWeight.w500,
-                              //               ),
-                              //         ),
-                              //       ),
-                              //     ],
-                              //   ),
-                              // ),
                             ],
                           ),
                         ),

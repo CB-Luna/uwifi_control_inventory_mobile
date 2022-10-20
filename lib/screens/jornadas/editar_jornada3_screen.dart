@@ -89,7 +89,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
         TextEditingController(text: widget.jornada.tarea.target!.comentarios);
     descController =
         TextEditingController(text: widget.jornada.tarea.target!.descripcion);
-    activoController = widget.jornada.tarea.target!.activo;
+    activoController = !widget.jornada.completada;
     tipoProyecto = widget.jornada.emprendimiento.target!.catalogoProyecto
         .target!.tipoProyecto.target!.tipoProyecto;
     proyecto =
@@ -502,11 +502,11 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                           if (jornada1 != null &&
                                               jornada2 != null) {
                                             if (jornada1!
-                                                        .tarea.target!.activo ==
-                                                    false &&
+                                                        .completada ==
+                                                    true &&
                                                 jornada2!
-                                                        .tarea.target!.activo ==
-                                                    false) {
+                                                        .completada ==
+                                                    true) {
                                               print(val);
                                               activoController = val;
                                               print(activoController);
@@ -1222,7 +1222,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                     tareaController.text !=
                                         widget.jornada.tarea.target!.tarea ||
                                     activoController !=
-                                        widget.jornada.tarea.target!.activo ||
+                                        !widget.jornada.completada ||
                                     fechaRevision !=
                                         widget.jornada.fechaRevision ||
                                     comentariosController.text !=
@@ -1271,7 +1271,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                               .id,
                                           fechaRegistro,
                                           tareaController.text,
-                                          activoController,
+                                          !activoController,
                                           fechaRevision,
                                           comentariosController.text,
                                           newAnalisisFinanciero,

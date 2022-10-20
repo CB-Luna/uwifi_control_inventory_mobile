@@ -3,7 +3,6 @@ import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_imagenes_completas.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_validacion_eliminar_imagen.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_eliminar_imagen.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_carousel.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -64,7 +63,7 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
         oldConvenio.add(element.imagenes);
       }
     }
-    activoController = widget.jornada.tarea.target!.activo;
+    activoController = !widget.jornada.completada;
   }
 
   @override
@@ -741,14 +740,14 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                             .comentarios ||
                                     newConvenio != oldConvenio ||
                                     activoController !=
-                                        widget.jornada.tarea.target!.activo) {
+                                        !widget.jornada.completada) {
                                   jornadaProvider.updateJornada4(
                                       widget.jornada.id,
                                       fechaRegistro,
                                       comentariosController.text,
                                       newConvenio,
                                       imagenes,
-                                      activoController,
+                                      !activoController,
                                       widget.jornada.tarea.target!.id);
                                   await Navigator.push(
                                       context,

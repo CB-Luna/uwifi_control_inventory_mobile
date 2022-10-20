@@ -74,7 +74,7 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
         TextEditingController(text: widget.jornada.tarea.target!.tarea);
     comentariosController =
         TextEditingController(text: widget.jornada.tarea.target!.comentarios);
-    activoController = widget.jornada.tarea.target!.activo;
+    activoController = !widget.jornada.completada;
   }
 
   @override
@@ -534,8 +534,8 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                           }
                                           if (jornada1 != null) {
                                             if (jornada1!
-                                                    .tarea.target!.activo ==
-                                                false) {
+                                                    .completada ==
+                                                true) {
                                               print(val);
                                               activoController = val;
                                               print(activoController);
@@ -925,7 +925,7 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                         widget.jornada.tarea.target!
                                             .comentarios||
                                     activoController !=
-                                        widget.jornada.tarea.target!.activo ||
+                                        !widget.jornada.completada ||
                                     newCirculoEmpresa !=
                                         oldCirculoEmpresa) {
                                   jornadaProvider.updateJornada2(
@@ -936,7 +936,7 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                       comentariosController.text,
                                       imagenes,
                                       newCirculoEmpresa,
-                                      activoController,
+                                      !activoController,
                                       widget.jornada.tarea.target!.id);
                                   await Navigator.push(
                                     context,

@@ -89,7 +89,6 @@ class ConsultoriaController extends ChangeNotifier {
       final nuevaTarea = Tareas(
       tarea: tarea == "" ? oldTarea.tarea : tarea,
       descripcion: avanceObservado,
-      activo: activo,
       fechaRevision: fechaRevision!);
       // Se agrega la imagen a la Tarea
       final nuevaImagenTarea = Imagenes(imagenes: imagen); //Se crea el objeto imagenes para la Tarea
@@ -127,7 +126,6 @@ class ConsultoriaController extends ChangeNotifier {
     final nuevaTarea = Tareas(
     tarea: tarea,
     descripcion: avanceObservado,
-    activo: activo,
     fechaRevision: fechaRevision!);
     final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
     nuevaTarea.statusSync.target = nuevoSyncTarea;
