@@ -20,6 +20,7 @@ class _DescargaCatalogosEmiWebScreenState extends State<DescargaCatalogosEmiWebS
     // TODO: implement initState
     super.initState();
       setState(() {
+        context.read<CatalogoEmiWebProvider>().exitoso = true;
         context.read<CatalogoEmiWebProvider>().procesoCargando(true);
         context.read<CatalogoEmiWebProvider>().procesoTerminado(false);
         context.read<CatalogoEmiWebProvider>().procesoExitoso(false);

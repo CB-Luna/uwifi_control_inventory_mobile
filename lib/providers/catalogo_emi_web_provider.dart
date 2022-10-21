@@ -105,12 +105,14 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
         procesocargando = false;
         procesoterminado = true;
         procesoexitoso = true;
+        banderasExistoSync.clear();
         notifyListeners();
         return exitoso;
       } else {
         procesocargando = false;
         procesoterminado = true;
         procesoexitoso = false;
+        banderasExistoSync.clear();
         notifyListeners();
         return exitoso;
       }
@@ -118,6 +120,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
       procesocargando = false;
       procesoterminado = true;
       procesoexitoso = false;
+      banderasExistoSync.clear();
       notifyListeners();
       return false;
     }

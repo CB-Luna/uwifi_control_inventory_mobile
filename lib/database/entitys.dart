@@ -573,6 +573,8 @@ class Ventas {
   bool archivado;
   @Unique()
   String? idDBR;
+  @Unique()
+  String? idEmiWeb;
   final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
   final emprendimiento = ToOne<Emprendimientos>();
@@ -586,6 +588,7 @@ class Ventas {
     DateTime? fechaRegistro,
     this.archivado = false,
     this.idDBR,
+    this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -630,6 +633,8 @@ class ProductosEmp {
   bool archivado;
   @Unique()
   String? idDBR;
+  @Unique()
+  String? idEmiWeb;
   final statusSync = ToOne<StatusSync>();
   final emprendimientos = ToOne<Emprendimientos>();
   final unidadMedida = ToOne<UnidadMedida>();
@@ -646,6 +651,7 @@ class ProductosEmp {
     DateTime? fechaRegistro,
     this.archivado = false,
     this.idDBR,
+    this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);

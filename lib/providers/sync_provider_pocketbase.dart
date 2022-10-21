@@ -426,19 +426,29 @@ class SyncProviderPocketbase extends ChangeNotifier {
           }
           continue;
         case "syncAddProductoEmprendedor":
-          print("Entro aqui");
+          print("Entro al caso de syncAddProductoEmprendedor Pocketbase");
           final prodEmprendedorToSync = getFirstProductoEmprendedor(dataBase.productosEmpBox.getAll(), instruccionesBitacora[i].id);
           if(prodEmprendedorToSync != null){
-            if(prodEmprendedorToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
-            print("Entro aqui en el if");
-            continue;
+            if(prodEmprendedorToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") { 
+              continue;
+            } else {
+              final boolSyncAddProductoEmprendedor = await syncAddProductoEmprendedor(prodEmprendedorToSync);
+              if (boolSyncAddProductoEmprendedor) {
+                banderasExistoSync.add(boolSyncAddProductoEmprendedor);
+                continue;
+              } else {
+                //Salimos del bucle
+                banderasExistoSync.add(boolSyncAddProductoEmprendedor);
+                i = instruccionesBitacora.length;
+                break;
+              }
+            }          
           } else {
-            print("Entro aqui en el else");
-            
-            await syncAddProductoEmprendedor(prodEmprendedorToSync);
-          } 
-          }         
-          continue;
+            //Salimos del bucle
+            banderasExistoSync.add(false);
+            i = instruccionesBitacora.length;
+            break;
+          }
         case "syncUpdateProductoEmprendedor":
           final prodEmprendedorToSync = getFirstInversion(dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
           if(prodEmprendedorToSync != null){
@@ -457,33 +467,53 @@ class SyncProviderPocketbase extends ChangeNotifier {
           }  
           continue;
         case "syncAddVenta":
-          print("Entro aqui");
+          print("Entro al caso de syncAddVenta Pocketbase");
           final ventaToSync = getFirstVenta(dataBase.ventasBox.getAll(), instruccionesBitacora[i].id);
           if(ventaToSync != null){
-            if(ventaToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
-            print("Entro aqui en el if");
-            continue;
+            if(ventaToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") { 
+              continue;
+            } else {
+              final boolSyncAddVenta = await syncAddVenta(ventaToSync);
+              if (boolSyncAddVenta) {
+                banderasExistoSync.add(boolSyncAddVenta);
+                continue;
+              } else {
+                //Salimos del bucle
+                banderasExistoSync.add(boolSyncAddVenta);
+                i = instruccionesBitacora.length;
+                break;
+              }
+            }          
           } else {
-            print("Entro aqui en el else");
-            
-            await syncAddVenta(ventaToSync);
-          } 
-          }         
-          continue;
+            //Salimos del bucle
+            banderasExistoSync.add(false);
+            i = instruccionesBitacora.length;
+            break;
+          }
         case "syncAddProductoVendido":
-          print("Entro aqui");
+          print("Entro al caso de syncAddProductoVendido Pocketbase");
           final prodVendidoToSync = getFirstProductoVendido(dataBase.productosVendidosBox.getAll(), instruccionesBitacora[i].id);
           if(prodVendidoToSync != null){
-            if(prodVendidoToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
-            print("Entro aqui en el if");
-            continue;
+            if(prodVendidoToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") { 
+              continue;
+            } else {
+              final boolSyncAddProductoVendido = await syncAddProductoVendido(prodVendidoToSync);
+              if (boolSyncAddProductoVendido) {
+                banderasExistoSync.add(boolSyncAddProductoVendido);
+                continue;
+              } else {
+                //Salimos del bucle
+                banderasExistoSync.add(boolSyncAddProductoVendido);
+                i = instruccionesBitacora.length;
+                break;
+              }
+            }          
           } else {
-            print("Entro aqui en el else");
-            
-            await syncAddProductoVendido(prodVendidoToSync);
-          } 
-          }         
-          continue;
+            //Salimos del bucle
+            banderasExistoSync.add(false);
+            i = instruccionesBitacora.length;
+            break;
+          }
         case "syncAddInversion":
           print("Entro aqui");
           final inversionToSync = getFirstInversion(dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
@@ -562,12 +592,14 @@ class SyncProviderPocketbase extends ChangeNotifier {
       procesocargando = false;
       procesoterminado = true;
       procesoexitoso = true;
+      banderasExistoSync.clear();
       // notifyListeners();
       return exitoso;
     } else {
       procesocargando = false;
       procesoterminado = true;
       procesoexitoso = false;
+      banderasExistoSync.clear();
        // notifyListeners();
       return exitoso;
     }
@@ -1705,7 +1737,7 @@ void deleteBitacora() {
   notifyListeners();
 }
 
-  Future<bool?> syncAddProductoEmprendedor(ProductosEmp productoEmp) async {
+  Future<bool> syncAddProductoEmprendedor(ProductosEmp productoEmp) async {
     print("Estoy en El syncAddProductoEmp");
       try {
       final record = await client.records.create('productos_emp', body: {
@@ -1744,7 +1776,7 @@ void deleteBitacora() {
     }
 }
 
-  Future<bool?> syncAddVenta(Ventas venta) async {
+  Future<bool> syncAddVenta(Ventas venta) async {
     print("Estoy en El syncAddVenta");
       try {
       final record = await client.records.create('ventas', body: {
@@ -1817,7 +1849,7 @@ void deleteBitacora() {
     }
 }
 
-  Future<bool?> syncAddProductoVendido(ProdVendidos productoVendido) async {
+  Future<bool> syncAddProductoVendido(ProdVendidos productoVendido) async {
     print("Estoy en El syncAddProductoVendido");
       try {
       final record = await client.records.create('prod_vendidos', body: {
@@ -1829,7 +1861,7 @@ void deleteBitacora() {
       });
       if (record.id.isNotEmpty) {
         String idDBR = record.id;
-        print("Producto Emprendedor created succesfully");
+        print("Producto Vendido created succesfully");
         var updateProductoVendido = dataBase.productosVendidosBox.get(productoVendido.id);
         if (updateProductoVendido != null) {
             final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateProductoVendido.statusSync.target!.id)).build().findUnique();

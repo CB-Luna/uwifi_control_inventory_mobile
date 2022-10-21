@@ -20,6 +20,7 @@ class _DescargaCatalogosPocketbaseScreenState extends State<DescargaCatalogosPoc
     // TODO: implement initState
     super.initState();
       setState(() {
+        context.read<CatalogoPocketbaseProvider>().exitoso = true;
         context.read<CatalogoPocketbaseProvider>().procesoCargando(true);
         context.read<CatalogoPocketbaseProvider>().procesoTerminado(false);
         context.read<CatalogoPocketbaseProvider>().procesoExitoso(false);

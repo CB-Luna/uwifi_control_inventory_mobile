@@ -37,12 +37,14 @@ class RolesPocketbaseProvider extends ChangeNotifier {
       procesocargando = false;
       procesoterminado = true;
       procesoexitoso = true;
+      banderaExistoSync = false;
       notifyListeners();
       return exitoso;
     } else {
       procesocargando = false;
       procesoterminado = true;
       procesoexitoso = false;
+      banderaExistoSync = false;
       notifyListeners();
       return exitoso;
     }

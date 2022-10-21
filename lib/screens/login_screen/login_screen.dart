@@ -251,6 +251,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 );
                                 if (loginResponseEmiWeb != null) {
                                   //Se descargan los roles desde Emi Web
+                                  rolesEmiWebProvider.exitoso = true;
                                   rolesEmiWebProvider.procesoCargando(true);
                                   rolesEmiWebProvider.procesoTerminado(false);
                                   rolesEmiWebProvider.procesoExitoso(false);
@@ -260,6 +261,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   if (await booleanoEmiWeb) {
                                     //Se descargan los roles desde Pocketbase
                                     print("Se ha realizado con éxito el proceso de Roles Emi Web");
+                                    rolesPocketbaseProvider.exitoso = true;
                                     rolesPocketbaseProvider.procesoCargando(true);
                                     rolesPocketbaseProvider.procesoTerminado(false);
                                     rolesPocketbaseProvider.procesoExitoso(false);
@@ -436,6 +438,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 } else {
                                   print('Usuario no existente');
                                   if (dataBase.catalogoProyectoBox.isEmpty()) {
+                                    rolesPocketbaseProvider.exitoso = true;
                                     rolesPocketbaseProvider.procesoCargando(true);
                                     rolesPocketbaseProvider.procesoTerminado(false);
                                     rolesPocketbaseProvider.procesoExitoso(false);

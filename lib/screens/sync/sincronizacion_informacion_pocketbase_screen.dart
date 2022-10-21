@@ -24,6 +24,7 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
     // TODO: implement initState
     super.initState();
       setState(() {
+        context.read<SyncProviderPocketbase>().exitoso = true;
         context.read<SyncProviderPocketbase>().procesoCargando(true);
         context.read<SyncProviderPocketbase>().procesoTerminado(false);
         context.read<SyncProviderPocketbase>().procesoExitoso(false);

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_prod_emprendedor_by_emprendedor_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_token_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/post_registro_exitoso_emi_web.dart';
 import 'package:bizpro_app/objectbox.g.dart';
@@ -74,7 +75,6 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       return false;
     }
   }
-
 
   Future<bool> executeInstrucciones(List<Bitacora> instruccionesBitacora) async {
     if (await getTokenOAuth()) {
@@ -207,6 +207,53 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               i = instruccionesBitacora.length;
               break;
             }
+          case "syncAddProductoEmprendedor":
+            print("Entro al caso de syncAddProductoEmprendedor Emi Web");
+            final productoEmprendedorToSync = getFirstProductoEmprendedor(dataBase.productosEmpBox.getAll(), instruccionesBitacora[i].id);
+            if(productoEmprendedorToSync != null){
+              var result = await syncAddProductoEmprendedor(productoEmprendedorToSync, instruccionesBitacora[i].id);
+              print("Result de syncAddProductoEmprendedor: $result");
+              if (result) {
+                banderasExistoSync.add(result);    
+                continue; 
+              } else {
+                //Salimos del bucle
+                banderasExistoSync.add(false);
+                i = instruccionesBitacora.length;
+                break;
+              }       
+            } else {
+              //Salimos del bucle
+              banderasExistoSync.add(false);
+              i = instruccionesBitacora.length;
+              break;
+            }
+          case "syncAddVenta":
+            print("Entro al caso de syncAddVenta Emi Web");
+            final ventaToSync = getFirstVenta(dataBase.ventasBox.getAll(), instruccionesBitacora[i].id);
+            if(ventaToSync != null){
+              var result = await syncAddVenta(ventaToSync, instruccionesBitacora[i].id);
+              print("Result de syncAddVenta: $result");
+              if (result) {
+                banderasExistoSync.add(result);    
+                continue; 
+              } else {
+                //Salimos del bucle
+                banderasExistoSync.add(false);
+                i = instruccionesBitacora.length;
+                break;
+              }       
+            } else {
+              //Salimos del bucle
+              banderasExistoSync.add(false);
+              i = instruccionesBitacora.length;
+              break;
+            }
+          case "syncAddProductoVendido":
+            print("Entro al caso de syncAddProductoVendido Emi Web");
+            var result = syncAddProductoVendido(instruccionesBitacora[i].id);
+            banderasExistoSync.add(result);
+            continue;
           case "syncUpdateFaseEmprendimiento":
             print("Entro al caso de syncUpdateFaseEmprendimiento Emi Web");
             final emprendimientoToSync = getFirstEmprendimiento(dataBase.emprendimientosBox.getAll(), instruccionesBitacora[i].id);
@@ -296,6 +343,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         procesocargando = false;
         procesoterminado = true;
         procesoexitoso = true;
+        banderasExistoSync.clear();
         dataBase.bitacoraBox.removeAll(); //TOD0: Quitar instrucción cuando se hayan colocado todos los casos de instrucciones.
         notifyListeners();
         return exitoso;
@@ -304,6 +352,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         procesocargando = false;
         procesoterminado = true;
         procesoexitoso = false;
+        banderasExistoSync.clear();
         notifyListeners();
         return exitoso;
       }
@@ -312,6 +361,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       procesocargando = false;
       procesoterminado = true;
       procesoexitoso = false;
+      banderasExistoSync.clear();
       notifyListeners();
       return false;
     }
@@ -741,7 +791,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     }
 }
 
- Future<bool> syncAddConsultoria(Consultorias consultoria, int idInstruccionBitacora) async {
+  Future<bool> syncAddConsultoria(Consultorias consultoria, int idInstruccionBitacora) async {
     print("Estoy en El syncAddConsultoria de Emi Web");
     try {
       final tareaToSync = dataBase.tareasBox.get(consultoria.tareas.first.id);
@@ -794,7 +844,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             print("Se ha removido la instrucción");
             return true;
             default: //No se realizo con éxito el post
-              print("Error en postear jornada Emi Web");
+              print("Error en postear consultoría Emi Web");
               return false;
           }       
         } else {
@@ -804,8 +854,8 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           return true;
         }
       } else {
-        //No existe una tarea asociada a la jornada de forma local
-        print("No existe una tarea asociada a la jornada de forma local");
+        //No existe una tarea asociada a la consultoría de forma local
+        print("No existe una tarea asociada a la consultoría de forma local");
         return false;
       }
     } catch (e) { //Fallo en el momento se sincronizar
@@ -813,6 +863,190 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       return false;
     }
 }
+
+  Future<bool> syncAddProductoEmprendedor(ProductosEmp productoEmp, int idInstruccionBitacora) async {
+    print("Estoy en El syncAddProductoEmprendedor de Emi Web");
+    try {
+      //Verificamos que no se haya posteado anteriormente el producto Emprendedor
+      if (productoEmp.idEmiWeb == null) {
+        // Primero creamos el producto Emprendedor
+        final crearProductoEmprendedorUri =
+          Uri.parse('$baseUrlEmiWebServices/productos/emprendedores/registro/crear');
+        final headers = ({
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $tokenGlobal',
+        });
+        final responsePostProductoEmprendedor = await post(crearProductoEmprendedorUri, 
+        headers: headers,
+        body: jsonEncode({
+          "idUsuario": productoEmp.emprendimientos.target!.usuario.target!.idEmiWeb,
+          "nombreUsuario": "${productoEmp.emprendimientos
+          .target!.usuario.target!.nombre} ${productoEmp.emprendimientos
+          .target!.usuario.target!.apellidoP} ${productoEmp.emprendimientos
+          .target!.usuario.target!.apellidoM}",
+          "idEmprendedor": productoEmp.emprendimientos.target!.emprendedor.target!.idEmiWeb,
+          "producto": productoEmp.nombre,
+          "idEmprendimiento": productoEmp.emprendimientos.target!.idEmiWeb,
+          "idUnidadMedida": productoEmp.unidadMedida.target!.idEmiWeb,
+          "idDocumento": 1, //TODO: Crear el documento corresponsiente y asociarlo
+          "descripcion": productoEmp.descripcion,
+          "costoUnidadMedida": productoEmp.costo,
+        }));
+        print(responsePostProductoEmprendedor.statusCode);
+        print(responsePostProductoEmprendedor.body);
+        print("Respuesta Post Producto Emprendedor");
+        switch (responsePostProductoEmprendedor.statusCode) {
+          case 200:
+            print("Caso 200 en Emi Web Producto Emprendedor");
+            //Segundo se recupera el id Emi Web del Producto Emprendedor mediante otro API
+            final url =
+              Uri.parse('$baseUrlEmiWebServices/productosEmprendedor?idEmprendedor=${productoEmp.emprendimientos.target!.emprendedor.target!.idEmiWeb}');
+            final headers = ({
+              "Content-Type": "application/json",
+              'Authorization': 'Bearer $tokenGlobal',
+            });
+            var responseIdProductoEmprendedor = await get(
+              url,
+              headers: headers
+            );
+            print(responseIdProductoEmprendedor.statusCode);
+            print(responseIdProductoEmprendedor.body);
+            print("Respuesta Get Productos Emprendedor");
+            switch(responseIdProductoEmprendedor.statusCode) {
+              case 200:
+                final responsePostProductosEmprendedorParse = getProdEmprendedorByEmprendedorEmiWebFromMap(
+                const Utf8Decoder().convert(responseIdProductoEmprendedor.bodyBytes));
+                for(var i = 0; i < responsePostProductosEmprendedorParse.payload!.toList().length; i++){
+                  if (productoEmp.nombre == responsePostProductosEmprendedorParse.payload![i].producto &&
+                      productoEmp.costo == responsePostProductosEmprendedorParse.payload![i].costoUnidadMedida &&
+                      productoEmp.unidadMedida.target!.unidadMedida == responsePostProductosEmprendedorParse.payload![i].unidadMedida) {
+                    productoEmp.idEmiWeb = responsePostProductosEmprendedorParse.payload![i].idProductoEmprendedor.toString();
+                    dataBase.productosEmpBox.put(productoEmp);
+                    print("Se hace put al producto emprendedor");
+                    //Se elimina la instrucción de la bitacora
+                    dataBase.bitacoraBox.remove(idInstruccionBitacora);
+                    print("Después de remover la instrucción");
+                    print("Tamaño banderas: ${banderasExistoSync.length}");
+                    return true;
+                  }
+                }
+                //No se encontró ningún producto con las caracerísticas establecidas
+                return false;
+              default:
+                return false;
+            }
+          default: //No se realizo con éxito el post
+            return false;
+        }       
+      } else {
+        //Ya se ha posteado anteriormente
+        //Se elimina la instrucción de la bitacora
+        dataBase.bitacoraBox.remove(idInstruccionBitacora);
+        return true;
+      }
+    } catch (e) { //Fallo en el momento se sincronizar
+     print("Catch de syncAddProductoEmprendedor: $e");
+      return false;
+    }
+}
+
+  Future<bool> syncAddVenta(Ventas venta, int idInstruccionBitacora) async {
+    print("Estoy en El syncAddVenta de Emi Web");
+    try {
+      return true;
+      // //Verificamos que no se haya posteado anteriormente la venta
+      // if (venta.idEmiWeb == null) {
+      //   //Creamos la venta asociada a la primera tarea creada
+      //   final crearVentaUri =
+      //     Uri.parse('$baseUrlEmiWebServices/ventas');
+      //   final headers = ({
+      //     "Content-Type": "application/json",
+      //     'Authorization': 'Bearer $tokenGlobal',
+      //   });
+
+      //   final responsePostVenta = await post(crearVentaUri, 
+      //   headers: headers,
+      //   body: jsonEncode({   
+      //     "idUsuarioRegistra": venta.emprendimiento.target!.usuario.target!.idEmiWeb,
+      //     "usuarioRegistra": "${venta.emprendimiento
+      //     .target!.usuario.target!.nombre} ${venta.emprendimiento
+      //     .target!.usuario.target!.apellidoP} ${venta.emprendimiento
+      //     .target!.usuario.target!.apellidoM}",
+      //     "idProyecto": venta.emprendimiento.target!.idEmiWeb,
+      //     "fechaInicio": DateFormat("yyyy-MM-ddTHH:mm:ss").format(venta.fechaInicio),
+      //     "fechaTermino": DateFormat("yyyy-MM-ddTHH:mm:ss").format(venta.fechaTermino),
+      //     "total": venta.total,
+      //     "ventaCrearRequestList": [
+      //       {
+      //         "idProductoEmprendedor": "<number>",
+      //         "cantidadVendida": "<number>",
+      //         "precioVenta": "<number>"
+      //       }
+            
+      //     "idUsuario": consultoria.emprendimiento.target!.usuario.target!.idEmiWeb,
+      //     "nombreUsuario": "${consultoria.emprendimiento
+      //     .target!.usuario.target!.nombre} ${consultoria.emprendimiento
+      //     .target!.usuario.target!.apellidoP} ${consultoria.emprendimiento
+      //     .target!.usuario.target!.apellidoM}",
+      //     "idCatAmbito": consultoria.ambitoConsultoria.target!.idEmiWeb,
+      //     "idCatAreaCirculo": consultoria.areaCirculo.target!.idEmiWeb,
+      //     "asignarTarea": consultoria.tareas.first.tarea,
+      //     "proximaVisita": DateFormat("yyyy-MM-dd").format(consultoria.tareas.first.fechaRevision),
+      //     "idProyecto": consultoria.emprendimiento.target!.idEmiWeb,
+      //     "archivado": false, //Es falso por que apenas la estamos dando de alta
+      //     "fechaRegistro": DateFormat("yyyy-MM-ddTHH:mm:ss").format(consultoria.tareas.first.fechaRegistro),
+      //   }));
+      //   print(responsePostVenta.statusCode);
+      //   print(responsePostVenta.body);
+      //   print("Respuesta Post Consultoria");
+      //   switch (responsePostVenta.statusCode) {
+      //     case 200:
+      //     print("Caso 200 en Emi Web Consultoría");
+      //     //Se recupera el id Emi Web de la Consultoría que será el mismo id para la Tarea
+      //     final responsePostVentaParse = postRegistroExitosoEmiWebFromMap(
+      //     const Utf8Decoder().convert(responsePostVenta.bodyBytes));
+      //     print("Se convierte a utf8 exitosamente");
+      //     consultoria.idEmiWeb = responsePostVentaParse.payload!.id.toString();
+      //       print("Se recupera el idEmiWeb");
+      //     dataBase.consultoriasBox.put(consultoria);
+      //     print("Se hace put a la consultoria");
+      //     //Segundo creamos la Tarea
+      //     //Se recupera el id Emi Web de la Tarea
+      //     tareaToSync.idEmiWeb = responsePostVentaParse.payload!.id.toString();
+      //     dataBase.tareasBox.put(tareaToSync);
+      //     //Se elimina la instrucción de la bitacora
+      //     dataBase.bitacoraBox.remove(idInstruccionBitacora);
+      //     print("Se ha removido la instrucción");
+      //     return true;
+      //     default: //No se realizo con éxito el post
+      //       print("Error en postear consultoría Emi Web");
+      //       return false;
+      //   }       
+      // } else {
+      //   //Ya se ha posteado anteriormente
+      //   //Se elimina la instrucción de la bitacora
+      //   dataBase.bitacoraBox.remove(idInstruccionBitacora);
+      //   return true;
+      // }
+    } catch (e) { //Fallo en el momento se sincronizar
+     print("Catch de syncAddVenta: $e");
+      return false;
+    }
+}
+
+  bool syncAddProductoVendido(int idInstruccionBitacora) {
+    print("Estoy en El syncAddProductoVendido de Emi Web");
+    try {
+      //Se elimina la instrucción de la bitacora
+      print("Elimino Instrucción de bitacora");
+      dataBase.bitacoraBox.remove(idInstruccionBitacora);
+      return true;
+    } catch (e) {
+      print('ERROR - function syncAddProductoVendido(): $e');
+      return false;
+    }
+  }
+
 
   Future<bool> syncUpdateFaseEmprendimiento(Emprendimientos emprendimiento, Bitacora bitacora) async {
     print("Estoy en El syncUpdateFaseEmprendimiento en Emi Web");

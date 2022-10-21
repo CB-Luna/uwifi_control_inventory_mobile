@@ -23,6 +23,7 @@ class _SincronizacionInformacionEmiWebScreenState extends State<SincronizacionIn
     // TODO: implement initState
     super.initState();
       setState(() {
+        context.read<SyncProviderEmiWeb>().exitoso = true;
         context.read<SyncProviderEmiWeb>().procesoCargando(true);
         context.read<SyncProviderEmiWeb>().procesoTerminado(false);
         context.read<SyncProviderEmiWeb>().procesoExitoso(false);

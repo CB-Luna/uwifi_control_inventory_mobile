@@ -76,12 +76,13 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
       procesocargando = false;
       procesoterminado = true;
       procesoexitoso = true;
+      banderasExistoSync.clear();
       notifyListeners();
     } else {
       procesocargando = false;
       procesoterminado = true;
       procesoexitoso = false;
-      clearDataBase();
+      banderasExistoSync.clear();
       notifyListeners();
     }
   }
