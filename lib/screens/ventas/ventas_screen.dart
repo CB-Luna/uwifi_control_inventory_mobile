@@ -504,6 +504,30 @@ class _VentasScreenState extends State<VentasScreen> {
                                                         MainAxisAlignment.center,
                                                     children: [
                                                       Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                      .fromSTEB(5,
+                                                                          0, 0, 0),
+                                                              child:Row(
+                                                                mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceAround,
+                                                                children: 
+                                                                  [Padding(
+                                                                   padding: EdgeInsets.all(8.0),
+                                                                    child: Text(
+                                                                      emprendedor,
+                                                                      style: AppTheme
+                                                                              .of(context)
+                                                                          .bodyText1,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                      Padding(
                                                         padding:
                                                             const EdgeInsetsDirectional
                                                                 .fromSTEB(
@@ -515,34 +539,21 @@ class _VentasScreenState extends State<VentasScreen> {
                                                               MainAxisAlignment
                                                                   .spaceAround,
                                                           children: [
-                                                            SizedBox(
-                                                              width: 30,
-                                                              height: 30,
-                                                              
+                                                            
+                                                              Padding(
+                                                                padding: EdgeInsets.all(8.0),
                                                               child: Text(
                                                                 dateTimeFormat("dd/MMM/yyyy", venta.fechaInicio)
                                                               )
-                                                            ),
-                                                            SizedBox(
-                                                              width:30,
-                                                              height:30,
+                                                        ),
+                                                            Padding(
+                                                              padding: EdgeInsets.all(8.0),
                                                               
                                                               child: Text(
                                                                 dateTimeFormat("dd/MMM/yyyy", venta.fechaTermino)
                                                               ),
                                                             ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(5,
-                                                                          0, 0, 0),
-                                                              child: Text(
-                                                                emprendedor,
-                                                                style: AppTheme
-                                                                        .of(context)
-                                                                    .bodyText1,
-                                                              ),
-                                                            ),
+                                                            
                                                           ],
                                                         ),
                                                       ),

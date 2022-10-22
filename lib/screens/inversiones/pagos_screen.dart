@@ -23,18 +23,40 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:bizpro_app/screens/widgets/toggle_icon.dart';
 
-
 class PagosScreen extends StatefulWidget {
   final int idInversion;
-  
+
   const PagosScreen({
-    Key? key, 
+    Key? key,
     required this.idInversion,
-    }) : super(key: key);
+  }) : super(key: key);
 
   @override
-  _PagosScreenState createState() =>
-      _PagosScreenState();
+  _PagosScreenState createState() => _PagosScreenState();
+}
+
+DataRow _getDataRow(ProdCotizados productos, RecepcionYEntregaController recepcionYentregaProvider) {
+  return DataRow(
+   // selected: recepcionYentregaProvider.inversionXProdCotizadosTemp!.aceptado,
+    onSelectChanged: (value) {
+      recepcionYentregaProvider.inversionXProdCotizadosTemp!.aceptado =
+          !recepcionYentregaProvider.inversionXProdCotizadosTemp!.aceptado;
+          value = !recepcionYentregaProvider.inversionXProdCotizadosTemp!.aceptado;
+    },
+    cells: <DataCell>[
+      DataCell(
+        Text(
+          productos.productosProv.target!.nombre,
+        ),
+      ),
+      DataCell(Text(
+        productos.cantidad.toString(),
+      )),
+      DataCell(Text(
+        currencyFormat.format((productos.costoTotal).toStringAsFixed(2)),
+      )),
+    ],
+  );
 }
 
 class _PagosScreenState extends State<PagosScreen> {
@@ -56,23 +78,28 @@ class _PagosScreenState extends State<PagosScreen> {
     actualInversion = dataBase.inversionesBox.get(widget.idInversion);
     if (actualInversion != null) {
       if (actualInversion!.imagenes.isNotEmpty) {
-      imageFirma = actualInversion!.imagenes.first.imagenes;
-      imageProducto = actualInversion!.imagenes.last.imagenes;
+        imageFirma = actualInversion!.imagenes.first.imagenes;
+        imageProducto = actualInversion!.imagenes.last.imagenes;
       } else {
         imageFirma = "";
         imageProducto = "";
       }
       listPagos = actualInversion!.pagos.toList();
-      montoPagar = TextEditingController(text: currencyFormat.format(actualInversion!.montoPagar.toStringAsFixed(2)));
-      saldo = TextEditingController(text: currencyFormat.format(actualInversion!.saldo.toStringAsFixed(2)));
+      montoPagar = TextEditingController(
+          text: currencyFormat
+              .format(actualInversion!.montoPagar.toStringAsFixed(2)));
+      saldo = TextEditingController(
+          text:
+              currencyFormat.format(actualInversion!.saldo.toStringAsFixed(2)));
       montoAbonado = TextEditingController();
       totalProyecto = 0.00;
       inversionesXprodCotizados = actualInversion!.inversionXprodCotizados.last;
       setState(() {
-        totalProyecto = context.read<RecepcionYEntregaController>().getProdCotizadosEinversionXprodCotizados(
-          inversionesXprodCotizados!.prodCotizados,
-          inversionesXprodCotizados!
-        );
+        totalProyecto = context
+            .read<RecepcionYEntregaController>()
+            .getProdCotizadosEinversionXprodCotizados(
+                inversionesXprodCotizados!.prodCotizados,
+                inversionesXprodCotizados!);
       });
     }
   }
@@ -104,7 +131,8 @@ class _PagosScreenState extends State<PagosScreen> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(20, 40, 20, 0),
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(20, 40, 20, 0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -122,7 +150,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => MainTabOpcionesScreen(
-                                    emprendimiento: actualInversion!.emprendimiento.target!,
+                                    emprendimiento:
+                                        actualInversion!.emprendimiento.target!,
                                     idInversion: actualInversion!.id,
                                   ),
                                 ),
@@ -148,9 +177,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                         fontSize: 16,
                                         fontWeight: FontWeight.w300,
                                         useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(
-                                                AppTheme.of(context)
-                                                    .bodyText1Family),
+                                            .containsKey(AppTheme.of(context)
+                                                .bodyText1Family),
                                       ),
                                 ),
                               ],
@@ -169,15 +197,12 @@ class _PagosScreenState extends State<PagosScreen> {
                         Text(
                           'Recepción y Entrega de Inversión',
                           textAlign: TextAlign.center,
-                          style: AppTheme.of(context)
-                              .bodyText1
-                              .override(
-                                fontFamily: AppTheme.of(context)
-                                    .bodyText1Family,
+                          style: AppTheme.of(context).bodyText1.override(
+                                fontFamily:
+                                    AppTheme.of(context).bodyText1Family,
                                 fontSize: 20,
                                 useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                    AppTheme.of(context)
-                                        .bodyText1Family),
+                                    AppTheme.of(context).bodyText1Family),
                               ),
                         ),
                       ],
@@ -191,7 +216,8 @@ class _PagosScreenState extends State<PagosScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 5, 0, 0),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               children: [
@@ -204,44 +230,41 @@ class _PagosScreenState extends State<PagosScreen> {
                                     width: double.infinity,
                                     color: const Color(0x00F2F4F8),
                                     child: ExpandableNotifier(
-                                      initialExpanded: actualInversion!.estadoInversion.target!.estado == "Comprada",
+                                      initialExpanded: actualInversion!
+                                              .estadoInversion.target!.estado ==
+                                          "Comprada",
                                       child: ExpandablePanel(
                                         header: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 8, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 0, 8, 0),
                                               child: FaIcon(
                                                 FontAwesomeIcons.handHolding,
-                                                color:
-                                                    AppTheme.of(context)
-                                                        .secondaryText,
+                                                color: AppTheme.of(context)
+                                                    .secondaryText,
                                                 size: 24,
                                               ),
                                             ),
                                             Text(
                                               'Recepción de Inversión',
-                                              style:
-                                                  AppTheme.of(context)
-                                                      .title1
-                                                      .override(
-                                                        fontFamily:
-                                                            AppTheme.of(
-                                                                    context)
-                                                                .title1Family,
-                                                        color:
-                                                            AppTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        fontSize: 20,
-                                                        useGoogleFonts: GoogleFonts
-                                                                .asMap()
-                                                            .containsKey(
-                                                                AppTheme.of(
-                                                                        context)
-                                                                    .title1Family),
-                                                      ),
+                                              style: AppTheme.of(context)
+                                                  .title1
+                                                  .override(
+                                                    fontFamily:
+                                                        AppTheme.of(context)
+                                                            .title1Family,
+                                                    color: AppTheme.of(context)
+                                                        .primaryText,
+                                                    fontSize: 20,
+                                                    useGoogleFonts: GoogleFonts
+                                                            .asMap()
+                                                        .containsKey(
+                                                            AppTheme.of(context)
+                                                                .title1Family),
+                                                  ),
                                             ),
                                           ],
                                         ),
@@ -264,43 +287,57 @@ class _PagosScreenState extends State<PagosScreen> {
                                                   0.9,
                                               height: 1,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    AppTheme.of(context)
-                                                        .secondaryText,
+                                                color: AppTheme.of(context)
+                                                    .secondaryText,
                                                 borderRadius:
                                                     BorderRadius.circular(8),
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(0, 10, 0, 0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'Producto',
-                                                    style: AppTheme.of(
-                                                            context)
-                                                        .bodyText1,
-                                                  ),
-                                                  Text(
-                                                    'Cantidad',
-                                                    style: AppTheme.of(
-                                                            context)
-                                                        .bodyText1,
-                                                  ),
-                                                  Text(
-                                                    'Costo final',
-                                                    style: AppTheme.of(
-                                                            context)
-                                                        .bodyText1,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
+                                                padding: const EdgeInsetsDirectional
+                                                        .fromSTEB(0, 10, 0,
+                                                    0), // Inicio de columnas de datatable
+                                                child: DataTable(
+                                                  columnSpacing: 6,
+                                                  showCheckboxColumn: true,
+                                                  columns: <DataColumn>[
+                                                    DataColumn(
+                                                        label: Expanded(
+                                                            child: Text(
+                                                      'Producto',
+                                                      style:
+                                                          AppTheme.of(context)
+                                                              .bodyText1,
+                                                    ))),
+                                                    DataColumn(
+                                                        label: Expanded(
+                                                            child: Text(
+                                                      'Cantidad',
+                                                      style:
+                                                          AppTheme.of(context)
+                                                              .bodyText1,
+                                                    ))),
+                                                    DataColumn(
+                                                        label: Expanded(
+                                                      child: Text(
+                                                        'Costo final',
+                                                        style:
+                                                            AppTheme.of(context)
+                                                                .bodyText1,
+                                                      ),
+                                                    ))
+                                                  ],
+                                                  rows: List.generate(
+                                                      inversionesXprodCotizados!
+                                                          .prodCotizados
+                                                          .toList()
+                                                          .length,
+                                                      ((index) => _getDataRow(
+                                                          inversionesXprodCotizados!
+                                                                  .prodCotizados
+                                                                  .toList()[
+                                                              index],recepcionYentregaProvider)))
+                                                )),
                                             Container(
                                               width: MediaQuery.of(context)
                                                       .size
@@ -308,152 +345,193 @@ class _PagosScreenState extends State<PagosScreen> {
                                                   0.9,
                                               height: 1,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    AppTheme.of(context)
-                                                        .secondaryText,
+                                                color: AppTheme.of(context)
+                                                    .secondaryText,
                                                 borderRadius:
                                                     BorderRadius.circular(8),
                                               ),
                                             ),
                                             IgnorePointer(
-                                              ignoring: actualInversion!.estadoInversion.target!.estado != "Comprada" ||
-                                              actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio"
-                                              || actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Emprendedor",
-                                              child: Builder(
-                                                builder: (context) {
-                                                  return ListView.builder(
-                                                    padding: EdgeInsets.zero,
-                                                    shrinkWrap: true,
-                                                    scrollDirection: Axis.vertical,
-                                                    controller: ScrollController(),
-                                                    itemCount: recepcionYentregaProvider.prodCotizadosTemp.length,
-                                                    itemBuilder: (context, index) {
-                                                      final productoCot = recepcionYentregaProvider.prodCotizadosTemp[index];
-                                                      return Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment.start,
-                                                        children: [
-                                                          ToggleIcon(
-                                                            onPressed: () {
-                                                              setState(() {
-                                                                recepcionYentregaProvider
-                                                                .prodCotizadosTemp[index]
-                                                                .aceptado = 
-                                                                !recepcionYentregaProvider
-                                                                .prodCotizadosTemp[index]
-                                                                .aceptado;
-                                                              });
-                                                            },
-                                                            value: recepcionYentregaProvider
-                                                                    .prodCotizadosTemp[index]
-                                                                    .aceptado,
-                                                            onIcon: Icon(
-                                                              Icons.check_box,
-                                                              color:
-                                                                  AppTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                              size: 25,
-                                                            ),
-                                                            offIcon: Icon(
-                                                              Icons
-                                                                  .check_box_outline_blank,
-                                                              color:
-                                                                  AppTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                              size: 25,
-                                                            ),
-                                                          ),
-                                                          Expanded(
-                                                            child: Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize.max,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment.spaceBetween,
-                                                              children: [
-                                                                Text(
-                                                                  productoCot.productosProv.target!.nombre,
-                                                                  style: AppTheme
-                                                                          .of(context)
-                                                                      .bodyText1
-                                                                      .override(
-                                                                        fontFamily: AppTheme.of(
-                                                                                context)
-                                                                            .bodyText1Family,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .normal,
-                                                                        useGoogleFonts: GoogleFonts
-                                                                                .asMap()
-                                                                            .containsKey(
-                                                                                AppTheme.of(context)
-                                                                                    .bodyText1Family),
-                                                                      ),
-                                                                ),
-                                                                Text(
-                                                                  productoCot.cantidad.toString(),
-                                                                  style: AppTheme
-                                                                          .of(context)
-                                                                      .bodyText1
-                                                                      .override(
-                                                                        fontFamily: AppTheme.of(
-                                                                                context)
-                                                                            .bodyText1Family,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .normal,
-                                                                        useGoogleFonts: GoogleFonts
-                                                                                .asMap()
-                                                                            .containsKey(
-                                                                                AppTheme.of(context)
-                                                                                    .bodyText1Family),
-                                                                      ),
-                                                                ),
-                                                                Text(
-                                                                  currencyFormat.format((productoCot.costoTotal).toStringAsFixed(2)),
-                                                                  style: AppTheme
-                                                                          .of(context)
-                                                                      .bodyText1
-                                                                      .override(
-                                                                        fontFamily: AppTheme.of(
-                                                                                context)
-                                                                            .bodyText1Family,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .normal,
-                                                                        useGoogleFonts: GoogleFonts
-                                                                                .asMap()
-                                                                            .containsKey(
-                                                                                AppTheme.of(context)
-                                                                                    .bodyText1Family),
-                                                                      ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      );
-                                                    },
-                                                  );
-                                                }
-                                              ),
+                                              ignoring: actualInversion!
+                                                          .estadoInversion
+                                                          .target!
+                                                          .estado !=
+                                                      "Comprada" ||
+                                                  actualInversion!
+                                                          .emprendimiento
+                                                          .target!
+                                                          .usuario
+                                                          .target!
+                                                          .rol
+                                                          .target!
+                                                          .rol ==
+                                                      "Amigo del Cambio" ||
+                                                  actualInversion!
+                                                          .emprendimiento
+                                                          .target!
+                                                          .usuario
+                                                          .target!
+                                                          .rol
+                                                          .target!
+                                                          .rol ==
+                                                      "Emprendedor",
+                                              // child: Builder(
+                                              //   builder: (context) {
+                                              //     return ListView.builder( //entrada de datos a datatable
+                                              //       padding: EdgeInsets.zero,
+                                              //       shrinkWrap: true,
+                                              //       scrollDirection: Axis.vertical,
+                                              //       controller: ScrollController(),
+                                              //       itemCount: recepcionYentregaProvider.prodCotizadosTemp.length,
+                                              //       itemBuilder: (context, index) {
+                                              //         final productoCot = recepcionYentregaProvider.prodCotizadosTemp[index];
+                                              //         return Row(
+                                              //           mainAxisSize:
+                                              //               MainAxisSize.max,
+                                              //           mainAxisAlignment:
+                                              //               MainAxisAlignment.start,
+                                              //           children: [
+                                              //             ToggleIcon(
+                                              //               onPressed: () {
+                                              //                 setState(() {
+                                              //                   recepcionYentregaProvider
+                                              //                   .prodCotizadosTemp[index]
+                                              //                   .aceptado =
+                                              //                   !recepcionYentregaProvider
+                                              //                   .prodCotizadosTemp[index]
+                                              //                   .aceptado;
+                                              //                 });
+                                              //               },
+                                              //               value: recepcionYentregaProvider
+                                              //                       .prodCotizadosTemp[index]
+                                              //                       .aceptado,
+                                              //               onIcon: Icon(
+                                              //                 Icons.check_box,
+                                              //                 color:
+                                              //                     AppTheme.of(
+                                              //                             context)
+                                              //                         .primaryText,
+                                              //                 size: 25,
+                                              //               ),
+                                              //               offIcon: Icon(
+                                              //                 Icons
+                                              //                     .check_box_outline_blank,
+                                              //                 color:
+                                              //                     AppTheme.of(
+                                              //                             context)
+                                              //                         .primaryText,
+                                              //                 size: 25,
+                                              //               ),
+                                              //             ),
+                                              //             Expanded(
+                                              //               child: Row(
+                                              //                 mainAxisSize:
+                                              //                     MainAxisSize.max,
+                                              //                 mainAxisAlignment:
+                                              //                     MainAxisAlignment.spaceBetween,
+                                              //                 children: [
+                                              //                   Text(
+                                              //                     productoCot.productosProv.target!.nombre,
+                                              //                     style: AppTheme
+                                              //                             .of(context)
+                                              //                         .bodyText1
+                                              //                         .override(
+                                              //                           fontFamily: AppTheme.of(
+                                              //                                   context)
+                                              //                               .bodyText1Family,
+                                              //                           fontWeight:
+                                              //                               FontWeight
+                                              //                                   .normal,
+                                              //                           useGoogleFonts: GoogleFonts
+                                              //                                   .asMap()
+                                              //                               .containsKey(
+                                              //                                   AppTheme.of(context)
+                                              //                                       .bodyText1Family),
+                                              //                         ),
+                                              //                   ),
+                                              //                   Text(
+                                              //                     productoCot.cantidad.toString(),
+                                              //                     style: AppTheme
+                                              //                             .of(context)
+                                              //                         .bodyText1
+                                              //                         .override(
+                                              //                           fontFamily: AppTheme.of(
+                                              //                                   context)
+                                              //                               .bodyText1Family,
+                                              //                           fontWeight:
+                                              //                               FontWeight
+                                              //                                   .normal,
+                                              //                           useGoogleFonts: GoogleFonts
+                                              //                                   .asMap()
+                                              //                               .containsKey(
+                                              //                                   AppTheme.of(context)
+                                              //                                       .bodyText1Family),
+                                              //                         ),
+                                              //                   ),
+                                              //                   Text(
+                                              //                     currencyFormat.format((productoCot.costoTotal).toStringAsFixed(2)),
+                                              //                     style: AppTheme
+                                              //                             .of(context)
+                                              //                         .bodyText1
+                                              //                         .override(
+                                              //                           fontFamily: AppTheme.of(
+                                              //                                   context)
+                                              //                               .bodyText1Family,
+                                              //                           fontWeight:
+                                              //                               FontWeight
+                                              //                                   .normal,
+                                              //                           useGoogleFonts: GoogleFonts
+                                              //                                   .asMap()
+                                              //                               .containsKey(
+                                              //                                   AppTheme.of(context)
+                                              //                                       .bodyText1Family),
+                                              //                         ),
+                                              //                   ),
+                                              //                 ],
+                                              //               ),
+                                              //             ),
+                                              //           ],
+                                              //         );
+                                              //       },
+                                              //     );
+                                              //   }
+                                              // ),
                                             ),
                                             IgnorePointer(
-                                              ignoring: actualInversion!.estadoInversion.target!.estado != "Comprada" || 
-                                              actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio"
-                                              || actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Emprendedor",
+                                              ignoring: actualInversion!
+                                                          .estadoInversion
+                                                          .target!
+                                                          .estado !=
+                                                      "Comprada" ||
+                                                  actualInversion!
+                                                          .emprendimiento
+                                                          .target!
+                                                          .usuario
+                                                          .target!
+                                                          .rol
+                                                          .target!
+                                                          .rol ==
+                                                      "Amigo del Cambio" ||
+                                                  actualInversion!
+                                                          .emprendimiento
+                                                          .target!
+                                                          .usuario
+                                                          .target!
+                                                          .rol
+                                                          .target!
+                                                          .rol ==
+                                                      "Emprendedor",
                                               child: Container(
                                                 height: 50,
                                                 decoration: BoxDecoration(
-                                                  color: const Color(0x2D4672FF),
+                                                  color:
+                                                      const Color(0x2D4672FF),
                                                   borderRadius:
                                                       BorderRadius.circular(8),
                                                 ),
                                                 child: Column(
-                                                  mainAxisSize: MainAxisSize.max,
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
@@ -461,34 +539,35 @@ class _PagosScreenState extends State<PagosScreen> {
                                                       mainAxisSize:
                                                           MainAxisSize.max,
                                                       mainAxisAlignment:
-                                                          MainAxisAlignment.start,
+                                                          MainAxisAlignment
+                                                              .start,
                                                       children: [
                                                         ToggleIcon(
                                                           onPressed: () {
                                                             setState(() {
-                                                                recepcionYentregaProvider
-                                                                .inversionXProdCotizadosTemp!
-                                                                .aceptado = 
-                                                                !recepcionYentregaProvider
-                                                                .inversionXProdCotizadosTemp!
-                                                                .aceptado;
-                                                              });
+                                                              recepcionYentregaProvider
+                                                                      .inversionXProdCotizadosTemp!
+                                                                      .aceptado =
+                                                                  !recepcionYentregaProvider
+                                                                      .inversionXProdCotizadosTemp!
+                                                                      .aceptado;
+                                                            });
                                                           },
                                                           value: recepcionYentregaProvider
-                                                                .inversionXProdCotizadosTemp!
-                                                                .aceptado,
+                                                              .inversionXProdCotizadosTemp!
+                                                              .aceptado,
                                                           onIcon: Icon(
                                                             Icons.check_box,
-                                                            color: AppTheme
-                                                                    .of(context)
+                                                            color: AppTheme.of(
+                                                                    context)
                                                                 .primaryText,
                                                             size: 25,
                                                           ),
                                                           offIcon: Icon(
                                                             Icons
                                                                 .check_box_outline_blank,
-                                                            color: AppTheme
-                                                                    .of(context)
+                                                            color: AppTheme.of(
+                                                                    context)
                                                                 .primaryText,
                                                             size: 25,
                                                           ),
@@ -497,8 +576,11 @@ class _PagosScreenState extends State<PagosScreen> {
                                                           child: Padding(
                                                             padding:
                                                                 const EdgeInsetsDirectional
-                                                                    .fromSTEB(0,
-                                                                        0, 10, 0),
+                                                                        .fromSTEB(
+                                                                    0,
+                                                                    0,
+                                                                    10,
+                                                                    0),
                                                             child: Row(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -519,21 +601,23 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                           .max,
                                                                   children: [
                                                                     Padding(
-                                                                      padding: const EdgeInsetsDirectional
-                                                                          .fromSTEB(
+                                                                      padding:
+                                                                          const EdgeInsetsDirectional.fromSTEB(
                                                                               0,
                                                                               0,
                                                                               10,
                                                                               0),
-                                                                      child: Text(
+                                                                      child:
+                                                                          Text(
                                                                         'Total',
-                                                                        style: AppTheme.of(
-                                                                                context)
+                                                                        style: AppTheme.of(context)
                                                                             .bodyText1,
                                                                       ),
                                                                     ),
                                                                     Text(
-                                                                      currencyFormat.format(totalProyecto.toStringAsFixed(2)),
+                                                                      currencyFormat
+                                                                          .format(
+                                                                              totalProyecto.toStringAsFixed(2)),
                                                                       style: AppTheme.of(
                                                                               context)
                                                                           .bodyText1
@@ -559,100 +643,154 @@ class _PagosScreenState extends State<PagosScreen> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                                  0, 10, 0, 10),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 10, 0, 10),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
                                                 children: [
                                                   FFButtonWidget(
                                                     onPressed: () async {
-                                                      if (actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol != "Amigo del Cambio"
-                                                          && actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol != "Emprendedor") {
-                                                      if (actualInversion!.estadoInversion.target!.estado == "Comprada") {
-                                                        if ((!recepcionYentregaProvider
-                                                          .prodCotizadosTemp
-                                                          .every((element) => element.aceptado == true)) &&
-                                                          (recepcionYentregaProvider
-                                                          .inversionXProdCotizadosTemp!
-                                                          .aceptado == true)
-                                                      ) {
-                                                        snackbarKey.currentState
-                                                            ?.showSnackBar(const SnackBar(
-                                                          content: Text(
-                                                              "Para finalizar la recepción debes de seleccionar todos los productos."),
-                                                        ));                                                     
-                                                      } else {
-                                                        if (recepcionYentregaProvider
-                                                          .inversionXProdCotizadosTemp!
-                                                          .aceptado) {
-                                                          recepcionYentregaProvider.finishRecepcionInversion();
-                                                          await Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (context) => RecepcionInversionConcluida(
-                                                                idEmprendimiento: 
-                                                                  actualInversion!.emprendimiento.target!.id,
-                                                              ),
-                                                            ),
-                                                          );
-                                                          
-                                                        } else {
-                                                          recepcionYentregaProvider.updateRecepcionInversion();
-                                                          snackbarKey.currentState
-                                                            ?.showSnackBar(const SnackBar(
-                                                          content: Text(
-                                                              "Estado de productos actualizado."),
-                                                          )); 
-                                                          await Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (context) => InversionesScreen(
-                                                                idEmprendimiento: 
-                                                                  actualInversion!.emprendimiento.target!.id,
-                                                              ),
-                                                            ),
-                                                          );
-                                                        }
-                                                      }
-                                                      } else{
-                                                        snackbarKey.currentState
-                                                            ?.showSnackBar(const SnackBar(
-                                                          content: Text(
-                                                              "No puedes actualizar esta sección."),
-                                                          )); 
-                                                      }
-                                                    } else {
-                                                            snackbarKey.currentState
-                                                                ?.showSnackBar(const SnackBar(
+                                                      if (actualInversion!
+                                                                  .emprendimiento
+                                                                  .target!
+                                                                  .usuario
+                                                                  .target!
+                                                                  .rol
+                                                                  .target!
+                                                                  .rol !=
+                                                              "Amigo del Cambio" &&
+                                                          actualInversion!
+                                                                  .emprendimiento
+                                                                  .target!
+                                                                  .usuario
+                                                                  .target!
+                                                                  .rol
+                                                                  .target!
+                                                                  .rol !=
+                                                              "Emprendedor") {
+                                                        if (actualInversion!
+                                                                .estadoInversion
+                                                                .target!
+                                                                .estado ==
+                                                            "Comprada") {
+                                                          if ((!recepcionYentregaProvider
+                                                                  .prodCotizadosTemp
+                                                                  .every((element) =>
+                                                                      element
+                                                                          .aceptado ==
+                                                                      true)) &&
+                                                              (recepcionYentregaProvider
+                                                                      .inversionXProdCotizadosTemp!
+                                                                      .aceptado ==
+                                                                  true)) {
+                                                            snackbarKey
+                                                                .currentState
+                                                                ?.showSnackBar(
+                                                                    const SnackBar(
                                                               content: Text(
-                                                                  "Este usuario no tiene permisos para esta acción."),
+                                                                  "Para finalizar la recepción debes de seleccionar todos los productos."),
                                                             ));
-                                                    }
+                                                          } else {
+                                                            if (recepcionYentregaProvider
+                                                                .inversionXProdCotizadosTemp!
+                                                                .aceptado) {
+                                                              recepcionYentregaProvider
+                                                                  .finishRecepcionInversion();
+                                                              await Navigator
+                                                                  .push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          RecepcionInversionConcluida(
+                                                                    idEmprendimiento:
+                                                                        actualInversion!
+                                                                            .emprendimiento
+                                                                            .target!
+                                                                            .id,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            } else {
+                                                              recepcionYentregaProvider
+                                                                  .updateRecepcionInversion();
+                                                              snackbarKey
+                                                                  .currentState
+                                                                  ?.showSnackBar(
+                                                                      const SnackBar(
+                                                                content: Text(
+                                                                    "Estado de productos actualizado."),
+                                                              ));
+                                                              await Navigator
+                                                                  .push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          InversionesScreen(
+                                                                    idEmprendimiento:
+                                                                        actualInversion!
+                                                                            .emprendimiento
+                                                                            .target!
+                                                                            .id,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            }
+                                                          }
+                                                        } else {
+                                                          snackbarKey
+                                                              .currentState
+                                                              ?.showSnackBar(
+                                                                  const SnackBar(
+                                                            content: Text(
+                                                                "No puedes actualizar esta sección."),
+                                                          ));
+                                                        }
+                                                      } else {
+                                                        snackbarKey.currentState
+                                                            ?.showSnackBar(
+                                                                const SnackBar(
+                                                          content: Text(
+                                                              "Este usuario no tiene permisos para esta acción."),
+                                                        ));
+                                                      }
                                                     },
                                                     text: 'Aceptar',
                                                     icon: const Icon(
-                                                      Icons.check_circle_outline,
+                                                      Icons
+                                                          .check_circle_outline,
                                                       size: 15,
                                                     ),
                                                     options: FFButtonOptions(
                                                       width: 200,
                                                       height: 50,
-                                                      color: const Color(0xFF4672FF),
-                                                      textStyle: AppTheme.of(context)
+                                                      color: const Color(
+                                                          0xFF4672FF),
+                                                      textStyle: AppTheme.of(
+                                                              context)
                                                           .title3
                                                           .override(
-                                                            fontFamily: 'Poppins',
+                                                            fontFamily:
+                                                                'Poppins',
                                                             color: Colors.white,
                                                             fontSize: 16,
-                                                            fontWeight: FontWeight.w300,
+                                                            fontWeight:
+                                                                FontWeight.w300,
                                                           ),
                                                       elevation: 3,
-                                                      borderSide: const BorderSide(
-                                                        color: Color(0x002CC3F4),
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color:
+                                                            Color(0x002CC3F4),
                                                         width: 0,
                                                       ),
-                                                      borderRadius: BorderRadius.circular(8),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
                                                     ),
                                                   ),
                                                 ],
@@ -668,9 +806,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                               ExpandablePanelHeaderAlignment
                                                   .center,
                                           hasIcon: true,
-                                          iconColor:
-                                              AppTheme.of(context)
-                                                  .secondaryText,
+                                          iconColor: AppTheme.of(context)
+                                              .secondaryText,
                                         ),
                                       ),
                                     ),
@@ -685,44 +822,41 @@ class _PagosScreenState extends State<PagosScreen> {
                                     width: double.infinity,
                                     color: const Color(0x00F2F4F8),
                                     child: ExpandableNotifier(
-                                      initialExpanded: actualInversion!.estadoInversion.target!.estado == "Entregada Al Promotor",
+                                      initialExpanded: actualInversion!
+                                              .estadoInversion.target!.estado ==
+                                          "Entregada Al Promotor",
                                       child: ExpandablePanel(
                                         header: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 8, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 0, 8, 0),
                                               child: FaIcon(
                                                 FontAwesomeIcons.solidHandshake,
-                                                color:
-                                                    AppTheme.of(context)
-                                                        .secondaryText,
+                                                color: AppTheme.of(context)
+                                                    .secondaryText,
                                                 size: 20,
                                               ),
                                             ),
                                             Text(
                                               'Entrega de Inversión',
-                                              style:
-                                                  AppTheme.of(context)
-                                                      .title1
-                                                      .override(
-                                                        fontFamily:
-                                                            AppTheme.of(
-                                                                    context)
-                                                                .title1Family,
-                                                        color:
-                                                            AppTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        fontSize: 20,
-                                                        useGoogleFonts: GoogleFonts
-                                                                .asMap()
-                                                            .containsKey(
-                                                                AppTheme.of(
-                                                                        context)
-                                                                    .title1Family),
-                                                      ),
+                                              style: AppTheme.of(context)
+                                                  .title1
+                                                  .override(
+                                                    fontFamily:
+                                                        AppTheme.of(context)
+                                                            .title1Family,
+                                                    color: AppTheme.of(context)
+                                                        .primaryText,
+                                                    fontSize: 20,
+                                                    useGoogleFonts: GoogleFonts
+                                                            .asMap()
+                                                        .containsKey(
+                                                            AppTheme.of(context)
+                                                                .title1Family),
+                                                  ),
                                             ),
                                           ],
                                         ),
@@ -739,8 +873,9 @@ class _PagosScreenState extends State<PagosScreen> {
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 0, 5),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 0, 0, 5),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -749,164 +884,244 @@ class _PagosScreenState extends State<PagosScreen> {
                                                 children: [
                                                   Text(
                                                     'Firma de recibido*',
-                                                    style: AppTheme.of(
-                                                            context)
+                                                    style: AppTheme.of(context)
                                                         .bodyText1
                                                         .override(
-                                                          fontFamily:
-                                                              AppTheme.of(
-                                                                      context)
-                                                                  .bodyText1Family,
+                                                          fontFamily: AppTheme
+                                                                  .of(context)
+                                                              .bodyText1Family,
                                                           fontSize: 18,
                                                           fontWeight:
                                                               FontWeight.normal,
                                                           useGoogleFonts: GoogleFonts
                                                                   .asMap()
-                                                              .containsKey(
-                                                                  AppTheme.of(
-                                                                          context)
-                                                                      .bodyText1Family),
+                                                              .containsKey(AppTheme
+                                                                      .of(context)
+                                                                  .bodyText1Family),
                                                         ),
                                                   ),
                                                 ],
                                               ),
                                             ),
-                                            FormField(builder: (state){
-                                              return Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                        color: AppTheme.of(context)
-                                                            .primaryText,
-                                                        borderRadius: BorderRadius.circular(8),
-                                                        border: Border.all(
-                                                          width: 1.5,
+                                            FormField(
+                                              builder: (state) {
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(5, 0, 5, 0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: AppTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          border: Border.all(
+                                                            width: 1.5,
+                                                          ),
                                                         ),
-                                                      ),
-                                                      child: InkWell(
-                                                        onTap: () async {
-                                                          await Navigator.push(
-                                                            context,
-                                                            PageTransition(
-                                                              type: PageTransitionType.fade,
-                                                              child:
-                                                                  FlutterFlowExpandedImageView(
-                                                                image: imageFirma == "" ? Image.network(
-                                                                  'https://picsum.photos/seed/836/600',
-                                                                  fit: BoxFit.contain,
-                                                                ) 
-                                                                :
-                                                                Image.file(
-                                                                  File(imageFirma),
-                                                                  fit: BoxFit.contain,
+                                                        child: InkWell(
+                                                          onTap: () async {
+                                                            await Navigator
+                                                                .push(
+                                                              context,
+                                                              PageTransition(
+                                                                type:
+                                                                    PageTransitionType
+                                                                        .fade,
+                                                                child:
+                                                                    FlutterFlowExpandedImageView(
+                                                                  image: imageFirma ==
+                                                                          ""
+                                                                      ? Image
+                                                                          .network(
+                                                                          'https://picsum.photos/seed/836/600',
+                                                                          fit: BoxFit
+                                                                              .contain,
+                                                                        )
+                                                                      : Image
+                                                                          .file(
+                                                                          File(
+                                                                              imageFirma),
+                                                                          fit: BoxFit
+                                                                              .contain,
+                                                                        ),
+                                                                  allowRotation:
+                                                                      false,
+                                                                  tag:
+                                                                      'imagenFirma',
+                                                                  useHeroAnimation:
+                                                                      true,
                                                                 ),
-                                                                allowRotation: false,
-                                                                tag: 'imagenFirma',
-                                                                useHeroAnimation: true,
                                                               ),
-                                                            ),
-                                                          );
-                                                        },
-                                                        child: Hero(
-                                                          tag: 'imagenFirma',
-                                                          transitionOnUserGestures: true,
-                                                          child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius.circular(5),
-                                                            child: imageFirma == "" ?Image.network(
-                                                              'https://picsum.photos/seed/836/600',
-                                                              width: 200,
-                                                              height: 120,
-                                                              fit: BoxFit.cover,
-                                                            )
-                                                            :
-                                                            Image.file(
-                                                              File(imageFirma),
-                                                              width: 200,
-                                                              height: 120,
-                                                              fit: BoxFit.cover,
+                                                            );
+                                                          },
+                                                          child: Hero(
+                                                            tag: 'imagenFirma',
+                                                            transitionOnUserGestures:
+                                                                true,
+                                                            child: ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5),
+                                                              child: imageFirma ==
+                                                                      ""
+                                                                  ? Image
+                                                                      .network(
+                                                                      'https://picsum.photos/seed/836/600',
+                                                                      width:
+                                                                          200,
+                                                                      height:
+                                                                          120,
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                    )
+                                                                  : Image.file(
+                                                                      File(
+                                                                          imageFirma),
+                                                                      width:
+                                                                          200,
+                                                                      height:
+                                                                          120,
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                    ),
                                                             ),
                                                           ),
                                                         ),
                                                       ),
-                                                    ),
-                                                    IgnorePointer(
-                                                      ignoring: actualInversion!.estadoInversion.target!.estado != "Entregada Al Promotor" ||
-                                                      actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio"
-                                                      || actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Emprendedor",
-                                                      child: FFButtonWidget(
-                                                        onPressed: () async {
-                                                          String? option = await showModalBottomSheet(
+                                                      IgnorePointer(
+                                                        ignoring: actualInversion!
+                                                                    .estadoInversion
+                                                                    .target!
+                                                                    .estado !=
+                                                                "Entregada Al Promotor" ||
+                                                            actualInversion!
+                                                                    .emprendimiento
+                                                                    .target!
+                                                                    .usuario
+                                                                    .target!
+                                                                    .rol
+                                                                    .target!
+                                                                    .rol ==
+                                                                "Amigo del Cambio" ||
+                                                            actualInversion!
+                                                                    .emprendimiento
+                                                                    .target!
+                                                                    .usuario
+                                                                    .target!
+                                                                    .rol
+                                                                    .target!
+                                                                    .rol ==
+                                                                "Emprendedor",
+                                                        child: FFButtonWidget(
+                                                          onPressed: () async {
+                                                            String? option =
+                                                                await showModalBottomSheet(
                                                               context: context,
-                                                              builder: (_) => const CustomBottomSheet(),
+                                                              builder: (_) =>
+                                                                  const CustomBottomSheet(),
                                                             );
-                                                                                                  
-                                                            if (option == null) return;
-                                                                                                  
-                                                            final picker = ImagePicker();
-                                                                                                  
-                                                            late final XFile? pickedFile;
-                                                                                                  
-                                                            if (option == 'camera') {
-                                                              pickedFile = await picker.pickImage(
-                                                                source: ImageSource.camera,
-                                                                imageQuality: 100,
+
+                                                            if (option == null)
+                                                              return;
+
+                                                            final picker =
+                                                                ImagePicker();
+
+                                                            late final XFile?
+                                                                pickedFile;
+
+                                                            if (option ==
+                                                                'camera') {
+                                                              pickedFile =
+                                                                  await picker
+                                                                      .pickImage(
+                                                                source:
+                                                                    ImageSource
+                                                                        .camera,
+                                                                imageQuality:
+                                                                    100,
                                                               );
                                                             } else {
-                                                              pickedFile = await picker.pickImage(
-                                                                source: ImageSource.gallery,
-                                                                imageQuality: 100,
+                                                              pickedFile =
+                                                                  await picker
+                                                                      .pickImage(
+                                                                source:
+                                                                    ImageSource
+                                                                        .gallery,
+                                                                imageQuality:
+                                                                    100,
                                                               );
                                                             }
-                                                                                                  
-                                                            if (pickedFile == null) {
+
+                                                            if (pickedFile ==
+                                                                null) {
                                                               return;
                                                             }
-                                                                                                  
+
                                                             setState(() {
-                                                              imageFirma = pickedFile!.path;
+                                                              imageFirma =
+                                                                  pickedFile!
+                                                                      .path;
                                                             });
-                                                        },
-                                                        text: 'Agregar',
-                                                        icon: const Icon(
-                                                          Icons.add,
-                                                          size: 15,
-                                                        ),
-                                                        options: FFButtonOptions(
-                                                          height: 50,
-                                                          color: AppTheme.of(context)
-                                                              .secondaryText,
-                                                          textStyle: AppTheme.of(context)
-                                                              .subtitle2
-                                                              .override(
-                                                                fontFamily:
-                                                                    AppTheme.of(context)
-                                                                        .subtitle2Family,
-                                                                color: Colors.white,
-                                                                fontSize: 15,
-                                                              ),
-                                                          borderSide: const BorderSide(
-                                                            color: Colors.transparent,
-                                                            width: 1,
+                                                          },
+                                                          text: 'Agregar',
+                                                          icon: const Icon(
+                                                            Icons.add,
+                                                            size: 15,
                                                           ),
-                                                          borderRadius: BorderRadius.circular(8),
+                                                          options:
+                                                              FFButtonOptions(
+                                                            height: 50,
+                                                            color: AppTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                            textStyle:
+                                                                AppTheme.of(
+                                                                        context)
+                                                                    .subtitle2
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          AppTheme.of(context)
+                                                                              .subtitle2Family,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          15,
+                                                                    ),
+                                                            borderSide:
+                                                                const BorderSide(
+                                                              color: Colors
+                                                                  .transparent,
+                                                              width: 1,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8),
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              );
-                                            },
+                                                    ],
+                                                  ),
+                                                );
+                                              },
                                             ),
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(0, 10, 0, 5),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 10, 0, 5),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -915,238 +1130,364 @@ class _PagosScreenState extends State<PagosScreen> {
                                                 children: [
                                                   Text(
                                                     'Producto entregado*',
-                                                    style: AppTheme.of(
-                                                            context)
+                                                    style: AppTheme.of(context)
                                                         .bodyText1
                                                         .override(
-                                                          fontFamily:
-                                                              AppTheme.of(
-                                                                      context)
-                                                                  .bodyText1Family,
+                                                          fontFamily: AppTheme
+                                                                  .of(context)
+                                                              .bodyText1Family,
                                                           fontSize: 18,
                                                           fontWeight:
                                                               FontWeight.normal,
                                                           useGoogleFonts: GoogleFonts
                                                                   .asMap()
-                                                              .containsKey(
-                                                                  AppTheme.of(
-                                                                          context)
-                                                                      .bodyText1Family),
+                                                              .containsKey(AppTheme
+                                                                      .of(context)
+                                                                  .bodyText1Family),
                                                         ),
                                                   ),
                                                 ],
                                               ),
                                             ),
-                                            FormField(builder: (state){
-                                              return Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                        color: AppTheme.of(context)
-                                                            .primaryText,
-                                                        borderRadius: BorderRadius.circular(8),
-                                                        border: Border.all(
-                                                          width: 1.5,
+                                            FormField(
+                                              builder: (state) {
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(5, 0, 5, 0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: AppTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          border: Border.all(
+                                                            width: 1.5,
+                                                          ),
                                                         ),
-                                                      ),
-                                                      child: InkWell(
-                                                        onTap: () async {
-                                                          await Navigator.push(
-                                                            context,
-                                                            PageTransition(
-                                                              type: PageTransitionType.fade,
-                                                              child:
-                                                                  FlutterFlowExpandedImageView(
-                                                                image: imageProducto == "" ? Image.network(
-                                                                  'https://picsum.photos/seed/836/600',
-                                                                  fit: BoxFit.contain,
-                                                                ) 
-                                                                :
-                                                                Image.file(
-                                                                  File(imageProducto),
-                                                                  fit: BoxFit.contain,
+                                                        child: InkWell(
+                                                          onTap: () async {
+                                                            await Navigator
+                                                                .push(
+                                                              context,
+                                                              PageTransition(
+                                                                type:
+                                                                    PageTransitionType
+                                                                        .fade,
+                                                                child:
+                                                                    FlutterFlowExpandedImageView(
+                                                                  image: imageProducto ==
+                                                                          ""
+                                                                      ? Image
+                                                                          .network(
+                                                                          'https://picsum.photos/seed/836/600',
+                                                                          fit: BoxFit
+                                                                              .contain,
+                                                                        )
+                                                                      : Image
+                                                                          .file(
+                                                                          File(
+                                                                              imageProducto),
+                                                                          fit: BoxFit
+                                                                              .contain,
+                                                                        ),
+                                                                  allowRotation:
+                                                                      false,
+                                                                  tag:
+                                                                      'imagenProducto',
+                                                                  useHeroAnimation:
+                                                                      true,
                                                                 ),
-                                                                allowRotation: false,
-                                                                tag: 'imagenProducto',
-                                                                useHeroAnimation: true,
                                                               ),
-                                                            ),
-                                                          );
-                                                        },
-                                                        child: Hero(
-                                                          tag: 'imagenProducto',
-                                                          transitionOnUserGestures: true,
-                                                          child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius.circular(5),
-                                                            child: imageProducto == "" ?Image.network(
-                                                              'https://picsum.photos/seed/836/600',
-                                                              width: 200,
-                                                              height: 120,
-                                                              fit: BoxFit.cover,
-                                                            )
-                                                            :
-                                                            Image.file(
-                                                              File(imageProducto),
-                                                              width: 200,
-                                                              height: 120,
-                                                              fit: BoxFit.cover,
+                                                            );
+                                                          },
+                                                          child: Hero(
+                                                            tag:
+                                                                'imagenProducto',
+                                                            transitionOnUserGestures:
+                                                                true,
+                                                            child: ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5),
+                                                              child: imageProducto ==
+                                                                      ""
+                                                                  ? Image
+                                                                      .network(
+                                                                      'https://picsum.photos/seed/836/600',
+                                                                      width:
+                                                                          200,
+                                                                      height:
+                                                                          120,
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                    )
+                                                                  : Image.file(
+                                                                      File(
+                                                                          imageProducto),
+                                                                      width:
+                                                                          200,
+                                                                      height:
+                                                                          120,
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                    ),
                                                             ),
                                                           ),
                                                         ),
                                                       ),
-                                                    ),
-                                                    IgnorePointer(
-                                                      ignoring: actualInversion!.estadoInversion.target!.estado != "Entregada Al Promotor" ||
-                                                      actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio"
-                                                      || actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Emprendedor",
-                                                      child: FFButtonWidget(
-                                                        onPressed: () async {
-                                                          String? option = await showModalBottomSheet(
+                                                      IgnorePointer(
+                                                        ignoring: actualInversion!
+                                                                    .estadoInversion
+                                                                    .target!
+                                                                    .estado !=
+                                                                "Entregada Al Promotor" ||
+                                                            actualInversion!
+                                                                    .emprendimiento
+                                                                    .target!
+                                                                    .usuario
+                                                                    .target!
+                                                                    .rol
+                                                                    .target!
+                                                                    .rol ==
+                                                                "Amigo del Cambio" ||
+                                                            actualInversion!
+                                                                    .emprendimiento
+                                                                    .target!
+                                                                    .usuario
+                                                                    .target!
+                                                                    .rol
+                                                                    .target!
+                                                                    .rol ==
+                                                                "Emprendedor",
+                                                        child: FFButtonWidget(
+                                                          onPressed: () async {
+                                                            String? option =
+                                                                await showModalBottomSheet(
                                                               context: context,
-                                                              builder: (_) => const CustomBottomSheet(),
+                                                              builder: (_) =>
+                                                                  const CustomBottomSheet(),
                                                             );
-                                                                                                  
-                                                            if (option == null) return;
-                                                                                                  
-                                                            final picker = ImagePicker();
-                                                                                                  
-                                                            late final XFile? pickedFile;
-                                                                                                  
-                                                            if (option == 'camera') {
-                                                              pickedFile = await picker.pickImage(
-                                                                source: ImageSource.camera,
-                                                                imageQuality: 100,
+
+                                                            if (option == null)
+                                                              return;
+
+                                                            final picker =
+                                                                ImagePicker();
+
+                                                            late final XFile?
+                                                                pickedFile;
+
+                                                            if (option ==
+                                                                'camera') {
+                                                              pickedFile =
+                                                                  await picker
+                                                                      .pickImage(
+                                                                source:
+                                                                    ImageSource
+                                                                        .camera,
+                                                                imageQuality:
+                                                                    100,
                                                               );
                                                             } else {
-                                                              pickedFile = await picker.pickImage(
-                                                                source: ImageSource.gallery,
-                                                                imageQuality: 100,
+                                                              pickedFile =
+                                                                  await picker
+                                                                      .pickImage(
+                                                                source:
+                                                                    ImageSource
+                                                                        .gallery,
+                                                                imageQuality:
+                                                                    100,
                                                               );
                                                             }
-                                                                                                  
-                                                            if (pickedFile == null) {
+
+                                                            if (pickedFile ==
+                                                                null) {
                                                               return;
                                                             }
-                                                                                                  
+
                                                             setState(() {
-                                                              imageProducto = pickedFile!.path;
+                                                              imageProducto =
+                                                                  pickedFile!
+                                                                      .path;
                                                             });
-                                                        },
-                                                        text: 'Agregar',
-                                                        icon: const Icon(
-                                                          Icons.add,
-                                                          size: 15,
-                                                        ),
-                                                        options: FFButtonOptions(
-                                                          height: 50,
-                                                          color: AppTheme.of(context)
-                                                              .secondaryText,
-                                                          textStyle: AppTheme.of(context)
-                                                              .subtitle2
-                                                              .override(
-                                                                fontFamily:
-                                                                    AppTheme.of(context)
-                                                                        .subtitle2Family,
-                                                                color: Colors.white,
-                                                                fontSize: 15,
-                                                              ),
-                                                          borderSide: const BorderSide(
-                                                            color: Colors.transparent,
-                                                            width: 1,
+                                                          },
+                                                          text: 'Agregar',
+                                                          icon: const Icon(
+                                                            Icons.add,
+                                                            size: 15,
                                                           ),
-                                                          borderRadius: BorderRadius.circular(8),
+                                                          options:
+                                                              FFButtonOptions(
+                                                            height: 50,
+                                                            color: AppTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                            textStyle:
+                                                                AppTheme.of(
+                                                                        context)
+                                                                    .subtitle2
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          AppTheme.of(context)
+                                                                              .subtitle2Family,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          15,
+                                                                    ),
+                                                            borderSide:
+                                                                const BorderSide(
+                                                              color: Colors
+                                                                  .transparent,
+                                                              width: 1,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8),
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              );
-                                            },
+                                                    ],
+                                                  ),
+                                                );
+                                              },
                                             ),
                                             Padding(
-                                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                                0, 30, 0, 10),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                FFButtonWidget(
-                                                  onPressed: () async {
-                                                    if (actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol != "Amigo del Cambio"
-                                                    && actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol != "Emprendedor") {
-                                                    if (actualInversion!.estadoInversion.target!.estado == "Entregada Al Promotor") {
-                                                      if (imageFirma != ""  && imageProducto != "") {
-                                                        recepcionYentregaProvider.entregaInversion(
-                                                            imageFirma,
-                                                            imageProducto,
-                                                            actualInversion!.id
-                                                          );
-                                                        await Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (context) => EntregaInversionConcluida(
-                                                                idEmprendimiento: 
-                                                                  actualInversion!.emprendimiento.target!.id,
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 30, 0, 10),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  FFButtonWidget(
+                                                    onPressed: () async {
+                                                      if (actualInversion!
+                                                                  .emprendimiento
+                                                                  .target!
+                                                                  .usuario
+                                                                  .target!
+                                                                  .rol
+                                                                  .target!
+                                                                  .rol !=
+                                                              "Amigo del Cambio" &&
+                                                          actualInversion!
+                                                                  .emprendimiento
+                                                                  .target!
+                                                                  .usuario
+                                                                  .target!
+                                                                  .rol
+                                                                  .target!
+                                                                  .rol !=
+                                                              "Emprendedor") {
+                                                        if (actualInversion!
+                                                                .estadoInversion
+                                                                .target!
+                                                                .estado ==
+                                                            "Entregada Al Promotor") {
+                                                          if (imageFirma !=
+                                                                  "" &&
+                                                              imageProducto !=
+                                                                  "") {
+                                                            recepcionYentregaProvider
+                                                                .entregaInversion(
+                                                                    imageFirma,
+                                                                    imageProducto,
+                                                                    actualInversion!
+                                                                        .id);
+                                                            await Navigator
+                                                                .push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        EntregaInversionConcluida(
+                                                                  idEmprendimiento:
+                                                                      actualInversion!
+                                                                          .emprendimiento
+                                                                          .target!
+                                                                          .id,
+                                                                ),
                                                               ),
-                                                            ),
-                                                          );
+                                                            );
+                                                          } else {
+                                                            snackbarKey
+                                                                .currentState
+                                                                ?.showSnackBar(
+                                                                    const SnackBar(
+                                                              content: Text(
+                                                                  "Por favor carga los archivos solicitados 'Firma de recibido' y 'Producto entregado'."),
+                                                            ));
+                                                          }
+                                                        } else {
+                                                          snackbarKey
+                                                              .currentState
+                                                              ?.showSnackBar(
+                                                                  const SnackBar(
+                                                            content: Text(
+                                                                "No puedes actualizar esta sección."),
+                                                          ));
+                                                        }
                                                       } else {
                                                         snackbarKey.currentState
-                                                          ?.showSnackBar(const SnackBar(
-                                                        content: Text(
-                                                            "Por favor carga los archivos solicitados 'Firma de recibido' y 'Producto entregado'."),
-                                                        ));                                  
+                                                            ?.showSnackBar(
+                                                                const SnackBar(
+                                                          content: Text(
+                                                              "Este usuario no tiene permisos para esta acción."),
+                                                        ));
                                                       }
-                                                    } else{
-                                                      snackbarKey.currentState
-                                                          ?.showSnackBar(const SnackBar(
-                                                        content: Text(
-                                                            "No puedes actualizar esta sección."),
-                                                        )); 
-                                                    }
-                                                    } else {
-                                                      snackbarKey.currentState
-                                                          ?.showSnackBar(const SnackBar(
-                                                        content: Text(
-                                                            "Este usuario no tiene permisos para esta acción."),
-                                                      ));
-                                                    }
-                                                  },
-                                                  text: 'Aceptar',
-                                                  icon: const Icon(
-                                                    Icons.check_circle_outline,
-                                                    size: 15,
-                                                  ),
-                                                  options: FFButtonOptions(
-                                                    width: 200,
-                                                    height: 50,
-                                                    color: const Color(0xFF4672FF),
-                                                    textStyle: AppTheme.of(context)
-                                                        .title3
-                                                        .override(
-                                                          fontFamily: 'Poppins',
-                                                          color: Colors.white,
-                                                          fontSize: 16,
-                                                          fontWeight: FontWeight.w300,
-                                                        ),
-                                                    elevation: 3,
-                                                    borderSide: const BorderSide(
-                                                      color: Color(0x002CC3F4),
-                                                      width: 0,
+                                                    },
+                                                    text: 'Aceptar',
+                                                    icon: const Icon(
+                                                      Icons
+                                                          .check_circle_outline,
+                                                      size: 15,
                                                     ),
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    options: FFButtonOptions(
+                                                      width: 200,
+                                                      height: 50,
+                                                      color: const Color(
+                                                          0xFF4672FF),
+                                                      textStyle: AppTheme.of(
+                                                              context)
+                                                          .title3
+                                                          .override(
+                                                            fontFamily:
+                                                                'Poppins',
+                                                            color: Colors.white,
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.w300,
+                                                          ),
+                                                      elevation: 3,
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color:
+                                                            Color(0x002CC3F4),
+                                                        width: 0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
-                                          ),
                                           ],
                                         ),
                                         theme: ExpandableThemeData(
@@ -1157,9 +1498,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                               ExpandablePanelHeaderAlignment
                                                   .center,
                                           hasIcon: true,
-                                          iconColor:
-                                              AppTheme.of(context)
-                                                  .secondaryText,
+                                          iconColor: AppTheme.of(context)
+                                              .secondaryText,
                                         ),
                                       ),
                                     ),
@@ -1169,7 +1509,8 @@ class _PagosScreenState extends State<PagosScreen> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 5, 0, 0),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               children: [
@@ -1182,44 +1523,41 @@ class _PagosScreenState extends State<PagosScreen> {
                                     width: double.infinity,
                                     color: const Color(0x00F2F4F8),
                                     child: ExpandableNotifier(
-                                      initialExpanded: actualInversion!.estadoInversion.target!.estado == "Entregada Al Emprendedor",
+                                      initialExpanded: actualInversion!
+                                              .estadoInversion.target!.estado ==
+                                          "Entregada Al Emprendedor",
                                       child: ExpandablePanel(
                                         header: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 8, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 0, 8, 0),
                                               child: Icon(
                                                 Icons.attach_money_rounded,
-                                                color:
-                                                    AppTheme.of(context)
-                                                        .secondaryText,
+                                                color: AppTheme.of(context)
+                                                    .secondaryText,
                                                 size: 24,
                                               ),
                                             ),
                                             Text(
                                               'Pagos',
-                                              style:
-                                                  AppTheme.of(context)
-                                                      .title1
-                                                      .override(
-                                                        fontFamily:
-                                                            AppTheme.of(
-                                                                    context)
-                                                                .title1Family,
-                                                        color:
-                                                            AppTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        fontSize: 20,
-                                                        useGoogleFonts: GoogleFonts
-                                                                .asMap()
-                                                            .containsKey(
-                                                                AppTheme.of(
-                                                                        context)
-                                                                    .title1Family),
-                                                      ),
+                                              style: AppTheme.of(context)
+                                                  .title1
+                                                  .override(
+                                                    fontFamily:
+                                                        AppTheme.of(context)
+                                                            .title1Family,
+                                                    color: AppTheme.of(context)
+                                                        .primaryText,
+                                                    fontSize: 20,
+                                                    useGoogleFonts: GoogleFonts
+                                                            .asMap()
+                                                        .containsKey(
+                                                            AppTheme.of(context)
+                                                                .title1Family),
+                                                  ),
                                             ),
                                           ],
                                         ),
@@ -1233,149 +1571,216 @@ class _PagosScreenState extends State<PagosScreen> {
                                           ],
                                         ),
                                         expanded: Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  0, 0, 0, 20),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(0, 0, 0, 20),
                                           child: Form(
                                             key: formKey,
                                             child: Column(
                                               children: [
                                                 Row(
-                                                  mainAxisSize: MainAxisSize.max,
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Column(
-                                                      mainAxisSize: MainAxisSize.max,
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
                                                       crossAxisAlignment:
-                                                          CrossAxisAlignment.start,
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: [
                                                         Padding(
                                                           padding:
                                                               const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0, 5, 0, 10),
+                                                                      .fromSTEB(
+                                                                  0, 5, 0, 10),
                                                           child: Text(
                                                             'Monto a pagar',
+                                                            style: AppTheme.of(
+                                                                    context)
+                                                                .bodyText1,
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                  0, 5, 0, 10),
+                                                          child: Text(
+                                                            currencyFormat
+                                                                .format(
+                                                                    montoPagar
+                                                                        .text),
                                                             style:
                                                                 AppTheme.of(
                                                                         context)
-                                                                    .bodyText1,
+                                                                    .title3
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Poppins',
+                                                                      color: AppTheme.of(
+                                                                              context)
+                                                                          .primaryText,
+                                                                      fontSize:
+                                                                          25,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                      useGoogleFonts: GoogleFonts
+                                                                              .asMap()
+                                                                          .containsKey(
+                                                                              AppTheme.of(context).title3Family),
+                                                                    ),
                                                           ),
                                                         ),
                                                         Padding(
                                                           padding:
                                                               const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0, 5, 0, 10),
-                                                          child: Text(
-                                                            currencyFormat.format(montoPagar.text),
-                                                            style:
-                                                                AppTheme.of(
-                                                                    context)
-                                                                .title3
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Poppins',
-                                                                  color: AppTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                                  fontSize: 25,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal,
-                                                                  useGoogleFonts: GoogleFonts
-                                                                          .asMap()
-                                                                      .containsKey(
-                                                                          AppTheme.of(context)
-                                                                              .title3Family),
-                                                                ),
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0, 5, 0, 10),
+                                                                      .fromSTEB(
+                                                                  0, 5, 0, 10),
                                                           child: Text(
                                                             'Monto Abonado*',
-                                                            style:
-                                                                AppTheme.of(
-                                                                        context)
-                                                                    .bodyText1,
+                                                            style: AppTheme.of(
+                                                                    context)
+                                                                .bodyText1,
                                                           ),
                                                         ),
                                                         IgnorePointer(
-                                                          ignoring: actualInversion!.estadoInversion.target!.estado != "Entregada Al Emprendedor" ||
-                                                          actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio"
-                                                          || actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol == "Emprendedor",
+                                                          ignoring: actualInversion!
+                                                                      .estadoInversion
+                                                                      .target!
+                                                                      .estado !=
+                                                                  "Entregada Al Emprendedor" ||
+                                                              actualInversion!
+                                                                      .emprendimiento
+                                                                      .target!
+                                                                      .usuario
+                                                                      .target!
+                                                                      .rol
+                                                                      .target!
+                                                                      .rol ==
+                                                                  "Amigo del Cambio" ||
+                                                              actualInversion!
+                                                                      .emprendimiento
+                                                                      .target!
+                                                                      .usuario
+                                                                      .target!
+                                                                      .rol
+                                                                      .target!
+                                                                      .rol ==
+                                                                  "Emprendedor",
                                                           child: SizedBox(
                                                             width: 200,
                                                             child: Padding(
-                                                              padding: const EdgeInsetsDirectional
-                                                                  .fromSTEB(0, 0, 10, 0),
-                                                              child: TextFormField(
-                                                                controller: montoAbonado,
-                                                                autovalidateMode: AutovalidateMode
-                                                                    .onUserInteraction,
-                                                                obscureText: false,
-                                                                decoration: InputDecoration(
-                                                                  labelText: 'Monto abonado*',
-                                                                  labelStyle: AppTheme.of(context)
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                      0,
+                                                                      0,
+                                                                      10,
+                                                                      0),
+                                                              child:
+                                                                  TextFormField(
+                                                                controller:
+                                                                    montoAbonado,
+                                                                autovalidateMode:
+                                                                    AutovalidateMode
+                                                                        .onUserInteraction,
+                                                                obscureText:
+                                                                    false,
+                                                                decoration:
+                                                                    InputDecoration(
+                                                                  labelText:
+                                                                      'Monto abonado*',
+                                                                  labelStyle: AppTheme.of(
+                                                                          context)
                                                                       .title3
                                                                       .override(
-                                                                        fontFamily: 'Montserrat',
+                                                                        fontFamily:
+                                                                            'Montserrat',
                                                                         color: AppTheme.of(context)
                                                                             .secondaryText,
-                                                                        fontSize: 15,
-                                                                        fontWeight: FontWeight.normal,
+                                                                        fontSize:
+                                                                            15,
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
                                                                       ),
                                                                   hintText:
                                                                       'Monto abonado*...',
-                                                                  hintStyle: AppTheme.of(context)
+                                                                  hintStyle: AppTheme.of(
+                                                                          context)
                                                                       .title3
                                                                       .override(
-                                                                        fontFamily: 'Poppins',
+                                                                        fontFamily:
+                                                                            'Poppins',
                                                                         color: AppTheme.of(context)
                                                                             .secondaryText,
-                                                                        fontSize: 15,
-                                                                        fontWeight: FontWeight.normal,
+                                                                        fontSize:
+                                                                            15,
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
                                                                       ),
-                                                                  enabledBorder: OutlineInputBorder(
-                                                                    borderSide: BorderSide(
-                                                                      color: AppTheme.of(context)
+                                                                  enabledBorder:
+                                                                      OutlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      color: AppTheme.of(
+                                                                              context)
                                                                           .primaryText,
-                                                                      width: 1.5,
+                                                                      width:
+                                                                          1.5,
                                                                     ),
                                                                     borderRadius:
-                                                                        BorderRadius.circular(12),
+                                                                        BorderRadius.circular(
+                                                                            12),
                                                                   ),
-                                                                  focusedBorder: OutlineInputBorder(
-                                                                    borderSide: BorderSide(
-                                                                      color: AppTheme.of(context)
+                                                                  focusedBorder:
+                                                                      OutlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      color: AppTheme.of(
+                                                                              context)
                                                                           .primaryText,
-                                                                      width: 1.5,
+                                                                      width:
+                                                                          1.5,
                                                                     ),
                                                                     borderRadius:
-                                                                        BorderRadius.circular(12),
+                                                                        BorderRadius.circular(
+                                                                            12),
                                                                   ),
                                                                   filled: true,
-                                                                  fillColor: const Color(0x49FFFFFF),
+                                                                  fillColor:
+                                                                      const Color(
+                                                                          0x49FFFFFF),
                                                                 ),
-                                                                keyboardType: TextInputType.number,
-                                                                inputFormatters: [currencyFormat],
-                                                                style: AppTheme.of(context)
+                                                                keyboardType:
+                                                                    TextInputType
+                                                                        .number,
+                                                                inputFormatters: [
+                                                                  currencyFormat
+                                                                ],
+                                                                style: AppTheme.of(
+                                                                        context)
                                                                     .title3
                                                                     .override(
-                                                                      fontFamily: 'Poppins',
-                                                                      color: AppTheme.of(context)
+                                                                      fontFamily:
+                                                                          'Poppins',
+                                                                      color: AppTheme.of(
+                                                                              context)
                                                                           .primaryText,
-                                                                      fontSize: 15,
-                                                                      fontWeight: FontWeight.normal,
+                                                                      fontSize:
+                                                                          15,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
                                                                     ),
                                                                 maxLines: 1,
-                                                                validator: (val) {
-                                                                  if (val == null || val.isEmpty) {
+                                                                validator:
+                                                                    (val) {
+                                                                  if (val ==
+                                                                          null ||
+                                                                      val.isEmpty) {
                                                                     return 'Ingrese un monto abonado.';
                                                                   }
                                                                   return null;
@@ -1387,43 +1792,44 @@ class _PagosScreenState extends State<PagosScreen> {
                                                         Padding(
                                                           padding:
                                                               const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0, 5, 0, 10),
+                                                                      .fromSTEB(
+                                                                  0, 5, 0, 10),
                                                           child: Text(
                                                             'Saldo Restante',
-                                                            style:
-                                                                AppTheme.of(
-                                                                        context)
-                                                                    .bodyText1,
+                                                            style: AppTheme.of(
+                                                                    context)
+                                                                .bodyText1,
                                                           ),
                                                         ),
                                                         Padding(
                                                           padding:
                                                               const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0, 5, 0, 10),
+                                                                      .fromSTEB(
+                                                                  0, 5, 0, 10),
                                                           child: Text(
-                                                            currencyFormat.format(saldo.text),
+                                                            currencyFormat
+                                                                .format(
+                                                                    saldo.text),
                                                             style:
                                                                 AppTheme.of(
-                                                                    context)
-                                                                .title3
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Poppins',
-                                                                  color: AppTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                                  fontSize: 25,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal,
-                                                                  useGoogleFonts: GoogleFonts
-                                                                          .asMap()
-                                                                      .containsKey(
-                                                                          AppTheme.of(context)
-                                                                              .title3Family),
-                                                                ),
+                                                                        context)
+                                                                    .title3
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Poppins',
+                                                                      color: AppTheme.of(
+                                                                              context)
+                                                                          .primaryText,
+                                                                      fontSize:
+                                                                          25,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                      useGoogleFonts: GoogleFonts
+                                                                              .asMap()
+                                                                          .containsKey(
+                                                                              AppTheme.of(context).title3Family),
+                                                                    ),
                                                           ),
                                                         ),
                                                       ],
@@ -1433,155 +1839,245 @@ class _PagosScreenState extends State<PagosScreen> {
                                                         mainAxisSize:
                                                             MainAxisSize.max,
                                                         crossAxisAlignment:
-                                                            CrossAxisAlignment.start,
+                                                            CrossAxisAlignment
+                                                                .start,
                                                         children: [
                                                           Padding(
                                                             padding:
                                                                 const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0, 5, 0, 10),
+                                                                        .fromSTEB(
+                                                                    0,
+                                                                    5,
+                                                                    0,
+                                                                    10),
                                                             child: Text(
                                                               'Pagos',
-                                                              style:
-                                                                  AppTheme.of(
-                                                                          context)
-                                                                      .bodyText1,
+                                                              style: AppTheme.of(
+                                                                      context)
+                                                                  .bodyText1,
                                                             ),
                                                           ),
-                                                          Builder(
-                                                            builder: (context) {
-                                                              return ListView.builder(
-                                                                padding: EdgeInsets.zero,
-                                                                shrinkWrap: true,
-                                                                scrollDirection: Axis.vertical,
-                                                                controller: ScrollController(),
-                                                                itemCount: listPagos.length,
-                                                                itemBuilder: (context, index) {
-                                                                  final pago = listPagos[index];
-                                                                  return Row(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize.max,
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceBetween,
-                                                                    children: [
-                                                                      Text(
-                                                                        "${dateTimeFormat('dd/MMM/yyyy', pago.fechaMovimiento)} \n ${currencyFormat.format(pago.montoAbonado.toStringAsFixed(2))} ",
-                                                                        style: AppTheme
-                                                                                .of(context)
-                                                                            .bodyText1
-                                                                            .override(
-                                                                              fontFamily: AppTheme.of(
-                                                                                      context)
-                                                                                  .bodyText1Family,
-                                                                              fontWeight:
-                                                                                  FontWeight
-                                                                                      .normal,
-                                                                              useGoogleFonts: GoogleFonts
-                                                                                      .asMap()
-                                                                                  .containsKey(
-                                                                                      AppTheme.of(context)
-                                                                                          .bodyText1Family),
-                                                                            ),
-                                                                      ),
-                                                                      
-                                                                    ],
-                                                                  );
-                                                                },
-                                                              );
-                                                            }
-                                                          ),
+                                                          Builder(builder:
+                                                              (context) {
+                                                            return ListView
+                                                                .builder(
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .zero,
+                                                              shrinkWrap: true,
+                                                              scrollDirection:
+                                                                  Axis.vertical,
+                                                              controller:
+                                                                  ScrollController(),
+                                                              itemCount:
+                                                                  listPagos
+                                                                      .length,
+                                                              itemBuilder:
+                                                                  (context,
+                                                                      index) {
+                                                                final pago =
+                                                                    listPagos[
+                                                                        index];
+                                                                return Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Text(
+                                                                      "${dateTimeFormat('dd/MMM/yyyy', pago.fechaMovimiento)} \n ${currencyFormat.format(pago.montoAbonado.toStringAsFixed(2))} ",
+                                                                      style: AppTheme.of(
+                                                                              context)
+                                                                          .bodyText1
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                AppTheme.of(context).bodyText1Family,
+                                                                            fontWeight:
+                                                                                FontWeight.normal,
+                                                                            useGoogleFonts:
+                                                                                GoogleFonts.asMap().containsKey(AppTheme.of(context).bodyText1Family),
+                                                                          ),
+                                                                    ),
+                                                                  ],
+                                                                );
+                                                              },
+                                                            );
+                                                          }),
                                                         ],
                                                       ),
                                                     ),
                                                   ],
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                                      0, 30, 0, 10),
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                          0, 30, 0, 10),
                                                   child: Row(
-                                                    mainAxisSize: MainAxisSize.max,
-                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
                                                     children: [
                                                       FFButtonWidget(
                                                         onPressed: () async {
-                                                          if (actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol != "Amigo del Cambio"
-                                                          && actualInversion!.emprendimiento.target!.usuario.target!.rol.target!.rol != "Emprendedor") {
-                                                          if (actualInversion!.estadoInversion.target!.estado == "Entregada Al Emprendedor") {
-                                                              if (recepcionYentregaProvider.validateForm(formKey)) {
-                                                                if (double.parse(
-                                                                  montoAbonado.text.replaceAll("\$", "")
-                                                                  .replaceAll(",", "")) == double.parse(
-                                                                  saldo.text.replaceAll("\$", "")
-                                                                  .replaceAll(",", ""))) {
-                                                                    recepcionYentregaProvider.finishPago(
-                                                                      double.parse(
-                                                                      montoAbonado.text.replaceAll("\$", "")
-                                                                      .replaceAll(",", "")), 
-                                                                      actualInversion!.id
-                                                                    );
-                                                                    await Navigator.push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                        builder: (context) =>
-                                                                            PagosConcluidos(
-                                                                              idEmprendimiento: 
-                                                                                actualInversion!.emprendimiento.target!.id
-                                                                              ,),
+                                                          if (actualInversion!
+                                                                      .emprendimiento
+                                                                      .target!
+                                                                      .usuario
+                                                                      .target!
+                                                                      .rol
+                                                                      .target!
+                                                                      .rol !=
+                                                                  "Amigo del Cambio" &&
+                                                              actualInversion!
+                                                                      .emprendimiento
+                                                                      .target!
+                                                                      .usuario
+                                                                      .target!
+                                                                      .rol
+                                                                      .target!
+                                                                      .rol !=
+                                                                  "Emprendedor") {
+                                                            if (actualInversion!
+                                                                    .estadoInversion
+                                                                    .target!
+                                                                    .estado ==
+                                                                "Entregada Al Emprendedor") {
+                                                              if (recepcionYentregaProvider
+                                                                  .validateForm(
+                                                                      formKey)) {
+                                                                if (double.parse(montoAbonado
+                                                                        .text
+                                                                        .replaceAll(
+                                                                            "\$", "")
+                                                                        .replaceAll(
+                                                                            ",",
+                                                                            "")) ==
+                                                                    double.parse(saldo
+                                                                        .text
+                                                                        .replaceAll(
+                                                                            "\$",
+                                                                            "")
+                                                                        .replaceAll(
+                                                                            ",",
+                                                                            ""))) {
+                                                                  recepcionYentregaProvider.finishPago(
+                                                                      double.parse(montoAbonado
+                                                                          .text
+                                                                          .replaceAll(
+                                                                              "\$",
+                                                                              "")
+                                                                          .replaceAll(
+                                                                              ",",
+                                                                              "")),
+                                                                      actualInversion!
+                                                                          .id);
+                                                                  await Navigator
+                                                                      .push(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              PagosConcluidos(
+                                                                        idEmprendimiento: actualInversion!
+                                                                            .emprendimiento
+                                                                            .target!
+                                                                            .id,
                                                                       ),
-                                                                    );
-                                                                  
+                                                                    ),
+                                                                  );
                                                                 }
-                                                                if (double.parse(
-                                                                  montoAbonado.text.replaceAll("\$", "")
-                                                                  .replaceAll(",", "")) < double.parse(
-                                                                  saldo.text.replaceAll("\$", "")
-                                                                  .replaceAll(",", ""))) {
-                                                                    recepcionYentregaProvider.updatePago(
-                                                                      double.parse(
-                                                                      montoAbonado.text.replaceAll("\$", "")
-                                                                      .replaceAll(",", "")), 
-                                                                      actualInversion!.id
-                                                                    );
-                                                                  snackbarKey.currentState
-                                                                    ?.showSnackBar(const SnackBar(
-                                                                  content: Text(
-                                                                      "Pago agregado éxitosamente."),
-                                                                  )); 
+                                                                if (double.parse(montoAbonado
+                                                                        .text
+                                                                        .replaceAll(
+                                                                            "\$", "")
+                                                                        .replaceAll(
+                                                                            ",",
+                                                                            "")) <
+                                                                    double.parse(saldo
+                                                                        .text
+                                                                        .replaceAll(
+                                                                            "\$",
+                                                                            "")
+                                                                        .replaceAll(
+                                                                            ",",
+                                                                            ""))) {
+                                                                  recepcionYentregaProvider.updatePago(
+                                                                      double.parse(montoAbonado
+                                                                          .text
+                                                                          .replaceAll(
+                                                                              "\$",
+                                                                              "")
+                                                                          .replaceAll(
+                                                                              ",",
+                                                                              "")),
+                                                                      actualInversion!
+                                                                          .id);
+                                                                  snackbarKey
+                                                                      .currentState
+                                                                      ?.showSnackBar(
+                                                                          const SnackBar(
+                                                                    content: Text(
+                                                                        "Pago agregado éxitosamente."),
+                                                                  ));
                                                                   // ignore: use_build_context_synchronously
-                                                                  await Navigator.push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                        builder: (context) =>
-                                                                            InversionesScreen(
-                                                                              idEmprendimiento: 
-                                                                                actualInversion!.emprendimiento.target!.id
-                                                                              ,),
+                                                                  await Navigator
+                                                                      .push(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              InversionesScreen(
+                                                                        idEmprendimiento: actualInversion!
+                                                                            .emprendimiento
+                                                                            .target!
+                                                                            .id,
                                                                       ),
-                                                                    );
+                                                                    ),
+                                                                  );
                                                                 }
-                                                                if (double.parse(
-                                                                  montoAbonado.text.replaceAll("\$", "")
-                                                                  .replaceAll(",", "")) > double.parse(
-                                                                  saldo.text.replaceAll("\$", "")
-                                                                  .replaceAll(",", ""))) {
-                                                                  snackbarKey.currentState
-                                                                    ?.showSnackBar(const SnackBar(
-                                                                  content: Text(
-                                                                      "El monto abonado no puede ser mayor al saldo restante."),
-                                                                  )); 
+                                                                if (double.parse(montoAbonado
+                                                                        .text
+                                                                        .replaceAll(
+                                                                            "\$", "")
+                                                                        .replaceAll(
+                                                                            ",",
+                                                                            "")) >
+                                                                    double.parse(saldo
+                                                                        .text
+                                                                        .replaceAll(
+                                                                            "\$",
+                                                                            "")
+                                                                        .replaceAll(
+                                                                            ",",
+                                                                            ""))) {
+                                                                  snackbarKey
+                                                                      .currentState
+                                                                      ?.showSnackBar(
+                                                                          const SnackBar(
+                                                                    content: Text(
+                                                                        "El monto abonado no puede ser mayor al saldo restante."),
+                                                                  ));
                                                                 }
                                                               }
-                                                            } else{
-                                                              snackbarKey.currentState
-                                                                  ?.showSnackBar(const SnackBar(
+                                                            } else {
+                                                              snackbarKey
+                                                                  .currentState
+                                                                  ?.showSnackBar(
+                                                                      const SnackBar(
                                                                 content: Text(
                                                                     "No puedes actualizar esta sección."),
-                                                                )); 
+                                                              ));
                                                             }
                                                           } else {
-                                                            snackbarKey.currentState
-                                                                ?.showSnackBar(const SnackBar(
+                                                            snackbarKey
+                                                                .currentState
+                                                                ?.showSnackBar(
+                                                                    const SnackBar(
                                                               content: Text(
                                                                   "Este usuario no tiene permisos para esta acción."),
                                                             ));
@@ -1589,27 +2085,39 @@ class _PagosScreenState extends State<PagosScreen> {
                                                         },
                                                         text: 'Aceptar',
                                                         icon: const Icon(
-                                                          Icons.check_circle_outline,
+                                                          Icons
+                                                              .check_circle_outline,
                                                           size: 15,
                                                         ),
-                                                        options: FFButtonOptions(
+                                                        options:
+                                                            FFButtonOptions(
                                                           width: 200,
                                                           height: 50,
-                                                          color: const Color(0xFF4672FF),
-                                                          textStyle: AppTheme.of(context)
+                                                          color: const Color(
+                                                              0xFF4672FF),
+                                                          textStyle: AppTheme
+                                                                  .of(context)
                                                               .title3
                                                               .override(
-                                                                fontFamily: 'Poppins',
-                                                                color: Colors.white,
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                color: Colors
+                                                                    .white,
                                                                 fontSize: 16,
-                                                                fontWeight: FontWeight.w300,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w300,
                                                               ),
                                                           elevation: 3,
-                                                          borderSide: const BorderSide(
-                                                            color: Color(0x002CC3F4),
+                                                          borderSide:
+                                                              const BorderSide(
+                                                            color: Color(
+                                                                0x002CC3F4),
                                                             width: 0,
                                                           ),
-                                                          borderRadius: BorderRadius.circular(8),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
                                                         ),
                                                       ),
                                                     ],
@@ -1627,9 +2135,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                               ExpandablePanelHeaderAlignment
                                                   .center,
                                           hasIcon: true,
-                                          iconColor:
-                                              AppTheme.of(context)
-                                                  .secondaryText,
+                                          iconColor: AppTheme.of(context)
+                                              .secondaryText,
                                         ),
                                       ),
                                     ),
