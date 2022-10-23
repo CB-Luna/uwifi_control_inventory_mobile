@@ -401,7 +401,7 @@ class _DetalleProductoEmprendedorState extends State<DetalleProductoEmprendedor>
                                             borderRadius:
                                                 BorderRadius.circular(8),
                                             child: getImageProductoEmprendedor(
-                                              widget.productoEmprendedor.imagen,
+                                              widget.productoEmprendedor.imagen.target?.path,
                                               height: 200,
                                               width: 250
                                             ),

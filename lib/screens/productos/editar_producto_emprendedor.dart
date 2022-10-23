@@ -45,7 +45,7 @@ class _EditarProductoEmprendedorScreenState
   @override
   void initState() {
     super.initState();
-    newImagen = widget.productoEmprendedor.imagen;
+    newImagen = widget.productoEmprendedor.imagen.target?.path ?? "";
     nombreController =
         TextEditingController(text: widget.productoEmprendedor.nombre);
     descController =
@@ -568,7 +568,7 @@ class _EditarProductoEmprendedorScreenState
                                     FFButtonWidget(
                                       onPressed: () async {
                                         if (newImagen !=
-                                              widget.productoEmprendedor.imagen ||
+                                              widget.productoEmprendedor.imagen.target?.path ||
                                           nombreController.text !=
                                               widget.productoEmprendedor.nombre ||
                                           descController.text !=

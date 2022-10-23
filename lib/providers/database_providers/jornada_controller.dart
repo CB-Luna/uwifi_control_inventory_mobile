@@ -1,4 +1,5 @@
 import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/save_imagenes_local.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
@@ -17,6 +18,7 @@ class JornadaController extends ChangeNotifier {
   String comentarios = "";
   String descripcion = "";
   List<String> imagenes = [];
+  List<SaveImagenesLocal> imagenesLocal = [];
   bool activo = true;
   String tipoProyecto = "";
   String proyecto =  "";
@@ -35,6 +37,7 @@ class JornadaController extends ChangeNotifier {
     comentarios = "";
     descripcion = "";
     imagenes = [];
+    imagenesLocal = [];
     activo = true;
     tipoProyecto = "";
     proyecto = "";
@@ -135,7 +138,12 @@ class JornadaController extends ChangeNotifier {
     nuevaTarea.statusSync.target = nuevoSyncTarea;
     //Se agregan las imagenes a la Tarea
     for (var i = 0; i < imagenes.length; i++) {
-      final nuevaImagenTarea = Imagenes(imagenes: imagenes[i]); //Se crea el objeto imagenes para la Tarea
+      final nuevaImagenTarea = Imagenes(
+        imagenes: imagenes[i],
+        nombre: imagenesLocal[i].nombre,
+        path: imagenesLocal[i].path,
+        base64: imagenesLocal[i].base64,
+        ); //Se crea el objeto imagenes para la Tarea
       nuevaTarea.imagenes.add(nuevaImagenTarea);
     }
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
@@ -231,7 +239,12 @@ class JornadaController extends ChangeNotifier {
     nuevaTarea.statusSync.target = nuevoSyncTarea;
     //Se agregan las imagenes a la Tarea
     for (var i = 0; i < imagenes.length; i++) {
-      final nuevaImagenTarea = Imagenes(imagenes: imagenes[i]); //Se crea el objeto imagenes para la Tarea
+      final nuevaImagenTarea = Imagenes(
+        imagenes: imagenes[i],
+        nombre: imagenesLocal[i].nombre,
+        path: imagenesLocal[i].path,
+        base64: imagenesLocal[i].base64,
+        ); //Se crea el objeto imagenes para la Tarea
       nuevaTarea.imagenes.add(nuevaImagenTarea);
     }
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
@@ -354,7 +367,12 @@ class JornadaController extends ChangeNotifier {
     nuevaTarea.statusSync.target = nuevoSyncTarea;
     //Se agregan las imagenes a la Tarea
     for (var i = 0; i < imagenes.length; i++) {
-      final nuevaImagenTarea = Imagenes(imagenes: imagenes[i]); //Se crea el objeto imagenes para la Tarea
+      final nuevaImagenTarea = Imagenes(
+        imagenes: imagenes[i],
+        nombre: imagenesLocal[i].nombre,
+        path: imagenesLocal[i].path,
+        base64: imagenesLocal[i].base64,
+        ); //Se crea el objeto imagenes para la Tarea
       nuevaTarea.imagenes.add(nuevaImagenTarea);
     }
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);

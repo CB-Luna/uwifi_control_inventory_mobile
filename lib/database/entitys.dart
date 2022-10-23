@@ -605,6 +605,8 @@ class ProdVendidos {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
+  @Unique()
+  String? idEmiWeb;
   final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
   final venta = ToOne<Ventas>();
@@ -616,6 +618,7 @@ class ProdVendidos {
     required this.precioVenta,
     DateTime? fechaRegistro,
     this.idDBR,
+    this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -627,7 +630,6 @@ class ProductosEmp {
   int id;
   String nombre;
   String descripcion;
-  String imagen;
   double costo;
   DateTime fechaRegistro;
   bool archivado;
@@ -638,6 +640,7 @@ class ProductosEmp {
   final statusSync = ToOne<StatusSync>();
   final emprendimientos = ToOne<Emprendimientos>();
   final unidadMedida = ToOne<UnidadMedida>();
+  final imagen = ToOne<Imagenes>();
   final bitacora = ToMany<Bitacora>();
   @Backlink()
   final vendidos = ToMany<ProdVendidos>();
@@ -646,7 +649,6 @@ class ProductosEmp {
     this.id = 0,
     required this.nombre,
     required this.descripcion,
-    required this.imagen,
     required this.costo,
     DateTime? fechaRegistro,
     this.archivado = false,
@@ -1158,17 +1160,27 @@ class StatusSync {
 class Imagenes {
   int id;
   String imagenes;
+  String? nombre;
+  String? path;
+  String? base64;
   DateTime fechaRegistro;
+  @Unique()
+  String? idEmiWeb;
   final tareas = ToMany<Tareas>();
   final prodSolicitados = ToMany<ProdSolicitado>();
   final productosProv = ToMany<ProductosProv>();
   final prodProyecto = ToMany<ProdProyecto>();
   final usuarios = ToMany<Usuarios>();
   final inversiones = ToMany<Inversiones>();
+  final productosEmp = ToMany<ProductosEmp>();
   Imagenes({
     this.id = 0,
     required this.imagenes,
+    this.nombre,
+    this.path,
+    this.base64,
     DateTime? fechaRegistro,
+    this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);

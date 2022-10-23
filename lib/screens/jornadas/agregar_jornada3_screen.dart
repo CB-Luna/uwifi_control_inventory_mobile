@@ -1,5 +1,7 @@
-import 'dart:io';
+import 'dart:convert';
+import 'dart:io' as libraryIO;
 import 'package:bizpro_app/modelsPocketbase/temporals/productos_solicitados_temporal.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/save_imagenes_local.dart';
 import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
@@ -118,7 +120,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                       height: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: FileImage(File(widget.emprendimiento.imagen)),
+                          image: FileImage(libraryIO.File(widget.emprendimiento.imagen)),
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
                         ),
@@ -654,6 +656,14 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                           }
                                           setState(() {
                                             for (var i = 0; i < imagenesTemp.length; i++) {
+                                              libraryIO.File file = libraryIO.File(imagenesTemp[i].path);
+                                              List<int> fileInByte = file.readAsBytesSync();
+                                              String base64 = base64Encode(fileInByte);
+                                              var newImagenLocal = SaveImagenesLocal(
+                                                nombre: imagenesTemp[i].name, 
+                                                path: imagenesTemp[i].path, 
+                                                base64: base64);
+                                              jornadaProvider.imagenesLocal.add(newImagenLocal);  
                                               jornadaProvider.imagenes.add(imagenesTemp[i].path);
                                             }
                                           });
@@ -1043,8 +1053,6 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                         onPressed: () async {
                                           if (productoInversionJornadaController.productosSolicitados.isEmpty) {
                                             if (proyecto != "" && tipoProyecto != "") {
-                                            print("Proyecto: $proyecto");
-                                            print("HOLIS");
                                             final actualProyecto = dataBase.catalogoProyectoBox
                                             .query(CatalogoProyecto_.nombre
                                                 .equals(proyecto))

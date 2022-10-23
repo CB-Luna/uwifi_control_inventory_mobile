@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:bizpro_app/modelsPocketbase/temporals/save_imagenes_local.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -236,8 +240,15 @@ class _AgregarProductoEmprendedorScreenState
 
                                     setState(() {
                                       image = pickedFile;
-                                      productoEmprendedorProvider.imagen =
-                                          image!.path;
+                                      File file = File(image!.path);
+                                      List<int> fileInByte = file.readAsBytesSync();
+                                      String base64 = base64Encode(fileInByte);
+                                      var newImagenLocal = SaveImagenesLocal(
+                                        nombre: image!.name, 
+                                        path: image!.path, 
+                                        base64: base64);
+                                      productoEmprendedorProvider.imagen = newImagenLocal;
+                                      
                                     });
                                   },
                                   child: Container(

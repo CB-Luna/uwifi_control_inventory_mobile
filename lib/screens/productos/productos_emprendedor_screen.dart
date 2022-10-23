@@ -483,7 +483,7 @@ class _ProductosEmprendedorScreenState
                                                   child:
                                                       getWidgetContainerImage(
                                                           productoEmprendedor
-                                                              .imagen,
+                                                              .imagen.target?.path,
                                                           150,
                                                           double.infinity),
                                                 ),

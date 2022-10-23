@@ -1,4 +1,6 @@
-import 'dart:io';
+import 'dart:convert';
+import 'dart:io' as libraryIO;
+import 'package:bizpro_app/modelsPocketbase/temporals/save_imagenes_local.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -74,7 +76,7 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                       height: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: FileImage(File(widget.emprendimiento.imagen)),
+                          image: FileImage(libraryIO.File(widget.emprendimiento.imagen)),
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
                         ),
@@ -731,6 +733,14 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                                           }
                                           setState(() {
                                             for (var i = 0; i < imagenesTemp.length; i++) {
+                                              libraryIO.File file = libraryIO.File(imagenesTemp[i].path);
+                                              List<int> fileInByte = file.readAsBytesSync();
+                                              String base64 = base64Encode(fileInByte);
+                                              var newImagenLocal = SaveImagenesLocal(
+                                                nombre: imagenesTemp[i].name, 
+                                                path: imagenesTemp[i].path, 
+                                                base64: base64);
+                                              jornadaProvider.imagenesLocal.add(newImagenLocal);  
                                               jornadaProvider.imagenes.add(imagenesTemp[i].path);
                                             }
                                           });

@@ -1,5 +1,7 @@
-import 'dart:io';
+import 'dart:convert';
+import 'dart:io' as libraryIO;
 import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/save_imagenes_local.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_imagenes_completas.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_carousel.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +74,7 @@ class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
                       height: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: FileImage(File(widget.emprendimiento.imagen)),
+                          image: FileImage(libraryIO.File(widget.emprendimiento.imagen)),
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
                         ),
@@ -587,6 +589,14 @@ class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
                                           }
                                           setState(() {
                                             for (var i = 0; i < imagenesTemp.length; i++) {
+                                              libraryIO.File file = libraryIO.File(imagenesTemp[i].path);
+                                              List<int> fileInByte = file.readAsBytesSync();
+                                              String base64 = base64Encode(fileInByte);
+                                              var newImagenLocal = SaveImagenesLocal(
+                                                nombre: imagenesTemp[i].name, 
+                                                path: imagenesTemp[i].path, 
+                                                base64: base64);
+                                              jornadaProvider.imagenesLocal.add(newImagenLocal);  
                                               jornadaProvider.imagenes.add(imagenesTemp[i].path);
                                             }
                                           });
