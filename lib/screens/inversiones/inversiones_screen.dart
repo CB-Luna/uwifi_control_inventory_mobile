@@ -285,7 +285,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                 ),
                                 Container(
                                   width: MediaQuery.of(context).size.width * 0.75,
-                                  height: 50,
+                                  height: 60,
                                   decoration: BoxDecoration(
                                     color: const Color(0x49FFFFFF),
                                     boxShadow: const[
