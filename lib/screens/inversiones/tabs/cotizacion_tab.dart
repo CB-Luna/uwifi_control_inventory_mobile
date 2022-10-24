@@ -1,12 +1,13 @@
 import 'dart:io';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/screens/inversiones/cotizacion_simulada_exitosamente.dart';
+import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/providers/sync_provider_pocketbase.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:bizpro_app/util/util.dart';
+//import 'package:bizpro_app/util/util.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 import 'package:bizpro_app/database/entitys.dart';
@@ -84,7 +85,7 @@ with TickerProviderStateMixin {
                               AppTheme.of(
                                       context)
                                   .bodyText1Family,
-                          fontSize: 20,
+                          fontSize: 16,
                         ),
                   ),
                 ],
@@ -325,7 +326,7 @@ with TickerProviderStateMixin {
                                               style: AppTheme.of(context).bodyText1.override(
                                                     fontFamily: AppTheme.of(context).bodyText1Family,
                                                     color: Colors.white,
-                                                    fontSize: 12,
+                                                    fontSize: 10,
                                                   ),
                                             ),
                                           ),
@@ -682,7 +683,7 @@ with TickerProviderStateMixin {
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
                                                       Text(
-                                                          productoCot.productosProv.target!.descripcion,
+                                                          maybeHandleOverflow(productoCot.productosProv.target!.descripcion,14,"..."),
                                                           style: AppTheme.of(context).bodyText1.override(
                                                                 fontFamily: AppTheme.of(context).bodyText1Family,
                                                                 color: AppTheme.of(context).secondaryText,
@@ -690,7 +691,7 @@ with TickerProviderStateMixin {
                                                           overflow: TextOverflow.ellipsis,
                                                         ),
                                                         Text(
-                                                          productoCot.productosProv.target?.familiaProducto.target?.nombre ?? "SIN FAMILIA",
+                                                          maybeHandleOverflow(productoCot.productosProv.target?.familiaProducto.target?.nombre ?? "SIN FAMILIA",13,"..."),
                                                           style: AppTheme.of(context).bodyText1.override(
                                                                 fontFamily: AppTheme.of(context).bodyText1Family,
                                                                 color: AppTheme.of(context).secondaryText,

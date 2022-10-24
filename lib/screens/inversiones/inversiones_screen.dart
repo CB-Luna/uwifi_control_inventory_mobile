@@ -177,7 +177,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                               .bodyText1Family,
                                           color: AppTheme.of(context)
                                               .primaryText,
-                                          fontSize: 17,
+                                          fontSize: 14,
                                           fontWeight: FontWeight.w600,
                                         ),
                                   ),
@@ -461,7 +461,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                               20, 10, 20, 20),
                                           child: Container(
                                             width: double.infinity,
-                                            height: 130,
+                                            height: 160,
                                             decoration: BoxDecoration(
                                               color: const Color(
                                                 0x374672FF),
@@ -532,22 +532,13 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                   MainAxisAlignment
                                                                       .spaceAround,
                                                               children: [
-                                                                
-                                                                  Padding(
-                                                                    padding: const EdgeInsets.all(8.0),
-                                                                    child: Text(dateTimeFormat("dd/MMM/yyyy", 
-                                                                    actualEmprendimiento!.emprendedor.target!.fechaRegistro),
-                                                                        
-                                                                    ),
-                                                                  ),
-                                                                
                                                                 Padding(
                                                                   padding:
                                                                       const EdgeInsetsDirectional
                                                                           .fromSTEB(5,
                                                                               0, 0, 0),
                                                                   child: Text(
-                                                                    maybeHandleOverflow(emprendedor, 16, "..."),
+                                                                    maybeHandleOverflow(emprendedor, 25, "..."),
                                                                     style: AppTheme.of(
                                                                             context)
                                                                         .bodyText1
@@ -566,6 +557,25 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                               ],
                                                             ),
                                                           ),
+                                                                
+                                                                  Padding(
+                                                                    padding: const EdgeInsets.all(8.0),
+                                                                    child: Row(
+                                                                      mainAxisSize:
+                                                                  MainAxisSize.max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceEvenly,
+                                                                      children: [
+                                                                        Text(dateTimeFormat("dd/MMM/yyyy", 
+                                                                        actualEmprendimiento!.emprendedor.target!.fechaRegistro),
+                                                                            style: AppTheme.of(context).bodyText1 ,
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                
+                                                                
                                                           Padding(
                                                             padding:
                                                                 const EdgeInsetsDirectional
@@ -657,7 +667,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                               "Tipo de proyecto: ${
                                                                 actualEmprendimiento!
                                                                   .catalogoProyecto
-                                                                  .target!.nombre}", 38, "..."
+                                                                  .target!.nombre}", 30, "..."
                                                               ),
                                                               style: AppTheme.of(
                                                                       context)

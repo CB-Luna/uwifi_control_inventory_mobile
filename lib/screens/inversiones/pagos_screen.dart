@@ -320,7 +320,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                     DataColumn(
                                                         label: Expanded(
                                                       child: Text(
-                                                        'Costo final',
+                                                        'Costo\nfinal',
                                                         style:
                                                             AppTheme.of(context)
                                                                 .bodyText1,
@@ -615,20 +615,21 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                       ),
                                                                     ),
                                                                     Text(
-                                                                      currencyFormat
+                                                                      maybeHandleOverflow(currencyFormat
                                                                           .format(
                                                                               totalProyecto.toStringAsFixed(2)),
-                                                                      style: AppTheme.of(
-                                                                              context)
-                                                                          .bodyText1
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                AppTheme.of(context).bodyText1Family,
-                                                                            fontSize:
-                                                                                18,
-                                                                            useGoogleFonts:
-                                                                                GoogleFonts.asMap().containsKey(AppTheme.of(context).bodyText1Family),
-                                                                          ),
+                                                                      // style: AppTheme.of(
+                                                                      //         context)
+                                                                      //     .bodyText1
+                                                                      //     .override(
+                                                                      //       fontFamily:
+                                                                      //           AppTheme.of(context).bodyText1Family,
+                                                                      //       fontSize:
+                                                                      //           18,
+                                                                      //       useGoogleFonts:
+                                                                      //           GoogleFonts.asMap().containsKey(AppTheme.of(context).bodyText1Family),
+                                                                      //     )
+                                                                      8,"..."),
                                                                     ),
                                                                   ],
                                                                 ),

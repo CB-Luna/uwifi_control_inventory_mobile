@@ -465,7 +465,7 @@ class _VentasScreenState extends State<VentasScreen> {
                                               20, 10, 20, 20),
                                           child: Container(
                                             width: double.infinity,
-                                            height: 100,
+                                            height: 140,
                                             decoration: BoxDecoration(
                                               color: const Color(
                                                 0x374672FF),
@@ -518,7 +518,7 @@ class _VentasScreenState extends State<VentasScreen> {
                                                                   [Padding(
                                                                    padding: EdgeInsets.all(8.0),
                                                                     child: Text(
-                                                                      emprendedor,
+                                                                      maybeHandleOverflow(emprendedor,25,"..."),
                                                                       style: AppTheme
                                                                               .of(context)
                                                                           .bodyText1,
@@ -550,7 +550,8 @@ class _VentasScreenState extends State<VentasScreen> {
                                                               padding: EdgeInsets.all(8.0),
                                                               
                                                               child: Text(
-                                                                dateTimeFormat("dd/MMM/yyyy", venta.fechaTermino)
+                                                                maybeHandleOverflow(dateTimeFormat("dd/MMM/yyyy", venta.fechaTermino),
+                                                                7,"..."),
                                                               ),
                                                             ),
                                                             
