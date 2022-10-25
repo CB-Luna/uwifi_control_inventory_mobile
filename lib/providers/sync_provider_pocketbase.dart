@@ -310,20 +310,33 @@ class SyncProviderPocketbase extends ChangeNotifier {
         case "syncUpdateJornada3":
           final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
           if(jornadaToSync != null){
-            if(jornadaToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
-              print("Entro aqui en el if");
+            if(jornadaToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") { 
               continue;
             } else {
-              print("Entro aqui en el else");
               if (jornadaToSync.idDBR != null) {
-                print("Ya ha sido enviado al backend");
-                syncUpdateJornada3(jornadaToSync);
+                //Ya se ha enviado al backend la jornada y se puede actualizar
+                final boolSyncUpdateJornada3 = await syncUpdateJornada3(jornadaToSync);
+                if (boolSyncUpdateJornada3) {
+                  banderasExistoSync.add(boolSyncUpdateJornada3);
+                  continue;
+                } else {
+                  //Salimos del bucle
+                  banderasExistoSync.add(boolSyncUpdateJornada3);
+                  i = instruccionesBitacora.length;
+                  break;
+                }
               } else {
-                print("No ha sido enviado al backend");
-              }
-            }   
-          }  
-          continue;
+                //No se ha enviado al backend la jornada y por lo tanto no se puede actualizar
+                banderasExistoSync.add(true);
+                continue;
+              } 
+            }          
+          } else {
+            //Salimos del bucle
+            banderasExistoSync.add(false);
+            i = instruccionesBitacora.length;
+            break;
+          }
         case "syncUpdateJornada4":
           final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
           if(jornadaToSync != null){
@@ -411,20 +424,33 @@ class SyncProviderPocketbase extends ChangeNotifier {
         case "syncUpdateUsuario":
           final usuarioToSync = getFirstUsuario(dataBase.usuariosBox.getAll(), instruccionesBitacora[i].id);
           if(usuarioToSync != null){
-            if(usuarioToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
-              print("Entro aqui en el if");
+            if(usuarioToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") { 
               continue;
             } else {
-              print("Entro aqui en el else");
               if (usuarioToSync.idDBR != null) {
-                print("Ya ha sido enviado al backend");
-                syncUpdateUsuario(usuarioToSync);
+                //Ya se ha enviado al backend el usuario y se puede actualizar
+                final boolSyncUpdateUsuario = await syncUpdateUsuario(usuarioToSync);
+                if (boolSyncUpdateUsuario) {
+                  banderasExistoSync.add(boolSyncUpdateUsuario);
+                  continue;
+                } else {
+                  //Salimos del bucle
+                  banderasExistoSync.add(boolSyncUpdateUsuario);
+                  i = instruccionesBitacora.length;
+                  break;
+                }
               } else {
-                print("No ha sido enviado al backend");
-              }
-            } 
+                //No se ha enviado al backend el usuario y por lo tanto no se puede actualizar
+                banderasExistoSync.add(true);
+                continue;
+              } 
+            }          
+          } else {
+            //Salimos del bucle
+            banderasExistoSync.add(false);
+            i = instruccionesBitacora.length;
+            break;
           }
-          continue;
         case "syncAddProductoEmprendedor":
           print("Entro al caso de syncAddProductoEmprendedor Pocketbase");
           final prodEmprendedorToSync = getFirstProductoEmprendedor(dataBase.productosEmpBox.getAll(), instruccionesBitacora[i].id);
@@ -1485,7 +1511,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
     }
   } 
 
-  Future<bool?> syncUpdateJornada3(Jornadas jornada) async {
+  Future<bool> syncUpdateJornada3(Jornadas jornada) async {
     print("Estoy en El syncUpdateJornada3");
     try {
       //Primero actualizamos la tarea
@@ -1506,34 +1532,39 @@ class SyncProviderPocketbase extends ChangeNotifier {
             if (statusSync != null) {
               statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado de la tarea
               dataBase.statusSyncBox.put(statusSync);
-            }
-          }
-        }
-        //Segundo actualizamos la jornada
-        final recordJornada = await client.records.update('jornadas', jornada.idDBR.toString(), body: {
-            "proxima_visita": jornada.fechaRevision.toUtc().toString(),
-            "id_status_sync_fk": "HoI36PzYw1wtbO1",
-        }); 
+              //Segundo actualizamos la jornada
+              final recordJornada = await client.records.update('jornadas', jornada.idDBR.toString(), body: {
+                  "proxima_visita": jornada.fechaRevision.toUtc().toString(),
+                  "id_status_sync_fk": "HoI36PzYw1wtbO1",
+              }); 
 
-        if (recordJornada.id.isNotEmpty) {
-          print("Jornada updated succesfully");
-          var updateJornada = dataBase.jornadasBox.get(jornada.id);
-          if (updateJornada  != null) {
-            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateJornada.statusSync.target!.id)).build().findUnique();
-            if (statusSync != null) {
-              statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado de la jornada
-              dataBase.statusSyncBox.put(statusSync);
+              if (recordJornada.id.isNotEmpty) {
+                print("Jornada updated succesfully");
+                final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(jornada.statusSync.target!.id)).build().findUnique();
+                if (statusSync != null) {
+                  statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado de la jornada
+                  dataBase.statusSyncBox.put(statusSync);
+                  return true;
+                } else {
+                  return false;
+                }
+              }
+              else{
+                return false;
+              }
+            } else {
+              return false;
             }
+          } else {
+            return false;
           }
-        }
-        else{
+        } else {
           return false;
         }
       }
       else{
         return false;
       }
-      return true;
 
     } catch (e) {
       print('ERROR - function syncUpdateJornada3(): $e');
@@ -1707,10 +1738,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   } 
 
-  Future<bool?> syncUpdateUsuario(Usuarios usuario) async {
+  Future<bool> syncUpdateUsuario(Usuarios usuario) async {
     print("Estoy en El syncUpdateUsuario");
     try {
-
       final record = await client.records.update('emi_users', usuario.idDBR.toString(), body: {
         "nombre_usuario": usuario.nombre,
         "apellido_p": usuario.apellidoP,
@@ -1722,20 +1752,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
       if (record.id.isNotEmpty) {
         print("usuario updated succesfully");
-        var updateUsuario = dataBase.usuariosBox.get(usuario.id);
-        if (updateUsuario  != null) {
-          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateUsuario.statusSync.target!.id)).build().findUnique();
-          if (statusSync != null) {
-            statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
-            dataBase.statusSyncBox.put(statusSync);
-          }
+        final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(usuario.statusSync.target!.id)).build().findUnique();
+        if (statusSync != null) {
+          statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
+          dataBase.statusSyncBox.put(statusSync);
+          return true;
+        } else{
+          return false;
         }
       }
       else{
         return false;
       }
-      return true;
-
     } catch (e) {
       print('ERROR - function syncUpdateUsuario(): $e');
       return false;

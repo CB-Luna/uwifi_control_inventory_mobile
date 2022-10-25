@@ -279,6 +279,27 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               i = instruccionesBitacora.length;
               break;
             }
+          case "syncUpdateUsuario":
+            print("Entro al caso de syncUpdateUsuario Emi Web");
+            final usuarioToSync = getFirstUsuario(dataBase.usuariosBox.getAll(), instruccionesBitacora[i].id);
+            if(usuarioToSync != null){
+              //Se encontró al usuario y se puede actualizar
+              final boolSyncUpdateUsuario = await syncUpdateUsuario(usuarioToSync, instruccionesBitacora[i]);
+              if (boolSyncUpdateUsuario) {
+                banderasExistoSync.add(boolSyncUpdateUsuario);
+                continue;
+              } else {
+                //Salimos del bucle
+                banderasExistoSync.add(boolSyncUpdateUsuario);
+                i = instruccionesBitacora.length;
+                break;
+              }
+            } else {
+              //Salimos del bucle
+              banderasExistoSync.add(false);
+              i = instruccionesBitacora.length;
+              break;
+            }
           case "syncUpdateFaseEmprendimiento":
             print("Entro al caso de syncUpdateFaseEmprendimiento Emi Web");
             final emprendimientoToSync = getFirstEmprendimiento(dataBase.emprendimientosBox.getAll(), instruccionesBitacora[i].id);
@@ -300,7 +321,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               break;
             }
           case "syncUpdateJornada1":
-            print("Entro al caso de syncAddJornada1 Emi Web");
+            print("Entro al caso de syncUpdateJornada1 Emi Web");
             final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
             if(jornadaToSync != null){
               if (jornadaToSync.idEmiWeb != null) {
@@ -1954,6 +1975,81 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       }  
     } catch (e) {
       print('ERROR - function syncUpdateJornada2(): $e');
+      return false;
+    }
+  } 
+
+    Future<bool> syncUpdateUsuario(Usuarios usuario, Bitacora bitacora) async {
+    print("Estoy en El syncUpdateUsuario() en Emi Web");
+    try {
+      // Primero creamos el API para realizar la actualización
+      final actualizarUsuarioUri =
+        Uri.parse('$baseUrlEmiWebServices/usuarios/actualizar');
+      final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+      final responsePostUpdateUsuario = await put(actualizarUsuarioUri, 
+      headers: headers,
+      body: jsonEncode({
+        "idUsuario": usuario.idEmiWeb,
+        "nombre": usuario.nombre,
+        "apellidoPaterno": usuario.apellidoP,
+        "apellidoMaterno": usuario.apellidoM,
+        "telefono": usuario.telefono,
+      }));
+
+      print(responsePostUpdateUsuario.statusCode);
+      print(responsePostUpdateUsuario.body);
+      switch (responsePostUpdateUsuario.statusCode) {
+        case 200:
+        print("Caso 200 en Emi Web Update Usuario");
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
+          return true;
+        default: //No se realizo con éxito el post
+          print("Error en actualizar usuario Emi Web");
+          return false;
+      }  
+    } catch (e) {
+      print('ERROR - function syncUpdateUsuario(): $e');
+      return false;
+    }
+  } 
+
+    Future<bool> syncUpdateImagenUsuario(Usuarios usuario, Bitacora bitacora) async {
+    print("Estoy en El syncUpdateImagenUsuario() en Emi Web");
+    try {
+      // Primero creamos el API para realizar la actualización
+      final actualizarImagenUsuarioUri =
+        Uri.parse('$baseUrlEmiWebServices/usuarios/actualizar');
+      final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+      final responsePostUpdateImagenUsuario = await put(actualizarImagenUsuarioUri, 
+      headers: headers,
+      body: jsonEncode({
+        "idCatTipoDocumento": "1", //Foto perfil Usuario
+        "nombreArchivo": usuario.image.target!.nombre,
+        "archivo": usuario.image.target!.base64,
+        "idUsuario": usuario.idEmiWeb,
+      }));
+
+      print(responsePostUpdateImagenUsuario.statusCode);
+      print(responsePostUpdateImagenUsuario.body);
+      switch (responsePostUpdateImagenUsuario.statusCode) {
+        case 200:
+        print("Caso 200 en Emi Web Update Imagen Usuario");
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
+          return true;
+        default: //No se realizo con éxito el post
+          print("Error en actualizar imagen usuario Emi Web");
+          return false;
+      }  
+    } catch (e) {
+      print('ERROR - function syncUpdateImagenUsuario(): $e');
       return false;
     }
   } 
