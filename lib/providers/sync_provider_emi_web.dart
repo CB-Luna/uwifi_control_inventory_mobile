@@ -1594,13 +1594,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           "idProyecto": inversion.emprendimiento.target!.idEmiWeb,
           "idCatEstadoInversion": inversion.estadoInversion.target!.idEmiWeb,
           "porcentajePago": inversion.porcentajePago,
-          "idInversiones": 4,
           "archivadoPromotor": false,
           "archivadoStaff": false,
           "fechaCompra": inversion.fechaCompra,
           "montoPagar": inversion.montoPagar,
           "saldo": inversion.saldo,
-          "totalInversion": inversion.totalInversion,
+          "totalInversion": 0.0,
           "inversionRecibida": true,
         }));
         print(responsePostInversion.statusCode);
