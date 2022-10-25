@@ -181,7 +181,7 @@ class _ProductosEmprendedorScreenState
                                                     .bodyText1Family,
                                                 color: AppTheme.of(context)
                                                     .primaryText,
-                                                fontSize: 17,
+                                                fontSize: 15,
                                                 fontWeight: FontWeight.w600,
                                               ),
                                         ),
