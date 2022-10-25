@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:bizpro_app/modelsPocketbase/temporals/save_imagenes_local.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -210,8 +214,14 @@ class _AgregarProductoInversionScreenState
 
                                             setState(() {
                                               image = pickedFile;
-                                              inversionProvider.imagen =
-                                                  image!.path;
+                                              File file = File(image!.path);
+                                              List<int> fileInByte = file.readAsBytesSync();
+                                              String base64 = base64Encode(fileInByte);
+                                              var newImagenLocal = SaveImagenesLocal(
+                                                nombre: image!.name, 
+                                                path: image!.path, 
+                                                base64: base64);
+                                              inversionProvider.imagen = newImagenLocal;
                                             });
                                           },
                                           child: Container(

@@ -1,4 +1,5 @@
 import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/instruccion_temporal.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/save_imagenes_local.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class JornadaController extends ChangeNotifier {
   String descripcion = "";
   List<String> imagenes = [];
   List<SaveImagenesLocal> imagenesLocal = [];
+  List<InstruccionTemporal> instruccionesTemp = [];
   bool activo = true;
   String tipoProyecto = "";
   String proyecto =  "";
@@ -38,6 +40,7 @@ class JornadaController extends ChangeNotifier {
     descripcion = "";
     imagenes = [];
     imagenesLocal = [];
+    instruccionesTemp = [];
     activo = true;
     tipoProyecto = "";
     proyecto = "";

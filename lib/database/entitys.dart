@@ -68,6 +68,8 @@ class ProdSolicitado {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
+  @Unique()
+  String? idEmiWeb;
   final familiaProducto = ToOne<FamiliaProd>();
   final unidadMedida = ToOne<UnidadMedida>();
   final tipoEmpaques = ToOne<TipoEmpaques>();
@@ -87,6 +89,7 @@ class ProdSolicitado {
     this.costoEstimado,
     DateTime? fechaRegistro,
     this.idDBR,
+    this.idEmiWeb,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -106,7 +109,7 @@ class ProdProyecto {
   @Unique()
   String? idDBR;
   @Unique()
-  String? idEmiWeb;
+  String idEmiWeb;
   final familiaProducto = ToOne<FamiliaProd>();
   final unidadMedida = ToOne<UnidadMedida>();
   final catalogoProyecto = ToOne<CatalogoProyecto>();
@@ -143,6 +146,8 @@ class Inversiones {
   bool jornada3;
   @Unique()
   String? idDBR;
+  @Unique()
+  String? idEmiWeb;
   final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
   final emprendimiento = ToOne<Emprendimientos>();
@@ -163,6 +168,7 @@ class Inversiones {
     DateTime? fechaRegistro,
     this.jornada3 = false,
     this.idDBR,
+    this.idEmiWeb,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
