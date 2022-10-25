@@ -200,6 +200,9 @@ void updatePago(double newMontoAbonado, int idInversion) {
     notifyListeners(); 
   }
 
+   void notification() {
+    notifyListeners(); 
+  }
 
   
 }
