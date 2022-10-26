@@ -880,18 +880,26 @@ with TickerProviderStateMixin {
                                       ));
                                     } else
                                     {
-                                    await cotizacionProvider.buscarOtraCotizacion(
-                                      widget.inversion.id,
-                                      widget.inversionesXprodCotizados.id);
-                                    // ignore: use_build_context_synchronously
-                                    await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => CotizacionSolicitarOtra(
-                                            idEmprendimiento: widget.emprendimiento.id,
-                                            ),
-                                        ),
-                                      );
+                                      if (await cotizacionProvider.buscarOtraCotizacion(
+                                      widget.inversion,
+                                      widget.inversionesXprodCotizados.id
+                                      )) {
+                                        // ignore: use_build_context_synchronously
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => CotizacionSolicitarOtra(
+                                              idEmprendimiento: widget.emprendimiento.id,
+                                              ),
+                                          ),
+                                        );
+                                      } else {
+                                        snackbarKey.currentState
+                                            ?.showSnackBar(const SnackBar(
+                                          content: Text(
+                                              "No se pudo completar el proceso de búsqueda de otra cotización, intente más tarde."),
+                                        ));
+                                      }
                                     } 
                                   } else {
                                     snackbarKey.currentState

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_inversion_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_prod_cotizados_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_prod_emprendedor_by_emprendedor_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_token_emi_web.dart';
@@ -2229,4 +2230,64 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     }
   }
 
+
+  // VALIDAR QUE HAYA CAMBIADO EL ESTADO DE LA INVERSION A COMPRADA
+  Future<bool> validateInversionComprada(Inversiones inversion) async {
+    try {
+      if (await getTokenOAuth()) {
+        var url = Uri.parse("$baseUrlEmiWebServices/inversiones/${inversion.idEmiWeb}");
+        final headers = ({
+            "Content-Type": "application/json",
+            'Authorization': 'Bearer $tokenGlobal',
+          });
+        var response = await get(
+          url,
+          headers: headers
+        );
+        print("Status: ${response.statusCode}");
+        print("Body: ${response.body}");
+        switch (response.statusCode) {
+          case 200: //Caso éxitoso
+            final responseGetInversionParse = getInversionEmiWebFromMap(
+              const Utf8Decoder().convert(response.bodyBytes));
+            final estadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.idEmiWeb.equals(responseGetInversionParse.payload!.idCatEstadoInversion.toString())).build().findUnique();
+            if(estadoInversion != null) {
+              if(estadoInversion.estado == "Comprada") {
+                //Se actualiza estado de Inversión en Pocketbase
+                final record = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
+                "id_estado_inversion_fk": estadoInversion.idDBR,
+                }); 
+                if (record.id.isEmpty) {
+                  return false;
+                } else {
+                  final statusSyncInversion = dataBase.statusSyncBox.query(StatusSync_.id.equals(inversion.statusSync.target!.id)).build().findUnique();
+                  if (statusSyncInversion != null) {
+                    statusSyncInversion.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado de la inversion
+                    dataBase.statusSyncBox.put(statusSyncInversion);
+                    inversion.estadoInversion.target = estadoInversion;
+                    dataBase.inversionesBox.put(inversion);
+                    return true;
+                  }
+                  else{
+                    return false;
+                  }
+              }
+              } else {
+                return false;
+              }
+            } else {
+              return false;
+            }
+          default:
+            //Ocurrió un error
+            return false;
+        }  
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print("Error en validateInversionComprada(): $e");
+      return false;
+    }
+  }
 }
