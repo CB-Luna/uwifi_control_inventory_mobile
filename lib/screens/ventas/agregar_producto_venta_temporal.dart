@@ -523,7 +523,7 @@ class _AgregarProductoVentaTemporalState
                                     || precioVenta.text == "") ? 
                                     "\$0.00"
                                     :
-                                    "\$${subTotal.text}",
+                                    currencyFormat.format(subTotal.text),
                                     style: AppTheme.of(context)
                                         .bodyText1
                                         .override(
