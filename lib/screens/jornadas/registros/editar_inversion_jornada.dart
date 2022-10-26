@@ -71,9 +71,9 @@ class _EditarInversionJornadaScreenState
             ),
             Stack(
               children: [
-                SingleChildScrollView(
-                  child: Align(
-                    alignment: const AlignmentDirectional(0, 0),
+                Align(
+                  alignment: const AlignmentDirectional(0, 0),
+                  child: SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
