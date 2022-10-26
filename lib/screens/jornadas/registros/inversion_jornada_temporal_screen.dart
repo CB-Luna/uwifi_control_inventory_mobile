@@ -669,7 +669,7 @@ class _InversionJornadaTemporalScreenState
                                                                                 ),
                                                                           ),
                                                                           Text(
-                                                                            prodSolicitado.unidadMedida ?? "",
+                                                                            maybeHandleOverflow(prodSolicitado.unidadMedida ?? "",9,"..."),
                                                                             style: AppTheme.of(context)
                                                                                 .subtitle1
                                                                                 .override(
