@@ -2294,7 +2294,7 @@
     },
     {
       "id": "54:858406953056318390",
-      "lastPropertyId": "15:4879353849688490270",
+      "lastPropertyId": "16:8734737385801163286",
       "name": "ProdCotizados",
       "properties": [
         {
@@ -2353,6 +2353,13 @@
           "id": "15:4879353849688490270",
           "name": "aceptado",
           "type": 1
+        },
+        {
+          "id": "16:8734737385801163286",
+          "name": "idEmiWeb",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "248:3698332697706038826"
         }
       ],
       "relations": [
@@ -2796,7 +2803,7 @@
     }
   ],
   "lastEntityId": "62:5967866020755512418",
-  "lastIndexId": "247:8811611690106049466",
+  "lastIndexId": "248:3698332697706038826",
   "lastRelationId": "73:134544593655180451",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

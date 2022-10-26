@@ -797,8 +797,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                               type: PageTransitionType.fade,
                                                               child:
                                                                   FlutterFlowExpandedImageView(
-                                                                image: imageFirma == "" ? Image.network(
-                                                                  'https://picsum.photos/seed/836/600',
+                                                                image: imageFirma == "" ? Image.asset(
+                                                                  'assets/images/default_image.png',
                                                                   fit: BoxFit.contain,
                                                                 ) 
                                                                 :
@@ -819,8 +819,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                           child: ClipRRect(
                                                             borderRadius:
                                                                 BorderRadius.circular(5),
-                                                            child: imageFirma == "" ?Image.network(
-                                                              'https://picsum.photos/seed/836/600',
+                                                            child: imageFirma == "" ? Image.asset(
+                                                              'assets/images/default_image.png',
                                                               width: 200,
                                                               height: 120,
                                                               fit: BoxFit.cover,
@@ -963,8 +963,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                               type: PageTransitionType.fade,
                                                               child:
                                                                   FlutterFlowExpandedImageView(
-                                                                image: imageProducto == "" ? Image.network(
-                                                                  'https://picsum.photos/seed/836/600',
+                                                                image: imageProducto == "" ? Image.asset(
+                                                                  'assets/images/default_image.png',
                                                                   fit: BoxFit.contain,
                                                                 ) 
                                                                 :
@@ -985,8 +985,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                           child: ClipRRect(
                                                             borderRadius:
                                                                 BorderRadius.circular(5),
-                                                            child: imageProducto == "" ?Image.network(
-                                                              'https://picsum.photos/seed/836/600',
+                                                            child: imageProducto == "" ? Image.asset(
+                                                              'assets/images/default_image.png',
                                                               width: 200,
                                                               height: 120,
                                                               fit: BoxFit.cover,

@@ -1,38 +1,52 @@
+import 'package:bizpro_app/providers/sync_provider_emi_web.dart';
+import 'package:bizpro_app/screens/sync/cotizaciones_pocketbase_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/providers/catalogo_emi_web_provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
+import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:bizpro_app/screens/sync/descarga_catalogos_pocketbase_screen.dart';
-import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
+import 'package:bizpro_app/screens/inversiones/inversiones_screen.dart';
 
-class DescargaCatalogosEmiWebScreen extends StatefulWidget {
-  const DescargaCatalogosEmiWebScreen({Key? key}) : super(key: key);
+import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+
+class CotizacionesEmiWebScreen extends StatefulWidget {
+  final Emprendimientos emprendimiento;
+  final Inversiones inversion;
+  final InversionesXProdCotizados inversionesXProdCotizados;
+  const CotizacionesEmiWebScreen({
+    Key? key, 
+    required this.emprendimiento, 
+    required this.inversion, 
+    required this.inversionesXProdCotizados
+    }) : super(key: key);
 
   @override
-  State<DescargaCatalogosEmiWebScreen> createState() => _DescargaCatalogosEmiWebScreenState();
+  State<CotizacionesEmiWebScreen> createState() => _CotizacionesEmiWebScreenState();
 }
 
-class _DescargaCatalogosEmiWebScreenState extends State<DescargaCatalogosEmiWebScreen> {
+class _CotizacionesEmiWebScreenState extends State<CotizacionesEmiWebScreen> {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-      setState(() {
-        context.read<CatalogoEmiWebProvider>().exitoso = true;
-        context.read<CatalogoEmiWebProvider>().procesoCargando(true);
-        context.read<CatalogoEmiWebProvider>().procesoTerminado(false);
-        context.read<CatalogoEmiWebProvider>().procesoExitoso(false);
-        Future<bool> booleano = context.read<CatalogoEmiWebProvider>().getCatalogosEmiWeb();
+    setState(() {
+      context.read<SyncProviderEmiWeb>().exitoso = true;
+      context.read<SyncProviderEmiWeb>().procesoCargando(true);
+      context.read<SyncProviderEmiWeb>().procesoTerminado(false);
+      context.read<SyncProviderEmiWeb>().procesoExitoso(false);
+      Future<bool> booleano = context.read<SyncProviderEmiWeb>().executeProductosCotizadosEmiWeb(widget.inversion);
         Future(() async {
           if (await booleano) {
-            print("Se ha realizado con éxito el proceso de Descarga Emi Web");
+            print("Se ha realizado con éxito el proceso de Cotización Emi Web");
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    const DescargaCatalogosPocketbaseScreen(),
+                    CotizacionesPocketbaseScreen(
+                      emprendimiento: widget.emprendimiento, 
+                      inversion: widget.inversion, 
+                      inversionesXProdCotizados: widget.inversionesXProdCotizados,
+                    ),
               ),
             );
           }
@@ -42,7 +56,7 @@ class _DescargaCatalogosEmiWebScreenState extends State<DescargaCatalogosEmiWebS
 
   @override
   Widget build(BuildContext context) {
-    final catalogoEmiWebProvider = Provider.of<CatalogoEmiWebProvider>(context);
+    final syncProviderEmiWeb = Provider.of<SyncProviderEmiWeb>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -81,7 +95,7 @@ class _DescargaCatalogosEmiWebScreenState extends State<DescargaCatalogosEmiWebS
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 40, 0, 0),
                               child: Text(
-                                '¡Conectando a\ncatálogos de EMI Web!',
+                                '¡Obteniendo Cotización\nen Emi Web!',
                                 textAlign: TextAlign.center,
                                 style: AppTheme.of(context).bodyText1.override(
                                       fontFamily:
@@ -95,7 +109,7 @@ class _DescargaCatalogosEmiWebScreenState extends State<DescargaCatalogosEmiWebS
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 10, 0, 0),
                               child: Text(
-                                'Se está realizando la conexión\na EMI Web, por favor, no apague\nla conexión Wi-Fi o datos móviles hasta \nque se complete el proceso.\nEl proceso puede tardar algunos minutos.',
+                                'Conctando a información\nde cotizaciones, por favor, no apague\nla conexión Wi-Fi o datos móviles hasta \nque se complete el proceso.',
                                 textAlign: TextAlign.center,
                                 maxLines: 5,
                                 style: AppTheme.of(context).bodyText1.override(
@@ -107,9 +121,9 @@ class _DescargaCatalogosEmiWebScreenState extends State<DescargaCatalogosEmiWebS
                                     ),
                               ),
                             ),
-                            catalogoEmiWebProvider.procesocargando
+                            syncProviderEmiWeb.procesocargando
                                 ? Visibility(
-                                  visible: catalogoEmiWebProvider.procesocargando,
+                                  visible: syncProviderEmiWeb.procesocargando,
                                   child: Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
@@ -119,9 +133,9 @@ class _DescargaCatalogosEmiWebScreenState extends State<DescargaCatalogosEmiWebS
                                     ),
                                 )
                                 : 
-                                catalogoEmiWebProvider.procesoexitoso
+                                syncProviderEmiWeb.procesoexitoso
                                 ? Visibility(
-                                  visible: !catalogoEmiWebProvider.procesocargando,
+                                  visible: !syncProviderEmiWeb.procesocargando,
                                   child: const Padding(
                                       padding:
                                           EdgeInsetsDirectional.fromSTEB(
@@ -131,7 +145,7 @@ class _DescargaCatalogosEmiWebScreenState extends State<DescargaCatalogosEmiWebS
                                   )
                                   :
                                   Visibility(
-                                    visible: !catalogoEmiWebProvider.procesocargando,
+                                    visible: !syncProviderEmiWeb.procesocargando,
                                     child: const Padding(
                                       padding:
                                           EdgeInsetsDirectional.fromSTEB(
@@ -144,7 +158,7 @@ class _DescargaCatalogosEmiWebScreenState extends State<DescargaCatalogosEmiWebS
                                     ),
                                   ),
                             Visibility(
-                              visible: catalogoEmiWebProvider.procesoterminado && (catalogoEmiWebProvider.procesoexitoso == false),
+                              visible: syncProviderEmiWeb.procesoterminado && (syncProviderEmiWeb.procesoexitoso == false),
                               child: Column(
                                 children: [
                                   Padding(
@@ -172,7 +186,7 @@ class _DescargaCatalogosEmiWebScreenState extends State<DescargaCatalogosEmiWebS
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                const EmprendimientosScreen(),
+                                                InversionesScreen(idEmprendimiento: widget.emprendimiento.id,),
                                           ),
                                         );
                                       },

@@ -10,7 +10,6 @@ class RolesPocketbaseProvider extends ChangeNotifier {
   bool procesocargando = false;
   bool procesoterminado = false;
   bool procesoexitoso = false;
-  bool banderaExistoSync = false;
   bool exitoso = true;
 
   void procesoCargando(bool boleano) {
@@ -29,22 +28,18 @@ class RolesPocketbaseProvider extends ChangeNotifier {
   }
 
   Future<bool> getRolesPocketbase() async {
-    banderaExistoSync = await getRoles();
-    //Aplicamos una operación and para validar que no haya habido un catálogo con False
-    exitoso = exitoso && banderaExistoSync;
-    //Verificamos que no haya habido errores al sincronizar con las banderas
+    exitoso = await getRoles();
+    //Verificamos que no haya habido errores al sincronizar
     if (exitoso) {
       procesocargando = false;
       procesoterminado = true;
       procesoexitoso = true;
-      banderaExistoSync = false;
       notifyListeners();
       return exitoso;
     } else {
       procesocargando = false;
       procesoterminado = true;
       procesoexitoso = false;
-      banderaExistoSync = false;
       notifyListeners();
       return exitoso;
     }
@@ -66,15 +61,13 @@ class RolesPocketbaseProvider extends ChangeNotifier {
           //Se valida que el nuevo rol aún no existe en Objectbox
           final rolExistente = dataBase.rolesBox.query(Roles_.idDBR.equals(listRoles[i].id)).build().findUnique();
           if (rolExistente == null) {
-            if (listRoles[i].id.isNotEmpty) {
-              final nuevoRol = Roles(
-              rol: listRoles[i].rol,
-              idDBR: listRoles[i].id, 
-              idEmiWeb: listRoles[i].idEmiWeb,
-              );
-              dataBase.rolesBox.put(nuevoRol);
-              print('Rol Nuevo agregado exitosamente');
-            }
+            final nuevoRol = Roles(
+            rol: listRoles[i].rol,
+            idDBR: listRoles[i].id, 
+            idEmiWeb: listRoles[i].idEmiWeb,
+            );
+            dataBase.rolesBox.put(nuevoRol);
+            print('Rol Nuevo agregado exitosamente');
           } else {
             //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
             if (rolExistente.fechaRegistro != listRoles[i].updated) {

@@ -675,6 +675,8 @@ class ProdCotizados {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
+  @Unique()
+  String idEmiWeb;
   final statusSync = ToOne<StatusSync>();
   final inversionXprodCotizados = ToOne<InversionesXProdCotizados>();
   final productosProv = ToOne<ProductosProv>();
@@ -687,6 +689,7 @@ class ProdCotizados {
     required this.costoTotal,
     DateTime? fechaRegistro,
     this.idDBR,
+    required this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);

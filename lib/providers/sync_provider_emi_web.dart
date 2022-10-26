@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_prod_cotizados_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_prod_emprendedor_by_emprendedor_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_token_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_venta_emi_web.dart';
@@ -8,6 +9,8 @@ import 'package:bizpro_app/modelsEmiWeb/post_registro_exitoso_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/post_registro_imagen_exitoso_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/post_simple_registro_exitoso_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/venta_crear_request_list_emi_web.dart';
+import 'package:bizpro_app/modelsPocketbase/get_inversion.dart';
+import 'package:bizpro_app/modelsPocketbase/get_inversion_x_prod_cotizados.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -1988,7 +1991,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         "Content-Type": "application/json",
         'Authorization': 'Bearer $tokenGlobal',
       });
-      final responsePostUpdateUsuario = await put(actualizarUsuarioUri, 
+      final responsePutUpdateUsuario = await put(actualizarUsuarioUri, 
       headers: headers,
       body: jsonEncode({
         "idUsuario": usuario.idEmiWeb,
@@ -1998,9 +2001,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         "telefono": usuario.telefono,
       }));
 
-      print(responsePostUpdateUsuario.statusCode);
-      print(responsePostUpdateUsuario.body);
-      switch (responsePostUpdateUsuario.statusCode) {
+      print(responsePutUpdateUsuario.statusCode);
+      print(responsePutUpdateUsuario.body);
+      switch (responsePutUpdateUsuario.statusCode) {
         case 200:
         print("Caso 200 en Emi Web Update Usuario");
           //Se elimina la instrucción de la bitacora
@@ -2051,6 +2054,179 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       print('ERROR - function syncUpdateImagenUsuario(): $e');
       return false;
     }
-  } 
+  }
+
+ 
+// PROCESO DE OBTENCIÓN DE PRODUCTOS COTIZADOS 
+  Future<bool> executeProductosCotizadosEmiWeb(Inversiones inversion) async {
+    if (await getTokenOAuth()) {
+      exitoso = await getProductosCotizadosEmiWeb(inversion);
+      //Verificamos que no haya habido errores en el proceso
+      if (exitoso) {
+        procesocargando = false;
+        procesoterminado = true;
+        procesoexitoso = true;
+        notifyListeners();
+        return exitoso;
+      } else {
+        procesocargando = false;
+        procesoterminado = true;
+        procesoexitoso = false;
+        notifyListeners();
+        return exitoso;
+      }
+    } else {
+      print("Proceso de sync Emi Web fallido por Token");
+      procesocargando = false;
+      procesoterminado = true;
+      procesoexitoso = false;
+      notifyListeners();
+      return false;
+    }
+
+  }
+
+
+// VALIDAR QUE HAYA INFO EN EL BACKEND
+// False se espera hasta que haya cotización
+// True se recupera la cotización
+  Future<bool> validateCotizacionEmiWeb(Inversiones inversion) async {
+    try {
+      if (await getTokenOAuth()) {
+        var url = Uri.parse("$baseUrlEmiWebServices/productosCotizados?idInversion=${inversion.idEmiWeb}");
+        final headers = ({
+            "Content-Type": "application/json",
+            'Authorization': 'Bearer $tokenGlobal',
+          });
+        var response = await get(
+          url,
+          headers: headers
+        );
+        switch (response.statusCode) {
+          case 200: //Caso éxitoso
+            return true;
+          case 404: //Error no existen productos cotizados a esta inversión
+            return false;
+          default:
+            return false;
+        }  
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print("Error en validateCotizacionEmiWeb(): $e");
+      return false;
+    }
+  }
+
+  Future<bool> getProductosCotizadosEmiWeb(Inversiones inversion) async {
+    try {
+      //Validamos que ya se haya realizado el proceso 
+        final recordInversion = await client.records.
+        getOne('inversiones', 
+        inversion.idDBR!);
+        if (recordInversion.id.isNotEmpty) {
+          print("Record Inversión no está vacía");
+          final GetInversion inversionParse = getInversionFromMap(recordInversion.toString());
+          final estadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.idDBR.equals(inversionParse.idEstadoInversionFk)).build().findUnique();
+          if (estadoInversion != null) {
+            if (estadoInversion.estado == "En Cotización") {
+              //Ya se ha realizado el proceso para Emi Web
+              return true;
+            } else {
+              print("No se ha realizado la cotización");
+              if (await getTokenOAuth()) {
+              var url = Uri.parse("$baseUrlEmiWebServices/productosCotizados?idInversion=${inversion.idEmiWeb}");
+              final headers = ({
+                  "Content-Type": "application/json",
+                  'Authorization': 'Bearer $tokenGlobal',
+                });
+              var response = await get(
+                url,
+                headers: headers
+              );
+              print("Response: ${response.body}");
+              switch (response.statusCode) {
+                case 200: //Caso éxitoso
+                print("200 Con Caso éxitoso");
+                  final responseListProdCotizados = getProdCotizadosEmiWebFromMap(
+                  const Utf8Decoder().convert(response.bodyBytes));
+                  //Se recupera el último Id de inversion_x_prod_cotizados
+                  final records = await client.records.
+                    getFullList('inversion_x_prod_cotizados', 
+                    batch: 200, 
+                    filter: "id_inversion_fk='${inversion.idDBR}'",
+                    sort: '-created'); 
+                  final List<GetInversionXProdCotizados> listInversionXProdCotizados = [];
+                  for (var element in records) {
+                    listInversionXProdCotizados.add(getInversionXProdCotizadosFromMap(element.toString()));
+                  }
+                  print("Tamaño Lista: ${records.length}");
+                  final GetInversionXProdCotizados lastInversionXProdCotizados = listInversionXProdCotizados[0];
+                  //Se recuperan los prod Cotizados a utilizar para ser posteados en Pocketbase
+                  for (var i = 0; i < responseListProdCotizados.payload!.first.first.productosCotizadosList!.length; i++) {
+                    //Verificamos que el nuevo prod Cotizado no exista en Pocketbase
+                    final recordProdCotizado = await client.records.getFullList(
+                      'productos_cotizados', 
+                      batch: 200, 
+                      filter: "id_emi_web='${responseListProdCotizados.payload!.first.first.productosCotizadosList![i].idProducto.toString()}'");
+                    if (recordProdCotizado.isEmpty) {
+                      final productoProveedor = dataBase.productosProvBox.query(ProductosProv_.nombre.equals(responseListProdCotizados.payload!.first.first.productosCotizadosList![i].producto)
+                      .and(ProductosProv_.marca.equals(responseListProdCotizados.payload!.first.first.productosCotizadosList![i].marca))
+                      .and(ProductosProv_.descripcion.equals(responseListProdCotizados.payload!.first.first.productosCotizadosList![i].descripcion))).build().findFirst();
+                      //Se crean los prod Cotizados
+                      if (productoProveedor != null) {
+                        await client.records.create('productos_cotizados', body: {
+                          "cantidad": responseListProdCotizados.payload!.first.first.productosCotizadosList![i].cantidad,
+                          "costo_total": responseListProdCotizados.payload!.first.first.productosCotizadosList![i].costoTotal,
+                          "id_producto_prov_fk": productoProveedor.idDBR,
+                          "id_inversion_x_prod_cotizados_fk": lastInversionXProdCotizados.id,
+                          "id_emi_web": responseListProdCotizados.payload!.first.first.productosCotizadosList![i].idProducto.toString(),
+                          "aceptado": false
+                        });
+                      } else{
+                        return false;
+                      }
+                    } else {
+                      //Ya existe el prod Cotizado en Pocketbase
+                      continue;
+                    }
+                  }
+                  //Se cambia el estado a En Cotización en la colección de inversiones
+                  final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En Cotización")).build().findUnique();
+                  if (newEstadoInversion != null) {
+                    final updateInversion = await client.records.update('inversiones', "${inversion.idDBR}", body: {
+                    "id_estado_inversion_fk": newEstadoInversion.idDBR,
+                    }); 
+                    if (updateInversion.id.isNotEmpty) {
+                      return true;
+                    } else {
+                      return false;
+                    }
+                  } else {
+                    return false;
+                  }
+                case 404: //Error no existen productos cotizados a esta inversión
+                  return false;
+                default:
+                  return false;
+              }  
+            } else {
+              return false;
+            }
+            }
+          } else {
+            //No se encontró el estado de l inversión
+            return false;
+          }
+        } else {
+          //No se recupero la inversión en Pocketbase
+          return false;
+        }
+    } catch (e) {
+      print("Error en getProductosCotizadosEmiWeb(): $e");
+      return false;
+    }
+  }
 
 }

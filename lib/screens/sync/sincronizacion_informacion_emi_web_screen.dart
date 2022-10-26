@@ -213,7 +213,6 @@ class _SincronizacionInformacionEmiWebScreenState extends State<SincronizacionIn
                                                 const EmprendimientosScreen(),
                                           ),
                                         );
-                                        syncProviderEmiWeb.procesoTerminado(false);
                                       },
                                       text: 'Cerrar',
                                       options: FFButtonOptions(

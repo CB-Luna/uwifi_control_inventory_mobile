@@ -186,7 +186,6 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
                                                 const EmprendimientosScreen(),
                                           ),
                                         );
-                                        syncProviderPocketbase.procesoTerminado(false);
                                       },
                                       text: 'Cerrar',
                                       options: FFButtonOptions(

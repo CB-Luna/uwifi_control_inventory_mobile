@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:bizpro_app/providers/sync_provider_pocketbase.dart';
-import 'package:bizpro_app/screens/inversiones/inversion_actualizada_exitosamente.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/helpers/globals.dart';
@@ -740,103 +739,6 @@ class _InversionTabState extends State<InversionTab>
                             ),
                           ),
                         ],
-                      ),
-                    ),
-                    Visibility(
-                      visible:
-                          widget.inversion.estadoInversion.target!.estado ==
-                              "Autorizada",
-                      child: Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(10, 12, 5, 12),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            FFButtonWidget(
-                              onPressed: () async {
-                                if (widget.emprendimiento.usuario.target!.rol
-                                            .target!.rol !=
-                                        "Amigo del Cambio" &&
-                                    widget.emprendimiento.usuario.target!.rol
-                                            .target!.rol !=
-                                        "Emprendedor") {
-                                  final connectivityResult =
-                                      await (Connectivity()
-                                          .checkConnectivity());
-                                  if (connectivityResult ==
-                                      ConnectivityResult.none) {
-                                    snackbarKey.currentState
-                                        ?.showSnackBar(const SnackBar(
-                                      content: Text(
-                                          "Necesitas conexión a internet para aceptar la cotización."),
-                                    ));
-                                  } else {
-                                    Future<bool?> boolean =
-                                        syncProviderPocketbase
-                                            .cambiarInversionAComprada(
-                                                widget.inversion);
-                                    if (await boolean != null) {
-                                      if (await boolean == true) {
-                                        // ignore: use_build_context_synchronously
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                InversionActualizadaExitosamente(
-                                                    idEmprendimiento: widget
-                                                        .emprendimiento.id),
-                                          ),
-                                        );
-                                      } else {
-                                        snackbarKey.currentState
-                                            ?.showSnackBar(const SnackBar(
-                                          content: Text(
-                                              "Falló al momento de actualizar el estado en el backend."),
-                                        ));
-                                      }
-                                    } else {
-                                      snackbarKey.currentState
-                                          ?.showSnackBar(const SnackBar(
-                                        content: Text(
-                                            "Ya ha sido actualizado el estado en el backend, para continuar presione el botón 'editar' en la parte superior de la pantalla."),
-                                      ));
-                                    }
-                                  }
-                                } else {
-                                  snackbarKey.currentState
-                                      ?.showSnackBar(const SnackBar(
-                                    content: Text(
-                                        "Este usuario no tiene permisos para esta acción."),
-                                  ));
-                                }
-                              },
-                              text: 'Cambiar a Comprada',
-                              icon: const Icon(
-                                Icons.sync_rounded,
-                                size: 18,
-                              ),
-                              options: FFButtonOptions(
-                                width: 200,
-                                height: 45,
-                                color: Colors.red.shade400,
-                                textStyle: AppTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily:
-                                          AppTheme.of(context).subtitle2Family,
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                    ),
-                                borderSide: const BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                          ],
-                        ),
                       ),
                     ),
                     const SizedBox(
