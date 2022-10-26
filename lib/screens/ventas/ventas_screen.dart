@@ -465,7 +465,7 @@ class _VentasScreenState extends State<VentasScreen> {
                                               20, 10, 20, 20),
                                           child: Container(
                                             width: double.infinity,
-                                            height: 140,
+                                            height: 170,
                                             decoration: BoxDecoration(
                                               color: const Color(
                                                 0x374672FF),
@@ -546,18 +546,19 @@ class _VentasScreenState extends State<VentasScreen> {
                                                                 dateTimeFormat("dd/MMM/yyyy", venta.fechaInicio)
                                                               )
                                                         ),
-                                                            Padding(
-                                                              padding: EdgeInsets.all(8.0),
-                                                              
-                                                              child: Text(
-                                                                maybeHandleOverflow(dateTimeFormat("dd/MMM/yyyy", venta.fechaTermino),
-                                                                7,"..."),
-                                                              ),
-                                                            ),
+                                                            
                                                             
                                                           ],
                                                         ),
                                                       ),
+                                                      Padding(
+                                                              padding: EdgeInsets.all(8.0),
+                                                              
+                                                              child: Text(
+                                                                maybeHandleOverflow(dateTimeFormat("dd/MMM/yyyy", venta.fechaTermino),
+                                                                19,"..."),
+                                                              ),
+                                                            ),
                                                       Padding(
                                                         padding:
                                                             const EdgeInsetsDirectional
