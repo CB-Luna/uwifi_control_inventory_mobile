@@ -98,8 +98,9 @@ class CotizacionController extends ChangeNotifier {
             .target!.usuario.target!.apellidoP} ${inversion.emprendimiento
             .target!.usuario.target!.apellidoM}",
             "idInversiones": inversion.idEmiWeb,
-            "idCatEstadoInversion": inversion.estadoInversion.target!.idEmiWeb,
+            "idCatEstadoInversion": newEstadoInversion.idEmiWeb,
           }));
+          print("Id Inversión: ${inversion.idEmiWeb}");
           switch (responsePutUpdateEstadoInversion.statusCode) {
             case 200:
             print("Caso 200 en Emi Web Update Estado Inversión");
@@ -152,9 +153,11 @@ class CotizacionController extends ChangeNotifier {
           }  
 
         } else {
+          print("No se encontro ese estaod de autorizada");
           return false;
         }
       } else {
+        print("Fallo en el Token");
         return false;
       }
     } catch (e) {
@@ -185,7 +188,7 @@ class CotizacionController extends ChangeNotifier {
             .target!.usuario.target!.apellidoP} ${inversion.emprendimiento
             .target!.usuario.target!.apellidoM}",
             "idInversiones": inversion.idEmiWeb,
-            "idCatEstadoInversion": inversion.estadoInversion.target!.idEmiWeb,
+            "idCatEstadoInversion": newEstadoInversion.idEmiWeb,
           }));
           switch (responsePutUpdateEstadoInversion.statusCode) {
             case 200:
@@ -266,7 +269,7 @@ class CotizacionController extends ChangeNotifier {
             .target!.usuario.target!.apellidoP} ${inversion.emprendimiento
             .target!.usuario.target!.apellidoM}",
             "idInversiones": inversion.idEmiWeb,
-            "idCatEstadoInversion": inversion.estadoInversion.target!.idEmiWeb,
+            "idCatEstadoInversion": newEstadoInversion.idEmiWeb,
           }));
           switch (responsePutUpdateEstadoInversion.statusCode) {
             case 200:
