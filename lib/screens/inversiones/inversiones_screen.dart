@@ -22,10 +22,9 @@ import 'package:bizpro_app/helpers/constants.dart';
 class InversionesScreen extends StatefulWidget {
   final int idEmprendimiento;
   const InversionesScreen({
-    Key? key, 
+    Key? key,
     required this.idEmprendimiento,
   }) : super(key: key);
-
 
   @override
   _InversionesScreenState createState() => _InversionesScreenState();
@@ -41,7 +40,8 @@ class _InversionesScreenState extends State<InversionesScreen> {
   @override
   void initState() {
     super.initState();
-    actualEmprendimiento = dataBase.emprendimientosBox.get(widget.idEmprendimiento);
+    actualEmprendimiento =
+        dataBase.emprendimientosBox.get(widget.idEmprendimiento);
     if (actualEmprendimiento != null) {
       inversiones = actualEmprendimiento!.inversiones.toList();
       emprendedor = "";
@@ -61,29 +61,32 @@ class _InversionesScreenState extends State<InversionesScreen> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.white,
-        floatingActionButton: (actualEmprendimiento!.usuario.target!.rol.target!.rol == "Administrador" ||
-            actualEmprendimiento!.usuario.target!.rol.target!.rol == "Promotor")
-            ? FloatingActionButton(
-                onPressed: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            AgregarPrimerProductoInversionScreen(
-                              idEmprendimiento: widget.idEmprendimiento,
-                            ),
-                      ),
-                    );
-                },
-                backgroundColor: const Color(0xFF4672FF),
-                elevation: 8,
-                child: const Icon(
-                  Icons.add,
-                  color: Colors.white,
-                  size: 24,
-                ),
-              )
-            : null,
+        floatingActionButton:
+            (actualEmprendimiento!.usuario.target!.rol.target!.rol ==
+                        "Administrador" ||
+                    actualEmprendimiento!.usuario.target!.rol.target!.rol ==
+                        "Promotor")
+                ? FloatingActionButton(
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              AgregarPrimerProductoInversionScreen(
+                            idEmprendimiento: widget.idEmprendimiento,
+                          ),
+                        ),
+                      );
+                    },
+                    backgroundColor: const Color(0xFF4672FF),
+                    elevation: 8,
+                    child: const Icon(
+                      Icons.add,
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                  )
+                : null,
         body: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Stack(
@@ -108,34 +111,34 @@ class _InversionesScreenState extends State<InversionesScreen> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(20, 10, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                20, 10, 0, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding:
-                                      const EdgeInsetsDirectional.fromSTEB(
-                                          0, 35, 0, 0),
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 35, 0, 0),
                                   child: Container(
                                     width: 80,
                                     height: 40,
                                     decoration: BoxDecoration(
-                                      color:
-                                          AppTheme.of(context).secondaryText,
+                                      color: AppTheme.of(context).secondaryText,
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: InkWell(
                                       onTap: () async {
                                         await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetalleEmprendimientoScreen(
-                                                    idEmprendimiento: actualEmprendimiento!.id,
-                                                    ),
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                DetalleEmprendimientoScreen(
+                                              idEmprendimiento:
+                                                  actualEmprendimiento!.id,
                                             ),
-                                          );
+                                          ),
+                                        );
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -175,8 +178,8 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                         .override(
                                           fontFamily: AppTheme.of(context)
                                               .bodyText1Family,
-                                          color: AppTheme.of(context)
-                                              .primaryText,
+                                          color:
+                                              AppTheme.of(context).primaryText,
                                           fontSize: 14,
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -186,7 +189,8 @@ class _InversionesScreenState extends State<InversionesScreen> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 10, 0, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
@@ -197,8 +201,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                     width: 45,
                                     height: 45,
                                     decoration: BoxDecoration(
-                                      color: AppTheme.of(context)
-                                          .secondaryText,
+                                      color: AppTheme.of(context).secondaryText,
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     child: InkWell(
@@ -215,51 +218,44 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                           ),
                                           items: [
                                             for (var inversion in inversiones)
-                                              for(var productoSol in inversion.prodSolicitados)
-                                              InversionesItem(
-                                                id: inversion.id,
-                                                emprendedor: 
-                                                  "${inversion.
-                                                    emprendimiento.target!.
-                                                    emprendedor.target!.nombre} ${inversion.
-                                                    emprendimiento.target!.
-                                                    emprendedor.target!.apellidos}",
-                                                producto: 
-                                                  productoSol.
-                                                    producto,
-                                                descripcion: 
-                                                  productoSol.
-                                                    descripcion,
-                                                marcaSugerida: 
-                                                  productoSol.
-                                                    marcaSugerida ?? "",
-                                                proveedorSugerido: 
-                                                  productoSol.
-                                                    proveedorSugerido ?? "",
-                                                tipoEmpaque: 
-                                                  productoSol.
-                                                    tipoEmpaques.target!.tipo,
-                                                cantidad: 
-                                                  productoSol.
-                                                    cantidad.toString(),
-                                                costoEstimado:
-                                                  productoSol.costoEstimado == null ?
-                                                  ""
-                                                  :
-                                                  currencyFormat.format(productoSol.
-                                                    costoEstimado!.toStringAsFixed(2)),
-                                                porcentajePago: 
-                                                  "%${productoSol.
-                                                    inversion.target!.
-                                                    porcentajePago}",
-                                                usuario:
-                                                    "${inversion.emprendimiento.target!.
-                                                    usuario.target!.nombre} ${inversion.
-                                                    emprendimiento.target!.usuario.
-                                                    target!.apellidoP}",
-                                                fechaRegistro:
-                                                    inversion.fechaRegistro,
-                                              ),
+                                              for (var productoSol
+                                                  in inversion.prodSolicitados)
+                                                InversionesItem(
+                                                  id: inversion.id,
+                                                  emprendedor:
+                                                      "${inversion.emprendimiento.target!.emprendedor.target!.nombre} ${inversion.emprendimiento.target!.emprendedor.target!.apellidos}",
+                                                  producto:
+                                                      productoSol.producto,
+                                                  descripcion:
+                                                      productoSol.descripcion,
+                                                  marcaSugerida: productoSol
+                                                          .marcaSugerida ??
+                                                      "",
+                                                  proveedorSugerido: productoSol
+                                                          .proveedorSugerido ??
+                                                      "",
+                                                  tipoEmpaque: productoSol
+                                                      .tipoEmpaques
+                                                      .target!
+                                                      .tipo,
+                                                  cantidad: productoSol.cantidad
+                                                      .toString(),
+                                                  costoEstimado: productoSol
+                                                              .costoEstimado ==
+                                                          null
+                                                      ? ""
+                                                      : currencyFormat.format(
+                                                          productoSol
+                                                              .costoEstimado!
+                                                              .toStringAsFixed(
+                                                                  2)),
+                                                  porcentajePago:
+                                                      "%${productoSol.inversion.target!.porcentajePago}",
+                                                  usuario:
+                                                      "${inversion.emprendimiento.target!.usuario.target!.nombre} ${inversion.emprendimiento.target!.usuario.target!.apellidoP}",
+                                                  fechaRegistro:
+                                                      inversion.fechaRegistro,
+                                                ),
                                           ],
                                         );
                                         final pdfFile =
@@ -272,7 +268,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
-                                        children: const[
+                                        children: const [
                                           FaIcon(
                                             FontAwesomeIcons.fileArrowDown,
                                             color: Colors.white,
@@ -284,38 +280,37 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                   ),
                                 ),
                                 Container(
-                                  width: MediaQuery.of(context).size.width * 0.75,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.75,
                                   height: 60,
                                   decoration: BoxDecoration(
                                     color: const Color(0x49FFFFFF),
-                                    boxShadow: const[
+                                    boxShadow: const [
                                       BoxShadow(
-                                          color: Color(0x39000000),
-                                        ) 
+                                        color: Color(0x39000000),
+                                      )
                                     ],
                                     borderRadius: BorderRadius.circular(40),
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        4, 4, 0, 4),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            4, 4, 0, 4),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Expanded(
                                           child: Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional
-                                                    .fromSTEB(4, 0, 4, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(4, 0, 4, 0),
                                             child: TextFormField(
                                               controller: searchController,
                                               obscureText: false,
-                                              onChanged: (_) =>
-                                                  setState(() {}),
+                                              onChanged: (_) => setState(() {}),
                                               decoration: InputDecoration(
                                                 labelText:
                                                     'Ingresa búsqueda...',
-                                                labelStyle: AppTheme.of(
-                                                        context)
+                                                labelStyle: AppTheme.of(context)
                                                     .bodyText2
                                                     .override(
                                                       fontFamily: 'Poppins',
@@ -326,25 +321,21 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                     ),
                                                 enabledBorder:
                                                     OutlineInputBorder(
-                                                  borderSide:
-                                                      const BorderSide(
+                                                  borderSide: const BorderSide(
                                                     color: Color(0x00000000),
                                                     width: 2,
                                                   ),
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                          8),
+                                                      BorderRadius.circular(8),
                                                 ),
                                                 focusedBorder:
                                                     OutlineInputBorder(
-                                                  borderSide:
-                                                      const BorderSide(
+                                                  borderSide: const BorderSide(
                                                     color: Color(0x00000000),
                                                     width: 2,
                                                   ),
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                          8),
+                                                      BorderRadius.circular(8),
                                                 ),
                                                 prefixIcon: const Icon(
                                                   Icons.search_sharp,
@@ -365,8 +356,8 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsetsDirectional.fromSTEB(
-                                              0, 0, 10, 0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(0, 0, 10, 0),
                                           child: FFButtonWidget(
                                             onPressed: () async {
                                               setState(() {});
@@ -381,19 +372,17 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                               height: 40,
                                               color: AppTheme.of(context)
                                                   .secondaryText,
-                                              textStyle:
-                                                  AppTheme.of(context)
-                                                      .subtitle2
-                                                      .override(
-                                                        fontFamily:
-                                                            AppTheme.of(
-                                                                    context)
-                                                                .subtitle2Family,
-                                                        color: Colors.white,
-                                                        fontSize: 9,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
+                                              textStyle: AppTheme.of(context)
+                                                  .subtitle2
+                                                  .override(
+                                                    fontFamily:
+                                                        AppTheme.of(context)
+                                                            .subtitle2Family,
+                                                    color: Colors.white,
+                                                    fontSize: 9,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
                                               borderSide: const BorderSide(
                                                 color: Colors.transparent,
                                                 width: 1,
@@ -412,23 +401,26 @@ class _InversionesScreenState extends State<InversionesScreen> {
                           ),
                           Expanded(
                             child: Padding(
-                              padding:
-                                  const EdgeInsetsDirectional.fromSTEB(0, 25, 0, 6),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 25, 0, 6),
                               child: Builder(
                                 builder: (context) {
                                   //Busqueda
                                   if (searchController.text != '') {
                                     inversiones.removeWhere((element) {
-                                      final estadoInversion =
-                                          removeDiacritics(element.estadoInversion.target!.estado)
-                                              .toLowerCase();
-                                      final total = removeDiacritics(
-                                                element.totalInversion.toStringAsFixed(2))
-                                            .toLowerCase();
-                                      final tempBusqueda =
-                                          removeDiacritics(searchController.text)
-                                              .toLowerCase();
-                                      if (estadoInversion.contains(tempBusqueda) ||
+                                      final estadoInversion = removeDiacritics(
+                                              element.estadoInversion.target!
+                                                  .estado)
+                                          .toLowerCase();
+                                      final total = removeDiacritics(element
+                                              .totalInversion
+                                              .toStringAsFixed(2))
+                                          .toLowerCase();
+                                      final tempBusqueda = removeDiacritics(
+                                              searchController.text)
+                                          .toLowerCase();
+                                      if (estadoInversion
+                                              .contains(tempBusqueda) ||
                                           total.contains(tempBusqueda)) {
                                         return false;
                                       }
@@ -446,88 +438,103 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                       return InkWell(
                                         onTap: () async {
                                           await Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    MainTabOpcionesScreen(
-                                                      emprendimiento: actualEmprendimiento!,
-                                                      idInversion: inversion.id,
-                                                    ),
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  MainTabOpcionesScreen(
+                                                emprendimiento:
+                                                    actualEmprendimiento!,
+                                                idInversion: inversion.id,
                                               ),
-                                            );
+                                            ),
+                                          );
                                         },
                                         child: Padding(
-                                          padding: const EdgeInsetsDirectional.fromSTEB(
-                                              20, 10, 20, 20),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(20, 10, 20, 20),
                                           child: Container(
                                             width: double.infinity,
-                                            height: 160,
+                                            height: 180,
                                             decoration: BoxDecoration(
-                                              color: const Color(
-                                                0x374672FF),
-                                              borderRadius: BorderRadius.circular(8),
+                                              color: const Color(0x374672FF),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
                                             ),
                                             child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: [
                                                 Row(
-                                                  mainAxisSize: MainAxisSize.max,
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
                                                   children: [
                                                     Padding(
-                                                      padding: const EdgeInsetsDirectional
-                                                          .fromSTEB(10, 0, 0, 0),
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                              10, 0, 0, 0),
                                                       child: Column(
-                                                        mainAxisSize: MainAxisSize.max,
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
                                                         mainAxisAlignment:
-                                                            MainAxisAlignment.center,
+                                                            MainAxisAlignment
+                                                                .center,
                                                         children: [
                                                           ClipRRect(
                                                             borderRadius:
-                                                                BorderRadius.circular(
-                                                                    12),
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        12),
                                                             child: SizedBox(
                                                               height: 80,
                                                               width: 120,
                                                               child: getWidgetCoverImage(
-                                                                actualEmprendimiento!.imagen
-                                                              ),
+                                                                  actualEmprendimiento!
+                                                                      .imagen),
                                                             ),
                                                           ),
                                                           Text(
                                                             maybeHandleOverflow(
-                                                              actualEmprendimiento!.nombre, 12, "..."
-                                                              ),
+                                                                actualEmprendimiento!
+                                                                    .nombre,
+                                                                12,
+                                                                "..."),
                                                             style: AppTheme.of(
                                                                     context)
                                                                 .bodyText1
                                                                 .override(
-                                                                  fontFamily:
-                                                                      AppTheme.of(context)
-                                                                          .bodyText1Family,
-                                                                  fontSize:
-                                                                      16,
-                                                                  color: AppTheme.of(context)
-                                                                          .secondaryText,
+                                                                  fontFamily: AppTheme.of(
+                                                                          context)
+                                                                      .bodyText1Family,
+                                                                  fontSize: 16,
+                                                                  color: AppTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
                                                                 ),
-                                                            overflow: TextOverflow.ellipsis,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
                                                           ),
                                                         ],
                                                       ),
                                                     ),
                                                     Expanded(
                                                       child: Column(
-                                                        mainAxisSize: MainAxisSize.max,
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
                                                         mainAxisAlignment:
-                                                            MainAxisAlignment.center,
+                                                            MainAxisAlignment
+                                                                .center,
                                                         children: [
                                                           Padding(
                                                             padding:
                                                                 const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        5, 0, 5, 5),
+                                                                        .fromSTEB(
+                                                                    5, 0, 5, 5),
                                                             child: Row(
                                                               mainAxisSize:
-                                                                  MainAxisSize.max,
+                                                                  MainAxisSize
+                                                                      .max,
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
                                                                       .spaceAround,
@@ -535,55 +542,70 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                 Padding(
                                                                   padding:
                                                                       const EdgeInsetsDirectional
-                                                                          .fromSTEB(5,
-                                                                              0, 0, 0),
+                                                                              .fromSTEB(
+                                                                          5,
+                                                                          0,
+                                                                          0,
+                                                                          0),
                                                                   child: Text(
-                                                                    maybeHandleOverflow(emprendedor, 25, "..."),
+                                                                    maybeHandleOverflow(
+                                                                        emprendedor,
+                                                                        22,
+                                                                        "..."),
                                                                     style: AppTheme.of(
                                                                             context)
                                                                         .bodyText1
                                                                         .override(
                                                                           fontFamily:
-                                                                              AppTheme.of(context)
-                                                                                  .bodyText1Family,
+                                                                              AppTheme.of(context).bodyText1Family,
                                                                           fontSize:
                                                                               14,
-                                                                          color: AppTheme.of(context)
-                                                                                  .secondaryText,
+                                                                          color:
+                                                                              AppTheme.of(context).secondaryText,
                                                                         ),
-                                                                    overflow: TextOverflow.ellipsis,
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
                                                                   ),
                                                                 ),
                                                               ],
                                                             ),
                                                           ),
-                                                                
-                                                                  Padding(
-                                                                    padding: const EdgeInsets.all(8.0),
-                                                                    child: Row(
-                                                                      mainAxisSize:
-                                                                  MainAxisSize.max,
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
                                                                       .spaceEvenly,
-                                                                      children: [
-                                                                        Text(dateTimeFormat("dd/MMM/yyyy", 
-                                                                        actualEmprendimiento!.emprendedor.target!.fechaRegistro),
-                                                                            style: AppTheme.of(context).bodyText1 ,
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                
-                                                                
+                                                              children: [
+                                                                Text(
+                                                                  dateTimeFormat(
+                                                                      "dd/MMM/yyyy",
+                                                                      actualEmprendimiento!
+                                                                          .emprendedor
+                                                                          .target!
+                                                                          .fechaRegistro),
+                                                                  style: AppTheme.of(
+                                                                          context)
+                                                                      .bodyText1,
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
                                                           Padding(
                                                             padding:
                                                                 const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        5, 0, 5, 0),
+                                                                        .fromSTEB(
+                                                                    5, 0, 5, 0),
                                                             child: Row(
                                                               mainAxisSize:
-                                                                  MainAxisSize.max,
+                                                                  MainAxisSize
+                                                                      .max,
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
                                                                       .spaceEvenly,
@@ -591,41 +613,16 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                 Padding(
                                                                   padding:
                                                                       const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                              5,
-                                                                              0,
-                                                                              0,
-                                                                              0),
+                                                                              .fromSTEB(
+                                                                          5,
+                                                                          0,
+                                                                          0,
+                                                                          0),
                                                                   child: Text(
                                                                     'Total Inversión:',
                                                                     style: AppTheme.of(
                                                                             context)
                                                                         .bodyText1,
-                                                                  ),
-                                                                ),
-                                                                Padding(
-                                                                  padding:
-                                                                      const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                              10,
-                                                                              0,
-                                                                              0,
-                                                                              0),
-                                                                  child: Text(
-                                                                    maybeHandleOverflow(
-                                                                    currencyFormat.format(inversion.totalInversion.toStringAsFixed(2))
-                                                                    , 6, "..."
-                                                                    ),
-                                                                    style: AppTheme.of(
-                                                                            context)
-                                                                        .bodyText1
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              AppTheme.of(context)
-                                                                                  .bodyText1Family,
-                                                                          fontSize:
-                                                                              12,
-                                                                        ),
                                                                   ),
                                                                 ),
                                                               ],
@@ -634,11 +631,36 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                           Padding(
                                                             padding:
                                                                 const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        5,
-                                                                        0,
-                                                                        5,
-                                                                        0),
+                                                                        .fromSTEB(
+                                                                    10,
+                                                                    0,
+                                                                    0,
+                                                                    0),
+                                                            child: Text(
+                                                              maybeHandleOverflow(
+                                                                  currencyFormat.format(inversion
+                                                                      .totalInversion
+                                                                      .toStringAsFixed(
+                                                                          2)),
+                                                                  15,
+                                                                  "..."),
+                                                              style: AppTheme.of(
+                                                                      context)
+                                                                  .bodyText1
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        AppTheme.of(context)
+                                                                            .bodyText1Family,
+                                                                    fontSize:
+                                                                        12,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                    5, 0, 5, 0),
                                                             child: Text(
                                                               "Estado: ${inversion.estadoInversion.target?.estado ?? ''}",
                                                               style: AppTheme.of(
@@ -650,25 +672,22 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                             .bodyText1Family,
                                                                     fontSize:
                                                                         14,
-                                                                    color: AppTheme.of(context).secondaryText,
+                                                                    color: AppTheme.of(
+                                                                            context)
+                                                                        .secondaryText,
                                                                   ),
                                                             ),
                                                           ),
                                                           Padding(
                                                             padding:
                                                                 const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        5,
-                                                                        0,
-                                                                        5,
-                                                                        0),
+                                                                        .fromSTEB(
+                                                                    5, 0, 5, 0),
                                                             child: Text(
                                                               maybeHandleOverflow(
-                                                              "Tipo de proyecto: ${
-                                                                actualEmprendimiento!
-                                                                  .catalogoProyecto
-                                                                  .target!.nombre}", 30, "..."
-                                                              ),
+                                                                  "Tipo de proyecto: ${actualEmprendimiento!.catalogoProyecto.target!.nombre}",
+                                                                  30,
+                                                                  "..."),
                                                               style: AppTheme.of(
                                                                       context)
                                                                   .bodyText1
