@@ -18,18 +18,14 @@ import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 
-
-
-
 class VentasScreen extends StatefulWidget {
   final List<Ventas> ventas;
   final Emprendimientos emprendimiento;
   const VentasScreen({
-    Key? key, 
-    required this.ventas, 
+    Key? key,
+    required this.ventas,
     required this.emprendimiento,
   }) : super(key: key);
-
 
   @override
   _VentasScreenState createState() => _VentasScreenState();
@@ -40,7 +36,6 @@ class _VentasScreenState extends State<VentasScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   String emprendedor = "";
   List<Ventas> listActualVentas = [];
-
 
   @override
   void initState() {
@@ -63,27 +58,31 @@ class _VentasScreenState extends State<VentasScreen> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.white,
-        floatingActionButton: (widget.emprendimiento.usuario.target!.rol.target!.rol == "Administrador" ||
-            widget.emprendimiento.usuario.target!.rol.target!.rol == "Promotor")
-            ? FloatingActionButton(
-                onPressed: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            AgregarVentaScreen(idEmprendimiento: widget.emprendimiento.id,),
-                      ),
-                    );
-                },
-                backgroundColor: const Color(0xFF4672FF),
-                elevation: 8,
-                child: const Icon(
-                  Icons.add,
-                  color: Colors.white,
-                  size: 24,
-                ),
-              )
-            : null,
+        floatingActionButton:
+            (widget.emprendimiento.usuario.target!.rol.target!.rol ==
+                        "Administrador" ||
+                    widget.emprendimiento.usuario.target!.rol.target!.rol ==
+                        "Promotor")
+                ? FloatingActionButton(
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AgregarVentaScreen(
+                            idEmprendimiento: widget.emprendimiento.id,
+                          ),
+                        ),
+                      );
+                    },
+                    backgroundColor: const Color(0xFF4672FF),
+                    elevation: 8,
+                    child: const Icon(
+                      Icons.add,
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                  )
+                : null,
         body: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Stack(
@@ -108,34 +107,34 @@ class _VentasScreenState extends State<VentasScreen> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(20, 10, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                20, 10, 0, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding:
-                                      const EdgeInsetsDirectional.fromSTEB(
-                                          0, 35, 0, 0),
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 35, 0, 0),
                                   child: Container(
                                     width: 80,
                                     height: 40,
                                     decoration: BoxDecoration(
-                                      color:
-                                          AppTheme.of(context).secondaryText,
+                                      color: AppTheme.of(context).secondaryText,
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: InkWell(
                                       onTap: () async {
                                         await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetalleEmprendimientoScreen(
-                                                    idEmprendimiento: widget.emprendimiento.id,
-                                                    ),
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                DetalleEmprendimientoScreen(
+                                              idEmprendimiento:
+                                                  widget.emprendimiento.id,
                                             ),
-                                          );
+                                          ),
+                                        );
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -175,8 +174,8 @@ class _VentasScreenState extends State<VentasScreen> {
                                         .override(
                                           fontFamily: AppTheme.of(context)
                                               .bodyText1Family,
-                                          color: AppTheme.of(context)
-                                              .primaryText,
+                                          color:
+                                              AppTheme.of(context).primaryText,
                                           fontSize: 17,
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -186,7 +185,8 @@ class _VentasScreenState extends State<VentasScreen> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 10, 0, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
@@ -197,8 +197,7 @@ class _VentasScreenState extends State<VentasScreen> {
                                     width: 45,
                                     height: 45,
                                     decoration: BoxDecoration(
-                                      color: AppTheme.of(context)
-                                          .secondaryText,
+                                      color: AppTheme.of(context).secondaryText,
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     child: InkWell(
@@ -215,52 +214,53 @@ class _VentasScreenState extends State<VentasScreen> {
                                           ),
                                           items: [
                                             for (var venta in widget.ventas)
-                                              for(var productoVendido in venta.prodVendidos)
+                                              for (var productoVendido
+                                                  in venta.prodVendidos)
                                                 VentasItem(
-                                                id: venta.id,
-                                                emprendedor: 
-                                                  "${venta.
-                                                  emprendimiento.target!.
-                                                  emprendedor.target!.nombre} ${venta.
-                                                  emprendimiento.target!.
-                                                  emprendedor.target!.apellidos}",
-                                                fechaInicio: 
-                                                  venta.
-                                                  fechaInicio,
-                                                fechaTermino: 
-                                                  venta.
-                                                  fechaTermino,
-                                                producto:
-                                                  productoVendido.
-                                                  productoEmp.target!.nombre,
-                                                unidadMedida: 
-                                                  productoVendido.
-                                                  productoEmp.target!.unidadMedida.
-                                                  target!.unidadMedida,
-                                                cantidadVendida:
-                                                  productoVendido.
-                                                  cantVendida.toString(),
-                                                costoUnitario: 
-                                                  currencyFormat.format(productoVendido.
-                                                  productoEmp.target!.
-                                                  costo.toStringAsFixed(2)),
-                                                precioVenta: currencyFormat.format(productoVendido.
-                                                  precioVenta.toStringAsFixed(2)), 
-                                                total: currencyFormat.format(productoVendido.
-                                                  subtotal.toStringAsFixed(2)),
-                                                usuario:
-                                                    "${venta.emprendimiento.target!.
-                                                    usuario.target!.nombre} ${venta.
-                                                    emprendimiento.target!.usuario.
-                                                    target!.apellidoP}",
-                                                fechaRegistro:
-                                                    venta.fechaRegistro,
-                                              ),
+                                                  id: venta.id,
+                                                  emprendedor:
+                                                      "${venta.emprendimiento.target!.emprendedor.target!.nombre} ${venta.emprendimiento.target!.emprendedor.target!.apellidos}",
+                                                  fechaInicio:
+                                                      venta.fechaInicio,
+                                                  fechaTermino:
+                                                      venta.fechaTermino,
+                                                  producto: productoVendido
+                                                      .productoEmp
+                                                      .target!
+                                                      .nombre,
+                                                  unidadMedida: productoVendido
+                                                      .productoEmp
+                                                      .target!
+                                                      .unidadMedida
+                                                      .target!
+                                                      .unidadMedida,
+                                                  cantidadVendida:
+                                                      productoVendido
+                                                          .cantVendida
+                                                          .toString(),
+                                                  costoUnitario: currencyFormat
+                                                      .format(productoVendido
+                                                          .productoEmp
+                                                          .target!
+                                                          .costo
+                                                          .toStringAsFixed(2)),
+                                                  precioVenta: currencyFormat
+                                                      .format(productoVendido
+                                                          .precioVenta
+                                                          .toStringAsFixed(2)),
+                                                  total: currencyFormat.format(
+                                                      productoVendido.subtotal
+                                                          .toStringAsFixed(2)),
+                                                  usuario:
+                                                      "${venta.emprendimiento.target!.usuario.target!.nombre} ${venta.emprendimiento.target!.usuario.target!.apellidoP}",
+                                                  fechaRegistro:
+                                                      venta.fechaRegistro,
+                                                ),
                                           ],
                                         );
                                         final pdfFile =
-                                            await PdfInvoiceVentas
-                                                .generate(invoice);
+                                            await PdfInvoiceVentas.generate(
+                                                invoice);
 
                                         PdfApi.openFile(pdfFile);
                                       },
@@ -268,7 +268,7 @@ class _VentasScreenState extends State<VentasScreen> {
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
-                                        children: const[
+                                        children: const [
                                           FaIcon(
                                             FontAwesomeIcons.fileArrowDown,
                                             color: Colors.white,
@@ -280,38 +280,37 @@ class _VentasScreenState extends State<VentasScreen> {
                                   ),
                                 ),
                                 Container(
-                                  width: MediaQuery.of(context).size.width * 0.75,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.75,
                                   height: 50,
                                   decoration: BoxDecoration(
                                     color: const Color(0x49FFFFFF),
-                                    boxShadow: const[
+                                    boxShadow: const [
                                       BoxShadow(
-                                          color: Color(0x39000000),
-                                        ) 
+                                        color: Color(0x39000000),
+                                      )
                                     ],
                                     borderRadius: BorderRadius.circular(40),
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        4, 4, 0, 4),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            4, 4, 0, 4),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Expanded(
                                           child: Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional
-                                                    .fromSTEB(4, 0, 4, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(4, 0, 4, 0),
                                             child: TextFormField(
                                               controller: searchController,
                                               obscureText: false,
-                                              onChanged: (_) =>
-                                                  setState(() {}),
+                                              onChanged: (_) => setState(() {}),
                                               decoration: InputDecoration(
                                                 labelText:
                                                     'Ingresa búsqueda...',
-                                                labelStyle: AppTheme.of(
-                                                        context)
+                                                labelStyle: AppTheme.of(context)
                                                     .bodyText2
                                                     .override(
                                                       fontFamily: 'Poppins',
@@ -322,25 +321,21 @@ class _VentasScreenState extends State<VentasScreen> {
                                                     ),
                                                 enabledBorder:
                                                     OutlineInputBorder(
-                                                  borderSide:
-                                                      const BorderSide(
+                                                  borderSide: const BorderSide(
                                                     color: Color(0x00000000),
                                                     width: 2,
                                                   ),
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                          8),
+                                                      BorderRadius.circular(8),
                                                 ),
                                                 focusedBorder:
                                                     OutlineInputBorder(
-                                                  borderSide:
-                                                      const BorderSide(
+                                                  borderSide: const BorderSide(
                                                     color: Color(0x00000000),
                                                     width: 2,
                                                   ),
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                          8),
+                                                      BorderRadius.circular(8),
                                                 ),
                                                 prefixIcon: const Icon(
                                                   Icons.search_sharp,
@@ -361,11 +356,11 @@ class _VentasScreenState extends State<VentasScreen> {
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsetsDirectional.fromSTEB(
-                                              0, 0, 10, 0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(0, 0, 10, 0),
                                           child: FFButtonWidget(
                                             onPressed: () {
-                                               setState(() {});
+                                              setState(() {});
                                             },
                                             text: '',
                                             icon: const Icon(
@@ -377,19 +372,17 @@ class _VentasScreenState extends State<VentasScreen> {
                                               height: 40,
                                               color: AppTheme.of(context)
                                                   .secondaryText,
-                                              textStyle:
-                                                  AppTheme.of(context)
-                                                      .subtitle2
-                                                      .override(
-                                                        fontFamily:
-                                                            AppTheme.of(
-                                                                    context)
-                                                                .subtitle2Family,
-                                                        color: Colors.white,
-                                                        fontSize: 9,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
+                                              textStyle: AppTheme.of(context)
+                                                  .subtitle2
+                                                  .override(
+                                                    fontFamily:
+                                                        AppTheme.of(context)
+                                                            .subtitle2Family,
+                                                    color: Colors.white,
+                                                    fontSize: 9,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
                                               borderSide: const BorderSide(
                                                 color: Colors.transparent,
                                                 width: 1,
@@ -408,28 +401,29 @@ class _VentasScreenState extends State<VentasScreen> {
                           ),
                           Expanded(
                             child: Padding(
-                              padding:
-                                  const EdgeInsetsDirectional.fromSTEB(0, 25, 0, 6),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 25, 0, 6),
                               child: Builder(
                                 builder: (context) {
                                   //Busqueda
-                                 if (searchController.text != '') {
-                                      listActualVentas.removeWhere((element) {
-                                        final nombreEmprendedor = removeDiacritics(
-                                            '${element.emprendimiento.target!.emprendedor.target?.nombre ?? ''} ${element.emprendimiento.target!.emprendedor.target?.apellidos ?? ''}')
-                                        .toLowerCase();
-                                        final total = removeDiacritics(
-                                                element.total.toStringAsFixed(2))
-                                            .toLowerCase();
-                                        final tempBusqueda =
-                                            removeDiacritics(searchController.text)
-                                                .toLowerCase();
-                                        if (nombreEmprendedor.contains(tempBusqueda) ||
-                                            total.contains(tempBusqueda)) {
-                                          return false;
-                                        }
-                                        return true;
-                                      });
+                                  if (searchController.text != '') {
+                                    listActualVentas.removeWhere((element) {
+                                      final nombreEmprendedor = removeDiacritics(
+                                              '${element.emprendimiento.target!.emprendedor.target?.nombre ?? ''} ${element.emprendimiento.target!.emprendedor.target?.apellidos ?? ''}')
+                                          .toLowerCase();
+                                      final total = removeDiacritics(
+                                              element.total.toStringAsFixed(2))
+                                          .toLowerCase();
+                                      final tempBusqueda = removeDiacritics(
+                                              searchController.text)
+                                          .toLowerCase();
+                                      if (nombreEmprendedor
+                                              .contains(tempBusqueda) ||
+                                          total.contains(tempBusqueda)) {
+                                        return false;
+                                      }
+                                      return true;
+                                    });
                                   }
                                   return ListView.builder(
                                     padding: EdgeInsets.zero,
@@ -440,188 +434,231 @@ class _VentasScreenState extends State<VentasScreen> {
                                       final venta =
                                           listActualVentas[resultadoIndex];
                                       return InkWell(
-                                        onTap: () async {
-                                          if (widget.emprendimiento.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
-                                              widget.emprendimiento.usuario.target!.rol.target!.rol == "Emprendedor") {
-                                            snackbarKey.currentState
-                                                ?.showSnackBar(const SnackBar(
-                                              content: Text(
-                                                  "Este usuario no tiene permisos para esta acción."),
-                                            ));
-                                          } else {
-                                            await Navigator.push(
+                                          onTap: () async {
+                                            if (widget
+                                                        .emprendimiento
+                                                        .usuario
+                                                        .target!
+                                                        .rol
+                                                        .target!
+                                                        .rol ==
+                                                    "Amigo del Cambio" ||
+                                                widget
+                                                        .emprendimiento
+                                                        .usuario
+                                                        .target!
+                                                        .rol
+                                                        .target!
+                                                        .rol ==
+                                                    "Emprendedor") {
+                                              snackbarKey.currentState
+                                                  ?.showSnackBar(const SnackBar(
+                                                content: Text(
+                                                    "Este usuario no tiene permisos para esta acción."),
+                                              ));
+                                            } else {
+                                              await Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      EditarVentaScreen(venta: venta,idEmp: widget.emprendimiento,),
+                                                      EditarVentaScreen(
+                                                    venta: venta,
+                                                    idEmp:
+                                                        widget.emprendimiento,
+                                                  ),
                                                 ),
                                               );
                                             }
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsetsDirectional.fromSTEB(
-                                              20, 10, 20, 20),
-                                          child: Container(
-                                            width: double.infinity,
-                                            height: 170,
-                                            decoration: BoxDecoration(
-                                              color: const Color(
-                                                0x374672FF),
-                                              borderRadius: BorderRadius.circular(8),
-                                            ),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(10, 0, 0, 0),
-                                                  child: Column(
-                                                    mainAxisSize: MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.center,
-                                                    children: [
-                                                      ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                12),
-                                                        child: SizedBox(
-                                                          height: 80,
-                                                          width: 120,
-                                                          child: getWidgetCoverImage(
-                                                            widget.emprendimiento.imagen
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
+                                          },
+                                          child: Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(20, 10, 20, 20),
+                                              child: Container(
+                                                width: double.infinity,
+                                                height: 170,
+                                                decoration: BoxDecoration(
+                                                  color:
+                                                      const Color(0x374672FF),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
                                                 ),
-                                                Expanded(
-                                                  child: Column(
-                                                    mainAxisSize: MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.center,
+                                                child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
                                                     children: [
                                                       Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(5,
-                                                                          0, 0, 0),
-                                                              child:Row(
-                                                                mainAxisSize:
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                10, 0, 0, 0),
+                                                        child: Column(
+                                                          mainAxisSize:
                                                               MainAxisSize.max,
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
-                                                                  .spaceAround,
-                                                                children: 
-                                                                  [Padding(
-                                                                   padding: const EdgeInsets.all(8.0),
+                                                                  .center,
+                                                          children: [
+                                                            ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          12),
+                                                              child: SizedBox(
+                                                                height: 80,
+                                                                width: 120,
+                                                                child: getWidgetCoverImage(
+                                                                    widget
+                                                                        .emprendimiento
+                                                                        .imagen),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Expanded(
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                      5,
+                                                                      0,
+                                                                      0,
+                                                                      0),
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceAround,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding:
+                                                                        const EdgeInsets.all(
+                                                                            8.0),
                                                                     child: Text(
-                                                                      maybeHandleOverflow(emprendedor,25,"..."),
-                                                                      style: AppTheme
-                                                                              .of(context)
+                                                                      maybeHandleOverflow(
+                                                                          emprendedor,
+                                                                          25,
+                                                                          "..."),
+                                                                      style: AppTheme.of(
+                                                                              context)
                                                                           .bodyText1,
                                                                     ),
                                                                   ),
                                                                 ],
                                                               ),
                                                             ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    5, 0, 5, 5),
-                                                        child: Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceAround,
-                                                          children: [
-                                                            
-                                                              Padding(
-                                                                padding: const EdgeInsets.all(8.0),
-                                                              child: Text(
-                                                                dateTimeFormat("dd/MMM/yyyy", venta.fechaInicio)
-                                                              )
-                                                        ),
                                                             Padding(
-                                                              padding: const EdgeInsets.all(8.0),
-                                                              
-                                                              child: Text(
-                                                                maybeHandleOverflow(dateTimeFormat("dd/MMM/yyyy", venta.fechaTermino),
-                                                                19,"..."),
-                                                              ),
-                                                            ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    5, 0, 5, 0),
-                                                        child: Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize.max,
-                                                              children: [
-                                                                Padding(
-                                                                  padding:
-                                                                      const EdgeInsetsDirectional
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
                                                                           .fromSTEB(
-                                                                              5,
-                                                                              0,
-                                                                              0,
-                                                                              0),
-                                                                  child: Text(
-                                                                    'Total\nVenta',
-                                                                    style: AppTheme.of(
-                                                                            context)
-                                                                        .bodyText1,
-                                                                  ),
-                                                                ),
-                                                                Padding(
-                                                                  padding:
-                                                                      const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                              10,
-                                                                              0,
-                                                                              0,
-                                                                              0),
-                                                                  child: Text(
-                                                                    currencyFormat.format(venta.total.toStringAsFixed(2)),
-                                                                    style: AppTheme.of(
-                                                                            context)
-                                                                        .bodyText1
-                                                                        .override(
-                                                                        fontFamily:
-                                                                            AppTheme.of(
-                                                                                    context)
-                                                                                .bodyText1Family,
-                                                                        color: AppTheme.of(context)
-                                                                                .secondaryText,
-                                                                        fontSize: 20,
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
+                                                                      5,
+                                                                      0,
+                                                                      5,
+                                                                      5),
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceAround,
+                                                                children: [
+                                                                  Padding(
+                                                                      padding:
+                                                                          const EdgeInsets.all(
+                                                                              8.0),
+                                                                      child: Text(dateTimeFormat(
+                                                                          "dd/MMM/yyyy",
+                                                                          venta
+                                                                              .fechaInicio)))
+                                                                              ,
+                                                                  
+                                                          ])),
+                                                            Padding(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional.fromSTEB(
+                                                                            5,0,5,5),
+                                                                    child: Row(
+                                                                      mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceAround,
+                                                                children: [
+                                                                      Padding(
+                                                                        padding:
+                                                                        const EdgeInsets.all(
+                                                                            8.0),
+                                                                        child:Text(
+                                                                          maybeHandleOverflow(
+                                                                              dateTimeFormat("dd/MMM/yyyy", venta.fechaTermino),
+                                                                              19,
+                                                                              "..."),
+                                                                        ),
                                                                       ),
+                                                          ]),
                                                                   ),
-                                                                ),
-                                                              ],
-                                                            ),
+                                                                  Padding(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional.fromSTEB(
+                                                                            5,
+                                                                            0,
+                                                                            5,
+                                                                            0),
+                                                                    child: Row(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .max,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          children: [
+                                                                            Padding(
+                                                                              padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                                                                              child: Text(
+                                                                                'Total\nVenta',
+                                                                                style: AppTheme.of(context).bodyText1,
+                                                                              ),
+                                                                            ),
+                                                                            Padding(
+                                                                              padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                                                                              child: Text(
+                                                                                currencyFormat.format(venta.total.toStringAsFixed(2)),
+                                                                                style: AppTheme.of(context).bodyText1.override(
+                                                                                      fontFamily: AppTheme.of(context).bodyText1Family,
+                                                                                      color: AppTheme.of(context).secondaryText,
+                                                                                      fontSize: 20,
+                                                                                      fontWeight: FontWeight.w600,
+                                                                                    ),
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                
+                                                              
                                                           ],
                                                         ),
                                                       ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                        ]),
-                                      )));
+                                                    ]),
+                                              )));
                                     },
                                   );
                                 },
