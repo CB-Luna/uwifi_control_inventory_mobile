@@ -1471,6 +1471,7 @@ Future<bool> getProveedoresNoArchivados() async {
           return false;
       }
     } catch (e) {
+      print("Error en getProveedoresNoArchivados: $e");
       return false;
     }
   }
@@ -1612,6 +1613,7 @@ Future<bool> getProveedoresArchivados() async {
           return false;
       }
     } catch (e) {
+      print("Error en getProveedoresArchivados: $e");
       return false;
     }
   }
@@ -1674,7 +1676,7 @@ Future<bool> getProductosProv() async {
                     "nombre_prod_prov": responseProductoProveedor.payload!.producto,
                     "descripcion_prod_prov": responseProductoProveedor.payload!.descripcion,
                     "marca": responseProductoProveedor.payload!.marca,
-                    "is_und_medida_fk": recordUnidadMedida.first.id,
+                    "id_und_medida_fk": recordUnidadMedida.first.id,
                     "costo_prod_prov": responseProductoProveedor.payload!.costoUnidadMedida,
                     "id_proveedor_fk": recordProveedor.first.id,
                     "id_familia_prod_fk": recordFamiliaProd.first.id,
@@ -1693,6 +1695,7 @@ Future<bool> getProductosProv() async {
               } else {
                 //Se actualiza el producto proveedor en la colección de Pocketbase
                 final recordProductoProveedorParse = getProductosProvFromMap(recordProductoProveedor.first.toString());
+                print("Id Unidad Medida: ${recordProductoProveedorParse.idUndMedidaFk}");
                 //Verificamos que los campos de este registro sean diferentes para actualizarlo
                 if (recordProductoProveedorParse.nombreProdProv != responseProductoProveedor.payload!.producto ||
                     recordProductoProveedorParse.descripcionProdProv != responseProductoProveedor.payload!.descripcion||
@@ -1746,6 +1749,7 @@ Future<bool> getProductosProv() async {
           return false;
       }
     } catch (e) {
+      print("Error en getProductosProv: $e");
       return false;
     }
   }
@@ -1880,6 +1884,7 @@ Future<bool> getProductosProv() async {
           return false;
       }
     } catch (e) {
+      print("Error en getProdProyecto: $e");
       return false;
     }
     }

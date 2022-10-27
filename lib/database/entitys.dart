@@ -611,7 +611,6 @@ class ProdVendidos {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
-  @Unique()
   String? idEmiWeb;
   final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
