@@ -16,7 +16,6 @@ class RolesEmiWebProvider extends ChangeNotifier {
   bool procesoterminado = false;
   bool procesoexitoso = false;
   String tokenGlobal = "";
-  bool banderaExistoSync = false;
   bool exitoso = true;
 
   void procesoCargando(bool boleano) {
@@ -35,22 +34,18 @@ class RolesEmiWebProvider extends ChangeNotifier {
   }
 
   Future<bool> getRolesEmiWeb(String email, String password) async {
-      banderaExistoSync = await getRoles(email, password);
-      //Aplicamos una operación and para validar que no haya habido un catálogo con False
-      exitoso = exitoso && banderaExistoSync;
+      exitoso = await getRoles(email, password);
       //Verificamos que no haya habido errores al sincronizar con las banderas
       if (exitoso) {
         procesocargando = false;
         procesoterminado = true;
         procesoexitoso = true;
-        banderaExistoSync = false;
         notifyListeners();
         return exitoso;
       } else {
         procesocargando = false;
         procesoterminado = true;
         procesoexitoso = false;
-        banderaExistoSync = false;
         notifyListeners();
         return exitoso;
       }

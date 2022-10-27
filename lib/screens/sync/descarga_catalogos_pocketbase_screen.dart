@@ -206,7 +206,6 @@ class _DescargaCatalogosPocketbaseScreenState extends State<DescargaCatalogosPoc
                                                 const EmprendimientosScreen(),
                                           ),
                                         );
-                                        catalogoPocketbaseProvider.procesoTerminado(false);
                                       },
                                       text: 'Cerrar',
                                       options: FFButtonOptions(

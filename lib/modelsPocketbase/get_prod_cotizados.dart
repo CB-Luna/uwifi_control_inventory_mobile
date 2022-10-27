@@ -16,6 +16,7 @@ class GetProdCotizados {
         required this.idProductoProvFk,
         required this.idInversionXProdCotizadosFk,
         required this.aceptado,
+        required this.idEmiWeb,
     });
 
     final String collectionId;
@@ -28,6 +29,7 @@ class GetProdCotizados {
     final String idProductoProvFk;
     final String idInversionXProdCotizadosFk;
     final bool aceptado;
+    final String idEmiWeb;
 
     factory GetProdCotizados.fromMap(Map<String, dynamic> json) => GetProdCotizados(
         collectionId: json["@collectionId"],
@@ -36,10 +38,11 @@ class GetProdCotizados {
         created: json["created"] == null ? null : DateTime.parse(json["created"]),
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
         cantidad: json["cantidad"],
-        costoTotal: json["costo_total"],
+        costoTotal: json["costo_total"].toDouble(),
         idProductoProvFk: json["id_producto_prov_fk"],
         idInversionXProdCotizadosFk: json["id_inversion_x_prod_cotizados_fk"],
         aceptado: json["aceptado"],
+        idEmiWeb: json["id_emi_web"],
     );
 
     Map<String, dynamic> toMap() => {
@@ -53,5 +56,6 @@ class GetProdCotizados {
         "id_producto_prov_fk": idProductoProvFk,
         "id_inversion_x_prod_cotizados_fk": idInversionXProdCotizadosFk,
         "aceptado": aceptado,
+        "id_emi_web": idEmiWeb,
     };
 }

@@ -1,19 +1,16 @@
 import 'dart:io';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/screens/inversiones/cotizacion_simulada_exitosamente.dart';
+import 'package:bizpro_app/providers/sync_provider_emi_web.dart';
+import 'package:bizpro_app/screens/sync/cotizaciones_emi_web_screen.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/providers/sync_provider_pocketbase.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-//import 'package:bizpro_app/util/util.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/screens/cotizaciones/cotizaciones_screen.dart';
 import 'package:bizpro_app/screens/inversiones/cotizacion_aceptada.dart';
 import 'package:bizpro_app/screens/inversiones/cotizacion_cancelada.dart';
 import 'package:bizpro_app/screens/inversiones/cotizacion_solicitar_otra.dart';
@@ -57,8 +54,8 @@ with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final syncProviderPocketbase =
-        Provider.of<SyncProviderPocketbase>(context);
+    final syncProviderEmiWeb =
+        Provider.of<SyncProviderEmiWeb>(context);
     final cotizacionProvider =
         Provider.of<CotizacionController>(context);
     return SingleChildScrollView(
@@ -419,7 +416,7 @@ with TickerProviderStateMixin {
                                     } else {
                                         switch (widget.inversion.estadoInversion.target!.estado) {
                                         case "Solicitada":
-                                          if(widget.inversion.idDBR != null){
+                                          if(widget.inversion.idEmiWeb != null){
                                             final connectivityResult =
                                             await (Connectivity().checkConnectivity());
                                             if(connectivityResult == ConnectivityResult.none) {
@@ -431,15 +428,12 @@ with TickerProviderStateMixin {
                                             }
                                             else {
                                               print("Holaaaaaaaa 2");
-                                              print(widget.inversionesXprodCotizados.idDBR);
-                                              if (await syncProviderPocketbase.validateLengthCotizacion(widget.inversionesXprodCotizados, widget.inversion)) {
-                                                syncProviderPocketbase.procesoCargando(true);
-                                                syncProviderPocketbase.procesoTerminado(false);
+                                              if (await syncProviderEmiWeb.validateCotizacionEmiWeb(widget.inversion)) {
                                                 // ignore: use_build_context_synchronously
                                                 await Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                    builder: (context) => CotizacionesScreen(
+                                                    builder: (context) => CotizacionesEmiWebScreen(
                                                           emprendimiento: widget.emprendimiento, 
                                                           inversion: widget.inversion,
                                                           inversionesXProdCotizados: widget.inversionesXprodCotizados,
@@ -716,127 +710,6 @@ with TickerProviderStateMixin {
                       },
                     ),
                     Visibility(
-                      visible: widget.inversion.estadoInversion.target!.estado == "Solicitada",
-                      child: Padding(
-                        padding:
-                            const EdgeInsetsDirectional
-                                .fromSTEB(10, 12,
-                                    5, 12),
-                        child: Row(
-                          mainAxisSize:
-                              MainAxisSize.max,
-                          mainAxisAlignment:
-                              MainAxisAlignment
-                                  .center,
-                          children: [
-                            FFButtonWidget(
-                              onPressed:
-                                  () async {
-                                    if (widget.emprendimiento.usuario.target!.rol.target!.rol != "Amigo del Cambio"
-                                    && widget.emprendimiento.usuario.target!.rol.target!.rol != "Emprendedor")
-                                     {
-                                      if (widget.inversion.jornada3) {
-                                        snackbarKey.currentState
-                                            ?.showSnackBar(const SnackBar(
-                                          content: Text(
-                                              "No se puede hacer seguimiento a esta inversión."),
-                                        ));
-                                      } else {
-                                        if(widget.inversion.idDBR != null){
-                                        final connectivityResult =
-                                        await (Connectivity().checkConnectivity());
-                                        if (connectivityResult == ConnectivityResult.none) 
-                                        {
-                                          snackbarKey.currentState
-                                          ?.showSnackBar(const SnackBar(
-                                          content: Text(
-                                              "Necesitas conexión a internet para simular la cotización."),
-                                          ));
-                                        } else{
-                                          if (await syncProviderPocketbase.validateLengthCotizacion(widget.inversionesXprodCotizados, widget.inversion)) {
-                                            snackbarKey.currentState
-                                              ?.showSnackBar(const SnackBar(
-                                            content: Text(
-                                                "Ya se ha simulado la cotización, ahora presione '+Obtener cotización'."),
-                                            ));
-                                          } else {
-                                            if(await syncProviderPocketbase.simularCotizacion(widget.inversion))
-                                            {
-                                              // ignore: use_build_context_synchronously
-                                              await Navigator
-                                              .push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder:
-                                                      (context) =>
-                                                          CotizacionSimuladaExitosamente(idEmprendimiento: widget.emprendimiento.id),
-                                                ),
-                                              );
-                                            }
-                                            else{
-                                              snackbarKey.currentState
-                                              ?.showSnackBar(const SnackBar(
-                                              content: Text(
-                                                  "Falló al momento de simular la cotización."),
-                                              ));
-                                            }
-                                          }
-                                        }
-                                        } else {
-                                          snackbarKey.currentState
-                                            ?.showSnackBar(const SnackBar(
-                                            content: Text(
-                                                "Primero debes sincronizar tu información."),
-                                            ));
-                                        }
-                                      }
-                                    } else {
-                                    snackbarKey.currentState
-                                        ?.showSnackBar(const SnackBar(
-                                      content: Text(
-                                          "Este usuario no tiene permisos para esta acción."),
-                                    ));
-                                  }
-                                  },
-                              text: 'Simular Cotización',
-                              icon: const Icon(
-                                Icons.sync_rounded,
-                                size: 18,
-                              ),
-                              options:
-                                  FFButtonOptions(
-                                width: 200,
-                                height: 45,
-                                color: Colors.red.shade400,
-                                textStyle:
-                                    AppTheme.of(
-                                            context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily:
-                                              AppTheme.of(context).subtitle2Family,
-                                          color: Colors
-                                              .white,
-                                          fontSize:
-                                              18,
-                                        ),
-                                borderSide:
-                                    const BorderSide(
-                                  color: Colors
-                                      .transparent,
-                                  width: 1,
-                                ),
-                                borderRadius:
-                                    BorderRadius
-                                        .circular(
-                                            8),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Visibility(
                       visible: widget.inversion.estadoInversion.target!.estado == "En Cotización",
                       child: Column(
                         children: [
@@ -861,19 +734,26 @@ with TickerProviderStateMixin {
                                       ));
                                     } else
                                     {
-                                    await cotizacionProvider.acceptCotizacion(
-                                      widget.inversion.id,
+                                      if (await cotizacionProvider.acceptCotizacion(
+                                      widget.inversion,
                                       widget.inversionesXprodCotizados.id
-                                      );
-                                    // ignore: use_build_context_synchronously
-                                    await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => CotizacionAceptada(
-                                            idEmprendimiento: widget.emprendimiento.id,
-                                            ),
-                                        ),
-                                      );
+                                      )) {
+                                        // ignore: use_build_context_synchronously
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => CotizacionAceptada(
+                                              idEmprendimiento: widget.emprendimiento.id,
+                                              ),
+                                          ),
+                                        );
+                                      } else {
+                                        snackbarKey.currentState
+                                            ?.showSnackBar(const SnackBar(
+                                          content: Text(
+                                              "No se pudo completar el proceso de aceptación, intente más tarde."),
+                                        ));
+                                      }
                                     }
                                   } else {
                                     snackbarKey.currentState
@@ -922,19 +802,26 @@ with TickerProviderStateMixin {
                                       ));
                                     } else
                                     {
-                                    await cotizacionProvider.cancelCotizacion(
-                                      widget.inversion.id,
+                                      if (await cotizacionProvider.cancelCotizacion(
+                                      widget.inversion,
                                       widget.inversionesXprodCotizados.id
-                                      );
-                                    // ignore: use_build_context_synchronously
-                                    await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => CotizacionCancelada(
-                                            idEmprendimiento: widget.emprendimiento.id,
-                                            ),
-                                        ),
-                                      );
+                                      )) {
+                                        // ignore: use_build_context_synchronously
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => CotizacionCancelada(
+                                              idEmprendimiento: widget.emprendimiento.id,
+                                              ),
+                                          ),
+                                        );
+                                      } else {
+                                        snackbarKey.currentState
+                                            ?.showSnackBar(const SnackBar(
+                                          content: Text(
+                                              "No se pudo completar el proceso de cancelación, intente más tarde."),
+                                        ));
+                                      }
                                     }
                                    } else {
                                     snackbarKey.currentState
@@ -993,18 +880,26 @@ with TickerProviderStateMixin {
                                       ));
                                     } else
                                     {
-                                    await cotizacionProvider.buscarOtraCotizacion(
-                                      widget.inversion.id,
-                                      widget.inversionesXprodCotizados.id);
-                                    // ignore: use_build_context_synchronously
-                                    await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => CotizacionSolicitarOtra(
-                                            idEmprendimiento: widget.emprendimiento.id,
-                                            ),
-                                        ),
-                                      );
+                                      if (await cotizacionProvider.buscarOtraCotizacion(
+                                      widget.inversion,
+                                      widget.inversionesXprodCotizados.id
+                                      )) {
+                                        // ignore: use_build_context_synchronously
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => CotizacionSolicitarOtra(
+                                              idEmprendimiento: widget.emprendimiento.id,
+                                              ),
+                                          ),
+                                        );
+                                      } else {
+                                        snackbarKey.currentState
+                                            ?.showSnackBar(const SnackBar(
+                                          content: Text(
+                                              "No se pudo completar el proceso de búsqueda de otra cotización, intente más tarde."),
+                                        ));
+                                      }
                                     } 
                                   } else {
                                     snackbarKey.currentState

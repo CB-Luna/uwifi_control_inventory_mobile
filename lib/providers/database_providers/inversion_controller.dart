@@ -1,3 +1,4 @@
+import 'package:bizpro_app/modelsPocketbase/temporals/save_imagenes_local.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
@@ -11,7 +12,7 @@ class InversionController extends ChangeNotifier {
   GlobalKey<FormState> productoEmpFormKey = GlobalKey<FormState>();
  
   //ProductoEmp
-  String imagen = '';
+  SaveImagenesLocal? imagen;
   String nombre = '';
   String descripcion = '';
   String costo = '';
@@ -30,7 +31,7 @@ class InversionController extends ChangeNotifier {
 
   void clearInformation()
   {
-    imagen = '';
+    imagen = null;
     nombre = '';
     descripcion = '';
     costo = '';
@@ -85,7 +86,12 @@ class InversionController extends ChangeNotifier {
             updateImagen.imagenes = newImagen;
           }
         } else {
-          final nuevaImagenProdSolicitado = Imagenes(imagenes: imagen); //Se crea el objeto imagenes para el Prod Solicitado
+          final nuevaImagenProdSolicitado = Imagenes(
+          imagenes: imagen!.path,
+          nombre: imagen!.nombre,
+          path: imagen!.path,
+          base64: imagen!.base64,
+          ); //Se crea el objeto imagenes para el Prod Solicitado
           updateProdSolicitado.imagen.target = nuevaImagenProdSolicitado;
         }
       }
@@ -118,8 +124,13 @@ class InversionController extends ChangeNotifier {
       cantidad: int.parse(cantidad),
       costoEstimado: costo != '' ? double.parse(costo) : 0.0,
       );
-      if (imagen != '') {
-        final nuevaImagenProdSolicitado = Imagenes(imagenes: imagen); //Se crea el objeto imagenes para el Prod Solicitado
+      if (imagen != null) {
+        final nuevaImagenProdSolicitado = Imagenes(
+          imagenes: imagen!.path,
+          nombre: imagen!.nombre,
+          path: imagen!.path,
+          base64: imagen!.base64,
+          ); //Se crea el objeto imagenes para el Prod Solicitado
         nuevoProdSolicitado.imagen.target = nuevaImagenProdSolicitado;
       }
       final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);

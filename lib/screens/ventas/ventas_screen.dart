@@ -14,7 +14,6 @@ import 'package:bizpro_app/screens/widgets/pdf/api/pdf_api.dart';
 import 'package:bizpro_app/screens/widgets/pdf/api/pdf_invoice_ventas.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:bizpro_app/screens/ventas/agregar_venta.dart';
-import 'package:bizpro_app/providers/user_provider.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:bizpro_app/helpers/constants.dart';
@@ -58,7 +57,6 @@ class _VentasScreenState extends State<VentasScreen> {
   Widget build(BuildContext context) {
     final usuarioProvider = Provider.of<UsuarioController>(context);
     final Usuarios currentUser = usuarioProvider.usuarioCurrent!;
-    final UserState userState = Provider.of<UserState>(context);
     listActualVentas = widget.ventas.toList();
     return WillPopScope(
       onWillPop: () async => false,
@@ -516,7 +514,7 @@ class _VentasScreenState extends State<VentasScreen> {
                                                                   .spaceAround,
                                                                 children: 
                                                                   [Padding(
-                                                                   padding: EdgeInsets.all(8.0),
+                                                                   padding: const EdgeInsets.all(8.0),
                                                                     child: Text(
                                                                       maybeHandleOverflow(emprendedor,25,"..."),
                                                                       style: AppTheme
@@ -541,18 +539,13 @@ class _VentasScreenState extends State<VentasScreen> {
                                                           children: [
                                                             
                                                               Padding(
-                                                                padding: EdgeInsets.all(8.0),
+                                                                padding: const EdgeInsets.all(8.0),
                                                               child: Text(
                                                                 dateTimeFormat("dd/MMM/yyyy", venta.fechaInicio)
                                                               )
                                                         ),
-                                                            
-                                                            
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                              padding: EdgeInsets.all(8.0),
+                                                            Padding(
+                                                              padding: const EdgeInsets.all(8.0),
                                                               
                                                               child: Text(
                                                                 maybeHandleOverflow(dateTimeFormat("dd/MMM/yyyy", venta.fechaTermino),
@@ -627,8 +620,8 @@ class _VentasScreenState extends State<VentasScreen> {
                                               ],
                                             ),
                                           ),
-                                        ),
-                                      );
+                        ]),
+                                      )));
                                     },
                                   );
                                 },

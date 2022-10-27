@@ -310,20 +310,33 @@ class SyncProviderPocketbase extends ChangeNotifier {
         case "syncUpdateJornada3":
           final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
           if(jornadaToSync != null){
-            if(jornadaToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
-              print("Entro aqui en el if");
+            if(jornadaToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") { 
               continue;
             } else {
-              print("Entro aqui en el else");
               if (jornadaToSync.idDBR != null) {
-                print("Ya ha sido enviado al backend");
-                syncUpdateJornada3(jornadaToSync);
+                //Ya se ha enviado al backend la jornada y se puede actualizar
+                final boolSyncUpdateJornada3 = await syncUpdateJornada3(jornadaToSync);
+                if (boolSyncUpdateJornada3) {
+                  banderasExistoSync.add(boolSyncUpdateJornada3);
+                  continue;
+                } else {
+                  //Salimos del bucle
+                  banderasExistoSync.add(boolSyncUpdateJornada3);
+                  i = instruccionesBitacora.length;
+                  break;
+                }
               } else {
-                print("No ha sido enviado al backend");
-              }
-            }   
-          }  
-          continue;
+                //No se ha enviado al backend la jornada y por lo tanto no se puede actualizar
+                banderasExistoSync.add(true);
+                continue;
+              } 
+            }          
+          } else {
+            //Salimos del bucle
+            banderasExistoSync.add(false);
+            i = instruccionesBitacora.length;
+            break;
+          }
         case "syncUpdateJornada4":
           final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
           if(jornadaToSync != null){
@@ -411,20 +424,33 @@ class SyncProviderPocketbase extends ChangeNotifier {
         case "syncUpdateUsuario":
           final usuarioToSync = getFirstUsuario(dataBase.usuariosBox.getAll(), instruccionesBitacora[i].id);
           if(usuarioToSync != null){
-            if(usuarioToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
-              print("Entro aqui en el if");
+            if(usuarioToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") { 
               continue;
             } else {
-              print("Entro aqui en el else");
               if (usuarioToSync.idDBR != null) {
-                print("Ya ha sido enviado al backend");
-                syncUpdateUsuario(usuarioToSync);
+                //Ya se ha enviado al backend el usuario y se puede actualizar
+                final boolSyncUpdateUsuario = await syncUpdateUsuario(usuarioToSync);
+                if (boolSyncUpdateUsuario) {
+                  banderasExistoSync.add(boolSyncUpdateUsuario);
+                  continue;
+                } else {
+                  //Salimos del bucle
+                  banderasExistoSync.add(boolSyncUpdateUsuario);
+                  i = instruccionesBitacora.length;
+                  break;
+                }
               } else {
-                print("No ha sido enviado al backend");
-              }
-            } 
+                //No se ha enviado al backend el usuario y por lo tanto no se puede actualizar
+                banderasExistoSync.add(true);
+                continue;
+              } 
+            }          
+          } else {
+            //Salimos del bucle
+            banderasExistoSync.add(false);
+            i = instruccionesBitacora.length;
+            break;
           }
-          continue;
         case "syncAddProductoEmprendedor":
           print("Entro al caso de syncAddProductoEmprendedor Pocketbase");
           final prodEmprendedorToSync = getFirstProductoEmprendedor(dataBase.productosEmpBox.getAll(), instruccionesBitacora[i].id);
@@ -515,19 +541,29 @@ class SyncProviderPocketbase extends ChangeNotifier {
             break;
           }
         case "syncAddInversion":
-          print("Entro aqui");
+          print("Entro al caso de syncAddInversion Pocketbase");
           final inversionToSync = getFirstInversion(dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
           if(inversionToSync != null){
-            if(inversionToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
-            print("Entro aqui en el if");
-            continue;
+            if(inversionToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") { 
+              continue;
+            } else {
+              final boolSyncAddInversion = await syncAddInversion(inversionToSync);
+              if (boolSyncAddInversion) {
+                banderasExistoSync.add(boolSyncAddInversion);
+                continue;
+              } else {
+                //Salimos del bucle
+                banderasExistoSync.add(boolSyncAddInversion);
+                i = instruccionesBitacora.length;
+                break;
+              }
+            }          
           } else {
-            print("Entro aqui en el else");
-            
-            await syncAddInversion(inversionToSync);
-          } 
-          }         
-          continue;
+            //Salimos del bucle
+            banderasExistoSync.add(false);
+            i = instruccionesBitacora.length;
+            break;
+          }
         case "syncUpdateInversion":
           final inversionToSync = getFirstInversion(dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
           if(inversionToSync != null){
@@ -1475,7 +1511,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
     }
   } 
 
-  Future<bool?> syncUpdateJornada3(Jornadas jornada) async {
+  Future<bool> syncUpdateJornada3(Jornadas jornada) async {
     print("Estoy en El syncUpdateJornada3");
     try {
       //Primero actualizamos la tarea
@@ -1496,34 +1532,39 @@ class SyncProviderPocketbase extends ChangeNotifier {
             if (statusSync != null) {
               statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado de la tarea
               dataBase.statusSyncBox.put(statusSync);
-            }
-          }
-        }
-        //Segundo actualizamos la jornada
-        final recordJornada = await client.records.update('jornadas', jornada.idDBR.toString(), body: {
-            "proxima_visita": jornada.fechaRevision.toUtc().toString(),
-            "id_status_sync_fk": "HoI36PzYw1wtbO1",
-        }); 
+              //Segundo actualizamos la jornada
+              final recordJornada = await client.records.update('jornadas', jornada.idDBR.toString(), body: {
+                  "proxima_visita": jornada.fechaRevision.toUtc().toString(),
+                  "id_status_sync_fk": "HoI36PzYw1wtbO1",
+              }); 
 
-        if (recordJornada.id.isNotEmpty) {
-          print("Jornada updated succesfully");
-          var updateJornada = dataBase.jornadasBox.get(jornada.id);
-          if (updateJornada  != null) {
-            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateJornada.statusSync.target!.id)).build().findUnique();
-            if (statusSync != null) {
-              statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado de la jornada
-              dataBase.statusSyncBox.put(statusSync);
+              if (recordJornada.id.isNotEmpty) {
+                print("Jornada updated succesfully");
+                final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(jornada.statusSync.target!.id)).build().findUnique();
+                if (statusSync != null) {
+                  statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado de la jornada
+                  dataBase.statusSyncBox.put(statusSync);
+                  return true;
+                } else {
+                  return false;
+                }
+              }
+              else{
+                return false;
+              }
+            } else {
+              return false;
             }
+          } else {
+            return false;
           }
-        }
-        else{
+        } else {
           return false;
         }
       }
       else{
         return false;
       }
-      return true;
 
     } catch (e) {
       print('ERROR - function syncUpdateJornada3(): $e');
@@ -1697,10 +1738,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   } 
 
-  Future<bool?> syncUpdateUsuario(Usuarios usuario) async {
+  Future<bool> syncUpdateUsuario(Usuarios usuario) async {
     print("Estoy en El syncUpdateUsuario");
     try {
-
       final record = await client.records.update('emi_users', usuario.idDBR.toString(), body: {
         "nombre_usuario": usuario.nombre,
         "apellido_p": usuario.apellidoP,
@@ -1712,20 +1752,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
       if (record.id.isNotEmpty) {
         print("usuario updated succesfully");
-        var updateUsuario = dataBase.usuariosBox.get(usuario.id);
-        if (updateUsuario  != null) {
-          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateUsuario.statusSync.target!.id)).build().findUnique();
-          if (statusSync != null) {
-            statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
-            dataBase.statusSyncBox.put(statusSync);
-          }
+        final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(usuario.statusSync.target!.id)).build().findUnique();
+        if (statusSync != null) {
+          statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
+          dataBase.statusSyncBox.put(statusSync);
+          return true;
+        } else{
+          return false;
         }
       }
       else{
         return false;
       }
-      return true;
-
     } catch (e) {
       print('ERROR - function syncUpdateUsuario(): $e');
       return false;
@@ -1778,40 +1816,40 @@ void deleteBitacora() {
 
   Future<bool> syncAddVenta(Ventas venta) async {
     print("Estoy en El syncAddVenta");
-      try {
-      final record = await client.records.create('ventas', body: {
-          "id_emprendimiento_fk": venta.emprendimiento.target!.idDBR,
-          "fecha_inicio": venta.fechaInicio.toUtc().toString(),
-          "fecha_termino": venta.fechaTermino.toUtc().toString(),
-          "total": venta.total,
-          "archivado": venta.archivado,
-      });
-      if (record.id.isNotEmpty) {
-        String idDBR = record.id;
-        print("Venta created succesfully");
-        var updateVenta = dataBase.ventasBox.get(venta.id);
-        if (updateVenta != null) {
-            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateVenta.statusSync.target!.id)).build().findUnique();
-            if (statusSync != null) {
-              statusSync.status = "HoI36PzYw1wtbO1";
-              dataBase.statusSyncBox.put(statusSync);
-            }
-          updateVenta.idDBR = idDBR;
-          dataBase.ventasBox.put(updateVenta);
-          return true;
-        }
-        else {
-          return false;
-        }
+    try {
+    final record = await client.records.create('ventas', body: {
+        "id_emprendimiento_fk": venta.emprendimiento.target!.idDBR,
+        "fecha_inicio": venta.fechaInicio.toUtc().toString(),
+        "fecha_termino": venta.fechaTermino.toUtc().toString(),
+        "total": venta.total,
+        "archivado": venta.archivado,
+    });
+    if (record.id.isNotEmpty) {
+      String idDBR = record.id;
+      print("Venta created succesfully");
+      var updateVenta = dataBase.ventasBox.get(venta.id);
+      if (updateVenta != null) {
+          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateVenta.statusSync.target!.id)).build().findUnique();
+          if (statusSync != null) {
+            statusSync.status = "HoI36PzYw1wtbO1";
+            dataBase.statusSyncBox.put(statusSync);
+          }
+        updateVenta.idDBR = idDBR;
+        dataBase.ventasBox.put(updateVenta);
+        return true;
       }
-      else{
+      else {
         return false;
       }
-
-    } catch (e) {
-      print('ERROR - function syncAddVenta(): $e');
+    }
+    else{
       return false;
     }
+
+  } catch (e) {
+    print('ERROR - function syncAddVenta(): $e');
+    return false;
+  }
 }
 
   Future<bool?> syncUpdateVenta(Ventas venta) async {
@@ -1959,17 +1997,13 @@ void deleteBitacora() {
     }
 }
 
-  Future<bool?> syncAddInversion(Inversiones inversion) async {
+  Future<bool> syncAddInversion(Inversiones inversion) async {
     try {
       print("Estoy en syncAddInversion");
       //Primero creamos la inversion  
       //Se busca el estado de inversión 'Solicitada'
       final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Solicitada")).build().findFirst();
       if (newEstadoInversion != null) {
-        print("Datos inversion");
-        print(inversion.estadoInversion);
-        print(inversion.porcentajePago);
-        print(inversion.montoPagar);
         final recordInversion = await client.records.create('inversiones', body: {
           "id_emprendimiento_fk": inversion.emprendimiento.target!.idDBR,
           "id_estado_inversion_fk": newEstadoInversion.idDBR,
@@ -1989,94 +2023,97 @@ void deleteBitacora() {
           if (statusSyncInversion != null) {
             statusSyncInversion.status = "HoI36PzYw1wtbO1";
             dataBase.statusSyncBox.put(statusSyncInversion);
-            print("Se hace el conteo de la tabla statusSync");
-            print(dataBase.statusSyncBox.count());
             print("Actualizacion de estado de la inversion");
-          }
-          //Se recupera el idDBR de la inversion
-          final updateInversion = dataBase.inversionesBox.query(Inversiones_.id.equals(inversion.id)).build().findUnique();
-          if (updateInversion != null) {
-            updateInversion.idDBR = idDBRInversion;
-            dataBase.inversionesBox.put(updateInversion);
-            print("Se recupera el idDBR de la inversion");
-          }
-        }
-
-        //Se recupera la inversion con los últimos cambios
-        final actualInversion = dataBase.inversionesBox.get(inversion.id);
-        if (actualInversion != null) {
-          //Segundo creamos la instancia de inversion x prod Cotizados en el backend
-          final inversionXprodCotizados = actualInversion.inversionXprodCotizados.last;
-          final recordInversionXProdCotizados = await client.records.create('inversion_x_prod_cotizados', body: {
-            "id_inversion_fk": inversionXprodCotizados.inversion.target!.idDBR,
-          });
-        if (recordInversionXProdCotizados.id.isNotEmpty) {
-          //Se actualiza el estado de la instancia de inversion x prod Cotizados
-          String idDBRInversionXProdCotizados = recordInversionXProdCotizados.id;
-          final statusSyncInversionXProdCotizados = dataBase.statusSyncBox.query(StatusSync_.id.equals(inversionXprodCotizados.statusSync.target?.id ?? -1)).build().findUnique();
-          if (statusSyncInversionXProdCotizados != null) {
-            statusSyncInversionXProdCotizados.status = "HoI36PzYw1wtbO1";
-            dataBase.statusSyncBox.put(statusSyncInversionXProdCotizados);
-            print("Se hace el conteo de la tabla statusSync");
-            print(dataBase.statusSyncBox.count());
-            print("Actualizacion de estado de la instancia de inversion x prod Cotizados");
-          }
-          // Se recupera el idDBR de la instancia de inversion x prod Cotizados
-          final updateInversionXprodCotizado = dataBase.inversionesXprodCotizadosBox.query(InversionesXProdCotizados_.id.equals(inversionXprodCotizados.id)).build().findUnique();
-          if (updateInversionXprodCotizado != null) {
-            updateInversionXprodCotizado.idDBR = idDBRInversionXProdCotizados;
-            dataBase.inversionesXprodCotizadosBox.put(updateInversionXprodCotizado);
-            print("Se recupera el idDBR de la instancia de inversion x prod Cotizados");
-          }
-        }
-        //Tercero creamos los productos solicitados asociados a la inversion
-        final prodSolicitadosToSync = actualInversion.prodSolicitados.toList();
-        if (prodSolicitadosToSync.isNotEmpty) {  
-          for (var i = 0; i < prodSolicitadosToSync.length; i++) {
-            print("Datos Prod Solicitados");
-            print(prodSolicitadosToSync[i].producto);
-            print(prodSolicitadosToSync[i].cantidad);
-            print(prodSolicitadosToSync[i].costoEstimado);
-            final recordProdSolicitado = await client.records.create('productos_solicitados', body: {
-              "producto": prodSolicitadosToSync[i].producto,
-              "marca_sugerida": prodSolicitadosToSync[i].marcaSugerida,
-              "descripcion": prodSolicitadosToSync[i].descripcion,
-              "proveedo_sugerido": prodSolicitadosToSync[i].proveedorSugerido,
-              "cantidad": prodSolicitadosToSync[i].cantidad,
-              "costo_estimado": prodSolicitadosToSync[i].costoEstimado,
-              "id_familia_prod_fk": prodSolicitadosToSync[i].familiaProducto.target!.idDBR,
-              "id_tipo_empaques_fk": prodSolicitadosToSync[i].tipoEmpaques.target!.idDBR,
-              "id_inversion_fk": prodSolicitadosToSync[i].inversion.target!.idDBR,
-            });
-            if (recordProdSolicitado.id.isNotEmpty) {
-            //Se actualiza el estado del prod Solicitado
-            String idDBRProdSolicitado = recordProdSolicitado.id;
-            final statusSyncProdSolicitado = dataBase.statusSyncBox.query(StatusSync_.id.equals(prodSolicitadosToSync[i].statusSync.target!.id)).build().findUnique();
-            if (statusSyncProdSolicitado != null) {
-              statusSyncProdSolicitado.status = "HoI36PzYw1wtbO1";
-              dataBase.statusSyncBox.put(statusSyncProdSolicitado);
-              print("Se hace el conteo de la tabla statusSync");
-              print(dataBase.statusSyncBox.count());
-              print("Actualizacion de estado del Prod Solicitado");
+            //Se recupera el idDBR de la inversion
+            final updateInversion = dataBase.inversionesBox.query(Inversiones_.id.equals(inversion.id)).build().findUnique();
+            if (updateInversion != null) {
+              updateInversion.idDBR = idDBRInversion;
+              dataBase.inversionesBox.put(updateInversion);
+              print("Se recupera el idDBR de la inversion");
             }
-            //Se recupera el idDBR del prod Solicitado
-            final updateProdSolicitado = dataBase.productosSolicitadosBox.query(ProdSolicitado_.id.equals(prodSolicitadosToSync[i].id)).build().findUnique();
-            if (updateProdSolicitado != null) {
-              updateProdSolicitado.idDBR = idDBRProdSolicitado;
-              dataBase.productosSolicitadosBox.put(updateProdSolicitado);
-              print("Se recupera el idDBR del Prod Solicitado");
+            //Se recupera la inversion con los últimos cambios
+            final actualInversion = dataBase.inversionesBox.get(inversion.id);
+            if (actualInversion != null) {
+              //Segundo creamos la instancia de inversion x prod Cotizados en el backend
+              final inversionXprodCotizados = actualInversion.inversionXprodCotizados.last;
+              final recordInversionXProdCotizados = await client.records.create('inversion_x_prod_cotizados', body: {
+                "id_inversion_fk": inversionXprodCotizados.inversion.target!.idDBR,
+              });
+            if (recordInversionXProdCotizados.id.isNotEmpty) {
+              //Se actualiza el estado de la instancia de inversion x prod Cotizados
+              String idDBRInversionXProdCotizados = recordInversionXProdCotizados.id;
+              final statusSyncInversionXProdCotizados = dataBase.statusSyncBox.query(StatusSync_.id.equals(inversionXprodCotizados.statusSync.target?.id ?? -1)).build().findUnique();
+              if (statusSyncInversionXProdCotizados != null) {
+                statusSyncInversionXProdCotizados.status = "HoI36PzYw1wtbO1";
+                dataBase.statusSyncBox.put(statusSyncInversionXProdCotizados);
+                print("Actualizacion de estado de la instancia de inversion x prod Cotizados");
+              }
+              // Se recupera el idDBR de la instancia de inversion x prod Cotizados
+              final updateInversionXprodCotizado = dataBase.inversionesXprodCotizadosBox.query(InversionesXProdCotizados_.id.equals(inversionXprodCotizados.id)).build().findUnique();
+              if (updateInversionXprodCotizado != null) {
+                updateInversionXprodCotizado.idDBR = idDBRInversionXProdCotizados;
+                dataBase.inversionesXprodCotizadosBox.put(updateInversionXprodCotizado);
+                print("Se recupera el idDBR de la instancia de inversion x prod Cotizados");
+              }
             }
+            //Tercero creamos los productos solicitados asociados a la inversion
+            final prodSolicitadosToSync = actualInversion.prodSolicitados.toList();
+            if (prodSolicitadosToSync.isNotEmpty) {  
+              for (var i = 0; i < prodSolicitadosToSync.length; i++) {
+                print("Datos Prod Solicitados");
+                print(prodSolicitadosToSync[i].producto);
+                print(prodSolicitadosToSync[i].cantidad);
+                print(prodSolicitadosToSync[i].costoEstimado);
+                final recordProdSolicitado = await client.records.create('productos_solicitados', body: {
+                  "producto": prodSolicitadosToSync[i].producto,
+                  "marca_sugerida": prodSolicitadosToSync[i].marcaSugerida,
+                  "descripcion": prodSolicitadosToSync[i].descripcion,
+                  "proveedo_sugerido": prodSolicitadosToSync[i].proveedorSugerido,
+                  "cantidad": prodSolicitadosToSync[i].cantidad,
+                  "costo_estimado": prodSolicitadosToSync[i].costoEstimado,
+                  "id_familia_prod_fk": prodSolicitadosToSync[i].familiaProducto.target!.idDBR,
+                  "id_tipo_empaques_fk": prodSolicitadosToSync[i].tipoEmpaques.target!.idDBR,
+                  "id_inversion_fk": prodSolicitadosToSync[i].inversion.target!.idDBR,
+                });
+                if (recordProdSolicitado.id.isNotEmpty) {
+                //Se actualiza el estado del prod Solicitado
+                String idDBRProdSolicitado = recordProdSolicitado.id;
+                final statusSyncProdSolicitado = dataBase.statusSyncBox.query(StatusSync_.id.equals(prodSolicitadosToSync[i].statusSync.target!.id)).build().findUnique();
+                if (statusSyncProdSolicitado != null) {
+                  statusSyncProdSolicitado.status = "HoI36PzYw1wtbO1";
+                  dataBase.statusSyncBox.put(statusSyncProdSolicitado);
+                  print("Actualizacion de estado del Prod Solicitado");
+                }
+                //Se recupera el idDBR del prod Solicitado
+                final updateProdSolicitado = dataBase.productosSolicitadosBox.query(ProdSolicitado_.id.equals(prodSolicitadosToSync[i].id)).build().findUnique();
+                if (updateProdSolicitado != null) {
+                  updateProdSolicitado.idDBR = idDBRProdSolicitado;
+                  dataBase.productosSolicitadosBox.put(updateProdSolicitado);
+                  print("Se recupera el idDBR del Prod Solicitado");
+                }
+                }
+              }
+              return true;
+            } else {
+              return false;
             }
+          } else {
+            return false;
           }
+          } else {
+            return false;
+          }      
+        } else{
+          //No se pudo enviar datos de inversión
+          return false;
         }
-        }
+      } else {
+        return false;
       }
       } catch (e) {
         print('ERROR - function syncAddInversion(): $e');
         return false;
       }
-    
-    return null;
 }
 
   Future<bool?> syncUpdateInversion(Inversiones inversion) async {
@@ -2179,79 +2216,28 @@ void deleteBitacora() {
     return null;
 }
 
-// VALIDAR QUE HAYA INFO EN EL BACKEND
-//False se simula
-//True ya ha sido simulada
-  Future<bool> validateLengthCotizacion(InversionesXProdCotizados inversionXprodCotizados, Inversiones inversion) async {
-    print("Id Inversion: ${inversionXprodCotizados.idDBR}");
-    final recordInversion = await client.records.
-    getOne('inversiones', 
-    inversion.idDBR!);
-    final recordProdCotizados = await client.records.
-    getFullList('productos_cotizados', 
-    batch: 200, 
-    filter: "id_inversion_x_prod_cotizados_fk='${
-      inversionXprodCotizados.idDBR
-      }'");
-    if (recordProdCotizados.isEmpty && recordInversion.id.isEmpty) {
-      return false;
+// PROCESO DE OBTENCIÓN DE PRODUCTOS COTIZADOS 
+
+  Future<bool> executeProductosCotizadosPocketbase(Emprendimientos emprendimiento, Inversiones inversion, InversionesXProdCotizados inversionesXProdCotizados) async {
+    exitoso = await getproductosCotizadosPocketbase(emprendimiento, inversion, inversionesXProdCotizados);
+    //Verificamos que no haya habido errores en el proceso
+    if (exitoso) {
+      procesocargando = false;
+      procesoterminado = true;
+      procesoexitoso = true;
+      notifyListeners();
+      return exitoso;
     } else {
-      print("No está vacio");
-      final GetInversion inversionParse = getInversionFromMap(recordInversion.toString());
-      final estadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.idDBR.equals(inversionParse.idEstadoInversionFk)).build().findUnique();
-      if (estadoInversion != null) {
-        if (estadoInversion.estado == "En Cotización") {
-          print("tamaño: ${recordProdCotizados.length}");
-          return true;
-        } else {
-          return false;
-        }
-      } else {
-        return false;
-      }
+      procesocargando = false;
+      procesoterminado = true;
+      procesoexitoso = false;
+      notifyListeners();
+      return exitoso;
     }
   }
 
-  // VALIDAR QUE HAYA CAMBIADO EL ESTADO DE LA INVERSION A COMPRADA
-  Future<bool> validateInversionComprada(Inversiones inversion) async {
-    print("Id Inversion: ${inversion.idDBR}");
-    final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Comprada")).build().findUnique();
-    if (newEstadoInversion != null) {
-      final records = await client.records.
-      getFullList('inversiones', 
-      batch: 200, 
-      filter: "id='${
-        inversion.idDBR
-        }' && id_estado_inversion_fk='${
-          newEstadoInversion.idDBR}'");
-      if (records.isEmpty) {
-        return false;
-      } else {
-        var updateInversion = dataBase.inversionesBox.get(inversion.id);
-        if (updateInversion != null) {
-          final statusSyncInversion = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateInversion.statusSync.target!.id)).build().findUnique();
-          if (statusSyncInversion != null) {
-            statusSyncInversion.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado de la inversion
-            dataBase.statusSyncBox.put(statusSyncInversion);
-            updateInversion.estadoInversion.target = newEstadoInversion;
-            dataBase.inversionesBox.put(updateInversion);
-            return true;
-          }
-          else{
-            return false;
-          }
-        }
-        else{
-          return false;
-        }
-    }
-    } else {
-      return false;
-    }
-  }
-
-  Future<void> getCotizacion(Emprendimientos emprendimiento, Inversiones inversion, InversionesXProdCotizados inversionXprodCotizados) async {
-    //obtenemos los productos cotizados
+  Future<bool> getproductosCotizadosPocketbase(Emprendimientos emprendimiento, Inversiones inversion, InversionesXProdCotizados inversionXprodCotizados) async {
+    //Obtenemos los productos cotizados
     print("Tamaño ProdCotizados al principio: ${dataBase.productosCotBox.getAll().length}");
     final recordInversion = await client.records.
     getOne('inversiones', 
@@ -2263,8 +2249,10 @@ void deleteBitacora() {
       inversionXprodCotizados.idDBR
       }'");
     if (recordProdCotizados.isEmpty || recordInversion.id.isEmpty) {
+      //No se encontró la inversión ni los productos cotizados
+      return false;
     } else {
-      print("No está vacio");
+      print("Se encontraron los prod cotizados y la inversión");
       final GetInversion inversionParse = getInversionFromMap(recordInversion.toString());
       final estadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.idDBR.equals(inversionParse.idEstadoInversionFk)).build().findUnique();
       if (estadoInversion != null) {
@@ -2276,137 +2264,55 @@ void deleteBitacora() {
           print("****Informacion productos cotizados****");
           print("Tamaño: ${recordProdCotizados.length}");
           for (var i = 0; i < recordProdCotizados.length; i++) {
-            if (listProdCotizados[i].id.isNotEmpty) {
-            final nuevoProductoCotizado = ProdCotizados(
-            cantidad: listProdCotizados[i].cantidad,
-            costoTotal: listProdCotizados[i].costoTotal,
-            idDBR: listProdCotizados[i].id,
-            aceptado: listProdCotizados[i].aceptado,
-            );
-            final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
-            final productoProv = dataBase.productosProvBox.query(ProductosProv_.idDBR.equals(listProdCotizados[i].idProductoProvFk)).build().findUnique();
-            if (productoProv != null) {
-              nuevoProductoCotizado.statusSync.target = nuevoSync;
-              nuevoProductoCotizado.inversionXprodCotizados.target = inversionXprodCotizados;
-              nuevoProductoCotizado.productosProv.target = productoProv;
-              dataBase.productosCotBox.put(nuevoProductoCotizado);
-              inversionXprodCotizados.prodCotizados.add(nuevoProductoCotizado);
-              dataBase.inversionesXprodCotizadosBox.put(inversionXprodCotizados);
-              print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
-              print('Prod Cotizado agregado exitosamente');
-              print("Tamaño ProdCotizados al final: ${dataBase.productosCotBox.getAll().length}");
-            }
-            }
-          }
-          //Se actualiza el estado de la inversión
-          final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En Cotización")).build().findFirst();
-          if (newEstadoInversion != null) {
-            final record = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
-              "id_estado_inversion_fk": newEstadoInversion.idDBR,
-            }); 
-            if (record.id.isNotEmpty) {
-            print("Inversion updated succesfully");
-            var updateInversion = dataBase.inversionesBox.get(inversion.id);
-            if (updateInversion != null) {
-                final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateInversion.statusSync.target!.id)).build().findUnique();
-                if (statusSync != null) {
-                  statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
-                  dataBase.statusSyncBox.put(statusSync);
-                  updateInversion.estadoInversion.target = newEstadoInversion;
-                  dataBase.inversionesBox.put(updateInversion);
-                }
+            //Se valida que el nuevo rol aún no existe en Objectbox
+            final prodCotizadoExistente = dataBase.productosCotBox.query(ProdCotizados_.idDBR.equals(listProdCotizados[i].id)).build().findUnique();
+            if (prodCotizadoExistente == null) {
+              final nuevoProductoCotizado = ProdCotizados(
+              cantidad: listProdCotizados[i].cantidad,
+              costoTotal: listProdCotizados[i].costoTotal,
+              idDBR: listProdCotizados[i].id,
+              aceptado: listProdCotizados[i].aceptado,
+              idEmiWeb: listProdCotizados[i].idEmiWeb,
+              );
+              final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
+              final productoProv = dataBase.productosProvBox.query(ProductosProv_.idDBR.equals(listProdCotizados[i].idProductoProvFk)).build().findUnique();
+              if (productoProv != null) {
+                nuevoProductoCotizado.statusSync.target = nuevoSync;
+                nuevoProductoCotizado.inversionXprodCotizados.target = inversionXprodCotizados;
+                nuevoProductoCotizado.productosProv.target = productoProv;
+                dataBase.productosCotBox.put(nuevoProductoCotizado);
+                inversionXprodCotizados.prodCotizados.add(nuevoProductoCotizado);
+                dataBase.inversionesXprodCotizadosBox.put(inversionXprodCotizados);
+                print('Prod Cotizado agregado exitosamente');
+                print("Tamaño ProdCotizados al final: ${dataBase.productosCotBox.getAll().length}");
+              } else {
+                return false;
               }
             }
           }
-          procesoterminado = true;
-          procesocargando = false;
-          notifyListeners();
-        } else {
-        }
-      } else {
-      }
-    }
-  }
-
-    // CAMBIAR EL ESTADO DE LA INVERSION A COMPRADA
-  Future<bool?> cambiarInversionAComprada(Inversiones inversion) async {
-    print("Id Inversion: ${inversion.idDBR}");
-    final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Comprada")).build().findUnique();
-    final record = await client.records.getOne('inversiones', inversion.idDBR.toString()); 
-    if (newEstadoInversion != null && record.id.isNotEmpty) {
-      GetInversion getInversion = getInversionFromMap(record.toString());
-      if (getInversion.idEstadoInversionFk == newEstadoInversion.idDBR) {
-        return null;
-      } else {
-        print("No está actualizada Inversion Comprada");
-        //Se actuzaliza a Inversión Comprada
-        final updateInversion = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
-        "id_estado_inversion_fk": newEstadoInversion.idDBR,
-        }); 
-        if (updateInversion.id.isNotEmpty) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    } else {
-      return false;
-    }
-  }
-  // Simular datos de cotizacion en el backend
-  Future<bool> simularCotizacion(Inversiones inversion) async {
-    try {
-      print("Id Inversion: ${inversion.idDBR}");
-      //Se recupera el último Id de inversion_x_prod_cotizados
-      final records = await client.records.
-        getFullList('inversion_x_prod_cotizados', 
-        batch: 200, 
-        filter: "id_inversion_fk='${
-          inversion.idDBR
-          }'",
-        sort: '-created');   
-      final List<GetInversionXProdCotizados> listInversionXProdCotizados = [];
-      for (var element in records) {
-        listInversionXProdCotizados.add(getInversionXProdCotizadosFromMap(element.toString()));
-      }
-      final GetInversionXProdCotizados lastInversionXProdCotizados = listInversionXProdCotizados[0];
-      for (var i = 0; i < listInversionXProdCotizados.length; i++) {
-        print("$i de ${listInversionXProdCotizados.length}");
-        print("ID INVERSION X PROD COTIZADOS: ${listInversionXProdCotizados[i].id}");
-      }
-      //Se enlistan los idDBR de los productos a cotizar
-      List<ProductosProv> prodCotizados = dataBase.productosProvBox.getAll().toList();
-      List<double> costos = [899.99, 699.99, 758.59, 666.99, 999.99];
-      for (var i = 0; i < random.nextInt(5) + 1; i++) {
-        //Se crean los prod Simulados Cotizados
-        await client.records.create('productos_cotizados', body: {
-          "cantidad": random.nextInt(12) + 1,
-          "costo_total": costos[random.nextInt(5)],
-          "id_producto_prov_fk":prodCotizados[random.nextInt(6)].idDBR,
-          "id_inversion_x_prod_cotizados_fk": lastInversionXProdCotizados.id,
-          "aceptado": false
-        });
-      }
-      //Se cambia el estado a En Cotización en la colección de inversiones
-      final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En Cotización")).build().findUnique();
-      if (newEstadoInversion != null) {
-        print("No está actualizada Inversion Comprada");
-        //Se actuzaliza a Inversión Comprada
-        final updateInversion = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
-        "id_estado_inversion_fk": newEstadoInversion.idDBR,
-        }); 
-        if (updateInversion.id.isNotEmpty) {
-          return true;
+          //Se actualiza el estado de la inversión en ObjectBox
+          final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En Cotización")).build().findFirst();
+          if (newEstadoInversion != null) {
+            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(inversion.statusSync.target!.id)).build().findUnique();
+            if (statusSync != null) {
+              statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
+              dataBase.statusSyncBox.put(statusSync);
+              inversion.estadoInversion.target = newEstadoInversion;
+              dataBase.inversionesBox.put(inversion);
+              print("Inversion updated succesfully");
+              return true;
+            } else {
+              return false;
+            }
+          } else {
+            return false;
+          }
         } else {
           return false;
         }
       } else {
         return false;
       }
-      
-    } catch (e) {
-      print("Error en simularCotizacion: $e");
-      return false;
     }
   }
 }
