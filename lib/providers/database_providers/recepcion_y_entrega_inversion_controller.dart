@@ -87,19 +87,20 @@ class RecepcionYEntregaController extends ChangeNotifier {
 
     final updateInversionXprodCotizado = dataBase.inversionesXprodCotizadosBox.get(inversionXProdCotizadosTemp!.id);
        if (updateInversionXprodCotizado != null) {
-        final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateInversionXProdCotizado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+        final nuevaInstruccionInversionXprodCotizado = Bitacora(instrucciones: 'syncUpdateInversionXProdCotizado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
         updateInversionXprodCotizado.aceptado = inversionXProdCotizadosTemp!.aceptado;
         final statusSyncInversionXProdCotizados = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateInversionXprodCotizado.statusSync.target!.id)).build().findUnique();
         if (statusSyncInversionXProdCotizados != null) {
           statusSyncInversionXProdCotizados.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del prod Cotizado X Inversion
           dataBase.statusSyncBox.put(statusSyncInversionXProdCotizados);
         }
-        updateInversionXprodCotizado.bitacora.add(nuevaInstruccion);
+        updateInversionXprodCotizado.bitacora.add(nuevaInstruccionInversionXprodCotizado);
         dataBase.inversionesXprodCotizadosBox.put(updateInversionXprodCotizado);
         print('Inversion X Prod Cotizado actualizado exitosamente');
       }
 
     //Se actualiza el estado de la inversión
+    final nuevaInstruccionEstadoInversion = Bitacora(instrucciones: 'syncUpdateEstadoInversion', instruccionAdicional: "Entregada Al Promotor",usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
     final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Entregada Al Promotor")).build().findFirst();
     final updateInversion = dataBase.inversionesBox.get(inversionXProdCotizadosTemp!.inversion.target!.id);
     if (newEstadoInversion != null && updateInversion != null) {
@@ -108,6 +109,7 @@ class RecepcionYEntregaController extends ChangeNotifier {
         statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del emprendimiento
         dataBase.statusSyncBox.put(statusSync);
         updateInversion.estadoInversion.target = newEstadoInversion;
+        updateInversion.bitacora.add(nuevaInstruccionEstadoInversion);
         dataBase.inversionesBox.put(updateInversion);
         print("Inversion updated succesfully");
       }
@@ -118,7 +120,7 @@ class RecepcionYEntregaController extends ChangeNotifier {
 
     final updateInversion = dataBase.inversionesBox.get(idInversion);
     if (updateInversion != null) {
-      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateImagenInversion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionImagenInversion = Bitacora(instrucciones: 'syncUpdateImagenInversion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Se agrega la imagen de la Firma
       final nuevaImagenFirma = Imagenes(imagenes: imagenFirma); //Se crea el objeto imagenes para la Inversion
       updateInversion.imagenes.add(nuevaImagenFirma);
@@ -126,6 +128,7 @@ class RecepcionYEntregaController extends ChangeNotifier {
       final nuevaImagenProducto = Imagenes(imagenes: imagenProducto); //Se crea el objeto imagenes para el Producto
       updateInversion.imagenes.add(nuevaImagenProducto);
       //Se actualiza el estado de la inversión
+      final nuevaInstruccionEstadoInversion = Bitacora(instrucciones: 'syncUpdateEstadoInversion', instruccionAdicional: "Entregada Al Emprendedor",usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Entregada Al Emprendedor")).build().findFirst();
       if (newEstadoInversion != null) {
         final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateInversion.statusSync.target!.id)).build().findUnique();
@@ -133,7 +136,8 @@ class RecepcionYEntregaController extends ChangeNotifier {
           statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la inversion
           dataBase.statusSyncBox.put(statusSync);
           updateInversion.estadoInversion.target = newEstadoInversion;
-          updateInversion.bitacora.add(nuevaInstruccion);
+          updateInversion.bitacora.add(nuevaInstruccionImagenInversion);
+          updateInversion.bitacora.add(nuevaInstruccionEstadoInversion);
           dataBase.inversionesBox.put(updateInversion);
           print("Inversion updated succesfully");
         }
@@ -170,7 +174,7 @@ void updatePago(double newMontoAbonado, int idInversion) {
   void finishPago(double newMontoAbonado, int idInversion) {
   final updateInversion = dataBase.inversionesBox.get(idInversion);
   if (updateInversion != null) {
-    final nuevaInstruccion = Bitacora(instrucciones: 'syncAddPagoInversion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+    final nuevaInstruccionPagoInversion = Bitacora(instrucciones: 'syncAddPagoInversion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
     //Se agrega el nuevo pago para la Inversion
     final nuevoPago = Pagos(
       montoAbonado: newMontoAbonado,
@@ -181,13 +185,15 @@ void updatePago(double newMontoAbonado, int idInversion) {
     updateInversion.pagos.add(nuevoPago);
     //Se resta el nuevo monto abonado al saldo de la Inversion
     updateInversion.saldo = 0.0;
-    updateInversion.bitacora.add(nuevaInstruccion);
+    updateInversion.bitacora.add(nuevaInstruccionPagoInversion);
     //Se actualiza el estado de la inversión
+    final nuevaInstruccionEstadoInversion = Bitacora(instrucciones: 'syncUpdateEstadoInversion', instruccionAdicional: "Pagado",usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
     final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Pagado")).build().findFirst();
     final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateInversion.statusSync.target!.id)).build().findUnique();
     if (statusSync != null && newEstadoInversion != null) {
       statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la inversion
       updateInversion.estadoInversion.target = newEstadoInversion;
+      updateInversion.bitacora.add(nuevaInstruccionEstadoInversion);
       dataBase.statusSyncBox.put(statusSync);
       dataBase.inversionesBox.put(updateInversion);
       print("Inversion updated succesfully");

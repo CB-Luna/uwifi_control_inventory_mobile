@@ -378,6 +378,26 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               i = instruccionesBitacora.length;
               break;
             }
+          case "syncUpdateEstadoInversion":
+            print("Entro al caso de syncUpdateEstadoInversion Emi Web");
+            final inversionToSync = getFirstInversion(dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
+            if(inversionToSync != null){
+              var result = await syncUpdateEstadoInversion(inversionToSync, instruccionesBitacora[i]);
+              if (result) {
+                banderasExistoSync.add(result);     
+                continue;
+              } else {
+                //Salimos del bucle
+                banderasExistoSync.add(false);
+                i = instruccionesBitacora.length;
+                break;
+              }         
+            } else {
+              //Salimos del bucle
+              banderasExistoSync.add(false);
+              i = instruccionesBitacora.length;
+              break;
+            }
           default:
             continue;
         }
@@ -1892,6 +1912,52 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     }
   }
 
+  Future<bool> syncUpdateEstadoInversion(Inversiones inversion, Bitacora bitacora) async {
+    print("Estoy en El syncUpdateEstadoInversion en Emi Web");
+    try {
+      final estadoActual = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals(bitacora.instruccionAdicional!)).build().findUnique();
+      if (estadoActual != null) {
+        // Primero creamos el API para realizar la actualización
+          final actualizarEstasyncUpdateEstadoInversionUri =
+            Uri.parse('$baseUrlEmiWebServices/inversion/estadoInversion');
+          final headers = ({
+            "Content-Type": "application/json",
+            'Authorization': 'Bearer $tokenGlobal',
+          });
+          print("Fase Actual: ${estadoActual.estado}");
+          final responsePostUpdateEstasyncUpdateEstadoInversion = await put(actualizarEstasyncUpdateEstadoInversionUri, 
+          headers: headers,
+          body: jsonEncode({
+            "idUsuarioRegistra": inversion.emprendimiento.target!.usuario.target!.idEmiWeb,
+            "usuarioRegistra": "${inversion.emprendimiento.target!
+            .usuario.target!.nombre} ${inversion.emprendimiento.target!
+            .usuario.target!.apellidoP} ${inversion.emprendimiento.target!
+            .usuario.target!.apellidoM}",
+            "idInversiones": inversion.idEmiWeb,
+            "idCatEstadoInversion": estadoActual.idEmiWeb,
+          }));
+          print(responsePostUpdateEstasyncUpdateEstadoInversion.statusCode);
+          print(responsePostUpdateEstasyncUpdateEstadoInversion.body);
+          print("Respuesta Post Update Estado Inversión");
+          switch (responsePostUpdateEstasyncUpdateEstadoInversion.statusCode) {
+            case 200:
+            print("Caso 200 en Emi Web Update Estado Inversión");
+            //Se elimina la instrucción de la bitacora
+            dataBase.bitacoraBox.remove(bitacora.id);
+            return true;
+            default: //No se realizo con éxito el post
+              print("Error en actualizar estado inversion Emi Web");
+              return false;
+          }  
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('ERROR - function syncUpdateEstadoInversion(): $e');
+      return false;
+    }
+  }
+
     Future<bool> syncUpdateJornada1(Jornadas jornada, Bitacora bitacora) async {
     print("Estoy en El syncUpdateJornada1() en Emi Web");
     try {
@@ -1923,12 +1989,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       print(responsePostUpdateJornada1.body);
       switch (responsePostUpdateJornada1.statusCode) {
         case 200:
-        print("Caso 200 en Emi Web Update Fase Emprendimiento");
+        print("Caso 200 en Emi Web Update Jornada 1");
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
           return true;
         default: //No se realizo con éxito el post
-          print("Error en actualizar fase emprendimiento Emi Web");
+          print("Error en actualizar jornada 1 Emi Web");
           return false;
       }  
     } catch (e) {
@@ -2132,6 +2198,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           final estadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.idDBR.equals(inversionParse.idEstadoInversionFk)).build().findUnique();
           if (estadoInversion != null) {
             if (estadoInversion.estado == "En Cotización") {
+              print("Ya se ha realizado la inversión");
               //Ya se ha realizado el proceso para Emi Web
               return true;
             } else {

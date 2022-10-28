@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:bizpro_app/modelsPocketbase/get_inversion.dart';
-import 'package:bizpro_app/modelsPocketbase/get_inversion_x_prod_cotizados.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
@@ -444,6 +443,33 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 banderasExistoSync.add(true);
                 continue;
               } 
+            }          
+          } else {
+            //Salimos del bucle
+            banderasExistoSync.add(false);
+            i = instruccionesBitacora.length;
+            break;
+          }
+        case "syncUpdateEstadoInversion":
+          print("Entro al caso de syncUpdateEstadoInversion Pocketbase");
+          final inversionToSync = getFirstInversion(dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
+          if(inversionToSync != null){
+            //Esta instrucción tendrán una bandera para pocketbase con el fin de que no se vuelvan a ejecutar.
+            if(instruccionesBitacora[i].executePocketbase) { 
+              print("Ya se ha ejecutado en Pocketbase");
+              continue;
+            } else {
+              final boolSyncUpdateEstadoInversion = await syncUpdateEstadoInversion(inversionToSync, instruccionesBitacora[i]);
+              if (boolSyncUpdateEstadoInversion) {
+                print("La respuesta es: $boolSyncUpdateEstadoInversion");
+                banderasExistoSync.add(boolSyncUpdateEstadoInversion);
+                continue;
+              } else {
+                //Salimos del bucle
+                banderasExistoSync.add(boolSyncUpdateEstadoInversion);
+                i = instruccionesBitacora.length;
+                break;
+              }
             }          
           } else {
             //Salimos del bucle
@@ -1273,6 +1299,36 @@ class SyncProviderPocketbase extends ChangeNotifier {
       }
     } catch (e) {
       print('ERROR - function syncUpdateFaseEmprendimiento(): $e');
+      return false;
+    }
+  } 
+
+  Future<bool> syncUpdateEstadoInversion(Inversiones inversion, Bitacora bitacora) async {
+    print("Estoy en El syncUpdateEstadoInversion en Pocketbase");
+    try {
+      print("Instrucción Adicional: ${bitacora.instruccionAdicional}");
+      final estadoActual = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals(bitacora.instruccionAdicional!)).build().findUnique();
+      if (estadoActual != null) {
+
+        final record = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
+            "id_estado_inversion_fk": estadoActual.idDBR,
+        }); 
+
+        if (record.id.isNotEmpty) {
+          print("Inversión updated succesfully");
+          bitacora.executePocketbase = true;
+          dataBase.bitacoraBox.put(bitacora);
+          print("Se marca como realizada en Pocketbase la instrucción en Bitacora");
+          return true;
+        }
+        else{
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('ERROR - function syncUpdateEstadoInversion(): $e');
       return false;
     }
   } 
