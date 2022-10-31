@@ -78,86 +78,87 @@ class CotizacionController extends ChangeNotifier {
   
   Future<bool> acceptCotizacion(Inversiones inversion, int idInversionesXProdCotizados) async {
     try {
-      if (await getTokenOAuth()) {
-        final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Autorizada")).build().findFirst();
-        if (newEstadoInversion != null) {
-          // Primero creamos el API para realizar la actualización
-          final actualizarEstadoInversionUri =
-            Uri.parse('$baseUrlEmiWebServices/inversion/estadoInversion');
-          final headers = ({
-            "Content-Type": "application/json",
-            'Authorization': 'Bearer $tokenGlobal',
-          });
-          //Se actualiza el estado de la inversión en Emi Web
-          final responsePutUpdateEstadoInversion = await put(actualizarEstadoInversionUri, 
-          headers: headers,
-          body: jsonEncode({
-            "idUsuarioRegistra": inversion.emprendimiento.target!.usuario.target!.idEmiWeb,
-            "usuarioRegistra": "${inversion.emprendimiento
-            .target!.usuario.target!.nombre} ${inversion.emprendimiento
-            .target!.usuario.target!.apellidoP} ${inversion.emprendimiento
-            .target!.usuario.target!.apellidoM}",
-            "idInversiones": inversion.idEmiWeb,
-            "idCatEstadoInversion": newEstadoInversion.idEmiWeb,
-          }));
-          print("Id Inversión: ${inversion.idEmiWeb}");
-          switch (responsePutUpdateEstadoInversion.statusCode) {
-            case 200:
-            print("Caso 200 en Emi Web Update Estado Inversión");
-              //Se actualiza el estado de la Inversión en Pocketbase
-              final record = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
-                  "id_estado_inversion_fk": newEstadoInversion.idDBR,
-                }); 
-                if (record.id.isNotEmpty) {
-                  //Se actualiza el estado y el monto en ObjectBox
-                  double montoPagarYSaldoInicial = 0.0;
-                  //Se actualiza es el estado de los prod Cotizados
-                  final inversionXprodCotizados = dataBase.inversionesXprodCotizadosBox.get(idInversionesXProdCotizados);
-                  if (inversionXprodCotizados != null) {
-                    final listProdCotizados = inversionXprodCotizados.prodCotizados.toList();
-                    for (var i = 0; i < listProdCotizados.length; i++) {
-                      final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(listProdCotizados[i].statusSync.target!.id)).build().findUnique();
-                      if (statusSync != null) {
-                        statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del prod Cotizado
-                        dataBase.statusSyncBox.put(statusSync);
-                        listProdCotizados[i].aceptado = true;
-                        dataBase.productosCotBox.put(listProdCotizados[i]);
-                        print("Prod Cotizado updated succesfully");
-                      }
-                      //Se suma el total del Prod Cotizado al monto a pagar y saldo
-                      montoPagarYSaldoInicial += listProdCotizados[i].costoTotal;
-                    }
-                    final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(inversion.statusSync.target!.id)).build().findUnique();
-                    if (statusSync != null) {
-                      statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
-                      dataBase.statusSyncBox.put(statusSync);
-                      inversion.estadoInversion.target = newEstadoInversion;
-                      //Se asigna monto a Pagar y el Saldo inicial
-                      inversion.montoPagar = double.parse(((montoPagarYSaldoInicial * inversion.porcentajePago)/100).toStringAsFixed(2));
-                      inversion.saldo = double.parse(((montoPagarYSaldoInicial * inversion.porcentajePago)/100).toStringAsFixed(2));
-                      dataBase.inversionesBox.put(inversion);
-                      print("Inversion updated succesfully");
+      final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Autorizada")).build().findFirst();
+      if (newEstadoInversion != null) {
+        //Se actualiza el estado y el monto en ObjectBox
+        double montoPagarYSaldoInicial = 0.0;
+        //Se actualiza es el estado de los prod Cotizados
+        final inversionXprodCotizados = dataBase.inversionesXprodCotizadosBox.get(idInversionesXProdCotizados);
+        if (inversionXprodCotizados != null) {
+          final listProdCotizados = inversionXprodCotizados.prodCotizados.toList();
+          for (var i = 0; i < listProdCotizados.length; i++) {
+            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(listProdCotizados[i].statusSync.target!.id)).build().findUnique();
+            if (statusSync != null) {
+              statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del prod Cotizado
+              dataBase.statusSyncBox.put(statusSync);
+              listProdCotizados[i].aceptado = true;
+              dataBase.productosCotBox.put(listProdCotizados[i]);
+              print("Prod Cotizado updated succesfully");
+            }
+            //Se suma el total del Prod Cotizado al monto a pagar y saldo
+            montoPagarYSaldoInicial += listProdCotizados[i].costoTotal;
+          }
+          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(inversion.statusSync.target!.id)).build().findUnique();
+          if (statusSync != null) {
+            statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
+            dataBase.statusSyncBox.put(statusSync);
+            inversion.estadoInversion.target = newEstadoInversion;
+            //Se asigna monto a Pagar y el Saldo inicial
+            inversion.montoPagar = double.parse(((montoPagarYSaldoInicial * inversion.porcentajePago)/100).toStringAsFixed(2));
+            inversion.saldo = double.parse(((montoPagarYSaldoInicial * inversion.porcentajePago)/100).toStringAsFixed(2));
+            dataBase.inversionesBox.put(inversion);
+            print("Inversion updated succesfully");
+            if (await getTokenOAuth()) {
+              // Se crea el API para realizar la actualización en Emi Web
+              final actualizarEstadoInversionUri =
+                Uri.parse('$baseUrlEmiWebServices/inversion/estadoInversion');
+              final headers = ({
+                "Content-Type": "application/json",
+                'Authorization': 'Bearer $tokenGlobal',
+              });
+              //Se actualiza el estado de la inversión en Emi Web
+              final responsePutUpdateEstadoInversion = await put(actualizarEstadoInversionUri, 
+              headers: headers,
+              body: jsonEncode({
+                "idUsuarioRegistra": inversion.emprendimiento.target!.usuario.target!.idEmiWeb,
+                "usuarioRegistra": "${inversion.emprendimiento
+                .target!.usuario.target!.nombre} ${inversion.emprendimiento
+                .target!.usuario.target!.apellidoP} ${inversion.emprendimiento
+                .target!.usuario.target!.apellidoM}",
+                "idInversiones": inversion.idEmiWeb,
+                "idCatEstadoInversion": newEstadoInversion.idEmiWeb,
+              }));
+              print("Id Inversión: ${inversion.idEmiWeb}");
+              switch (responsePutUpdateEstadoInversion.statusCode) {
+                case 200:
+                print("Caso 200 en Emi Web Update Estado Inversión");
+                  //Se actualiza el estado de la Inversión en Pocketbase
+                  final record = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
+                      "id_estado_inversion_fk": newEstadoInversion.idDBR,
+                      "monto_pagar": double.parse(((montoPagarYSaldoInicial * inversion.porcentajePago)/100).toStringAsFixed(2)),
+                      "saldo": double.parse(((montoPagarYSaldoInicial * inversion.porcentajePago)/100).toStringAsFixed(2)),
+                      "total_inversion": montoPagarYSaldoInicial,
+                    }); 
+                    if (record.id.isNotEmpty) {
                       return true;
                     } else {
                       return false;
                     }
-                  } else {
-                    return false;
-                  }
-                } else {
+                default: //No se realizo con éxito el put
+                  print("Error en actualizar estado inversión Emi Web");
                   return false;
-                }
-            default: //No se realizo con éxito el put
-              print("Error en actualizar estado inversión Emi Web");
+              }  
+            } else {
+              print("Fallo en el Token");
               return false;
-          }  
-
+            }
+          } else {
+            return false;
+          }
         } else {
-          print("No se encontro ese estaod de autorizada");
           return false;
-        }
+        }   
       } else {
-        print("Fallo en el Token");
         return false;
       }
     } catch (e) {

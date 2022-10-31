@@ -427,7 +427,6 @@ with TickerProviderStateMixin {
                                               ));
                                             }
                                             else {
-                                              print("Holaaaaaaaa 2");
                                               if (await syncProviderEmiWeb.validateCotizacionEmiWeb(widget.inversion)) {
                                                 // ignore: use_build_context_synchronously
                                                 await Navigator.push(
