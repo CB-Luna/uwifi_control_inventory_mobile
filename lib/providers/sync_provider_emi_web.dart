@@ -19,9 +19,11 @@ import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:http/http.dart';
+import 'package:uuid/uuid.dart';
 
 class SyncProviderEmiWeb extends ChangeNotifier {
 
+  var uuid = Uuid();
   bool procesocargando = false;
   bool procesoterminado = false;
   bool procesoexitoso = false;
@@ -751,13 +753,15 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             final responsePostJornadaParse = postRegistroExitosoEmiWebFromMap(
             const Utf8Decoder().convert(responsePostJornada.bodyBytes));
             print("Se convierte a utf8 exitosamente");
-            jornada.idEmiWeb = responsePostJornadaParse.payload!.id.toString();
+            //Se concatena el id recuperado con uuid para que los ids no se repitan
+            final idEmiWebUUid = "${responsePostJornadaParse.payload!.id.toString()}?${uuid.v1()}";
+            jornada.idEmiWeb = idEmiWebUUid;
              print("Se recupera el idEmiWeb");
             dataBase.jornadasBox.put(jornada);
             print("Se hace put a la jornada");
             //Segundo creamos la Tarea
             //Se recupera el id Emi Web de la Tarea
-            tareaToSync.idEmiWeb = responsePostJornadaParse.payload!.id.toString();
+            tareaToSync.idEmiWeb = idEmiWebUUid;
             dataBase.tareasBox.put(tareaToSync);
             //Se elimina la instrucción de la bitacora
             print("Antes de remover la instrucción");
@@ -825,12 +829,14 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             //Se recupera el id Emi Web de la Jornada que será el mismo id para la Tarea
             final responsePostJornadaParse = postRegistroExitosoEmiWebFromMap(
             const Utf8Decoder().convert(responsePostJornada.bodyBytes));
-            jornada.idEmiWeb = responsePostJornadaParse.payload!.id.toString();
+            //Se concatena el id recuperado con uuid para que los ids no se repitan
+            final idEmiWebUUid = "${responsePostJornadaParse.payload!.id.toString()}?${uuid.v1()}";
+            jornada.idEmiWeb = idEmiWebUUid;
             dataBase.jornadasBox.put(jornada);
             print("Se hace put a la jornada");
             // Segundo creamos la Tarea
             // Se recupera el id Emi Web de la Tarea
-            tareaToSync.idEmiWeb = responsePostJornadaParse.payload!.id.toString();
+            tareaToSync.idEmiWeb = idEmiWebUUid;
             dataBase.tareasBox.put(tareaToSync);
             print("Se hace put a la tarea");
             // Tercero creamos y enviamos las imágenes de la jornada
@@ -848,7 +854,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 "nombreArchivo": jornada.tarea.target!.imagenes.toList()[i].nombre,
                 "archivo": jornada.tarea.target!.imagenes.toList()[i].base64,
                 "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
-                "idJornada2": jornada.idEmiWeb,
+                "idJornada2": jornada.idEmiWeb!.split("?")[0],
               }));
               final responsePostImagenJornadaParse = postRegistroImagenExitosoEmiWebFromMap(
                const Utf8Decoder().convert(responsePostImagenJornada.bodyBytes));
@@ -879,7 +885,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 "nombreArchivo": jornada.tarea.target!.imagenes.toList()[i].nombre,
                 "archivo": jornada.tarea.target!.imagenes.toList()[i].base64,
                 "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
-                "idJornada2": jornada.idEmiWeb,
+                "idJornada2": jornada.idEmiWeb!.split("?")[0],
               }));
               print("status Imagen: ${responsePostImagenJornada.statusCode}");
               print("body Imagen: ${responsePostImagenJornada.body}");
@@ -944,7 +950,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             //Se recupera el id Emi Web de la Jornada que será el mismo id para la Tarea
             final responsePostJornadaParse = postRegistroExitosoEmiWebFromMap(
             const Utf8Decoder().convert(responsePostJornada.bodyBytes));
-            jornada.idEmiWeb = responsePostJornadaParse.payload!.id.toString();
+            //Se concatena el id recuperado con uuid para que los ids no se repitan
+            final idEmiWebUUid = "${responsePostJornadaParse.payload!.id.toString()}?${uuid.v1()}";
+            jornada.idEmiWeb = idEmiWebUUid;
             dataBase.jornadasBox.put(jornada);
             //Segundo actualizamos el tipo de proyecto del emprendimiento
             final updateTipoProyectoEmprendimientoUri =
@@ -971,7 +979,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               case 200:
               //Tercero creamos la Tarea
               //Se recupera el id Emi Web de la Tarea
-              tareaToSync.idEmiWeb = responsePostJornadaParse.payload!.id.toString();
+              tareaToSync.idEmiWeb = idEmiWebUUid;
               dataBase.tareasBox.put(tareaToSync);
               // Cuarto creamos y enviamos las imágenes de la jornada
               for (var i = 0; i < jornada.tarea.target!.imagenes.toList().length; i++) {
@@ -988,7 +996,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   "nombreArchivo": jornada.tarea.target!.imagenes.toList()[i].nombre,
                   "archivo": jornada.tarea.target!.imagenes.toList()[i].base64,
                   "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
-                  "idJornada3": jornada.idEmiWeb,
+                  "idJornada3": jornada.idEmiWeb!.split("?")[0],
                 }));
                 final responsePostImagenJornadaParse = postRegistroImagenExitosoEmiWebFromMap(
                 const Utf8Decoder().convert(responsePostImagenJornada.bodyBytes));
@@ -1023,7 +1031,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 "nombreArchivo": jornada.tarea.target!.imagenes.toList()[i].nombre,
                 "archivo": jornada.tarea.target!.imagenes.toList()[i].base64,
                 "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
-                "idJornada3": jornada.idEmiWeb,
+                "idJornada3": jornada.idEmiWeb!.split("?")[0],
               }));
               print("status Imagen: ${responsePostImagenJornada.statusCode}");
               print("body Imagen: ${responsePostImagenJornada.body}");
@@ -1088,12 +1096,14 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             //Se recupera el id Emi Web de la Jornada que será el mismo id para la Tarea
             final responsePostJornadaParse = postRegistroExitosoEmiWebFromMap(
             const Utf8Decoder().convert(responsePostJornada.bodyBytes));
-            jornada.idEmiWeb = responsePostJornadaParse.payload!.id.toString();
+            //Se concatena el id recuperado con uuid para que los ids no se repitan
+            final idEmiWebUUid = "${responsePostJornadaParse.payload!.id.toString()}?${uuid.v1()}";
+            jornada.idEmiWeb = idEmiWebUUid;
             dataBase.jornadasBox.put(jornada);
             print("Se hace put a la jornada");
             // Segundo creamos la Tarea
             // Se recupera el id Emi Web de la Tarea
-            tareaToSync.idEmiWeb = responsePostJornadaParse.payload!.id.toString();
+            tareaToSync.idEmiWeb = idEmiWebUUid;
             dataBase.tareasBox.put(tareaToSync);
             print("Se hace put a la tarea");
             // Tercero creamos y enviamos las imágenes de la jornada
@@ -1111,7 +1121,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 "nombreArchivo": jornada.tarea.target!.imagenes.toList()[i].nombre,
                 "archivo": jornada.tarea.target!.imagenes.toList()[i].base64,
                 "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
-                "idJornada4": jornada.idEmiWeb,
+                "idJornada4": jornada.idEmiWeb!.split("?")[0],
               }));
               final responsePostImagenJornadaParse = postRegistroImagenExitosoEmiWebFromMap(
                const Utf8Decoder().convert(responsePostImagenJornada.bodyBytes));
@@ -1142,7 +1152,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 "nombreArchivo": jornada.tarea.target!.imagenes.toList()[i].nombre,
                 "archivo": jornada.tarea.target!.imagenes.toList()[i].base64,
                 "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
-                "idJornada4": jornada.idEmiWeb,
+                "idJornada4": jornada.idEmiWeb!.split("?")[0],
               }));
               print("status Imagen: ${responsePostImagenJornada.statusCode}");
               print("body Imagen: ${responsePostImagenJornada.body}");
@@ -2039,7 +2049,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     try {
       // Primero creamos el API para realizar la actualización
       final actualizarJornada1Uri =
-        Uri.parse('$baseUrlEmiWebServices/jornadas?id=${jornada.idEmiWeb}&jornada=${jornada.numJornada}');
+        Uri.parse('$baseUrlEmiWebServices/jornadas?id=${jornada.idEmiWeb!.split("?")[0]}&jornada=${jornada.numJornada}');
       final headers = ({
         "Content-Type": "application/json",
         'Authorization': 'Bearer $tokenGlobal',
@@ -2083,13 +2093,13 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     print("Estoy en El syncUpdateJornada2() en Emi Web");
     try {
       // Primero creamos el API para realizar la actualización
-      final actualizarJornada1Uri =
-        Uri.parse('$baseUrlEmiWebServices/jornadas?id=${jornada.idEmiWeb}&jornada=${jornada.numJornada}');
+      final actualizarJornada2Uri =
+        Uri.parse('$baseUrlEmiWebServices/jornadas?id=${jornada.idEmiWeb!.split("?")[0]}&jornada=${jornada.numJornada}');
       final headers = ({
         "Content-Type": "application/json",
         'Authorization': 'Bearer $tokenGlobal',
       });
-      final responsePostUpdateJornada2 = await put(actualizarJornada1Uri, 
+      final responsePostUpdateJornada2 = await put(actualizarJornada2Uri, 
       headers: headers,
       body: jsonEncode({
         "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,

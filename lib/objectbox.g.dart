@@ -2742,7 +2742,7 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(62, 5967866020755512418),
-      lastIndexId: const IdUid(248, 3698332697706038826),
+      lastIndexId: const IdUid(249, 1504702329259649475),
       lastRelationId: const IdUid(73, 134544593655180451),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -2833,7 +2833,8 @@ ModelDefinition getObjectBoxModel() {
         5311167113567925142,
         7511884360991073275,
         4941615724051327288,
-        3757107251813869820
+        3757107251813869820,
+        1504702329259649475
       ],
       retiredPropertyUids: const [
         7079790605743243388,
