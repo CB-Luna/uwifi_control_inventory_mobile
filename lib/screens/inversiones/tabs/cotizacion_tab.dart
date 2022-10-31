@@ -427,24 +427,44 @@ with TickerProviderStateMixin {
                                               ));
                                             }
                                             else {
-                                              if (await syncProviderEmiWeb.validateCotizacionEmiWeb(widget.inversion)) {
-                                                // ignore: use_build_context_synchronously
-                                                await Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) => CotizacionesEmiWebScreen(
-                                                          emprendimiento: widget.emprendimiento, 
-                                                          inversion: widget.inversion,
-                                                          inversionesXProdCotizados: widget.inversionesXprodCotizados,
+                                              if (widget.inversionesXprodCotizados.idEmiWeb == null) {
+                                                if (await syncProviderEmiWeb.validateCotizacionFirstTimeEmiWeb(widget.inversion)) {
+                                                  // ignore: use_build_context_synchronously
+                                                  await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) => CotizacionesEmiWebScreen(
+                                                            emprendimiento: widget.emprendimiento, 
+                                                            inversion: widget.inversion,
+                                                      ),
                                                     ),
-                                                  ),
-                                                );
+                                                  );
+                                                } else {
+                                                  snackbarKey.currentState
+                                                    ?.showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      "Aún no hay datos de cotización de esta inversión."),
+                                                  ));
+                                                }
                                               } else {
-                                                snackbarKey.currentState
-                                                  ?.showSnackBar(const SnackBar(
-                                                content: Text(
-                                                    "Aún no hay datos de cotización de esta inversión."),
-                                                ));
+                                                if (await syncProviderEmiWeb.validateCotizacionNTimeEmiWeb(widget.inversion)) {
+                                                  // ignore: use_build_context_synchronously
+                                                  await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) => CotizacionesEmiWebScreen(
+                                                            emprendimiento: widget.emprendimiento, 
+                                                            inversion: widget.inversion,
+                                                      ),
+                                                    ),
+                                                  );
+                                                } else {
+                                                  snackbarKey.currentState
+                                                    ?.showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      "Aún no hay datos de cotización de esta inversión."),
+                                                  ));
+                                                }
                                               }
                                             }
                                             break;

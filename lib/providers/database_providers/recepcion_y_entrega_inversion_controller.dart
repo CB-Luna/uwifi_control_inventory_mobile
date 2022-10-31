@@ -68,7 +68,7 @@ class RecepcionYEntregaController extends ChangeNotifier {
     }
   }
 
-   void finishRecepcionInversion() {
+   void finishRecepcionInversion(InversionesXProdCotizados inversionXProdCotizados) {
     for (var i = 0; i < prodCotizadosTemp.length; i++) {
       final updateProdCotizado = dataBase.productosCotBox.get(prodCotizadosTemp[i].id);
        if (updateProdCotizado != null) {
@@ -85,10 +85,10 @@ class RecepcionYEntregaController extends ChangeNotifier {
       }
     }
 
-    final updateInversionXprodCotizado = dataBase.inversionesXprodCotizadosBox.get(inversionXProdCotizadosTemp!.id);
+    final updateInversionXprodCotizado = dataBase.inversionesXprodCotizadosBox.get(inversionXProdCotizados.id);
        if (updateInversionXprodCotizado != null) {
         final nuevaInstruccionInversionXprodCotizado = Bitacora(instrucciones: 'syncUpdateInversionXProdCotizado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-        updateInversionXprodCotizado.aceptado = inversionXProdCotizadosTemp!.aceptado;
+        updateInversionXprodCotizado.aceptado = inversionXProdCotizados.aceptado;
         final statusSyncInversionXProdCotizados = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateInversionXprodCotizado.statusSync.target!.id)).build().findUnique();
         if (statusSyncInversionXProdCotizados != null) {
           statusSyncInversionXProdCotizados.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del prod Cotizado X Inversion
@@ -102,7 +102,7 @@ class RecepcionYEntregaController extends ChangeNotifier {
     //Se actualiza el estado de la inversión
     final nuevaInstruccionEstadoInversion = Bitacora(instrucciones: 'syncUpdateEstadoInversion', instruccionAdicional: "Entregada Al Promotor",usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
     final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Entregada Al Promotor")).build().findFirst();
-    final updateInversion = dataBase.inversionesBox.get(inversionXProdCotizadosTemp!.inversion.target!.id);
+    final updateInversion = dataBase.inversionesBox.get(inversionXProdCotizados.inversion.target!.id);
     if (newEstadoInversion != null && updateInversion != null) {
       final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateInversion.statusSync.target!.id)).build().findUnique();
       if (statusSync != null) {

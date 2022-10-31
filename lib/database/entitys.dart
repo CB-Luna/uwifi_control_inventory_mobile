@@ -208,6 +208,7 @@ class InversionesXProdCotizados {
   bool aceptado;
   @Unique()
   String? idDBR;
+  String? idEmiWeb;
   final statusSync = ToOne<StatusSync>();
   final inversion = ToOne<Inversiones>();
   final prodCotizados = ToMany<ProdCotizados>();
@@ -218,6 +219,7 @@ class InversionesXProdCotizados {
     this.aceptado = false,
     DateTime? fechaRegistro,
     this.idDBR,
+    this.idEmiWeb,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -476,7 +478,6 @@ class Tareas {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
-  @Unique()
   String? idEmiWeb;
   final jornada = ToOne<Jornadas>();
   final consultoria = ToOne<Consultorias>();
