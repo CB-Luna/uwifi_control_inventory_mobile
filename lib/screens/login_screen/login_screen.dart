@@ -325,6 +325,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                           final idDBR = await AuthService.userEMIByID(
                                               loginResponsePocketbase.user.id);
+                                          
+                                          final imageUser = await AuthService.imagenUsuarioByID(
+                                              emiUser?.items?[0].idImagenFk ?? "empty");
 
                                           print("Hola miro el IdDBR $idDBR");
                                           if (emiUser == null) {
@@ -338,10 +341,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                             usuarioProvider.updatePasswordLocal(
                                                 passwordEncrypted);
                                           } else {
-                                            // print('Usuario no existente');
-                                            // if (dataBase.catalogoProyectoBox.isEmpty()) {
-                                            //   await catalogoPocketbaseProvider.getRoles();
-                                            // }
                                             usuarioProvider.add(
                                               emiUser.items![0].nombreUsuario,
                                               emiUser.items![0].apellidoP,
@@ -350,9 +349,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                               emiUser.items![0].celular,
                                               loginResponsePocketbase.user.email,
                                               passwordEncrypted,
-                                              emiUser.items![0].avatar ?? "",
+                                              imageUser,
                                               idDBR,
-                                              emiUser.items![0].idRolesFk ?? [],
+                                              emiUser.items?[0].idRolesFk ?? [],
                                               emiUser.items![0].idEmiWeb
                                             );
                                             usuarioProvider
@@ -423,6 +422,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                 final idDBR = await AuthService.userEMIByID(
                                     loginResponsePocketbase.user.id);
+                                
+                                final imageUser = await AuthService.imagenUsuarioByID(
+                                     emiUser?.items?[0].idImagenFk ?? "empty");
 
                                 print("Hola miro el IdDBR $idDBR");
                                 if (emiUser == null) {
@@ -460,9 +462,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                     emiUser.items![0].celular,
                                     loginResponsePocketbase.user.email,
                                     passwordEncrypted,
-                                    emiUser.items![0].avatar ?? "",
+                                    imageUser,
                                     idDBR,
-                                    emiUser.items![0].idRolesFk ?? [],
+                                    emiUser.items?[0].idRolesFk ?? [],
                                     emiUser.items![0].idEmiWeb
                                   );
                                   usuarioProvider

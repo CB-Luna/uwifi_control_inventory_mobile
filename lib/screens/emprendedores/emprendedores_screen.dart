@@ -153,7 +153,7 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                   child: Hero(
                                     tag: currentUserPhoto,
                                     transitionOnUserGestures: true,
-                                    child: currentUser.image.target?.imagenes ==
+                                    child: currentUser.imagen.target?.imagenes ==
                                             ""
                                         ? Container(
                                             width: 40,
@@ -191,7 +191,7 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                               image: DecorationImage(
                                                   fit: BoxFit.cover,
                                                   image: FileImage(File(
-                                                      currentUser.image.target!
+                                                      currentUser.imagen.target!
                                                           .imagenes))),
                                               shape: BoxShape.circle,
                                             ),

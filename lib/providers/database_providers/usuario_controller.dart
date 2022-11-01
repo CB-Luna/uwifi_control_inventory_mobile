@@ -1,7 +1,12 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/modelsPocketbase/get_imagen_usuario.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:bizpro_app/database/entitys.dart';
 
 class UsuarioController extends ChangeNotifier {
@@ -44,7 +49,7 @@ class UsuarioController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void add(
+  Future<void> add(
       String nombre,
       String apellidoP,
       String? apellidoM,
@@ -52,11 +57,12 @@ class UsuarioController extends ChangeNotifier {
       String? celular,
       String correo,
       String password,
-      String avatar,
+      GetImagenUsuario? imagen,
       String? idDBR,
       List<String> rolesIdDBR,
       String idEmiWeb,
-      ) {
+      ) async {
+    late Imagenes nuevaImagenUsuario;
     final nuevoUsuario = Usuarios(
         nombre: nombre,
         apellidoP: apellidoP,
@@ -65,12 +71,30 @@ class UsuarioController extends ChangeNotifier {
         celular: celular,
         correo: correo,
         password: password,
-        imagen: avatar,
         idDBR: idDBR, 
         idEmiWeb: idEmiWeb,
         );
     final nuevoSyncUsuario = StatusSync(); //Se crea el objeto estatus por dedault //M__ para Usuario
-    final nuevaImagenUsuario = Imagenes(imagenes: avatar); //Se crea el objeto imagenes para el Usuario
+    if (imagen != null) {
+      final uInt8ListImagen = base64Decode(imagen.base64);
+      final tempDir = await getTemporaryDirectory();
+      File file = await File('${tempDir.path}/${imagen.nombre}').create();
+      file.writeAsBytesSync(uInt8ListImagen);
+      nuevaImagenUsuario = Imagenes(
+      imagenes: file.path,
+      nombre: imagen.nombre,
+      path: file.path,
+      base64: imagen.base64,
+      idEmiWeb: imagen.idEmiWeb,
+      );   
+      print("Se guarda exitosamente la imagen de perfil");
+    } else{
+      print("No hay imagen de perfil");
+      nuevaImagenUsuario = Imagenes(
+      imagenes: "",
+      );
+    }
+    //Se crea el objeto imagenes para el Usuario
     //Se agregan los roles
     for (var i = 0; i < rolesIdDBR.length; i++) {
       final nuevoRol = dataBase.rolesBox.query(Roles_.idDBR.equals(rolesIdDBR[i])).build().findUnique(); //Se recupera el rol del Usuario
@@ -83,7 +107,7 @@ class UsuarioController extends ChangeNotifier {
     if (rolActual != null) {
       nuevoUsuario.rol.target = rolActual;
       nuevoUsuario.statusSync.target = nuevoSyncUsuario;
-      nuevoUsuario.image.target = nuevaImagenUsuario;
+      nuevoUsuario.imagen.target = nuevaImagenUsuario;
 
       dataBase.usuariosBox.put(nuevoUsuario);
       usuarios.add(nuevoUsuario);
@@ -104,7 +128,7 @@ void update(int id, int newIdRol, String newfotoPerfil, String newNombre, String
       if (updateRol != null) {
         updateUsuario.rol.target = updateRol; //Se actualiza el rol del Usuario
       }
-      final updateImagenUsuario = dataBase.imagenesBox.query(Imagenes_.id.equals(updateUsuario.image.target?.id ?? -1)).build().findUnique();
+      final updateImagenUsuario = dataBase.imagenesBox.query(Imagenes_.id.equals(updateUsuario.imagen.target?.id ?? -1)).build().findUnique();
       if (updateImagenUsuario != null) {
         updateImagenUsuario.imagenes = newfotoPerfil; //Se actualiza la imagen del usuario
         dataBase.imagenesBox.put(updateImagenUsuario);
