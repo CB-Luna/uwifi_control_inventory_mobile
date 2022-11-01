@@ -13,6 +13,7 @@ class GetInversionXProdCotizados {
         required this.updated,
         required this.idInversionFk,
         required this.aceptado,
+        required this.idEmiWeb,
     });
 
     final String collectionId;
@@ -22,6 +23,7 @@ class GetInversionXProdCotizados {
     final DateTime? updated;
     final String idInversionFk;
     final bool aceptado;
+    final String idEmiWeb;
 
     factory GetInversionXProdCotizados.fromMap(Map<String, dynamic> json) => GetInversionXProdCotizados(
         collectionId: json["@collectionId"],
@@ -31,6 +33,7 @@ class GetInversionXProdCotizados {
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
         idInversionFk: json["id_inversion_fk"],
         aceptado: json["aceptado"],
+        idEmiWeb: json["id_emi_web"],
     );
 
     Map<String, dynamic> toMap() => {
@@ -41,5 +44,6 @@ class GetInversionXProdCotizados {
         "updated": updated == null ? null : updated!.toIso8601String(),
         "id_inversion_fk": idInversionFk,
         "aceptado": aceptado,
+        "id_emi_web": idEmiWeb,
     };
 }

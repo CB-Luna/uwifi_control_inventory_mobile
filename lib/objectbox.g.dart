@@ -489,8 +489,7 @@ final _entities = <ModelEntity>[
             id: const IdUid(22, 6170236630099654648),
             name: 'idEmiWeb',
             type: 9,
-            flags: 2080,
-            indexId: const IdUid(235, 3757107251813869820))
+            flags: 0)
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -2417,7 +2416,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(57, 2397636268740769237),
       name: 'InversionesXProdCotizados',
-      lastPropertyId: const IdUid(6, 1747257805174508181),
+      lastPropertyId: const IdUid(7, 6157324509682149666),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -2454,6 +2453,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(6, 1747257805174508181),
             name: 'aceptado',
             type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 6157324509682149666),
+            name: 'idEmiWeb',
+            type: 9,
             flags: 0)
       ],
       relations: <ModelRelation>[
@@ -2738,7 +2742,7 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(62, 5967866020755512418),
-      lastIndexId: const IdUid(248, 3698332697706038826),
+      lastIndexId: const IdUid(249, 1504702329259649475),
       lastRelationId: const IdUid(73, 134544593655180451),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -2828,7 +2832,9 @@ ModelDefinition getObjectBoxModel() {
         4184900663065585925,
         5311167113567925142,
         7511884360991073275,
-        4941615724051327288
+        4941615724051327288,
+        3757107251813869820,
+        1504702329259649475
       ],
       retiredPropertyUids: const [
         7079790605743243388,
@@ -5724,13 +5730,17 @@ ModelDefinition getObjectBoxModel() {
         objectToFB: (InversionesXProdCotizados object, fb.Builder fbb) {
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(7);
+          final idEmiWebOffset = object.idEmiWeb == null
+              ? null
+              : fbb.writeString(object.idEmiWeb!);
+          fbb.startTable(8);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addOffset(2, idDBROffset);
           fbb.addInt64(3, object.statusSync.targetId);
           fbb.addInt64(4, object.inversion.targetId);
           fbb.addBool(5, object.aceptado);
+          fbb.addOffset(6, idEmiWebOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -5745,7 +5755,9 @@ ModelDefinition getObjectBoxModel() {
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 8));
+                  .vTableGetNullable(buffer, rootOffset, 8),
+              idEmiWeb: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 16));
           object.statusSync.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
           object.statusSync.attach(store);
@@ -7586,6 +7598,10 @@ class InversionesXProdCotizados_ {
   /// see [InversionesXProdCotizados.aceptado]
   static final aceptado = QueryBooleanProperty<InversionesXProdCotizados>(
       _entities[33].properties[5]);
+
+  /// see [InversionesXProdCotizados.idEmiWeb]
+  static final idEmiWeb = QueryStringProperty<InversionesXProdCotizados>(
+      _entities[33].properties[6]);
 
   /// see [InversionesXProdCotizados.prodCotizados]
   static final prodCotizados =

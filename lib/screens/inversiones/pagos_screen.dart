@@ -586,7 +586,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                         if (recepcionYentregaProvider
                                                           .inversionXProdCotizadosTemp!
                                                           .aceptado) {
-                                                          recepcionYentregaProvider.finishRecepcionInversion();
+                                                          recepcionYentregaProvider.finishRecepcionInversion(actualInversion!.inversionXprodCotizados.last);
                                                           await Navigator.push(
                                                             context,
                                                             MaterialPageRoute(

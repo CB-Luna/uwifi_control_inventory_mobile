@@ -1695,7 +1695,6 @@ Future<bool> getProductosProv() async {
               } else {
                 //Se actualiza el producto proveedor en la colección de Pocketbase
                 final recordProductoProveedorParse = getProductosProvFromMap(recordProductoProveedor.first.toString());
-                print("Id Unidad Medida: ${recordProductoProveedorParse.idUndMedidaFk}");
                 //Verificamos que los campos de este registro sean diferentes para actualizarlo
                 if (recordProductoProveedorParse.nombreProdProv != responseProductoProveedor.payload!.producto ||
                     recordProductoProveedorParse.descripcionProdProv != responseProductoProveedor.payload!.descripcion||

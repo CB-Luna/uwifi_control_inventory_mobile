@@ -12,12 +12,10 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 class CotizacionesEmiWebScreen extends StatefulWidget {
   final Emprendimientos emprendimiento;
   final Inversiones inversion;
-  final InversionesXProdCotizados inversionesXProdCotizados;
   const CotizacionesEmiWebScreen({
     Key? key, 
     required this.emprendimiento, 
     required this.inversion, 
-    required this.inversionesXProdCotizados
     }) : super(key: key);
 
   @override
@@ -44,8 +42,7 @@ class _CotizacionesEmiWebScreenState extends State<CotizacionesEmiWebScreen> {
                 builder: (context) =>
                     CotizacionesPocketbaseScreen(
                       emprendimiento: widget.emprendimiento, 
-                      inversion: widget.inversion, 
-                      inversionesXProdCotizados: widget.inversionesXProdCotizados,
+                      inversion: widget.inversion,
                     ),
               ),
             );

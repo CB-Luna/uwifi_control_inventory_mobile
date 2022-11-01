@@ -19,9 +19,11 @@ import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:http/http.dart';
+import 'package:uuid/uuid.dart';
 
 class SyncProviderEmiWeb extends ChangeNotifier {
 
+  var uuid = Uuid();
   bool procesocargando = false;
   bool procesoterminado = false;
   bool procesoexitoso = false;
@@ -398,6 +400,26 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               i = instruccionesBitacora.length;
               break;
             }
+          case "syncUpdateInversion":
+            print("Entro al caso de syncUpdateInversion Emi Web");
+            final inversionToSync = getFirstInversion(dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
+            if(inversionToSync != null){
+              var result = await syncUpdateInversion(inversionToSync, instruccionesBitacora[i]);
+              if (result) {
+                banderasExistoSync.add(result);     
+                continue;
+              } else {
+                //Salimos del bucle
+                banderasExistoSync.add(false);
+                i = instruccionesBitacora.length;
+                break;
+              }         
+            } else {
+              //Salimos del bucle
+              banderasExistoSync.add(false);
+              i = instruccionesBitacora.length;
+              break;
+            }
           default:
             continue;
         }
@@ -414,7 +436,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         procesoterminado = true;
         procesoexitoso = true;
         banderasExistoSync.clear();
-        dataBase.bitacoraBox.removeAll(); //TOD0: Quitar instrucción cuando se hayan colocado todos los casos de instrucciones.
+        // dataBase.bitacoraBox.removeAll(); //TOD0: Quitar instrucción cuando se hayan colocado todos los casos de instrucciones.
         notifyListeners();
         return exitoso;
       } else {
@@ -423,6 +445,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         procesoterminado = true;
         procesoexitoso = false;
         banderasExistoSync.clear();
+        // dataBase.bitacoraBox.removeAll();
         notifyListeners();
         return exitoso;
       }
@@ -432,6 +455,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       procesoterminado = true;
       procesoexitoso = false;
       banderasExistoSync.clear();
+      // dataBase.bitacoraBox.removeAll();
       notifyListeners();
       return false;
     }
@@ -729,13 +753,15 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             final responsePostJornadaParse = postRegistroExitosoEmiWebFromMap(
             const Utf8Decoder().convert(responsePostJornada.bodyBytes));
             print("Se convierte a utf8 exitosamente");
-            jornada.idEmiWeb = responsePostJornadaParse.payload!.id.toString();
+            //Se concatena el id recuperado con uuid para que los ids no se repitan
+            final idEmiWebUUid = "${responsePostJornadaParse.payload!.id.toString()}?${uuid.v1()}";
+            jornada.idEmiWeb = idEmiWebUUid;
              print("Se recupera el idEmiWeb");
             dataBase.jornadasBox.put(jornada);
             print("Se hace put a la jornada");
             //Segundo creamos la Tarea
             //Se recupera el id Emi Web de la Tarea
-            tareaToSync.idEmiWeb = responsePostJornadaParse.payload!.id.toString();
+            tareaToSync.idEmiWeb = idEmiWebUUid;
             dataBase.tareasBox.put(tareaToSync);
             //Se elimina la instrucción de la bitacora
             print("Antes de remover la instrucción");
@@ -803,12 +829,14 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             //Se recupera el id Emi Web de la Jornada que será el mismo id para la Tarea
             final responsePostJornadaParse = postRegistroExitosoEmiWebFromMap(
             const Utf8Decoder().convert(responsePostJornada.bodyBytes));
-            jornada.idEmiWeb = responsePostJornadaParse.payload!.id.toString();
+            //Se concatena el id recuperado con uuid para que los ids no se repitan
+            final idEmiWebUUid = "${responsePostJornadaParse.payload!.id.toString()}?${uuid.v1()}";
+            jornada.idEmiWeb = idEmiWebUUid;
             dataBase.jornadasBox.put(jornada);
             print("Se hace put a la jornada");
             // Segundo creamos la Tarea
             // Se recupera el id Emi Web de la Tarea
-            tareaToSync.idEmiWeb = responsePostJornadaParse.payload!.id.toString();
+            tareaToSync.idEmiWeb = idEmiWebUUid;
             dataBase.tareasBox.put(tareaToSync);
             print("Se hace put a la tarea");
             // Tercero creamos y enviamos las imágenes de la jornada
@@ -826,7 +854,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 "nombreArchivo": jornada.tarea.target!.imagenes.toList()[i].nombre,
                 "archivo": jornada.tarea.target!.imagenes.toList()[i].base64,
                 "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
-                "idJornada2": jornada.idEmiWeb,
+                "idJornada2": jornada.idEmiWeb!.split("?")[0],
               }));
               final responsePostImagenJornadaParse = postRegistroImagenExitosoEmiWebFromMap(
                const Utf8Decoder().convert(responsePostImagenJornada.bodyBytes));
@@ -857,7 +885,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 "nombreArchivo": jornada.tarea.target!.imagenes.toList()[i].nombre,
                 "archivo": jornada.tarea.target!.imagenes.toList()[i].base64,
                 "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
-                "idJornada2": jornada.idEmiWeb,
+                "idJornada2": jornada.idEmiWeb!.split("?")[0],
               }));
               print("status Imagen: ${responsePostImagenJornada.statusCode}");
               print("body Imagen: ${responsePostImagenJornada.body}");
@@ -922,7 +950,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             //Se recupera el id Emi Web de la Jornada que será el mismo id para la Tarea
             final responsePostJornadaParse = postRegistroExitosoEmiWebFromMap(
             const Utf8Decoder().convert(responsePostJornada.bodyBytes));
-            jornada.idEmiWeb = responsePostJornadaParse.payload!.id.toString();
+            //Se concatena el id recuperado con uuid para que los ids no se repitan
+            final idEmiWebUUid = "${responsePostJornadaParse.payload!.id.toString()}?${uuid.v1()}";
+            jornada.idEmiWeb = idEmiWebUUid;
             dataBase.jornadasBox.put(jornada);
             //Segundo actualizamos el tipo de proyecto del emprendimiento
             final updateTipoProyectoEmprendimientoUri =
@@ -949,7 +979,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               case 200:
               //Tercero creamos la Tarea
               //Se recupera el id Emi Web de la Tarea
-              tareaToSync.idEmiWeb = responsePostJornadaParse.payload!.id.toString();
+              tareaToSync.idEmiWeb = idEmiWebUUid;
               dataBase.tareasBox.put(tareaToSync);
               // Cuarto creamos y enviamos las imágenes de la jornada
               for (var i = 0; i < jornada.tarea.target!.imagenes.toList().length; i++) {
@@ -966,7 +996,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   "nombreArchivo": jornada.tarea.target!.imagenes.toList()[i].nombre,
                   "archivo": jornada.tarea.target!.imagenes.toList()[i].base64,
                   "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
-                  "idJornada3": jornada.idEmiWeb,
+                  "idJornada3": jornada.idEmiWeb!.split("?")[0],
                 }));
                 final responsePostImagenJornadaParse = postRegistroImagenExitosoEmiWebFromMap(
                 const Utf8Decoder().convert(responsePostImagenJornada.bodyBytes));
@@ -1001,7 +1031,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 "nombreArchivo": jornada.tarea.target!.imagenes.toList()[i].nombre,
                 "archivo": jornada.tarea.target!.imagenes.toList()[i].base64,
                 "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
-                "idJornada3": jornada.idEmiWeb,
+                "idJornada3": jornada.idEmiWeb!.split("?")[0],
               }));
               print("status Imagen: ${responsePostImagenJornada.statusCode}");
               print("body Imagen: ${responsePostImagenJornada.body}");
@@ -1066,12 +1096,14 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             //Se recupera el id Emi Web de la Jornada que será el mismo id para la Tarea
             final responsePostJornadaParse = postRegistroExitosoEmiWebFromMap(
             const Utf8Decoder().convert(responsePostJornada.bodyBytes));
-            jornada.idEmiWeb = responsePostJornadaParse.payload!.id.toString();
+            //Se concatena el id recuperado con uuid para que los ids no se repitan
+            final idEmiWebUUid = "${responsePostJornadaParse.payload!.id.toString()}?${uuid.v1()}";
+            jornada.idEmiWeb = idEmiWebUUid;
             dataBase.jornadasBox.put(jornada);
             print("Se hace put a la jornada");
             // Segundo creamos la Tarea
             // Se recupera el id Emi Web de la Tarea
-            tareaToSync.idEmiWeb = responsePostJornadaParse.payload!.id.toString();
+            tareaToSync.idEmiWeb = idEmiWebUUid;
             dataBase.tareasBox.put(tareaToSync);
             print("Se hace put a la tarea");
             // Tercero creamos y enviamos las imágenes de la jornada
@@ -1089,7 +1121,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 "nombreArchivo": jornada.tarea.target!.imagenes.toList()[i].nombre,
                 "archivo": jornada.tarea.target!.imagenes.toList()[i].base64,
                 "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
-                "idJornada4": jornada.idEmiWeb,
+                "idJornada4": jornada.idEmiWeb!.split("?")[0],
               }));
               final responsePostImagenJornadaParse = postRegistroImagenExitosoEmiWebFromMap(
                const Utf8Decoder().convert(responsePostImagenJornada.bodyBytes));
@@ -1120,7 +1152,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 "nombreArchivo": jornada.tarea.target!.imagenes.toList()[i].nombre,
                 "archivo": jornada.tarea.target!.imagenes.toList()[i].base64,
                 "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
-                "idJornada4": jornada.idEmiWeb,
+                "idJornada4": jornada.idEmiWeb!.split("?")[0],
               }));
               print("status Imagen: ${responsePostImagenJornada.statusCode}");
               print("body Imagen: ${responsePostImagenJornada.body}");
@@ -1912,6 +1944,60 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     }
   }
 
+  Future<bool> syncUpdateInversion(Inversiones inversion, Bitacora bitacora) async {
+    print("Estoy en El syncUpdateInversion en Emi Web");
+    try {
+      final estadoActual = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Solicitada")).build().findUnique();
+      if (estadoActual != null) {
+        // Primero creamos el API para realizar la actualización
+          final actualizarEstasyncUpdateEstadoInversionUri =
+            Uri.parse('$baseUrlEmiWebServices/inversion/estadoInversion');
+          final headers = ({
+            "Content-Type": "application/json",
+            'Authorization': 'Bearer $tokenGlobal',
+          });
+          print("Fase Actual: ${estadoActual.estado}");
+          final responsePostUpdateEstasyncUpdateEstadoInversion = await put(actualizarEstasyncUpdateEstadoInversionUri, 
+          headers: headers,
+          body: jsonEncode({
+            "idUsuarioRegistra": inversion.emprendimiento.target!.usuario.target!.idEmiWeb,
+            "usuarioRegistra": "${inversion.emprendimiento.target!
+            .usuario.target!.nombre} ${inversion.emprendimiento.target!
+            .usuario.target!.apellidoP} ${inversion.emprendimiento.target!
+            .usuario.target!.apellidoM}",
+            "idInversiones": inversion.idEmiWeb,
+            "idCatEstadoInversion": estadoActual.idEmiWeb,
+          }));
+          print(responsePostUpdateEstasyncUpdateEstadoInversion.statusCode);
+          print(responsePostUpdateEstasyncUpdateEstadoInversion.body);
+          print("Respuesta Post Update Inversión");
+          switch (responsePostUpdateEstasyncUpdateEstadoInversion.statusCode) {
+            case 200:
+            print("Caso 200 en Emi Web Update Inversión");
+            //Se actualiza el estado de la Inversión en ObjectBox
+            final statusSyncInversion = dataBase.statusSyncBox.query(StatusSync_.id.equals(inversion.statusSync.target!.id)).build().findUnique();
+            if (statusSyncInversion != null) {
+              statusSyncInversion.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado de la inversion
+              dataBase.statusSyncBox.put(statusSyncInversion);
+              inversion.estadoInversion.target = estadoActual;
+              dataBase.inversionesBox.put(inversion);
+            }
+            //Se elimina la instrucción de la bitacora
+            dataBase.bitacoraBox.remove(bitacora.id);
+            return true;
+            default: //No se realizo con éxito el post
+              print("Error en actualizar inversion Emi Web");
+              return false;
+          }  
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('ERROR - function syncUpdateInversion(): $e');
+      return false;
+    }
+  }
+
   Future<bool> syncUpdateEstadoInversion(Inversiones inversion, Bitacora bitacora) async {
     print("Estoy en El syncUpdateEstadoInversion en Emi Web");
     try {
@@ -1963,7 +2049,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     try {
       // Primero creamos el API para realizar la actualización
       final actualizarJornada1Uri =
-        Uri.parse('$baseUrlEmiWebServices/jornadas?id=${jornada.idEmiWeb}&jornada=${jornada.numJornada}');
+        Uri.parse('$baseUrlEmiWebServices/jornadas?id=${jornada.idEmiWeb!.split("?")[0]}&jornada=${jornada.numJornada}');
       final headers = ({
         "Content-Type": "application/json",
         'Authorization': 'Bearer $tokenGlobal',
@@ -2007,13 +2093,13 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     print("Estoy en El syncUpdateJornada2() en Emi Web");
     try {
       // Primero creamos el API para realizar la actualización
-      final actualizarJornada1Uri =
-        Uri.parse('$baseUrlEmiWebServices/jornadas?id=${jornada.idEmiWeb}&jornada=${jornada.numJornada}');
+      final actualizarJornada2Uri =
+        Uri.parse('$baseUrlEmiWebServices/jornadas?id=${jornada.idEmiWeb!.split("?")[0]}&jornada=${jornada.numJornada}');
       final headers = ({
         "Content-Type": "application/json",
         'Authorization': 'Bearer $tokenGlobal',
       });
-      final responsePostUpdateJornada2 = await put(actualizarJornada1Uri, 
+      final responsePostUpdateJornada2 = await put(actualizarJornada2Uri, 
       headers: headers,
       body: jsonEncode({
         "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
@@ -2157,7 +2243,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 // VALIDAR QUE HAYA INFO EN EL BACKEND
 // False se espera hasta que haya cotización
 // True se recupera la cotización
-  Future<bool> validateCotizacionEmiWeb(Inversiones inversion) async {
+  Future<bool> validateCotizacionFirstTimeEmiWeb(Inversiones inversion) async {
     try {
       if (await getTokenOAuth()) {
         var url = Uri.parse("$baseUrlEmiWebServices/productosCotizados?idInversion=${inversion.idEmiWeb}");
@@ -2172,6 +2258,41 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         switch (response.statusCode) {
           case 200: //Caso éxitoso
             return true;
+          case 404: //Error no existen productos cotizados a esta inversión
+            return false;
+          default:
+            return false;
+        }  
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print("Error en validateCotizacionEmiWeb(): $e");
+      return false;
+    }
+  }
+
+  Future<bool> validateCotizacionNTimeEmiWeb(Inversiones inversion) async {
+    try {
+      if (await getTokenOAuth()) {
+        var url = Uri.parse("$baseUrlEmiWebServices/productosCotizados?idInversion=${inversion.idEmiWeb}");
+        final headers = ({
+            "Content-Type": "application/json",
+            'Authorization': 'Bearer $tokenGlobal',
+          });
+        var response = await get(
+          url,
+          headers: headers
+        );
+        switch (response.statusCode) {
+          case 200: //Caso éxitoso
+            final responseListProdCotizados = getProdCotizadosEmiWebFromMap(
+                  const Utf8Decoder().convert(response.bodyBytes));
+            if(responseListProdCotizados.payload![int.parse(inversion.inversionXprodCotizados.last.idEmiWeb!) +1] != []){
+              return true;
+            } else{
+              return false;
+            }
           case 404: //Error no existen productos cotizados a esta inversión
             return false;
           default:
@@ -2216,58 +2337,60 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               print("Response: ${response.body}");
               switch (response.statusCode) {
                 case 200: //Caso éxitoso
-                print("200 Con Caso éxitoso");
+                print("200 Con Caso éxitoso en get Productos Exitosos Emi Web");
                   final responseListProdCotizados = getProdCotizadosEmiWebFromMap(
                   const Utf8Decoder().convert(response.bodyBytes));
-                  //Se recupera el último Id de inversion_x_prod_cotizados
-                  final records = await client.records.
-                    getFullList('inversion_x_prod_cotizados', 
-                    batch: 200, 
-                    filter: "id_inversion_fk='${inversion.idDBR}'",
-                    sort: '-created'); 
-                  final List<GetInversionXProdCotizados> listInversionXProdCotizados = [];
-                  for (var element in records) {
-                    listInversionXProdCotizados.add(getInversionXProdCotizadosFromMap(element.toString()));
-                  }
-                  print("Tamaño Lista: ${records.length}");
-                  final GetInversionXProdCotizados lastInversionXProdCotizados = listInversionXProdCotizados[0];
-                  //Se recuperan los prod Cotizados a utilizar para ser posteados en Pocketbase
-                  for (var i = 0; i < responseListProdCotizados.payload!.first.first.productosCotizadosList!.length; i++) {
-                    //Verificamos que el nuevo prod Cotizado no exista en Pocketbase
-                    final recordProdCotizado = await client.records.getFullList(
-                      'productos_cotizados', 
-                      batch: 200, 
-                      filter: "id_emi_web='${responseListProdCotizados.payload!.first.first.productosCotizadosList![i].idProducto.toString()}'");
-                    if (recordProdCotizado.isEmpty) {
-                      final productoProveedor = dataBase.productosProvBox.query(ProductosProv_.nombre.equals(responseListProdCotizados.payload!.first.first.productosCotizadosList![i].producto)
-                      .and(ProductosProv_.marca.equals(responseListProdCotizados.payload!.first.first.productosCotizadosList![i].marca))
-                      .and(ProductosProv_.descripcion.equals(responseListProdCotizados.payload!.first.first.productosCotizadosList![i].descripcion))).build().findFirst();
-                      //Se crean los prod Cotizados
-                      if (productoProveedor != null) {
-                        await client.records.create('productos_cotizados', body: {
-                          "cantidad": responseListProdCotizados.payload!.first.first.productosCotizadosList![i].cantidad,
-                          "costo_total": responseListProdCotizados.payload!.first.first.productosCotizadosList![i].costoTotal,
-                          "id_producto_prov_fk": productoProveedor.idDBR,
-                          "id_inversion_x_prod_cotizados_fk": lastInversionXProdCotizados.id,
-                          "id_emi_web": responseListProdCotizados.payload!.first.first.productosCotizadosList![i].idProducto.toString(),
-                          "aceptado": false
-                        });
-                      } else{
+                  //Se crea la instancia de inversion x prod Cotizados en el backend
+                  print("SE CREA LA INSTANCIA DE INVERSION X PROD COTIZADOS EN BACKEND");
+                  final inversionXprodCotizados = inversion.inversionXprodCotizados.last;
+                  print("ID EMI WEB: ${responseListProdCotizados.payload![responseListProdCotizados.payload!.length - 1].first.idListaCotizacion.toString()}");
+                  // print("Yo supongo que es: ${responseListProdCotizados.payload!.first[responseListProdCotizados.payload!.length - 1].idListaCotizacion.toString()}");
+                  print("ID INVERSION FK: ${inversionXprodCotizados.inversion.target!.idDBR}");
+                  final recordInversionXProdCotizados = await client.records.create('inversion_x_prod_cotizados', body: {
+                    "id_inversion_fk": inversionXprodCotizados.inversion.target!.idDBR,
+                    "id_emi_web": responseListProdCotizados.payload![responseListProdCotizados.payload!.length -1].first.idListaCotizacion.toString(),
+                  });
+                  if (recordInversionXProdCotizados.id.isNotEmpty) {
+                    //Se recuperan los prod Cotizados a utilizar para ser posteados en Pocketbase
+                    for (var i = 0; i < responseListProdCotizados.payload![responseListProdCotizados.payload!.length -1].first.productosCotizadosList!.length; i++) {
+                      //Verificamos que el nuevo prod Cotizado no exista en Pocketbase
+                      final recordProdCotizado = await client.records.getFullList(
+                        'productos_cotizados', 
+                        batch: 200, 
+                        filter: "id_emi_web='${responseListProdCotizados.payload![responseListProdCotizados.payload!.length -1].first.productosCotizadosList![i].idProducto.toString()}'");
+                      if (recordProdCotizado.isEmpty) {
+                        final productoProveedor = dataBase.productosProvBox.query(ProductosProv_.nombre.equals(responseListProdCotizados.payload![responseListProdCotizados.payload!.length -1].first.productosCotizadosList![i].producto)
+                        .and(ProductosProv_.marca.equals(responseListProdCotizados.payload![responseListProdCotizados.payload!.length -1].first.productosCotizadosList![i].marca))
+                        .and(ProductosProv_.descripcion.equals(responseListProdCotizados.payload![responseListProdCotizados.payload!.length -1].first.productosCotizadosList![i].descripcion))).build().findFirst();
+                        //Se crean los prod Cotizados
+                        if (productoProveedor != null) {
+                          await client.records.create('productos_cotizados', body: {
+                            "cantidad": responseListProdCotizados.payload![responseListProdCotizados.payload!.length -1].first.productosCotizadosList![i].cantidad,
+                            "costo_total": responseListProdCotizados.payload![responseListProdCotizados.payload!.length -1].first.productosCotizadosList![i].costoTotal,
+                            "id_producto_prov_fk": productoProveedor.idDBR,
+                            "id_inversion_x_prod_cotizados_fk": recordInversionXProdCotizados.id,
+                            "id_emi_web": responseListProdCotizados.payload![responseListProdCotizados.payload!.length -1].first.productosCotizadosList![i].idProducto.toString(),
+                            "aceptado": false
+                          });
+                        } else{
+                          return false;
+                        }
+                      } else {
+                        //Ya existe el prod Cotizado en Pocketbase
+                        continue;
+                      }
+                    }
+                    //Se cambia el estado a En Cotización en la colección de inversiones
+                    final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En Cotización")).build().findUnique();
+                    if (newEstadoInversion != null) {
+                      final updateInversion = await client.records.update('inversiones', "${inversion.idDBR}", body: {
+                      "id_estado_inversion_fk": newEstadoInversion.idDBR,
+                      }); 
+                      if (updateInversion.id.isNotEmpty) {
+                        return true;
+                      } else {
                         return false;
                       }
-                    } else {
-                      //Ya existe el prod Cotizado en Pocketbase
-                      continue;
-                    }
-                  }
-                  //Se cambia el estado a En Cotización en la colección de inversiones
-                  final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En Cotización")).build().findUnique();
-                  if (newEstadoInversion != null) {
-                    final updateInversion = await client.records.update('inversiones', "${inversion.idDBR}", body: {
-                    "id_estado_inversion_fk": newEstadoInversion.idDBR,
-                    }); 
-                    if (updateInversion.id.isNotEmpty) {
-                      return true;
                     } else {
                       return false;
                     }
