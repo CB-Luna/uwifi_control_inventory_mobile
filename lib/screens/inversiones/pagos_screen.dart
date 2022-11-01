@@ -1467,9 +1467,9 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                         Padding(
                                                                           padding: const EdgeInsets.all(8.0),
                                                                           child: Text(
-                                                                            dateTimeFormat(
+                                                                            "${dateTimeFormat(
                                                                             'dd/MMM/yyyy',
-                                                                            pago.fechaMovimiento),
+                                                                            pago.fechaMovimiento)} \n ${currencyFormat.format(pago.montoAbonado.toStringAsFixed(2))}",
                                                                             style: AppTheme
                                                                                     .of(context)
                                                                                 .bodyText1
@@ -1488,28 +1488,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                                 ),
                                                                           ),
                                                                         ),
-                                                                        Padding(
-                                                                          padding: const EdgeInsets.all(8.0),
-                                                                          child: Text(
-                                                                          currencyFormat.format(pago.montoAbonado.toStringAsFixed(2)),
-                                                                          style: AppTheme
-                                                                                  .of(context)
-                                                                              .bodyText1
-                                                                              .override(
-                                                                                fontFamily: AppTheme.of(
-                                                                                        context)
-                                                                                    .bodyText1Family,
-                                                                                fontWeight:
-                                                                                    FontWeight
-                                                                                        .w600,
-                                                                                useGoogleFonts: GoogleFonts
-                                                                                        .asMap()
-                                                                                    .containsKey(
-                                                                                        AppTheme.of(context)
-                                                                                            .bodyText1Family),
-                                                                              ),
-                                                                      ),
-                                                                        ),
+                                                                        
                                                                       ],
                                                                     ),
                                                                   );
