@@ -24,6 +24,7 @@ abstract class ApiService {
         print("200");
         print("El res Body de Emi user: ${res.body}");
           final emiUser = emiUserFromMap(res.body);
+        print("Avanzamos");
           return emiUser;
         case 403:
         print("403");
@@ -46,7 +47,7 @@ abstract class ApiService {
       }
       return null;
     } catch (e) {
-      print("catch");
+      print("catch $e");
       snackbarKey.currentState?.showSnackBar(const SnackBar(
         content: Text("Error al realizar la petición"),
       ));

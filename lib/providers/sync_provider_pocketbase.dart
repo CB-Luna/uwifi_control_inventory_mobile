@@ -1815,7 +1815,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
         "apellido_p": usuario.apellidoP,
         "apellido_m": usuario.apellidoM,
         "telefono": usuario.telefono,
-        "avatar": usuario.image.target?.imagenes,
         "id_status_sync_fk": "HoI36PzYw1wtbO1"
       }); 
 

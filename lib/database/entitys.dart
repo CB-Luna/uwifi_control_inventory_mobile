@@ -510,7 +510,6 @@ class Usuarios {
   String? celular;
   String correo;
   String password;
-  String imagen;
   DateTime fechaRegistro;
   bool archivado;
   @Unique()
@@ -521,7 +520,7 @@ class Usuarios {
   final bitacora = ToMany<Bitacora>();
   final rol = ToOne<Roles>();
   final roles = ToMany<Roles>();
-  final image = ToOne<Imagenes>();
+  final imagen = ToOne<Imagenes>();
   final pagos = ToMany<Pagos>();
   @Backlink()
   final emprendimientos = ToMany<Emprendimientos>();
@@ -536,7 +535,6 @@ class Usuarios {
     this.celular,
     required this.correo,
     required this.password,
-    required this.imagen,
     DateTime? fechaRegistro,
     this.archivado = false,
     this.idDBR,

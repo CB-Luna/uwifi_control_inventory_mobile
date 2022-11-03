@@ -51,7 +51,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
     for (var element in widget.usuario.roles) {
       listRoles.add(element.rol);
     }
-    fotoPerfil = widget.usuario.image.target?.imagenes ?? "";
+    fotoPerfil = widget.usuario.imagen.target?.imagenes ?? "";
     nombreController = TextEditingController(text: widget.usuario.nombre);
     apellidoPController = TextEditingController(text: widget.usuario.apellidoP);
     apellidoMController = TextEditingController(text: widget.usuario.apellidoM);
@@ -575,7 +575,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                     telefonoController.text !=
                                         widget.usuario.telefono ||
                                     fotoPerfil !=
-                                        widget.usuario.image.target?.imagenes ||
+                                        widget.usuario.imagen.target?.imagenes ||
                                     rolUsuario !=
                                         widget.usuario.rol.target!.rol) {
                                   if (usuarioProvider.validateForm(formKey)) {

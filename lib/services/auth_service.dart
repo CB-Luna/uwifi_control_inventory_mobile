@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_imagen_usuario_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_token_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_usuario_emi_web.dart';
-import 'package:bizpro_app/modelsEmiWeb/get_usuario_roles_emi_web.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_usuario_completo_emi_web.dart';
 import 'package:bizpro_app/modelsPocketbase/emi_user_by_id.dart';
+import 'package:bizpro_app/modelsPocketbase/get_imagen_usuario.dart';
 import 'package:bizpro_app/modelsPocketbase/login_response.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
@@ -155,25 +157,25 @@ abstract class AuthService {
   static Future<bool> postUsuarioPocketbase(GetUsuarioEmiWeb responseUsuarioEmiWeb, String email, String password) async {
     try {
       print("Entramos a crear el Usuario en postUsuarioPocketbase");
-      var url = Uri.parse("$baseUrlEmiWebServices/usuarios/${responseUsuarioEmiWeb.payload!.idUsuario}/roles");
+      var url = Uri.parse("$baseUrlEmiWebServices/usuarios/registro/${responseUsuarioEmiWeb.payload!.idUsuario}");
       var tokenActual = await storage.read(key: "tokenEmiWeb");
       final headers = ({
           "Content-Type": "application/json",
           'Authorization': 'Bearer $tokenActual',
         });
-      var responseUsuarioRoles = await get(
+      var responseUsuarioCompleto = await get(
         url,
         headers: headers
       );
-      switch (responseUsuarioRoles.statusCode) {
+      switch (responseUsuarioCompleto.statusCode) {
         case 200: //Caso éxitoso
         print("Caso éxitoso 200 en postUsuarioPocketbase");
-          final responseUsuarioRolesEmiWeb = getUsuarioRolesEmiWebFromMap(
-            const Utf8Decoder().convert(responseUsuarioRoles.bodyBytes));
+          final responseUsuarioCompletoEmiWeb = getUsuarioCompletoEmiWebFromMap(
+            const Utf8Decoder().convert(responseUsuarioCompleto.bodyBytes));
           List<String> listRoles = [];
           //Se recuperan los id Emi Web de los roles del Usuario
-          for (var i = 0; i < responseUsuarioRolesEmiWeb.payload!.length; i++) {
-            final rol = dataBase.rolesBox.query(Roles_.idEmiWeb.equals(responseUsuarioRolesEmiWeb.payload![i].idCatRoles.toString())).build().findUnique();
+          for (var i = 0; i < responseUsuarioCompletoEmiWeb.payload!.tiposUsuario!.length; i++) {
+            final rol = dataBase.rolesBox.query(Roles_.idEmiWeb.equals(responseUsuarioCompletoEmiWeb.payload!.tiposUsuario![i].idCatRoles.toString())).build().findUnique();
             if (rol != null) {
               print("Se recupera el rol tipo: '${rol.rol}' del usuario a registrar con id: '${rol.idDBR}'");
               if (rol.rol != "Staff Logística" && rol.rol != "Staff Dirección") {
@@ -181,37 +183,116 @@ abstract class AuthService {
               }
             } 
           }
-          //Se crea Usuario nuevo en Pocketbase
-          final nuevoUsuario = await client.users.create(body: {
-              'email': email,
-              'password': password,
-              'passwordConfirm': password,
-          });
-          if(nuevoUsuario.id.isNotEmpty) {
-            print("Se crea el Usuario en Pocketbase");
-            //Se crea Usuario emi_users nuevo en colección de pocketbase
-            final newRecordEmiUser = await client.records.create('emi_users', body: {
-              "nombre_usuario": responseUsuarioEmiWeb.payload!.nombre,
-              "apellido_p": responseUsuarioEmiWeb.payload!.apellidoPaterno,
-              "apellido_m": responseUsuarioEmiWeb.payload!.apellidoMaterno,
-              "telefono": responseUsuarioEmiWeb.payload!.telefono,
-              "celular": "",
-              "id_roles_fk": listRoles,
-              "id_status_sync_fk": "xx5X7zjT7DhRA8a",
-              "archivado": false,
-              "user": nuevoUsuario.id,
-              "id_emi_web": responseUsuarioEmiWeb.payload!.idUsuario.toString(),
+          //Se recupera la imagen del Usuario
+          if(responseUsuarioCompletoEmiWeb.payload!.idDocumento == 0) {
+            //No hay imagen asociada al usuario
+            //Se crea Usuario nuevo en Pocketbase
+            final nuevoUsuario = await client.users.create(body: {
+                'email': email,
+                'password': password,
+                'passwordConfirm': password,
             });
-            if (newRecordEmiUser.id.isNotEmpty) {
-              print('Usuario Emi Web agregado éxitosamente en Pocketbase');
+            if(nuevoUsuario.id.isNotEmpty) {
+              print("Se crea el Usuario en Pocketbase");
+              //Se crea Usuario emi_users nuevo en colección de pocketbase
+              final newRecordEmiUser = await client.records.create('emi_users', body: {
+                "nombre_usuario": responseUsuarioCompletoEmiWeb.payload!.nombre,
+                "apellido_p": responseUsuarioCompletoEmiWeb.payload!.apellidoPaterno,
+                "apellido_m": responseUsuarioCompletoEmiWeb.payload!.apellidoMaterno,
+                "telefono": responseUsuarioCompletoEmiWeb.payload!.telefono != "Vacío" ? responseUsuarioCompletoEmiWeb.payload!.telefono : "",
+                "celular": responseUsuarioCompletoEmiWeb.payload!.celular != "Vacío" ? responseUsuarioCompletoEmiWeb.payload!.telefono : "",
+                "id_roles_fk": listRoles,
+                "id_status_sync_fk": "xx5X7zjT7DhRA8a",
+                "archivado": false,
+                "user": nuevoUsuario.id,
+                "id_emi_web": responseUsuarioCompletoEmiWeb.payload!.idUsuario.toString(),
+              });
+              if (newRecordEmiUser.id.isNotEmpty) {
+                print('Usuario Emi Web agregado éxitosamente en Pocketbase');
+              } else {
+                print('Usuario Emi Web no agregado éxitosamente en Pocketbase');
+                return false;
+              }
+              return true;
             } else {
-              print('Usuario Emi Web no agregado éxitosamente en Pocketbase');
+              print("No se crea el Usuario en Pocketbase");
               return false;
             }
-            return true;
           } else {
-            print("No se crea el Usuario en Pocketbase");
-            return false;
+            //Si hay imagen asociada al usuario
+            var url = Uri.parse("$baseUrlEmiWebServices/documentos?id=${responseUsuarioCompletoEmiWeb.payload!.idDocumento}");
+            var tokenActual = await storage.read(key: "tokenEmiWeb");
+            final headers = ({
+                "Content-Type": "application/json",
+                'Authorization': 'Bearer $tokenActual',
+              });
+            var responseImagenUsuario = await get(
+              url,
+              headers: headers
+            );
+            switch (responseImagenUsuario.statusCode) {
+              case 200: //Caso éxitoso
+                final responseImagenUsuarioEmiWeb = getImagenUsuarioEmiWebFromMap(
+                  const Utf8Decoder().convert(responseImagenUsuario.bodyBytes));
+                //Se crea imagen de perfil nueva en colección de pocketbase
+                final newRecordImagenUsuario = await client.records.create('imagenes', body: {
+                  "nombre": responseImagenUsuarioEmiWeb.payload!.nombreArchivo,
+                  "id_emi_web": responseImagenUsuarioEmiWeb.payload!.idUsuario.toString(),
+                  "base64": responseImagenUsuarioEmiWeb.payload!.archivo
+                });
+                if (newRecordImagenUsuario.id.isNotEmpty) {
+                  //Se crea Usuario nuevo en Pocketbase
+                  final nuevoUsuario = await client.users.create(body: {
+                      'email': email,
+                      'password': password,
+                      'passwordConfirm': password,
+                  });
+                  if(nuevoUsuario.id.isNotEmpty) {
+                    print("Se crea el Usuario en Pocketbase");
+                    //Se crea Usuario emi_users nuevo en colección de pocketbase
+                    final newRecordEmiUser = await client.records.create('emi_users', body: {
+                      "nombre_usuario": responseUsuarioCompletoEmiWeb.payload!.nombre,
+                      "apellido_p": responseUsuarioCompletoEmiWeb.payload!.apellidoPaterno,
+                      "apellido_m": responseUsuarioCompletoEmiWeb.payload!.apellidoMaterno,
+                      "telefono": responseUsuarioCompletoEmiWeb.payload!.telefono != "Vacío" ? responseUsuarioCompletoEmiWeb.payload!.telefono : "",
+                      "celular": responseUsuarioCompletoEmiWeb.payload!.celular != "Vacío" ? responseUsuarioCompletoEmiWeb.payload!.telefono : "",
+                      "id_roles_fk": listRoles,
+                      "id_status_sync_fk": "xx5X7zjT7DhRA8a",
+                      "archivado": false,
+                      "user": nuevoUsuario.id,
+                      "id_emi_web": responseUsuarioCompletoEmiWeb.payload!.idUsuario.toString(),
+                      "id_imagen_fk": newRecordImagenUsuario.id,
+                    });
+                    if (newRecordEmiUser.id.isNotEmpty) {
+                      print('Usuario Emi Web agregado éxitosamente en Pocketbase');
+                    } else {
+                      print('Usuario Emi Web no agregado éxitosamente en Pocketbase');
+                      return false;
+                    }
+                    return true;
+                  } else {
+                    print("No se crea el Usuario en Pocketbase");
+                    return false;
+                  }
+                } else {
+                  print('Imagen usuario Emi Web no agregado éxitosamente en Pocketbase');
+                  return false;
+                }
+              case 401: //Error de Token incorrecto
+                print("Caso 401 en postUsuarioPocketbase");
+                if(await getTokenOAuthEmiWeb(email, password) != null) {
+                  postUsuarioPocketbase(responseUsuarioEmiWeb, email, password);
+                  return true;
+                } else{
+                  return false;
+                }
+              case 404: //Error de ruta incorrecta
+                print("Caso 404 en postUsuarioPocketbase");
+                return false;
+              default:
+                print("Caso default en postUsuarioPocketbase");
+                return false;
+            }
           }
         case 401: //Error de Token incorrecto
           print("Caso 401 en postUsuarioPocketbase");
@@ -286,6 +367,28 @@ abstract class AuthService {
     }
     return null;
   
+  }
+
+  static Future<GetImagenUsuario?> imagenUsuarioByID(String? idImagenUsuario) async {
+    try {
+      //Obtenemos la imagen del Usuario por id
+      final recordsImagenUsuario = await client.records.
+      getFullList('imagenes', 
+      batch: 200, 
+      filter: "id='$idImagenUsuario'",
+      sort: "-created");
+      if (recordsImagenUsuario.isNotEmpty) {
+        print("Se retorna Imagen de imagenUsuarioById");
+        print(recordsImagenUsuario[0].toString());
+      return getImagenUsuarioFromMap(recordsImagenUsuario[0].toString());
+      } else{
+        print("No se retorna Imagen de imagenUsuarioById");
+        return null;
+      }
+    } catch (e) {
+      print('ERROR - function userEMIByID(): $e');
+      return null;
+    }
   }
 
   static Future<bool> requestPasswordReset(

@@ -108,6 +108,7 @@ class SideMenu extends StatelessWidget {
                           const EdgeInsetsDirectional.fromSTEB(5, 25, 5, 0),
                       child: InkWell(
                         onTap: () async {
+                          print("Veamos que tiene Imagen: ${currentUser.imagen.target!.nombre}");
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -118,7 +119,7 @@ class SideMenu extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            currentUser.image.target?.imagenes == ""
+                            currentUser.imagen.target?.imagenes == ""
                                 ? Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
@@ -163,7 +164,7 @@ class SideMenu extends StatelessWidget {
                                         image: DecorationImage(
                                             fit: BoxFit.cover,
                                             image: FileImage(File(currentUser
-                                                .image.target!.imagenes))),
+                                                .imagen.target!.imagenes))),
                                         shape: BoxShape.circle,
                                       ),
                                     ),

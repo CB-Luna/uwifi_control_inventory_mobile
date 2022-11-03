@@ -2186,8 +2186,8 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       headers: headers,
       body: jsonEncode({
         "idCatTipoDocumento": "1", //Foto perfil Usuario
-        "nombreArchivo": usuario.image.target!.nombre,
-        "archivo": usuario.image.target!.base64,
+        "nombreArchivo": usuario.imagen.target!.nombre,
+        "archivo": usuario.imagen.target!.base64,
         "idUsuario": usuario.idEmiWeb,
       }));
 
