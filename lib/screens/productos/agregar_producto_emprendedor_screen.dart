@@ -301,6 +301,7 @@ class _AgregarProductoEmprendedorScreenState
                                 padding: const EdgeInsetsDirectional
                                     .fromSTEB(5, 0, 5, 10),
                                 child: TextFormField(
+                                  maxLength: 50,
                                   textCapitalization:
                                       TextCapitalization.sentences,
                                   autovalidateMode: AutovalidateMode
@@ -373,6 +374,7 @@ class _AgregarProductoEmprendedorScreenState
                                 padding: const EdgeInsetsDirectional
                                     .fromSTEB(5, 0, 5, 10),
                                 child: TextFormField(
+                                  maxLength: 100,
                                   textCapitalization:
                                       TextCapitalization.sentences,
                                   autovalidateMode: AutovalidateMode
@@ -506,6 +508,7 @@ class _AgregarProductoEmprendedorScreenState
                                 padding: const EdgeInsetsDirectional
                                     .fromSTEB(5, 0, 5, 10),
                                 child: TextFormField(
+                                  maxLength: 10,
                                   autovalidateMode: AutovalidateMode
                                       .onUserInteraction,
                                   onChanged: (value) {

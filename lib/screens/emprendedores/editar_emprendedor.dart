@@ -397,7 +397,7 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       5, 0, 5, 10),
                                   child: TextFormField(
-                                    maxLength: 50,
+                                    maxLength: 30,
                                     textCapitalization:
                                         TextCapitalization.words,
                                     autovalidateMode:

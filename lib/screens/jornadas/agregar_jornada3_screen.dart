@@ -1150,7 +1150,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                                 return AlertDialog(
                                                   title: const Text('Campos vacíos'),
                                                   content: const Text(
-                                                      "Para continuar, debes llenar los campos 'Proyecto' y 'Tipo de Proyecto'"),
+                                                      "Para agregar registros, es necesario que selecciones Tipo de Proyecto y un Proyecto"),
                                                   actions: [
                                                     TextButton(
                                                       onPressed: () =>
