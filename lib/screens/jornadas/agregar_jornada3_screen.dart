@@ -399,6 +399,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     5, 0, 5, 10),
                                 child: TextFormField(
+                                  maxLength: 500,
                                   controller: tareaController,
                                   textCapitalization:
                                       TextCapitalization.sentences,
@@ -700,7 +701,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                               }, validator: (val) {
                                 if (jornadaProvider.imagenes.isEmpty ||
                                     jornadaProvider.imagenes == []) {
-                                  return 'Para continuar, cargue el circulo de la empresa';
+                                  return 'Para continuar, cargue el Analisis Financiero';
                                 }
                                 return null;
                               }),
@@ -787,6 +788,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     5, 0, 5, 10),
                                 child: TextFormField(
+                                  maxLength: 500,
                                   controller: comentariosController,
                                   textCapitalization:
                                       TextCapitalization.sentences,
@@ -973,6 +975,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     5, 0, 5, 10),
                                 child: TextFormField(
+                                  maxLength: 500,
                                   controller: descripcionController,
                                   textCapitalization:
                                       TextCapitalization.sentences,

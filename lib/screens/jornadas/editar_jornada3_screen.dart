@@ -411,6 +411,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     5, 0, 5, 10),
                                 child: TextFormField(
+                                  maxLength: 500,
                                   controller: tareaController,
                                   textCapitalization:
                                       TextCapitalization.sentences,
@@ -786,7 +787,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                             }
                                           });
                                         },
-                                        text: 'Círculo Empresa',
+                                        text: 'Analisis Financiero',
                                         icon: const Icon(
                                           Icons.add_a_photo,
                                           size: 15,
@@ -818,7 +819,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                               }, validator: (val) {
                                 if (newAnalisisFinanciero.isEmpty ||
                                     newAnalisisFinanciero == []) {
-                                  return 'Para continuar, cargue el circulo de la empresa';
+                                  return 'Para continuar, cargue el Analisis Financiero';
                                 }
                                 return null;
                               }),
@@ -904,6 +905,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     5, 0, 5, 10),
                                 child: TextFormField(
+                                  maxLength: 500,
                                   controller: comentariosController,
                                   textCapitalization:
                                       TextCapitalization.sentences,
@@ -1088,6 +1090,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     5, 0, 5, 10),
                                 child: TextFormField(
+                                  maxLength: 500,
                                   controller: descController,
                                   textCapitalization:
                                       TextCapitalization.sentences,

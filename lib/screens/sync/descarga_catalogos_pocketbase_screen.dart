@@ -75,7 +75,7 @@ class _DescargaCatalogosPocketbaseScreenState extends State<DescargaCatalogosPoc
                                       fontFamily:
                                           AppTheme.of(context).bodyText1Family,
                                       color: AppTheme.of(context).primaryText,
-                                      fontSize: 28,
+                                      fontSize: 26,
                                     ),
                               ),
                             ),

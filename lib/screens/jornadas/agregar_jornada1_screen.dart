@@ -258,6 +258,7 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     5, 0, 5, 10),
                                 child: TextFormField(
+                                  maxLength: 50,
                                   textCapitalization:
                                       TextCapitalization.sentences,
                                   autovalidateMode:
@@ -474,6 +475,7 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     5, 0, 5, 10),
                                 child: TextFormField(
+                                  maxLength: 500,
                                   textCapitalization:
                                       TextCapitalization.sentences,
                                   autovalidateMode:

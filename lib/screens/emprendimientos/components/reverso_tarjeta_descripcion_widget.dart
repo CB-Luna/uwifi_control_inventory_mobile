@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -24,14 +26,35 @@ DataRow _getDataRow(ProdSolicitado prodSolicitado) {
       DataCell(Text(
         prodSolicitado.producto,
       )),
-      DataCell(Text(prodSolicitado.proveedorSugerido ?? '')),
-      DataCell(Text(prodSolicitado.marcaSugerida ?? '')),
-      DataCell(Text(prodSolicitado.unidadMedida.target?.unidadMedida ?? "-")),
-      DataCell(Text(prodSolicitado.cantidad.toString())),
+      DataCell(Text(prodSolicitado.proveedorSugerido ?? '',
+          style: GoogleFonts.roboto(
+              fontSize: 7.0,
+              fontWeight: FontWeight.w400,
+              color: Colors.white))),
+      
+      DataCell(Text(prodSolicitado.marcaSugerida ?? '',
+          style: GoogleFonts.roboto(
+              fontSize: 7.0,
+              fontWeight: FontWeight.w400,
+              color: Colors.white))),
+      DataCell(Text(prodSolicitado.unidadMedida.target?.unidadMedida ?? "-",
+          style: GoogleFonts.roboto(
+              fontSize: 7.0,
+              fontWeight: FontWeight.w400,
+              color: Colors.white))),
+      DataCell(Text(prodSolicitado.cantidad.toString(),
+          style: GoogleFonts.roboto(
+              fontSize: 7.0,
+              fontWeight: FontWeight.w400,
+              color: Colors.white))),
       DataCell(Text(prodSolicitado.costoEstimado != null
           ? currencyFormat
               .format(prodSolicitado.costoEstimado!.toStringAsFixed(2))
-          : "-")),
+          : "-",
+          style: GoogleFonts.roboto(
+              fontSize: 7.0,
+              fontWeight: FontWeight.w400,
+              color: Colors.white))),
     ],
   );
 }
