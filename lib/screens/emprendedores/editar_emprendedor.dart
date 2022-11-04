@@ -3,6 +3,8 @@ import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:bizpro_app/database/entitys.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -290,54 +292,57 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      5, 10, 5, 10),
-                                  child: TextFormField(
-                                    readOnly: true,
-                                    enabled: false,
-                                    initialValue: widget.emprendedor
-                                        .emprendimiento.target!.nombre,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelText: 'Emprendimiento',
-                                      labelStyle:
-                                          AppTheme.of(context).title3.override(
-                                                fontFamily: 'Montserrat',
-                                                color: AppTheme.of(context)
-                                                    .secondaryText,
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
+                                FormBuilder(
+                                  child: Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        5, 10, 5, 10),
+                                    child: TextFormField(
+                                      readOnly: true,
+                                      enabled: false,
+                                      initialValue: widget.emprendedor
+                                          .emprendimiento.target!.nombre,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        labelText: 'Emprendimiento',
+                                        labelStyle:
+                                            AppTheme.of(context).title3.override(
+                                                  fontFamily: 'Montserrat',
+                                                  color: AppTheme.of(context)
+                                                      .secondaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Colors.transparent,
+                                            width: 1,
+                                          ),
+                                          borderRadius: BorderRadius.circular(8),
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Colors.transparent,
+                                            width: 1,
+                                          ),
+                                          borderRadius: BorderRadius.circular(8),
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        filled: true,
+                                        fillColor: const Color(0x49FFFFFF),
                                       ),
-                                      filled: true,
-                                      fillColor: const Color(0x49FFFFFF),
+                                      style: AppTheme.of(context).title3.override(
+                                            fontFamily: 'Poppins',
+                                            color: Colors.black,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.normal,
+                                          ),
                                     ),
-                                    style: AppTheme.of(context).title3.override(
-                                          fontFamily: 'Poppins',
-                                          color: Colors.black,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.normal,
-                                        ),
                                   ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       5, 0, 5, 10),
-                                  child: TextFormField(
+                                  child: FormBuilderTextField(
+                                    name: "nombre",
                                     maxLength: 50,
                                     textCapitalization:
                                         TextCapitalization.words,
@@ -385,18 +390,30 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                           fontSize: 15,
                                           fontWeight: FontWeight.normal,
                                         ),
-                                    validator: (value) {
-                                      return capitalizadoCharacters
-                                              .hasMatch(value ?? '')
+                                    validator: FormBuilderValidators.compose([
+                                        (value){
+                                          return (capitalizadoCharacters.hasMatch(value ?? ''))
                                           ? null
                                           : 'Para continuar, ingrese el nombre empezando por mayúscula.';
-                                    },
+                                        },
+                                        (value){
+                                          return (nombreCharacters.hasMatch(value ?? ''))
+                                          ? null
+                                          : 'Evite usar números o caracteres especiales como diéresis';
+                                        }
+                                    ]),
+                                      // return capitalizadoCharacters
+                                      //         .hasMatch(value ?? '')
+                                      //     ? null
+                                      //     : 'Para continuar, ingrese el nombre empezando por mayúscula.';
+                                
                                   ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       5, 0, 5, 10),
-                                  child: TextFormField(
+                                  child: FormBuilderTextField(
+                                    name: "apellido",
                                     maxLength: 30,
                                     textCapitalization:
                                         TextCapitalization.words,
@@ -444,12 +461,18 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                           fontSize: 15,
                                           fontWeight: FontWeight.normal,
                                         ),
-                                    validator: (value) {
-                                      return capitalizadoCharacters
-                                              .hasMatch(value ?? '')
+                                    validator: FormBuilderValidators.compose([
+                                        (value){
+                                          return (capitalizadoCharacters.hasMatch(value ?? ''))
                                           ? null
-                                          : 'Para continuar, ingrese los apellidos empezando por mayúscula.';
-                                    },
+                                          : 'Para continuar, ingrese el nombre empezando por mayúscula.';
+                                        },
+                                        (value){
+                                          return (nombreCharacters.hasMatch(value ?? ''))
+                                          ? null
+                                          : 'Evite usar números o caracteres especiales como diéresis';
+                                        }
+                                      ]),
                                   ),
                                 ),
                                 Padding(

@@ -3,6 +3,8 @@ import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -247,78 +249,93 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      5, 0, 5, 10),
-                                  child: TextFormField(
-                                    maxLength: 30,
-                                    textCapitalization:
-                                        TextCapitalization.words,
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    onChanged: (value) {
-                                      emprendedorProvider.nombre = value;
-                                    },
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelText: 'Nombre(s)*',
-                                      labelStyle:
-                                          AppTheme.of(context).title3.override(
-                                                fontFamily: 'Montserrat',
-                                                color: const Color(0xFF4672FF),
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                      hintText: 'Ingresa nombre...',
-                                      hintStyle:
-                                          AppTheme.of(context).title3.override(
-                                                fontFamily: 'Poppins',
-                                                color: const Color(0xFF4672FF),
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFF221573),
-                                          width: 1.5,
+                                FormBuilder(
+                                  child: Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        5, 0, 5, 10),
+                                    child: FormBuilderTextField(
+                                      name: "nombre",
+                                      maxLength: 30,
+                                      textCapitalization:
+                                          TextCapitalization.words,
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      onChanged: (value) {
+                                        emprendedorProvider.nombre = value!;
+                                      },
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        labelText: 'Nombre(s)*',
+                                        labelStyle:
+                                            AppTheme.of(context).title3.override(
+                                                  fontFamily: 'Montserrat',
+                                                  color: const Color(0xFF4672FF),
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                        hintText: 'Ingresa nombre...',
+                                        hintStyle:
+                                            AppTheme.of(context).title3.override(
+                                                  fontFamily: 'Poppins',
+                                                  color: const Color(0xFF4672FF),
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color(0xFF221573),
+                                            width: 1.5,
+                                          ),
+                                          borderRadius: BorderRadius.circular(8),
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color(0xFF221573),
+                                            width: 1.5,
+                                          ),
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        filled: true,
+                                        fillColor: const Color(0x49FFFFFF),
                                       ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFF221573),
-                                          width: 1.5,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      filled: true,
-                                      fillColor: const Color(0x49FFFFFF),
-                                    ),
-                                    style: AppTheme.of(context).title3.override(
-                                          fontFamily: 'Poppins',
-                                          color: const Color(0xFF221573),
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                    validator: (value) {
-                                     return (capitalizadoCharacters.hasMatch(value ?? ''))
+                                      style: AppTheme.of(context).title3.override(
+                                            fontFamily: 'Poppins',
+                                            color: const Color(0xFF221573),
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      validator: FormBuilderValidators.compose([
+                                        (value){
+                                          return (capitalizadoCharacters.hasMatch(value ?? ''))
                                           ? null
                                           : 'Para continuar, ingrese el nombre empezando por mayúscula.';
-                                    },
-                                    
+                                        },
+                                        (value){
+                                          return (nombreCharacters.hasMatch(value ?? ''))
+                                          ? null
+                                          : 'Evite usar números o caracteres especiales como diéresis';
+                                        }
+                                      ]),
+                                      //  return (capitalizadoCharacters.hasMatch(value ?? ''))
+                                      //       ? null
+                                      //       : 'Para continuar, ingrese el nombre empezando por mayúscula.';
+                                      
+                                      
+                                    ),
                                   ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       5, 0, 5, 10),
-                                  child: TextFormField(
+                                  child: FormBuilderTextField(
+                                    name: "apellido",
                                     maxLength: 30,
                                     textCapitalization:
                                         TextCapitalization.words,
                                     autovalidateMode:
                                         AutovalidateMode.onUserInteraction,
                                     onChanged: (value) {
-                                      emprendedorProvider.apellidos = value;
+                                      emprendedorProvider.apellidos = value!;
                                     },
                                     obscureText: false,
                                     decoration: InputDecoration(
@@ -361,12 +378,18 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                           fontSize: 15,
                                           fontWeight: FontWeight.normal,
                                         ),
-                                    validator: (value) {
-                                      return capitalizadoCharacters
-                                              .hasMatch(value ?? '')
+                                    validator: FormBuilderValidators.compose([
+                                        (value){
+                                          return (capitalizadoCharacters.hasMatch(value ?? ''))
                                           ? null
-                                          : 'Para continuar, ingrese los apellidos empezando por mayúscula.';
-                                    },
+                                          : 'Para continuar, ingrese el nombre empezando por mayúscula.';
+                                        },
+                                        (value){
+                                          return (nombreCharacters.hasMatch(value ?? ''))
+                                          ? null
+                                          : 'Evite usar numeros o caracteres especiales como dieresis';
+                                        }
+                                      ]),
                                   ),
                                 ),
                                 Padding(
@@ -495,11 +518,12 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       5, 0, 5, 10),
-                                  child: TextFormField(
+                                  child: FormBuilderTextField(
+                                    name:"elefono",
                                     autovalidateMode:
                                         AutovalidateMode.onUserInteraction,
                                     onChanged: (value) {
-                                      emprendedorProvider.telefono = value;
+                                      emprendedorProvider.telefono = value!;
                                     },
                                     obscureText: false,
                                     decoration: InputDecoration(
@@ -547,6 +571,11 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                       LengthLimitingTextInputFormatter(12),
                                       telefonoFormat
                                     ],
+                                    validator: (value){
+                                      return value!.length < 12
+                                          ? 'Por favor ingrese un número telefónico válido'
+                                          : null;
+                                    }
                                   ),
                                 ),
                                 FormField(

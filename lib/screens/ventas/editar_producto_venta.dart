@@ -428,11 +428,13 @@ class _EditarProductoVentaState
                                       ),
                                   maxLines: 1,
                                   validator: (val) {
-                                    if (val == null || val.isEmpty) {
-                                      return 'Para continuar, ingrese la cantidad vendida.';
-                                    }
-                                    return null;
-                                  },
+                                            double cantidad = double.tryParse(val!) ?? 0;
+                                            if (cantidad <= 0) {
+                                              return 'Para continuar, ingrese una cantidad.';
+                                            }
+
+                                            return null;
+                                          },
                                 ),
                               ),
                               Padding(
@@ -486,6 +488,17 @@ class _EditarProductoVentaState
                                         fontWeight: FontWeight.normal,
                                       ),
                                   maxLines: 1,
+                                  validator: (val) {
+                                            if(val!.length > 1){
+                                              double costo = double.parse(val.replaceAll('\$', ''));
+                                            if (costo == 0) {
+                                              return 'Para continuar, ingrese un costo sugerido.';
+                                            }
+
+                                            return null;
+                                            }
+                                            
+                                          },
                                 ),
                               ),
                               Padding(
@@ -562,11 +575,16 @@ class _EditarProductoVentaState
                                       ),
                                   maxLines: 1,
                                   validator: (val) {
-                                    if (val == null || val.isEmpty) {
-                                      return 'Para continuar, ingrese el costo de la venta.';
-                                    }
-                                    return null;
-                                  },
+                                            if(val!.length > 1){
+                                              double costo = double.parse(val.replaceAll('\$', ''));
+                                            if (costo == 0) {
+                                              return 'Para continuar, ingrese un costo sugerido.';
+                                            }
+
+                                            return null;
+                                            }
+                                            
+                                          },
                                 ),
                               ),
                               Padding(

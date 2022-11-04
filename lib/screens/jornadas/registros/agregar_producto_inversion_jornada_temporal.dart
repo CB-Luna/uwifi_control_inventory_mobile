@@ -795,7 +795,8 @@ class _AgregarProductoInversionJornadaTemporalState
                                               ),
                                           maxLines: 1,
                                           validator: (val) {
-                                            if (val == null || val.isEmpty) {
+                                            double cantidad = double.tryParse(val!) ?? 0;
+                                            if (cantidad <= 0) {
                                               return 'Para continuar, ingrese una cantidad.';
                                             }
 
@@ -874,11 +875,15 @@ class _AgregarProductoInversionJornadaTemporalState
                                               ),
                                           maxLines: 1,
                                           validator: (val) {
-                                            if (val == null || val.isEmpty) {
+                                            if(val!.length > 1){
+                                              double costo = double.parse(val.replaceAll('\$', ''));
+                                            if (costo == 0) {
                                               return 'Para continuar, ingrese un costo sugerido.';
                                             }
 
                                             return null;
+                                            }
+                                            
                                           },
                                         ),
                                       ),

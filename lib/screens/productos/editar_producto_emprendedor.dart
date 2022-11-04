@@ -553,12 +553,18 @@ class _EditarProductoEmprendedorScreenState
                                         fontWeight: FontWeight.normal,
                                       ),
                                   maxLines: 1,
-                                  validator: (val) {
-                                    if (val == null || val.isEmpty) {
-                                      return 'Para continuar, ingrese el costo de unidad por medida.';
-                                    }
-                                    return null;
-                                  },
+                                  validator: 
+                                  (val) {
+                                            if(val!.length > 1){
+                                              double costo = double.parse(val.replaceAll('\$', ''));
+                                            if (costo == 0) {
+                                              return 'Para continuar, ingrese el costo de unidad por medida.';
+                                            }
+
+                                            return null;
+                                            }
+                                            
+                                          },
                                 ),
                               ),
                               Padding(
