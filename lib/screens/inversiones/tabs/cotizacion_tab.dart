@@ -850,7 +850,7 @@ with TickerProviderStateMixin {
                                     ));
                                   }
                                 },
-                                text: 'Rechazar',
+                                text: 'Cancelar Solicitud',
                                 icon: const Icon(
                                   Icons.cancel_outlined,
                                   size: 15,
@@ -864,7 +864,7 @@ with TickerProviderStateMixin {
                                       .override(
                                         fontFamily: 'Poppins',
                                         color: Colors.white,
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.w300,
                                       ),
                                   elevation: 3,

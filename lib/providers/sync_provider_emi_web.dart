@@ -2011,13 +2011,10 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           print("Caso 200 en Emi Web Inversión");
           final responsePostInversionParse = postSimpleRegistroExitosoEmiWebFromMap(
           const Utf8Decoder().convert(responsePostInversion.bodyBytes));
-          //Se recupera el id Emi Web de la InversiónXProdCotizados (Mismo que la inversión)
-          inversion.inversionXprodCotizados.last.idEmiWeb = responsePostInversionParse.payload.toString();
-          dataBase.inversionesXprodCotizadosBox.put(inversion.inversionXprodCotizados.last);
           //Se recupera el id Emi Web de la Inversión
           inversion.idEmiWeb = responsePostInversionParse.payload.toString();
           dataBase.inversionesBox.put(inversion);
-          print("Se recupera el idEmiWeb");
+          print("Se recupera el idEmiWeb de la inversión");
           //Creamos los prod Solicitados
           for(var i = 0; i < inversion.prodSolicitados.length; i++){
             if (inversion.prodSolicitados[i].imagen.target != null) {
@@ -2638,6 +2635,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
   Future<bool> validateCotizacionFirstTimeEmiWeb(Inversiones inversion) async {
     try {
       if (await getTokenOAuth()) {
+        print("idInversion Emi Web: ${inversion.idEmiWeb}");
         var url = Uri.parse("$baseUrlEmiWebServices/productosCotizados?idInversion=${inversion.idEmiWeb}");
         final headers = ({
             "Content-Type": "application/json",
@@ -2649,13 +2647,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         );
         switch (response.statusCode) {
           case 200: //Caso éxitoso
+            print("Caso 200");
             return true;
           case 404: //Error no existen productos cotizados a esta inversión
+            print("Caso 404");
             return false;
           default:
+            print("Default");
             return false;
         }  
       } else {
+        print("Error en el token");
         return false;
       }
     } catch (e) {
