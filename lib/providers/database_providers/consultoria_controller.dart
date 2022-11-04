@@ -56,8 +56,8 @@ class ConsultoriaController extends ChangeNotifier {
     final areaCirculo = dataBase.areaCirculoBox.get(idAreaCirculo);
     if (emprendimiento != null && ambito != null && areaCirculo != null && faseEmp != null) {
       final nuevoSyncConsultoria = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Consultoria
-      final nuevaInstruccionConsultoria = Bitacora(instrucciones: 'syncAddConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-      final nuevaInstruccionEmprendimiento = Bitacora(instrucciones: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Consultorías", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionConsultoria = Bitacora(instruccion: 'syncAddConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Consultorías", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       nuevaConsultoria.statusSync.target = nuevoSyncConsultoria;
       //Se asigna un ambito y un area del circulo a la nuevaConsultoria
       nuevaConsultoria.ambitoConsultoria.target = ambito;
@@ -106,7 +106,7 @@ class ConsultoriaController extends ChangeNotifier {
         //Se agrega la nueva tarea
         nuevaTarea.consultoria.target = updateConsultoria;
         updateConsultoria.tareas.add(nuevaTarea);
-        final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateTareaConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+        final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateTareaConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
         final statusSyncConsultoria = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateConsultoria.statusSync.target!.id)).build().findUnique();
         if (statusSyncConsultoria != null) {
           statusSyncConsultoria.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la consultoria
@@ -136,7 +136,7 @@ class ConsultoriaController extends ChangeNotifier {
     }
     final updateConsultoria = dataBase.consultoriasBox.get(idConsultoria);
     if (updateConsultoria != null) {
-      final nuevaInstruccion = Bitacora(instrucciones: 'syncAddTareaConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncAddTareaConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Se agrega una nueva Tarea a la consultoria
       updateConsultoria.tareas.add(nuevaTarea);
       dataBase.consultoriasBox.put(updateConsultoria);
@@ -151,7 +151,7 @@ class ConsultoriaController extends ChangeNotifier {
     void archivarConsultoria(int idConsultoria) {
     final consultoria = dataBase.consultoriasBox.get(idConsultoria);
     if (consultoria != null) {
-      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza el estado de la Consultoria
       consultoria.archivado = true;
       final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(consultoria.statusSync.target!.id)).build().findUnique();
@@ -168,7 +168,7 @@ class ConsultoriaController extends ChangeNotifier {
   void desarchivarConsultoria(int idConsultoria) {
     final consultoria = dataBase.consultoriasBox.get(idConsultoria);
     if (consultoria != null) {
-      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza el estado de la Consultoria
       consultoria.archivado = false;
       final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(consultoria.statusSync.target!.id)).build().findUnique();

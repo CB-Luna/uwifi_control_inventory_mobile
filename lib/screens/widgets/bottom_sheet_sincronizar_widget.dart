@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/screens/sync/sincronizacion_informacion_pocketbase_screen.dart';
+import 'package:bizpro_app/screens/sync/sincronizacion_informacion_emi_web_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 class BottomSheetSincronizarWidget extends StatefulWidget {
@@ -149,7 +149,7 @@ class _BottomSheetSincronizarWidgetState
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          const SincronizacionInformacionPocketbaseScreen(),
+                                          const SincronizacionInformacionEmiWebScreen(),
                                     ),
                                   );
                                 },

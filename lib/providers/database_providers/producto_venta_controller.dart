@@ -90,7 +90,7 @@ void add(int idEmprendimiento, int idVenta) {
         precioVenta: productosVendidos[i].precioVenta
         );
         final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
-        final nuevaInstruccion = Bitacora(instrucciones: 'syncAddProductoVendido', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+        final nuevaInstruccion = Bitacora(instruccion: 'syncAddProductoVendido', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
         nuevoProdVendido.productoEmp.target = productoEmp;
         nuevoProdVendido.statusSync.target = nuevoSync;
         nuevoProdVendido.venta.target = venta;
@@ -115,7 +115,7 @@ void addSingle(int idVenta, int idProductoEmp, String subTotal, ) {
         precioVenta: double.parse(precioVenta),
       );
       final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
-      final nuevaInstruccion = Bitacora(instrucciones: 'syncAddProductoVendido', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncAddProductoVendido', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       nuevoProdVendido.productoEmp.target = productoEmp;
       nuevoProdVendido.statusSync.target = nuevoSync;
       nuevoProdVendido.venta.target = venta;
@@ -132,7 +132,7 @@ void update(int id, int idProductoEmp, double newPrecioVenta, int newCantidad, d
     var updateProdVendido = dataBase.productosVendidosBox.get(id);
     final updateProductoEmp = dataBase.productosEmpBox.get(idProductoEmp);
     if (updateProdVendido != null && updateProductoEmp != null) {
-      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateProductoVendido', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateProductoVendido', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       updateProdVendido.productoEmp.target = updateProductoEmp;
       updateProdVendido.cantVendida = newCantidad;
       updateProdVendido.precioVenta =  newPrecioVenta;
@@ -159,7 +159,7 @@ void update(int id, int idProductoEmp, double newPrecioVenta, int newCantidad, d
   // }
   void remove(ProdVendidos productoVendido) {
     print("Tamaño productos vendidos antes de remover: ${dataBase.productosVendidosBox.getAll().length}");
-    final nuevaInstruccion = Bitacora(instrucciones: 'syncDeleteProductoVendido', usuario: prefs.getString("userId")!, idDBR: productoVendido.idDBR); //Se crea la nueva instruccion a realizar en bitacora
+    final nuevaInstruccion = Bitacora(instruccion: 'syncDeleteProductoVendido', usuario: prefs.getString("userId")!, idDBR: productoVendido.idDBR); //Se crea la nueva instruccion a realizar en bitacora
     productoVendido.bitacora.add(nuevaInstruccion);
     dataBase.productosVendidosBox.remove(productoVendido.id); //Se elimina de bitacora la instruccion creada anteriormente?
     print("Tamaño productos después de remover: ${dataBase.productosVendidosBox.getAll().length}");

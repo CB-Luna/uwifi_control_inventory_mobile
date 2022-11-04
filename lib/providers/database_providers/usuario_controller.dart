@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/modelsPocketbase/get_imagen_usuario.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/save_imagenes_local.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
@@ -22,7 +23,6 @@ class UsuarioController extends ChangeNotifier {
   String celular = '';
   String correo = '';
   String password = '';
-  String imagen = '';
 
   String? currentUser;
   int? currentUserId;
@@ -53,7 +53,7 @@ class UsuarioController extends ChangeNotifier {
       String nombre,
       String apellidoP,
       String? apellidoM,
-      String telefono,
+      String? telefono,
       String? celular,
       String correo,
       String password,
@@ -86,6 +86,7 @@ class UsuarioController extends ChangeNotifier {
       path: file.path,
       base64: imagen.base64,
       idEmiWeb: imagen.idEmiWeb,
+      idDBR: imagen.id
       );   
       print("Se guarda exitosamente la imagen de perfil");
     } else{
@@ -108,7 +109,7 @@ class UsuarioController extends ChangeNotifier {
       nuevoUsuario.rol.target = rolActual;
       nuevoUsuario.statusSync.target = nuevoSyncUsuario;
       nuevoUsuario.imagen.target = nuevaImagenUsuario;
-
+      nuevaImagenUsuario.usuario.target = nuevoUsuario;
       dataBase.usuariosBox.put(nuevoUsuario);
       usuarios.add(nuevoUsuario);
       print('Usuario agregado exitosamente');
@@ -116,10 +117,10 @@ class UsuarioController extends ChangeNotifier {
     }
   }
 
-void update(int id, int newIdRol, String newfotoPerfil, String newNombre, String newApellidoP, String newApellidoM, String newTelefono) {
+void update(int id, int newIdRol, String newNombre, String newApellidoP, String newApellidoM, String newTelefono) {
     var updateUsuario = dataBase.usuariosBox.get(id);
     if (updateUsuario != null) {
-      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateUsuario', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateUsuario', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       updateUsuario.nombre = newNombre;
       updateUsuario.apellidoP = newApellidoP;
       updateUsuario.apellidoM = newApellidoM;
@@ -127,11 +128,6 @@ void update(int id, int newIdRol, String newfotoPerfil, String newNombre, String
       final updateRol = dataBase.rolesBox.get(newIdRol);
       if (updateRol != null) {
         updateUsuario.rol.target = updateRol; //Se actualiza el rol del Usuario
-      }
-      final updateImagenUsuario = dataBase.imagenesBox.query(Imagenes_.id.equals(updateUsuario.imagen.target?.id ?? -1)).build().findUnique();
-      if (updateImagenUsuario != null) {
-        updateImagenUsuario.imagenes = newfotoPerfil; //Se actualiza la imagen del usuario
-        dataBase.imagenesBox.put(updateImagenUsuario);
       }
       final statusSyncUsuario = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateUsuario.statusSync.target?.id ?? -1)).build().findUnique();
       if (statusSyncUsuario != null) {
@@ -145,13 +141,42 @@ void update(int id, int newIdRol, String newfotoPerfil, String newNombre, String
     notifyListeners();
   }
 
+void updateImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPath, String newBase64) {
+    var updateImagenUsuario = dataBase.imagenesBox.get(idImagenUsuario);
+    final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateImagenUsuario', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+    if (updateImagenUsuario != null) {
+      updateImagenUsuario.imagenes = newPath; //Se actualiza la imagen del usuario
+      updateImagenUsuario.nombre = newNombreImagen;
+      updateImagenUsuario.base64 = newBase64;
+      updateImagenUsuario.path = newPath;
+      updateImagenUsuario.bitacora.add(nuevaInstruccion);
+      dataBase.imagenesBox.put(updateImagenUsuario);
+      print('Imagen Usuario actualizado exitosamente');
+    }
+    notifyListeners();
+  }
+
+void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPath, String newBase64) {
+    var newImagenUsuario = dataBase.imagenesBox.get(idImagenUsuario);
+    final nuevaInstruccion = Bitacora(instruccion: 'syncAddImagenUsuario', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+    if (newImagenUsuario != null) {
+      newImagenUsuario.imagenes = newPath; //Se actualiza la imagen del usuario
+      newImagenUsuario.nombre = newNombreImagen;
+      newImagenUsuario.base64 = newBase64;
+      newImagenUsuario.path = newPath;
+      newImagenUsuario.bitacora.add(nuevaInstruccion);
+      dataBase.imagenesBox.put(newImagenUsuario);
+      print('Imagen Usuario agregada exitosamente');
+    }
+    notifyListeners();
+  }
   getAll() {
     usuarios = dataBase.usuariosBox.getAll();
     notifyListeners();
   }
 
   //Usuario existente o no en la base de Datos
-  bool validateUser(String email) {
+  bool validateUsuario(String email) {
     final usuarios = dataBase.usuariosBox.getAll();
     for (int i = 0; i < usuarios.length; i++) {
       if (usuarios[i].correo == email) {

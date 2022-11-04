@@ -1,4 +1,3 @@
-import 'package:bizpro_app/objectbox.g.dart';
 import 'package:intl/intl.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -230,8 +229,9 @@ class InversionesXProdCotizados {
 class Bitacora{
   int id;
   String usuario;
-  String instrucciones;
+  String instruccion;
   String? instruccionAdicional;
+  bool executeEmiWeb;
   bool executePocketbase;
   String? idDBR;
   DateTime fechaRegistro;
@@ -264,12 +264,15 @@ class Bitacora{
   final inversionXprodCotizados = ToMany<InversionesXProdCotizados>();
   @Backlink()
   final pagos = ToMany<Pagos>();
+  @Backlink()
+  final imagenes = ToMany<Imagenes>();
 
   Bitacora({
     this.id = 0,
     required this.usuario,
-    required this.instrucciones,
+    required this.instruccion,
     this.instruccionAdicional,
+    this.executeEmiWeb = false,
     this.executePocketbase = false,
     this.idDBR,
     DateTime? fechaRegistro,
@@ -506,7 +509,7 @@ class Usuarios {
   String nombre;
   String apellidoP;
   String? apellidoM;
-  String telefono;
+  String? telefono;
   String? celular;
   String correo;
   String password;
@@ -531,7 +534,7 @@ class Usuarios {
     required this.nombre,
     required this.apellidoP,
     this.apellidoM,
-    required this.telefono,
+    this.telefono,
     this.celular,
     required this.correo,
     required this.password,
@@ -1172,14 +1175,17 @@ class Imagenes {
   String? base64;
   DateTime fechaRegistro;
   @Unique()
+  String? idDBR;
+  @Unique()
   String? idEmiWeb;
   final tareas = ToMany<Tareas>();
   final prodSolicitados = ToMany<ProdSolicitado>();
   final productosProv = ToMany<ProductosProv>();
   final prodProyecto = ToMany<ProdProyecto>();
-  final usuarios = ToMany<Usuarios>();
   final inversiones = ToMany<Inversiones>();
   final productosEmp = ToMany<ProductosEmp>();
+  final bitacora = ToMany<Bitacora>();
+  final usuario = ToOne<Usuarios>();
   Imagenes({
     this.id = 0,
     required this.imagenes,
@@ -1187,6 +1193,7 @@ class Imagenes {
     this.path,
     this.base64,
     DateTime? fechaRegistro,
+    this.idDBR,
     this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 

@@ -12,7 +12,6 @@ import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
-import 'package:bizpro_app/screens/consultorias/detalle_consultoria_screen.dart';
 import 'package:bizpro_app/screens/jornadas/detalle_jornada_screen.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:expandable/expandable.dart';

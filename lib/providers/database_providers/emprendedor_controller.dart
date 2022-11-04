@@ -77,7 +77,7 @@ class EmprendedorController extends ChangeNotifier {
       final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
       if (emprendimiento != null) {
         final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
-        final nuevaInstruccion = Bitacora(instrucciones: 'syncAddEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+        final nuevaInstruccion = Bitacora(instruccion: 'syncAddEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
         final comunidad = dataBase.comunidadesBox.get(emprendedor!.idComunidad);
         if (comunidad != null) {
           nuevoEmprendedor.comunidad.target = comunidad;
@@ -99,7 +99,7 @@ class EmprendedorController extends ChangeNotifier {
   void update(int id, String newImagen, String newNombre, String newApellidos, String newCurp, 
   String newIntegrantesFamilia, String newTelefono, String newComentarios, int idComunidad) {
     final updateEmprendedor = dataBase.emprendedoresBox.get(id);
-    final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+    final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
     if (updateEmprendedor != null) {
       updateEmprendedor.imagen = newImagen;
       updateEmprendedor.nombre = newNombre;

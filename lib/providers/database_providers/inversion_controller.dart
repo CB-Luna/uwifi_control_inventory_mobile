@@ -53,7 +53,7 @@ class InversionController extends ChangeNotifier {
         nuevaInversionXprodCotizados.inversion.target = nuevaInversion;
         final nuevoSyncInversion = StatusSync(); //Se crea el objeto estatus por dedault //M__
         final nuevoSyncInversionXprodCotizados = StatusSync(); //Se crea el objeto estatus por dedault //M__
-        final nuevaInstruccion = Bitacora(instrucciones: 'syncAddInversion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+        final nuevaInstruccion = Bitacora(instruccion: 'syncAddInversion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
         nuevaInversionXprodCotizados.statusSync.target = nuevoSyncInversionXprodCotizados;
         nuevaInversion.inversionXprodCotizados.add(nuevaInversionXprodCotizados); //Se agrega la nueva instancia de inversion x prod Cotizados
         nuevaInversion.statusSync.target = nuevoSyncInversion;
@@ -139,7 +139,7 @@ class InversionController extends ChangeNotifier {
       final tipoEmpaques = dataBase.tipoEmpaquesBox.get(idTipoEmpaques);
       if (emprendimiento != null && inversion != null && familiaProd != null && tipoEmpaques != null) {
         final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
-        final nuevaInstruccion = Bitacora(instrucciones: 'syncAddProductoSolicitado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+        final nuevaInstruccion = Bitacora(instruccion: 'syncAddProductoSolicitado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
         nuevoProdSolicitado.statusSync.target = nuevoSync;
         nuevoProdSolicitado.familiaProducto.target = familiaProd;
         nuevoProdSolicitado.tipoEmpaques.target = tipoEmpaques;
@@ -158,7 +158,7 @@ class InversionController extends ChangeNotifier {
     final inversion = dataBase.inversionesBox.get(productoSolicitado.idInversion);
     if (inversion != null) {
       print("Tamaño productos solicitados antes de remover: ${dataBase.productosSolicitadosBox.getAll().length}");
-      final nuevaInstruccion = Bitacora(instrucciones: 'syncDeleteProductoSolicitado', usuario: prefs.getString("userId")!, idDBR: productoSolicitado.idDBR); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncDeleteProductoSolicitado', usuario: prefs.getString("userId")!, idDBR: productoSolicitado.idDBR); //Se crea la nueva instruccion a realizar en bitacora
       //Se resta de la inversión el costo del Prod Solicitado
       inversion.totalInversion -= productoSolicitado.costoEstimado != null ? (productoSolicitado.cantidad * productoSolicitado.costoEstimado!) : 0.0;
       dataBase.inversionesBox.put(inversion);

@@ -335,7 +335,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             return;
                                           }
                                           print("Hola miro el IdDBR post $idDBR");
-                                          if (usuarioProvider.validateUser(userId)) {
+                                          if (usuarioProvider.validateUsuario(userId)) {
                                             print('Usuario ya existente');
                                             usuarioProvider.getUser(userId);
                                             usuarioProvider.updatePasswordLocal(
@@ -432,7 +432,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   return;
                                 }
                                 print("Hola miro el IdDBR post $idDBR");
-                                if (usuarioProvider.validateUser(userId)) {
+                                if (usuarioProvider.validateUsuario(userId)) {
                                   print('Usuario ya existente');
                                   usuarioProvider.getUser(userId);
                                   usuarioProvider.updatePasswordLocal(

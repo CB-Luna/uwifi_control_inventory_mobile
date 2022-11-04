@@ -37,7 +37,7 @@ class EmprendimientoController extends ChangeNotifier {
   void add() {
       final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
       final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Inscrito")).build().findFirst(); //Agregamos fase actual al emprendimiento
-      final nuevaInstruccion = Bitacora(instrucciones: 'syncAddEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncAddEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       if (faseEmp != null) {
         final nuevoEmprendimiento = Emprendimientos(
         faseActual: faseEmp.fase,
@@ -62,7 +62,7 @@ class EmprendimientoController extends ChangeNotifier {
 
   void update(int id, String newImagen, String newNombre, String newDescripcion) {
     var updateEmprendimiento = dataBase.emprendimientosBox.get(id);
-    final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+    final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
     if (updateEmprendimiento != null) {
       updateEmprendimiento.imagen = newImagen;
       updateEmprendimiento.nombre = newNombre;
@@ -82,7 +82,7 @@ class EmprendimientoController extends ChangeNotifier {
 
   void updateName(int id, String newNombre) {
     var updateEmprendimiento = dataBase.emprendimientosBox.get(id);
-    final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateNameEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+    final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateNameEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
     if (updateEmprendimiento != null) {
       updateEmprendimiento.nombre = newNombre;
       final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendimiento.statusSync.target!.id)).build().findUnique();
@@ -116,7 +116,7 @@ class EmprendimientoController extends ChangeNotifier {
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Detenido")).build().findFirst();
     if (emprendimiento != null && faseEmp != null) {
-      final nuevaInstruccionEmprendimiento = Bitacora(instrucciones: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Detenido", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Detenido", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza la fase del Emprendimiento
       emprendimiento.faseEmp.add(faseEmp);
       emprendimiento.faseActual = faseEmp.fase;
@@ -135,7 +135,7 @@ class EmprendimientoController extends ChangeNotifier {
   void reactivarOdesconsolidarEmprendimiento(int idEmprendimiento) {
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     if (emprendimiento != null) {
-      final nuevaInstruccionEmprendimiento = Bitacora(instrucciones: 'syncUpdateFaseEmprendimiento', instruccionAdicional: emprendimiento.faseAnterior, usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: emprendimiento.faseAnterior, usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza la fase del Emprendimiento
       emprendimiento.faseEmp.removeWhere((element) => element.fase == emprendimiento.faseActual);
       emprendimiento.faseActual = emprendimiento.faseAnterior;
@@ -154,7 +154,7 @@ class EmprendimientoController extends ChangeNotifier {
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Consolidado")).build().findFirst();
     if (emprendimiento != null && faseEmp != null) {
-      final nuevaInstruccionEmprendimiento = Bitacora(instrucciones: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Consolidado", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Consolidado", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza la fase del Emprendimiento
       emprendimiento.faseEmp.add(faseEmp);
       emprendimiento.faseActual = faseEmp.fase;
@@ -172,7 +172,7 @@ class EmprendimientoController extends ChangeNotifier {
     void archivarEmprendimiento(int idEmprendimiento) {
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     if (emprendimiento != null) {
-      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza el estado del Emprendimiento
       emprendimiento.archivado = true;
       final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(emprendimiento.statusSync.target!.id)).build().findUnique();
@@ -189,7 +189,7 @@ class EmprendimientoController extends ChangeNotifier {
   void desarchivarEmprendimiento(int idEmprendimiento) {
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     if (emprendimiento != null) {
-      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza el estado del Emprendimiento
       emprendimiento.archivado = false;
       final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(emprendimiento.statusSync.target!.id)).build().findUnique();

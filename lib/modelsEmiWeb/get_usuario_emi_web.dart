@@ -30,14 +30,14 @@ class Payload {
         required this.nombre,
         required this.apellidoPaterno,
         this.apellidoMaterno,
-        required this.telefono,
+        this.telefono,
     });
 
     final int idUsuario;
     final String nombre;
     final String apellidoPaterno;
     final String? apellidoMaterno;
-    final String telefono;
+    final String? telefono;
 
     factory Payload.fromMap(Map<String, dynamic> json) => Payload(
         idUsuario: json["idUsuario"],

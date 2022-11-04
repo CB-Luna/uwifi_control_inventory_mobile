@@ -2,13 +2,10 @@ import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/providers/sync_provider_emi_web.dart';
+import 'package:bizpro_app/screens/sync/sincronizacion_informacion_pocketbase_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
-import 'package:lottie/lottie.dart';
-
-import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 class SincronizacionInformacionEmiWebScreen extends StatefulWidget {
   const SincronizacionInformacionEmiWebScreen({Key? key}) : super(key: key);
@@ -27,11 +24,38 @@ class _SincronizacionInformacionEmiWebScreenState extends State<SincronizacionIn
         context.read<SyncProviderEmiWeb>().procesoCargando(true);
         context.read<SyncProviderEmiWeb>().procesoTerminado(false);
         context.read<SyncProviderEmiWeb>().procesoExitoso(false);
-        context.read<SyncProviderEmiWeb>().executeInstrucciones(dataBase.bitacoraBox
+         Future<bool> booleano = context.read<SyncProviderEmiWeb>().executeInstrucciones(
+          dataBase.bitacoraBox
             .getAll()
             .toList()
             .where((element) => element.usuario == prefs.getString("userId")!)
-            .toList());
+            .toList()
+         );
+        Future(() async {
+          if (await booleano) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    SincronizacionInformacionPocketbaseScreen(
+                      instruccionesFallidasEmiWeb: context.read<SyncProviderEmiWeb>().instruccionesFallidas, 
+                      exitosoEmiWeb: true,
+                      ),
+              ),
+            );
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    SincronizacionInformacionPocketbaseScreen(
+                      instruccionesFallidasEmiWeb: context.read<SyncProviderEmiWeb>().instruccionesFallidas, 
+                      exitosoEmiWeb: false,
+                      ),
+              ),
+            );
+          }
+        });
       });
   }
 
@@ -116,21 +140,14 @@ class _SincronizacionInformacionEmiWebScreenState extends State<SincronizacionIn
                                 : 
                                 syncProviderEmiWeb.procesoexitoso
                                 ? Visibility(
-                                  visible: !syncProviderEmiWeb.procesocargando,
-                                  child: Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0, 70, 0, 0),
-                                      child: Lottie.asset(
-                                        'assets/lottie_animations/elemento-creado.json',
-                                        width: 250,
-                                        height: 180,
-                                        fit: BoxFit.cover,
-                                        repeat: false,
-                                        animate: true,
+                                    visible: !syncProviderEmiWeb.procesocargando,
+                                    child: const Padding(
+                                        padding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0, 70, 0, 0),
+                                        child: SizedBox(),
                                       ),
-                                    ),
-                                )
+                                  )
                                   :
                                   Visibility(
                                     visible: !syncProviderEmiWeb.procesocargando,
@@ -146,42 +163,6 @@ class _SincronizacionInformacionEmiWebScreenState extends State<SincronizacionIn
                                     ),
                                   ),
                             Visibility(
-                              visible: syncProviderEmiWeb.procesoterminado && syncProviderEmiWeb.procesoexitoso,
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 100, 0, 0),
-                                child: FFButtonWidget(
-                                  onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const EmprendimientosScreen(),
-                                      ),
-                                    );
-                                    syncProviderEmiWeb.procesoTerminado(false);
-                                  },
-                                  text: 'Listo',
-                                  options: FFButtonOptions(
-                                    width: 130,
-                                    height: 45,
-                                    color: AppTheme.of(context).secondaryText,
-                                    textStyle:
-                                        AppTheme.of(context).subtitle2.override(
-                                              fontFamily: AppTheme.of(context)
-                                                  .subtitle2Family,
-                                              color: Colors.white,
-                                            ),
-                                    borderSide: const BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Visibility(
                               visible: syncProviderEmiWeb.procesoterminado && (syncProviderEmiWeb.procesoexitoso == false),
                               child: Column(
                                 children: [
@@ -189,7 +170,7 @@ class _SincronizacionInformacionEmiWebScreenState extends State<SincronizacionIn
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         0, 50, 0, 0),
                                     child: Text(
-                                      'Error al sincronizar con Emi Web.\nLa sincronización no se hizo con éxito.\nVuelva a probar más tarde.',
+                                      'Error al sincronizar algunas acciones.',
                                       textAlign: TextAlign.center,
                                       maxLines: 4,
                                       style: AppTheme.of(context).bodyText1.override(
@@ -199,38 +180,6 @@ class _SincronizacionInformacionEmiWebScreenState extends State<SincronizacionIn
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
                                           ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        0, 30, 0, 0),
-                                    child: FFButtonWidget(
-                                      onPressed: () async {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const EmprendimientosScreen(),
-                                          ),
-                                        );
-                                      },
-                                      text: 'Cerrar',
-                                      options: FFButtonOptions(
-                                        width: 130,
-                                        height: 45,
-                                        color: AppTheme.of(context).secondaryText,
-                                        textStyle:
-                                            AppTheme.of(context).subtitle2.override(
-                                                  fontFamily: AppTheme.of(context)
-                                                      .subtitle2Family,
-                                                  color: Colors.white,
-                                                ),
-                                        borderSide: const BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
                                     ),
                                   ),
                                 ],

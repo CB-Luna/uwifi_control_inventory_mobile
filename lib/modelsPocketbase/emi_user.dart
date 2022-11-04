@@ -47,7 +47,7 @@ class Item {
         required this.idRolesFk,
         required this.idStatusSyncFk,
         required this.nombreUsuario,
-        required this.telefono,
+        this.telefono,
         required this.updated,
         required this.user,
     });
@@ -65,7 +65,7 @@ class Item {
     final List<String>? idRolesFk;
     final String idStatusSyncFk;
     final String nombreUsuario;
-    final String telefono;
+    final String? telefono;
     final DateTime? updated;
     final String user;
 
