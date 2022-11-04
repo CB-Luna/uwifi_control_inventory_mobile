@@ -33,8 +33,8 @@ class Payload {
         required this.tiposUsuario,
         required this.fechaNacimiento,
         required this.correo,
-        required this.telefono,
-        required this.celular,
+        this.telefono,
+        this.celular,
         required this.fechaRegistro,
         required this.idDocumento,
     });
@@ -46,8 +46,8 @@ class Payload {
     final List<TiposUsuario>? tiposUsuario;
     final DateTime? fechaNacimiento;
     final String correo;
-    final String telefono;
-    final String celular;
+    final String? telefono;
+    final String? celular;
     final DateTime? fechaRegistro;
     final int idDocumento;
 

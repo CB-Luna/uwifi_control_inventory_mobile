@@ -67,8 +67,8 @@ class JornadaController extends ChangeNotifier {
     if (emprendimiento != null && faseEmp != null) {
       print("Fase de Add1: ${faseEmp.fase}");
       final nuevoSyncJornada = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Jornada 1
-      final nuevaInstruccionJornada = Bitacora(instrucciones: 'syncAddJornada1', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-      final nuevaInstruccionEmprendimiento = Bitacora(instrucciones: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Jornada 1", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionJornada = Bitacora(instruccion: 'syncAddJornada1', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Jornada 1", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza la fase del Emprendimiento
       //TODO actualizar en el backend.
       emprendimiento.faseEmp.add(faseEmp);
@@ -93,7 +93,7 @@ class JornadaController extends ChangeNotifier {
   void updateJornada1(int id, DateTime newFechaRegistro, DateTime newFechaRevision, String newTarea, bool newCompletada, int idTarea) {
     var updateTarea  = dataBase.tareasBox.get(idTarea);
     if (updateTarea != null) {
-      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateJornada1', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateJornada1', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       updateTarea.fechaRegistro = newFechaRegistro;
       updateTarea.fechaRevision = newFechaRevision;
       updateTarea.tarea = newTarea;
@@ -154,8 +154,8 @@ class JornadaController extends ChangeNotifier {
     if (emprendimiento != null && faseEmp != null) {
       print("Fase de Add2: ${faseEmp.fase}");
       final nuevoSyncJornada = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Jornada 2
-      final nuevaInstruccionJornada = Bitacora(instrucciones: 'syncAddJornada2', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-      final nuevaInstruccionEmprendimiento = Bitacora(instrucciones: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Jornada 2", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionJornada = Bitacora(instruccion: 'syncAddJornada2', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Jornada 2", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza la fase del Emprendimiento
       //TODO actualizar en el backend.
       emprendimiento.faseEmp.add(faseEmp);
@@ -180,7 +180,7 @@ class JornadaController extends ChangeNotifier {
   void updateJornada2(int id, DateTime newFechaRegistro, DateTime newFechaRevision, String newTarea, String newComentarios, List<Imagenes>? oldImagenes, List<String> newImagenes, bool newCompletada, int idTarea) {
     var updateTarea  = dataBase.tareasBox.get(idTarea);
     if (updateTarea != null) {
-      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateJornada2', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateJornada2', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       updateTarea.fechaRegistro = newFechaRegistro;
       updateTarea.fechaRevision = newFechaRevision;
       updateTarea.tarea = newTarea;
@@ -257,8 +257,8 @@ class JornadaController extends ChangeNotifier {
     if (emprendimiento != null && catalogoProyecto != null && faseEmp != null) {
       print("Fase de Add3: ${faseEmp.fase}");
       final nuevoSyncJornada = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Jornada 3
-      final nuevaInstruccionJornada = Bitacora(instrucciones: 'syncAddJornada3', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-      final nuevaInstruccionEmprendimiento = Bitacora(instrucciones: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Jornada 3", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionJornada = Bitacora(instruccion: 'syncAddJornada3', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Jornada 3", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza la fase del Emprendimiento
       //TODO actualizar en el backend.
       emprendimiento.faseEmp.add(faseEmp);
@@ -292,7 +292,7 @@ class JornadaController extends ChangeNotifier {
     String newComentarios, List<String> newImagenes, List<Imagenes>? oldImagenes, int newIdProyecto, String newDescripcion, int idTarea) {
     var updateTarea  = dataBase.tareasBox.get(idTarea);
     if (updateTarea != null) {
-      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateJornada3', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateJornada3', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       updateTarea.fechaRegistro = newFechaRegistro;
       updateTarea.fechaRevision = newFechaRevision;
       updateTarea.tarea = newTarea;
@@ -396,8 +396,8 @@ class JornadaController extends ChangeNotifier {
       }
       print("Entro aca");
       final nuevoSyncJornada = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Jornada 1
-      final nuevaInstruccionJornada = Bitacora(instrucciones: 'syncAddJornada4', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-      final nuevaInstruccionEmprendimiento = Bitacora(instrucciones: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Jornada 4", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionJornada = Bitacora(instruccion: 'syncAddJornada4', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Jornada 4", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza la fase del Emprendimiento
       //TODO actualizar en el backend.
       emprendimiento.faseEmp.add(faseEmp);
@@ -422,7 +422,7 @@ class JornadaController extends ChangeNotifier {
   void updateJornada4(int id, DateTime newFechaRegistro, String? newComentarios, List<String> newImagenes, List<Imagenes>? oldImagenes, bool newCompletada, int idTarea) {
     var updateTarea  = dataBase.tareasBox.get(idTarea);
     if (updateTarea != null) {
-      final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateJornada4', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateJornada4', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       updateTarea.fechaRegistro = newFechaRegistro;
       updateTarea.comentarios = newComentarios;
       //Se eliminan imagenes anteriores

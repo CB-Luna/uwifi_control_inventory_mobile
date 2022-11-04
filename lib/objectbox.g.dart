@@ -907,7 +907,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(27, 1774905738150923512),
       name: 'Bitacora',
-      lastPropertyId: const IdUid(14, 2308969436247945089),
+      lastPropertyId: const IdUid(16, 1541820519869477454),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -924,11 +924,6 @@ final _entities = <ModelEntity>[
             id: const IdUid(4, 6670748245644266493),
             name: 'fechaSync',
             type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(9, 2628466040035596378),
-            name: 'instrucciones',
-            type: 9,
             flags: 0),
         ModelProperty(
             id: const IdUid(11, 3616607795938519256),
@@ -948,6 +943,16 @@ final _entities = <ModelEntity>[
         ModelProperty(
             id: const IdUid(14, 2308969436247945089),
             name: 'executePocketbase',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(15, 9135086539016474235),
+            name: 'instruccion',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(16, 1541820519869477454),
+            name: 'executeEmiWeb',
             type: 1,
             flags: 0)
       ],
@@ -979,7 +984,8 @@ final _entities = <ModelEntity>[
             name: 'inversionXprodCotizados',
             srcEntity: 'InversionesXProdCotizados',
             srcField: ''),
-        ModelBacklink(name: 'pagos', srcEntity: 'Pagos', srcField: '')
+        ModelBacklink(name: 'pagos', srcEntity: 'Pagos', srcField: ''),
+        ModelBacklink(name: 'imagenes', srcEntity: 'Imagenes', srcField: '')
       ]),
   ModelEntity(
       id: const IdUid(30, 485586835672622394),
@@ -1706,7 +1712,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(47, 4406411524870188538),
       name: 'Imagenes',
-      lastPropertyId: const IdUid(8, 4973645824824210931),
+      lastPropertyId: const IdUid(11, 7411525460197573173),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1744,17 +1750,26 @@ final _entities = <ModelEntity>[
             id: const IdUid(8, 4973645824824210931),
             name: 'base64',
             type: 9,
-            flags: 0)
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 359111385444592456),
+            name: 'idDBR',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(251, 1378116722324924789)),
+        ModelProperty(
+            id: const IdUid(11, 7411525460197573173),
+            name: 'usuarioId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(253, 2893911726871456069),
+            relationTarget: 'Usuarios')
       ],
       relations: <ModelRelation>[
         ModelRelation(
             id: const IdUid(28, 68666458468522626),
             name: 'tareas',
             targetId: const IdUid(19, 2491530739310255510)),
-        ModelRelation(
-            id: const IdUid(29, 795186633578779297),
-            name: 'usuarios',
-            targetId: const IdUid(10, 252808688812742776)),
         ModelRelation(
             id: const IdUid(46, 3169132381372405348),
             name: 'prodSolicitados',
@@ -1774,7 +1789,11 @@ final _entities = <ModelEntity>[
         ModelRelation(
             id: const IdUid(73, 134544593655180451),
             name: 'productosEmp',
-            targetId: const IdUid(43, 8172937846526815489))
+            targetId: const IdUid(43, 8172937846526815489)),
+        ModelRelation(
+            id: const IdUid(74, 211223486003667531),
+            name: 'bitacora',
+            targetId: const IdUid(27, 1774905738150923512))
       ],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
@@ -2737,8 +2756,8 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(62, 5967866020755512418),
-      lastIndexId: const IdUid(250, 4481819197045105238),
-      lastRelationId: const IdUid(73, 134544593655180451),
+      lastIndexId: const IdUid(253, 2893911726871456069),
+      lastRelationId: const IdUid(74, 211223486003667531),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
         1366246136666677579,
@@ -2830,7 +2849,8 @@ ModelDefinition getObjectBoxModel() {
         4941615724051327288,
         3757107251813869820,
         1504702329259649475,
-        915767699699149923
+        915767699699149923,
+        3660023615256333447
       ],
       retiredPropertyUids: const [
         7079790605743243388,
@@ -3111,7 +3131,9 @@ ModelDefinition getObjectBoxModel() {
         7293987934442232642,
         3172314971365956702,
         3554819703177446556,
-        4594205475808180169
+        4594205475808180169,
+        2628466040035596378,
+        2797366167647637102
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -3126,7 +3148,8 @@ ModelDefinition getObjectBoxModel() {
         844143373802489165,
         803629559452567645,
         3709026006801487301,
-        5617872246173150113
+        5617872246173150113,
+        795186633578779297
       ],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -3305,7 +3328,9 @@ ModelDefinition getObjectBoxModel() {
           final apellidoMOffset = object.apellidoM == null
               ? null
               : fbb.writeString(object.apellidoM!);
-          final telefonoOffset = fbb.writeString(object.telefono);
+          final telefonoOffset = object.telefono == null
+              ? null
+              : fbb.writeString(object.telefono!);
           final celularOffset =
               object.celular == null ? null : fbb.writeString(object.celular!);
           final correoOffset = fbb.writeString(object.correo);
@@ -3345,7 +3370,7 @@ ModelDefinition getObjectBoxModel() {
               apellidoM: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 10),
               telefono: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 14, ''),
+                  .vTableGetNullable(buffer, rootOffset, 14),
               celular: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 16),
               correo: const fb.StringReader(asciiOptimization: true)
@@ -4205,29 +4230,31 @@ ModelDefinition getObjectBoxModel() {
                   object.prodVendidos,
               RelInfo<InversionesXProdCotizados>.toManyBacklink(59, object.id):
                   object.inversionXprodCotizados,
-              RelInfo<Pagos>.toManyBacklink(61, object.id): object.pagos
+              RelInfo<Pagos>.toManyBacklink(61, object.id): object.pagos,
+              RelInfo<Imagenes>.toManyBacklink(74, object.id): object.imagenes
             },
         getId: (Bitacora object) => object.id,
         setId: (Bitacora object, int id) {
           object.id = id;
         },
         objectToFB: (Bitacora object, fb.Builder fbb) {
-          final instruccionesOffset = fbb.writeString(object.instrucciones);
           final usuarioOffset = fbb.writeString(object.usuario);
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
           final instruccionAdicionalOffset = object.instruccionAdicional == null
               ? null
               : fbb.writeString(object.instruccionAdicional!);
-          fbb.startTable(15);
+          final instruccionOffset = fbb.writeString(object.instruccion);
+          fbb.startTable(17);
           fbb.addInt64(0, object.id);
           fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addInt64(3, object.fechaSync?.millisecondsSinceEpoch);
-          fbb.addOffset(8, instruccionesOffset);
           fbb.addOffset(10, usuarioOffset);
           fbb.addOffset(11, idDBROffset);
           fbb.addOffset(12, instruccionAdicionalOffset);
           fbb.addBool(13, object.executePocketbase);
+          fbb.addOffset(14, instruccionOffset);
+          fbb.addBool(15, object.executeEmiWeb);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4240,19 +4267,20 @@ ModelDefinition getObjectBoxModel() {
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
               usuario: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 24, ''),
-              instrucciones: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 20, ''),
-              instruccionAdicional: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 28),
+              instruccion: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 32, ''),
+              instruccionAdicional:
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGetNullable(buffer, rootOffset, 28),
+              executeEmiWeb: const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 34, false),
               executePocketbase: const fb.BoolReader()
                   .vTableGet(buffer, rootOffset, 30, false),
               idDBR: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 26),
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
-              fechaSync: fechaSyncValue == null
-                  ? null
-                  : DateTime.fromMillisecondsSinceEpoch(fechaSyncValue));
+              fechaSync: fechaSyncValue == null ? null : DateTime.fromMillisecondsSinceEpoch(fechaSyncValue));
           InternalToManyAccess.setRelInfo(
               object.emprendedores,
               store,
@@ -4322,6 +4350,11 @@ ModelDefinition getObjectBoxModel() {
               object.pagos,
               store,
               RelInfo<Pagos>.toManyBacklink(61, object.id),
+              store.box<Bitacora>());
+          InternalToManyAccess.setRelInfo(
+              object.imagenes,
+              store,
+              RelInfo<Imagenes>.toManyBacklink(74, object.id),
               store.box<Bitacora>());
           return object;
         }),
@@ -5043,15 +5076,15 @@ ModelDefinition getObjectBoxModel() {
         }),
     Imagenes: EntityDefinition<Imagenes>(
         model: _entities[24],
-        toOneRelations: (Imagenes object) => [],
+        toOneRelations: (Imagenes object) => [object.usuario],
         toManyRelations: (Imagenes object) => {
               RelInfo<Imagenes>.toMany(28, object.id): object.tareas,
-              RelInfo<Imagenes>.toMany(29, object.id): object.usuarios,
               RelInfo<Imagenes>.toMany(46, object.id): object.prodSolicitados,
               RelInfo<Imagenes>.toMany(52, object.id): object.productosProv,
               RelInfo<Imagenes>.toMany(63, object.id): object.inversiones,
               RelInfo<Imagenes>.toMany(67, object.id): object.prodProyecto,
-              RelInfo<Imagenes>.toMany(73, object.id): object.productosEmp
+              RelInfo<Imagenes>.toMany(73, object.id): object.productosEmp,
+              RelInfo<Imagenes>.toMany(74, object.id): object.bitacora
             },
         getId: (Imagenes object) => object.id,
         setId: (Imagenes object, int id) {
@@ -5068,7 +5101,9 @@ ModelDefinition getObjectBoxModel() {
               object.path == null ? null : fbb.writeString(object.path!);
           final base64Offset =
               object.base64 == null ? null : fbb.writeString(object.base64!);
-          fbb.startTable(9);
+          final idDBROffset =
+              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
+          fbb.startTable(12);
           fbb.addInt64(0, object.id);
           fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addOffset(3, imagenesOffset);
@@ -5076,6 +5111,8 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(5, nombreOffset);
           fbb.addOffset(6, pathOffset);
           fbb.addOffset(7, base64Offset);
+          fbb.addOffset(8, idDBROffset);
+          fbb.addInt64(10, object.usuario.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -5095,12 +5132,15 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGetNullable(buffer, rootOffset, 18),
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
+              idDBR: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 20),
               idEmiWeb: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 12));
+          object.usuario.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
+          object.usuario.attach(store);
           InternalToManyAccess.setRelInfo(object.tareas, store,
               RelInfo<Imagenes>.toMany(28, object.id), store.box<Imagenes>());
-          InternalToManyAccess.setRelInfo(object.usuarios, store,
-              RelInfo<Imagenes>.toMany(29, object.id), store.box<Imagenes>());
           InternalToManyAccess.setRelInfo(object.prodSolicitados, store,
               RelInfo<Imagenes>.toMany(46, object.id), store.box<Imagenes>());
           InternalToManyAccess.setRelInfo(object.productosProv, store,
@@ -5111,6 +5151,8 @@ ModelDefinition getObjectBoxModel() {
               RelInfo<Imagenes>.toMany(67, object.id), store.box<Imagenes>());
           InternalToManyAccess.setRelInfo(object.productosEmp, store,
               RelInfo<Imagenes>.toMany(73, object.id), store.box<Imagenes>());
+          InternalToManyAccess.setRelInfo(object.bitacora, store,
+              RelInfo<Imagenes>.toMany(74, object.id), store.box<Imagenes>());
           return object;
         }),
     Inversiones: EntityDefinition<Inversiones>(
@@ -6573,25 +6615,29 @@ class Bitacora_ {
   static final fechaSync =
       QueryIntegerProperty<Bitacora>(_entities[11].properties[2]);
 
-  /// see [Bitacora.instrucciones]
-  static final instrucciones =
-      QueryStringProperty<Bitacora>(_entities[11].properties[3]);
-
   /// see [Bitacora.usuario]
   static final usuario =
-      QueryStringProperty<Bitacora>(_entities[11].properties[4]);
+      QueryStringProperty<Bitacora>(_entities[11].properties[3]);
 
   /// see [Bitacora.idDBR]
   static final idDBR =
-      QueryStringProperty<Bitacora>(_entities[11].properties[5]);
+      QueryStringProperty<Bitacora>(_entities[11].properties[4]);
 
   /// see [Bitacora.instruccionAdicional]
   static final instruccionAdicional =
-      QueryStringProperty<Bitacora>(_entities[11].properties[6]);
+      QueryStringProperty<Bitacora>(_entities[11].properties[5]);
 
   /// see [Bitacora.executePocketbase]
   static final executePocketbase =
-      QueryBooleanProperty<Bitacora>(_entities[11].properties[7]);
+      QueryBooleanProperty<Bitacora>(_entities[11].properties[6]);
+
+  /// see [Bitacora.instruccion]
+  static final instruccion =
+      QueryStringProperty<Bitacora>(_entities[11].properties[7]);
+
+  /// see [Bitacora.executeEmiWeb]
+  static final executeEmiWeb =
+      QueryBooleanProperty<Bitacora>(_entities[11].properties[8]);
 }
 
 /// [AmbitoConsultoria] entity fields to define ObjectBox queries.
@@ -7095,33 +7141,41 @@ class Imagenes_ {
   static final base64 =
       QueryStringProperty<Imagenes>(_entities[24].properties[6]);
 
+  /// see [Imagenes.idDBR]
+  static final idDBR =
+      QueryStringProperty<Imagenes>(_entities[24].properties[7]);
+
+  /// see [Imagenes.usuario]
+  static final usuario =
+      QueryRelationToOne<Imagenes, Usuarios>(_entities[24].properties[8]);
+
   /// see [Imagenes.tareas]
   static final tareas =
       QueryRelationToMany<Imagenes, Tareas>(_entities[24].relations[0]);
 
-  /// see [Imagenes.usuarios]
-  static final usuarios =
-      QueryRelationToMany<Imagenes, Usuarios>(_entities[24].relations[1]);
-
   /// see [Imagenes.prodSolicitados]
   static final prodSolicitados =
-      QueryRelationToMany<Imagenes, ProdSolicitado>(_entities[24].relations[2]);
+      QueryRelationToMany<Imagenes, ProdSolicitado>(_entities[24].relations[1]);
 
   /// see [Imagenes.productosProv]
   static final productosProv =
-      QueryRelationToMany<Imagenes, ProductosProv>(_entities[24].relations[3]);
+      QueryRelationToMany<Imagenes, ProductosProv>(_entities[24].relations[2]);
 
   /// see [Imagenes.inversiones]
   static final inversiones =
-      QueryRelationToMany<Imagenes, Inversiones>(_entities[24].relations[4]);
+      QueryRelationToMany<Imagenes, Inversiones>(_entities[24].relations[3]);
 
   /// see [Imagenes.prodProyecto]
   static final prodProyecto =
-      QueryRelationToMany<Imagenes, ProdProyecto>(_entities[24].relations[5]);
+      QueryRelationToMany<Imagenes, ProdProyecto>(_entities[24].relations[4]);
 
   /// see [Imagenes.productosEmp]
   static final productosEmp =
-      QueryRelationToMany<Imagenes, ProductosEmp>(_entities[24].relations[6]);
+      QueryRelationToMany<Imagenes, ProductosEmp>(_entities[24].relations[5]);
+
+  /// see [Imagenes.bitacora]
+  static final bitacora =
+      QueryRelationToMany<Imagenes, Bitacora>(_entities[24].relations[6]);
 }
 
 /// [Inversiones] entity fields to define ObjectBox queries.

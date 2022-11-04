@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:bizpro_app/helpers/constants.dart';
@@ -17,6 +18,8 @@ import 'package:bizpro_app/screens/perfil_usuario/usuario_actualizado.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/custom_button.dart';
 import 'package:bizpro_app/theme/theme.dart';
+
+import '../../modelsPocketbase/temporals/save_imagenes_local.dart';
 
 class EditarUsuarioScreen extends StatefulWidget {
   const EditarUsuarioScreen({
@@ -38,7 +41,9 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
   TextEditingController telefonoController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
-  late String fotoPerfil;
+  late String path;
+  String base64 = "";
+  String nombreImagen = "";
   XFile? image;
   String rolUsuario = "";
   List<String> listRoles = [];
@@ -51,7 +56,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
     for (var element in widget.usuario.roles) {
       listRoles.add(element.rol);
     }
-    fotoPerfil = widget.usuario.imagen.target?.imagenes ?? "";
+    path = widget.usuario.imagen.target?.imagenes ?? "";
     nombreController = TextEditingController(text: widget.usuario.nombre);
     apellidoPController = TextEditingController(text: widget.usuario.apellidoP);
     apellidoMController = TextEditingController(text: widget.usuario.apellidoM);
@@ -60,7 +65,6 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //TODO: como manejar imagen?
     final usuarioProvider = Provider.of<UsuarioController>(context);
     return WillPopScope(
       onWillPop: () async => false,
@@ -203,7 +207,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          fotoPerfil == ""
+                          path == ""
                               ? Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 30, 0, 0),
@@ -231,10 +235,6 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                         ),
                                       ),
                                     ),
-                                    //TODO: manejar imagenes
-                                    // child: Image.network(
-                                    //   currentUserPhoto,
-                                    // ),
                                   ),
                                 )
                               : Padding(
@@ -247,20 +247,9 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                       color: const Color(0x00EEEEEE),
                                       image: DecorationImage(
                                           fit: BoxFit.cover,
-                                          image: FileImage(File(fotoPerfil))),
+                                          image: FileImage(File(path))),
                                       shape: BoxShape.circle,
                                     ),
-                                    // Imagen cuadrada
-                                    // child: Stack(
-                                    //   children: [
-                                    //     ClipRRect(
-                                    //       borderRadius: BorderRadius.circular(20),
-                                    //       child: getImage(
-                                    //         image?.path ?? currentUserPhoto,
-                                    //       ),
-                                    //     ),
-                                    //   ],
-                                    // ),
                                   ),
                                 ),
                           FormField(
@@ -306,7 +295,11 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
 
                                         setState(() {
                                           image = pickedFile;
-                                          fotoPerfil = image!.path;
+                                          File file = File(image!.path);
+                                          List<int> fileInByte = file.readAsBytesSync();
+                                          base64 = base64Encode(fileInByte);
+                                          path = image!.path;
+                                          nombreImagen = image!.name;
                                         });
                                       },
                                       text: 'Agregar Foto',
@@ -574,8 +567,8 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                         widget.usuario.apellidoM ||
                                     telefonoController.text !=
                                         widget.usuario.telefono ||
-                                    fotoPerfil !=
-                                        widget.usuario.imagen.target?.imagenes ||
+                                    path !=
+                                        widget.usuario.imagen.target?.path ||
                                     rolUsuario !=
                                         widget.usuario.rol.target!.rol) {
                                   if (usuarioProvider.validateForm(formKey)) {
@@ -588,12 +581,28 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                       usuarioProvider.update(
                                         widget.usuario.id,
                                         idRol,
-                                        fotoPerfil,
                                         nombreController.text,
                                         apellidoPController.text,
                                         apellidoMController.text,
                                         telefonoController.text,
                                       );
+                                      if (path != widget.usuario.imagen.target?.path) {
+                                        if (widget.usuario.imagen.target?.path != null) {
+                                          // Ya había imagen registrada, se hace update
+                                          usuarioProvider.updateImagenUsuario(
+                                            widget.usuario.imagen.target!.id, 
+                                            nombreImagen, 
+                                            path, 
+                                            base64);
+                                        } else {
+                                          // No había imagen registrada, se hace add
+                                          usuarioProvider.addImagenUsuario(
+                                            widget.usuario.imagen.target!.id, 
+                                            nombreImagen, 
+                                            path, 
+                                            base64);                                  
+                                        }
+                                      }
                                       await Navigator.push(
                                         context,
                                         MaterialPageRoute(
