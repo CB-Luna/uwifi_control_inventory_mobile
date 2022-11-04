@@ -299,7 +299,7 @@ class CotizacionController extends ChangeNotifier {
                     if (statusSync != null) {
                       final nuevaInversionXprodCotizados = InversionesXProdCotizados(); //Se crea la instancia inversion x prod Cotizados
                       final nuevoSyncInversionXprodCotizados = StatusSync(); //Se crea el objeto estatus por dedault //M__
-                      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateInversion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+                      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateEstadoInversion', instruccionAdicional: "Solicitada", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
                       nuevaInversionXprodCotizados.statusSync.target = nuevoSyncInversionXprodCotizados;
                       statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la inversión
                       dataBase.statusSyncBox.put(statusSync);

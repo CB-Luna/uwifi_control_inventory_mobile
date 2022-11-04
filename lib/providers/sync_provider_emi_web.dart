@@ -661,43 +661,38 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             }
           case "syncUpdateEstadoInversion":
             print("Entro al caso de syncUpdateEstadoInversion Emi Web");
-            final inversionToSync = getFirstInversion(dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
-            if(inversionToSync != null){
-              var result = await syncUpdateEstadoInversion(inversionToSync, instruccionesBitacora[i]);
-              if (result) {
-                banderasExistoSync.add(result);     
-                continue;
+            if (!instruccionesBitacora[i].executeEmiWeb) {
+              final inversionToSync = getFirstInversion(dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
+              if(inversionToSync != null){
+                //Se encontró la inversión y se puede actualizar su estado
+                var boolSyncUpdateEstadoInversion = await syncUpdateEstadoInversion(inversionToSync, instruccionesBitacora[i]);
+                if (boolSyncUpdateEstadoInversion) {
+                  banderasExistoSync.add(boolSyncUpdateEstadoInversion);
+                  continue;
+                } else {
+                  //Recuperamos la instrucción que no se ejecutó
+                  banderasExistoSync.add(boolSyncUpdateEstadoInversion);
+                  final instruccionNoSincronizada = InstruccionNoSincronizada(
+                    emprendimiento: inversionToSync.emprendimiento.target!.nombre,
+                    instruccion: "Actualizar Estado Inversión Emi Web", 
+                    fecha: instruccionesBitacora[i].fechaRegistro);
+                  instruccionesFallidas.add(instruccionNoSincronizada);
+                  continue;
+                }
               } else {
-                //Salimos del bucle
+                //Recuperamos la instrucción que no se ejecutó
                 banderasExistoSync.add(false);
-                i = instruccionesBitacora.length;
-                break;
-              }         
-            } else {
-              //Salimos del bucle
-              banderasExistoSync.add(false);
-              i = instruccionesBitacora.length;
-              break;
-            }
-          case "syncUpdateInversion":
-            print("Entro al caso de syncUpdateInversion Emi Web");
-            final inversionToSync = getFirstInversion(dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
-            if(inversionToSync != null){
-              var result = await syncUpdateInversion(inversionToSync, instruccionesBitacora[i]);
-              if (result) {
-                banderasExistoSync.add(result);     
+                final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  emprendimiento: "No encontrado",
+                  instruccion: "Actualizar Estado Inversión Emi Web",
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+                instruccionesFallidas.add(instruccionNoSincronizada);
                 continue;
-              } else {
-                //Salimos del bucle
-                banderasExistoSync.add(false);
-                i = instruccionesBitacora.length;
-                break;
-              }         
+              }
             } else {
-              //Salimos del bucle
-              banderasExistoSync.add(false);
-              i = instruccionesBitacora.length;
-              break;
+              // Ya se ha ejecutado esta instrucción en Emi Web
+              banderasExistoSync.add(true);
+              continue;
             }
           default:
             continue;
@@ -2295,98 +2290,98 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     }
   }
 
-  Future<bool> syncUpdateInversion(Inversiones inversion, Bitacora bitacora) async {
-    print("Estoy en El syncUpdateInversion en Emi Web");
-    try {
-      final estadoActual = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Solicitada")).build().findUnique();
-      if (estadoActual != null) {
-        // Primero creamos el API para realizar la actualización
-          final actualizarEstasyncUpdateEstadoInversionUri =
-            Uri.parse('$baseUrlEmiWebServices/inversion/estadoInversion');
-          final headers = ({
-            "Content-Type": "application/json",
-            'Authorization': 'Bearer $tokenGlobal',
-          });
-          print("Fase Actual: ${estadoActual.estado}");
-          final responsePostUpdateEstasyncUpdateEstadoInversion = await put(actualizarEstasyncUpdateEstadoInversionUri, 
-          headers: headers,
-          body: jsonEncode({
-            "idUsuarioRegistra": inversion.emprendimiento.target!.usuario.target!.idEmiWeb,
-            "usuarioRegistra": "${inversion.emprendimiento.target!
-            .usuario.target!.nombre} ${inversion.emprendimiento.target!
-            .usuario.target!.apellidoP} ${inversion.emprendimiento.target!
-            .usuario.target!.apellidoM}",
-            "idInversiones": inversion.idEmiWeb,
-            "idCatEstadoInversion": estadoActual.idEmiWeb,
-          }));
-          print(responsePostUpdateEstasyncUpdateEstadoInversion.statusCode);
-          print(responsePostUpdateEstasyncUpdateEstadoInversion.body);
-          print("Respuesta Post Update Inversión");
-          switch (responsePostUpdateEstasyncUpdateEstadoInversion.statusCode) {
-            case 200:
-            print("Caso 200 en Emi Web Update Inversión");
-            //Se actualiza el estado de la Inversión en ObjectBox
-            final statusSyncInversion = dataBase.statusSyncBox.query(StatusSync_.id.equals(inversion.statusSync.target!.id)).build().findUnique();
-            if (statusSyncInversion != null) {
-              statusSyncInversion.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado de la inversion
-              dataBase.statusSyncBox.put(statusSyncInversion);
-              inversion.estadoInversion.target = estadoActual;
-              dataBase.inversionesBox.put(inversion);
-            }
-            //Se elimina la instrucción de la bitacora
-            dataBase.bitacoraBox.remove(bitacora.id);
-            return true;
-            default: //No se realizo con éxito el post
-              print("Error en actualizar inversion Emi Web");
-              return false;
-          }  
-      } else {
-        return false;
-      }
-    } catch (e) {
-      print('ERROR - function syncUpdateInversion(): $e');
-      return false;
-    }
-  }
+  // Future<bool> syncUpdateInversion(Inversiones inversion, Bitacora bitacora) async {
+  //   print("Estoy en El syncUpdateInversion en Emi Web");
+  //   try {
+  //     final estadoActual = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Solicitada")).build().findUnique();
+  //     if (estadoActual != null) {
+  //       // Primero creamos el API para realizar la actualización
+  //         final actualizarEstasyncUpdateEstadoInversionUri =
+  //           Uri.parse('$baseUrlEmiWebServices/inversion/estadoInversion');
+  //         final headers = ({
+  //           "Content-Type": "application/json",
+  //           'Authorization': 'Bearer $tokenGlobal',
+  //         });
+  //         final responsePostUpdateEstasyncUpdateEstadoInversion = await put(actualizarEstasyncUpdateEstadoInversionUri, 
+  //         headers: headers,
+  //         body: jsonEncode({
+  //           "idUsuarioRegistra": inversion.emprendimiento.target!.usuario.target!.idEmiWeb,
+  //           "usuarioRegistra": "${inversion.emprendimiento.target!
+  //           .usuario.target!.nombre} ${inversion.emprendimiento.target!
+  //           .usuario.target!.apellidoP} ${inversion.emprendimiento.target!
+  //           .usuario.target!.apellidoM}",
+  //           "idInversiones": inversion.idEmiWeb,
+  //           "idCatEstadoInversion": estadoActual.idEmiWeb,
+  //         }));
+  //         print(responsePostUpdateEstasyncUpdateEstadoInversion.statusCode);
+  //         print(responsePostUpdateEstasyncUpdateEstadoInversion.body);
+  //         print("Respuesta Post Update Inversión");
+  //         switch (responsePostUpdateEstasyncUpdateEstadoInversion.statusCode) {
+  //           case 200:
+  //           print("Caso 200 en Emi Web Update Inversión");
+  //           //Se actualiza el estado de la Inversión en ObjectBox
+  //           final statusSyncInversion = dataBase.statusSyncBox.query(StatusSync_.id.equals(inversion.statusSync.target!.id)).build().findUnique();
+  //           if (statusSyncInversion != null) {
+  //             statusSyncInversion.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado de la inversion
+  //             dataBase.statusSyncBox.put(statusSyncInversion);
+  //             inversion.estadoInversion.target = estadoActual;
+  //             dataBase.inversionesBox.put(inversion);
+  //           }
+  //           //Se elimina la instrucción de la bitacora
+  //           dataBase.bitacoraBox.remove(bitacora.id);
+  //           return true;
+  //           default: //No se realizo con éxito el post
+  //             print("Error en actualizar inversion Emi Web");
+  //             return false;
+  //         }  
+  //     } else {
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     print('ERROR - function syncUpdateInversion(): $e');
+  //     return false;
+  //   }
+  // }
 
   Future<bool> syncUpdateEstadoInversion(Inversiones inversion, Bitacora bitacora) async {
     print("Estoy en El syncUpdateEstadoInversion en Emi Web");
     try {
       final estadoActual = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals(bitacora.instruccionAdicional!)).build().findUnique();
       if (estadoActual != null) {
-        // Primero creamos el API para realizar la actualización
-          final actualizarEstasyncUpdateEstadoInversionUri =
-            Uri.parse('$baseUrlEmiWebServices/inversion/estadoInversion');
-          final headers = ({
-            "Content-Type": "application/json",
-            'Authorization': 'Bearer $tokenGlobal',
-          });
-          print("Fase Actual: ${estadoActual.estado}");
-          final responsePostUpdateEstasyncUpdateEstadoInversion = await put(actualizarEstasyncUpdateEstadoInversionUri, 
-          headers: headers,
-          body: jsonEncode({
-            "idUsuarioRegistra": inversion.emprendimiento.target!.usuario.target!.idEmiWeb,
-            "usuarioRegistra": "${inversion.emprendimiento.target!
-            .usuario.target!.nombre} ${inversion.emprendimiento.target!
-            .usuario.target!.apellidoP} ${inversion.emprendimiento.target!
-            .usuario.target!.apellidoM}",
-            "idInversiones": inversion.idEmiWeb,
-            "idCatEstadoInversion": estadoActual.idEmiWeb,
-          }));
-          print(responsePostUpdateEstasyncUpdateEstadoInversion.statusCode);
-          print(responsePostUpdateEstasyncUpdateEstadoInversion.body);
-          print("Respuesta Post Update Estado Inversión");
-          switch (responsePostUpdateEstasyncUpdateEstadoInversion.statusCode) {
-            case 200:
+        // Primero creamos el API para realizar la actualización del estado de la inversión
+        final syncUpdateEstadoInversionUri =
+          Uri.parse('$baseUrlEmiWebServices/inversion/estadoInversion');
+        final headers = ({
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $tokenGlobal',
+        });
+        print("Fase Actual: ${estadoActual.estado}");
+        final responsePostUpdateEstasyncUpdateEstadoInversion = await put(syncUpdateEstadoInversionUri, 
+        headers: headers,
+        body: jsonEncode({
+          "idUsuarioRegistra": inversion.emprendimiento.target!.usuario.target!.idEmiWeb,
+          "usuarioRegistra": "${inversion.emprendimiento.target!
+          .usuario.target!.nombre} ${inversion.emprendimiento.target!
+          .usuario.target!.apellidoP} ${inversion.emprendimiento.target!
+          .usuario.target!.apellidoM}",
+          "idInversiones": inversion.idEmiWeb,
+          "idCatEstadoInversion": estadoActual.idEmiWeb,
+        }));
+        print("Respuesta Post Update Estado Inversión");
+        print(responsePostUpdateEstasyncUpdateEstadoInversion.body);
+        switch (responsePostUpdateEstasyncUpdateEstadoInversion.statusCode) {
+          case 200:
             print("Caso 200 en Emi Web Update Estado Inversión");
-            //Se elimina la instrucción de la bitacora
-            dataBase.bitacoraBox.remove(bitacora.id);
+            //Se marca como realizada en EmiWeb la instrucción en Bitacora
+            bitacora.executeEmiWeb = true;
+            dataBase.bitacoraBox.put(bitacora);
             return true;
-            default: //No se realizo con éxito el post
-              print("Error en actualizar estado inversion Emi Web");
-              return false;
-          }  
+          default: //No se realizo con éxito el post de la actualización de estado de la inversión
+            print("Error en actualizar estado inversion Emi Web");
+            return false;
+        }  
       } else {
+        // No se encontró el estado actual da la inversión
         return false;
       }
     } catch (e) {

@@ -670,55 +670,29 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncUpdateEstadoInversion Pocketbase");
           final inversionToSync = getFirstInversion(dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
           if(inversionToSync != null){
-            //Esta instrucción tendrán una bandera para pocketbase con el fin de que no se vuelvan a ejecutar.
-            if(instruccionesBitacora[i].executePocketbase) { 
-              print("Ya se ha ejecutado en Pocketbase");
+            final boolSyncUpdateEstadoInversion = await syncUpdateEstadoInversion(inversionToSync, instruccionesBitacora[i]);
+            if (boolSyncUpdateEstadoInversion) {
+              banderasExistoSync.add(boolSyncUpdateEstadoInversion);
               continue;
             } else {
-              final boolSyncUpdateEstadoInversion = await syncUpdateEstadoInversion(inversionToSync, instruccionesBitacora[i]);
-              if (boolSyncUpdateEstadoInversion) {
-                print("La respuesta es: $boolSyncUpdateEstadoInversion");
-                banderasExistoSync.add(boolSyncUpdateEstadoInversion);
-                continue;
-              } else {
-                //Salimos del bucle
-                banderasExistoSync.add(boolSyncUpdateEstadoInversion);
-                i = instruccionesBitacora.length;
-                break;
-              }
-            }          
-          } else {
-            //Salimos del bucle
-            banderasExistoSync.add(false);
-            i = instruccionesBitacora.length;
-            break;
-          }
-        case "syncUpdateInversion":
-          print("Entro al caso de syncUpdateInversion Pocketbase");
-          final inversionToSync = getFirstInversion(dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
-          if(inversionToSync != null){
-            //Esta instrucción tendrán una bandera para pocketbase con el fin de que no se vuelvan a ejecutar.
-            if(instruccionesBitacora[i].executePocketbase) { 
-              print("Ya se ha ejecutado en Pocketbase");
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(boolSyncUpdateEstadoInversion);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                emprendimiento: inversionToSync.emprendimiento.target!.nombre,
+                instruccion: "Actualizar Estado Inversión Servidor", 
+                fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               continue;
-            } else {
-              final boolSyncUpdateInversion = await syncUpdateInversion(inversionToSync, instruccionesBitacora[i]);
-              if (boolSyncUpdateInversion) {
-                print("La respuesta es: $boolSyncUpdateInversion");
-                banderasExistoSync.add(boolSyncUpdateInversion);
-                continue;
-              } else {
-                //Salimos del bucle
-                banderasExistoSync.add(boolSyncUpdateInversion);
-                i = instruccionesBitacora.length;
-                break;
-              }
-            }          
+            }      
           } else {
-            //Salimos del bucle
+            //Recuperamos la instrucción que no se ejecutó
             banderasExistoSync.add(false);
-            i = instruccionesBitacora.length;
-            break;
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+              emprendimiento: "No encontrado",
+              instruccion: "Actualizar Estado Inversión Servidor", 
+              fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
           }
         case "syncUpdateProductoEmprendedor":
           final prodEmprendedorToSync = getFirstInversion(dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
@@ -2411,26 +2385,39 @@ class SyncProviderPocketbase extends ChangeNotifier {
   Future<bool> syncUpdateEstadoInversion(Inversiones inversion, Bitacora bitacora) async {
     print("Estoy en El syncUpdateEstadoInversion en Pocketbase");
     try {
-      print("Instrucción Adicional: ${bitacora.instruccionAdicional}");
-      final estadoActual = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals(bitacora.instruccionAdicional!)).build().findUnique();
-      if (estadoActual != null) {
+      if (!bitacora.executePocketbase) {
+        final estadoActual = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals(bitacora.instruccionAdicional!)).build().findUnique();
+        if (estadoActual != null) {
 
-        final record = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
-            "id_estado_inversion_fk": estadoActual.idDBR,
-        }); 
+          final record = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
+              "id_estado_inversion_fk": estadoActual.idDBR,
+          }); 
 
-        if (record.id.isNotEmpty) {
-          print("Inversión updated succesfully");
-          bitacora.executePocketbase = true;
-          dataBase.bitacoraBox.put(bitacora);
-          print("Se marca como realizada en Pocketbase la instrucción en Bitacora");
-          return true;
-        }
-        else{
+          if (record.id.isNotEmpty) {
+            print("Inversión updated succesfully");
+            //Se marca como realizada en Pocketbase la instrucción en Bitacora
+            bitacora.executePocketbase = true;
+            dataBase.bitacoraBox.put(bitacora);
+            if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+              //Se elimina la instrucción de la bitacora
+              dataBase.bitacoraBox.remove(bitacora.id);
+            }
+            return true;
+          }
+          else {
+            // No se pudo hacer la actualización del estado de la inversión en Pocketbase
+            return false;
+          }
+        } else {
+          // No se encontro el estado actual de la inversión
           return false;
-        }
+        } 
       } else {
-        return false;
+        if (bitacora.executeEmiWeb) {
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
+        }
+        return true;
       }
     } catch (e) {
       print('ERROR - function syncUpdateEstadoInversion(): $e');
@@ -3052,35 +3039,35 @@ void deleteBitacora() {
     }
 }
 
-  Future<bool> syncUpdateInversion(Inversiones inversion, Bitacora bitacora) async {
-    try {
-      print("Estoy en syncUpdateInversion"); 
-      //Se busca el estado de inversión 'Solicitada'
-      final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Solicitada")).build().findFirst();
-      if (newEstadoInversion != null) {
-        print("Datos inversion");
-        print(inversion.estadoInversion);
-        print(inversion.porcentajePago);
-        print(inversion.montoPagar);
-        final record = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
-          "id_estado_inversion_fk": newEstadoInversion.idDBR,
-        }); 
-        if (record.id.isNotEmpty) {
-          bitacora.executePocketbase = true;
-          dataBase.bitacoraBox.put(bitacora);
-          print("Se marca como realizada en Pocketbase la instrucción en Bitacora");
-          return true;
-        } else {
-          return false;
-        }
-      } else {
-        return false;
-      }
-      } catch (e) {
-        print('ERROR - function syncUpdateInversion(): $e');
-        return false;
-      }
-}
+//   Future<bool> syncUpdateInversion(Inversiones inversion, Bitacora bitacora) async {
+//     try {
+//       print("Estoy en syncUpdateInversion"); 
+//       //Se busca el estado de inversión 'Solicitada'
+//       final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Solicitada")).build().findFirst();
+//       if (newEstadoInversion != null) {
+//         print("Datos inversion");
+//         print(inversion.estadoInversion);
+//         print(inversion.porcentajePago);
+//         print(inversion.montoPagar);
+//         final record = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
+//           "id_estado_inversion_fk": newEstadoInversion.idDBR,
+//         }); 
+//         if (record.id.isNotEmpty) {
+//           bitacora.executePocketbase = true;
+//           dataBase.bitacoraBox.put(bitacora);
+//           print("Se marca como realizada en Pocketbase la instrucción en Bitacora");
+//           return true;
+//         } else {
+//           return false;
+//         }
+//       } else {
+//         return false;
+//       }
+//       } catch (e) {
+//         print('ERROR - function syncUpdateInversion(): $e');
+//         return false;
+//       }
+// }
 
   Future<bool?> syncDeleteProductoVendido(String idDBRProductoVendido) async {
     try {
