@@ -850,7 +850,7 @@ with TickerProviderStateMixin {
                                     ));
                                   }
                                 },
-                                text: 'Rechazar',
+                                text: 'Cancelar Solicitud',
                                 icon: const Icon(
                                   Icons.cancel_outlined,
                                   size: 15,
