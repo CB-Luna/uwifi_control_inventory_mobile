@@ -730,13 +730,13 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                     },
                                     obscureText: false,
                                     decoration: InputDecoration(
-                                      labelText: 'Fecha de revisión*',
+                                      labelText: '\nFecha de revisión*',
                                       labelStyle:
                                           AppTheme.of(context).title3.override(
                                                 fontFamily: 'Montserrat',
                                                 color: AppTheme.of(context)
                                                     .secondaryText,
-                                                fontSize: 15,
+                                                fontSize: 12,
                                                 fontWeight: FontWeight.normal,
                                               ),
                                       hintText: 'Ingresa fecha de revisión...',

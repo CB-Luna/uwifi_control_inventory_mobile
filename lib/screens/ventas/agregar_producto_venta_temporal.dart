@@ -363,11 +363,17 @@ class _AgregarProductoVentaTemporalState
                                       ),
                                   maxLines: 1,
                                   validator: (val) {
-                                    if (val == null || val.isEmpty) {
-                                      return 'Para continuar, ingrese la cantidad vendida.';
-                                    }
-                                    return null;
-                                  },
+                                            if(val!.length > 1){
+                                              double costo = double.parse(val.replaceAll('\$', ''));
+                                            if (costo == 0) {
+                                              return 'Para continuar, ingrese un costo sugerido.';
+                                            }
+
+                                            return null;
+                                            }
+                                            
+                                          },
+                                    
                                 ),
                               ),
                               Padding(
@@ -421,6 +427,15 @@ class _AgregarProductoVentaTemporalState
                                         fontWeight: FontWeight.normal,
                                       ),
                                   maxLines: 1,
+                                  validator: (value){
+                                    double costo = double.parse(value!);
+                                    if(costo <= 0){
+                                      return 'El costo unitario debe ser mayor a 0';
+                                    }
+                                    else{
+                                      return null;
+                                    }
+                                  }
                                 ),
                               ),
                               Padding(
@@ -497,12 +512,15 @@ class _AgregarProductoVentaTemporalState
                                         fontWeight: FontWeight.normal,
                                       ),
                                   maxLines: 1,
-                                  validator: (val) {
-                                    if (val == null || val.isEmpty) {
-                                      return 'Para continuar, ingrese el costo de la venta.';
+                                  validator: (value){
+                                    double costo = double.parse(value!);
+                                    if(costo <= 0){
+                                      return 'El precio debe ser mayor a 0';
                                     }
-                                    return null;
-                                  },
+                                    else{
+                                      return null;
+                                    }
+                                  }
                                 ),
                               ),
                               Padding(

@@ -848,12 +848,12 @@ class _EditarProductoInversionScreenState
                                                 fontWeight: FontWeight.normal,
                                               ),
                                           maxLines: 1,
-                                          validator: (val) {
-                                            if (val == null || val.isEmpty) {
-                                              return 'Para continuar, ingrese una cantidad.';
+                                          validator: (value){
+                                            double cant = double.parse(value!);
+                                            if(cant == 0){
+                                              return 'Para continuar, ingrese una cantidad mayor a 0.';
                                             }
-                                            return null;
-                                          },
+                                          }
                                         ),
                                       ),
                                       Padding(
@@ -920,6 +920,12 @@ class _EditarProductoInversionScreenState
                                                 fontWeight: FontWeight.normal,
                                               ),
                                           maxLines: 1,
+                                          validator: (value){
+                                            double cant = double.parse(value!);
+                                            if(cant == 0){
+                                              return 'Para continuar, ingrese un costo mayor a 0.';
+                                            }
+                                          }
                                         ),
                                       ),
                                       Padding(

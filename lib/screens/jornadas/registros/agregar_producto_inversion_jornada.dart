@@ -804,9 +804,11 @@ class _AgregarProductoInversionJornadaScreenState
                                               ),
                                           maxLines: 1,
                                           validator: (val) {
-                                            if (val == null || val.isEmpty) {
+                                            double cantidad = double.tryParse(val!) ?? 0;
+                                            if (cantidad <= 0) {
                                               return 'Para continuar, ingrese una cantidad.';
                                             }
+
                                             return null;
                                           },
                                         ),
@@ -882,10 +884,15 @@ class _AgregarProductoInversionJornadaScreenState
                                               ),
                                           maxLines: 1,
                                           validator: (val) {
-                                            if (val == null || val.isEmpty) {
-                                              return 'Para continuar, ingrese un costo estimado.';
+                                            if(val!.length > 1){
+                                              double costo = double.parse(val.replaceAll('\$', ''));
+                                            if (costo == 0) {
+                                              return 'Para continuar, ingrese un costo sugerido.';
                                             }
+
                                             return null;
+                                            }
+                                            
                                           },
                                         ),
                                       ),
