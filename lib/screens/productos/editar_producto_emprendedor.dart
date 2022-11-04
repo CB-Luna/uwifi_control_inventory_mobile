@@ -304,6 +304,7 @@ class _EditarProductoEmprendedorScreenState
                                 padding: const EdgeInsetsDirectional
                                     .fromSTEB(5, 0, 5, 10),
                                 child: TextFormField(
+                                  maxLength: 50,
                                   controller: nombreController,
                                   textCapitalization:
                                       TextCapitalization.sentences,
@@ -374,6 +375,7 @@ class _EditarProductoEmprendedorScreenState
                                 padding: const EdgeInsetsDirectional
                                     .fromSTEB(5, 0, 5, 10),
                                 child: TextFormField(
+                                  maxLength: 100,
                                   controller: descController,
                                   textCapitalization:
                                       TextCapitalization.sentences,
@@ -491,6 +493,7 @@ class _EditarProductoEmprendedorScreenState
                                 padding: const EdgeInsetsDirectional
                                     .fromSTEB(5, 0, 5, 10),
                                 child: TextFormField(
+                                  maxLength: 10,
                                   controller: costoController,
                                   autovalidateMode: AutovalidateMode
                                       .onUserInteraction,

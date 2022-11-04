@@ -101,6 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                         child: TextFormField(
+                          maxLength: 50,
                           controller: userState.emailController,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -128,6 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                         child: TextFormField(
+                          maxLength: 50,
                           controller: userState.passwordController,
                           obscureText: !contrasenaVisibility,
                           obscuringCharacter: '*',

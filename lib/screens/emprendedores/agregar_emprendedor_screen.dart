@@ -251,6 +251,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       5, 0, 5, 10),
                                   child: TextFormField(
+                                    maxLength: 30,
                                     textCapitalization:
                                         TextCapitalization.words,
                                     autovalidateMode:
@@ -300,17 +301,18 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                           fontWeight: FontWeight.normal,
                                         ),
                                     validator: (value) {
-                                      return capitalizadoCharacters
-                                              .hasMatch(value ?? '')
+                                     return (capitalizadoCharacters.hasMatch(value ?? ''))
                                           ? null
                                           : 'Para continuar, ingrese el nombre empezando por mayúscula.';
                                     },
+                                    
                                   ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       5, 0, 5, 10),
                                   child: TextFormField(
+                                    maxLength: 30,
                                     textCapitalization:
                                         TextCapitalization.words,
                                     autovalidateMode:
@@ -750,6 +752,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       5, 0, 5, 10),
                                   child: TextFormField(
+                                    maxLength: 500,
                                     textCapitalization:
                                         TextCapitalization.sentences,
                                     autovalidateMode:

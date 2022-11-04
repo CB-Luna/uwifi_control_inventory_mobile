@@ -291,6 +291,7 @@ class _AgregarProductoVentaTemporalState
                                 padding: const EdgeInsetsDirectional
                                     .fromSTEB(5, 0, 5, 10),
                                 child: TextFormField(
+                                  maxLength: 5,
                                   controller: cantidadVendida,
                                   autovalidateMode: AutovalidateMode
                                       .onUserInteraction,
@@ -426,6 +427,7 @@ class _AgregarProductoVentaTemporalState
                                 padding: const EdgeInsetsDirectional
                                     .fromSTEB(5, 0, 5, 10),
                                 child: TextFormField(
+                                  maxLength: 10,
                                   controller: precioVenta,
                                   autovalidateMode: AutovalidateMode
                                       .onUserInteraction,

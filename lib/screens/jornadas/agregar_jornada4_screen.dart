@@ -339,6 +339,7 @@ class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     5, 0, 5, 10),
                                 child: TextFormField(
+                                  maxLength: 500,
                                   textCapitalization:
                                       TextCapitalization.sentences,
                                   autovalidateMode:

@@ -417,6 +417,7 @@ class _EditarProductoInversionJornadaTemporalState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          maxLength: 50,
                                           controller: productoController,
                                           textCapitalization:
                                               TextCapitalization.sentences,
@@ -487,6 +488,7 @@ class _EditarProductoInversionJornadaTemporalState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          maxLength: 500,
                                           controller: descripcionController,
                                           textCapitalization:
                                               TextCapitalization.sentences,
@@ -557,6 +559,7 @@ class _EditarProductoInversionJornadaTemporalState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          maxLength: 50,
                                           controller: marcaController,
                                           textCapitalization:
                                               TextCapitalization.sentences,
@@ -621,6 +624,7 @@ class _EditarProductoInversionJornadaTemporalState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          maxLength: 50,
                                           controller: proveedorController,
                                           textCapitalization:
                                               TextCapitalization.sentences,
@@ -747,6 +751,7 @@ class _EditarProductoInversionJornadaTemporalState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          maxLength: 5,
                                           controller: cantidadController,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
@@ -820,6 +825,7 @@ class _EditarProductoInversionJornadaTemporalState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          maxLength: 9,
                                           controller: costoController,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,

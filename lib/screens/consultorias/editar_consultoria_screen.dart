@@ -431,6 +431,7 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     5, 0, 5, 10),
                                 child: TextFormField(
+                                  maxLength: 500,
                                   textCapitalization:
                                       TextCapitalization.sentences,
                                   autovalidateMode:
@@ -540,6 +541,7 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     5, 0, 5, 10),
                                 child: TextFormField(
+                                  maxLength: 500,
                                   textCapitalization:
                                       TextCapitalization.sentences,
                                   autovalidateMode:

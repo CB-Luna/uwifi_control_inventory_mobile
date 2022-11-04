@@ -385,6 +385,7 @@ class _AgregarProductoInversionJornadaTemporalState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          maxLength: 50,
                                           textCapitalization:
                                               TextCapitalization.sentences,
                                           autovalidateMode: AutovalidateMode
@@ -458,6 +459,7 @@ class _AgregarProductoInversionJornadaTemporalState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          maxLength: 500,
                                           textCapitalization:
                                               TextCapitalization.sentences,
                                           autovalidateMode: AutovalidateMode
@@ -531,6 +533,7 @@ class _AgregarProductoInversionJornadaTemporalState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          maxLength: 50,
                                           textCapitalization:
                                               TextCapitalization.sentences,
                                           autovalidateMode: AutovalidateMode
@@ -598,6 +601,7 @@ class _AgregarProductoInversionJornadaTemporalState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          maxLength: 50,
                                           textCapitalization:
                                               TextCapitalization.sentences,
                                           autovalidateMode: AutovalidateMode
@@ -726,6 +730,7 @@ class _AgregarProductoInversionJornadaTemporalState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          maxLength: 5,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
@@ -802,6 +807,7 @@ class _AgregarProductoInversionJornadaTemporalState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          maxLength: 9,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {

@@ -358,6 +358,7 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     5, 0, 5, 10),
                                 child: TextFormField(
+                                  maxLength: 500,
                                   controller: comentariosController,
                                   textCapitalization:
                                       TextCapitalization.sentences,
