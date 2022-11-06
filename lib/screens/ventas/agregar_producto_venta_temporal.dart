@@ -364,7 +364,7 @@ class _AgregarProductoVentaTemporalState
                                   maxLines: 1,
                                   validator: (val) {
                                             if(val!.length > 1){
-                                              double costo = double.parse(val.replaceAll('\$', ''));
+                                               double costo = double.parse(val.replaceAll('\$', '').replaceAll(',', ''));
                                             if (costo == 0) {
                                               return 'Para continuar, ingrese un costo sugerido.';
                                             }
@@ -427,22 +427,14 @@ class _AgregarProductoVentaTemporalState
                                         fontWeight: FontWeight.normal,
                                       ),
                                   maxLines: 1,
-                                  validator: (value){
-                                    double costo = double.parse(value!);
-                                    if(costo <= 0){
-                                      return 'El costo unitario debe ser mayor a 0';
-                                    }
-                                    else{
-                                      return null;
-                                    }
-                                  }
+                                  
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional
                                     .fromSTEB(5, 0, 5, 10),
                                 child: TextFormField(
-                                  maxLength: 10,
+                                  maxLength: 13,
                                   controller: precioVenta,
                                   autovalidateMode: AutovalidateMode
                                       .onUserInteraction,
@@ -512,15 +504,17 @@ class _AgregarProductoVentaTemporalState
                                         fontWeight: FontWeight.normal,
                                       ),
                                   maxLines: 1,
-                                  validator: (value){
-                                    double costo = double.parse(value!);
-                                    if(costo <= 0){
-                                      return 'El precio debe ser mayor a 0';
-                                    }
-                                    else{
-                                      return null;
-                                    }
-                                  }
+                                  validator: (val) {
+                                            if(val!.length > 1){
+                                               double venta = double.parse(val.replaceAll('\$', '').replaceAll(',', ''));
+                                            if (venta <= 0) {
+                                              return 'Para continuar, ingrese un costo mayor a 0.';
+                                            }
+
+                                            return null;
+                                            }
+                                            
+                                          },
                                 ),
                               ),
                               Padding(

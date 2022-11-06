@@ -576,9 +576,9 @@ class _EditarProductoVentaState
                                   maxLines: 1,
                                   validator: (val) {
                                             if(val!.length > 1){
-                                              double costo = double.parse(val.replaceAll('\$', ''));
-                                            if (costo == 0) {
-                                              return 'Para continuar, ingrese un costo sugerido.';
+                                               double precio = double.parse(val.replaceAll('\$', '').replaceAll(',', ''));
+                                            if (precio <= 0) {
+                                              return 'Para continuar, ingrese un costo mayor a 0.';
                                             }
 
                                             return null;

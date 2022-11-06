@@ -489,8 +489,8 @@ class _EditarProductoVentaTemporalState
                                   maxLines: 1,
                                   validator: (val) {
                                             if(val!.length > 1){
-                                              double costo = double.parse(val.replaceAll('\$', ''));
-                                            if (costo == 0) {
+                                               double costo = double.parse(val.replaceAll('\$', '').replaceAll(',', ''));
+                                            if (costo <= 0) {
                                               return 'Para continuar, ingrese un costo sugerido.';
                                             }
 
@@ -575,8 +575,8 @@ class _EditarProductoVentaTemporalState
                                   maxLines: 1,
                                   validator: (val) {
                                             if(val!.length > 1){
-                                              double costo = double.parse(val.replaceAll('\$', ''));
-                                            if (costo == 0) {
+                                               double precio = double.parse(val.replaceAll('\$', '').replaceAll(',', ''));
+                                            if (precio <= 0) {
                                               return 'Para continuar, ingrese un costo sugerido.';
                                             }
 

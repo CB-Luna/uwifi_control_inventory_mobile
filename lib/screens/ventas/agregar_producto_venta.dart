@@ -369,14 +369,14 @@ class _AgregarProductoVentaState
                                       ),
                                   maxLines: 1,
                                   validator: (val) {
-                                            if(val!.length > 1){
-                                              double costo = double.parse(val.replaceAll('\$', ''));
-                                            if (costo == 0) {
-                                              return 'Para continuar, ingrese un costo sugerido.';
+                                           
+                                               double costo = double.parse(val!.replaceAll('\$', '').replaceAll(',', ''));
+                                            if (costo <= 0) {
+                                              return 'Para continuar, ingrese una cantidad mayor a 0.';
                                             }
 
                                             return null;
-                                            }
+                                            
                                             
                                           },
                                 ),
@@ -508,15 +508,17 @@ class _AgregarProductoVentaState
                                         fontWeight: FontWeight.normal,
                                       ),
                                   maxLines: 1,
-                                  validator: (value){
-                                    double costo = double.parse(value!);
-                                    if(costo <= 0){
-                                      return 'El costo unitario debe ser mayor a 0';
-                                    }
-                                    else{
-                                      return null;
-                                    }
-                                  }
+                                  validator: (val) {
+                                            if(val!.length > 1){
+                                               double precio = double.parse(val.replaceAll('\$', '').replaceAll(',', ''));
+                                            if (precio <= 0) {
+                                              return 'Para continuar, ingrese un costo mayor a 0.';
+                                            }
+
+                                            return null;
+                                            }
+                                            
+                                          },
                                 ),
                               ),
                               Padding(

@@ -802,6 +802,7 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          maxLength: 15,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
@@ -869,7 +870,7 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                           maxLines: 1,
                                           validator: (val) {
                                             if(val!.length > 1){
-                                              double costo = double.parse(val.replaceAll('\$', ''));
+                                              double costo = double.parse(val.replaceAll('\$', '').replaceAll(',', ''));
                                             if (costo == 0) {
                                               return 'Para continuar, ingrese un costo sugerido.';
                                             }
