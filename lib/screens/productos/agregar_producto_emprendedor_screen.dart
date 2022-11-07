@@ -508,7 +508,7 @@ class _AgregarProductoEmprendedorScreenState
                                 padding: const EdgeInsetsDirectional
                                     .fromSTEB(5, 0, 5, 10),
                                 child: TextFormField(
-                                  maxLength: 10,
+                                  maxLength: 15,
                                   autovalidateMode: AutovalidateMode
                                       .onUserInteraction,
                                   onChanged: (value) {
@@ -576,8 +576,8 @@ class _AgregarProductoEmprendedorScreenState
                                   maxLines: 1,
                                   validator: (val) {
                                             if(val!.length > 1){
-                                              double costo = double.parse(val.replaceAll('\$', ''));
-                                            if (costo == 0) {
+                                               double costo = double.parse(val.replaceAll('\$', '').replaceAll(',', ''));
+                                            if (costo <= 0) {
                                               return 'Para continuar, ingrese un costo mayor a 0.';
                                             }
 

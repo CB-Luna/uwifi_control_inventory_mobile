@@ -813,7 +813,7 @@ class _AgregarPrimerProductoInversionScreenState
                                           maxLines: 1,
                                           validator: (value){
                                             double cant = double.parse(value!);
-                                            if(cant == 0){
+                                            if(cant <= 0){
                                               return 'Para continuar, ingrese un costo mayor a 0.';
                                             }
                                           }
@@ -824,7 +824,7 @@ class _AgregarPrimerProductoInversionScreenState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
-                                          maxLength: 9,
+                                          maxLength: 13,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
@@ -890,12 +890,17 @@ class _AgregarPrimerProductoInversionScreenState
                                                 fontWeight: FontWeight.normal,
                                               ),
                                           maxLines: 1,
-                                          validator: (value){
-                                            double cant = double.parse(value!);
-                                            if(cant == 0){
+                                          validator: (val) {
+                                            if(val!.length > 1){
+                                               double costo = double.parse(val.replaceAll('\$', '').replaceAll(',', ''));
+                                            if (costo <= 0) {
                                               return 'Para continuar, ingrese un costo mayor a 0.';
                                             }
-                                          }
+
+                                            return null;
+                                            }
+                                            
+                                          },
                                         ),
                                       ),
                                       Padding(
