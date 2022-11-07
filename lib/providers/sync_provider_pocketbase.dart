@@ -378,28 +378,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
           }
-        case "syncUpdateEmprendimiento":
-          var bitacoraList = dataBase.bitacoraBox.getAll();
-          for (var i = 0; i < bitacoraList.length; i++) {
-            print("bitacora ID: ${bitacoraList[i].id}");  
-            print("Instrucciones: ${bitacoraList[i].instruccion}");
-            }
-          final emprendimientoToSync = getFirstEmprendimiento(dataBase.emprendimientosBox.getAll(), instruccionesBitacora[i].id);
-          if(emprendimientoToSync != null){
-            if(emprendimientoToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
-              print("Entro aqui en el if");
-              continue;
-            } else {
-              print("Entro aqui en el else");
-              if (emprendimientoToSync.idDBR != null) {
-                print("Ya ha sido enviado al backend");
-                syncUpdateEmprendimiento(emprendimientoToSync);
-              } else {
-                print("No ha sido enviado al backend");
-              }
-            }   
-          }  
-          continue;
         case "syncUpdateFaseEmprendimiento":
           print("Entro al caso de syncUpdateFaseEmprendimiento Pocketbase");
           final emprendimientoToSync = getFirstEmprendimiento(dataBase.emprendimientosBox.getAll(), instruccionesBitacora[i].id);
@@ -496,6 +474,34 @@ class SyncProviderPocketbase extends ChangeNotifier {
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
               instruccion: "Actualización Emprendedor Servidor", 
+              fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
+        case "syncUpdateEmprendimiento":
+          print("Entro al caso de syncUpdateEmprendimiento Pocketbase");
+          final emprendedorToSync = getFirstEmprendimiento(dataBase.emprendimientosBox.getAll(), instruccionesBitacora[i].id);
+          if(emprendedorToSync != null){
+            final boolSyncUpdateEmprendimiento = await syncUpdateEmprendimiento(emprendedorToSync, instruccionesBitacora[i]);
+            if (boolSyncUpdateEmprendimiento) {
+              banderasExistoSync.add(boolSyncUpdateEmprendimiento);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(boolSyncUpdateEmprendimiento);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                emprendimiento: emprendedorToSync.nombre,
+                instruccion: "Actualización Emprendimiento Servidor", 
+                fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }      
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+              emprendimiento: "No encontrado",
+              instruccion: "Actualización Emprendimiento Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
@@ -1001,7 +1007,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
               final recordEmprendimiento = await client.records.create('emprendimientos', body: {
                 "nombre_emprendimiento": emprendimientoToSync.nombre,
                 "descripcion": emprendimientoToSync.descripcion,
-                "imagen": emprendimientoToSync.imagen,
                 "activo": emprendimientoToSync.activo,
                 "archivado": emprendimientoToSync.archivado,
                 "id_promotor_fk": emprendimientoToSync.usuario.target!.idDBR,
@@ -1042,7 +1047,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
               final recordEmprendimiento = await client.records.create('emprendimientos', body: {
                 "nombre_emprendimiento": emprendimientoToSync.nombre,
                 "descripcion": emprendimientoToSync.descripcion,
-                "imagen": emprendimientoToSync.imagen,
                 "activo": emprendimientoToSync.activo,
                 "archivado": emprendimientoToSync.archivado,
                 "id_promotor_fk": emprendimientoToSync.usuario.target!.idDBR,
@@ -2398,46 +2402,41 @@ class SyncProviderPocketbase extends ChangeNotifier {
     }
   } 
 
-  Future<bool?> syncUpdateEmprendimiento(Emprendimientos emprendimiento) async {
-
+  Future<bool> syncUpdateEmprendimiento(Emprendimientos emprendimiento, Bitacora bitacora) async {
     print("Estoy en El syncUpdateEmprendimiento");
     try {
-      print("ID Promotor: ${emprendimiento.usuario.target!.idDBR}");
-
-      print("ID Emprendedor: ${emprendimiento.emprendedor.target!.idDBR}");
-
-      final record = await client.records.update('emprendimientos', emprendimiento.idDBR.toString(), body: {
+      if (!bitacora.executePocketbase) {
+        final record = await client.records.update('emprendimientos', emprendimiento.idDBR.toString(), body: {
           "nombre_emprendimiento": emprendimiento.nombre,
           "descripcion": emprendimiento.descripcion,
-          "imagen": emprendimiento.imagen,
-          "activo": emprendimiento.activo,
-          "archivado": emprendimiento.archivado,
-          "id_promotor_fk": emprendimiento.usuario.target!.idDBR,
-          "id_status_sync_fk": "HoI36PzYw1wtbO1",
-          "id_emprendedor_fk": emprendimiento.emprendedor.target!.idDBR,
       }); 
 
-      if (record.id.isNotEmpty) {
-        print("Emprendimiento updated succesfully");
-        var updateEmprendimiento = dataBase.emprendimientosBox.get(emprendimiento.id);
-        if (updateEmprendimiento  != null) {
-          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendimiento.statusSync.target!.id)).build().findUnique();
-          if (statusSync != null) {
-            statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
-            dataBase.statusSyncBox.put(statusSync);
+        if (record.id.isNotEmpty) {
+          print("Emprendedor updated succesfully");
+          //Se marca como realizada en Pocketbase la instrucción en Bitacora
+          bitacora.executePocketbase = true;
+          dataBase.bitacoraBox.put(bitacora);
+          if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+            //Se elimina la instrucción de la bitacora
+            dataBase.bitacoraBox.remove(bitacora.id);
           }
+          return true;
         }
+        else{
+          return false;
+        }
+      } else {
+        if (bitacora.executeEmiWeb) {
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
+        }
+        return true;
       }
-      else{
-        return false;
-      }
-      return true;
 
     } catch (e) {
-      print('ERROR - function syncUpdateEmprendimiento(): $e');
+      print('ERROR - function syncUpdateEmprendedimiento(): $e');
       return false;
     }
-
   } 
 
 
@@ -2475,7 +2474,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
   } 
 
   Future<bool> syncUpdateEmprendedor(Emprendedores emprendedor, Bitacora bitacora) async {
-
     print("Estoy en El syncUpdateEmprendedor");
     try {
       if (!bitacora.executePocketbase) {
@@ -2516,7 +2514,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
       print('ERROR - function syncUpdateEmprendedor(): $e');
       return false;
     }
-
   } 
 
   Future<bool> syncUpdateJornada1(Jornadas jornada) async {

@@ -1009,8 +1009,6 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                                         .findFirst()
                                                         ?.id;
                                                     if (idComunidad != null) {
-                                                      print(
-                                                          "Antes de actualizar");
                                                       if (newImagen !=
                                                         widget.emprendedor.imagen.target) {
                                                           if (widget.emprendedor.imagen.target == null) {

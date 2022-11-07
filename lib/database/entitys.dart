@@ -7,7 +7,6 @@ class Emprendimientos {
   String faseActual;
   String faseAnterior;
   int? idInversionJornada;
-  String imagen;
   String nombre;
   String descripcion;
   bool activo;
@@ -24,6 +23,7 @@ class Emprendimientos {
   final jornadas = ToMany<Jornadas>();
   final emprendedor = ToOne<Emprendedores>();
   final statusSync = ToOne<StatusSync>();
+  final imagen = ToOne<Imagenes>();
   final bitacora = ToMany<Bitacora>();
   final faseEmp = ToMany<FasesEmp>();
   @Backlink()
@@ -40,7 +40,6 @@ class Emprendimientos {
     required this.faseActual,
     required this.faseAnterior,
     this.idInversionJornada,
-    required this.imagen,
     required this.nombre,
     required this.descripcion,
     this.activo = true,
@@ -1185,6 +1184,7 @@ class Imagenes {
   final productosEmp = ToMany<ProductosEmp>();
   final bitacora = ToMany<Bitacora>();
   final emprendedor = ToOne<Emprendedores>();
+  final emprendimiento = ToOne<Emprendimientos>();
   final usuario = ToOne<Usuarios>();
   Imagenes({
     this.id = 0,

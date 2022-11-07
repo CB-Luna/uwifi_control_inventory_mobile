@@ -490,7 +490,7 @@ class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
                                 image: DecorationImage(
                                   fit: BoxFit.cover,
                                   image: Image.file(
-                                    File(emprendimientosEmprendedor.imagen),
+                                    File(emprendimientosEmprendedor.imagen.target!.path!),
                                   ).image,
                                 ),
                                 borderRadius: BorderRadius.circular(8),

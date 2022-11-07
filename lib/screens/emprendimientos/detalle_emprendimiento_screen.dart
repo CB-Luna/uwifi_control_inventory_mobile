@@ -90,7 +90,7 @@ Emprendimientos? emprendimientoActual;
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 image: FileImage(
-                                    File(emprendimientoActual!.imagen)),
+                                    File(emprendimientoActual!.imagen.target!.path!)),
                                 fit: BoxFit.cover,
                                 filterQuality: FilterQuality.high,
                               ),

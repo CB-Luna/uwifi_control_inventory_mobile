@@ -195,7 +195,7 @@ class _EditarInversionJornadaScreenState
                                             fit: BoxFit.cover,
                                             image: Image.file(
                                               File(widget.inversion.emprendimiento
-                                                  .target!.imagen),
+                                                  .target!.imagen.target!.path!),
                                               fit: BoxFit.contain,
                                             ).image,
                                           ),

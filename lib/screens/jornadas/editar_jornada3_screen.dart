@@ -138,7 +138,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: FileImage(File(
-                              widget.jornada.emprendimiento.target!.imagen)),
+                              widget.jornada.emprendimiento.target!.imagen.target!.path!)),
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
                         ),

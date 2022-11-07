@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:bizpro_app/helpers/constants.dart';
@@ -37,11 +38,13 @@ class _EditarEmprendimientoScreenState
   late TextEditingController nombreController;
   late TextEditingController descController;
 
-  late String newImagen;
+  Imagenes? newImagen;
+  String? imagenTemp;
   @override
   void initState() {
     super.initState();
-    newImagen = widget.emprendimiento.imagen;
+    newImagen = widget.emprendimiento.imagen.target;
+    imagenTemp = widget.emprendimiento.imagen.target?.path;
     nombreController =
         TextEditingController(text: widget.emprendimiento.nombre);
     descController =
@@ -71,7 +74,7 @@ class _EditarEmprendimientoScreenState
                       height: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: FileImage(File(widget.emprendimiento.imagen)),
+                          image: FileImage(File(widget.emprendimiento.imagen.target!.path!)),
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
                         ),
@@ -241,7 +244,16 @@ class _EditarEmprendimientoScreenState
                     
                               setState(() {
                                 image = pickedFile;
-                                newImagen = image!.path;
+                                imagenTemp = image!.path;
+                                File file = File(image!.path);
+                                List<int> fileInByte = file.readAsBytesSync();
+                                String base64 = base64Encode(fileInByte);
+                                newImagen = Imagenes(
+                                  imagenes: image!.path,
+                                  nombre: image!.name, 
+                                  path: image!.path, 
+                                  base64: base64);
+                                emprendimientoProvider.imagenLocal = newImagen;
                               });
                             },
                             child: Container(
@@ -268,8 +280,7 @@ class _EditarEmprendimientoScreenState
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(8),
                                     child: getImage(
-                                      image?.path ??
-                                          widget.emprendimiento.imagen,
+                                      imagenTemp,
                                     ),
                                   ),
                                 ],
@@ -409,9 +420,7 @@ class _EditarEmprendimientoScreenState
                                     0, 5, 0, 10),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    if (newImagen !=
-                                            widget.emprendimiento.imagen ||
-                                        nombreController.text !=
+                                    if (nombreController.text !=
                                             widget.emprendimiento.nombre ||
                                         descController.text !=
                                             widget
@@ -419,9 +428,17 @@ class _EditarEmprendimientoScreenState
                                         ) {
                                       if (emprendimientoProvider
                                           .validateForm(formKey)) {
+                                        
+                                        if (newImagen !=
+                                            widget.emprendimiento.imagen.target) {
+                                          emprendimientoProvider
+                                          .updateImagen(
+                                            widget.emprendimiento.imagen.target!.id, 
+                                            newImagen!,
+                                          );
+                                        }
                                         emprendimientoProvider.update(
                                             widget.emprendimiento.id,
-                                            newImagen,
                                             nombreController.text,
                                             descController.text
                                             );
@@ -453,6 +470,48 @@ class _EditarEmprendimientoScreenState
                                           },
                                         );
                                         return;
+                                      }
+                                    } else {
+                                      if (newImagen !=
+                                            widget.emprendimiento.imagen.target) {
+                                          if (emprendimientoProvider
+                                          .validateForm(formKey)) {
+                                          
+                                          emprendimientoProvider
+                                          .updateImagen(
+                                            widget.emprendimiento.imagen.target!.id, 
+                                            newImagen!,
+                                          );
+                                          
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const EmprendimientoActualizado(),
+                                            ),
+                                          );
+                                        } else {
+                                          await showDialog(
+                                            context: context,
+                                            builder: (alertDialogContext) {
+                                              return AlertDialog(
+                                                title:
+                                                    const Text('Campos vacíos'),
+                                                content: const Text(
+                                                    'Para continuar, debe llenar todos los campos e incluír una imagen.'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext),
+                                                    child: const Text('Bien'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                          return;
+                                        }
                                       }
                                     }
                                   },

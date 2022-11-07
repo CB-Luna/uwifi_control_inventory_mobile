@@ -78,7 +78,7 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                 Stack(
                   children: [
                     Image.file(
-                      File(widget.consultoria.emprendimiento.target!.imagen),
+                      File(widget.consultoria.emprendimiento.target!.imagen.target!.path!),
                       width: double.infinity,
                       height: 200,
                       fit: BoxFit.cover,

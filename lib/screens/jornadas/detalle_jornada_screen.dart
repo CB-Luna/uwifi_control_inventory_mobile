@@ -84,7 +84,7 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                 Stack(
                   children: [
                     Image.file(
-                      File(widget.jornada.emprendimiento.target!.imagen),
+                      File(widget.jornada.emprendimiento.target!.imagen.target!.path!),
                       width: double.infinity,
                       height: 200,
                       fit: BoxFit.cover,

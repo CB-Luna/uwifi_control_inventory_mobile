@@ -84,7 +84,7 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
                       height: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: FileImage(File(actualEmprendimiento!.imagen)),
+                          image: FileImage(File(actualEmprendimiento!.imagen.target!.path!)),
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
                         ),

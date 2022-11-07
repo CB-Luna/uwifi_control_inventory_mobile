@@ -47,7 +47,7 @@ class _DetalleProductoEmprendedorState extends State<DetalleProductoEmprendedor>
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: FileImage(File(
-                              widget.productoEmprendedor.emprendimientos.target!.imagen)),
+                              widget.productoEmprendedor.emprendimientos.target!.imagen.target!.path!)),
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
                         ),

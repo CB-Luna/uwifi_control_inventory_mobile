@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/providers/database_providers/emprendedor_controller.dart';
@@ -173,8 +177,15 @@ class _AgregarEmprendimientoScreenState
 
                                     setState(() {
                                       image = pickedFile;
-                                      emprendimientoProvider.imagen =
-                                          image!.path;
+                                      File file = File(image!.path);
+                                      List<int> fileInByte = file.readAsBytesSync();
+                                      String base64 = base64Encode(fileInByte);
+                                      var newImagenLocal = Imagenes(
+                                        imagenes: image!.path,
+                                        nombre: image!.name, 
+                                        path: image!.path, 
+                                        base64: base64);
+                                      emprendimientoProvider.imagenLocal = newImagenLocal;
                                     });
                                   },
                                   child: Container(
@@ -214,8 +225,8 @@ class _AgregarEmprendimientoScreenState
                             ],
                           );
                         }, validator: (val) {
-                          if (emprendimientoProvider.imagen == null ||
-                              emprendimientoProvider.imagen.isEmpty) {
+                          if (image?.path == null || image?.path == "") {
+                            print("Espera");
                             return 'Para continuar, cargue una imagen';
                           }
                           return null;
