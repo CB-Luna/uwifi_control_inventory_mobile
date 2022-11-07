@@ -1,9 +1,6 @@
 import 'dart:io';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
-import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
-import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -84,7 +81,7 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: FileImage(File(widget
-                              .consultoria.emprendimiento.target!.imagen)),
+                              .consultoria.emprendimiento.target!.imagen.target!.path!)),
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
                         ),

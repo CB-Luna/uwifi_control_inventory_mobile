@@ -76,7 +76,7 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                       height: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: FileImage(libraryIO.File(widget.emprendimiento.imagen)),
+                          image: FileImage(libraryIO.File(widget.emprendimiento.imagen.target!.path!)),
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
                         ),

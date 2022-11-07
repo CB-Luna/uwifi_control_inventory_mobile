@@ -58,7 +58,7 @@ class _DetalleTareaConsultoriaScreenState
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: FileImage(File(widget
-                              .consultoria.emprendimiento.target!.imagen)),
+                              .consultoria.emprendimiento.target!.imagen.target!.path!)),
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
                         ),

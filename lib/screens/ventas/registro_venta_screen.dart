@@ -205,7 +205,7 @@ class _RegistroVentaScreenState
                                           image: DecorationImage(
                                             fit: BoxFit.cover,
                                             image: Image.file(
-                                              File(widget.venta.emprendimiento.target!.imagen),
+                                              File(widget.venta.emprendimiento.target!.imagen.target!.path!),
                                               fit: BoxFit.contain,
                                             ).image,
                                           ),

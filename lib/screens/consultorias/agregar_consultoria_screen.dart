@@ -86,7 +86,7 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                       height: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: FileImage(File(widget.emprendimiento.imagen)),
+                          image: FileImage(File(widget.emprendimiento.imagen.target!.path!)),
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
                         ),

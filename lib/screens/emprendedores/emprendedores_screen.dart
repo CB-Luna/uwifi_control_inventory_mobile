@@ -515,7 +515,7 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                                 topRight: Radius.circular(8),
                                               ),
                                               child: getWidgetImageEmprendedor(
-                                                  emprendedor.imagen, 180, double.infinity)),
+                                                  emprendedor.imagen.target?.path, 180, double.infinity)),
                                         ),
                                         Padding(
                                           padding: const EdgeInsetsDirectional

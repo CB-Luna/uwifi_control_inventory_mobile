@@ -315,7 +315,7 @@ class _GridEmprendimientosScreenState extends State<GridEmprendimientosScreen> {
                                                 topRight: Radius.circular(8),
                                               ),
                                               child: getImage(
-                                                emprendimiento.imagen,
+                                                emprendimiento.imagen.target!.path!,
                                                 height: 155,
                                               ),
                                             ),

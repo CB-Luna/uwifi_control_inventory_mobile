@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:diacritic/diacritic.dart';
@@ -205,8 +209,15 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
 
                                             setState(() {
                                               image = pickedFile;
-                                              emprendedorProvider.imagen =
-                                                  image!.path;
+                                              File file = File(image!.path);
+                                              List<int> fileInByte = file.readAsBytesSync();
+                                              String base64 = base64Encode(fileInByte);
+                                              var newImagenLocal = Imagenes(
+                                                imagenes: image!.path,
+                                                nombre: image!.name, 
+                                                path: image!.path, 
+                                                base64: base64);
+                                              emprendedorProvider.imagenLocal = newImagenLocal;
                                             });
                                           },
                                           child: Container(
@@ -892,7 +903,7 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                                         ?.id;
                                                     if (idComunidad != null) {
                                                       emprendedorProvider
-                                                        .addTemporaly(idComunidad);
+                                                        .addTemporal(idComunidad);
                                                       Navigator.pop(context);
                                                       snackbarKey.currentState
                                                           ?.showSnackBar(const SnackBar(

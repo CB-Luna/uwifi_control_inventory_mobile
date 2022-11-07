@@ -233,7 +233,7 @@ class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
                             type: PageTransitionType.fade,
                             child: FlutterFlowExpandedImageView(
                               image: getImageEmprendedor(
-                                actualEmprendedor!.imagen
+                                actualEmprendedor!.imagen.target?.path
                                 ),
                               allowRotation: false,
                               tag: actualEmprendedor!.imagen,
@@ -253,7 +253,7 @@ class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
                             shape: BoxShape.circle,
                           ),
                           child: getImageEmprendedor(
-                            actualEmprendedor!.imagen,
+                            actualEmprendedor!.imagen.target?.path,
                             height: 200
                           ),
                         ),
@@ -490,7 +490,7 @@ class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
                                 image: DecorationImage(
                                   fit: BoxFit.cover,
                                   image: Image.file(
-                                    File(emprendimientosEmprendedor.imagen),
+                                    File(emprendimientosEmprendedor.imagen.target!.path!),
                                   ).image,
                                 ),
                                 borderRadius: BorderRadius.circular(8),

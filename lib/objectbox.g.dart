@@ -22,7 +22,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(8, 804684152773215409),
       name: 'Emprendimientos',
-      lastPropertyId: const IdUid(32, 7788765518671870184),
+      lastPropertyId: const IdUid(33, 4714516556889829554),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -30,11 +30,6 @@ final _entities = <ModelEntity>[
             name: 'id',
             type: 6,
             flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 5330112956647391083),
-            name: 'imagen',
-            type: 9,
-            flags: 0),
         ModelProperty(
             id: const IdUid(3, 3655261249465798823),
             name: 'nombre',
@@ -121,7 +116,14 @@ final _entities = <ModelEntity>[
             name: 'idEmiWeb',
             type: 9,
             flags: 2080,
-            indexId: const IdUid(233, 1803242766406010981))
+            indexId: const IdUid(233, 1803242766406010981)),
+        ModelProperty(
+            id: const IdUid(33, 4714516556889829554),
+            name: 'imagenId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(256, 1186035180202240577),
+            relationTarget: 'Imagenes')
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -558,7 +560,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(21, 311544265460535081),
       name: 'Emprendedores',
-      lastPropertyId: const IdUid(22, 2413860551118199294),
+      lastPropertyId: const IdUid(23, 4858378161463265971),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -616,11 +618,6 @@ final _entities = <ModelEntity>[
             indexId: const IdUid(39, 5629854475557113245),
             relationTarget: 'Emprendimientos'),
         ModelProperty(
-            id: const IdUid(15, 9187449762833663479),
-            name: 'imagen',
-            type: 9,
-            flags: 0),
-        ModelProperty(
             id: const IdUid(16, 4772008941693181500),
             name: 'apellidos',
             type: 9,
@@ -643,7 +640,14 @@ final _entities = <ModelEntity>[
             name: 'idEmiWeb',
             type: 9,
             flags: 2080,
-            indexId: const IdUid(232, 6714898879411675212))
+            indexId: const IdUid(232, 6714898879411675212)),
+        ModelProperty(
+            id: const IdUid(23, 4858378161463265971),
+            name: 'imagenId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(254, 3834159862581205550),
+            relationTarget: 'Imagenes')
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -1712,7 +1716,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(47, 4406411524870188538),
       name: 'Imagenes',
-      lastPropertyId: const IdUid(11, 7411525460197573173),
+      lastPropertyId: const IdUid(13, 6948596352627655480),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1763,7 +1767,21 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(253, 2893911726871456069),
-            relationTarget: 'Usuarios')
+            relationTarget: 'Usuarios'),
+        ModelProperty(
+            id: const IdUid(12, 5630061134539575344),
+            name: 'emprendedorId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(255, 5783738241510611326),
+            relationTarget: 'Emprendedores'),
+        ModelProperty(
+            id: const IdUid(13, 6948596352627655480),
+            name: 'emprendimientoId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(257, 7992571315025806315),
+            relationTarget: 'Emprendimientos')
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -2756,8 +2774,8 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(62, 5967866020755512418),
-      lastIndexId: const IdUid(253, 2893911726871456069),
-      lastRelationId: const IdUid(74, 211223486003667531),
+      lastIndexId: const IdUid(257, 7992571315025806315),
+      lastRelationId: const IdUid(75, 1265602403063460460),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
         1366246136666677579,
@@ -3133,7 +3151,9 @@ ModelDefinition getObjectBoxModel() {
         3554819703177446556,
         4594205475808180169,
         2628466040035596378,
-        2797366167647637102
+        2797366167647637102,
+        9187449762833663479,
+        5330112956647391083
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -3149,7 +3169,8 @@ ModelDefinition getObjectBoxModel() {
         803629559452567645,
         3709026006801487301,
         5617872246173150113,
-        795186633578779297
+        795186633578779297,
+        1265602403063460460
       ],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -3163,7 +3184,8 @@ ModelDefinition getObjectBoxModel() {
               object.statusSync,
               object.usuario,
               object.prioridadEmp,
-              object.catalogoProyecto
+              object.catalogoProyecto,
+              object.imagen
             ],
         toManyRelations: (Emprendimientos object) => {
               RelInfo<Emprendimientos>.toMany(5, object.id): object.jornadas,
@@ -3189,7 +3211,6 @@ ModelDefinition getObjectBoxModel() {
           object.id = id;
         },
         objectToFB: (Emprendimientos object, fb.Builder fbb) {
-          final imagenOffset = fbb.writeString(object.imagen);
           final nombreOffset = fbb.writeString(object.nombre);
           final descripcionOffset = fbb.writeString(object.descripcion);
           final idDBROffset =
@@ -3199,9 +3220,8 @@ ModelDefinition getObjectBoxModel() {
           final idEmiWebOffset = object.idEmiWeb == null
               ? null
               : fbb.writeString(object.idEmiWeb!);
-          fbb.startTable(33);
+          fbb.startTable(34);
           fbb.addInt64(0, object.id);
-          fbb.addOffset(1, imagenOffset);
           fbb.addOffset(2, nombreOffset);
           fbb.addOffset(3, descripcionOffset);
           fbb.addInt64(4, object.fechaRegistro.millisecondsSinceEpoch);
@@ -3217,6 +3237,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(29, faseActualOffset);
           fbb.addOffset(30, faseAnteriorOffset);
           fbb.addOffset(31, idEmiWebOffset);
+          fbb.addInt64(32, object.imagen.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -3232,16 +3253,14 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 64, ''),
               idInversionJornada: const fb.Int64Reader()
                   .vTableGetNullable(buffer, rootOffset, 58),
-              imagen: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
               nombre: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 8, ''),
               descripcion: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 10, ''),
               activo: const fb.BoolReader()
                   .vTableGet(buffer, rootOffset, 34, false),
-              fechaRegistro:
-                  DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0)),
+              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0)),
               archivado: const fb.BoolReader().vTableGet(buffer, rootOffset, 36, false),
               idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 40),
               idEmiWeb: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 66));
@@ -3260,6 +3279,9 @@ ModelDefinition getObjectBoxModel() {
           object.catalogoProyecto.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 56, 0);
           object.catalogoProyecto.attach(store);
+          object.imagen.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 68, 0);
+          object.imagen.attach(store);
           InternalToManyAccess.setRelInfo(
               object.jornadas,
               store,
@@ -3695,8 +3717,12 @@ ModelDefinition getObjectBoxModel() {
         }),
     Emprendedores: EntityDefinition<Emprendedores>(
         model: _entities[6],
-        toOneRelations: (Emprendedores object) =>
-            [object.statusSync, object.emprendimiento, object.comunidad],
+        toOneRelations: (Emprendedores object) => [
+              object.statusSync,
+              object.emprendimiento,
+              object.comunidad,
+              object.imagen
+            ],
         toManyRelations: (Emprendedores object) =>
             {RelInfo<Emprendedores>.toMany(9, object.id): object.bitacora},
         getId: (Emprendedores object) => object.id,
@@ -3712,14 +3738,13 @@ ModelDefinition getObjectBoxModel() {
               ? null
               : fbb.writeString(object.telefono!);
           final comentariosOffset = fbb.writeString(object.comentarios);
-          final imagenOffset = fbb.writeString(object.imagen);
           final apellidosOffset = fbb.writeString(object.apellidos);
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
           final idEmiWebOffset = object.idEmiWeb == null
               ? null
               : fbb.writeString(object.idEmiWeb!);
-          fbb.startTable(23);
+          fbb.startTable(24);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nombreOffset);
           fbb.addInt64(4, object.nacimiento.millisecondsSinceEpoch);
@@ -3730,11 +3755,11 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(9, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addInt64(12, object.statusSync.targetId);
           fbb.addInt64(13, object.emprendimiento.targetId);
-          fbb.addOffset(14, imagenOffset);
           fbb.addOffset(15, apellidosOffset);
           fbb.addOffset(17, idDBROffset);
           fbb.addInt64(20, object.comunidad.targetId);
           fbb.addOffset(21, idEmiWebOffset);
+          fbb.addInt64(22, object.imagen.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -3744,8 +3769,6 @@ ModelDefinition getObjectBoxModel() {
 
           final object = Emprendedores(
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              imagen: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 32, ''),
               nombre: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 6, ''),
               apellidos: const fb.StringReader(asciiOptimization: true)
@@ -3758,9 +3781,10 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 16, ''),
               telefono: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 18),
-              comentarios:
-                  const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
-              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0)),
+              comentarios: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 20, ''),
+              fechaRegistro:
+                  DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 38),
               idEmiWeb: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 46));
           object.statusSync.targetId =
@@ -3772,6 +3796,9 @@ ModelDefinition getObjectBoxModel() {
           object.comunidad.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 44, 0);
           object.comunidad.attach(store);
+          object.imagen.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 48, 0);
+          object.imagen.attach(store);
           InternalToManyAccess.setRelInfo(
               object.bitacora,
               store,
@@ -5076,7 +5103,8 @@ ModelDefinition getObjectBoxModel() {
         }),
     Imagenes: EntityDefinition<Imagenes>(
         model: _entities[24],
-        toOneRelations: (Imagenes object) => [object.usuario],
+        toOneRelations: (Imagenes object) =>
+            [object.usuario, object.emprendedor, object.emprendimiento],
         toManyRelations: (Imagenes object) => {
               RelInfo<Imagenes>.toMany(28, object.id): object.tareas,
               RelInfo<Imagenes>.toMany(46, object.id): object.prodSolicitados,
@@ -5103,7 +5131,7 @@ ModelDefinition getObjectBoxModel() {
               object.base64 == null ? null : fbb.writeString(object.base64!);
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(12);
+          fbb.startTable(14);
           fbb.addInt64(0, object.id);
           fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addOffset(3, imagenesOffset);
@@ -5113,6 +5141,8 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(7, base64Offset);
           fbb.addOffset(8, idDBROffset);
           fbb.addInt64(10, object.usuario.targetId);
+          fbb.addInt64(11, object.emprendedor.targetId);
+          fbb.addInt64(12, object.emprendimiento.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -5139,6 +5169,12 @@ ModelDefinition getObjectBoxModel() {
           object.usuario.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
           object.usuario.attach(store);
+          object.emprendedor.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0);
+          object.emprendedor.attach(store);
+          object.emprendimiento.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0);
+          object.emprendimiento.attach(store);
           InternalToManyAccess.setRelInfo(object.tareas, store,
               RelInfo<Imagenes>.toMany(28, object.id), store.box<Imagenes>());
           InternalToManyAccess.setRelInfo(object.prodSolicitados, store,
@@ -6061,70 +6097,70 @@ class Emprendimientos_ {
   static final id =
       QueryIntegerProperty<Emprendimientos>(_entities[0].properties[0]);
 
-  /// see [Emprendimientos.imagen]
-  static final imagen =
-      QueryStringProperty<Emprendimientos>(_entities[0].properties[1]);
-
   /// see [Emprendimientos.nombre]
   static final nombre =
-      QueryStringProperty<Emprendimientos>(_entities[0].properties[2]);
+      QueryStringProperty<Emprendimientos>(_entities[0].properties[1]);
 
   /// see [Emprendimientos.descripcion]
   static final descripcion =
-      QueryStringProperty<Emprendimientos>(_entities[0].properties[3]);
+      QueryStringProperty<Emprendimientos>(_entities[0].properties[2]);
 
   /// see [Emprendimientos.fechaRegistro]
   static final fechaRegistro =
-      QueryIntegerProperty<Emprendimientos>(_entities[0].properties[4]);
+      QueryIntegerProperty<Emprendimientos>(_entities[0].properties[3]);
 
   /// see [Emprendimientos.emprendedor]
   static final emprendedor = QueryRelationToOne<Emprendimientos, Emprendedores>(
-      _entities[0].properties[5]);
+      _entities[0].properties[4]);
 
   /// see [Emprendimientos.statusSync]
   static final statusSync = QueryRelationToOne<Emprendimientos, StatusSync>(
-      _entities[0].properties[6]);
+      _entities[0].properties[5]);
 
   /// see [Emprendimientos.activo]
   static final activo =
-      QueryBooleanProperty<Emprendimientos>(_entities[0].properties[7]);
+      QueryBooleanProperty<Emprendimientos>(_entities[0].properties[6]);
 
   /// see [Emprendimientos.archivado]
   static final archivado =
-      QueryBooleanProperty<Emprendimientos>(_entities[0].properties[8]);
+      QueryBooleanProperty<Emprendimientos>(_entities[0].properties[7]);
 
   /// see [Emprendimientos.idDBR]
   static final idDBR =
-      QueryStringProperty<Emprendimientos>(_entities[0].properties[9]);
+      QueryStringProperty<Emprendimientos>(_entities[0].properties[8]);
 
   /// see [Emprendimientos.usuario]
-  static final usuario = QueryRelationToOne<Emprendimientos, Usuarios>(
-      _entities[0].properties[10]);
+  static final usuario =
+      QueryRelationToOne<Emprendimientos, Usuarios>(_entities[0].properties[9]);
 
   /// see [Emprendimientos.prioridadEmp]
   static final prioridadEmp = QueryRelationToOne<Emprendimientos, PrioridadEmp>(
-      _entities[0].properties[11]);
+      _entities[0].properties[10]);
 
   /// see [Emprendimientos.catalogoProyecto]
   static final catalogoProyecto =
       QueryRelationToOne<Emprendimientos, CatalogoProyecto>(
-          _entities[0].properties[12]);
+          _entities[0].properties[11]);
 
   /// see [Emprendimientos.idInversionJornada]
   static final idInversionJornada =
-      QueryIntegerProperty<Emprendimientos>(_entities[0].properties[13]);
+      QueryIntegerProperty<Emprendimientos>(_entities[0].properties[12]);
 
   /// see [Emprendimientos.faseActual]
   static final faseActual =
-      QueryStringProperty<Emprendimientos>(_entities[0].properties[14]);
+      QueryStringProperty<Emprendimientos>(_entities[0].properties[13]);
 
   /// see [Emprendimientos.faseAnterior]
   static final faseAnterior =
-      QueryStringProperty<Emprendimientos>(_entities[0].properties[15]);
+      QueryStringProperty<Emprendimientos>(_entities[0].properties[14]);
 
   /// see [Emprendimientos.idEmiWeb]
   static final idEmiWeb =
-      QueryStringProperty<Emprendimientos>(_entities[0].properties[16]);
+      QueryStringProperty<Emprendimientos>(_entities[0].properties[15]);
+
+  /// see [Emprendimientos.imagen]
+  static final imagen = QueryRelationToOne<Emprendimientos, Imagenes>(
+      _entities[0].properties[16]);
 
   /// see [Emprendimientos.jornadas]
   static final jornadas =
@@ -6452,25 +6488,25 @@ class Emprendedores_ {
       QueryRelationToOne<Emprendedores, Emprendimientos>(
           _entities[6].properties[9]);
 
-  /// see [Emprendedores.imagen]
-  static final imagen =
-      QueryStringProperty<Emprendedores>(_entities[6].properties[10]);
-
   /// see [Emprendedores.apellidos]
   static final apellidos =
-      QueryStringProperty<Emprendedores>(_entities[6].properties[11]);
+      QueryStringProperty<Emprendedores>(_entities[6].properties[10]);
 
   /// see [Emprendedores.idDBR]
   static final idDBR =
-      QueryStringProperty<Emprendedores>(_entities[6].properties[12]);
+      QueryStringProperty<Emprendedores>(_entities[6].properties[11]);
 
   /// see [Emprendedores.comunidad]
   static final comunidad = QueryRelationToOne<Emprendedores, Comunidades>(
-      _entities[6].properties[13]);
+      _entities[6].properties[12]);
 
   /// see [Emprendedores.idEmiWeb]
   static final idEmiWeb =
-      QueryStringProperty<Emprendedores>(_entities[6].properties[14]);
+      QueryStringProperty<Emprendedores>(_entities[6].properties[13]);
+
+  /// see [Emprendedores.imagen]
+  static final imagen =
+      QueryRelationToOne<Emprendedores, Imagenes>(_entities[6].properties[14]);
 
   /// see [Emprendedores.bitacora]
   static final bitacora =
@@ -7148,6 +7184,14 @@ class Imagenes_ {
   /// see [Imagenes.usuario]
   static final usuario =
       QueryRelationToOne<Imagenes, Usuarios>(_entities[24].properties[8]);
+
+  /// see [Imagenes.emprendedor]
+  static final emprendedor =
+      QueryRelationToOne<Imagenes, Emprendedores>(_entities[24].properties[9]);
+
+  /// see [Imagenes.emprendimiento]
+  static final emprendimiento = QueryRelationToOne<Imagenes, Emprendimientos>(
+      _entities[24].properties[10]);
 
   /// see [Imagenes.tareas]
   static final tareas =

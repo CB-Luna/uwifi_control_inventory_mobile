@@ -116,7 +116,7 @@ with TickerProviderStateMixin {
                         image: DecorationImage(
                           fit: BoxFit.cover,
                           image: Image.file(
-                            File(widget.emprendimiento.imagen),
+                            File(widget.emprendimiento.imagen.target!.path!),
                             fit: BoxFit.contain,
                           ).image,
                         ),

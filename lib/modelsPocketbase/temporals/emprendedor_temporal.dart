@@ -1,5 +1,5 @@
+
 class EmprendedorTemporal {
-    final String? imagen;
     final String nombre;
     final String apellidos;
     final DateTime nacimiento;
@@ -11,7 +11,6 @@ class EmprendedorTemporal {
     final DateTime fechaRegistro;
 
     EmprendedorTemporal({
-      this.imagen,
       required this.nombre,
       required this.apellidos,
       required this.nacimiento,
