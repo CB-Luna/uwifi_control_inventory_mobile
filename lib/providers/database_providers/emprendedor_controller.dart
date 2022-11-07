@@ -11,7 +11,7 @@ class EmprendedorController extends ChangeNotifier {
 
   //Emprendedor
   // TextEditingController integrantesFamilia = TextEditingController();
-  String imagen = '';
+  Imagenes? imagenLocal;
   String nombre = '';
   String apellidos = '';
   DateTime? nacimiento = DateTime.parse("2000-02-27 13:27:00");
@@ -29,7 +29,7 @@ class EmprendedorController extends ChangeNotifier {
 
   void clearInformation()
   {
-    imagen = '';
+    imagenLocal = null;
     nombre = '';
     apellidos = '';
     nacimiento = null;
@@ -43,9 +43,8 @@ class EmprendedorController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addTemporaly(int idComunidad) {
+  void addTemporal(int idComunidad) {
   emprendedor = EmprendedorTemporal(
-    imagen: imagen,
     nombre: nombre, 
     apellidos: apellidos,
     nacimiento: nacimiento?? DateTime.parse("2000-02-27 13:27:00"), 
@@ -64,7 +63,6 @@ class EmprendedorController extends ChangeNotifier {
   void add(int idEmprendimiento) {
     if (emprendedor != null) {
       final nuevoEmprendedor = Emprendedores(
-      imagen: emprendedor?.imagen ?? "",
       nombre: emprendedor!.nombre, 
       apellidos: emprendedor!.apellidos,
       nacimiento: emprendedor?.nacimiento ?? DateTime.parse("2000-02-27 13:27:00"), 
@@ -88,7 +86,6 @@ class EmprendedorController extends ChangeNotifier {
           dataBase.emprendimientosBox.put(emprendimiento);
           // dataBase.emprendedoresBox.put(nuevoEmprendedor);
           print('Emprendedor agregado exitosamente');
-          clearInformation();
           notifyListeners();
         }
       }
@@ -96,12 +93,11 @@ class EmprendedorController extends ChangeNotifier {
     } 
   }
 
-  void update(int id, String newImagen, String newNombre, String newApellidos, String newCurp, 
+  void update(int id, String newNombre, String newApellidos, String newCurp, 
   String newIntegrantesFamilia, String newTelefono, String newComentarios, int idComunidad) {
     final updateEmprendedor = dataBase.emprendedoresBox.get(id);
     final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
     if (updateEmprendedor != null) {
-      updateEmprendedor.imagen = newImagen;
       updateEmprendedor.nombre = newNombre;
       updateEmprendedor.apellidos = newApellidos;
       updateEmprendedor.curp = newCurp;
@@ -118,6 +114,33 @@ class EmprendedorController extends ChangeNotifier {
       dataBase.emprendedoresBox.put(updateEmprendedor);
       print('Emprendedor actualizado exitosamente');
 
+    }
+    notifyListeners();
+  }
+
+  void addImagen(int idEmprendimiento) {
+    final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
+    if (emprendimiento != null) {
+      final nuevaInstruccion = Bitacora(instruccion: 'syncAddImagenEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      imagenLocal!.bitacora.add(nuevaInstruccion);
+      emprendimiento.emprendedor.target!.imagen.target = imagenLocal;
+      dataBase.imagenesBox.put(imagenLocal!);
+      dataBase.emprendedoresBox.put(emprendimiento.emprendedor.target!);
+      print('Imagen Emprendedor agregada exitosamente');
+      notifyListeners();
+    } 
+  }
+
+  void updateImagen(int id, Imagenes newImagen) {
+    final updateImagen = dataBase.imagenesBox.get(id);
+    final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateImagenEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+    if (updateImagen != null) {
+      updateImagen.nombre = newImagen.nombre;
+      updateImagen.path = newImagen.path;
+      updateImagen.base64 = newImagen.base64;
+      updateImagen.bitacora.add(nuevaInstruccion);
+      dataBase.imagenesBox.put(updateImagen);
+      print('Imagen de Emprendedor actualizada exitosamente');
     }
     notifyListeners();
   }

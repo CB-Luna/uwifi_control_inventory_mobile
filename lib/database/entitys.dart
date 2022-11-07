@@ -286,7 +286,6 @@ class Bitacora{
 @Entity()
 class Emprendedores {
   int id;
-  String imagen;
   String nombre;
   String apellidos;
   DateTime nacimiento;
@@ -302,11 +301,11 @@ class Emprendedores {
   final comunidad = ToOne<Comunidades>();
   final emprendimiento = ToOne<Emprendimientos>();
   final statusSync = ToOne<StatusSync>();
+  final imagen = ToOne<Imagenes>();
   final bitacora = ToMany<Bitacora>();
 
   Emprendedores({
     this.id = 0,
-    required this.imagen,
     required this.nombre,
     required this.apellidos,
     required this.nacimiento,
@@ -1185,6 +1184,7 @@ class Imagenes {
   final inversiones = ToMany<Inversiones>();
   final productosEmp = ToMany<ProductosEmp>();
   final bitacora = ToMany<Bitacora>();
+  final emprendedor = ToOne<Emprendedores>();
   final usuario = ToOne<Usuarios>();
   Imagenes({
     this.id = 0,

@@ -38,13 +38,18 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
         context.read<SyncProviderPocketbase>().procesoCargando(true);
         context.read<SyncProviderPocketbase>().procesoTerminado(false);
         context.read<SyncProviderPocketbase>().procesoExitoso(false);
-        context.read<SyncProviderPocketbase>().executeInstrucciones(dataBase.bitacoraBox
+        Future<bool> booleano = context.read<SyncProviderPocketbase>().executeInstrucciones(dataBase.bitacoraBox
             .getAll()
             .toList()
             .where((element) => element.usuario == prefs.getString("userId")!)
             .toList(), 
             widget.instruccionesFallidasEmiWeb
             );
+        Future(() async {
+          if (await booleano) {
+          } else {
+          }
+        });
       });
   }
 

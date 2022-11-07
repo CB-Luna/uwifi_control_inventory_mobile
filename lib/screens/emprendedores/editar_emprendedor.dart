@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:bizpro_app/screens/emprendedores/detalle_emprendedor_screen.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
@@ -47,12 +50,14 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
   late TextEditingController integrantesController;
   late TextEditingController telefonoController;
   late TextEditingController comentariosController;
-  late String newImagen;
+  Imagenes? newImagen;
+  String? imagenTemp;
 
   @override
   void initState() {
     super.initState();
-    newImagen = widget.emprendedor.imagen;
+    newImagen = widget.emprendedor.imagen.target;
+    imagenTemp = widget.emprendedor.imagen.target?.path;
     nombreController = TextEditingController(text: widget.emprendedor.nombre);
     apellidosController =
         TextEditingController(text: widget.emprendedor.apellidos);
@@ -248,8 +253,18 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
 
                                             setState(() {
                                               image = pickedFile;
-                                              newImagen = image!.path;
+                                              imagenTemp = image!.path;
+                                              File file = File(image!.path);
+                                              List<int> fileInByte = file.readAsBytesSync();
+                                              String base64 = base64Encode(fileInByte);
+                                              newImagen = Imagenes(
+                                                imagenes: image!.path,
+                                                nombre: image!.name, 
+                                                path: image!.path, 
+                                                base64: base64);
+                                              emprendedorProvider.imagenLocal = newImagen;
                                             });
+
                                           },
                                           child: Container(
                                             width: MediaQuery.of(context)
@@ -274,7 +289,7 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                               ),
                                             ),
                                             child: getImage(
-                                              widget.emprendedor.imagen),
+                                              imagenTemp),
                                           ),
                                         ),
                                       ),
@@ -921,9 +936,7 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                             .fromSTEB(0, 0, 0, 15),
                                         child: FFButtonWidget(
                                           onPressed: () async {
-                                            if (newImagen !=
-                                                    widget.emprendedor.imagen ||
-                                                nombreController.text !=
+                                            if (nombreController.text !=
                                                     widget.emprendedor.nombre ||
                                                 apellidosController.text !=
                                                     widget.emprendedor
@@ -998,9 +1011,21 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                                     if (idComunidad != null) {
                                                       print(
                                                           "Antes de actualizar");
+                                                      if (newImagen !=
+                                                        widget.emprendedor.imagen.target) {
+                                                          if (widget.emprendedor.imagen.target == null) {
+                                                            emprendedorProvider.addImagen(
+                                                              widget.emprendedor
+                                                              .emprendimiento.target!.id
+                                                              );
+                                                          } else {
+                                                            emprendedorProvider.updateImagen(
+                                                              widget.emprendedor.imagen.target!.id, 
+                                                              newImagen!);
+                                                          }
+                                                      }
                                                       emprendedorProvider.update(
                                                           widget.emprendedor.id,
-                                                          newImagen,
                                                           nombreController.text,
                                                           apellidosController
                                                               .text,
@@ -1047,6 +1072,56 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                                   },
                                                 );
                                                 return;
+                                              }
+                                            } else {
+                                              if (newImagen !=
+                                                    widget.emprendedor.imagen.target) {
+                                                if (emprendedorProvider
+                                                    .validateForm(
+                                                        emprendedorKey)) {
+                                                  if (widget.emprendedor.imagen.target == null) {
+                                                    emprendedorProvider.addImagen(
+                                                      widget.emprendedor
+                                                      .emprendimiento.target!.id
+                                                      );
+                                                  } else {
+                                                    emprendedorProvider.updateImagen(
+                                                      widget.emprendedor.imagen.target!.id, 
+                                                      newImagen!);
+                                                  }
+                                                  await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          EmprendedorActualizado(
+                                                            idEmprendedor: widget.emprendedor.id
+                                                            ,),
+                                                    ),
+                                                  );
+                                                } else {
+                                                  await showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (alertDialogContext) {
+                                                      return AlertDialog(
+                                                        title: const Text(
+                                                            'Campos vacíos'),
+                                                        content: const Text(
+                                                            'Para continuar, debe llenar todos los campos solicitados.'),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    alertDialogContext),
+                                                            child: const Text(
+                                                                'Bien'),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
+                                                  return;
+                                                }
                                               }
                                             }
                                           },

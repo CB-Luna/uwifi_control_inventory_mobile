@@ -433,6 +433,15 @@ class _AgregarEmprendimientoScreenState
                                                     emprendedorProvider.add(
                                                       emprendimientoProvider
                                                           .idEmprendimiento!);
+                                                    
+                                                    if (emprendedorProvider.imagenLocal != null) {
+                                                      emprendedorProvider
+                                                        .addImagen(emprendimientoProvider
+                                                          .idEmprendimiento!);
+                                                    }
+                                                    
+                                                    emprendedorProvider.clearInformation();
+                                                    emprendimientoProvider.clearInformation();
                                                 }
                                                 await Navigator.push(
                                                   context,
