@@ -863,6 +863,15 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                       LengthLimitingTextInputFormatter(12),
                                       telefonoFormat
                                     ],
+                                    validator: (value){
+                                     if(value != "" && value != null){
+                                       return value.length < 12
+                                          ? 'Por favor ingrese un número telefónico válido'
+                                          : null;
+                                     }else{
+                                      return null;
+                                     }
+                                    }
                                   ),
                                 ),
                                 Padding(
