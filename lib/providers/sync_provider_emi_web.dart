@@ -2478,6 +2478,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             .target!.nombre} ${emprendedor.emprendimiento.target!.usuario
             .target!.apellidoP} ${emprendedor.emprendimiento.target!.usuario
             .target!.apellidoM}",
+        "emprendimiento": emprendedor.emprendimiento.target!.nombre,
         "idEmprendedor": emprendedor.idEmiWeb,
         "nombre": emprendedor.nombre,
         "apellidos": emprendedor.apellidos,
@@ -2488,10 +2489,10 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         "municipio": emprendedor.comunidad.target!.municipios.target!.idEmiWeb,
         "telefono": emprendedor.telefono?.replaceAll("-", ""),
         "comentarios": emprendedor.comentarios,
-        "fechaRegistro": DateFormat("yyyy-MM-dd").format(emprendedor.fechaRegistro),
+        "fechaRegistro": (DateFormat("yyyy-MM-ddTHH:mm:ss").format(emprendedor.fechaRegistro)).toString(),
         "archivado": emprendedor.emprendimiento.target!.archivado,
       }));
-       print(responseUpdateEmprendedor.statusCode);
+      print(responseUpdateEmprendedor.statusCode);
       print(responseUpdateEmprendedor.body);
       switch (responseUpdateEmprendedor.statusCode) {
         case 200:
@@ -2836,30 +2837,15 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         "Content-Type": "application/json",
         'Authorization': 'Bearer $tokenGlobal',
       });
-      print("Datos");
-      print("${imagen.nombre}");
-      print("${imagen.idEmiWeb}");
-      print("${imagen.base64}");
-      print("${imagen.tarea.target!.jornada.target!.emprendimiento.target!.usuario
-            .target!.nombre} ${imagen.tarea.target!.jornada.target!.emprendimiento.target!.usuario
-            .target!.apellidoP} ${imagen.tarea.target!.jornada.target!.emprendimiento.target!.usuario
-            .target!.apellidoM}");
-      print("${imagen.tarea.target!.jornada.target!.idEmiWeb!.split("?")[0]}");
       final responseUpdateImagenJornada2 = await put(actualizarImagenJornada2Uri, 
       headers: headers,
       body: jsonEncode({
-        "idUsuario": imagen.tarea.target!.jornada.target!.emprendimiento.target!.idEmiWeb,
-        "nombreUsuario": "${imagen.tarea.target!.jornada.target!.emprendimiento.target!.usuario
-            .target!.nombre} ${imagen.tarea.target!.jornada.target!.emprendimiento.target!.usuario
-            .target!.apellidoP} ${imagen.tarea.target!.jornada.target!.emprendimiento.target!.usuario
-            .target!.apellidoM}",
+        "idUsuario": imagen.tarea.target!.jornada.target!.emprendimiento.target!.usuario.target!.idEmiWeb,
         "idCatTipoDocumento": "4", //Círculo Empresa
         "nombreArchivo": imagen.nombre,
         "archivo": imagen.base64,
         "idJornada2": imagen.tarea.target!.jornada.target!.idEmiWeb!.split("?")[0],
       }));
-      print("Status Code: ${responseUpdateImagenJornada2.statusCode}");
-      print("${responseUpdateImagenJornada2.body}");
       switch (responseUpdateImagenJornada2.statusCode) {
         case 200:
         print("Caso 200 en Emi Web Update Imagen Usuario");

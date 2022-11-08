@@ -165,8 +165,8 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
                                             EdgeInsetsDirectional.fromSTEB(
                                                 0, 30, 0, 0),
                                         child: Icon(
-                                            Icons.cancel_outlined,
-                                            color: Color.fromARGB(228, 255, 82, 70),
+                                            Icons.warning_amber_outlined,
+                                            color: Color.fromARGB(255, 255, 176, 7),
                                             size: 250,
                                             ),
                                       ),
@@ -213,9 +213,9 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
                                   children: [
                                     Padding(
                                       padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0, 20, 0, 0),
+                                          0, 10, 0, 0),
                                       child: Text(
-                                        'Error al sincronizar algunos datos.\nLa sincronización no se hizo con éxito.',
+                                        'Sincronización incompleta,\nfalló al sincronizar algunos datos.\nPara más información\nvea los problemas registrados.',
                                         textAlign: TextAlign.center,
                                         maxLines: 4,
                                         style: AppTheme.of(context).bodyText1.override(
