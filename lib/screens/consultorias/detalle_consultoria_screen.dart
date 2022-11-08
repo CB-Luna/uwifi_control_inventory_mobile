@@ -481,62 +481,62 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                                     ),
                                                   ),
                                                 ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                          0, 10, 10, 0),
-                                                  child: Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.4,
-                                                    height: 100,
-                                                    decoration: BoxDecoration(
-                                                      color: const Color(0x554672FF),
-                                                      borderRadius: BorderRadius.circular(8),
-                                                      border: Border.all(
-                                                        width: 1.5,           
-                                                      ),
-                                                    ),
-                                                    child: InkWell(
-                                                      onTap: () async {
-                                                        if (tareas.first.imagenes.last.imagenes != "") {
-                                                          await Navigator.push(
-                                                          context,
-                                                          PageTransition(
-                                                            type: PageTransitionType.fade,
-                                                            child:
-                                                                FlutterFlowExpandedImageView(
-                                                              image: getWidgetContainImage(
-                                                                tareas.first.imagenes.last.imagenes
-                                                              ),
-                                                              allowRotation: false,
-                                                              tag: tareas.first.imagenes.last.imagenes,
-                                                              useHeroAnimation: true,
-                                                            ),
-                                                          ),
-                                                        );
-                                                        }
-                                                      },
-                                                      child: Hero(
-                                                        tag: tareas.first.imagenes.last.imagenes,
-                                                        transitionOnUserGestures: true,
-                                                        child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius.circular(8),
-                                                          child: 
-                                                          getWidgetContainerImage(
-                                                            tareas.first.imagenes.last.imagenes, 
-                                                            170, 
-                                                            120,
-                                                            ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
+                                                // Padding(
+                                                //   padding:
+                                                //       const EdgeInsetsDirectional
+                                                //               .fromSTEB(
+                                                //           0, 10, 10, 0),
+                                                //   child: Container(
+                                                //     width:
+                                                //         MediaQuery.of(context)
+                                                //                 .size
+                                                //                 .width *
+                                                //             0.4,
+                                                //     height: 100,
+                                                //     decoration: BoxDecoration(
+                                                //       color: const Color(0x554672FF),
+                                                //       borderRadius: BorderRadius.circular(8),
+                                                //       border: Border.all(
+                                                //         width: 1.5,           
+                                                //       ),
+                                                //     ),
+                                                //     child: InkWell(
+                                                //       onTap: () async {
+                                                //         if (tareas.first.imagenes.last.imagenes != "") {
+                                                //           await Navigator.push(
+                                                //           context,
+                                                //           PageTransition(
+                                                //             type: PageTransitionType.fade,
+                                                //             child:
+                                                //                 FlutterFlowExpandedImageView(
+                                                //               image: getWidgetContainImage(
+                                                //                 tareas.first.imagenes.last.imagenes
+                                                //               ),
+                                                //               allowRotation: false,
+                                                //               tag: tareas.first.imagenes.last.imagenes,
+                                                //               useHeroAnimation: true,
+                                                //             ),
+                                                //           ),
+                                                //         );
+                                                //         }
+                                                //       },
+                                                //       child: Hero(
+                                                //         tag: tareas.first.imagenes.last.imagenes,
+                                                //         transitionOnUserGestures: true,
+                                                //         child: ClipRRect(
+                                                //           borderRadius:
+                                                //               BorderRadius.circular(8),
+                                                //           child: 
+                                                //           getWidgetContainerImage(
+                                                //             tareas.first.imagenes.last.imagenes, 
+                                                //             170, 
+                                                //             120,
+                                                //             ),
+                                                //         ),
+                                                //       ),
+                                                //     ),
+                                                //   ),
+                                                // ),
                                               ],
                                             ),
                                           ),
