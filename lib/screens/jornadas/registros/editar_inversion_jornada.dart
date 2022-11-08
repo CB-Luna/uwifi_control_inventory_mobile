@@ -650,7 +650,7 @@ class _EditarInversionJornadaScreenState
                                                                                 ),
                                                                           ),
                                                                            Text(
-                                                                            prodSolicitado.tipoEmpaques.target!.tipo,
+                                                                            prodSolicitado.unidadMedida.target?.unidadMedida ?? "SIN TIPO EMPAQUE",
                                                                             style: AppTheme.of(context)
                                                                                 .subtitle1
                                                                                 .override(

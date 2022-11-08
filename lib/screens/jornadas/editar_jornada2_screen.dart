@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:bizpro_app/modelsPocketbase/temporals/save_imagenes_local.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/save_instruccion_imagen_temporal.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_validacion_eliminar_imagen.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_eliminar_imagen.dart';
 import 'package:bizpro_app/screens/widgets/edit_flutter_flow_carousel.dart';
@@ -45,11 +48,13 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
   late TextEditingController tareaController;
   late TextEditingController comentariosController;
   late bool activoController;
-  List<String> newCirculoEmpresa = [];
-  List<String> oldCirculoEmpresa = [];
-  List<Imagenes>? imagenes = [];
+  List<SaveImagenesLocal> newCirculoEmpresa = [];
+  List<SaveImagenesLocal> oldCirculoEmpresa = [];
+  List<SaveInstruccionImagenTemporal> listInstruccionesImagenesTemp = [];
+  List<String> imagenesCarrousel = [];
   List<XFile> imagenesTemp = [];
   Jornadas? jornada1;
+
 
   @override
   void initState() {
@@ -57,12 +62,16 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
     jornada1 = null;
     imagenesTemp =[];
     newCirculoEmpresa = [];
-    imagenes = widget.jornada.tarea.target?.imagenes.toList();
-    if (imagenes != null ) {
-      for (var element in imagenes!) {
-        newCirculoEmpresa.add(element.imagenes);
-        oldCirculoEmpresa.add(element.imagenes);
-      }
+    for (var element in widget.jornada.tarea.target!.imagenes.toList()) {
+      var newSaveImagenLocal = SaveImagenesLocal(
+        id: element.id,
+        nombre: element.nombre!, 
+        path: element.path!, 
+        base64: element.base64!,
+      );
+      newCirculoEmpresa.add(newSaveImagenLocal);
+      oldCirculoEmpresa.add(newSaveImagenLocal);
+      imagenesCarrousel.add(element.imagenes);
     }
     fechaRevision = widget.jornada.fechaRevision;
     fechaRegistro = widget.jornada.fechaRegistro;
@@ -164,6 +173,7 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                       ),
                                       child: InkWell(
                                         onTap: () async {
+                                          jornadaProvider.clearInformation();
                                           Navigator.pop(context);
                                         },
                                         child: Row(
@@ -652,7 +662,7 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                                   height: 100,
                                                   child: CarouselSlider(
                                                     options: CarouselOptions(height: 400.0),
-                                                    items: newCirculoEmpresa.map((i) {
+                                                    items: imagenesCarrousel.map((i) {
                                                       return Builder(
                                                         builder: (BuildContext context) {
                                                           return InkWell(
@@ -682,9 +692,20 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                                                 );
                                                                 if (booleano) {
                                                                   print("Se elimina IMAGEN");
-                                                                    newCirculoEmpresa.remove(i);
+                                                                  for (var element in newCirculoEmpresa) {
+                                                                    if (element.path == i) {
+                                                                      var newInstruccionImagen = SaveInstruccionImagenTemporal(
+                                                                        instruccion: "syncDeleteImagenJornada",
+                                                                        instruccionAdicional: "Imagen Jornada 2",
+                                                                        imagenLocal: element,
+                                                                        );
+                                                                      newCirculoEmpresa.remove(element);
+                                                                      listInstruccionesImagenesTemp.add(newInstruccionImagen);
+                                                                      imagenesCarrousel.remove(element.path);
+                                                                      break;
+                                                                    }
+                                                                  }
                                                                 }
-
                                                               } else { //Se aborta la opción
                                                                 return;
                                                               }
@@ -710,7 +731,7 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                               padding: const EdgeInsetsDirectional
                                                 .fromSTEB(0, 10, 0, 0),
                                               child: Text(
-                                                "Total imágenes: ${newCirculoEmpresa.length}",
+                                                "Total imágenes: ${imagenesCarrousel.length}",
                                                 style: AppTheme.of(context).title3.override(
                                                 fontFamily: 'Poppins',
                                                 color:
@@ -739,7 +760,7 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                           XFile? pickedFile;
                                           List<XFile>? pickedFiles;
                                           if (option == 'camera') {
-                                            if (newCirculoEmpresa.length < 3) {
+                                            if (imagenesCarrousel.length < 3) {
                                               pickedFile = await picker.pickImage(
                                                 source: ImageSource.camera,
                                                 imageQuality: 100,
@@ -770,15 +791,25 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                                 );
                                                 if (pickedFile != null) {
                                                   setState(() {
+                                                    File file = File(pickedFile!.path);
+                                                    List<int> fileInByte = file.readAsBytesSync();
+                                                    String base64 = base64Encode(fileInByte);
+                                                    var updateImagenLocal = SaveImagenesLocal(
+                                                      nombre: pickedFile.name, 
+                                                      path: pickedFile.path, 
+                                                      base64: base64,
+                                                    );
+                                                    imagenesCarrousel.removeLast();
+                                                    imagenesCarrousel.add(pickedFile.path);
                                                     newCirculoEmpresa.removeLast();
-                                                    newCirculoEmpresa.add(pickedFile!.path);
+                                                    newCirculoEmpresa.add(updateImagenLocal);
                                                   });
                                                 }
                                                 return;
                                               }        
                                             }
                                           } else { //Se selecciona galería
-                                            if (newCirculoEmpresa.length < 3) {
+                                            if (imagenesCarrousel.length < 3) {
                                               pickedFiles = await picker.pickMultiImage(
                                               imageQuality: 100,
                                               );
@@ -793,11 +824,25 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                                 ));
                                                 return;
                                               }
-                                              switch (newCirculoEmpresa.length) {
+                                              switch (imagenesCarrousel.length) {
                                                 case 0:
                                                   for(int i = 0; i < pickedFiles.length; i++)
                                                   {
                                                     imagenesTemp.add(pickedFiles[i]);
+                                                    File file = File(pickedFiles[i].path);
+                                                    List<int> fileInByte = file.readAsBytesSync();
+                                                    String base64 = base64Encode(fileInByte);
+                                                    var newImagenLocal = SaveImagenesLocal(
+                                                      nombre: pickedFiles[i].name, 
+                                                      path: pickedFiles[i].path, 
+                                                      base64: base64,
+                                                      );
+                                                    var newInstruccionImagen = SaveInstruccionImagenTemporal(
+                                                      instruccion: "syncAddImagenJornada2",
+                                                      imagenLocal: newImagenLocal,
+                                                      );
+                                                    newCirculoEmpresa.add(newImagenLocal);
+                                                    listInstruccionesImagenesTemp.add(newInstruccionImagen);
                                                   }
                                                   break;
                                                 case 1:
@@ -805,6 +850,20 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                                     for(int i = 0; i < pickedFiles.length; i++)
                                                     {
                                                       imagenesTemp.add(pickedFiles[i]);
+                                                      File file = File(pickedFiles[i].path);
+                                                      List<int> fileInByte = file.readAsBytesSync();
+                                                      String base64 = base64Encode(fileInByte);
+                                                      var newImagenLocal = SaveImagenesLocal(
+                                                        nombre: pickedFiles[i].name, 
+                                                        path: pickedFiles[i].path, 
+                                                        base64: base64,
+                                                        );
+                                                      var newInstruccionImagen = SaveInstruccionImagenTemporal(
+                                                        instruccion: "syncAddImagenJornada2",
+                                                        imagenLocal: newImagenLocal,
+                                                        );
+                                                      newCirculoEmpresa.add(newImagenLocal);
+                                                      listInstruccionesImagenesTemp.add(newInstruccionImagen);
                                                     }
                                                   }
                                                   else{
@@ -821,6 +880,20 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                                     for(int i = 0; i < pickedFiles.length; i++)
                                                     {
                                                       imagenesTemp.add(pickedFiles[i]);
+                                                      File file = File(pickedFiles[i].path);
+                                                      List<int> fileInByte = file.readAsBytesSync();
+                                                      String base64 = base64Encode(fileInByte);
+                                                      var newImagenLocal = SaveImagenesLocal(
+                                                        nombre: pickedFiles[i].name, 
+                                                        path: pickedFiles[i].path, 
+                                                        base64: base64,
+                                                        );
+                                                      var newInstruccionImagen = SaveInstruccionImagenTemporal(
+                                                        instruccion: "syncAddImagenJornada2",
+                                                        imagenLocal: newImagenLocal,
+                                                        );
+                                                      newCirculoEmpresa.add(newImagenLocal);
+                                                      listInstruccionesImagenesTemp.add(newInstruccionImagen);
                                                     }
                                                   }
                                                   else{
@@ -858,9 +931,43 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                                 );
                                                 if (pickedFile != null) {
                                                   setState(() {
-                                                    newCirculoEmpresa.removeLast();
-                                                    newCirculoEmpresa.add(pickedFile!.path);
-                                                  });
+                                                    if (newCirculoEmpresa[imagenesCarrousel.length - 1].id != null) {
+                                                      // La imagen anterior ya ha sido registrada
+                                                      File file = File(pickedFile!.path);
+                                                      List<int> fileInByte = file.readAsBytesSync();
+                                                      String base64 = base64Encode(fileInByte);
+                                                      var updateImagenLocal = SaveImagenesLocal(
+                                                        id: newCirculoEmpresa[imagenesCarrousel.length - 1].id,
+                                                        nombre: pickedFile.name, 
+                                                        path: pickedFile.path, 
+                                                        base64: base64,
+                                                        );
+                                                      var newInstruccionImagen = SaveInstruccionImagenTemporal(
+                                                        instruccion: "syncUpdateImagenJornada2",
+                                                        imagenLocal: updateImagenLocal,
+                                                        );
+                                                      newCirculoEmpresa.removeLast();
+                                                      newCirculoEmpresa.add(updateImagenLocal);
+                                                      imagenesCarrousel.removeLast();
+                                                      imagenesCarrousel.add(pickedFile.path);
+                                                      listInstruccionesImagenesTemp.add(newInstruccionImagen);
+                                                    } else {
+                                                      // La imagen no ha sido registrada
+                                                      File file = File(pickedFile!.path);
+                                                      List<int> fileInByte = file.readAsBytesSync();
+                                                      String base64 = base64Encode(fileInByte);
+                                                      var updateImagenLocal = SaveImagenesLocal(
+                                                        nombre: pickedFile.name, 
+                                                        path: pickedFile.path, 
+                                                        base64: base64,
+                                                      );
+                                                      newCirculoEmpresa.removeLast();
+                                                      newCirculoEmpresa.add(updateImagenLocal);
+                                                      imagenesCarrousel.removeLast();
+                                                      imagenesCarrousel.add(pickedFile.path);
+                                                    }
+                                                  }
+                                                  );
                                                 }
                                                 return;
                                               }     
@@ -868,7 +975,7 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                           }
                                           setState(() {
                                             for (var i = 0; i < imagenesTemp.length; i++) {
-                                              newCirculoEmpresa.add(imagenesTemp[i].path);
+                                              imagenesCarrousel.add(imagenesTemp[i].path);
                                             }
                                           });
                                         },
@@ -927,19 +1034,38 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                         widget.jornada.tarea.target!
                                             .comentarios||
                                     activoController !=
-                                        !widget.jornada.completada ||
-                                    newCirculoEmpresa !=
+                                        !widget.jornada.completada) {
+
+                                  if (newCirculoEmpresa !=
                                         oldCirculoEmpresa) {
+                                    jornadaProvider.updateImagenesJornada2(
+                                      widget.jornada.tarea.target!, 
+                                      listInstruccionesImagenesTemp,
+                                      );
+                                  } 
                                   jornadaProvider.updateJornada2(
                                       widget.jornada.id,
                                       fechaRegistro,
                                       fechaRevision,
                                       tareaController.text,
                                       comentariosController.text,
-                                      imagenes,
-                                      newCirculoEmpresa,
                                       !activoController,
                                       widget.jornada.tarea.target!.id);
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                           JornadaActualizada(emprendimientoId: widget.emprendimiento.id,),
+                                    ),
+                                  );
+                                } else {
+                                  if (newCirculoEmpresa !=
+                                        oldCirculoEmpresa) {
+                                    jornadaProvider.updateImagenesJornada2(
+                                      widget.jornada.tarea.target!, 
+                                      listInstruccionesImagenesTemp,
+                                      );
+                                  } 
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(

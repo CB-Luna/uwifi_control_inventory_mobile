@@ -552,6 +552,181 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 5, 0, 0),
                                   child: Text(
+                                    'Tarea Principal',
+                                    style:
+                                        AppTheme.of(context).bodyText1.override(
+                                              fontFamily: AppTheme.of(context)
+                                                  .bodyText1Family,
+                                              fontSize: 15,
+                                            ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsetsDirectional.fromSTEB(
+                                          16, 8, 16, 12),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              DetalleTareaConsultoriaScreen(
+                                            consultoria: widget.consultoria,
+                                            tarea: tareas.first,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 120,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            blurRadius: 4,
+                                            color: Color(0x2B202529),
+                                            offset: Offset(0, 2),
+                                          )
+                                        ],
+                                        borderRadius:
+                                            BorderRadius.circular(12),
+                                      ),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                const EdgeInsetsDirectional
+                                                    .fromSTEB(8, 0, 0, 0),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Expanded(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                            8, 0, 0, 4),
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                  0,
+                                                                  10,
+                                                                  0,
+                                                                  0),
+                                                          child: AutoSizeText(
+                                                            tareas.first
+                                                                .tarea,
+                                                            maxLines: 2,
+                                                            style: AppTheme.of(
+                                                                    context)
+                                                                .subtitle1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Outfit',
+                                                                  color: AppTheme.of(
+                                                                          context)
+                                                                      .primaryText,
+                                                                  fontSize:
+                                                                      20,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                                // Padding(
+                                                //   padding:
+                                                //       const EdgeInsetsDirectional
+                                                //               .fromSTEB(
+                                                //           0, 10, 10, 0),
+                                                //   child: Container(
+                                                //     width:
+                                                //         MediaQuery.of(context)
+                                                //                 .size
+                                                //                 .width *
+                                                //             0.4,
+                                                //     height: 100,
+                                                //     decoration: BoxDecoration(
+                                                //       color: const Color(0x554672FF),
+                                                //       borderRadius: BorderRadius.circular(8),
+                                                //       border: Border.all(
+                                                //         width: 1.5,           
+                                                //       ),
+                                                //     ),
+                                                //     child: InkWell(
+                                                //       onTap: () async {
+                                                //         if (tareas.first.imagenes.last.imagenes != "") {
+                                                //           await Navigator.push(
+                                                //           context,
+                                                //           PageTransition(
+                                                //             type: PageTransitionType.fade,
+                                                //             child:
+                                                //                 FlutterFlowExpandedImageView(
+                                                //               image: getWidgetContainImage(
+                                                //                 tareas.first.imagenes.last.imagenes
+                                                //               ),
+                                                //               allowRotation: false,
+                                                //               tag: tareas.first.imagenes.last.imagenes,
+                                                //               useHeroAnimation: true,
+                                                //             ),
+                                                //           ),
+                                                //         );
+                                                //         }
+                                                //       },
+                                                //       child: Hero(
+                                                //         tag: tareas.first.imagenes.last.imagenes,
+                                                //         transitionOnUserGestures: true,
+                                                //         child: ClipRRect(
+                                                //           borderRadius:
+                                                //               BorderRadius.circular(8),
+                                                //           child: 
+                                                //           getWidgetContainerImage(
+                                                //             tareas.first.imagenes.last.imagenes, 
+                                                //             170, 
+                                                //             120,
+                                                //             ),
+                                                //         ),
+                                                //       ),
+                                                //     ),
+                                                //   ),
+                                                // ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ).animated([
+                                      animationsMap[
+                                          'containerOnPageLoadAnimation']!
+                                    ]),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 5, 0, 0),
+                                  child: Text(
                                     'SubTareas',
                                     style:
                                         AppTheme.of(context).bodyText1.override(

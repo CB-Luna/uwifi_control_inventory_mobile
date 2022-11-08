@@ -134,6 +134,7 @@ class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
                                       ),
                                       child: InkWell(
                                         onTap: () async {
+                                          jornadaProvider.clearInformation();
                                           Navigator.pop(context);
                                         },
                                         child: Row(

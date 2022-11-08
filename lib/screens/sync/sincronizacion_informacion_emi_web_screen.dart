@@ -152,39 +152,12 @@ class _SincronizacionInformacionEmiWebScreenState extends State<SincronizacionIn
                                   Visibility(
                                     visible: !syncProviderEmiWeb.procesocargando,
                                     child: const Padding(
-                                      padding:
-                                          EdgeInsetsDirectional.fromSTEB(
-                                              0, 70, 0, 0),
-                                      child: Icon(
-                                          Icons.cancel_outlined,
-                                          color: Color.fromARGB(228, 255, 82, 70),
-                                          size: 250,
-                                          ),
-                                    ),
+                                        padding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0, 70, 0, 0),
+                                        child: SizedBox(),
+                                      ),
                                   ),
-                            Visibility(
-                              visible: syncProviderEmiWeb.procesoterminado && (syncProviderEmiWeb.procesoexitoso == false),
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        0, 50, 0, 0),
-                                    child: Text(
-                                      'Error al sincronizar algunas acciones.',
-                                      textAlign: TextAlign.center,
-                                      maxLines: 4,
-                                      style: AppTheme.of(context).bodyText1.override(
-                                            fontFamily:
-                                                AppTheme.of(context).bodyText1Family,
-                                            color: AppTheme.of(context).secondaryText,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
                           ],
                         ),
                       ),

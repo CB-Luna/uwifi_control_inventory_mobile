@@ -182,6 +182,34 @@ class SyncProviderPocketbase extends ChangeNotifier {
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
           }
+        case "syncAddImagenJornada2":
+          print("Entro al caso de syncAddImagenJornada2 Pocketbase");
+          final imagenToSync = getFirstImagen(dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
+          if(imagenToSync != null){
+            final boolSyncAddImagenJornada2 = await syncAddImagenJornada2(imagenToSync, instruccionesBitacora[i]);
+            if (boolSyncAddImagenJornada2) {
+              banderasExistoSync.add(boolSyncAddImagenJornada2);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(boolSyncAddImagenJornada2);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                emprendimiento: imagenToSync.tarea.target!.jornada.target!.emprendimiento.target!.nombre,
+                instruccion: "Agregar Imagen Jornada 2 Servidor", 
+                fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }      
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+              emprendimiento: "No encontrado",
+              instruccion: "Agregar Imagen Jornada 2 Servidor", 
+              fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
         case "syncAddJornada3":
           print("Entro al caso de syncAddJornada3 Pocketbase");
           final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
@@ -507,64 +535,88 @@ class SyncProviderPocketbase extends ChangeNotifier {
             continue;
           }
         case "syncUpdateJornada1":
-        final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
+        print("Entro al caso de syncUpdateJornada1 Pocketbase");
+         final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
           if(jornadaToSync != null){
-            if(jornadaToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") { 
+            final boolSyncUpdateJornada1 = await syncUpdateJornada1(jornadaToSync, instruccionesBitacora[i]);
+            if (boolSyncUpdateJornada1) {
+              banderasExistoSync.add(boolSyncUpdateJornada1);
               continue;
             } else {
-              if (jornadaToSync.idDBR != null) {
-                //Ya se ha enviado al backend la jornada y se puede actualizar
-                final boolSyncUpdateJornada1 = await syncUpdateJornada1(jornadaToSync);
-                if (boolSyncUpdateJornada1) {
-                  banderasExistoSync.add(boolSyncUpdateJornada1);
-                  continue;
-                } else {
-                  //Salimos del bucle
-                  banderasExistoSync.add(boolSyncUpdateJornada1);
-                  i = instruccionesBitacora.length;
-                  break;
-                }
-              } else {
-                //No se ha enviado al backend la jornada y por lo tanto no se puede actualizar
-                banderasExistoSync.add(true);
-                continue;
-              } 
-            }          
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(boolSyncUpdateJornada1);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                emprendimiento: jornadaToSync.emprendimiento.target!.nombre,
+                instruccion: "Actualización Jornada 1 Servidor", 
+                fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }      
           } else {
-            //Salimos del bucle
+            //Recuperamos la instrucción que no se ejecutó
             banderasExistoSync.add(false);
-            i = instruccionesBitacora.length;
-            break;
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+              emprendimiento: "No encontrado",
+              instruccion: "Actualización Jornada 1 Servidor", 
+              fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
           }
         case "syncUpdateJornada2":
+          print("Entro al caso de syncUpdateJornada2 Pocketbase");
           final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
           if(jornadaToSync != null){
-            if(jornadaToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") { 
+            final boolSyncUpdateJornada2 = await syncUpdateJornada2(jornadaToSync, instruccionesBitacora[i]);
+            if (boolSyncUpdateJornada2) {
+              banderasExistoSync.add(boolSyncUpdateJornada2);
               continue;
             } else {
-              if (jornadaToSync.idDBR != null) {
-                //Ya se ha enviado al backend la jornada y se puede actualizar
-                final boolSyncUpdateJornada2 = await syncUpdateJornada2(jornadaToSync);
-                if (boolSyncUpdateJornada2) {
-                  banderasExistoSync.add(boolSyncUpdateJornada2);
-                  continue;
-                } else {
-                  //Salimos del bucle
-                  banderasExistoSync.add(boolSyncUpdateJornada2);
-                  i = instruccionesBitacora.length;
-                  break;
-                }
-              } else {
-                //No se ha enviado al backend la jornada y por lo tanto no se puede actualizar
-                banderasExistoSync.add(true);
-                continue;
-              } 
-            }          
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(boolSyncUpdateJornada2);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                emprendimiento: jornadaToSync.emprendimiento.target!.nombre,
+                instruccion: "Actualización Jornada 2 Servidor", 
+                fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }      
           } else {
-            //Salimos del bucle
+            //Recuperamos la instrucción que no se ejecutó
             banderasExistoSync.add(false);
-            i = instruccionesBitacora.length;
-            break;
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+              emprendimiento: "No encontrado",
+              instruccion: "Actualización Jornada 2 Servidor", 
+              fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
+        case "syncUpdateImagenJornada2":
+          print("Entro al caso de syncUpdateImagenJornada2 Pocketbase");
+          final imagenToSync = getFirstImagen(dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
+          if(imagenToSync != null){
+            final boolSyncUpdateImagenJornada2 = await syncUpdateImagenJornada2(imagenToSync, instruccionesBitacora[i]);
+            if (boolSyncUpdateImagenJornada2) {
+              banderasExistoSync.add(boolSyncUpdateImagenJornada2);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(boolSyncUpdateImagenJornada2);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                emprendimiento: imagenToSync.emprendimiento.target!.nombre,
+                instruccion: "Actualización Imagen Jornada 2 Servidor", 
+                fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }      
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+              emprendimiento: "No encontrado",
+              instruccion: "Actualización Imagen Jornada 2 Servidor", 
+              fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
           }
         case "syncUpdateJornada3":
           final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
@@ -613,6 +665,22 @@ class SyncProviderPocketbase extends ChangeNotifier {
             }   
           }  
           continue;
+        case "syncDeleteImagenJornada":
+          print("Entro al caso de syncDeleteImagenJornada Pocketbase");
+            final boolSyncDeleteImagenJornada = await syncDeleteImagenJornada(instruccionesBitacora[i]);
+            if (boolSyncDeleteImagenJornada) {
+              banderasExistoSync.add(boolSyncDeleteImagenJornada);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(boolSyncDeleteImagenJornada);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                emprendimiento: instruccionesBitacora[i].emprendimiento,
+                instruccion: "Eliminar ${instruccionesBitacora[i].instruccionAdicional} Servidor", 
+                fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }      
         case "syncUpdateConsultoria":
           final consultoriaToSync = getFirstConsultoria(dataBase.consultoriasBox.getAll(), instruccionesBitacora[i].id);
           if(consultoriaToSync != null){
@@ -1339,6 +1407,80 @@ class SyncProviderPocketbase extends ChangeNotifier {
       }
     } catch (e) {
       print('ERROR - function syncAddJornada2(): $e');
+      return false;
+    }
+}
+
+  Future<bool> syncAddImagenJornada2(Imagenes imagen, Bitacora bitacora) async {
+    print("Estoy en syncAddImagenJornada2");
+    final List<String> idsDBRImagenes = [];
+    try {
+      if (!bitacora.executePocketbase) {
+        if (imagen.idDBR == null) {
+          //No se ha posteado la imagen en Emi Web
+          final recordImagenJornada2 = await client.records.create('imagenes', body: {
+            "nombre": imagen.nombre,
+            "base64": imagen.base64,
+            "id_emi_web": imagen.idEmiWeb,
+          });
+          if (recordImagenJornada2.id.isNotEmpty) {
+            //Se recupera el idDBR de la imagen
+            imagen.idDBR = recordImagenJornada2.id;
+            dataBase.imagenesBox.put(imagen);
+            print("Se recupera el idDBR de la Imagen");
+            for (var i = 0; i < imagen.tarea.target!.imagenes.length; i++) {
+              idsDBRImagenes.add(imagen.tarea.target!.imagenes[i].idDBR!);
+            }
+            final recordTareaJornada2 = await client.records.update('tareas', imagen.tarea.target!.idDBR!.split("?")[0], body: {
+            "id_imagenes_fk": idsDBRImagenes,
+            });
+            if (recordTareaJornada2.id.isNotEmpty) {
+              //Se marca como realizada en Pocketbase la instrucción en Bitacora
+              bitacora.executePocketbase = true;
+              dataBase.bitacoraBox.put(bitacora);
+              if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+                //Se elimina la instrucción de la bitacora
+                dataBase.bitacoraBox.remove(bitacora.id);
+              } 
+              return true;
+            } else {
+              //No se pudo hacer la acutalización de la tarea
+              return false;
+            }
+          } else {
+            return false;
+          }       
+        } else {
+          //Ya se posteo la imagen en Emi Web
+          for (var i = 0; i < imagen.tarea.target!.imagenes.length; i++) {
+              idsDBRImagenes.add(imagen.tarea.target!.imagenes[i].idDBR!);
+            }
+            final recordTareaJornada2 = await client.records.update('tareas', imagen.tarea.target!.idDBR!.split("?")[0], body: {
+            "id_imagenes_fk": idsDBRImagenes,
+            });
+            if (recordTareaJornada2.id.isNotEmpty) {
+              //Se marca como realizada en Pocketbase la instrucción en Bitacora
+              bitacora.executePocketbase = true;
+              dataBase.bitacoraBox.put(bitacora);
+              if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+                //Se elimina la instrucción de la bitacora
+                dataBase.bitacoraBox.remove(bitacora.id);
+              } 
+              return true;
+            } else {
+              //No se pudo hacer la acutalización de la tarea
+              return false;
+            }
+        }
+      } else {
+        if (bitacora.executeEmiWeb) {
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
+        } 
+        return true;
+      }
+    } catch (e) {
+      print('ERROR - function syncAddImagenJornada2(): $e');
       return false;
     }
 }
@@ -2509,64 +2651,55 @@ class SyncProviderPocketbase extends ChangeNotifier {
         }
         return true;
       }
-
     } catch (e) {
       print('ERROR - function syncUpdateEmprendedor(): $e');
       return false;
     }
   } 
 
-  Future<bool> syncUpdateJornada1(Jornadas jornada) async {
+  Future<bool> syncUpdateJornada1(Jornadas jornada, Bitacora bitacora) async {
     print("Estoy en El syncUpdateJornada1");
     try {
-      //Primero actualizamos la tarea
-      final updateTarea = dataBase.tareasBox.get(jornada.tarea.target!.id);
-      if (updateTarea != null) {
-        final recordTarea = await client.records.update('tareas', updateTarea.idDBR.toString(), body: {
-        "tarea": updateTarea.tarea,
-        "fecha_revision": updateTarea.fechaRevision.toUtc().toString(),
-        "id_status_sync_fk": "HoI36PzYw1wtbO1"
+      if (!bitacora.executePocketbase) {
+        //Primero actualizamos la tarea
+        final recordTarea = await client.records.update('tareas', jornada.tarea.target!.idDBR.toString(), body: {
+        "tarea": jornada.tarea.target!.tarea,
+        "fecha_revision": jornada.tarea.target!.fechaRevision.toUtc().toString(),
+        "id_status_sync_fk": "gdjz1oQlrSvQ8PB"
         });
         if (recordTarea.id.isNotEmpty) {
           print("Tarea updated succesfully");
-          var updateTarea = dataBase.tareasBox.get(jornada.tarea.target!.id);
-          if (updateTarea  != null) {
-            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateTarea.statusSync.target!.id)).build().findUnique();
-            if (statusSync != null) {
-              statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado de la tarea
-              dataBase.statusSyncBox.put(statusSync);
-              //Segundo actualizamos la jornada
-              final recordJornada = await client.records.update('jornadas', jornada.idDBR.toString(), body: {
-                  "proxima_visita": jornada.fechaRevision.toUtc().toString(),
-                  "id_status_sync_fk": "HoI36PzYw1wtbO1",
-              }); 
-
-              if (recordJornada.id.isNotEmpty) {
-                print("Jornada updated succesfully");
-                final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(jornada.statusSync.target!.id)).build().findUnique();
-                if (statusSync != null) {
-                  statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado de la jornada
-                  dataBase.statusSyncBox.put(statusSync);
-                  return true;
-                } else {
-                  return false;
-                }
-              }
-              else{
-                return false;
-              }
-            } else {
-              return false;
+          //Segundo actualizamos la jornada
+          final recordJornada = await client.records.update('jornadas', jornada.idDBR.toString(), body: {
+            "proxima_visita": jornada.fechaRevision.toUtc().toString(),
+            "completada": jornada.completada,
+            "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+          }); 
+          if (recordJornada.id.isNotEmpty) {
+            print("Jornada updated succesfully");
+            //Se marca como realizada en Pocketbase la instrucción en Bitacora
+            bitacora.executePocketbase = true;
+            dataBase.bitacoraBox.put(bitacora);
+            if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+              //Se elimina la instrucción de la bitacora
+              dataBase.bitacoraBox.remove(bitacora.id);
             }
-          } else {
+            return true;
+          }
+          else{
+            //No se pudo actualizar jornada en Pocketbase
             return false;
           }
         } else {
+          //No se pudo actualizar tarea en Pocketbase
           return false;
+        }   
+      } else {
+        if (bitacora.executeEmiWeb) {
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
         }
-      }
-      else{
-        return false;
+        return true;
       }
     } catch (e) {
       print('ERROR - function syncUpdateJornada1(): $e');
@@ -2574,61 +2707,88 @@ class SyncProviderPocketbase extends ChangeNotifier {
     }
   } 
 
-  Future<bool> syncUpdateJornada2(Jornadas jornada) async {
+  Future<bool> syncUpdateJornada2(Jornadas jornada, Bitacora bitacora) async {
     print("Estoy en El syncUpdateJornada2");
     try {
-      //Primero actualizamos la tarea
-      final updateTarea = dataBase.tareasBox.get(jornada.tarea.target!.id);
-      if (updateTarea != null) {
-        final recordTarea = await client.records.update('tareas', updateTarea.idDBR.toString(), body: {
-        "tarea": updateTarea.tarea,
-        "comentarios": updateTarea.comentarios,
-        "fecha_revision": updateTarea.fechaRevision.toUtc().toString(),
-        "id_status_sync_fk": "HoI36PzYw1wtbO1"
+      if (!bitacora.executePocketbase) {
+        //Primero actualizamos la tarea
+        final recordTarea = await client.records.update('tareas', jornada.tarea.target!.idDBR.toString(), body: {
+        "tarea": jornada.tarea.target!.tarea,
+        "comentarios": jornada.tarea.target!.comentarios,
+        "fecha_revision": jornada.tarea.target!.fechaRevision.toUtc().toString(),
+        "id_status_sync_fk": "gdjz1oQlrSvQ8PB"
         });
         if (recordTarea.id.isNotEmpty) {
           print("Tarea updated succesfully");
-          var updateTarea = dataBase.tareasBox.get(jornada.tarea.target!.id);
-          if (updateTarea  != null) {
-            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateTarea.statusSync.target!.id)).build().findUnique();
-            if (statusSync != null) {
-              statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado de la tarea
-              dataBase.statusSyncBox.put(statusSync);
-              //Segundo actualizamos la jornada
-              final recordJornada = await client.records.update('jornadas', jornada.idDBR.toString(), body: {
-                  "proxima_visita": jornada.fechaRevision.toUtc().toString(),
-                  "id_status_sync_fk": "HoI36PzYw1wtbO1",
-              }); 
-
-              if (recordJornada.id.isNotEmpty) {
-                print("Jornada updated succesfully");
-                final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(jornada.statusSync.target!.id)).build().findUnique();
-                if (statusSync != null) {
-                  statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado de la jornada
-                  dataBase.statusSyncBox.put(statusSync);
-                  return true;
-                } else {
-                  return false;
-                }
-              }
-              else{
-                return false;
-              }
-            } else {
-              return false;
+          //Segundo actualizamos la jornada
+          final recordJornada = await client.records.update('jornadas', jornada.idDBR.toString(), body: {
+            "proxima_visita": jornada.fechaRevision.toUtc().toString(),
+            "completada": jornada.completada,
+            "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+          }); 
+          if (recordJornada.id.isNotEmpty) {
+            print("Jornada updated succesfully");
+            //Se marca como realizada en Pocketbase la instrucción en Bitacora
+            bitacora.executePocketbase = true;
+            dataBase.bitacoraBox.put(bitacora);
+            if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+              //Se elimina la instrucción de la bitacora
+              dataBase.bitacoraBox.remove(bitacora.id);
             }
-          } else {
+            return true;
+          }
+          else{
+            //No se pudo actualizar jornada en Pocketbase
             return false;
           }
         } else {
+          //No se pudo actualizar tarea en Pocketbase
           return false;
+        }   
+      } else {
+        if (bitacora.executeEmiWeb) {
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
         }
-      }
-      else{
-        return false;
+        return true;
       }
     } catch (e) {
-      print('ERROR - function syncUpdateJornada1(): $e');
+      print('ERROR - function syncUpdateJornada2(): $e');
+      return false;
+    }
+  } 
+
+  Future<bool> syncUpdateImagenJornada2(Imagenes imagen, Bitacora bitacora) async {
+    print("Estoy en El syncUpdateImagenJornada2 en Pocketbase");
+    try {
+      if (!bitacora.executePocketbase) {
+        final record = await client.records.update('imagenes', imagen.idDBR.toString(), body: {
+            "nombre": imagen.nombre,
+            "base64": imagen.base64,
+        }); 
+        if (record.id.isNotEmpty) {
+          print("Imagen Jornada 2 updated succesfully");
+          //Se marca como realizada en Pocketbase la instrucción en Bitacora
+          bitacora.executePocketbase = true;
+          dataBase.bitacoraBox.put(bitacora);
+          if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+            //Se elimina la instrucción de la bitacora
+            dataBase.bitacoraBox.remove(bitacora.id);
+          }
+          return true;
+        }
+        else{
+          return false;
+        }
+      } else {
+        if (bitacora.executeEmiWeb) {
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
+        }
+        return true;
+      }
+    } catch (e) {
+      print('ERROR - function syncUpdateImagenJornada2(): $e');
       return false;
     }
   } 
@@ -2749,6 +2909,33 @@ class SyncProviderPocketbase extends ChangeNotifier {
       return false;
     }
 
+  } 
+
+  Future<bool> syncDeleteImagenJornada(Bitacora bitacora) async {
+    print("Estoy en El syncDelteImagenJornada en Pocketbase");
+    try {
+      if (!bitacora.executePocketbase) {
+        await client.records.delete('imagenes', bitacora.idDBR.toString()); 
+        print("Imagen Jornada deleted succesfully");
+        //Se marca como realizada en Pocketbase la instrucción en Bitacora
+        bitacora.executePocketbase = true;
+        dataBase.bitacoraBox.put(bitacora);
+        if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
+        }
+        return true;
+      } else {
+        if (bitacora.executeEmiWeb) {
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
+        }
+        return true;
+      }
+    } catch (e) {
+      print('ERROR - function syncDelteImagenJornada(): $e');
+      return false;
+    }
   } 
 
   Future<bool?> syncUpdateConsultoria(Consultorias consultoria) async {
