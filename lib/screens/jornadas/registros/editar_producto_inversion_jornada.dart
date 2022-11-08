@@ -873,7 +873,7 @@ class _EditarProductoInversionJornadaState
                                           maxLines: 1,
                                           validator: (val) {
                                             double cantidad = double.parse(val!);
-                                            if (cantidad == 0) {
+                                            if (cantidad <= 0) {
                                               return 'Para continuar, ingrese una cantidad.';
                                             }
 

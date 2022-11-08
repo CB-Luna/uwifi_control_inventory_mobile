@@ -575,15 +575,12 @@ class _EditarProductoVentaState
                                       ),
                                   maxLines: 1,
                                   validator: (val) {
-                                            if(val!.length > 1){
-                                               double precio = double.parse(val.replaceAll('\$', '').replaceAll(',', ''));
-                                            if (precio <= 0) {
-                                              return 'Para continuar, ingrese un costo mayor a 0.';
+                                            double cantidad = double.tryParse(val!) ?? 0;
+                                            if (cantidad <= 0) {
+                                              return 'Para continuar, ingrese una cantidad.';
                                             }
 
                                             return null;
-                                            }
-                                            
                                           },
                                 ),
                               ),

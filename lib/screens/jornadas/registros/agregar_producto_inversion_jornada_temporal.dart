@@ -877,7 +877,7 @@ class _AgregarProductoInversionJornadaTemporalState
                                           validator: (val) {
                                             if(val!.length > 1){
                                               double costo = double.parse(val.replaceAll('\$', '').replaceAll(',', ''));
-                                            if (costo == 0) {
+                                            if (costo <= 0) {
                                               return 'Para continuar, ingrese un costo sugerido.';
                                             }
 
