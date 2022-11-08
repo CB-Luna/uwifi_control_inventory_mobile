@@ -1,6 +1,6 @@
 import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/modelsPocketbase/temporals/instruccion_temporal.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/save_imagenes_local.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/save_instruccion_imagen_temporal.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
@@ -20,7 +20,7 @@ class JornadaController extends ChangeNotifier {
   String descripcion = "";
   List<String> imagenes = [];
   List<SaveImagenesLocal> imagenesLocal = [];
-  List<InstruccionTemporal> instruccionesTemp = [];
+  List<SaveInstruccionImagenTemporal> instruccionesImagenesTemp = [];
   bool activo = true;
   String tipoProyecto = "";
   String proyecto =  "";
@@ -40,7 +40,7 @@ class JornadaController extends ChangeNotifier {
     descripcion = "";
     imagenes = [];
     imagenesLocal = [];
-    instruccionesTemp = [];
+    instruccionesImagenesTemp = [];
     activo = true;
     tipoProyecto = "";
     proyecto = "";
@@ -78,6 +78,7 @@ class JornadaController extends ChangeNotifier {
       nuevaJornada.tarea.target = nuevaTarea;
       nuevaJornada.emprendimiento.target = emprendimiento;
       nuevaJornada.bitacora.add(nuevaInstruccionJornada);
+      nuevaTarea.jornada.target = nuevaJornada;
       //Indispensable para que se muestre en la lista de jornadas
       emprendimiento.bitacora.add(nuevaInstruccionEmprendimiento);
       emprendimiento.jornadas.add(nuevaJornada);
@@ -147,6 +148,7 @@ class JornadaController extends ChangeNotifier {
         path: imagenesLocal[i].path,
         base64: imagenesLocal[i].base64,
         ); //Se crea el objeto imagenes para la Tarea
+      nuevaImagenTarea.tarea.target = nuevaTarea;
       nuevaTarea.imagenes.add(nuevaImagenTarea);
     }
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
@@ -165,6 +167,7 @@ class JornadaController extends ChangeNotifier {
       nuevaJornada.tarea.target = nuevaTarea;
       nuevaJornada.emprendimiento.target = emprendimiento;
       nuevaJornada.bitacora.add(nuevaInstruccionJornada);
+      nuevaTarea.jornada.target = nuevaJornada;
       //Indispensable para que se muestre en la lista de jornadas
       emprendimiento.bitacora.add(nuevaInstruccionEmprendimiento);
       emprendimiento.jornadas.add(nuevaJornada);
@@ -177,7 +180,7 @@ class JornadaController extends ChangeNotifier {
     print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
   }
 
-  void updateJornada2(int id, DateTime newFechaRegistro, DateTime newFechaRevision, String newTarea, String newComentarios, List<Imagenes>? oldImagenes, List<String> newImagenes, bool newCompletada, int idTarea) {
+  void updateJornada2(int id, DateTime newFechaRegistro, DateTime newFechaRevision, String newTarea, String newComentarios, bool newCompletada, int idTarea) {
     var updateTarea  = dataBase.tareasBox.get(idTarea);
     if (updateTarea != null) {
       final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateJornada2', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
@@ -185,18 +188,6 @@ class JornadaController extends ChangeNotifier {
       updateTarea.fechaRevision = newFechaRevision;
       updateTarea.tarea = newTarea;
       updateTarea.comentarios = newComentarios;
-      //Se eliminan imagenes anteriores
-      if (oldImagenes != null) {
-        for (var i = 0; i < oldImagenes.length; i++) {
-        dataBase.imagenesBox.remove(oldImagenes[i].id);
-      }
-      }
-      //Se agregan las nuevas imagenes
-      for (var i = 0; i < newImagenes.length; i++) {
-        final nuevaImagenTarea = Imagenes(imagenes: newImagenes[i]); //Se crea el objeto imagenes para la Tarea
-        int idNuevaTarea = dataBase.imagenesBox.put(nuevaImagenTarea);
-        updateTarea.imagenes.add(dataBase.imagenesBox.get(idNuevaTarea)!);
-      }
       //Se actualiza la tarea con las nuevas imagenes
       dataBase.tareasBox.put(updateTarea);
       final statusSyncTarea = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateTarea.statusSync.target!.id)).build().findUnique();
@@ -219,8 +210,63 @@ class JornadaController extends ChangeNotifier {
         print('Jornada actualizada exitosamente');
       }
     }
-    print(dataBase.imagenesBox.getAll().length);
     notifyListeners();
+  }
+
+  void updateImagenesJornada2(Tareas tarea, List<SaveInstruccionImagenTemporal> listInstruccionesImagenesTemp) {
+    for (var i = 0; i < listInstruccionesImagenesTemp.length; i++) {
+      switch (listInstruccionesImagenesTemp[i].instruccion) {
+        case "syncAddImagenJornada2":
+          final nuevaInstruccion = Bitacora(instruccion: 'syncAddImagenJornada2', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+          final nuevaImagenTarea = Imagenes(
+            imagenes: listInstruccionesImagenesTemp[i].imagenLocal.path,
+            nombre: listInstruccionesImagenesTemp[i].imagenLocal.nombre,
+            path: listInstruccionesImagenesTemp[i].imagenLocal.path,
+            base64: listInstruccionesImagenesTemp[i].imagenLocal.base64,
+            ); //Se crea el objeto imagenes para la Tarea
+          nuevaImagenTarea.tarea.target = tarea;
+          nuevaImagenTarea.bitacora.add(nuevaInstruccion);
+          int idNuevaTarea = dataBase.imagenesBox.put(nuevaImagenTarea);
+          tarea.imagenes.add(dataBase.imagenesBox.get(idNuevaTarea)!);
+          dataBase.tareasBox.put(tarea);
+          print("Número de jornada desde syncAddImagenJornada2: ${tarea.jornada.target!.numJornada}");
+          continue;
+        case "syncUpdateImagenJornada2":
+          final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateImagenJornada2', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+          final updateImagen = dataBase.imagenesBox.get(listInstruccionesImagenesTemp[i].imagenLocal.id!);
+          if(updateImagen != null) {
+            updateImagen.imagenes = listInstruccionesImagenesTemp[i].imagenLocal.path;
+            updateImagen.nombre = listInstruccionesImagenesTemp[i].imagenLocal.nombre;
+            updateImagen.path = listInstruccionesImagenesTemp[i].imagenLocal.path;
+            updateImagen.base64 = listInstruccionesImagenesTemp[i].imagenLocal.base64;
+            updateImagen.bitacora.add(nuevaInstruccion);
+            dataBase.imagenesBox.put(updateImagen);
+            continue;
+          } else {
+            continue;
+          }
+        case "syncDeleteImagenJornada":
+          final deleteImagen = dataBase.imagenesBox.get(listInstruccionesImagenesTemp[i].imagenLocal.id ?? -1);
+          if(deleteImagen != null) {
+            final nuevaInstruccion = Bitacora(
+              instruccion: 'syncDeleteImagenJornada', 
+              instruccionAdicional: listInstruccionesImagenesTemp[i].instruccionAdicional, 
+              usuario: prefs.getString("userId")!,
+              idDBR: deleteImagen.idDBR,
+              idEmiWeb: deleteImagen.idEmiWeb,
+              emprendimiento: deleteImagen.tarea.target!.jornada.target!.emprendimiento.target!.nombre,
+            ); //Se crea la nueva instruccion a realizar en bitacora
+            deleteImagen.bitacora.add(nuevaInstruccion);
+            // Se elimina imagen de ObjectBox
+            dataBase.imagenesBox.remove(deleteImagen.id);
+            continue;
+          } else {
+            continue;
+          }
+        default:
+          continue;
+      }
+    }
   }
 
   void addJornada3(int idEmprendimiento, int idCatalogoProyecto, int numJornada) {
@@ -248,6 +294,7 @@ class JornadaController extends ChangeNotifier {
         path: imagenesLocal[i].path,
         base64: imagenesLocal[i].base64,
         ); //Se crea el objeto imagenes para la Tarea
+      nuevaImagenTarea.tarea.target = nuevaTarea;
       nuevaTarea.imagenes.add(nuevaImagenTarea);
     }
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
@@ -270,6 +317,7 @@ class JornadaController extends ChangeNotifier {
       nuevaJornada.bitacora.add(nuevaInstruccionJornada);
       //Se asigna una catalogoProyecto(Proyecto) al emprendimiento, como por default catalogoProuyecto ya tiene un clasificacion emprendimiento
       emprendimiento.catalogoProyecto.target = catalogoProyecto;
+      nuevaTarea.jornada.target = nuevaJornada;
       //Indispensable para que se muestre en la lista de jornadas
       emprendimiento.bitacora.add(nuevaInstruccionEmprendimiento);
       emprendimiento.jornadas.add(nuevaJornada);
@@ -376,6 +424,7 @@ class JornadaController extends ChangeNotifier {
         path: imagenesLocal[i].path,
         base64: imagenesLocal[i].base64,
         ); //Se crea el objeto imagenes para la Tarea
+      nuevaImagenTarea.tarea.target = nuevaTarea;
       nuevaTarea.imagenes.add(nuevaImagenTarea);
     }
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
@@ -407,6 +456,7 @@ class JornadaController extends ChangeNotifier {
       nuevaJornada.tarea.target = nuevaTarea;
       nuevaJornada.emprendimiento.target = emprendimiento;
       nuevaJornada.bitacora.add(nuevaInstruccionJornada);
+      nuevaTarea.jornada.target = nuevaJornada;
       //Indispensable para que se muestre en la lista de jornadas
       emprendimiento.bitacora.add(nuevaInstruccionEmprendimiento);
       emprendimiento.jornadas.add(nuevaJornada);

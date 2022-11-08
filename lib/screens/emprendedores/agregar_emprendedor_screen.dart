@@ -583,9 +583,13 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                       telefonoFormat
                                     ],
                                     validator: (value){
-                                      return value!.length < 12
+                                      if (value != "" && value != null) {
+                                        return value.length < 12
                                           ? 'Por favor ingrese un número telefónico válido'
                                           : null;
+                                      } else{
+                                        return null;
+                                      }
                                     }
                                   ),
                                 ),

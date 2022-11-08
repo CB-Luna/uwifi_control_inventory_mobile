@@ -266,6 +266,41 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               banderasExistoSync.add(true);
               continue;
             }
+          case "syncAddImagenJornada2":
+            print("Entro al caso de syncAddImagenJornada2 Emi Web");
+            if (!instruccionesBitacora[i].executeEmiWeb) {
+              final imagenToSync = getFirstImagen(dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
+              if(imagenToSync != null){
+                //Se encontró a la imagen y se puede agregar
+                var boolSyncAddImagenJornada2 = await syncAddImagenJornada2(imagenToSync, instruccionesBitacora[i]);
+                if (boolSyncAddImagenJornada2) {
+                  banderasExistoSync.add(boolSyncAddImagenJornada2);
+                  continue;
+                } else {
+                  //Recuperamos la instrucción que no se ejecutó
+                  banderasExistoSync.add(boolSyncAddImagenJornada2);
+                  final instruccionNoSincronizada = InstruccionNoSincronizada(
+                    emprendimiento: imagenToSync.tarea.target!.jornada.target?.emprendimiento.target?.nombre,
+                    instruccion: "Agregar Imagen Jornada 2 Emi Web", 
+                    fecha: instruccionesBitacora[i].fechaRegistro);
+                  instruccionesFallidas.add(instruccionNoSincronizada);
+                  continue;
+                }
+              } else {
+                //Recuperamos la instrucción que no se ejecutó
+                banderasExistoSync.add(false);
+                final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  emprendimiento: "No encontrado",
+                  instruccion: "Agregar Imagen Jornada 2 Emi Web",
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+                instruccionesFallidas.add(instruccionNoSincronizada);
+                continue;
+              }
+            } else {
+              // Ya se ha ejecutado esta instrucción en Emi Web
+              banderasExistoSync.add(true);
+              continue;
+            }
           case "syncAddJornada3":
             print("Entro al caso de syncAddJornada3 Emi Web");
             if (!instruccionesBitacora[i].executeEmiWeb) {
@@ -620,7 +655,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   banderasExistoSync.add(boolSyncUpdateEmprendedor);
                   final instruccionNoSincronizada = InstruccionNoSincronizada(
                     emprendimiento: emprendedorToSync.emprendimiento.target!.nombre,
-                    instruccion: "Actualizar Emprendedor Emi Web", 
+                    instruccion: "Actualización Emprendedor Emi Web", 
                     fecha: instruccionesBitacora[i].fechaRegistro);
                   instruccionesFallidas.add(instruccionNoSincronizada);
                   continue;
@@ -630,7 +665,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 banderasExistoSync.add(false);
                 final instruccionNoSincronizada = InstruccionNoSincronizada(
                   emprendimiento: "No encontrado",
-                  instruccion: "Actualizar Emprendedor Emi Web",
+                  instruccion: "Actualización Emprendedor Emi Web",
                   fecha: instruccionesBitacora[i].fechaRegistro);
                 instruccionesFallidas.add(instruccionNoSincronizada);
                 continue;
@@ -655,7 +690,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   banderasExistoSync.add(boolSyncUpdateEmprendimiento);
                   final instruccionNoSincronizada = InstruccionNoSincronizada(
                     emprendimiento: emprendimientoToSync.nombre,
-                    instruccion: "Actualizar Emprendimiento Emi Web", 
+                    instruccion: "Actualización Emprendimiento Emi Web", 
                     fecha: instruccionesBitacora[i].fechaRegistro);
                   instruccionesFallidas.add(instruccionNoSincronizada);
                   continue;
@@ -665,7 +700,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 banderasExistoSync.add(false);
                 final instruccionNoSincronizada = InstruccionNoSincronizada(
                   emprendimiento: "No encontrado",
-                  instruccion: "Actualizar Emprendimiento Emi Web",
+                  instruccion: "Actualización Emprendimiento Emi Web",
                   fecha: instruccionesBitacora[i].fechaRegistro);
                 instruccionesFallidas.add(instruccionNoSincronizada);
                 continue;
@@ -677,57 +712,108 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             }
           case "syncUpdateJornada1":
             print("Entro al caso de syncUpdateJornada1 Emi Web");
-            final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
-            if(jornadaToSync != null){
-              if (jornadaToSync.idEmiWeb != null) {
-                //Ya se ha enviado al backend la jornada y se puede actualizar
+            if (!instruccionesBitacora[i].executeEmiWeb) {
+              final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
+              if(jornadaToSync != null){
+                //Se encontró la jornada y se puede actualizar
                 final boolSyncUpdateJornada1 = await syncUpdateJornada1(jornadaToSync, instruccionesBitacora[i]);
                 if (boolSyncUpdateJornada1) {
                   banderasExistoSync.add(boolSyncUpdateJornada1);
                   continue;
                 } else {
-                  //Salimos del bucle
+                  //Recuperamos la instrucción que no se ejecutó
                   banderasExistoSync.add(boolSyncUpdateJornada1);
-                  i = instruccionesBitacora.length;
-                  break;
+                  final instruccionNoSincronizada = InstruccionNoSincronizada(
+                    emprendimiento: jornadaToSync.emprendimiento.target!.nombre,
+                    instruccion: "Actualización Jornada 1 Emi Web", 
+                    fecha: instruccionesBitacora[i].fechaRegistro);
+                  instruccionesFallidas.add(instruccionNoSincronizada);
+                  continue;
                 }
               } else {
-                //No se ha enviado al backend la jornada y por lo tanto no se puede actualizar
-                banderasExistoSync.add(true);
+                //Recuperamos la instrucción que no se ejecutó
+                banderasExistoSync.add(false);
+                final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  emprendimiento: "No encontrado",
+                  instruccion: "Actualización Jornada 1 Emi Web",
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+                instruccionesFallidas.add(instruccionNoSincronizada);
                 continue;
-              } 
+              }
             } else {
-              //Salimos del bucle
-              banderasExistoSync.add(false);
-              i = instruccionesBitacora.length;
-              break;
+              // Ya se ha ejecutado esta instrucción en Emi Web
+              banderasExistoSync.add(true);
+              continue;
             }
           case "syncUpdateJornada2":
-            print("Entro al caso de syncAddJornada2 Emi Web");
-            final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
-            if(jornadaToSync != null){
-              if (jornadaToSync.idEmiWeb != null) {
-                //Ya se ha enviado al backend la jornada y se puede actualizar
-                final boolSyncUpdateJornada1 = await syncUpdateJornada2(jornadaToSync, instruccionesBitacora[i]);
-                if (boolSyncUpdateJornada1) {
-                  banderasExistoSync.add(boolSyncUpdateJornada1);
+            print("Entro al caso de syncUpdateJornada2 Emi Web");
+            if (!instruccionesBitacora[i].executeEmiWeb) {
+              final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
+              if(jornadaToSync != null){
+                //Se encontró la jornada y se puede actualizar
+                final boolSyncUpdateJornada2 = await syncUpdateJornada2(jornadaToSync, instruccionesBitacora[i]);
+                if (boolSyncUpdateJornada2) {
+                  banderasExistoSync.add(boolSyncUpdateJornada2);
                   continue;
                 } else {
-                  //Salimos del bucle
-                  banderasExistoSync.add(boolSyncUpdateJornada1);
-                  i = instruccionesBitacora.length;
-                  break;
+                  //Recuperamos la instrucción que no se ejecutó
+                  banderasExistoSync.add(boolSyncUpdateJornada2);
+                  final instruccionNoSincronizada = InstruccionNoSincronizada(
+                    emprendimiento: jornadaToSync.emprendimiento.target!.nombre,
+                    instruccion: "Actualización Jornada 2 Emi Web", 
+                    fecha: instruccionesBitacora[i].fechaRegistro);
+                  instruccionesFallidas.add(instruccionNoSincronizada);
+                  continue;
                 }
               } else {
-                //No se ha enviado al backend la jornada y por lo tanto no se puede actualizar
-                banderasExistoSync.add(true);
+                //Recuperamos la instrucción que no se ejecutó
+                banderasExistoSync.add(false);
+                final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  emprendimiento: "No encontrado",
+                  instruccion: "Actualización Jornada 2 Emi Web",
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+                instruccionesFallidas.add(instruccionNoSincronizada);
                 continue;
-              } 
+              }
             } else {
-              //Salimos del bucle
-              banderasExistoSync.add(false);
-              i = instruccionesBitacora.length;
-              break;
+              // Ya se ha ejecutado esta instrucción en Emi Web
+              banderasExistoSync.add(true);
+              continue;
+            }
+          case "syncUpdateImagenJornada2":
+            print("Entro al caso de syncUpdateImagenJornada2 Emi Web");
+            if (!instruccionesBitacora[i].executeEmiWeb) {
+              final imagenToSync = getFirstImagen(dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
+              if(imagenToSync != null){
+                //Se encontró a la imagen y se puede actualizar
+                var boolSyncUpdateImagenJornada2 = await syncUpdateImagenJornada2(imagenToSync, instruccionesBitacora[i]);
+                if (boolSyncUpdateImagenJornada2) {
+                  banderasExistoSync.add(boolSyncUpdateImagenJornada2);
+                  continue;
+                } else {
+                  //Recuperamos la instrucción que no se ejecutó
+                  banderasExistoSync.add(boolSyncUpdateImagenJornada2);
+                  final instruccionNoSincronizada = InstruccionNoSincronizada(
+                    emprendimiento: imagenToSync.tarea.target!.jornada.target!.emprendimiento.target!.nombre,
+                    instruccion: "Actualizar Imagen Jornada 2 Emi Web", 
+                    fecha: instruccionesBitacora[i].fechaRegistro);
+                  instruccionesFallidas.add(instruccionNoSincronizada);
+                  continue;
+                }
+              } else {
+                //Recuperamos la instrucción que no se ejecutó
+                banderasExistoSync.add(false);
+                final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  emprendimiento: "No encontrado",
+                  instruccion: "Actualizar Imagen Jornada 2 Emi Web",
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+                instruccionesFallidas.add(instruccionNoSincronizada);
+                continue;
+              }
+            } else {
+              // Ya se ha ejecutado esta instrucción en Emi Web
+              banderasExistoSync.add(true);
+              continue;
             }
           case "syncUpdateEstadoInversion":
             print("Entro al caso de syncUpdateEstadoInversion Emi Web");
@@ -755,6 +841,28 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 final instruccionNoSincronizada = InstruccionNoSincronizada(
                   emprendimiento: "No encontrado",
                   instruccion: "Actualizar Estado Inversión Emi Web",
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+                instruccionesFallidas.add(instruccionNoSincronizada);
+                continue;
+              }
+            } else {
+              // Ya se ha ejecutado esta instrucción en Emi Web
+              banderasExistoSync.add(true);
+              continue;
+            }
+          case "syncDeleteImagenJornada":
+            print("Entro al caso de syncDeleteImagenJornada Emi Web");
+            if (!instruccionesBitacora[i].executeEmiWeb) {
+              var boolSyncDeleteImagenJornada = await syncDeleteImagenJornada(instruccionesBitacora[i]);
+              if (boolSyncDeleteImagenJornada) {
+                banderasExistoSync.add(boolSyncDeleteImagenJornada);
+                continue;
+              } else {
+                //Recuperamos la instrucción que no se ejecutó
+                banderasExistoSync.add(boolSyncDeleteImagenJornada);
+                final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  emprendimiento: instruccionesBitacora[i].emprendimiento,
+                  instruccion: "Eliminar ${instruccionesBitacora[i].instruccionAdicional} Emi Web", 
                   fecha: instruccionesBitacora[i].fechaRegistro);
                 instruccionesFallidas.add(instruccionNoSincronizada);
                 continue;
@@ -1283,6 +1391,51 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     }
 }
 
+  Future<bool> syncAddImagenJornada2(Imagenes imagen, Bitacora bitacora) async {
+    print("Estoy en El syncAddImagenJornada2() en Emi Web");
+    try {
+      // Primero creamos el API para realizar la actualización
+      final crearImagenJornada2Uri =
+        Uri.parse('$baseUrlEmiWebServices/documentos/crear');
+      final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+      print("${imagen.nombre}");
+      print("${imagen.base64}");
+      print("${imagen.tarea.target?.comentarios}");
+      print("${imagen.tarea.target!.jornada.target!.emprendimiento.target!.usuario.target!.idEmiWeb}");
+      final responsePostAddImagenJornada2 = await post(crearImagenJornada2Uri, 
+      headers: headers,
+      body: jsonEncode({
+        "idCatTipoDocumento": "4", //Círculo Empresa
+        "nombreArchivo": imagen.nombre,
+        "archivo": imagen.base64,
+        "idUsuario": imagen.tarea.target!.jornada.target!.emprendimiento.target!.usuario.target!.idEmiWeb,
+        "idJornada2": imagen.tarea.target!.jornada.target!.idEmiWeb!.split("?")[0],
+      }));
+      switch (responsePostAddImagenJornada2.statusCode) {
+        case 200:
+        print("Caso 200 en Emi Web Add Imagen Usuario");
+          //Se recupera el id Emi Web
+          final responsePostImagenUsuarioParse = postRegistroImagenExitosoEmiWebFromMap(
+               const Utf8Decoder().convert(responsePostAddImagenJornada2.bodyBytes));
+          imagen.idEmiWeb = responsePostImagenUsuarioParse.payload.idDocumento.toString();
+          dataBase.imagenesBox.put(imagen);
+          //Se marca como realizada en EmiWeb la instrucción en Bitacora
+          bitacora.executeEmiWeb = true;
+          dataBase.bitacoraBox.put(bitacora);
+          return true;
+        default: //No se realizo con éxito el post
+          print("Error en agregar imagen jornada 2 Emi Web");
+          return false;
+      }  
+    } catch (e) {
+      print('ERROR - function syncAddImagenJornada2(): $e');
+      return false;
+    }
+  }
+
   Future<bool> syncAddJornada3(Jornadas jornada, Bitacora bitacora) async {
     print("Estoy en El syncAddJornada3 de Emi Web");
     try {
@@ -1703,6 +1856,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           }));
           switch (responsePostImagenProductoEmp.statusCode) {
             case 200:
+              print("Caso 200 en Emi Web Imagen Producto Emprendedor");
               final responsePostImagenProductoEmpParse = postRegistroImagenExitosoEmiWebFromMap(
                 const Utf8Decoder().convert(responsePostImagenProductoEmp.bodyBytes));
               imagenToSync.idEmiWeb = responsePostImagenProductoEmpParse.payload.idDocumento.toString();
@@ -1730,8 +1884,6 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 "descripcion": productoEmp.descripcion,
                 "costoUnidadMedida": productoEmp.costo,
               }));
-              print("Respuesta Post Producto Emprendedor");
-              print(responsePostProductoEmprendedor.body);
               switch (responsePostProductoEmprendedor.statusCode) {
                 case 200:
                   print("Caso 200 en Emi Web Producto Emprendedor");
@@ -1746,10 +1898,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     url,
                     headers: headers
                   );
-                  print("Respuesta Get Productos Emprendedor");
-                  print(responseIdProductoEmprendedor.body);
                   switch(responseIdProductoEmprendedor.statusCode) {
                     case 200:
+                      print("Caso 200 en Emi Web Recuperación Id Producto Emprendedor");
                       final responsePostProductosEmprendedorParse = getProdEmprendedorByEmprendedorEmiWebFromMap(
                       const Utf8Decoder().convert(responseIdProductoEmprendedor.bodyBytes));
                       for(var i = 0; i < responsePostProductosEmprendedorParse.payload!.toList().length; i++){
@@ -1771,13 +1922,16 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       return false;
                     default:
                       // No se recuperó con éxito el id Emi Web del producto Emp
+                      print("Error en Emi Web Recuperación Id Producto Emprendedor");
                       return false;
                   }
                 default: //No se realizo con éxito el post del producto Emp
+                  print("Error en Emi Web Producto Emprendedor");
                   return false;
               } 
             default:
               //No se realizo con éxito el post de la imagen asociada
+              print("Error en Emi Web Imagen Producto Emprendedor");
               return false;
           }  
         } else {
@@ -1805,8 +1959,6 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               "descripcion": productoEmp.descripcion,
               "costoUnidadMedida": productoEmp.costo,
             }));
-            print("Respuesta Post Producto Emprendedor");
-            print(responsePostProductoEmprendedor.body);
             switch (responsePostProductoEmprendedor.statusCode) {
               case 200:
                 print("Caso 200 en Emi Web Producto Emprendedor");
@@ -1821,10 +1973,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   url,
                   headers: headers
                 );
-                print("Respuesta Get Productos Emprendedor");
-                print(responseIdProductoEmprendedor.body);
                 switch(responseIdProductoEmprendedor.statusCode) {
                   case 200:
+                     print("Caso 200 en Emi Web Id Producto Emprendedor");
                     final responsePostProductosEmprendedorParse = getProdEmprendedorByEmprendedorEmiWebFromMap(
                     const Utf8Decoder().convert(responseIdProductoEmprendedor.bodyBytes));
                     for(var i = 0; i < responsePostProductosEmprendedorParse.payload!.toList().length; i++){
@@ -1846,9 +1997,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     return false;
                   default:
                     // No se recuperó con éxito el id Emi Web del producto Emp
+                    print("Error en Emi Web Recuperación Id Producto Emprendedor");
                     return false;
                 }
               default: //No se realizo con éxito el post del producto Emp
+                print("Error en Emi Web Producto Emprendedor");
                 return false;
             } 
           } else {
@@ -1884,8 +2037,6 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             "descripcion": productoEmp.descripcion,
             "costoUnidadMedida": productoEmp.costo,
           }));
-          print("Respuesta Post Producto Emprendedor");
-          print(responsePostProductoEmprendedor.body);
           switch (responsePostProductoEmprendedor.statusCode) {
             case 200:
               print("Caso 200 en Emi Web Producto Emprendedor");
@@ -1900,10 +2051,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 url,
                 headers: headers
               );
-              print("Respuesta Get Productos Emprendedor");
-              print(responseIdProductoEmprendedor.body);
               switch(responseIdProductoEmprendedor.statusCode) {
                 case 200:
+                  print("Caso 200 en Emi Web Id Producto Emprendedor");
                   final responsePostProductosEmprendedorParse = getProdEmprendedorByEmprendedorEmiWebFromMap(
                   const Utf8Decoder().convert(responseIdProductoEmprendedor.bodyBytes));
                   for(var i = 0; i < responsePostProductosEmprendedorParse.payload!.toList().length; i++){
@@ -1925,9 +2075,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   return false;
                 default:
                   // No se recuperó con éxito el id Emi Web del producto Emp
+                  print("Error en Emi Web Recuperación Id Producto Emprendedor");
                   return false;
               }
             default: //No se realizo con éxito el post del producto Emp
+              print("Error en Emi Web Producto Emprendedor");
               return false;
           } 
         } else {
@@ -2318,7 +2470,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         "Content-Type": "application/json",
         'Authorization': 'Bearer $tokenGlobal',
       });
-      final responsePostUpdateEmprendedor = await put(actualizarEmprendedorUri, 
+      final responseUpdateEmprendedor = await put(actualizarEmprendedorUri, 
       headers: headers,
       body: jsonEncode({
         "idUsuario": emprendedor.emprendimiento.target!.usuario.target!.idEmiWeb,
@@ -2339,18 +2491,16 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         "fechaRegistro": DateFormat("yyyy-MM-dd").format(emprendedor.fechaRegistro),
         "archivado": emprendedor.emprendimiento.target!.archivado,
       }));
-
-      print("Respuesta Update Emprendedor");
-      print(responsePostUpdateEmprendedor.body);
-      print(responsePostUpdateEmprendedor.statusCode);
-      switch (responsePostUpdateEmprendedor.statusCode) {
+       print(responseUpdateEmprendedor.statusCode);
+      print(responseUpdateEmprendedor.body);
+      switch (responseUpdateEmprendedor.statusCode) {
         case 200:
         print("Caso 200 en Emi Web Update Emprendedor");
           //Se marca como realizada en EmiWeb la instrucción en Bitacora
           bitacora.executeEmiWeb = true;
           dataBase.bitacoraBox.put(bitacora);
           return true;
-        default: //No se realizo con éxito el put
+        default: //No se realizo con éxito el update
           print("Error en actualizar Emprendedor Emi Web");
           return false;
       }  
@@ -2409,7 +2559,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         "Content-Type": "application/json",
         'Authorization': 'Bearer $tokenGlobal',
       });
-      final responsePostUpdateEmprendimiento = await put(actualizarEmprendimientoUri, 
+      final responseUpdateEmprendimiento = await put(actualizarEmprendimientoUri, 
       headers: headers,
       body: jsonEncode({
         "idUsuarioRegistra": emprendimiento.usuario.target!.idEmiWeb,
@@ -2420,18 +2570,16 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         "emprendimiento": emprendimiento.nombre,
         "id": emprendimiento.idEmiWeb,
       }));
-
-      print("Respuesta Update Emprendimiento");
-      print(responsePostUpdateEmprendimiento.body);
-      print(responsePostUpdateEmprendimiento.statusCode);
-      switch (responsePostUpdateEmprendimiento.statusCode) {
+      print(responseUpdateEmprendimiento.statusCode);
+      print(responseUpdateEmprendimiento.body);
+      switch (responseUpdateEmprendimiento.statusCode) {
         case 200:
         print("Caso 200 en Emi Web Update Emprendedor");
           //Se marca como realizada en EmiWeb la instrucción en Bitacora
           bitacora.executeEmiWeb = true;
           dataBase.bitacoraBox.put(bitacora);
           return true;
-        default: //No se realizo con éxito el put
+        default: //No se realizo con éxito el update
           print("Error en actualizar Emprendedor Emi Web");
           return false;
       }  
@@ -2456,7 +2604,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           });
           print("Fase Actual: ${faseActual.fase}");
           print("Id Emprendimiento: ${emprendimiento.idEmiWeb}");
-          final responsePostUpdateFaseEmprendimiento = await put(actualizarFaseEmprendimientoUri, 
+          final responseUpdateFaseEmprendimiento = await put(actualizarFaseEmprendimientoUri, 
           headers: headers,
           body: jsonEncode({
             "idUsuarioRegistra": emprendimiento.usuario.target!.idEmiWeb,
@@ -2467,17 +2615,15 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             "id": emprendimiento.idEmiWeb,
             "idCatFase": faseActual.idEmiWeb,
           }));
-          print(responsePostUpdateFaseEmprendimiento.statusCode);
-          print(responsePostUpdateFaseEmprendimiento.body);
-          print("Respuesta Post Update Fase Emprendimiento");
-          switch (responsePostUpdateFaseEmprendimiento.statusCode) {
+
+          switch (responseUpdateFaseEmprendimiento.statusCode) {
             case 200:
               print("Caso 200 en Emi Web Update Fase Emprendimiento");
               //Se marca como realizada en EmiWeb la instrucción en Bitacora
               bitacora.executeEmiWeb = true;
               dataBase.bitacoraBox.put(bitacora);
               return true;
-            default: //No se realizo con éxito el post
+            default: //No se realizo con éxito el update
               print("Error en actualizar fase emprendimiento Emi Web");
               return false;
           }  
@@ -2556,7 +2702,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           'Authorization': 'Bearer $tokenGlobal',
         });
         print("Fase Actual: ${estadoActual.estado}");
-        final responsePostUpdateEstasyncUpdateEstadoInversion = await put(syncUpdateEstadoInversionUri, 
+        final responseUpdateEstasyncUpdateEstadoInversion = await put(syncUpdateEstadoInversionUri, 
         headers: headers,
         body: jsonEncode({
           "idUsuarioRegistra": inversion.emprendimiento.target!.usuario.target!.idEmiWeb,
@@ -2567,16 +2713,15 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           "idInversiones": inversion.idEmiWeb,
           "idCatEstadoInversion": estadoActual.idEmiWeb,
         }));
-        print("Respuesta Post Update Estado Inversión");
-        print(responsePostUpdateEstasyncUpdateEstadoInversion.body);
-        switch (responsePostUpdateEstasyncUpdateEstadoInversion.statusCode) {
+
+        switch (responseUpdateEstasyncUpdateEstadoInversion.statusCode) {
           case 200:
             print("Caso 200 en Emi Web Update Estado Inversión");
             //Se marca como realizada en EmiWeb la instrucción en Bitacora
             bitacora.executeEmiWeb = true;
             dataBase.bitacoraBox.put(bitacora);
             return true;
-          default: //No se realizo con éxito el post de la actualización de estado de la inversión
+          default: //No se realizo con éxito el update de la actualización de estado de la inversión
             print("Error en actualizar estado inversion Emi Web");
             return false;
         }  
@@ -2590,7 +2735,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     }
   }
 
-    Future<bool> syncUpdateJornada1(Jornadas jornada, Bitacora bitacora) async {
+  Future<bool> syncUpdateJornada1(Jornadas jornada, Bitacora bitacora) async {
     print("Estoy en El syncUpdateJornada1() en Emi Web");
     try {
       // Primero creamos el API para realizar la actualización
@@ -2600,7 +2745,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         "Content-Type": "application/json",
         'Authorization': 'Bearer $tokenGlobal',
       });
-      final responsePostUpdateJornada1 = await put(actualizarJornada1Uri, 
+      final responseUpdateJornada1 = await put(actualizarJornada1Uri, 
       headers: headers,
       body: jsonEncode({
         "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
@@ -2617,15 +2762,15 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         "idProyecto": jornada.emprendimiento.target!.idEmiWeb,
         "nombreEmprendimiento": jornada.emprendimiento.target!.nombre,
       }));
-      print(responsePostUpdateJornada1.statusCode);
-      print(responsePostUpdateJornada1.body);
-      switch (responsePostUpdateJornada1.statusCode) {
+
+      switch (responseUpdateJornada1.statusCode) {
         case 200:
         print("Caso 200 en Emi Web Update Jornada 1");
-          //Se elimina la instrucción de la bitacora
-          dataBase.bitacoraBox.remove(bitacora.id);
+          //Se marca como realizada en EmiWeb la instrucción en Bitacora
+          bitacora.executeEmiWeb = true;
+          dataBase.bitacoraBox.put(bitacora);
           return true;
-        default: //No se realizo con éxito el post
+        default: //No se realizo con éxito el update
           print("Error en actualizar jornada 1 Emi Web");
           return false;
       }  
@@ -2635,7 +2780,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     }
   } 
 
-    Future<bool> syncUpdateJornada2(Jornadas jornada, Bitacora bitacora) async {
+  Future<bool> syncUpdateJornada2(Jornadas jornada, Bitacora bitacora) async {
     print("Estoy en El syncUpdateJornada2() en Emi Web");
     try {
       // Primero creamos el API para realizar la actualización
@@ -2645,7 +2790,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         "Content-Type": "application/json",
         'Authorization': 'Bearer $tokenGlobal',
       });
-      final responsePostUpdateJornada2 = await put(actualizarJornada2Uri, 
+      final responseUpdateJornada2 = await put(actualizarJornada2Uri, 
       headers: headers,
       body: jsonEncode({
         "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
@@ -2662,15 +2807,15 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         "idProyecto": jornada.emprendimiento.target!.idEmiWeb,
         "nombreEmprendimiento": jornada.emprendimiento.target!.nombre,
       }));
-      print(responsePostUpdateJornada2.statusCode);
-      print(responsePostUpdateJornada2.body);
-      switch (responsePostUpdateJornada2.statusCode) {
+
+      switch (responseUpdateJornada2.statusCode) {
         case 200:
         print("Caso 200 en Emi Web Update Fase Emprendimiento");
-          //Se elimina la instrucción de la bitacora
-          dataBase.bitacoraBox.remove(bitacora.id);
+          //Se marca como realizada en EmiWeb la instrucción en Bitacora
+          bitacora.executeEmiWeb = true;
+          dataBase.bitacoraBox.put(bitacora);
           return true;
-        default: //No se realizo con éxito el post
+        default: //No se realizo con éxito el update
           print("Error en actualizar fase emprendimiento Emi Web");
           return false;
       }  
@@ -2680,7 +2825,90 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     }
   } 
 
-    Future<bool> syncUpdateUsuario(Usuarios usuario, Bitacora bitacora) async {
+  Future<bool> syncUpdateImagenJornada2(Imagenes imagen, Bitacora bitacora) async {
+    print("Estoy en El syncUpdateImagenJornada2() en Emi Web");
+    try {
+      // Primero creamos el API para realizar la actualización
+      print("${imagen.idEmiWeb}");
+      final actualizarImagenJornada2Uri =
+        Uri.parse('$baseUrlEmiWebServices/documentos/actualizar?id=${imagen.idEmiWeb}');
+      final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+      print("Datos");
+      print("${imagen.nombre}");
+      print("${imagen.idEmiWeb}");
+      print("${imagen.base64}");
+      print("${imagen.tarea.target!.jornada.target!.emprendimiento.target!.usuario
+            .target!.nombre} ${imagen.tarea.target!.jornada.target!.emprendimiento.target!.usuario
+            .target!.apellidoP} ${imagen.tarea.target!.jornada.target!.emprendimiento.target!.usuario
+            .target!.apellidoM}");
+      print("${imagen.tarea.target!.jornada.target!.idEmiWeb!.split("?")[0]}");
+      final responseUpdateImagenJornada2 = await put(actualizarImagenJornada2Uri, 
+      headers: headers,
+      body: jsonEncode({
+        "idUsuario": imagen.tarea.target!.jornada.target!.emprendimiento.target!.idEmiWeb,
+        "nombreUsuario": "${imagen.tarea.target!.jornada.target!.emprendimiento.target!.usuario
+            .target!.nombre} ${imagen.tarea.target!.jornada.target!.emprendimiento.target!.usuario
+            .target!.apellidoP} ${imagen.tarea.target!.jornada.target!.emprendimiento.target!.usuario
+            .target!.apellidoM}",
+        "idCatTipoDocumento": "4", //Círculo Empresa
+        "nombreArchivo": imagen.nombre,
+        "archivo": imagen.base64,
+        "idJornada2": imagen.tarea.target!.jornada.target!.idEmiWeb!.split("?")[0],
+      }));
+      print("Status Code: ${responseUpdateImagenJornada2.statusCode}");
+      print("${responseUpdateImagenJornada2.body}");
+      switch (responseUpdateImagenJornada2.statusCode) {
+        case 200:
+        print("Caso 200 en Emi Web Update Imagen Usuario");
+          //Se marca como realizada en EmiWeb la instrucción en Bitacora
+          bitacora.executeEmiWeb = true;
+          dataBase.bitacoraBox.put(bitacora);
+          return true;
+        default: //No se realizo con éxito el update
+          print("Error en actualizar imagen usuario Emi Web");
+          return false;
+      }  
+    } catch (e) {
+      print('ERROR - function syncUpdateImagenJornada2(): $e');
+      return false;
+    }
+  }
+
+  Future<bool> syncDeleteImagenJornada(Bitacora bitacora) async {
+    print("Estoy en El syncDeleteImagenJornada() en Emi Web");
+    try {
+      // Primero creamos el API para realizar la actualización
+      final eliminarImagenJornada =
+        Uri.parse('$baseUrlEmiWebServices/documentos/eliminar?id=${bitacora.idEmiWeb}');
+      final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+      final responseDeleteImagenJornada = await delete(eliminarImagenJornada, 
+      headers: headers,
+      body: jsonEncode({
+      }));
+      switch (responseDeleteImagenJornada.statusCode) {
+        case 200:
+        print("Caso 200 en Emi Web Delete Imagen Usuario");
+          //Se marca como realizada en EmiWeb la instrucción en Bitacora
+          bitacora.executeEmiWeb = true;
+          dataBase.bitacoraBox.put(bitacora);
+          return true;
+        default: //No se realizo con éxito el delete
+          print("Error en eliminar imagen usuario Emi Web");
+          return false;
+      }  
+    } catch (e) {
+      print('ERROR - function syncDeleteImagenJornada(): $e');
+      return false;
+    }
+  }
+
+  Future<bool> syncUpdateUsuario(Usuarios usuario, Bitacora bitacora) async {
     print("Estoy en El syncUpdateUsuario() en Emi Web");
     try {
       //Primero creamos el API para realizar la actualización
@@ -2703,8 +2931,6 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         "telefono": usuario.telefono,
       }));
 
-      print(responsePutUpdateUsuario.statusCode);
-      print(responsePutUpdateUsuario.body);
       switch (responsePutUpdateUsuario.statusCode) {
         case 200:
         print("Caso 200 en Emi Web Update Usuario");
@@ -2722,10 +2948,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     }
   } 
 
-    Future<bool> syncUpdateImagenUsuario(Imagenes imagen, Bitacora bitacora) async {
+  Future<bool> syncUpdateImagenUsuario(Imagenes imagen, Bitacora bitacora) async {
     print("Estoy en El syncUpdateImagenUsuario() en Emi Web");
     try {
-      print("imagen id Emi Web: ${imagen.idEmiWeb}");
       // Primero creamos el API para realizar la actualización
       final actualizarImagenUsuarioUri =
         Uri.parse('$baseUrlEmiWebServices/documentos/actualizar?id=${imagen.idEmiWeb}');
@@ -2745,8 +2970,6 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         "nombreArchivo": imagen.nombre,
         "archivo": imagen.base64,
       }));
-      print(responsePostUpdateImagenUsuario.statusCode);
-      print(responsePostUpdateImagenUsuario.body);
       switch (responsePostUpdateImagenUsuario.statusCode) {
         case 200:
         print("Caso 200 en Emi Web Update Imagen Usuario");
@@ -2763,7 +2986,8 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       return false;
     }
   }
-    Future<bool> syncAddImagenUsuario(Imagenes imagen, Bitacora bitacora) async {
+
+  Future<bool> syncAddImagenUsuario(Imagenes imagen, Bitacora bitacora) async {
     print("Estoy en El syncAddImagenUsuario() en Emi Web");
     try {
       // Primero creamos el API para realizar la actualización
@@ -2781,8 +3005,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         "archivo": imagen.base64,
         "idUsuario": imagen.usuario.target!.idEmiWeb,
       }));
-      print(responsePostAddImagenUsuario.statusCode);
-      print(responsePostAddImagenUsuario.body);
+
       switch (responsePostAddImagenUsuario.statusCode) {
         case 200:
         print("Caso 200 en Emi Web Add Imagen Usuario");
@@ -2796,7 +3019,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           dataBase.bitacoraBox.put(bitacora);
           return true;
         default: //No se realizo con éxito el post
-          print("Error en actualizar imagen usuario Emi Web");
+          print("Error en agregar imagen usuario Emi Web");
           return false;
       }  
     } catch (e) {

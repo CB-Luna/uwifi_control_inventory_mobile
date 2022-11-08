@@ -233,6 +233,8 @@ class Bitacora{
   bool executeEmiWeb;
   bool executePocketbase;
   String? idDBR;
+  String? idEmiWeb;
+  String? emprendimiento;
   DateTime fechaRegistro;
   DateTime? fechaSync;
   @Backlink()
@@ -274,6 +276,8 @@ class Bitacora{
     this.executeEmiWeb = false,
     this.executePocketbase = false,
     this.idDBR,
+    this.idEmiWeb,
+    this.emprendimiento,
     DateTime? fechaRegistro,
     this.fechaSync,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
@@ -1176,7 +1180,7 @@ class Imagenes {
   String? idDBR;
   @Unique()
   String? idEmiWeb;
-  final tareas = ToMany<Tareas>();
+  final tarea = ToOne<Tareas>();
   final prodSolicitados = ToMany<ProdSolicitado>();
   final productosProv = ToMany<ProductosProv>();
   final prodProyecto = ToMany<ProdProyecto>();
