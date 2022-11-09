@@ -1,5 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/save_imagenes_local.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/save_instruccion_imagen_temporal.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_imagenes_completas.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_validacion_eliminar_imagen.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_eliminar_imagen.dart';
@@ -38,9 +41,10 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
   late TextEditingController fechaRevisionText;
   late TextEditingController comentariosController;
   late bool activoController;
-  List<String> newConvenio = [];
-  List<String> oldConvenio = [];
-  List<Imagenes>? imagenes = [];
+  List<SaveImagenesLocal> newConvenio = [];
+  List<SaveImagenesLocal> oldConvenio = [];
+  List<SaveInstruccionImagenTemporal> listInstruccionesImagenesTemp = [];
+  List<String> imagenesCarrousel = [];
   List<XFile> imagenesTemp = [];
 
   @override
@@ -56,12 +60,16 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
         TextEditingController(text: widget.jornada.tarea.target!.comentarios);
     imagenesTemp =[];
     newConvenio = [];
-    imagenes = widget.jornada.tarea.target?.imagenes.toList();
-    if (imagenes != null ) {
-      for (var element in imagenes!) {
-        newConvenio.add(element.imagenes);
-        oldConvenio.add(element.imagenes);
-      }
+    for (var element in widget.jornada.tarea.target!.imagenes.toList()) {
+      var newSaveImagenLocal = SaveImagenesLocal(
+        id: element.id,
+        nombre: element.nombre!, 
+        path: element.path!, 
+        base64: element.base64!,
+      );
+      newConvenio.add(newSaveImagenLocal);
+      oldConvenio.add(newSaveImagenLocal);
+      imagenesCarrousel.add(element.imagenes);
     }
     activoController = !widget.jornada.completada;
   }
@@ -440,7 +448,7 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                                   height: 100,
                                                   child: CarouselSlider(
                                                     options: CarouselOptions(height: 400.0),
-                                                    items: newConvenio.map((i) {
+                                                    items: imagenesCarrousel.map((i) {
                                                       return Builder(
                                                         builder: (BuildContext context) {
                                                           return InkWell(
@@ -452,7 +460,6 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                                                     const CustomBottomEliminarImagen(),
                                                               );
                                                               if (option == 'eliminar') {
-                                                                print("Eliminar a ${File(i)}");
                                                                 var booleano = await showModalBottomSheet(
                                                                   isScrollControlled: true,
                                                                   backgroundColor: Colors.transparent,
@@ -469,9 +476,20 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                                                   },
                                                                 );
                                                                 if (booleano) {
-                                                                    newConvenio.remove(i);
+                                                                  for (var element in newConvenio) {
+                                                                    if (element.path == i) {
+                                                                      var newInstruccionImagen = SaveInstruccionImagenTemporal(
+                                                                        instruccion: "syncDeleteImagenJornada",
+                                                                        instruccionAdicional: "Imagen Jornada 4",
+                                                                        imagenLocal: element,
+                                                                        );
+                                                                      newConvenio.remove(element);
+                                                                      listInstruccionesImagenesTemp.add(newInstruccionImagen);
+                                                                      imagenesCarrousel.remove(element.path);
+                                                                      break;
+                                                                    }
+                                                                  }
                                                                 }
-
                                                               } else { //Se aborta la opción
                                                                 return;
                                                               }
@@ -491,13 +509,13 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                                       );
                                                       }).toList(),
                                                     ),
-                                                    ),
+                                                ),
                                             ),
                                             Padding(
                                               padding: const EdgeInsetsDirectional
                                                 .fromSTEB(0, 10, 0, 0),
                                               child: Text(
-                                                "Total imágenes: ${newConvenio.length}",
+                                                "Total imágenes: ${imagenesCarrousel.length}",
                                                 style: AppTheme.of(context).title3.override(
                                                 fontFamily: 'Poppins',
                                                 color:
@@ -526,7 +544,7 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                           XFile? pickedFile;
                                           List<XFile>? pickedFiles;
                                           if (option == 'camera') {
-                                            if (newConvenio.length < 3) {
+                                            if (imagenesCarrousel.length < 3) {
                                               pickedFile = await picker.pickImage(
                                                 source: ImageSource.camera,
                                                 imageQuality: 100,
@@ -557,15 +575,25 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                                 );
                                                 if (pickedFile != null) {
                                                   setState(() {
+                                                    File file = File(pickedFile!.path);
+                                                    List<int> fileInByte = file.readAsBytesSync();
+                                                    String base64 = base64Encode(fileInByte);
+                                                    var updateImagenLocal = SaveImagenesLocal(
+                                                      nombre: pickedFile.name, 
+                                                      path: pickedFile.path, 
+                                                      base64: base64,
+                                                    );
+                                                    imagenesCarrousel.removeLast();
+                                                    imagenesCarrousel.add(pickedFile.path);
                                                     newConvenio.removeLast();
-                                                    newConvenio.add(pickedFile!.path);
+                                                    newConvenio.add(updateImagenLocal);
                                                   });
                                                 }
                                                 return;
                                               }        
                                             }
                                           } else { //Se selecciona galería
-                                            if (newConvenio.length < 3) {
+                                            if (imagenesCarrousel.length < 3) {
                                               pickedFiles = await picker.pickMultiImage(
                                               imageQuality: 100,
                                               );
@@ -580,11 +608,25 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                                 ));
                                                 return;
                                               }
-                                              switch (newConvenio.length) {
+                                              switch (imagenesCarrousel.length) {
                                                 case 0:
                                                   for(int i = 0; i < pickedFiles.length; i++)
                                                   {
                                                     imagenesTemp.add(pickedFiles[i]);
+                                                    File file = File(pickedFiles[i].path);
+                                                    List<int> fileInByte = file.readAsBytesSync();
+                                                    String base64 = base64Encode(fileInByte);
+                                                    var newImagenLocal = SaveImagenesLocal(
+                                                      nombre: pickedFiles[i].name, 
+                                                      path: pickedFiles[i].path, 
+                                                      base64: base64,
+                                                      );
+                                                    var newInstruccionImagen = SaveInstruccionImagenTemporal(
+                                                      instruccion: "syncAddImagenJornada4",
+                                                      imagenLocal: newImagenLocal,
+                                                      );
+                                                    newConvenio.add(newImagenLocal);
+                                                    listInstruccionesImagenesTemp.add(newInstruccionImagen);
                                                   }
                                                   break;
                                                 case 1:
@@ -592,6 +634,20 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                                     for(int i = 0; i < pickedFiles.length; i++)
                                                     {
                                                       imagenesTemp.add(pickedFiles[i]);
+                                                      File file = File(pickedFiles[i].path);
+                                                      List<int> fileInByte = file.readAsBytesSync();
+                                                      String base64 = base64Encode(fileInByte);
+                                                      var newImagenLocal = SaveImagenesLocal(
+                                                        nombre: pickedFiles[i].name, 
+                                                        path: pickedFiles[i].path, 
+                                                        base64: base64,
+                                                        );
+                                                      var newInstruccionImagen = SaveInstruccionImagenTemporal(
+                                                        instruccion: "syncAddImagenJornada4",
+                                                        imagenLocal: newImagenLocal,
+                                                        );
+                                                      newConvenio.add(newImagenLocal);
+                                                      listInstruccionesImagenesTemp.add(newInstruccionImagen);
                                                     }
                                                   }
                                                   else{
@@ -608,6 +664,20 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                                     for(int i = 0; i < pickedFiles.length; i++)
                                                     {
                                                       imagenesTemp.add(pickedFiles[i]);
+                                                      File file = File(pickedFiles[i].path);
+                                                      List<int> fileInByte = file.readAsBytesSync();
+                                                      String base64 = base64Encode(fileInByte);
+                                                      var newImagenLocal = SaveImagenesLocal(
+                                                        nombre: pickedFiles[i].name, 
+                                                        path: pickedFiles[i].path, 
+                                                        base64: base64,
+                                                        );
+                                                      var newInstruccionImagen = SaveInstruccionImagenTemporal(
+                                                        instruccion: "syncAddImagenJornada4",
+                                                        imagenLocal: newImagenLocal,
+                                                        );
+                                                      newConvenio.add(newImagenLocal);
+                                                      listInstruccionesImagenesTemp.add(newInstruccionImagen);
                                                     }
                                                   }
                                                   else{
@@ -645,9 +715,43 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                                 );
                                                 if (pickedFile != null) {
                                                   setState(() {
-                                                    newConvenio.removeLast();
-                                                    newConvenio.add(pickedFile!.path);
-                                                  });
+                                                    if (newConvenio[imagenesCarrousel.length - 1].id != null) {
+                                                      // La imagen anterior ya ha sido registrada
+                                                      File file = File(pickedFile!.path);
+                                                      List<int> fileInByte = file.readAsBytesSync();
+                                                      String base64 = base64Encode(fileInByte);
+                                                      var updateImagenLocal = SaveImagenesLocal(
+                                                        id: newConvenio[imagenesCarrousel.length - 1].id,
+                                                        nombre: pickedFile.name, 
+                                                        path: pickedFile.path, 
+                                                        base64: base64,
+                                                        );
+                                                      var newInstruccionImagen = SaveInstruccionImagenTemporal(
+                                                        instruccion: "syncUpdateImagenJornada4",
+                                                        imagenLocal: updateImagenLocal,
+                                                        );
+                                                      newConvenio.removeLast();
+                                                      newConvenio.add(updateImagenLocal);
+                                                      imagenesCarrousel.removeLast();
+                                                      imagenesCarrousel.add(pickedFile.path);
+                                                      listInstruccionesImagenesTemp.add(newInstruccionImagen);
+                                                    } else {
+                                                      // La imagen no ha sido registrada
+                                                      File file = File(pickedFile!.path);
+                                                      List<int> fileInByte = file.readAsBytesSync();
+                                                      String base64 = base64Encode(fileInByte);
+                                                      var updateImagenLocal = SaveImagenesLocal(
+                                                        nombre: pickedFile.name, 
+                                                        path: pickedFile.path, 
+                                                        base64: base64,
+                                                      );
+                                                      newConvenio.removeLast();
+                                                      newConvenio.add(updateImagenLocal);
+                                                      imagenesCarrousel.removeLast();
+                                                      imagenesCarrousel.add(pickedFile.path);
+                                                    }
+                                                  }
+                                                  );
                                                 }
                                                 return;
                                               }     
@@ -655,7 +759,7 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                           }
                                           setState(() {
                                             for (var i = 0; i < imagenesTemp.length; i++) {
-                                              newConvenio.add(imagenesTemp[i].path);
+                                              imagenesCarrousel.add(imagenesTemp[i].path);
                                             }
                                           });
                                         },
@@ -689,9 +793,9 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                   ),
                                 );
                               }, validator: (val) {
-                                if (newConvenio.isEmpty ||
-                                    newConvenio == []) {
-                                  return 'Para continuar, cargue el circulo de la empresa';
+                                if (imagenesCarrousel.isEmpty ||
+                                    imagenesCarrousel == []) {
+                                  return 'Para continuar, cargue el convenio.';
                                 }
                                 return null;
                               }),
@@ -739,15 +843,19 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                     comentariosController.text !=
                                         widget.jornada.tarea.target!
                                             .comentarios ||
-                                    newConvenio != oldConvenio ||
                                     activoController !=
                                         !widget.jornada.completada) {
+                                  if (newConvenio !=
+                                        oldConvenio) {
+                                    jornadaProvider.updateImagenesJornada(
+                                      widget.jornada.tarea.target!, 
+                                      listInstruccionesImagenesTemp,
+                                      );
+                                  } 
                                   jornadaProvider.updateJornada4(
                                       widget.jornada.id,
                                       fechaRegistro,
                                       comentariosController.text,
-                                      newConvenio,
-                                      imagenes,
                                       !activoController,
                                       widget.jornada.tarea.target!.id);
                                   await Navigator.push(
@@ -756,6 +864,21 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                         builder: (context) =>
                                              JornadaActualizada(emprendimientoId: widget.emprendimiento.id,),
                                       ));
+                                } else {
+                                  if (newConvenio !=
+                                        oldConvenio) {
+                                    jornadaProvider.updateImagenesJornada(
+                                      widget.jornada.tarea.target!, 
+                                      listInstruccionesImagenesTemp,
+                                      );
+                                  } 
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                           JornadaActualizada(emprendimientoId: widget.emprendimiento.id,),
+                                    ),
+                                  );
                                 }
                               } else {
                                 await showDialog(

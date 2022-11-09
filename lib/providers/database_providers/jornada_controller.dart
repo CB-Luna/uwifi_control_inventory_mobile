@@ -213,7 +213,7 @@ class JornadaController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateImagenesJornada2(Tareas tarea, List<SaveInstruccionImagenTemporal> listInstruccionesImagenesTemp) {
+  void updateImagenesJornada(Tareas tarea, List<SaveInstruccionImagenTemporal> listInstruccionesImagenesTemp) {
     for (var i = 0; i < listInstruccionesImagenesTemp.length; i++) {
       switch (listInstruccionesImagenesTemp[i].instruccion) {
         case "syncAddImagenJornada2":
@@ -229,10 +229,65 @@ class JornadaController extends ChangeNotifier {
           int idNuevaTarea = dataBase.imagenesBox.put(nuevaImagenTarea);
           tarea.imagenes.add(dataBase.imagenesBox.get(idNuevaTarea)!);
           dataBase.tareasBox.put(tarea);
-          print("Número de jornada desde syncAddImagenJornada2: ${tarea.jornada.target!.numJornada}");
           continue;
         case "syncUpdateImagenJornada2":
           final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateImagenJornada2', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+          final updateImagen = dataBase.imagenesBox.get(listInstruccionesImagenesTemp[i].imagenLocal.id!);
+          if(updateImagen != null) {
+            updateImagen.imagenes = listInstruccionesImagenesTemp[i].imagenLocal.path;
+            updateImagen.nombre = listInstruccionesImagenesTemp[i].imagenLocal.nombre;
+            updateImagen.path = listInstruccionesImagenesTemp[i].imagenLocal.path;
+            updateImagen.base64 = listInstruccionesImagenesTemp[i].imagenLocal.base64;
+            updateImagen.bitacora.add(nuevaInstruccion);
+            dataBase.imagenesBox.put(updateImagen);
+            continue;
+          } else {
+            continue;
+          }
+        case "syncAddImagenJornada3":
+          final nuevaInstruccion = Bitacora(instruccion: 'syncAddImagenJornada3', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+          final nuevaImagenTarea = Imagenes(
+            imagenes: listInstruccionesImagenesTemp[i].imagenLocal.path,
+            nombre: listInstruccionesImagenesTemp[i].imagenLocal.nombre,
+            path: listInstruccionesImagenesTemp[i].imagenLocal.path,
+            base64: listInstruccionesImagenesTemp[i].imagenLocal.base64,
+            ); //Se crea el objeto imagenes para la Tarea
+          nuevaImagenTarea.tarea.target = tarea;
+          nuevaImagenTarea.bitacora.add(nuevaInstruccion);
+          int idNuevaTarea = dataBase.imagenesBox.put(nuevaImagenTarea);
+          tarea.imagenes.add(dataBase.imagenesBox.get(idNuevaTarea)!);
+          dataBase.tareasBox.put(tarea);
+          continue;
+        case "syncUpdateImagenJornada3":
+          final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateImagenJornada3', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+          final updateImagen = dataBase.imagenesBox.get(listInstruccionesImagenesTemp[i].imagenLocal.id!);
+          if(updateImagen != null) {
+            updateImagen.imagenes = listInstruccionesImagenesTemp[i].imagenLocal.path;
+            updateImagen.nombre = listInstruccionesImagenesTemp[i].imagenLocal.nombre;
+            updateImagen.path = listInstruccionesImagenesTemp[i].imagenLocal.path;
+            updateImagen.base64 = listInstruccionesImagenesTemp[i].imagenLocal.base64;
+            updateImagen.bitacora.add(nuevaInstruccion);
+            dataBase.imagenesBox.put(updateImagen);
+            continue;
+          } else {
+            continue;
+          }
+        case "syncAddImagenJornada4":
+          final nuevaInstruccion = Bitacora(instruccion: 'syncAddImagenJornada4', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+          final nuevaImagenTarea = Imagenes(
+            imagenes: listInstruccionesImagenesTemp[i].imagenLocal.path,
+            nombre: listInstruccionesImagenesTemp[i].imagenLocal.nombre,
+            path: listInstruccionesImagenesTemp[i].imagenLocal.path,
+            base64: listInstruccionesImagenesTemp[i].imagenLocal.base64,
+            ); //Se crea el objeto imagenes para la Tarea
+          nuevaImagenTarea.tarea.target = tarea;
+          nuevaImagenTarea.bitacora.add(nuevaInstruccion);
+          int idNuevaTarea = dataBase.imagenesBox.put(nuevaImagenTarea);
+          tarea.imagenes.add(dataBase.imagenesBox.get(idNuevaTarea)!);
+          dataBase.tareasBox.put(tarea);
+          continue;
+        case "syncUpdateImagenJornada4":
+          final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateImagenJornada4', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
           final updateImagen = dataBase.imagenesBox.get(listInstruccionesImagenesTemp[i].imagenLocal.id!);
           if(updateImagen != null) {
             updateImagen.imagenes = listInstruccionesImagenesTemp[i].imagenLocal.path;
@@ -337,7 +392,7 @@ class JornadaController extends ChangeNotifier {
   }
 
   void updateJornada3(int id, int idEmprendimiento, DateTime newFechaRegistro, String newTarea, bool newCompletada, DateTime newFechaRevision, 
-    String newComentarios, List<String> newImagenes, List<Imagenes>? oldImagenes, int newIdProyecto, String newDescripcion, int idTarea) {
+    String newComentarios, int newIdProyecto, String newDescripcion, int idTarea) {
     var updateTarea  = dataBase.tareasBox.get(idTarea);
     if (updateTarea != null) {
       final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateJornada3', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
@@ -346,18 +401,6 @@ class JornadaController extends ChangeNotifier {
       updateTarea.tarea = newTarea;
       updateTarea.comentarios = newComentarios;
       updateTarea.descripcion = newDescripcion;
-      //Se eliminan imagenes anteriores
-      if (oldImagenes != null) {
-        for (var i = 0; i < oldImagenes.length; i++) {
-        dataBase.imagenesBox.remove(oldImagenes[i].id);
-      }
-      }
-      //Se agregan las nuevas imagenes
-      for (var i = 0; i < newImagenes.length; i++) {
-        final nuevaImagenTarea = Imagenes(imagenes: newImagenes[i]); //Se crea el objeto imagenes para la Tarea
-        int idNuevaTarea = dataBase.imagenesBox.put(nuevaImagenTarea);
-        updateTarea.imagenes.add(dataBase.imagenesBox.get(idNuevaTarea)!);
-      }
       //Se actualiza la tarea con las nuevas imagenes
       dataBase.tareasBox.put(updateTarea);
       final statusSyncTarea = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateTarea.statusSync.target!.id)).build().findUnique();
@@ -469,24 +512,12 @@ class JornadaController extends ChangeNotifier {
     print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
   }
 
-  void updateJornada4(int id, DateTime newFechaRegistro, String? newComentarios, List<String> newImagenes, List<Imagenes>? oldImagenes, bool newCompletada, int idTarea) {
+  void updateJornada4(int id, DateTime newFechaRegistro, String? newComentarios, bool newCompletada, int idTarea) {
     var updateTarea  = dataBase.tareasBox.get(idTarea);
     if (updateTarea != null) {
       final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateJornada4', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       updateTarea.fechaRegistro = newFechaRegistro;
       updateTarea.comentarios = newComentarios;
-      //Se eliminan imagenes anteriores
-      if (oldImagenes != null) {
-        for (var i = 0; i < oldImagenes.length; i++) {
-        dataBase.imagenesBox.remove(oldImagenes[i].id);
-      }
-      }
-      //Se agregan las nuevas imagenes
-      for (var i = 0; i < newImagenes.length; i++) {
-        final nuevaImagenTarea = Imagenes(imagenes: newImagenes[i]); //Se crea el objeto imagenes para la Tarea
-        int idNuevaTarea = dataBase.imagenesBox.put(nuevaImagenTarea);
-        updateTarea.imagenes.add(dataBase.imagenesBox.get(idNuevaTarea)!);
-      }
       //Se actualiza la tarea con las nuevas imagenes
       dataBase.tareasBox.put(updateTarea);
       final statusSyncTarea = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateTarea.statusSync.target!.id)).build().findUnique();

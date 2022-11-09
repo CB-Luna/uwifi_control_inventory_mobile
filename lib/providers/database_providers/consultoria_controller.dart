@@ -14,7 +14,7 @@ class ConsultoriaController extends ChangeNotifier {
   String tarea = "";
   String avanceObservado = "";
   String porcentaje = "";
-  String imagen = "";
+  Imagenes? imagenLocal;
   bool activo = true;
 
   bool validateForm(GlobalKey<FormState> consultoriaKey) {
@@ -29,7 +29,7 @@ class ConsultoriaController extends ChangeNotifier {
     porcentaje = "";
     fechaRevision = DateTime.now();
     activo = true;
-    imagen = "";
+    imagenLocal = null;
     notifyListeners();
   }
 
@@ -40,7 +40,7 @@ class ConsultoriaController extends ChangeNotifier {
     descripcion: "Creación de Consultoría",
     fechaRevision: fechaRevision!);
     //Se agrega la imagen a la Tarea y el porcentaje de avance
-    final nuevaImagenTarea = Imagenes(imagenes: imagen); //Se crea el objeto imagenes para la Tarea
+    final nuevaImagenTarea = Imagenes(imagenes: ""); //Se crea el objeto imagenes para la Tarea
     nuevaTarea.imagenes.add(nuevaImagenTarea);
     final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
     nuevaTarea.statusSync.target = nuevoSyncTarea;
@@ -82,67 +82,39 @@ class ConsultoriaController extends ChangeNotifier {
     }
   }
 
-  void updateTareaConsultoria(int id, int idOldTarea, int idPorcentajeAvance) {
-    var oldTarea  = dataBase.tareasBox.get(idOldTarea);
-    if (oldTarea != null) {
-      print("Dentro de old Tarea");
-      final nuevaTarea = Tareas(
-      tarea: tarea == "" ? oldTarea.tarea : tarea,
-      descripcion: avanceObservado,
-      fechaRevision: fechaRevision!);
-      // Se agrega la imagen a la Tarea
-      final nuevaImagenTarea = Imagenes(imagenes: imagen); //Se crea el objeto imagenes para la Tarea
-      nuevaTarea.imagenes.add(nuevaImagenTarea);
-      final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
-      nuevaTarea.statusSync.target = nuevoSyncTarea;
-      //Se actualiza el porcentaje de la Tarea
-      final porcentajeAvance = dataBase.porcentajeAvanceBox.get(idPorcentajeAvance);
-      if (porcentajeAvance != null) {
-        print("Se actualiza porcentaje");
-        nuevaTarea.porcentaje.target = porcentajeAvance;
-      }
-      var updateConsultoria = dataBase.consultoriasBox.get(id);
-      if (updateConsultoria !=  null) {
-        //Se agrega la nueva tarea
-        nuevaTarea.consultoria.target = updateConsultoria;
-        updateConsultoria.tareas.add(nuevaTarea);
-        final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateTareaConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-        final statusSyncConsultoria = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateConsultoria.statusSync.target!.id)).build().findUnique();
-        if (statusSyncConsultoria != null) {
-          statusSyncConsultoria.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la consultoria
-          dataBase.statusSyncBox.put(statusSyncConsultoria);
-        }
-        dataBase.consultoriasBox.put(updateConsultoria);
-        nuevaTarea.bitacora.add(nuevaInstruccion);
-        dataBase.tareasBox.put(nuevaTarea);
-        print('Tarea de Consultoría actualizada exitosamente');
-        clearInformation(); //Se limpia información para usar el mismo controller en otro registro
-        notifyListeners();
-      }
-    }
-  }
-
-  void addTareaConsultoria(int idConsultoria, idPorcentajeAvance) {
+  void updateTareaConsultoria(int id, Tareas oldTarea, int idPorcentajeAvance) {
     final nuevaTarea = Tareas(
-    tarea: tarea,
+    tarea: tarea == "" ? oldTarea.tarea : tarea,
     descripcion: avanceObservado,
     fechaRevision: fechaRevision!);
+
+    // Se agrega la imagen a la Tarea
+    if (imagenLocal != null) {
+      nuevaTarea.imagenes.add(imagenLocal!);
+    }
     final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
     nuevaTarea.statusSync.target = nuevoSyncTarea;
     //Se actualiza el porcentaje de la Tarea
     final porcentajeAvance = dataBase.porcentajeAvanceBox.get(idPorcentajeAvance);
     if (porcentajeAvance != null) {
+      print("Se actualiza porcentaje");
       nuevaTarea.porcentaje.target = porcentajeAvance;
     }
-    final updateConsultoria = dataBase.consultoriasBox.get(idConsultoria);
-    if (updateConsultoria != null) {
-      final nuevaInstruccion = Bitacora(instruccion: 'syncAddTareaConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-      //Se agrega una nueva Tarea a la consultoria
+    var updateConsultoria = dataBase.consultoriasBox.get(id);
+    if (updateConsultoria !=  null) {
+      //Se agrega la nueva tarea
+      nuevaTarea.consultoria.target = updateConsultoria;
       updateConsultoria.tareas.add(nuevaTarea);
+      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateTareaConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final statusSyncConsultoria = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateConsultoria.statusSync.target!.id)).build().findUnique();
+      if (statusSyncConsultoria != null) {
+        statusSyncConsultoria.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la consultoria
+        dataBase.statusSyncBox.put(statusSyncConsultoria);
+      }
       dataBase.consultoriasBox.put(updateConsultoria);
-      consultorias.add(updateConsultoria);
       nuevaTarea.bitacora.add(nuevaInstruccion);
-      print('Consultoria actualizada exitosamente');
+      dataBase.tareasBox.put(nuevaTarea);
+      print('Tarea de Consultoría actualizada exitosamente');
       clearInformation(); //Se limpia información para usar el mismo controller en otro registro
       notifyListeners();
     }
@@ -151,7 +123,7 @@ class ConsultoriaController extends ChangeNotifier {
     void archivarConsultoria(int idConsultoria) {
     final consultoria = dataBase.consultoriasBox.get(idConsultoria);
     if (consultoria != null) {
-      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateEstadoConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza el estado de la Consultoria
       consultoria.archivado = true;
       final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(consultoria.statusSync.target!.id)).build().findUnique();
@@ -168,7 +140,7 @@ class ConsultoriaController extends ChangeNotifier {
   void desarchivarConsultoria(int idConsultoria) {
     final consultoria = dataBase.consultoriasBox.get(idConsultoria);
     if (consultoria != null) {
-      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateEstadoConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza el estado de la Consultoria
       consultoria.archivado = false;
       final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(consultoria.statusSync.target!.id)).build().findUnique();
