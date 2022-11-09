@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
@@ -144,6 +145,7 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                       ),
                                       child: InkWell(
                                         onTap: () async {
+                                          consultoriaProvider.clearInformation();
                                           Navigator.pop(context);
                                         },
                                         child: Row(
@@ -752,7 +754,15 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                 
                                             setState(() {
                                               fotoAvance = pickedFile;
-                                              consultoriaProvider.imagen = fotoAvance!.path;
+                                              File file = File(fotoAvance!.path);
+                                              List<int> fileInByte = file.readAsBytesSync();
+                                              String base64 = base64Encode(fileInByte);
+                                              var newImagen = Imagenes(
+                                                imagenes: fotoAvance!.path,
+                                                nombre: fotoAvance!.name, 
+                                                path: fotoAvance!.path, 
+                                                base64: base64);
+                                              consultoriaProvider.imagenLocal = newImagen;
                                             });
                                         },
                                         text: 'Foto Avance',
@@ -794,10 +804,6 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                               0, 20, 0, 10),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              print("Avance observado: ${consultoriaProvider.avanceObservado}");
-                              print("Porcentaje obervado: ${consultoriaProvider.porcentaje}");
-                              print("Siguientes pasos: ${consultoriaProvider.tarea}");
-                              print("Fecha proxima revision: ${fechaRevision.text}");
                               if (consultoriaProvider.validateForm(formKey)) {
                                   final idPorcentajeAvance = dataBase.porcentajeAvanceBox
                                     .query(PorcentajeAvance_
@@ -809,7 +815,7 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                   if (idPorcentajeAvance != null) {
                                     consultoriaProvider.updateTareaConsultoria(
                                     widget.consultoria.id,
-                                    widget.tarea.id,
+                                    widget.tarea,
                                     idPorcentajeAvance,
                                   );
                                   await Navigator.push(

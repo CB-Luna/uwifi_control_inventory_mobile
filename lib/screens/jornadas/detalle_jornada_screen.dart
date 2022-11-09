@@ -257,8 +257,6 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                                                   .tarea
                                                                   .target!
                                                                   .comentarios,
-                                                              listImagenes,
-                                                              imagenes,
                                                               true,
                                                               widget.jornada.tarea
                                                                   .target!.id);

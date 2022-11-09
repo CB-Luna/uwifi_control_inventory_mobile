@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:bizpro_app/modelsPocketbase/temporals/save_imagenes_local.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/save_instruccion_imagen_temporal.dart';
 import 'package:bizpro_app/screens/jornadas/detalle_jornada_screen.dart';
 import 'package:bizpro_app/screens/jornadas/registros/editar_inversion_jornada.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_imagenes_completas.dart';
@@ -50,10 +53,6 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
   late TextEditingController comentariosController;
   late TextEditingController descController;
   late bool activoController;
-  List<String> newAnalisisFinanciero = [];
-  List<String> oldAnalisisFinanciero = [];
-  List<Imagenes>? imagenes = [];
-  List<XFile> imagenesTemp = [];
   Jornadas? jornada1;
   Jornadas? jornada2;
   String tipoProyecto = "";
@@ -62,6 +61,11 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
   List<String> listTipoProyecto = [];
   List<String> listProyectos = [];
   Inversiones? inversion;
+  List<SaveImagenesLocal> newAnalisisFinanciero = [];
+  List<SaveImagenesLocal> oldAnalisisFinanciero = [];
+  List<SaveInstruccionImagenTemporal> listInstruccionesImagenesTemp = [];
+  List<String> imagenesCarrousel = [];
+  List<XFile> imagenesTemp = [];
 
   @override
   void initState() {
@@ -70,12 +74,16 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
     jornada2 = null;
     imagenesTemp =[];
     newAnalisisFinanciero = [];
-    imagenes = widget.jornada.tarea.target?.imagenes.toList();
-    if (imagenes != null ) {
-      for (var element in imagenes!) {
-        newAnalisisFinanciero.add(element.imagenes);
-        oldAnalisisFinanciero.add(element.imagenes);
-      }
+    for (var element in widget.jornada.tarea.target!.imagenes.toList()) {
+      var newSaveImagenLocal = SaveImagenesLocal(
+        id: element.id,
+        nombre: element.nombre!, 
+        path: element.path!, 
+        base64: element.base64!,
+      );
+      newAnalisisFinanciero.add(newSaveImagenLocal);
+      oldAnalisisFinanciero.add(newSaveImagenLocal);
+      imagenesCarrousel.add(element.imagenes);
     }
     fechaRevision = widget.jornada.fechaRevision;
     fechaRegistro = widget.jornada.fechaRegistro;
@@ -508,9 +516,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                                 jornada2!
                                                         .completada ==
                                                     true) {
-                                              print(val);
                                               activoController = val;
-                                              print(activoController);
                                             } else {
                                               snackbarKey.currentState
                                                   ?.showSnackBar(const SnackBar(
@@ -567,7 +573,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                                   height: 100,
                                                   child: CarouselSlider(
                                                     options: CarouselOptions(height: 400.0),
-                                                    items: newAnalisisFinanciero.map((i) {
+                                                    items: imagenesCarrousel.map((i) {
                                                       return Builder(
                                                         builder: (BuildContext context) {
                                                           return InkWell(
@@ -579,7 +585,6 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                                                     const CustomBottomEliminarImagen(),
                                                               );
                                                               if (option == 'eliminar') {
-                                                                print("Eliminar a ${File(i)}");
                                                                 var booleano = await showModalBottomSheet(
                                                                   isScrollControlled: true,
                                                                   backgroundColor: Colors.transparent,
@@ -597,9 +602,20 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                                                 );
                                                                 if (booleano) {
                                                                   print("Se elimina IMAGEN");
-                                                                    newAnalisisFinanciero.remove(i);
+                                                                  for (var element in newAnalisisFinanciero) {
+                                                                    if (element.path == i) {
+                                                                      var newInstruccionImagen = SaveInstruccionImagenTemporal(
+                                                                        instruccion: "syncDeleteImagenJornada",
+                                                                        instruccionAdicional: "Imagen Jornada 3",
+                                                                        imagenLocal: element,
+                                                                        );
+                                                                      newAnalisisFinanciero.remove(element);
+                                                                      listInstruccionesImagenesTemp.add(newInstruccionImagen);
+                                                                      imagenesCarrousel.remove(element.path);
+                                                                      break;
+                                                                    }
+                                                                  }
                                                                 }
-
                                                               } else { //Se aborta la opción
                                                                 return;
                                                               }
@@ -619,13 +635,13 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                                       );
                                                       }).toList(),
                                                     ),
-                                                    ),
+                                                ),
                                             ),
                                             Padding(
                                               padding: const EdgeInsetsDirectional
                                                 .fromSTEB(0, 10, 0, 0),
                                               child: Text(
-                                                "Total imágenes: ${newAnalisisFinanciero.length}",
+                                                "Total imágenes: ${imagenesCarrousel.length}",
                                                 style: AppTheme.of(context).title3.override(
                                                 fontFamily: 'Poppins',
                                                 color:
@@ -654,7 +670,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                           XFile? pickedFile;
                                           List<XFile>? pickedFiles;
                                           if (option == 'camera') {
-                                            if (newAnalisisFinanciero.length < 3) {
+                                            if (imagenesCarrousel.length < 3) {
                                               pickedFile = await picker.pickImage(
                                                 source: ImageSource.camera,
                                                 imageQuality: 100,
@@ -685,15 +701,25 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                                 );
                                                 if (pickedFile != null) {
                                                   setState(() {
+                                                    File file = File(pickedFile!.path);
+                                                    List<int> fileInByte = file.readAsBytesSync();
+                                                    String base64 = base64Encode(fileInByte);
+                                                    var updateImagenLocal = SaveImagenesLocal(
+                                                      nombre: pickedFile.name, 
+                                                      path: pickedFile.path, 
+                                                      base64: base64,
+                                                    );
+                                                    imagenesCarrousel.removeLast();
+                                                    imagenesCarrousel.add(pickedFile.path);
                                                     newAnalisisFinanciero.removeLast();
-                                                    newAnalisisFinanciero.add(pickedFile!.path);
+                                                    newAnalisisFinanciero.add(updateImagenLocal);
                                                   });
                                                 }
                                                 return;
                                               }        
                                             }
                                           } else { //Se selecciona galería
-                                            if (newAnalisisFinanciero.length < 3) {
+                                            if (imagenesCarrousel.length < 3) {
                                               pickedFiles = await picker.pickMultiImage(
                                               imageQuality: 100,
                                               );
@@ -708,11 +734,25 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                                 ));
                                                 return;
                                               }
-                                              switch (newAnalisisFinanciero.length) {
+                                              switch (imagenesCarrousel.length) {
                                                 case 0:
                                                   for(int i = 0; i < pickedFiles.length; i++)
                                                   {
                                                     imagenesTemp.add(pickedFiles[i]);
+                                                    File file = File(pickedFiles[i].path);
+                                                    List<int> fileInByte = file.readAsBytesSync();
+                                                    String base64 = base64Encode(fileInByte);
+                                                    var newImagenLocal = SaveImagenesLocal(
+                                                      nombre: pickedFiles[i].name, 
+                                                      path: pickedFiles[i].path, 
+                                                      base64: base64,
+                                                      );
+                                                    var newInstruccionImagen = SaveInstruccionImagenTemporal(
+                                                      instruccion: "syncAddImagenJornada3",
+                                                      imagenLocal: newImagenLocal,
+                                                      );
+                                                    newAnalisisFinanciero.add(newImagenLocal);
+                                                    listInstruccionesImagenesTemp.add(newInstruccionImagen);
                                                   }
                                                   break;
                                                 case 1:
@@ -720,6 +760,20 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                                     for(int i = 0; i < pickedFiles.length; i++)
                                                     {
                                                       imagenesTemp.add(pickedFiles[i]);
+                                                      File file = File(pickedFiles[i].path);
+                                                      List<int> fileInByte = file.readAsBytesSync();
+                                                      String base64 = base64Encode(fileInByte);
+                                                      var newImagenLocal = SaveImagenesLocal(
+                                                        nombre: pickedFiles[i].name, 
+                                                        path: pickedFiles[i].path, 
+                                                        base64: base64,
+                                                        );
+                                                      var newInstruccionImagen = SaveInstruccionImagenTemporal(
+                                                        instruccion: "syncAddImagenJornada3",
+                                                        imagenLocal: newImagenLocal,
+                                                        );
+                                                      newAnalisisFinanciero.add(newImagenLocal);
+                                                      listInstruccionesImagenesTemp.add(newInstruccionImagen);
                                                     }
                                                   }
                                                   else{
@@ -736,6 +790,20 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                                     for(int i = 0; i < pickedFiles.length; i++)
                                                     {
                                                       imagenesTemp.add(pickedFiles[i]);
+                                                      File file = File(pickedFiles[i].path);
+                                                      List<int> fileInByte = file.readAsBytesSync();
+                                                      String base64 = base64Encode(fileInByte);
+                                                      var newImagenLocal = SaveImagenesLocal(
+                                                        nombre: pickedFiles[i].name, 
+                                                        path: pickedFiles[i].path, 
+                                                        base64: base64,
+                                                        );
+                                                      var newInstruccionImagen = SaveInstruccionImagenTemporal(
+                                                        instruccion: "syncAddImagenJornada3",
+                                                        imagenLocal: newImagenLocal,
+                                                        );
+                                                      newAnalisisFinanciero.add(newImagenLocal);
+                                                      listInstruccionesImagenesTemp.add(newInstruccionImagen);
                                                     }
                                                   }
                                                   else{
@@ -773,9 +841,43 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                                 );
                                                 if (pickedFile != null) {
                                                   setState(() {
-                                                    newAnalisisFinanciero.removeLast();
-                                                    newAnalisisFinanciero.add(pickedFile!.path);
-                                                  });
+                                                    if (newAnalisisFinanciero[imagenesCarrousel.length - 1].id != null) {
+                                                      // La imagen anterior ya ha sido registrada
+                                                      File file = File(pickedFile!.path);
+                                                      List<int> fileInByte = file.readAsBytesSync();
+                                                      String base64 = base64Encode(fileInByte);
+                                                      var updateImagenLocal = SaveImagenesLocal(
+                                                        id: newAnalisisFinanciero[imagenesCarrousel.length - 1].id,
+                                                        nombre: pickedFile.name, 
+                                                        path: pickedFile.path, 
+                                                        base64: base64,
+                                                        );
+                                                      var newInstruccionImagen = SaveInstruccionImagenTemporal(
+                                                        instruccion: "syncUpdateImagenJornada3",
+                                                        imagenLocal: updateImagenLocal,
+                                                        );
+                                                      newAnalisisFinanciero.removeLast();
+                                                      newAnalisisFinanciero.add(updateImagenLocal);
+                                                      imagenesCarrousel.removeLast();
+                                                      imagenesCarrousel.add(pickedFile.path);
+                                                      listInstruccionesImagenesTemp.add(newInstruccionImagen);
+                                                    } else {
+                                                      // La imagen no ha sido registrada
+                                                      File file = File(pickedFile!.path);
+                                                      List<int> fileInByte = file.readAsBytesSync();
+                                                      String base64 = base64Encode(fileInByte);
+                                                      var updateImagenLocal = SaveImagenesLocal(
+                                                        nombre: pickedFile.name, 
+                                                        path: pickedFile.path, 
+                                                        base64: base64,
+                                                      );
+                                                      newAnalisisFinanciero.removeLast();
+                                                      newAnalisisFinanciero.add(updateImagenLocal);
+                                                      imagenesCarrousel.removeLast();
+                                                      imagenesCarrousel.add(pickedFile.path);
+                                                    }
+                                                  }
+                                                  );
                                                 }
                                                 return;
                                               }     
@@ -783,17 +885,17 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                           }
                                           setState(() {
                                             for (var i = 0; i < imagenesTemp.length; i++) {
-                                              newAnalisisFinanciero.add(imagenesTemp[i].path);
+                                              imagenesCarrousel.add(imagenesTemp[i].path);
                                             }
                                           });
                                         },
-                                        text: 'Analisis Financiero',
+                                        text: 'Análisis Financiero',
                                         icon: const Icon(
                                           Icons.add_a_photo,
                                           size: 15,
                                         ),
                                         options: FFButtonOptions(
-                                          width: 140,
+                                          width: 160,
                                           height: 40,
                                           color: AppTheme.of(context)
                                               .secondaryText,
@@ -817,9 +919,9 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                   ),
                                 );
                               }, validator: (val) {
-                                if (newAnalisisFinanciero.isEmpty ||
-                                    newAnalisisFinanciero == []) {
-                                  return 'Para continuar, cargue el Analisis Financiero';
+                                if (imagenesCarrousel.isEmpty ||
+                                    imagenesCarrousel == []) {
+                                  return 'Para continuar, cargue el análisis financiero.';
                                 }
                                 return null;
                               }),
@@ -1163,7 +1265,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                                   .toString()
                                               : "0",
                                           style:
-                                              TextStyle(color: Colors.white)),
+                                              const TextStyle(color: Colors.white)),
                                       showBadge: true,
                                       badgeColor: const Color(0xFFD20030),
                                       position: BadgePosition.topEnd(),
@@ -1219,7 +1321,6 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                           child: FFButtonWidget(
                             onPressed: () async {
                               if (jornadaProvider.validateForm(formKey)) {
-                                print("Se puede actualizar");
                                 if (fechaRegistro !=
                                         widget.jornada.fechaRegistro ||
                                     tareaController.text !=
@@ -1246,9 +1347,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                             .catalogoProyecto.target!.nombre ||
                                     descController.text !=
                                         widget.jornada.tarea.target!
-                                            .descripcion ||
-                                    newAnalisisFinanciero !=
-                                        oldAnalisisFinanciero) {
+                                            .descripcion) {
                                   final idTipoProyecto = dataBase
                                       .tipoProyectoBox
                                       .query(TipoProyecto_.tipoProyecto
@@ -1268,6 +1367,13 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                         .findFirst()
                                         ?.id;
                                     if (idProyecto != null) {
+                                      if (newAnalisisFinanciero !=
+                                            oldAnalisisFinanciero) {
+                                        jornadaProvider.updateImagenesJornada(
+                                          widget.jornada.tarea.target!, 
+                                          listInstruccionesImagenesTemp,
+                                          );
+                                      } 
                                       jornadaProvider.updateJornada3(
                                           widget.jornada.id,
                                           widget.jornada.emprendimiento.target!
@@ -1277,8 +1383,6 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                           !activoController,
                                           fechaRevision,
                                           comentariosController.text,
-                                          newAnalisisFinanciero,
-                                          imagenes,
                                           idProyecto,
                                           descController.text,
                                           widget.jornada.tarea.target!.id);
@@ -1291,6 +1395,21 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                       );
                                     }
                                   }
+                                } else {
+                                  if (newAnalisisFinanciero !=
+                                        oldAnalisisFinanciero) {
+                                    jornadaProvider.updateImagenesJornada(
+                                      widget.jornada.tarea.target!, 
+                                      listInstruccionesImagenesTemp,
+                                      );
+                                  } 
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                           JornadaActualizada(emprendimientoId: widget.emprendimiento.id,),
+                                    ),
+                                  );
                                 }
                               } else {
                                 await showDialog(

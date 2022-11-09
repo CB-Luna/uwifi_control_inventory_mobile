@@ -4,8 +4,6 @@ import 'package:bizpro_app/modelsPocketbase/temporals/save_imagenes_local.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/save_instruccion_imagen_temporal.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_validacion_eliminar_imagen.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_eliminar_imagen.dart';
-import 'package:bizpro_app/screens/widgets/edit_flutter_flow_carousel.dart';
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -547,9 +545,7 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                             if (jornada1!
                                                     .completada ==
                                                 true) {
-                                              print(val);
                                               activoController = val;
-                                              print(activoController);
                                             } else {
                                               snackbarKey.currentState
                                                   ?.showSnackBar(const SnackBar(
@@ -674,7 +670,6 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                                                     const CustomBottomEliminarImagen(),
                                                               );
                                                               if (option == 'eliminar') {
-                                                                print("Eliminar a ${File(i)}");
                                                                 var booleano = await showModalBottomSheet(
                                                                   isScrollControlled: true,
                                                                   backgroundColor: Colors.transparent,
@@ -691,7 +686,6 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                                                   },
                                                                 );
                                                                 if (booleano) {
-                                                                  print("Se elimina IMAGEN");
                                                                   for (var element in newCirculoEmpresa) {
                                                                     if (element.path == i) {
                                                                       var newInstruccionImagen = SaveInstruccionImagenTemporal(
@@ -1009,9 +1003,9 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                   ),
                                 );
                               }, validator: (val) {
-                                if (newCirculoEmpresa.isEmpty ||
-                                    newCirculoEmpresa == []) {
-                                  return 'Para continuar, cargue el circulo de la empresa';
+                                if (imagenesCarrousel.isEmpty ||
+                                    imagenesCarrousel == []) {
+                                  return 'Para continuar, cargue el círculo de la empresa.';
                                 }
                                 return null;
                               }),
@@ -1038,7 +1032,7 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
 
                                   if (newCirculoEmpresa !=
                                         oldCirculoEmpresa) {
-                                    jornadaProvider.updateImagenesJornada2(
+                                    jornadaProvider.updateImagenesJornada(
                                       widget.jornada.tarea.target!, 
                                       listInstruccionesImagenesTemp,
                                       );
@@ -1061,7 +1055,7 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                 } else {
                                   if (newCirculoEmpresa !=
                                         oldCirculoEmpresa) {
-                                    jornadaProvider.updateImagenesJornada2(
+                                    jornadaProvider.updateImagenesJornada(
                                       widget.jornada.tarea.target!, 
                                       listInstruccionesImagenesTemp,
                                       );
