@@ -463,7 +463,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                               FormField(builder: (state) {
                                 return Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      5, 0, 5, 0),
+                                      5, 0, 5, 10),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment:
@@ -497,7 +497,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                             ),
                                             Padding(
                                               padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 10, 0, 0),
+                                                .fromSTEB(0, 5, 0, 0),
                                               child: Text(
                                                 "Total imágenes: ${jornadaProvider.imagenes.length}",
                                                 style: AppTheme.of(context).title3.override(
@@ -707,7 +707,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                               }),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    5, 0, 5, 10),
+                                    5, 10, 5, 10),
                                 child: TextFormField(
                                     controller: fechaRevision,
                                     autovalidateMode:
@@ -730,7 +730,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                     },
                                     obscureText: false,
                                     decoration: InputDecoration(
-                                      labelText: '\nFecha de revisión*',
+                                      labelText: 'Fecha de revisión*',
                                       labelStyle:
                                           AppTheme.of(context).title3.override(
                                                 fontFamily: 'Montserrat',

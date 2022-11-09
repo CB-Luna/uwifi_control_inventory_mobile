@@ -19,6 +19,10 @@ import 'package:bizpro_app/screens/widgets/drop_down.dart';
 
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
+import '../widgets/custom_bottom_sheet.dart';
+import '../widgets/flutter_flow_expanded_image_view.dart';
+import '../widgets/get_image_widget.dart';
+
 class EditarConsultoriaScreen extends StatefulWidget {
   final Consultorias consultoria;
   final String numConsultoria;

@@ -363,15 +363,12 @@ class _AgregarProductoVentaTemporalState
                                       ),
                                   maxLines: 1,
                                   validator: (val) {
-                                            if(val!.length > 1){
-                                               double costo = double.parse(val.replaceAll('\$', '').replaceAll(',', ''));
-                                            if (costo == 0) {
-                                              return 'Para continuar, ingrese un costo sugerido.';
+                                            double cantidad = double.tryParse(val!) ?? 0;
+                                            if (cantidad <= 0) {
+                                              return 'Para continuar, ingrese una cantidad.';
                                             }
 
                                             return null;
-                                            }
-                                            
                                           },
                                     
                                 ),
