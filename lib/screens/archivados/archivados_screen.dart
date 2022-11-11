@@ -1,6 +1,7 @@
 import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
 import 'package:bizpro_app/screens/archivados/emprendimiento_desarchivado_screen.dart';
 import 'package:bizpro_app/screens/emprendimientos/components/tarjeta_descripcion_widget.dart';
+import 'package:bizpro_app/screens/widgets/bottom_sheet_desarchivar_emprendimiento.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
@@ -319,13 +320,30 @@ class _ArchivadosScreenState extends State<ArchivadosScreen> {
                                                   ));
                                                 } else {
                                                   emprendimientoProvider.desarchivarEmprendimiento(emprendimiento.id);
-                                                  await Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const EmprendimientoDesarchivadoScreen(),
-                                                        ),
-                                                  );    
+                                                  await showModalBottomSheet(
+                                                          isScrollControlled:
+                                                              true,
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .transparent,
+                                                          context: context,
+                                                          builder: (context) {
+                                                            return Padding(
+                                                              padding: MediaQuery
+                                                                      .of(context)
+                                                                  .viewInsets,
+                                                              child: SizedBox(
+                                                                height: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .height *
+                                                                    0.45,
+                                                                child:
+                                                                    const BottomSheetDesarchivarWidget(isVisible: true,),
+                                                              ),
+                                                            );
+                                                          },
+                                                        );    
                                                 }                                        
                                               }
                                             ),

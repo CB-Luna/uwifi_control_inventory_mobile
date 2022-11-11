@@ -25,6 +25,10 @@ DataRow _getDataRow(ProdSolicitado prodSolicitado) {
     cells: <DataCell>[
       DataCell(Text(
         prodSolicitado.producto,
+        style: GoogleFonts.roboto(
+              fontSize: 7.0,
+              fontWeight: FontWeight.w400,
+              color: Colors.white)
       )),
       DataCell(Text(prodSolicitado.proveedorSugerido ?? '',
           style: GoogleFonts.roboto(
@@ -108,7 +112,7 @@ class _ReversoTarjetaDescripcionWidgetState
         child: Column(
           children: [
             DataTable(
-              columnSpacing: 5.0,
+              columnSpacing: 2.0,
               columns: <DataColumn>[
                 DataColumn(
                     label: Expanded(
