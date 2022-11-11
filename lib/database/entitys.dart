@@ -1178,7 +1178,6 @@ class Imagenes {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
-  @Unique()
   String? idEmiWeb;
   final tarea = ToOne<Tareas>();
   final prodSolicitados = ToMany<ProdSolicitado>();
