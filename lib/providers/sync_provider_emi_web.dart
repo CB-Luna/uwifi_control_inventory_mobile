@@ -146,8 +146,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       instruccion: "Agregar Emprendedor Emi Web", 
                       fecha: instruccionesBitacora[i].fechaRegistro);
                     instruccionesFallidas.add(instruccionNoSincronizada);
-                    i = instruccionesBitacora.length;
-                    break;
+                    continue;
                   }
                 } else {
                   //Recuperamos la instrucción que no se ejecutó
@@ -157,8 +156,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     instruccion: "El emprendedor ya se encuentra registrado en Emi Web", 
                     fecha: instruccionesBitacora[i].fechaRegistro);
                   instruccionesFallidas.add(instruccionNoSincronizada);
-                  i = instruccionesBitacora.length;
-                  break;
+                  continue;
                 }
               } else {
                 //Recuperamos la instrucción que no se ejecutó

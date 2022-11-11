@@ -81,8 +81,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 instruccion: "Agregar Emprendedor al Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
               instruccionesFallidas.add(instruccionNoSincronizada);
-              i = instruccionesBitacora.length;
-              break;
+              continue;
             }      
           } else {
             //Recuperamos la instrucción que no se ejecutó
@@ -92,8 +91,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
               instruccion: "Agregar Emprendedor al Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
             instruccionesFallidas.add(instruccionNoSincronizada);
-            i = instruccionesBitacora.length;
-            break;
+            continue;
           }
         case "syncAddEmprendimiento":
           print("Entro al caso de syncAddEmprendimiento Pocketbase");

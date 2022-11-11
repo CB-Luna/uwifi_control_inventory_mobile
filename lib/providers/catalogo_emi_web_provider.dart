@@ -425,9 +425,11 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
         url,
         headers: headers
       );
-
+      print("Tipo proyecto ${response.statusCode}");
+      print("Tipo Proyecto ${response.body}");
       switch (response.statusCode) {
         case 200: //Caso éxitoso
+        print("200 en Tipo Proyecto");
           final responseListTipoProyecto = getTipoProyectoEmiWebFromMap(
           const Utf8Decoder().convert(response.bodyBytes));
           for (var i = 0; i < responseListTipoProyecto.payload!.length; i++) {
@@ -437,6 +439,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
               batch: 200, 
               filter: "id_emi_web='${responseListTipoProyecto.payload![i].idCatTipoProyecto}'");
             if (recordTipoProyecto.isEmpty) {
+              print("Se agrega");
               //Se agrega el tipo proyecto como nuevo en la colección de Pocketbase
               final newRecordTipoProyecto = await client.records.create('tipo_proyecto', body: {
               "tipo_proyecto": responseListTipoProyecto.payload![i].tipoProyecto,
@@ -449,11 +452,14 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                 return false;
               }
             } else {
+              print("Se actualiza");
               //Se actualiza el tipo proyecto en la colección de Pocketbase
               final recordTipoProyectoParse = getTipoProyectoFromMap(recordTipoProyecto.first.toString());
+              print("Paso 1");
               //Verificamos que los campos de este registro sean diferentes para actualizarlo
               if (recordTipoProyectoParse.tipoProyecto != responseListTipoProyecto.payload![i].tipoProyecto ||
                   recordTipoProyectoParse.activo != responseListTipoProyecto.payload![i].activo) {
+                  print("Paso 2");
                   final updateRecordEstado = await client.records.update('tipo_proyecto', recordTipoProyectoParse.id, 
                   body: {
                     "tipo_proyecto": responseListTipoProyecto.payload![i].tipoProyecto,
@@ -482,6 +488,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
           return false;
       }
     } catch (e) {
+      print("Catch Exito 4: $e");
       return false;
     }
   }
