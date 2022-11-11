@@ -18,7 +18,7 @@ class GetProdProyecto {
         required this.cantidad,
         required this.costoEstimado,
         required this.idFamiliaProdFk,
-        required this.idUnidadMedidaFk,
+        required this.idTipoEmpaqueFk,
         required this.idCatalogoProyectoFk,
         required this.idEmiWeb,
     });
@@ -35,7 +35,7 @@ class GetProdProyecto {
     final int cantidad;
     final double costoEstimado;
     final String idFamiliaProdFk;
-    final String idUnidadMedidaFk;
+    final String idTipoEmpaqueFk;
     final String idCatalogoProyectoFk;
     final String idEmiWeb;
 
@@ -52,7 +52,7 @@ class GetProdProyecto {
         cantidad: json["cantidad"],
         costoEstimado: json["costo_estimado"].toDouble(),
         idFamiliaProdFk: json["id_familia_prod_fk"],
-        idUnidadMedidaFk: json["id_unidad_medida_fk"],
+        idTipoEmpaqueFk: json["id_tipo_empaque_fk"],
         idCatalogoProyectoFk: json["id_catalogo_proyecto_fk"],
         idEmiWeb: json["id_emi_web"],
     );
@@ -70,7 +70,7 @@ class GetProdProyecto {
         "cantidad": cantidad,
         "costo_estimado": costoEstimado,
         "id_familia_prod_fk": idFamiliaProdFk,
-        "id_unidad_medida_fk": idUnidadMedidaFk,
+        "id_tipo_empaque_fk": idTipoEmpaqueFk,
         "id_catalogo_proyecto_fk": idCatalogoProyectoFk,
         "id_emi_web": idEmiWeb,
     };

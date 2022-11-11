@@ -1,20 +1,24 @@
+import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
-class ProductoJornadaActualizado extends StatefulWidget {
-  const ProductoJornadaActualizado({Key? key}) : super(key: key);
+class InversionJornada3Actualizada extends StatefulWidget {
+  final int idEmprendimiento;
+  const InversionJornada3Actualizada({
+    Key? key, 
+    required this.idEmprendimiento
+    }) : super(key: key);
 
   @override
-  State<ProductoJornadaActualizado> createState() =>
-      _ProductoJornadaActualizadoState();
+  State<InversionJornada3Actualizada> createState() =>
+      _InversionJornada3ActualizadaState();
 }
 
-class _ProductoJornadaActualizadoState
-    extends State<ProductoJornadaActualizado> {
+class _InversionJornada3ActualizadaState
+    extends State<InversionJornada3Actualizada> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -39,7 +43,7 @@ class _ProductoJornadaActualizadoState
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                       child: Text(
-                        '¡Producto de Jornada\nActualizado!',
+                        '¡Inversión de\nJornada 3 Actualizada!',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -52,7 +56,7 @@ class _ProductoJornadaActualizadoState
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: Text(
-                        'Listo, el producto se actualizará a tu\nlista de productos.',
+                        'Listo, la inversión se actualizará\nen los productos solicitados\nde la jornada 3.',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -82,7 +86,7 @@ class _ProductoJornadaActualizadoState
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const EmprendimientosScreen(),
+                                  DetalleEmprendimientoScreen(idEmprendimiento: widget.idEmprendimiento,),
                             ),
                           );
                         },

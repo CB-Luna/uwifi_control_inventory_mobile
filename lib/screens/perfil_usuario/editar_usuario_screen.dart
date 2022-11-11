@@ -252,87 +252,87 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                     ),
                                   ),
                                 ),
-                          FormField(
-                            builder: (state) {
-                              return Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0, 10, 0, 0),
-                                    child: CustomButton(
-                                      onPressed: () async {
-                                        String? option =
-                                            await showModalBottomSheet(
-                                          context: context,
-                                          builder: (_) =>
-                                              const CustomBottomSheet(),
-                                        );
+                          // FormField(
+                          //   builder: (state) {
+                          //     return Row(
+                          //       mainAxisSize: MainAxisSize.max,
+                          //       mainAxisAlignment: MainAxisAlignment.center,
+                          //       children: [
+                          //         Padding(
+                          //           padding:
+                          //               const EdgeInsetsDirectional.fromSTEB(
+                          //                   0, 10, 0, 0),
+                          //           child: CustomButton(
+                          //             onPressed: () async {
+                          //               String? option =
+                          //                   await showModalBottomSheet(
+                          //                 context: context,
+                          //                 builder: (_) =>
+                          //                     const CustomBottomSheet(),
+                          //               );
 
-                                        if (option == null) return;
+                          //               if (option == null) return;
 
-                                        final picker = ImagePicker();
+                          //               final picker = ImagePicker();
 
-                                        late final XFile? pickedFile;
+                          //               late final XFile? pickedFile;
 
-                                        if (option == 'camera') {
-                                          pickedFile = await picker.pickImage(
-                                            source: ImageSource.camera,
-                                            imageQuality: 100,
-                                          );
-                                        } else {
-                                          pickedFile = await picker.pickImage(
-                                            source: ImageSource.gallery,
-                                            imageQuality: 100,
-                                          );
-                                        }
+                          //               if (option == 'camera') {
+                          //                 pickedFile = await picker.pickImage(
+                          //                   source: ImageSource.camera,
+                          //                   imageQuality: 100,
+                          //                 );
+                          //               } else {
+                          //                 pickedFile = await picker.pickImage(
+                          //                   source: ImageSource.gallery,
+                          //                   imageQuality: 100,
+                          //                 );
+                          //               }
 
-                                        if (pickedFile == null) {
-                                          return;
-                                        }
+                          //               if (pickedFile == null) {
+                          //                 return;
+                          //               }
 
-                                        setState(() {
-                                          image = pickedFile;
-                                          File file = File(image!.path);
-                                          List<int> fileInByte = file.readAsBytesSync();
-                                          base64 = base64Encode(fileInByte);
-                                          path = image!.path;
-                                          nombreImagen = image!.name;
-                                        });
-                                      },
-                                      text: 'Agregar Foto',
-                                      icon: const Icon(
-                                        Icons.add_a_photo,
-                                        color: Color(0xFF221573),
-                                        size: 15,
-                                      ),
-                                      options: ButtonOptions(
-                                        width: 150,
-                                        height: 30,
-                                        color: Colors.white,
-                                        textStyle: AppTheme.of(context)
-                                            .subtitle2
-                                            .override(
-                                              fontFamily: AppTheme.of(context)
-                                                  .subtitle2Family,
-                                              color: const Color(0xFF221573),
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFF221573),
-                                          width: 2,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
+                          //               setState(() {
+                          //                 image = pickedFile;
+                          //                 File file = File(image!.path);
+                          //                 List<int> fileInByte = file.readAsBytesSync();
+                          //                 base64 = base64Encode(fileInByte);
+                          //                 path = image!.path;
+                          //                 nombreImagen = image!.name;
+                          //               });
+                          //             },
+                          //             text: 'Agregar Foto',
+                          //             icon: const Icon(
+                          //               Icons.add_a_photo,
+                          //               color: Color(0xFF221573),
+                          //               size: 15,
+                          //             ),
+                          //             options: ButtonOptions(
+                          //               width: 150,
+                          //               height: 30,
+                          //               color: Colors.white,
+                          //               textStyle: AppTheme.of(context)
+                          //                   .subtitle2
+                          //                   .override(
+                          //                     fontFamily: AppTheme.of(context)
+                          //                         .subtitle2Family,
+                          //                     color: const Color(0xFF221573),
+                          //                     fontSize: 10,
+                          //                     fontWeight: FontWeight.w500,
+                          //                   ),
+                          //               borderSide: const BorderSide(
+                          //                 color: Color(0xFF221573),
+                          //                 width: 2,
+                          //               ),
+                          //               borderRadius: BorderRadius.circular(8),
+                          //             ),
+                          //           ),
+                          //         ),
+                          //       ],
+                          //     );
+                          //   },
+                          // ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 20, 0, 0),
@@ -350,6 +350,8 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 35, 20, 35, 0),
                             child: TextFormField(
+                              readOnly: true,
+                              enabled: false,
                               textCapitalization: TextCapitalization.words,
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
@@ -393,6 +395,8 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 35, 20, 35, 0),
                             child: TextFormField(
+                              readOnly: true,
+                              enabled: false,
                               textCapitalization: TextCapitalization.words,
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
@@ -436,6 +440,8 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 35, 20, 35, 0),
                             child: TextFormField(
+                              readOnly: true,
+                              enabled: false,
                               textCapitalization: TextCapitalization.words,
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
@@ -473,6 +479,8 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 35, 20, 35, 0),
                             child: TextFormField(
+                              readOnly: true,
+                              enabled: false,
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               controller: telefonoController,
@@ -559,19 +567,8 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                 0, 50, 0, 20),
                             child: FFButtonWidget(
                               onPressed: () async {
-                                if (nombreController.text !=
-                                        widget.usuario.nombre ||
-                                    apellidoPController.text !=
-                                        widget.usuario.apellidoP ||
-                                    apellidoMController.text !=
-                                        widget.usuario.apellidoM ||
-                                    telefonoController.text !=
-                                        widget.usuario.telefono ||
-                                    path !=
-                                        widget.usuario.imagen.target?.path ||
-                                    rolUsuario !=
+                                if (rolUsuario !=
                                         widget.usuario.rol.target!.rol) {
-                                  if (usuarioProvider.validateForm(formKey)) {
                                     final idRol = dataBase.rolesBox
                                         .query(Roles_.rol.equals(rolUsuario))
                                         .build()
@@ -581,28 +578,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                       usuarioProvider.update(
                                         widget.usuario.id,
                                         idRol,
-                                        nombreController.text,
-                                        apellidoPController.text,
-                                        apellidoMController.text,
-                                        telefonoController.text,
                                       );
-                                      if (path != widget.usuario.imagen.target?.path) {
-                                        if (widget.usuario.imagen.target?.path != null) {
-                                          // Ya había imagen registrada, se hace update
-                                          usuarioProvider.updateImagenUsuario(
-                                            widget.usuario.imagen.target!.id, 
-                                            nombreImagen, 
-                                            path, 
-                                            base64);
-                                        } else {
-                                          // No había imagen registrada, se hace add
-                                          usuarioProvider.addImagenUsuario(
-                                            widget.usuario.imagen.target!.id, 
-                                            nombreImagen, 
-                                            path, 
-                                            base64);                                  
-                                        }
-                                      }
                                       await Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -611,26 +587,6 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                         ),
                                       );
                                     }
-                                  } else {
-                                    await showDialog(
-                                      context: context,
-                                      builder: (alertDialogContext) {
-                                        return AlertDialog(
-                                          title: const Text('Campos vacíos'),
-                                          content: const Text(
-                                              'Para continuar, debe llenar los campos solicitados.'),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () => Navigator.pop(
-                                                  alertDialogContext),
-                                              child: const Text('Bien'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                    return;
-                                  }
                                 }
                               },
                               text: 'Guardar cambios',

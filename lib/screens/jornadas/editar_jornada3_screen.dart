@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:bizpro_app/modelsPocketbase/temporals/save_imagenes_local.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/save_instruccion_imagen_temporal.dart';
+import 'package:bizpro_app/providers/database_providers/producto_inversion_jornada_controller.dart';
 import 'package:bizpro_app/screens/jornadas/detalle_jornada_screen.dart';
 import 'package:bizpro_app/screens/jornadas/registros/editar_inversion_jornada.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_imagenes_completas.dart';
@@ -122,6 +123,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
   @override
   Widget build(BuildContext context) {
     final jornadaProvider = Provider.of<JornadaController>(context);
+    final productoInversionJornadaProvider = Provider.of<ProductoInversionJornadaController>(context);
     String emprendedor = "";
     if (widget.jornada.emprendimiento.target!.emprendedor.target != null) {
       emprendedor =
@@ -1272,16 +1274,19 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                       elevation: 4,
                                       child: FFButtonWidget(
                                         onPressed: () async {
-                                          //TODO: Tendra su propio aparatdo de actualizar
+                                          productoInversionJornadaProvider
+                                            .listProdSolicitadosActual = inversion!.prodSolicitados.toList();
                                           if (inversion != null) {
                                             await Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     EditarInversionJornadaScreen(
-                                                        inversion: inversion!, 
+                                                        prodSolicitados: productoInversionJornadaProvider
+                                                            .listProdSolicitadosActual, 
                                                         jornada: widget.jornada,
                                                         emprendimiento: widget.emprendimiento,
+                                                        inversion: inversion!,
                                                         ),
                                               ),
                                             );

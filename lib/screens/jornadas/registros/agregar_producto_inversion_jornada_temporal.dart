@@ -36,28 +36,28 @@ class _AgregarProductoInversionJornadaTemporalState
   final formKey = GlobalKey<FormState>();
   TextEditingController porcentajeController = TextEditingController(text: "");
   String familia = "";
-  String unidadMedida = "";
+  String tipoEmpaque = "";
   String emprendedor = "";
   XFile? image;
   List<String> listFamilias = [];
-  List<String> listUnidadesMedida = [];
+  List<String> listTipoEmpaque = [];
 
   @override
   void initState() {
     super.initState();
     familia = "";
-    unidadMedida = "";
+    tipoEmpaque = "";
     emprendedor = "";
     listFamilias = [];
-    listUnidadesMedida = [];
+    listTipoEmpaque = [];
     dataBase.familiaProductosBox.getAll().forEach((element) {
       listFamilias.add(element.nombre);
     });
     listFamilias.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
-    dataBase.unidadesMedidaBox.getAll().forEach((element) {
-      listUnidadesMedida.add(element.unidadMedida);
+    dataBase.tipoEmpaquesBox.getAll().forEach((element) {
+      listTipoEmpaque.add(element.tipo);
     });
-    listUnidadesMedida.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+    listTipoEmpaque.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     emprendedor = "";
     if (widget.emprendimiento.emprendedor.target != null) {
       emprendedor =
@@ -672,9 +672,9 @@ class _AgregarProductoInversionJornadaTemporalState
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(5, 0, 5, 10),
                                             child: DropDown(
-                                              options: listUnidadesMedida,
+                                              options: listTipoEmpaque,
                                               onChanged: (val) => setState(() {
-                                                if (listUnidadesMedida
+                                                if (listTipoEmpaque
                                                     .isEmpty) {
                                                   snackbarKey.currentState
                                                       ?.showSnackBar(
@@ -683,7 +683,7 @@ class _AgregarProductoInversionJornadaTemporalState
                                                         "Debes descargar los catálogos desde la sección de tu perfil"),
                                                   ));
                                                 } else {
-                                                  unidadMedida = val!;
+                                                  tipoEmpaque = val!;
                                                 }
                                               }),
                                               width: double.infinity,
@@ -698,7 +698,7 @@ class _AgregarProductoInversionJornadaTemporalState
                                                     fontWeight:
                                                         FontWeight.normal,
                                                   ),
-                                              hintText: 'Tipo de Empaques*',
+                                              hintText: 'Tipo de Empaque*',
                                               icon: const Icon(
                                                 Icons
                                                     .keyboard_arrow_down_rounded,
@@ -719,9 +719,9 @@ class _AgregarProductoInversionJornadaTemporalState
                                           );
                                         },
                                         validator: (val) {
-                                          if (unidadMedida == "" ||
-                                              unidadMedida.isEmpty) {
-                                            return 'Para continuar, seleccione un tipo de empaques.';
+                                          if (tipoEmpaque == "" ||
+                                              tipoEmpaque.isEmpty) {
+                                            return 'Para continuar, seleccione un tipo de empaque.';
                                           }
                                           return null;
                                         },
@@ -987,20 +987,20 @@ class _AgregarProductoInversionJornadaTemporalState
                                             .build()
                                             .findFirst()
                                             ?.id;
-                                        final idUnidadMedida = dataBase
-                                            .unidadesMedidaBox
-                                            .query(UnidadMedida_.unidadMedida
-                                                .equals(unidadMedida))
+                                        final idTipoEmpaque = dataBase
+                                            .tipoEmpaquesBox
+                                            .query(TipoEmpaques_.tipo
+                                                .equals(tipoEmpaque))
                                             .build()
                                             .findFirst()
                                             ?.id;
                                         if (idFamiliaProd != null &&
-                                            idUnidadMedida != null) {
+                                            idTipoEmpaque != null) {
                                           productoInversionJornadaController.addTemporal(
                                               idFamiliaProd,
                                               familia,
-                                              idUnidadMedida,
-                                              unidadMedida);
+                                              idTipoEmpaque,
+                                              tipoEmpaque);
                                           Navigator.pop(context);
                                           snackbarKey.currentState
                                               ?.showSnackBar(const SnackBar(

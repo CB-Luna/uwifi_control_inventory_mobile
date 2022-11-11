@@ -45,10 +45,10 @@ class _EditarProductoInversionJornadaTemporalState
   final formKey = GlobalKey<FormState>();
   String? newImagen;
   String newFamilia = "";
-  String newUnidadMedida = "";
+  String newTipoEmpaque = "";
   String emprendedor = "";
   List<String> listFamilias = [];
-  List<String> listUnidadMedida = [];
+  List<String> listTipoEmpaque = [];
   late TextEditingController porcentajeController;
   late TextEditingController productoController;
   late TextEditingController descripcionController;
@@ -63,7 +63,7 @@ class _EditarProductoInversionJornadaTemporalState
     super.initState();
     newImagen = widget.productoSol.imagen;
     newFamilia = widget.productoSol.familiaProd;
-    newUnidadMedida = widget.productoSol.unidadMedida!;
+    newTipoEmpaque = widget.productoSol.tipoEmpaques!;
     productoController =
         TextEditingController(text: widget.productoSol.producto);
     descripcionController =
@@ -83,15 +83,15 @@ class _EditarProductoInversionJornadaTemporalState
           "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
     }
     listFamilias = [];
-    listUnidadMedida = [];
+    listTipoEmpaque = [];
     dataBase.familiaProductosBox.getAll().forEach((element) {
       listFamilias.add(element.nombre);
     });
     listFamilias.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     dataBase.tipoEmpaquesBox.getAll().forEach((element) {
-      listUnidadMedida.add(element.tipo);
+      listTipoEmpaque.add(element.tipo);
     });
-    listUnidadMedida.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+    listTipoEmpaque.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
   }
 
   @override
@@ -692,10 +692,10 @@ class _EditarProductoInversionJornadaTemporalState
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(5, 0, 5, 10),
                                             child: DropDown(
-                                              initialOption: newUnidadMedida,
-                                              options: listUnidadMedida,
+                                              initialOption: newTipoEmpaque,
+                                              options: listTipoEmpaque,
                                               onChanged: (val) => setState(() {
-                                                if (listUnidadMedida
+                                                if (listTipoEmpaque
                                                     .isEmpty) {
                                                   snackbarKey.currentState
                                                       ?.showSnackBar(
@@ -704,7 +704,7 @@ class _EditarProductoInversionJornadaTemporalState
                                                         "Debes descargar los catálogos desde la sección de tu perfil"),
                                                   ));
                                                 } else {
-                                                  newUnidadMedida = val!;
+                                                  newTipoEmpaque = val!;
                                                 }
                                               }),
                                               width: double.infinity,
@@ -719,7 +719,7 @@ class _EditarProductoInversionJornadaTemporalState
                                                     fontWeight:
                                                         FontWeight.normal,
                                                   ),
-                                              hintText: 'Tipo de empaques*',
+                                              hintText: 'Tipo de Empaque*',
                                               icon: const Icon(
                                                 Icons
                                                     .keyboard_arrow_down_rounded,
@@ -740,9 +740,9 @@ class _EditarProductoInversionJornadaTemporalState
                                           );
                                         },
                                         validator: (val) {
-                                          if (newUnidadMedida == "" ||
-                                              newUnidadMedida.isEmpty) {
-                                            return 'Para continuar, seleccione un tipo de empaques.';
+                                          if (newTipoEmpaque == "" ||
+                                              newTipoEmpaque.isEmpty) {
+                                            return 'Para continuar, seleccione un tipo de empaque.';
                                           }
                                           return null;
                                         },
@@ -1006,7 +1006,7 @@ class _EditarProductoInversionJornadaTemporalState
                                             newFamilia !=
                                                 widget
                                                     .productoSol.familiaProd ||
-                                            newUnidadMedida !=
+                                            newTipoEmpaque !=
                                                 widget
                                                     .productoSol.tipoEmpaques ||
                                             newImagen != 
@@ -1019,15 +1019,15 @@ class _EditarProductoInversionJornadaTemporalState
                                               .build()
                                               .findFirst()
                                               ?.id;
-                                          final newIdUnidadMedida = dataBase
+                                          final newIdTipoEmpaque = dataBase
                                               .tipoEmpaquesBox
                                               .query(TipoEmpaques_.tipo
-                                                  .equals(newUnidadMedida))
+                                                  .equals(newTipoEmpaque))
                                               .build()
                                               .findFirst()
                                               ?.id;
                                           if (newIdFamiliaProd != null &&
-                                              newIdUnidadMedida != null) {
+                                              newIdTipoEmpaque != null) {
                                             productoInversionJornadaController
                                                 .updateTemporal(
                                               widget.productoSol.id,
@@ -1039,8 +1039,8 @@ class _EditarProductoInversionJornadaTemporalState
                                               cantidadController.text,
                                               newIdFamiliaProd,
                                               newFamilia,
-                                              newIdUnidadMedida,
-                                              newUnidadMedida,
+                                              newIdTipoEmpaque,
+                                              newTipoEmpaque,
                                               newImagen,
                                               widget.productoSol.fechaRegistro,
                                             );

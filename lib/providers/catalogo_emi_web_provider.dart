@@ -1666,7 +1666,7 @@ Future<bool> getProductosProv() async {
                   batch: 200, 
                   filter: "id_emi_web='${responseProductoProveedor.payload!.idCatTipoProducto}'");
                 final recordUnidadMedida = await client.records.getFullList(
-                  'und_medida', 
+                  'tipo_empaques', 
                   batch: 200, 
                   filter: "id_emi_web='${responseProductoProveedor.payload!.idUnidadMedida}'");
                 if (recordProveedor.isNotEmpty && recordFamiliaProd.isNotEmpty 
@@ -1676,7 +1676,7 @@ Future<bool> getProductosProv() async {
                     "nombre_prod_prov": responseProductoProveedor.payload!.producto,
                     "descripcion_prod_prov": responseProductoProveedor.payload!.descripcion,
                     "marca": responseProductoProveedor.payload!.marca,
-                    "id_und_medida_fk": recordUnidadMedida.first.id,
+                    "id_tipo_empaque_fk": recordUnidadMedida.first.id,
                     "costo_prod_prov": responseProductoProveedor.payload!.costoUnidadMedida,
                     "id_proveedor_fk": recordProveedor.first.id,
                     "id_familia_prod_fk": recordFamiliaProd.first.id,
@@ -1800,12 +1800,12 @@ Future<bool> getProductosProv() async {
                   'cat_proyecto', 
                   batch: 200, 
                   filter: "id_emi_web='${responseListProdProyecto.payload![i].idCatProyecto}'");
-                final recordUnidadMedida = await client.records.getFullList(
-                  'und_medida', 
+                final recordTipoEmpaque = await client.records.getFullList(
+                  'tipo_empaques', 
                   batch: 200, 
                   filter: "id_emi_web='${responseProductoProveedor.payload!.idUnidadMedida}'");
                 if (recordFamiliaProd.isNotEmpty && recordCatalogoProyecto.isNotEmpty
-                    && recordUnidadMedida.isNotEmpty) {
+                    && recordTipoEmpaque.isNotEmpty) {
                     //Se agrega el producto proveedor como nuevo en la colección de Pocketbase
                     final recordProductoProyecto = await client.records.create('prod_proyecto', body: {
                     "producto": responseListProdProyecto.payload![i].producto!.producto,
@@ -1815,7 +1815,7 @@ Future<bool> getProductosProv() async {
                     "cantidad": responseListProdProyecto.payload![i].cantidad,
                     "costo_estimado": responseListProdProyecto.payload![i].costoEstimado,
                     "id_familia_prod_fk": recordFamiliaProd.first.id,
-                    "id_unidad_medida_fk": recordUnidadMedida.first.id,
+                    "id_tipo_empaque_fk": recordTipoEmpaque.first.id,
                     "id_catalogo_proyecto_fk": recordCatalogoProyecto.first.id,
                     "id_emi_web": responseListProdProyecto.payload![i].idCatInversionProyecto,
                     });

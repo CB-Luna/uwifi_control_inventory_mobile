@@ -109,7 +109,7 @@ class ProdProyecto {
   @Unique()
   String idEmiWeb;
   final familiaProducto = ToOne<FamiliaProd>();
-  final unidadMedida = ToOne<UnidadMedida>();
+  final tipoEmpaque = ToOne<TipoEmpaques>();
   final catalogoProyecto = ToOne<CatalogoProyecto>();
   final imagen = ToOne<Imagenes>();
   final statusSync = ToOne<StatusSync>();
@@ -711,6 +711,7 @@ class TipoEmpaques {
   String idEmiWeb;
   final statusSync = ToOne<StatusSync>();
   final prodSolicitados = ToMany<ProdSolicitado>();
+  final productosProyecto = ToMany<ProdProyecto>();
 
   TipoEmpaques({
     this.id = 0,
@@ -1014,7 +1015,6 @@ class UnidadMedida {
   final productosEmp = ToMany<ProductosEmp>();
   final prodSolicitados = ToMany<ProdSolicitado>();
   final productosProv = ToMany<ProductosProv>();
-  final prodProyecto = ToMany<ProdProyecto>();
 
   UnidadMedida({
     this.id = 0,

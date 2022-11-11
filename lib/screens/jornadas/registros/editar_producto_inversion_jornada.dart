@@ -1,5 +1,5 @@
+import 'package:bizpro_app/modelsPocketbase/temporals/save_instruccion_producto_inversion_j3_temporal.dart';
 import 'package:bizpro_app/screens/jornadas/registros/editar_inversion_jornada.dart';
-import 'package:bizpro_app/screens/jornadas/registros/producto_jornada_eliminado.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_eliminar_producto.dart';
 import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
@@ -17,7 +17,6 @@ import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:bizpro_app/providers/database_providers/producto_inversion_jornada_controller.dart';
-import 'package:bizpro_app/screens/jornadas/registros/producto_jornada_actualizado.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
@@ -27,11 +26,14 @@ class EditarProductoInversionJornada extends StatefulWidget {
   final ProdSolicitado productoSol;
   final Jornadas jornada;
   final Emprendimientos emprendimientoActual;
+  final Inversiones inversion;
 
   const EditarProductoInversionJornada({
     Key? key,
     required this.productoSol, 
-    required this.jornada, required this.emprendimientoActual,
+    required this.jornada, 
+    required this.emprendimientoActual,
+    required this.inversion,
   }) : super(key: key);
 
   @override
@@ -44,7 +46,7 @@ class _EditarProductoInversionJornadaState
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
   String newFamilia = "";
-  String newUnidadMedida = "";
+  String newTipoEmpaque = "";
   String emprendedor = "";
   String? newImagen;
   XFile? image;
@@ -61,7 +63,7 @@ class _EditarProductoInversionJornadaState
     super.initState();
     newImagen = widget.productoSol.imagen.target?.imagenes;
     newFamilia = widget.productoSol.familiaProducto.target!.nombre;
-    newUnidadMedida = widget.productoSol.unidadMedida.target!.unidadMedida;
+    newTipoEmpaque = widget.productoSol.tipoEmpaques.target!.tipo;
     productoController =
         TextEditingController(text: widget.productoSol.producto);
     descripcionController =
@@ -94,15 +96,15 @@ class _EditarProductoInversionJornadaState
     final productoInversionJornadaController =
         Provider.of<ProductoInversionJornadaController>(context);
     List<String> listFamilias = [];
-    List<String> listUnidadMedida = [];
+    List<String> listTipoEmpaque = [];
     dataBase.familiaProductosBox.getAll().forEach((element) {
       listFamilias.add(element.nombre);
     });
     listFamilias.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
-    dataBase.unidadesMedidaBox.getAll().forEach((element) {
-      listUnidadMedida.add(element.unidadMedida);
+    dataBase.tipoEmpaquesBox.getAll().forEach((element) {
+      listTipoEmpaque.add(element.tipo);
     });
-    listUnidadMedida.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+    listTipoEmpaque.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -155,11 +157,14 @@ class _EditarProductoInversionJornadaState
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 EditarInversionJornadaScreen(
-                                                    inversion: 
-                                                        widget.productoSol.inversion.target!,
+                                                    prodSolicitados: 
+                                                        productoInversionJornadaController.listProdSolicitadosActual,
                                                     jornada:
                                                         widget.jornada,
-                                                    emprendimiento: widget.emprendimientoActual),
+                                                    emprendimiento: 
+                                                        widget.emprendimientoActual,
+                                                    inversion: 
+                                                        widget.inversion),
                                           ),
                                         );
                                       },
@@ -212,30 +217,26 @@ class _EditarProductoInversionJornadaState
                                           const BottomSheetEliminarProducto(),
                                     );
                                     if (option == 'eliminar') {
-                                      productoInversionJornadaController.remove(widget.productoSol);
-                                      // double totalVentas = 0.00;
-                                      // Ventas venta = widget.prodVendido.venta.target!;
-                                      // List<ProdVendidos> productosVenta = venta.prodVendidos.toList();
-                                      // for (var i = 0; i < productosVenta.length; i++) {
-                                      //   totalVentas += productosVenta[i].subtotal;
-                                      // }
-                                      // ventaProvider.update(
-                                      //   venta.id,
-                                      //   venta.fechaInicio,
-                                      //   venta.fechaTermino,
-                                      //   totalVentas,
-                                      //   );
+                                      // productoInversionJornadaController.remove(widget.productoSol);
+                                      productoInversionJornadaController.listProdSolicitadosActual.remove(widget.productoSol);
+                                      final newInstruccionProdInversionJ3 = SaveInstruccionProductoInversionJ3Temporal(
+                                        instruccion: "syncDeleteProductoInversionJ3", 
+                                        prodSolicitado: widget.productoSol,
+                                      );
+                                      productoInversionJornadaController.instruccionesProdInversionJ3Temp.add(newInstruccionProdInversionJ3);
                                       // ignore: use_build_context_synchronously
                                       await Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                      builder: (context) =>
-                                           ProductoJornadaEliminado(jornada: 
-                                              widget.jornada,
-                                              emprendimientoActual: widget.emprendimientoActual,
-                                              ),
+                                        builder: (context) =>
+                                            EditarInversionJornadaScreen(
+                                              emprendimiento: widget.emprendimientoActual, 
+                                              jornada: widget.jornada, 
+                                              prodSolicitados: productoInversionJornadaController.listProdSolicitadosActual,
+                                              inversion: widget.inversion,
                                             ),
-                                      );
+                                      ),
+                                    );
                                     } else { //Se aborta la opción
                                       return;
                                     }
@@ -752,10 +753,10 @@ class _EditarProductoInversionJornadaState
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(5, 0, 5, 10),
                                             child: DropDown(
-                                              initialOption: newUnidadMedida,
-                                              options: listUnidadMedida,
+                                              initialOption: newTipoEmpaque,
+                                              options: listTipoEmpaque,
                                               onChanged: (val) => setState(() {
-                                                if (listUnidadMedida
+                                                if (listTipoEmpaque
                                                     .isEmpty) {
                                                   snackbarKey.currentState
                                                       ?.showSnackBar(
@@ -764,7 +765,7 @@ class _EditarProductoInversionJornadaState
                                                         "Debes descargar los catálogos desde la sección de tu perfil"),
                                                   ));
                                                 } else {
-                                                  newUnidadMedida = val!;
+                                                  newTipoEmpaque = val!;
                                                 }
                                               }),
                                               width: double.infinity,
@@ -779,7 +780,7 @@ class _EditarProductoInversionJornadaState
                                                     fontWeight:
                                                         FontWeight.normal,
                                                   ),
-                                              hintText: 'Tipo de Empaques*',
+                                              hintText: 'Unidad de Medida*',
                                               icon: const Icon(
                                                 Icons
                                                     .keyboard_arrow_down_rounded,
@@ -800,9 +801,9 @@ class _EditarProductoInversionJornadaState
                                           );
                                         },
                                         validator: (val) {
-                                          if (newUnidadMedida == "" ||
-                                              newUnidadMedida.isEmpty) {
-                                            return 'Para continuar, seleccione un tipo de empaques.';
+                                          if (newTipoEmpaque == "" ||
+                                              newTipoEmpaque.isEmpty) {
+                                            return 'Para continuar, seleccione una unidad de medida.';
                                           }
                                           return null;
                                         },
@@ -1069,42 +1070,59 @@ class _EditarProductoInversionJornadaState
                                                     .familiaProducto
                                                     .target!
                                                     .nombre ||
-                                            newUnidadMedida !=
+                                            newTipoEmpaque !=
                                                 widget.productoSol.tipoEmpaques
                                                     .target!.tipo) {
-                                          final newIdFamiliaProd = dataBase
+                                          final nuevaFamiliaProd = dataBase
                                               .familiaProductosBox
                                               .query(FamiliaProd_.nombre
                                                   .equals(newFamilia))
                                               .build()
-                                              .findFirst()
-                                              ?.id;
-                                          final newIdUnidadMedida = dataBase
-                                              .unidadesMedidaBox
-                                              .query(UnidadMedida_.unidadMedida
-                                                  .equals(newUnidadMedida))
+                                              .findFirst();
+                                          final nuevoTipoEmpaque = dataBase
+                                              .tipoEmpaquesBox
+                                              .query(TipoEmpaques_.tipo
+                                                  .equals(newTipoEmpaque))
                                               .build()
-                                              .findFirst()
-                                              ?.id;
-                                          if (newIdFamiliaProd != null &&
-                                              newIdUnidadMedida != null) {
-                                              productoInversionJornadaController.update(
-                                              widget.productoSol.id,
-                                              productoController.text,
-                                              marcaController.text,
-                                              descripcionController.text,
-                                              proveedorController.text,
-                                              costoController.text.replaceAll("\$", "").replaceAll(",", ""),
-                                              cantidadController.text,
-                                              newIdFamiliaProd,
-                                              newIdUnidadMedida,
-                                              newImagen ?? ''
+                                              .findFirst();
+                                          if (nuevaFamiliaProd != null &&
+                                              nuevoTipoEmpaque != null) {
+                                            //   productoInversionJornadaController.update(
+                                            //   widget.productoSol.id,
+                                            //   productoController.text,
+                                            //   marcaController.text,
+                                            //   descripcionController.text,
+                                            //   proveedorController.text,
+                                            //   costoController.text.replaceAll("\$", "").replaceAll(",", ""),
+                                            //   cantidadController.text,
+                                            //   newIdFamiliaProd,
+                                            //   newIdTipoEmpaque,
+                                            //   newImagen ?? ''
+                                            // );
+                                            final indexUpdateProdSolicitado = productoInversionJornadaController
+                                                .listProdSolicitadosActual
+                                                .indexOf(widget.productoSol);
+                                            productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado].marcaSugerida = marcaController.text;
+                                            productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado].proveedorSugerido = proveedorController.text;
+                                            productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado].cantidad = int.parse(cantidadController.text);
+                                            productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado].costoEstimado = double.parse(costoController.text.replaceAll("\$", "").replaceAll(",", ""));
+                                            productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado].tipoEmpaques.target = nuevoTipoEmpaque;
+                                            productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado].familiaProducto.target = nuevaFamiliaProd;
+                                            final newInstruccionProdInversionJ3 = SaveInstruccionProductoInversionJ3Temporal(
+                                              instruccion: "syncUpdateProductoInversionJ3", 
+                                              prodSolicitado: productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado],
                                             );
+                                            productoInversionJornadaController.instruccionesProdInversionJ3Temp.add(newInstruccionProdInversionJ3);
                                             await Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const ProductoJornadaActualizado(),
+                                                    EditarInversionJornadaScreen(
+                                                      emprendimiento: widget.emprendimientoActual, 
+                                                      jornada: widget.jornada, 
+                                                      prodSolicitados: productoInversionJornadaController.listProdSolicitadosActual,
+                                                      inversion: widget.inversion,
+                                                    ),
                                               ),
                                             );
                                           }

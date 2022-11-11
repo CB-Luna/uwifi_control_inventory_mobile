@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:math';
-
 import 'package:bizpro_app/modelsPocketbase/get_inversion.dart';
 import 'package:bizpro_app/modelsPocketbase/get_inversion_x_prod_cotizados.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/instruccion_no_sincronizada.dart';
@@ -10,10 +7,8 @@ import 'package:bizpro_app/objectbox.g.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/modelsPocketbase/get_prod_cotizados.dart';
-import 'package:bizpro_app/util/flutter_flow_util.dart';
 
 class SyncProviderPocketbase extends ChangeNotifier {
-  Random random = new Random();
   bool procesocargando = false;
   bool procesoterminado = false;
   bool procesoexitoso = false;
@@ -83,20 +78,22 @@ class SyncProviderPocketbase extends ChangeNotifier {
               banderasExistoSync.add(boolSyncAddEmprendedor);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: emprendedorToSync.emprendimiento.target!.nombre,
-                instruccion: "Agregar Emprendedor Servidor", 
+                instruccion: "Agregar Emprendedor al Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
               instruccionesFallidas.add(instruccionNoSincronizada);
-              continue;
+              i = instruccionesBitacora.length;
+              break;
             }      
           } else {
             //Recuperamos la instrucción que no se ejecutó
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Agregar Emprendedor Servidor", 
+              instruccion: "Agregar Emprendedor al Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
             instruccionesFallidas.add(instruccionNoSincronizada);
-            continue;
+            i = instruccionesBitacora.length;
+            break;
           }
         case "syncAddEmprendimiento":
           print("Entro al caso de syncAddEmprendimiento Pocketbase");
@@ -262,6 +259,34 @@ class SyncProviderPocketbase extends ChangeNotifier {
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
               instruccion: "Agregar Imagen Jornada 3 Servidor", 
+              fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
+        case "syncAddProductoInversionJ3":
+          print("Entro al caso de syncAddProductoInversionJ3 Pocketbase");
+          final prodSolicitadoToSync = getFirstProdSolicitado(dataBase.productosSolicitadosBox.getAll(), instruccionesBitacora[i].id);
+          if(prodSolicitadoToSync != null){
+            final boolSyncAddProductoInversionJ3 = await syncAddProductoInversionJ3(prodSolicitadoToSync, instruccionesBitacora[i]);
+            if (boolSyncAddProductoInversionJ3) {
+              banderasExistoSync.add(boolSyncAddProductoInversionJ3);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(boolSyncAddProductoInversionJ3);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                emprendimiento: prodSolicitadoToSync.inversion.target!.emprendimiento.target!.nombre,
+                instruccion: "Agregar Producto Inversión Jornada 3 Servidor", 
+                fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }      
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+              emprendimiento: "No encontrado",
+              instruccion: "Agregar Producto Inversión Jornada 3 Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
@@ -730,6 +755,34 @@ class SyncProviderPocketbase extends ChangeNotifier {
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
           }
+        case "syncUpdateProductoInversionJ3":
+          print("Entro al caso de syncUpdateProductoInversionJ3 Pocketbase");
+          final prodSolicitadoToSync = getFirstProdSolicitado(dataBase.productosSolicitadosBox.getAll(), instruccionesBitacora[i].id);
+          if(prodSolicitadoToSync != null){
+            final boolSyncUpdateProductoInversionJ3 = await syncUpdateProductoInversionJ3(prodSolicitadoToSync, instruccionesBitacora[i]);
+            if (boolSyncUpdateProductoInversionJ3) {
+              banderasExistoSync.add(boolSyncUpdateProductoInversionJ3);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(boolSyncUpdateProductoInversionJ3);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                emprendimiento: prodSolicitadoToSync.inversion.target!.emprendimiento.target!.nombre,
+                instruccion: "Actualización Producto Inversión Jornada 3 Servidor", 
+                fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }      
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+              emprendimiento: "No encontrado",
+              instruccion: "Actualización Producto Inversión Jornada 3 Servidor", 
+              fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
         case "syncUpdateJornada4":
           print("Entro al caso de syncUpdateJornada4 Pocketbase");
           final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
@@ -788,20 +841,36 @@ class SyncProviderPocketbase extends ChangeNotifier {
           }
         case "syncDeleteImagenJornada":
           print("Entro al caso de syncDeleteImagenJornada Pocketbase");
-            final boolSyncDeleteImagenJornada = await syncDeleteImagenJornada(instruccionesBitacora[i]);
-            if (boolSyncDeleteImagenJornada) {
-              banderasExistoSync.add(boolSyncDeleteImagenJornada);
-              continue;
-            } else {
-              //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncDeleteImagenJornada);
-              final instruccionNoSincronizada = InstruccionNoSincronizada(
-                emprendimiento: instruccionesBitacora[i].emprendimiento,
-                instruccion: "Eliminar ${instruccionesBitacora[i].instruccionAdicional} Servidor", 
-                fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
-              continue;
-            }
+          final boolSyncDeleteImagenJornada = await syncDeleteImagenJornada(instruccionesBitacora[i]);
+          if (boolSyncDeleteImagenJornada) {
+            banderasExistoSync.add(boolSyncDeleteImagenJornada);
+            continue;
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(boolSyncDeleteImagenJornada);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+              emprendimiento: instruccionesBitacora[i].emprendimiento,
+              instruccion: "Eliminar ${instruccionesBitacora[i].instruccionAdicional} Servidor", 
+              fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
+        case "syncDeleteProductoInversionJ3":
+          print("Entro al caso de syncDeleteProductoInversionJ3 Pocketbase");
+          final boolSyncDeleteProductoInversionJ3 = await syncDeleteProductoInversionJ3(instruccionesBitacora[i]);
+          if (boolSyncDeleteProductoInversionJ3) {
+            banderasExistoSync.add(boolSyncDeleteProductoInversionJ3);
+            continue;
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(boolSyncDeleteProductoInversionJ3);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+              emprendimiento: instruccionesBitacora[i].emprendimiento,
+              instruccion: "Eliminar Producto Inversión J3 Servidor", 
+              fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
         case "syncUpdateTareaConsultoria":
           print("Entro al caso de syncUpdateTareaConsultoria Pocketbase");
           final tareaToSync = getFirstTarea(dataBase.tareasBox.getAll(), instruccionesBitacora[i].id);
@@ -1067,6 +1136,21 @@ class SyncProviderPocketbase extends ChangeNotifier {
         for (var j = 0; j < inversiones[i].bitacora.length; j++) {
           if (inversiones[i].bitacora[j].id == idInstruccionesBitacora) {
             return inversiones[i];
+          } 
+        }
+      }
+    }
+    return null;
+  }
+  ProdSolicitado? getFirstProdSolicitado(List<ProdSolicitado> prodSolicitado, int idInstruccionesBitacora)
+  {
+    for (var i = 0; i < prodSolicitado.length; i++) {
+      if (prodSolicitado[i].bitacora.isEmpty) {
+        
+      } else {
+        for (var j = 0; j < prodSolicitado[i].bitacora.length; j++) {
+          if (prodSolicitado[i].bitacora[j].id == idInstruccionesBitacora) {
+            return prodSolicitado[i];
           } 
         }
       }
@@ -1606,79 +1690,274 @@ class SyncProviderPocketbase extends ChangeNotifier {
         final tareaToSync = dataBase.tareasBox.query(Tareas_.id.equals(jornada.tarea.target!.id)).build().findUnique();
         if (tareaToSync != null) {  
           if (tareaToSync.idDBR == null) {
-            // Creamos y enviamos las imágenes de la jornada
-            for (var i = 0; i < jornada.tarea.target!.imagenes.toList().length; i++) {
-              if (jornada.tarea.target!.imagenes.toList()[i].idDBR == null) {
-                final recordImagen = await client.records.create('imagenes', body: {
-                  "nombre": jornada.tarea.target!.imagenes.toList()[i].nombre,
-                  "id_emi_web": jornada.tarea.target!.imagenes.toList()[i].idEmiWeb,
-                  "base64": jornada.tarea.target!.imagenes.toList()[i].base64,
-                });
-                jornada.tarea.target!.imagenes.toList()[i].idDBR = recordImagen.id;
-                dataBase.imagenesBox.put(jornada.tarea.target!.imagenes.toList()[i]);
-                idsDBRImagenes.add(jornada.tarea.target!.imagenes.toList()[i].idDBR!);
-              } else {
-                idsDBRImagenes.add(jornada.tarea.target!.imagenes.toList()[i].idDBR!);
-              } 
-            }
-            //Primero creamos la tarea asociada a la jornada
-            final recordTarea = await client.records.create('tareas', body: {
-            "tarea": tareaToSync.tarea,
-            "descripcion": tareaToSync.descripcion,
-            "comentarios": tareaToSync.comentarios,
-            "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
-            "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
-            "id_emi_web": tareaToSync.idEmiWeb!.split("?")[0],
-            "id_imagenes_fk": idsDBRImagenes,
-            });
-            if (recordTarea.id.isNotEmpty) {
-              //Se recupera el idDBR de la tarea
-              tareaToSync.idDBR = recordTarea.id;
-              dataBase.tareasBox.put(tareaToSync);
-              //Segundo actualizamos el catalogoProyecto del emprendimiento
-              final emprendimiento = dataBase.emprendimientosBox.query(Emprendimientos_.id.equals(jornada.emprendimiento.target!.id)).build().findUnique();
-              if (emprendimiento != null) {
-                final recordCatalogoProyecto = await client.records.update('emprendimientos', emprendimiento.idDBR.toString(), body: {
-                  "id_nombre_proyecto_fk": emprendimiento.catalogoProyecto.target!.idDBR,
-                });
-                if (recordCatalogoProyecto.id.isNotEmpty) {
-                  //Tercero creamos la jornada  
-                  final recordJornada = await client.records.create('jornadas', body: {
-                    "num_jornada": jornada.numJornada,
-                    "id_tarea_fk": tareaToSync.idDBR,
-                    "proxima_visita": jornada.fechaRevision.toUtc().toString(),
-                    "id_emprendimiento_fk": jornada.emprendimiento.target!.idDBR,
-                    "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
-                    "completada": jornada.completada,
-                    "id_emi_web": jornada.idEmiWeb!.split("?")[0],
+            final inversionJornada3 = dataBase.inversionesBox.get(jornada.emprendimiento.target?.idInversionJornada ?? -1);
+            final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Solicitada")).build().findFirst();
+            if (inversionJornada3 != null && newEstadoInversion != null) {
+              // Creamos y enviamos las imágenes de la jornada
+              for (var i = 0; i < jornada.tarea.target!.imagenes.toList().length; i++) {
+                if (jornada.tarea.target!.imagenes.toList()[i].idDBR == null) {
+                  final recordImagen = await client.records.create('imagenes', body: {
+                    "nombre": jornada.tarea.target!.imagenes.toList()[i].nombre,
+                    "id_emi_web": jornada.tarea.target!.imagenes.toList()[i].idEmiWeb,
+                    "base64": jornada.tarea.target!.imagenes.toList()[i].base64,
                   });
-
-                  if (recordJornada.id.isNotEmpty) {
-                    //Cuarto se recupera el idDBR de la jornada
-                    jornada.idDBR = recordJornada.id;
-                    dataBase.jornadasBox.put(jornada);
-                    //Se marca como realizada en Pocketbase la instrucción en Bitacora
-                    bitacora.executePocketbase = true;
-                    dataBase.bitacoraBox.put(bitacora);
-                    if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
-                      //Se elimina la instrucción de la bitacora
-                      dataBase.bitacoraBox.remove(bitacora.id);
-                    } 
-                    return true;
-                  } else {
-                    // No se pudo postear la jornada
-                    return false;
-                  } 
+                  jornada.tarea.target!.imagenes.toList()[i].idDBR = recordImagen.id;
+                  dataBase.imagenesBox.put(jornada.tarea.target!.imagenes.toList()[i]);
+                  idsDBRImagenes.add(jornada.tarea.target!.imagenes.toList()[i].idDBR!);
                 } else {
-                  //No se pudo actualizar el catálogo proyecto del emprendimiento
+                  idsDBRImagenes.add(jornada.tarea.target!.imagenes.toList()[i].idDBR!);
+                } 
+              }
+              if (inversionJornada3.idDBR == null) {
+                // Creamos y enviamos los productos asociados a la inversión
+                final recordInversion = await client.records.create('inversiones', body: {
+                  "id_emprendimiento_fk": inversionJornada3.emprendimiento.target!.idDBR,
+                  "id_estado_inversion_fk": newEstadoInversion.idDBR,
+                  "porcentaje_pago": inversionJornada3.porcentajePago,
+                  "monto_pagar": inversionJornada3.montoPagar,
+                  "saldo": inversionJornada3.saldo,
+                  "total_inversion": inversionJornada3.totalInversion,
+                  "inversion_recibida": true,
+                  "pago_recibido": false,
+                  "producto_entregado": false,
+                  "id_emi_web": "0",
+                });
+                if (recordInversion.id.isNotEmpty) {     
+                  //Se recupera el idDBR de la inversion
+                  inversionJornada3.idDBR = recordInversion.id;
+                  dataBase.inversionesBox.put(inversionJornada3);    
+                  // Creamos y enviamos las imágenes de los prod Solicitados
+                  for (var i = 0; i < inversionJornada3.prodSolicitados.toList().length; i++) {
+                    if (inversionJornada3.prodSolicitados.toList()[i].idDBR == null) {
+                      if (inversionJornada3.prodSolicitados.toList()[i].imagen.target != null) {
+                        // El prod Solicitado está asociado a una imagen
+                        final recordProdSolicitado = await client.records.create('productos_proyecto', body: {
+                          "producto": inversionJornada3.prodSolicitados.toList()[i].producto,
+                          "marca_sugerida": inversionJornada3.prodSolicitados.toList()[i].marcaSugerida,
+                          "descripcion": inversionJornada3.prodSolicitados.toList()[i].descripcion,
+                          "proveedo_sugerido": inversionJornada3.prodSolicitados.toList()[i].proveedorSugerido,
+                          "cantidad": inversionJornada3.prodSolicitados.toList()[i].cantidad,
+                          "costo_estimado": inversionJornada3.prodSolicitados.toList()[i].costoEstimado,
+                          "id_familia_prod_fk": inversionJornada3.prodSolicitados.toList()[i].familiaProducto.target!.idDBR,
+                          "id_tipo_empaque_fk": inversionJornada3.prodSolicitados.toList()[i].tipoEmpaques.target!.idDBR,
+                          "id_inversion_fk": inversionJornada3.idDBR,
+                          "id_emi_web": inversionJornada3.prodSolicitados.toList()[i].idEmiWeb,
+                          // "id_imagen_fk": inversionJornada3.prodSolicitados.toList()[i].imagen.target!.idDBR,
+                        });
+                        if (recordProdSolicitado.id.isNotEmpty) {
+                          //Se recupera el idDBR del prod Solicitado
+                          inversionJornada3.prodSolicitados.toList()[i].idDBR = recordProdSolicitado.id;
+                          dataBase.productosSolicitadosBox.put(inversionJornada3.prodSolicitados.toList()[i]);
+                        } else {
+                          //No se pudo postear el producto Solicitado a Pocketbase
+                          return false;
+                        }
+                      } else {
+                        // El prod Solicitado no está asociado a una imagen
+                        final recordProdSolicitado = await client.records.create('productos_proyecto', body: {
+                          "producto": inversionJornada3.prodSolicitados.toList()[i].producto,
+                          "marca_sugerida": inversionJornada3.prodSolicitados.toList()[i].marcaSugerida,
+                          "descripcion": inversionJornada3.prodSolicitados.toList()[i].descripcion,
+                          "proveedo_sugerido": inversionJornada3.prodSolicitados.toList()[i].proveedorSugerido,
+                          "cantidad": inversionJornada3.prodSolicitados.toList()[i].cantidad,
+                          "costo_estimado": inversionJornada3.prodSolicitados.toList()[i].costoEstimado,
+                          "id_familia_prod_fk": inversionJornada3.prodSolicitados.toList()[i].familiaProducto.target!.idDBR,
+                          "id_tipo_empaque_fk": inversionJornada3.prodSolicitados.toList()[i].tipoEmpaques.target!.idDBR,
+                          "id_inversion_fk": inversionJornada3.idDBR,
+                          "id_emi_web": inversionJornada3.prodSolicitados.toList()[i].idEmiWeb,
+                          // "id_imagen_fk": inversionJornada3.prodSolicitados.toList()[i].imagen.target!.idDBR,
+                        });
+                        if (recordProdSolicitado.id.isNotEmpty) {
+                          //Se recupera el idDBR del prod Solicitado
+                          inversionJornada3.prodSolicitados.toList()[i].idDBR = recordProdSolicitado.id;
+                          dataBase.productosSolicitadosBox.put(inversionJornada3.prodSolicitados.toList()[i]);
+                        } else {
+                          //No se pudo postear el producto Solicitado a Pocketbase
+                          return false;
+                        }
+                      }   
+                    }
+                  }
+                  //Primero creamos la tarea asociada a la jornada
+                  final recordTarea = await client.records.create('tareas', body: {
+                  "tarea": tareaToSync.tarea,
+                  "descripcion": tareaToSync.descripcion,
+                  "comentarios": tareaToSync.comentarios,
+                  "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
+                  "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                  "id_emi_web": tareaToSync.idEmiWeb!.split("?")[0],
+                  "id_imagenes_fk": idsDBRImagenes,
+                  });
+                  if (recordTarea.id.isNotEmpty) {
+                    //Se recupera el idDBR de la tarea
+                    tareaToSync.idDBR = recordTarea.id;
+                    dataBase.tareasBox.put(tareaToSync);
+                    //Segundo actualizamos el catalogoProyecto del emprendimiento
+                    final emprendimiento = dataBase.emprendimientosBox.query(Emprendimientos_.id.equals(jornada.emprendimiento.target!.id)).build().findUnique();
+                    if (emprendimiento != null) {
+                      final recordCatalogoProyecto = await client.records.update('emprendimientos', emprendimiento.idDBR.toString(), body: {
+                        "id_nombre_proyecto_fk": emprendimiento.catalogoProyecto.target!.idDBR,
+                      });
+                      if (recordCatalogoProyecto.id.isNotEmpty) {
+                        //Tercero creamos la jornada  
+                        final recordJornada = await client.records.create('jornadas', body: {
+                          "num_jornada": jornada.numJornada,
+                          "id_tarea_fk": tareaToSync.idDBR,
+                          "proxima_visita": jornada.fechaRevision.toUtc().toString(),
+                          "id_emprendimiento_fk": jornada.emprendimiento.target!.idDBR,
+                          "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                          "completada": jornada.completada,
+                          "id_emi_web": jornada.idEmiWeb!.split("?")[0],
+                        });
+
+                        if (recordJornada.id.isNotEmpty) {
+                          //Cuarto se recupera el idDBR de la jornada
+                          jornada.idDBR = recordJornada.id;
+                          dataBase.jornadasBox.put(jornada);
+                          //Se marca como realizada en Pocketbase la instrucción en Bitacora
+                          bitacora.executePocketbase = true;
+                          dataBase.bitacoraBox.put(bitacora);
+                          if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+                            //Se elimina la instrucción de la bitacora
+                            dataBase.bitacoraBox.remove(bitacora.id);
+                          } 
+                          return true;
+                        } else {
+                          // No se pudo postear la jornada
+                          return false;
+                        } 
+                      } else {
+                        //No se pudo actualizar el catálogo proyecto del emprendimiento
+                        return false;
+                      }
+                    } else {
+                      //No se pudo recuperar el emprendimiento
+                      return false;
+                    }
+                  } else {
+                    // No se pudo postear la tarea
+                    return false;
+                  }
+                } else {
+                  //No se pudo postear la inversión en Pocketbase
+                  return false;
+                } 
+              } else {
+                // Creamos y enviamos las imágenes de los prod Solicitados
+                for (var i = 0; i < inversionJornada3.prodSolicitados.toList().length; i++) {
+                  if (inversionJornada3.prodSolicitados.toList()[i].idDBR == null) {
+                    if (inversionJornada3.prodSolicitados.toList()[i].imagen.target != null) {
+                      // El prod Solicitado está asociado a una imagen
+                      final recordProdSolicitado = await client.records.create('productos_proyecto', body: {
+                        "producto": inversionJornada3.prodSolicitados.toList()[i].producto,
+                        "marca_sugerida": inversionJornada3.prodSolicitados.toList()[i].marcaSugerida,
+                        "descripcion": inversionJornada3.prodSolicitados.toList()[i].descripcion,
+                        "proveedo_sugerido": inversionJornada3.prodSolicitados.toList()[i].proveedorSugerido,
+                        "cantidad": inversionJornada3.prodSolicitados.toList()[i].cantidad,
+                        "costo_estimado": inversionJornada3.prodSolicitados.toList()[i].costoEstimado,
+                        "id_familia_prod_fk": inversionJornada3.prodSolicitados.toList()[i].familiaProducto.target!.idDBR,
+                        "id_tipo_empaque_fk": inversionJornada3.prodSolicitados.toList()[i].tipoEmpaques.target!.idDBR,
+                        "id_inversion_fk": inversionJornada3.idDBR,
+                        "id_emi_web": inversionJornada3.prodSolicitados.toList()[i].idEmiWeb,
+                        // "id_imagen_fk": inversionJornada3.prodSolicitados.toList()[i].imagen.target!.idDBR,
+                      });
+                      if (recordProdSolicitado.id.isNotEmpty) {
+                        //Se recupera el idDBR del prod Solicitado
+                        inversionJornada3.prodSolicitados.toList()[i].idDBR = recordProdSolicitado.id;
+                        dataBase.productosSolicitadosBox.put(inversionJornada3.prodSolicitados.toList()[i]);
+                      } else {
+                        //No se pudo postear el producto Solicitado a Pocketbase
+                        return false;
+                      }
+                    } else {
+                      // El prod Solicitado no está asociado a una imagen
+                      final recordProdSolicitado = await client.records.create('productos_proyecto', body: {
+                        "producto": inversionJornada3.prodSolicitados.toList()[i].producto,
+                        "marca_sugerida": inversionJornada3.prodSolicitados.toList()[i].marcaSugerida,
+                        "descripcion": inversionJornada3.prodSolicitados.toList()[i].descripcion,
+                        "proveedo_sugerido": inversionJornada3.prodSolicitados.toList()[i].proveedorSugerido,
+                        "cantidad": inversionJornada3.prodSolicitados.toList()[i].cantidad,
+                        "costo_estimado": inversionJornada3.prodSolicitados.toList()[i].costoEstimado,
+                        "id_familia_prod_fk": inversionJornada3.prodSolicitados.toList()[i].familiaProducto.target!.idDBR,
+                        "id_tipo_empaque_fk": inversionJornada3.prodSolicitados.toList()[i].tipoEmpaques.target!.idDBR,
+                        "id_inversion_fk": inversionJornada3.idDBR,
+                        "id_emi_web": inversionJornada3.prodSolicitados.toList()[i].idEmiWeb,
+                        // "id_imagen_fk": inversionJornada3.prodSolicitados.toList()[i].imagen.target!.idDBR,
+                      });
+                      if (recordProdSolicitado.id.isNotEmpty) {
+                        //Se recupera el idDBR del prod Solicitado
+                        inversionJornada3.prodSolicitados.toList()[i].idDBR = recordProdSolicitado.id;
+                        dataBase.productosSolicitadosBox.put(inversionJornada3.prodSolicitados.toList()[i]);
+                      } else {
+                        //No se pudo postear el producto Solicitado a Pocketbase
+                        return false;
+                      }
+                    }   
+                  }
+                }
+                //Primero creamos la tarea asociada a la jornada
+                final recordTarea = await client.records.create('tareas', body: {
+                "tarea": tareaToSync.tarea,
+                "descripcion": tareaToSync.descripcion,
+                "comentarios": tareaToSync.comentarios,
+                "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
+                "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                "id_emi_web": tareaToSync.idEmiWeb!.split("?")[0],
+                "id_imagenes_fk": idsDBRImagenes,
+                });
+                if (recordTarea.id.isNotEmpty) {
+                  //Se recupera el idDBR de la tarea
+                  tareaToSync.idDBR = recordTarea.id;
+                  dataBase.tareasBox.put(tareaToSync);
+                  //Segundo actualizamos el catalogoProyecto del emprendimiento
+                  final emprendimiento = dataBase.emprendimientosBox.query(Emprendimientos_.id.equals(jornada.emprendimiento.target!.id)).build().findUnique();
+                  if (emprendimiento != null) {
+                    final recordCatalogoProyecto = await client.records.update('emprendimientos', emprendimiento.idDBR.toString(), body: {
+                      "id_nombre_proyecto_fk": emprendimiento.catalogoProyecto.target!.idDBR,
+                    });
+                    if (recordCatalogoProyecto.id.isNotEmpty) {
+                      //Tercero creamos la jornada  
+                      final recordJornada = await client.records.create('jornadas', body: {
+                        "num_jornada": jornada.numJornada,
+                        "id_tarea_fk": tareaToSync.idDBR,
+                        "proxima_visita": jornada.fechaRevision.toUtc().toString(),
+                        "id_emprendimiento_fk": jornada.emprendimiento.target!.idDBR,
+                        "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                        "completada": jornada.completada,
+                        "id_emi_web": jornada.idEmiWeb!.split("?")[0],
+                      });
+
+                      if (recordJornada.id.isNotEmpty) {
+                        //Cuarto se recupera el idDBR de la jornada
+                        jornada.idDBR = recordJornada.id;
+                        dataBase.jornadasBox.put(jornada);
+                        //Se marca como realizada en Pocketbase la instrucción en Bitacora
+                        bitacora.executePocketbase = true;
+                        dataBase.bitacoraBox.put(bitacora);
+                        if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+                          //Se elimina la instrucción de la bitacora
+                          dataBase.bitacoraBox.remove(bitacora.id);
+                        } 
+                        return true;
+                      } else {
+                        // No se pudo postear la jornada
+                        return false;
+                      } 
+                    } else {
+                      //No se pudo actualizar el catálogo proyecto del emprendimiento
+                      return false;
+                    }
+                  } else {
+                    //No se pudo recuperar el emprendimiento
+                    return false;
+                  }
+                } else {
+                  // No se pudo postear la tarea
                   return false;
                 }
-              } else {
-                //No se pudo recuperar el emprendimiento
-                return false;
               }
             } else {
-              // No se pudo postear la tarea
+              // No se pudo recuperar la inversión asociada a la jornada 3
               return false;
             }
           } else {
@@ -1819,6 +2098,105 @@ class SyncProviderPocketbase extends ChangeNotifier {
       }
     } catch (e) {
       print('ERROR - function syncAddImagenJornada3(): $e');
+      return false;
+    }
+}
+
+  Future<bool> syncAddProductoInversionJ3(ProdSolicitado prodSolicitado, Bitacora bitacora) async {
+    print("Estoy en syncAddProductoInversionJ3");
+    try {
+      if (!bitacora.executePocketbase) {
+        if (prodSolicitado.idDBR == null) {
+          //No se ha posteado la prodSolicitado en Emi Web
+          final recordProdSolicitado = await client.records.create('productos_proyecto', body: {
+            "producto": prodSolicitado.producto,
+            "marca_sugerida": prodSolicitado.marcaSugerida,
+            "descripcion": prodSolicitado.descripcion,
+            "proveedo_sugerido": prodSolicitado.proveedorSugerido,
+            "cantidad": prodSolicitado.cantidad,
+            "costo_estimado": prodSolicitado.costoEstimado,
+            "id_familia_prod_fk": prodSolicitado.familiaProducto.target!.idDBR,
+            "id_tipo_empaque_fk": prodSolicitado.tipoEmpaques.target!.idDBR,
+            "id_inversion_fk": prodSolicitado.inversion.target!.idDBR,
+            "id_emi_web": prodSolicitado.idEmiWeb,
+            // "id_imagen_fk": prodSolicitado.imagen.target!.idDBR,
+          });
+          if (recordProdSolicitado.id.isNotEmpty) {
+            //Se recupera el idDBR del prod Solicitado
+            prodSolicitado.idDBR = recordProdSolicitado.id;
+            dataBase.productosSolicitadosBox.put(prodSolicitado);
+            //Se marca como realizada en Pocketbase la instrucción en Bitacora
+            bitacora.executePocketbase = true;
+            dataBase.bitacoraBox.put(bitacora);
+            if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+              //Se elimina la instrucción de la bitacora
+              dataBase.bitacoraBox.remove(bitacora.id);
+            } 
+            return true;
+          } else {
+            //No se pudo postear el producto Solicitado a Pocketbase
+            return false;
+          }   
+        } else {
+          //Se marca como realizada en Pocketbase la instrucción en Bitacora
+          bitacora.executePocketbase = true;
+          dataBase.bitacoraBox.put(bitacora);
+          if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+            //Se elimina la instrucción de la bitacora
+            dataBase.bitacoraBox.remove(bitacora.id);
+          } 
+          return true;
+        }
+      } else {
+        if (bitacora.executeEmiWeb) {
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
+        } 
+        return true;
+      }
+    } catch (e) {
+      print('ERROR - function syncAddProductoInversionJ3(): $e');
+      return false;
+    }
+}
+
+  Future<bool> syncUpdateProductoInversionJ3(ProdSolicitado prodSolicitado, Bitacora bitacora) async {
+    print("Estoy en syncUpdateProductoInversionJ3");
+    try {
+      if (!bitacora.executePocketbase) {
+        final recordProdSolicitado = await client.records.update('productos_proyecto', prodSolicitado.idDBR.toString(), body: {
+          "producto": prodSolicitado.producto,
+          "marca_sugerida": prodSolicitado.marcaSugerida,
+          "descripcion": prodSolicitado.descripcion,
+          "proveedo_sugerido": prodSolicitado.proveedorSugerido,
+          "cantidad": prodSolicitado.cantidad,
+          "costo_estimado": prodSolicitado.costoEstimado,
+          "id_familia_prod_fk": prodSolicitado.familiaProducto.target!.idDBR,
+          "id_tipo_empaque_fk": prodSolicitado.tipoEmpaques.target!.idDBR,
+          // "id_imagen_fk": prodSolicitado.imagen.target!.idDBR,
+        });
+        if (recordProdSolicitado.id.isNotEmpty) {
+          //Se marca como realizada en Pocketbase la instrucción en Bitacora
+          bitacora.executePocketbase = true;
+          dataBase.bitacoraBox.put(bitacora);
+          if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+            //Se elimina la instrucción de la bitacora
+            dataBase.bitacoraBox.remove(bitacora.id);
+          } 
+          return true;
+        } else {
+          //No se pudo actualizar el producto Solicitado a Pocketbase
+          return false;
+        }   
+      } else {
+        if (bitacora.executeEmiWeb) {
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
+        } 
+        return true;
+      }
+    } catch (e) {
+      print('ERROR - function syncUpdateProductoInversionJ3(): $e');
       return false;
     }
 }
@@ -3152,6 +3530,32 @@ class SyncProviderPocketbase extends ChangeNotifier {
     }
   } 
 
+  Future<bool> syncDeleteProductoInversionJ3(Bitacora bitacora) async {
+    print("Estoy en El syncDelteProdusyncDeleteProductoInversionJ3 en Pocketbase");
+    try {
+      if (!bitacora.executePocketbase) {
+        await client.records.delete('productos_proyecto', bitacora.idDBR.toString()); 
+        //Se marca como realizada en Pocketbase la instrucción en Bitacora
+        bitacora.executePocketbase = true;
+        dataBase.bitacoraBox.put(bitacora);
+        if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
+        }
+        return true;
+      } else {
+        if (bitacora.executeEmiWeb) {
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
+        }
+        return true;
+      }
+    } catch (e) {
+      print('ERROR - function syncDeleteProductoInversionJ3(): $e');
+      return false;
+    }
+  } 
+
   Future<bool?> syncUpdateEstadoConsultoria(Consultorias consultoria) async {
     print("Estoy en El syncUpdateEstadoConsultoria");
     try {
@@ -3642,7 +4046,6 @@ void deleteBitacora() {
     sort: "-created");
     if (recordsInversionXProdCotizado.isNotEmpty) {
     for (var element in recordsInversionXProdCotizado) {
-      print("Records IXPC: ${element.id.toString()}");
     }
     final inversionXprodCotizadosParse =  getInversionXProdCotizadosFromMap(recordsInversionXProdCotizado[0].toString());
     //Obtenemos los productos cotizados
@@ -3659,11 +4062,6 @@ void deleteBitacora() {
       //No se encontró la inversión ni los productos cotizados
       return false;
     } else {
-      print("Se encontraron los prod cotizados y la inversión");
-      for (var element in recordProdCotizados) {
-        print("Prod Cotizado: ${element.data}");
-      }
-      print("Id Inversion: ${recordInversion.id}");
       final GetInversion inversionParse = getInversionFromMap(recordInversion.toString());
       final estadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.idDBR.equals(inversionParse.idEstadoInversionFk)).build().findUnique();
       if (estadoInversion != null) {
@@ -3674,7 +4072,6 @@ void deleteBitacora() {
           }
           print("Dentro de En Cotización");
           print("****Informacion productos cotizados****");
-          print("Tamaño: ${recordProdCotizados.length}");
           // Se recupera el idDBR de la instancia de inversion x prod Cotizados
           final nuevaIversionXprodCotizados = InversionesXProdCotizados(
             idDBR: inversionXprodCotizadosParse.id,
@@ -3702,16 +4099,10 @@ void deleteBitacora() {
                 dataBase.productosCotBox.put(nuevoProductoCotizado);
                 nuevaIversionXprodCotizados.prodCotizados.add(nuevoProductoCotizado);
                 dataBase.inversionesXprodCotizadosBox.put(nuevaIversionXprodCotizados);
-                print('Prod Cotizado agregado exitosamente');
-                print("Tamaño ProdCotizados al final: ${dataBase.productosCotBox.getAll().length}");
               } else {
                 return false;
               }
             } else {
-              print("Ya existe el prod Cotizado en ObjectBox");
-              print("Id Pocketbase Prod Cotizado ${prodCotizadoExistente.idDBR}");
-              print("Id Emi web Prod Cotizado ${prodCotizadoExistente.idEmiWeb}");
-              print("Prod proveedor Prod Cotizado ${prodCotizadoExistente.productosProv.target!.nombre}");
 
             }
           }

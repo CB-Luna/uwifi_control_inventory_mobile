@@ -36,9 +36,9 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
   final formKey = GlobalKey<FormState>();
   TextEditingController porcentajeController = TextEditingController();
   List<String> listFamilias = [];
-  List<String> listUnidadesMedida = [];
+  List<String> listTipoEmpaque = [];
   String familia = "";
-  String unidadMedida = "";
+  String tipoEmpaque = "";
   String emprendedor = "";
   XFile? image;
 
@@ -46,7 +46,7 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
   void initState() {
     super.initState();
     familia = "";
-    unidadMedida = "";
+    tipoEmpaque = "";
     emprendedor = "";
     porcentajeController = TextEditingController(text: "50");
     if (widget.emprendimiento.emprendedor.target != null) {
@@ -54,15 +54,15 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
           "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
     }
     listFamilias = [];
-    listUnidadesMedida = [];
+    listTipoEmpaque = [];
     dataBase.familiaProductosBox.getAll().forEach((element) {
       listFamilias.add(element.nombre);
     });
     listFamilias.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
-    dataBase.unidadesMedidaBox.getAll().forEach((element) {
-      listUnidadesMedida.add(element.unidadMedida);
+    dataBase.tipoEmpaquesBox.getAll().forEach((element) {
+      listTipoEmpaque.add(element.tipo);
     });
-    listUnidadesMedida.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+    listTipoEmpaque.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
   }
 
   @override
@@ -667,9 +667,9 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(5, 0, 5, 10),
                                             child: DropDown(
-                                              options: listUnidadesMedida,
+                                              options: listTipoEmpaque,
                                               onChanged: (val) => setState(() {
-                                                if (listUnidadesMedida
+                                                if (listTipoEmpaque
                                                     .isEmpty) {
                                                   snackbarKey.currentState
                                                       ?.showSnackBar(
@@ -678,7 +678,7 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                                         "Debes descargar los catálogos desde la sección de tu perfil"),
                                                   ));
                                                 } else {
-                                                  unidadMedida = val!;
+                                                  tipoEmpaque = val!;
                                                 }
                                               }),
                                               width: double.infinity,
@@ -693,7 +693,7 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                                     fontWeight:
                                                         FontWeight.normal,
                                                   ),
-                                              hintText: 'Tipo de Empaques*',
+                                              hintText: 'Tipo de Empaque*',
                                               icon: const Icon(
                                                 Icons
                                                     .keyboard_arrow_down_rounded,
@@ -714,9 +714,9 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                           );
                                         },
                                         validator: (val) {
-                                          if (unidadMedida == "" ||
-                                              unidadMedida.isEmpty) {
-                                            return 'Para continuar, seleccione un tipo de empaques.';
+                                          if (tipoEmpaque == "" ||
+                                              tipoEmpaque.isEmpty) {
+                                            return 'Para continuar, seleccione un tipo de empaque.';
                                           }
                                           return null;
                                         },
@@ -987,15 +987,15 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                             .build()
                                             .findFirst()
                                             ?.id;
-                                        final idUnidadMedida= dataBase
-                                            .unidadesMedidaBox
-                                            .query(UnidadMedida_.unidadMedida
-                                                .equals(unidadMedida))
+                                        final idTipoEmpaque= dataBase
+                                            .tipoEmpaquesBox
+                                            .query(TipoEmpaques_.tipo
+                                                .equals(tipoEmpaque))
                                             .build()
                                             .findFirst()
                                             ?.id;
                                         if (idFamiliaProd != null &&
-                                            idUnidadMedida!= null) {
+                                            idTipoEmpaque!= null) {
                                             print("Porcenatje:  ${porcentajeController.text}" );
                                           inversionJornadaController.porcentajePago = porcentajeController.text;
                                           inversionJornadaController
@@ -1004,8 +1004,8 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                           productoInversionJornadaController.addTemporal(
                                               idFamiliaProd,
                                               familia,
-                                              idUnidadMedida,
-                                              unidadMedida);
+                                              idTipoEmpaque,
+                                              tipoEmpaque);
                                           Navigator.pop(context);
                                           snackbarKey.currentState
                                               ?.showSnackBar(const SnackBar(

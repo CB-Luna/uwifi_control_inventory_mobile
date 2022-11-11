@@ -1,8 +1,10 @@
+import 'package:bizpro_app/database/entitys.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/save_instruccion_producto_inversion_j3_temporal.dart';
+import 'package:bizpro_app/screens/jornadas/registros/editar_inversion_jornada.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:number_text_input_formatter/number_text_input_formatter.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
@@ -15,17 +17,24 @@ import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 
 import 'package:bizpro_app/providers/database_providers/producto_inversion_jornada_controller.dart';
-import 'package:bizpro_app/screens/jornadas/registros/producto_jornada_creado.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 class AgregarProductoInversionJornadaScreen extends StatefulWidget {
-  final int idInversion;
+  final Emprendimientos emprendimiento;
+  final Jornadas jornada;
+  final Inversiones inversion;
+  final String emprendedor;
+  final String porcentajePago;
 
   const AgregarProductoInversionJornadaScreen({
     Key? key,
-    required this.idInversion,
+    required this.emprendimiento,
+    required this.jornada,
+    required this.inversion,
+    required this.emprendedor,
+    required this.porcentajePago,
   }) : super(key: key);
 
   @override
@@ -38,41 +47,31 @@ class _AgregarProductoInversionJornadaScreenState
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
   String familia = "";
-  String unidadMedida = "";
+  String tipoEmpaque = "";
   XFile? image;
   String emprendedor = "";
   List<String> listFamilias = [];
-  List<String> listUnidadMedida = [];
-  Inversiones? inversion;
+  List<String> listTipoEmpaque = [];
   TextEditingController porcentajeController =  TextEditingController();
 
   @override
   void initState() {
     super.initState();
     familia = "";
-    unidadMedida = "";
+    tipoEmpaque = "";
     emprendedor = "";
     listFamilias = [];
-    listUnidadMedida = [];
+    listTipoEmpaque = [];
     dataBase.familiaProductosBox.getAll().forEach((element) {
       listFamilias.add(element.nombre);
     });
     listFamilias.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
-    dataBase.unidadesMedidaBox.getAll().forEach((element) {
-      listUnidadMedida.add(element.unidadMedida);
+    dataBase.tipoEmpaquesBox.getAll().forEach((element) {
+      listTipoEmpaque.add(element.tipo);
     });
-    listUnidadMedida.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
-    inversion = dataBase.inversionesBox.get(widget.idInversion);
-    if (inversion != null) {
-      if (inversion!.emprendimiento.target!.emprendedor.target != null) {
-      emprendedor =
-          "${
-          inversion!.emprendimiento.
-          target!.emprendedor.target!.nombre} ${inversion!.emprendimiento.
-          target!.emprendedor.target!.apellidos}";
-    }
-    porcentajeController = TextEditingController(text: inversion!.porcentajePago.toString());
-    }
+    listTipoEmpaque.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+      emprendedor = widget.emprendedor;
+    porcentajeController = TextEditingController(text: widget.porcentajePago);
   }
 
   @override
@@ -123,9 +122,18 @@ class _AgregarProductoInversionJornadaScreenState
                                 ),
                                 child: InkWell(
                                   onTap: () async {
-                                    productoInversionJornadaController
-                                        .clearInformation();
-                                    Navigator.pop(context);
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            EditarInversionJornadaScreen(
+                                              emprendimiento: widget.emprendimiento, 
+                                              jornada: widget.jornada, 
+                                              prodSolicitados: productoInversionJornadaController.listProdSolicitadosActual,
+                                              inversion: widget.inversion,
+                                            ),
+                                      ),
+                                    );
                                   },
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -681,9 +689,9 @@ class _AgregarProductoInversionJornadaScreenState
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(5, 0, 5, 10),
                                             child: DropDown(
-                                              options: listUnidadMedida,
+                                              options: listTipoEmpaque,
                                               onChanged: (val) => setState(() {
-                                                if (listUnidadMedida
+                                                if (listTipoEmpaque
                                                     .isEmpty) {
                                                   snackbarKey.currentState
                                                       ?.showSnackBar(
@@ -692,7 +700,7 @@ class _AgregarProductoInversionJornadaScreenState
                                                         "Debes descargar los catálogos desde la sección de tu perfil"),
                                                   ));
                                                 } else {
-                                                  unidadMedida = val!;
+                                                  tipoEmpaque = val!;
                                                 }
                                               }),
                                               width: double.infinity,
@@ -707,7 +715,7 @@ class _AgregarProductoInversionJornadaScreenState
                                                     fontWeight:
                                                         FontWeight.normal,
                                                   ),
-                                              hintText: 'Tipo de Empaques*',
+                                              hintText: 'Tipo de Empaque*',
                                               icon: const Icon(
                                                 Icons
                                                     .keyboard_arrow_down_rounded,
@@ -728,9 +736,9 @@ class _AgregarProductoInversionJornadaScreenState
                                           );
                                         },
                                         validator: (val) {
-                                          if (unidadMedida == "" ||
-                                              unidadMedida.isEmpty) {
-                                            return 'Para continuar, seleccione un tipo de empaques.';
+                                          if (tipoEmpaque == "" ||
+                                              tipoEmpaque.isEmpty) {
+                                            return 'Para continuar, seleccione un tipo de empaque.';
                                           }
                                           return null;
                                         },
@@ -984,32 +992,51 @@ class _AgregarProductoInversionJornadaScreenState
                                       print("Desde registro");
                                       if (productoInversionJornadaController
                                           .validateForm(formKey)) {
-                                        final idFamiliaProd = dataBase
+                                        final actualFamiliaProd = dataBase
                                             .familiaProductosBox
                                             .query(FamiliaProd_.nombre
                                                 .equals(familia))
                                             .build()
-                                            .findFirst()
-                                            ?.id;
-                                        final idUnidadMedida= dataBase
-                                            .unidadesMedidaBox
-                                            .query(UnidadMedida_.unidadMedida
-                                                .equals(unidadMedida))
+                                            .findFirst();
+                                        final actualTipoEmpaque= dataBase
+                                            .tipoEmpaquesBox
+                                            .query(TipoEmpaques_.tipo
+                                                .equals(tipoEmpaque))
                                             .build()
-                                            .findFirst()
-                                            ?.id;
-                                        if (idFamiliaProd != null &&
-                                            idUnidadMedida!= null) {
-                                          productoInversionJornadaController.addSingle(
-                                            widget.idInversion,
-                                            idFamiliaProd,
-                                            idUnidadMedida,
+                                            .findFirst();
+                                        if (actualFamiliaProd != null &&
+                                            actualTipoEmpaque!= null) {
+                                          // productoInversionJornadaController.addSingle(idInversion, idFamiliaProd, idTipoEmpaque)
+                                          final newProductoSolicitado = ProdSolicitado(
+                                            idInversion: widget.inversion.id, 
+                                            producto: productoInversionJornadaController.producto, 
+                                            marcaSugerida: productoInversionJornadaController.marcaSugerida,
+                                            descripcion: productoInversionJornadaController.descripcion, 
+                                            proveedorSugerido: productoInversionJornadaController.proveedorSugerido,
+                                            cantidad: int.parse(productoInversionJornadaController.cantidad),
+                                            costoEstimado: double.parse(productoInversionJornadaController.costoEstimado),
                                           );
+                                          newProductoSolicitado.tipoEmpaques.target = actualTipoEmpaque;
+                                          newProductoSolicitado.familiaProducto.target = actualFamiliaProd;
+                                          newProductoSolicitado.inversion.target = widget.inversion;
+                                          final newInstruccionProdInversionJ3 = SaveInstruccionProductoInversionJ3Temporal(
+                                            instruccion: "syncAddProductoInversionJ3", 
+                                            prodSolicitado: newProductoSolicitado,
+                                          );
+                                          productoInversionJornadaController
+                                            .listProdSolicitadosActual.add(newProductoSolicitado);
+                                          productoInversionJornadaController
+                                            .instruccionesProdInversionJ3Temp.add(newInstruccionProdInversionJ3);
                                           await Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  const ProductoJornadaCreado(),
+                                                  EditarInversionJornadaScreen(
+                                                    emprendimiento: widget.emprendimiento, 
+                                                    jornada: widget.jornada, 
+                                                    prodSolicitados: productoInversionJornadaController.listProdSolicitadosActual,
+                                                    inversion: widget.inversion,
+                                                  ),
                                             ),
                                           );
                                         }

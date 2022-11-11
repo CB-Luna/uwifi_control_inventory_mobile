@@ -133,18 +133,31 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               if(emprendedorToSync != null){
                 //Se encontró al emprendedor y se puede agregar
                 final boolSyncAddEmprendedor = await syncAddEmprendedor(emprendedorToSync, instruccionesBitacora[i]);
-                if (boolSyncAddEmprendedor) {
-                  banderasExistoSync.add(boolSyncAddEmprendedor);
-                  continue;
+                if (boolSyncAddEmprendedor != null) {
+                  if (boolSyncAddEmprendedor) {
+                    banderasExistoSync.add(boolSyncAddEmprendedor);
+                    continue;
+                  } else {
+                    //Recuperamos la instrucción que no se ejecutó
+                    banderasExistoSync.add(boolSyncAddEmprendedor);
+                    final instruccionNoSincronizada = InstruccionNoSincronizada(
+                      emprendimiento: emprendedorToSync.emprendimiento.target!.nombre,
+                      instruccion: "Agregar Emprendedor Emi Web", 
+                      fecha: instruccionesBitacora[i].fechaRegistro);
+                    instruccionesFallidas.add(instruccionNoSincronizada);
+                    i = instruccionesBitacora.length;
+                    break;
+                  }
                 } else {
                   //Recuperamos la instrucción que no se ejecutó
-                  banderasExistoSync.add(boolSyncAddEmprendedor);
+                  banderasExistoSync.add(false);
                   final instruccionNoSincronizada = InstruccionNoSincronizada(
                     emprendimiento: emprendedorToSync.emprendimiento.target!.nombre,
-                    instruccion: "Agregar Emprendedor Emi Web", 
+                    instruccion: "El emprendedor ya se encuentra registrado en Emi Web", 
                     fecha: instruccionesBitacora[i].fechaRegistro);
                   instruccionesFallidas.add(instruccionNoSincronizada);
-                  continue;
+                  i = instruccionesBitacora.length;
+                  break;
                 }
               } else {
                 //Recuperamos la instrucción que no se ejecutó
@@ -362,6 +375,76 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 final instruccionNoSincronizada = InstruccionNoSincronizada(
                   emprendimiento: "No encontrado",
                   instruccion: "Agregar Imagen Jornada 3 Emi Web",
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+                instruccionesFallidas.add(instruccionNoSincronizada);
+                continue;
+              }
+            } else {
+              // Ya se ha ejecutado esta instrucción en Emi Web
+              banderasExistoSync.add(true);
+              continue;
+            }
+          case "syncAddProductoInversionJ3":
+            print("Entro al caso de syncAddProductoInversionJ3 Emi Web");
+            if (!instruccionesBitacora[i].executeEmiWeb) {
+              final prodSolicitadoToSync = getFirstProdSolicitado(dataBase.productosSolicitadosBox.getAll(), instruccionesBitacora[i].id);
+              if(prodSolicitadoToSync != null){
+                //Se encontró el prod Solicitado y se puede agregar
+                var boolSyncAddProductoInversionJ3 = await syncAddProductoInversionJ3(prodSolicitadoToSync, instruccionesBitacora[i]);
+                if (boolSyncAddProductoInversionJ3) {
+                  banderasExistoSync.add(boolSyncAddProductoInversionJ3);
+                  continue;
+                } else {
+                  //Recuperamos la instrucción que no se ejecutó
+                  banderasExistoSync.add(boolSyncAddProductoInversionJ3);
+                  final instruccionNoSincronizada = InstruccionNoSincronizada(
+                    emprendimiento: prodSolicitadoToSync.inversion.target!.emprendimiento.target!.nombre,
+                    instruccion: "Agregar Producto Inversión Jornada 3 Emi Web", 
+                    fecha: instruccionesBitacora[i].fechaRegistro);
+                  instruccionesFallidas.add(instruccionNoSincronizada);
+                  continue;
+                }
+              } else {
+                //Recuperamos la instrucción que no se ejecutó
+                banderasExistoSync.add(false);
+                final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  emprendimiento: "No encontrado",
+                  instruccion: "Agregar Producto Inversión Jornada 3 Emi Web",
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+                instruccionesFallidas.add(instruccionNoSincronizada);
+                continue;
+              }
+            } else {
+              // Ya se ha ejecutado esta instrucción en Emi Web
+              banderasExistoSync.add(true);
+              continue;
+            }
+          case "syncUpdateProductoInversionJ3":
+            print("Entro al caso de syncUpdateProductoInversionJ3 Emi Web");
+            if (!instruccionesBitacora[i].executeEmiWeb) {
+              final prodSolicitadoToSync = getFirstProdSolicitado(dataBase.productosSolicitadosBox.getAll(), instruccionesBitacora[i].id);
+              if(prodSolicitadoToSync != null){
+                //Se encontró el prod Solicitado y se puede actualizar
+                var boolSyncUpdateProductoInversionJ3 = await syncUpdateProductoInversionJ3(prodSolicitadoToSync, instruccionesBitacora[i]);
+                if (boolSyncUpdateProductoInversionJ3) {
+                  banderasExistoSync.add(boolSyncUpdateProductoInversionJ3);
+                  continue;
+                } else {
+                  //Recuperamos la instrucción que no se ejecutó
+                  banderasExistoSync.add(boolSyncUpdateProductoInversionJ3);
+                  final instruccionNoSincronizada = InstruccionNoSincronizada(
+                    emprendimiento: prodSolicitadoToSync.inversion.target!.emprendimiento.target!.nombre,
+                    instruccion: "Actualización Producto Inversión Jornada 3 Emi Web", 
+                    fecha: instruccionesBitacora[i].fechaRegistro);
+                  instruccionesFallidas.add(instruccionNoSincronizada);
+                  continue;
+                }
+              } else {
+                //Recuperamos la instrucción que no se ejecutó
+                banderasExistoSync.add(false);
+                final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  emprendimiento: "No encontrado",
+                  instruccion: "Actualización Producto Inversión Jornada 3 Emi Web",
                   fecha: instruccionesBitacora[i].fechaRegistro);
                 instruccionesFallidas.add(instruccionNoSincronizada);
                 continue;
@@ -1117,6 +1200,28 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               banderasExistoSync.add(true);
               continue;
             }
+          case "syncDeleteProductoInversionJ3":
+            print("Entro al caso de syncDeleteProductoInversionJ3 Emi Web");
+            if (!instruccionesBitacora[i].executeEmiWeb) {
+              var boolSyncDeleteProductoInversionJ3 = await syncDeleteProductoInversionJ3(instruccionesBitacora[i]);
+              if (boolSyncDeleteProductoInversionJ3) {
+                banderasExistoSync.add(boolSyncDeleteProductoInversionJ3);
+                continue;
+              } else {
+                //Recuperamos la instrucción que no se ejecutó
+                banderasExistoSync.add(boolSyncDeleteProductoInversionJ3);
+                final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  emprendimiento: instruccionesBitacora[i].emprendimiento,
+                  instruccion: "Eliminar Producto Inversión Jornada 3 Emi Web", 
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+                instruccionesFallidas.add(instruccionNoSincronizada);
+                continue;
+              }
+            } else {
+              // Ya se ha ejecutado esta instrucción en Emi Web
+              banderasExistoSync.add(true);
+              continue;
+            }
           default:
             continue;
         }
@@ -1248,6 +1353,21 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     }
     return null;
   }
+  ProdSolicitado? getFirstProdSolicitado(List<ProdSolicitado> prodSolicitado, int idInstruccionesBitacora)
+  {
+    for (var i = 0; i < prodSolicitado.length; i++) {
+      if (prodSolicitado[i].bitacora.isEmpty) {
+        
+      } else {
+        for (var j = 0; j < prodSolicitado[i].bitacora.length; j++) {
+          if (prodSolicitado[i].bitacora[j].id == idInstruccionesBitacora) {
+            return prodSolicitado[i];
+          } 
+        }
+      }
+    }
+    return null;
+  }
   Consultorias? getFirstConsultoria(List<Consultorias> consultorias, int idInstruccionesBitacora)
   {
     for (var i = 0; i < consultorias.length; i++) {
@@ -1325,7 +1445,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     }
 
 
-  Future<bool> syncAddEmprendedor(Emprendedores emprendedor, Bitacora bitacora) async {
+  Future<bool?> syncAddEmprendedor(Emprendedores emprendedor, Bitacora bitacora) async {
     print("Estoy en El syncAddEmprendedor de Emi Web");
     try {
       final emprendimientoToSync = dataBase.emprendimientosBox.get(emprendedor.emprendimiento.target!.id);
@@ -1378,6 +1498,8 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             bitacora.executeEmiWeb = true;
             dataBase.bitacoraBox.put(bitacora);
             return true;
+            case 409:
+              return null;
             default: //No se realizo con éxito el post
               print("Error en postear emprendedor Emi Web");
               return false;
@@ -1708,8 +1830,6 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             "idProyecto": jornada.emprendimiento.target!.idEmiWeb,
             "nombreEmprendimiento": jornada.emprendimiento.target!.nombre,
           }));
-          print("Respuesta Post Jornada 3");
-          print(responsePostJornada.body);
           switch (responsePostJornada.statusCode) {
             case 200:
               print("Caso 200 en Emi Web Jornada");
@@ -1742,6 +1862,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               switch (responseUpdateTipoProyectoEmprendimiento.statusCode) {
                 case 200:
                   // Tercero creamos y enviamos las imágenes de la jornada
+                  print("Caso 200 en Emi Web Actualización Tipo de Proyecto");
                   for (var i = 0; i < jornada.tarea.target!.imagenes.toList().length; i++) {
                     final crearImagenJornadaUri =
                     Uri.parse('$baseUrlEmiWebServices/documentos/crear');
@@ -1763,14 +1884,85 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     jornada.tarea.target!.imagenes.toList()[i].idEmiWeb = responsePostImagenJornadaParse.payload.idDocumento.toString();
                     dataBase.imagenesBox.put(jornada.tarea.target!.imagenes.toList()[i]);
                   }
-                  //Tercero creamos la Tarea
-                  //Se recupera el id Emi Web de la Tarea
-                  tareaToSync.idEmiWeb = idEmiWebUUid;
-                  dataBase.tareasBox.put(tareaToSync);
-                  //Se marca como realizada en EmiWeb la instrucción en Bitacora
-                  bitacora.executeEmiWeb = true;
-                  dataBase.bitacoraBox.put(bitacora);
-                  return true;
+                  // Cuarto creamos y enviamos los productos de la inversión asociada
+                  final inversionJornada3 = dataBase.inversionesBox.get(jornada.emprendimiento.target?.idInversionJornada ?? -1);
+                  if(inversionJornada3 != null) {
+                    for (var i = 0; i < inversionJornada3.prodSolicitados.toList().length; i++) {
+                      if (inversionJornada3.prodSolicitados.toList()[i].idEmiWeb == null) {
+                        if (inversionJornada3.prodSolicitados.toList()[i].imagen.target != null) {
+                          //El producto tiene imagen asociada
+                          final crearProductoProyectoUri =
+                          Uri.parse('$baseUrlEmiWebServices/productos/proyectos');
+                          final headers = ({
+                            "Content-Type": "application/json",
+                            'Authorization': 'Bearer $tokenGlobal',
+                          });
+                          final responsePostProductoProyecto = await post(crearProductoProyectoUri, 
+                          headers: headers,
+                          body: jsonEncode({
+                            "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
+                            "nombreUsuario": "${jornada.emprendimiento
+                              .target!.usuario.target!.nombre} ${jornada.emprendimiento
+                              .target!.usuario.target!.apellidoP} ${jornada.emprendimiento
+                              .target!.usuario.target!.apellidoM}",
+                            "producto": inversionJornada3.prodSolicitados.toList()[i].producto,
+                            "descripcion": inversionJornada3.prodSolicitados.toList()[i].descripcion,
+                            "marcaRecomendada": inversionJornada3.prodSolicitados.toList()[i].marcaSugerida,
+                            "cantidad": inversionJornada3.prodSolicitados.toList()[i].cantidad,
+                            "costoEstimado": inversionJornada3.prodSolicitados.toList()[i].costoEstimado,
+                            "proveedorSugerido": inversionJornada3.prodSolicitados.toList()[i].proveedorSugerido,
+                            "idProyecto": jornada.emprendimiento.target!.idEmiWeb,
+                            "idFamilia": inversionJornada3.prodSolicitados.toList()[i].familiaProducto.target!.idEmiWeb,
+                            "unidadMedida": inversionJornada3.prodSolicitados.toList()[i].tipoEmpaques.target!.idEmiWeb,
+                          }));
+                          final responsePostProductoProyectoParse = postRegistroExitosoEmiWebFromMap(
+                          const Utf8Decoder().convert(responsePostProductoProyecto.bodyBytes));
+                          inversionJornada3.prodSolicitados.toList()[i].idEmiWeb = responsePostProductoProyectoParse.payload!.id.toString();
+                          dataBase.productosSolicitadosBox.put(inversionJornada3.prodSolicitados.toList()[i]);
+                        } else {
+                          //El producto no tiene imagen asociada
+                          final crearProductoProyectoUri =
+                          Uri.parse('$baseUrlEmiWebServices/productos/proyectos');
+                          final headers = ({
+                            "Content-Type": "application/json",
+                            'Authorization': 'Bearer $tokenGlobal',
+                          });
+                          final responsePostProductoProyecto = await post(crearProductoProyectoUri, 
+                          headers: headers,
+                          body: jsonEncode({
+                            "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
+                            "nombreUsuario": "${jornada.emprendimiento
+                              .target!.usuario.target!.nombre} ${jornada.emprendimiento
+                              .target!.usuario.target!.apellidoP} ${jornada.emprendimiento
+                              .target!.usuario.target!.apellidoM}",
+                            "producto": inversionJornada3.prodSolicitados.toList()[i].producto,
+                            "descripcion": inversionJornada3.prodSolicitados.toList()[i].descripcion,
+                            "marcaRecomendada": inversionJornada3.prodSolicitados.toList()[i].marcaSugerida,
+                            "cantidad": inversionJornada3.prodSolicitados.toList()[i].cantidad,
+                            "costoEstimado": inversionJornada3.prodSolicitados.toList()[i].costoEstimado,
+                            "proveedorSugerido": inversionJornada3.prodSolicitados.toList()[i].proveedorSugerido,
+                            "idProyecto": jornada.emprendimiento.target!.idEmiWeb,
+                            "idFamilia": inversionJornada3.prodSolicitados.toList()[i].familiaProducto.target!.idEmiWeb,
+                            "unidadMedida": inversionJornada3.prodSolicitados.toList()[i].tipoEmpaques.target!.idEmiWeb,
+                          }));
+                          final responsePostProductoProyectoParse = postRegistroExitosoEmiWebFromMap(
+                          const Utf8Decoder().convert(responsePostProductoProyecto.bodyBytes));
+                          inversionJornada3.prodSolicitados.toList()[i].idEmiWeb = responsePostProductoProyectoParse.payload!.id.toString();
+                          dataBase.productosSolicitadosBox.put(inversionJornada3.prodSolicitados.toList()[i]);
+                        }
+                      }
+                    }
+                    //Se recupera el id Emi Web de la Tarea
+                    tareaToSync.idEmiWeb = idEmiWebUUid;
+                    dataBase.tareasBox.put(tareaToSync);
+                    //Se marca como realizada en EmiWeb la instrucción en Bitacora
+                    bitacora.executeEmiWeb = true;
+                    dataBase.bitacoraBox.put(bitacora);
+                    return true;
+                  } else {
+                    //No se recupera la inversión de la Jornada 3
+                    return false;
+                  }
                 default: //No se realizo con éxito el post
                   print("Error en actualizar tipo proyecto de emprendimiento");
                   return false;
@@ -1803,6 +1995,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             switch (responseUpdateTipoProyectoEmprendimiento.statusCode) {
               case 200:
                 // Tercero creamos y enviamos las imágenes de la jornada
+                 print("Caso 200 en Emi Web Actualización Tipo de Proyecto");
                 for (var i = 0; i < jornada.tarea.target!.imagenes.toList().length; i++) {
                   if (jornada.tarea.target!.imagenes.toList()[i].idEmiWeb == null) {
                     final crearImagenJornadaUri =
@@ -1826,14 +2019,87 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     dataBase.imagenesBox.put(jornada.tarea.target!.imagenes.toList()[i]);
                     }
                 }
-                //Tercero creamos la Tarea
-                //Se recupera el id Emi Web de la Tarea
-                tareaToSync.idEmiWeb = jornada.idEmiWeb;
-                dataBase.tareasBox.put(tareaToSync);
-                //Se marca como realizada en EmiWeb la instrucción en Bitacora
-                bitacora.executeEmiWeb = true;
-                dataBase.bitacoraBox.put(bitacora);
-                return true;
+                print("Se postean imagenes de jornada");
+                // Cuarto creamos y enviamos los productos de la inversión asociada
+                final inversionJornada3 = dataBase.inversionesBox.get(jornada.emprendimiento.target?.idInversionJornada ?? -1);
+                if(inversionJornada3 != null) {
+                  for (var i = 0; i < inversionJornada3.prodSolicitados.toList().length; i++) {
+                    if (inversionJornada3.prodSolicitados.toList()[i].idEmiWeb == null) {
+                      if (inversionJornada3.prodSolicitados.toList()[i].imagen.target != null) {
+                        //El producto tiene imagen asociada
+                        final crearProductoProyectoUri =
+                        Uri.parse('$baseUrlEmiWebServices/productos/proyectos');
+                        final headers = ({
+                          "Content-Type": "application/json",
+                          'Authorization': 'Bearer $tokenGlobal',
+                        });
+                        final responsePostProductoProyecto = await post(crearProductoProyectoUri, 
+                        headers: headers,
+                        body: jsonEncode({
+                          "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
+                          "nombreUsuario": "${jornada.emprendimiento
+                            .target!.usuario.target!.nombre} ${jornada.emprendimiento
+                            .target!.usuario.target!.apellidoP} ${jornada.emprendimiento
+                            .target!.usuario.target!.apellidoM}",
+                          "producto": inversionJornada3.prodSolicitados.toList()[i].producto,
+                          "descripcion": inversionJornada3.prodSolicitados.toList()[i].descripcion,
+                          "marcaRecomendada": inversionJornada3.prodSolicitados.toList()[i].marcaSugerida,
+                          "cantidad": inversionJornada3.prodSolicitados.toList()[i].cantidad,
+                          "costoEstimado": inversionJornada3.prodSolicitados.toList()[i].costoEstimado,
+                          "proveedorSugerido": inversionJornada3.prodSolicitados.toList()[i].proveedorSugerido,
+                          "idProyecto": jornada.emprendimiento.target!.idEmiWeb,
+                          "idFamilia": inversionJornada3.prodSolicitados.toList()[i].familiaProducto.target!.idEmiWeb,
+                          "unidadMedida": inversionJornada3.prodSolicitados.toList()[i].tipoEmpaques.target!.idEmiWeb,
+                        }));
+                        final responsePostProductoProyectoParse = postRegistroExitosoEmiWebFromMap(
+                        const Utf8Decoder().convert(responsePostProductoProyecto.bodyBytes));
+                        inversionJornada3.prodSolicitados.toList()[i].idEmiWeb = responsePostProductoProyectoParse.payload!.id.toString();
+                        dataBase.productosSolicitadosBox.put(inversionJornada3.prodSolicitados.toList()[i]);
+                      } else {
+                        //El producto no tiene imagen asociada
+                        final crearProductoProyectoUri =
+                        Uri.parse('$baseUrlEmiWebServices/productos/proyectos');
+                        final headers = ({
+                          "Content-Type": "application/json",
+                          'Authorization': 'Bearer $tokenGlobal',
+                        });
+                        final responsePostProductoProyecto = await post(crearProductoProyectoUri, 
+                        headers: headers,
+                        body: jsonEncode({
+                          "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
+                          "nombreUsuario": "${jornada.emprendimiento
+                            .target!.usuario.target!.nombre} ${jornada.emprendimiento
+                            .target!.usuario.target!.apellidoP} ${jornada.emprendimiento
+                            .target!.usuario.target!.apellidoM}",
+                          "producto": inversionJornada3.prodSolicitados.toList()[i].producto,
+                          "descripcion": inversionJornada3.prodSolicitados.toList()[i].descripcion,
+                          "marcaRecomendada": inversionJornada3.prodSolicitados.toList()[i].marcaSugerida,
+                          "cantidad": inversionJornada3.prodSolicitados.toList()[i].cantidad,
+                          "costoEstimado": inversionJornada3.prodSolicitados.toList()[i].costoEstimado,
+                          "proveedorSugerido": inversionJornada3.prodSolicitados.toList()[i].proveedorSugerido,
+                          "idProyecto": jornada.emprendimiento.target!.idEmiWeb,
+                          "idFamilia": inversionJornada3.prodSolicitados.toList()[i].familiaProducto.target!.idEmiWeb,
+                          "unidadMedida": inversionJornada3.prodSolicitados.toList()[i].tipoEmpaques.target!.idEmiWeb,
+                        }));
+                        print(responsePostProductoProyecto.body);
+                        final responsePostProductoProyectoParse = postRegistroExitosoEmiWebFromMap(
+                        const Utf8Decoder().convert(responsePostProductoProyecto.bodyBytes));
+                        inversionJornada3.prodSolicitados.toList()[i].idEmiWeb = responsePostProductoProyectoParse.payload!.id.toString();
+                        dataBase.productosSolicitadosBox.put(inversionJornada3.prodSolicitados.toList()[i]);
+                      }
+                    }
+                  } 
+                  //Se recupera el id Emi Web de la Tarea
+                  tareaToSync.idEmiWeb = jornada.idEmiWeb;
+                  dataBase.tareasBox.put(tareaToSync);
+                  //Se marca como realizada en EmiWeb la instrucción en Bitacora
+                  bitacora.executeEmiWeb = true;
+                  dataBase.bitacoraBox.put(bitacora);
+                  return true;
+                } else {
+                  //No se recupera la inversión de la Jornada 3
+                  return false;
+                }
               default: //No se realizo con éxito el post
                 print("Error en actualizar tipo proyecto de emprendimiento");
                 return false;
@@ -2030,6 +2296,56 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       return false;
     }
 }
+
+  Future<bool> syncAddProductoInversionJ3(ProdSolicitado prodSolicitado, Bitacora bitacora) async {
+    print("Estoy en El syncAddProductoInversionJ3() en Emi Web");
+    try {
+      // Primero creamos el API para realizar el post
+      final crearProductoProyectoUri =
+      Uri.parse('$baseUrlEmiWebServices/productos/proyectos');
+      final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+      final responsePostProductoProyecto = await post(crearProductoProyectoUri, 
+      headers: headers,
+      body: jsonEncode({
+        "idUsuario": prodSolicitado.inversion.target!.emprendimiento.target!.usuario.target!.idEmiWeb,
+        "nombreUsuario": "${prodSolicitado.inversion.target!.emprendimiento
+          .target!.usuario.target!.nombre} ${prodSolicitado.inversion.target!.emprendimiento
+          .target!.usuario.target!.apellidoP} ${prodSolicitado.inversion.target!.emprendimiento
+          .target!.usuario.target!.apellidoM}",
+        "producto": prodSolicitado.producto,
+        "descripcion": prodSolicitado.descripcion,
+        "marcaRecomendada": prodSolicitado.marcaSugerida,
+        "cantidad": prodSolicitado.cantidad,
+        "costoEstimado": prodSolicitado.costoEstimado,
+        "proveedorSugerido": prodSolicitado.proveedorSugerido,
+        "idProyecto": prodSolicitado.inversion.target!.emprendimiento.target!.idEmiWeb,
+        "idFamilia": prodSolicitado.familiaProducto.target!.idEmiWeb,
+        "unidadMedida": prodSolicitado.tipoEmpaques.target!.idEmiWeb,
+      }));
+      switch (responsePostProductoProyecto.statusCode) {
+        case 200:
+        print("Caso 200 en Emi Web Add Producto Inversion J3");
+          //Se recupera el id Emi Web
+          final responsePostProductoProyectoParse = postRegistroExitosoEmiWebFromMap(
+               const Utf8Decoder().convert(responsePostProductoProyecto.bodyBytes));
+          prodSolicitado.idEmiWeb = responsePostProductoProyectoParse.payload!.id.toString();
+          dataBase.productosSolicitadosBox.put(prodSolicitado);
+          //Se marca como realizada en EmiWeb la instrucción en Bitacora
+          bitacora.executeEmiWeb = true;
+          dataBase.bitacoraBox.put(bitacora);
+          return true;
+        default: //No se realizo con éxito el post
+          print("Error en agregar producto inversión J3 Emi Web");
+          return false;
+      }  
+    } catch (e) {
+      print('ERROR - function syncAddProductoInversionJ3(): $e');
+      return false;
+    }
+  }
 
   Future<bool> syncAddImagenJornada4(Imagenes imagen, Bitacora bitacora) async {
     print("Estoy en El syncAddImagenJornada4() en Emi Web");
@@ -3269,6 +3585,52 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     }
   }
 
+  Future<bool> syncUpdateProductoInversionJ3(ProdSolicitado prodSolicitado, Bitacora bitacora) async {
+    print("Estoy en El syncUpdateProductoInversionJ3() en Emi Web");
+    try {
+      // Primero creamos el API para realizar la actualización
+      final actualizarProductoProyectoUri =
+      Uri.parse('$baseUrlEmiWebServices/productos/proyectos');
+      final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+      final responseUpdateProductoProyecto = await put(actualizarProductoProyectoUri, 
+      headers: headers,
+      body: jsonEncode({
+        "idProductoDeProyecto": prodSolicitado.idEmiWeb,
+        "idUsuario": prodSolicitado.inversion.target!.emprendimiento.target!.usuario.target!.idEmiWeb,
+        "nombreUsuario": "${prodSolicitado.inversion.target!.emprendimiento
+          .target!.usuario.target!.nombre} ${prodSolicitado.inversion.target!.emprendimiento
+          .target!.usuario.target!.apellidoP} ${prodSolicitado.inversion.target!.emprendimiento
+          .target!.usuario.target!.apellidoM}",
+        "producto": prodSolicitado.producto,
+        "descripcion": prodSolicitado.descripcion,
+        "marcaRecomendada": prodSolicitado.marcaSugerida,
+        "cantidad": prodSolicitado.cantidad,
+        "costoEstimado": prodSolicitado.costoEstimado,
+        "proveedorSugerido": prodSolicitado.proveedorSugerido,
+        "idProyecto": prodSolicitado.inversion.target!.emprendimiento.target!.idEmiWeb,
+        "idFamilia": prodSolicitado.familiaProducto.target!.idEmiWeb,
+        "unidadMedida": prodSolicitado.tipoEmpaques.target!.idEmiWeb,
+      }));
+      switch (responseUpdateProductoProyecto.statusCode) {
+        case 200:
+        print("Caso 200 en Emi Web Update Producto Inversion J3");
+          //Se marca como realizada en EmiWeb la instrucción en Bitacora
+          bitacora.executeEmiWeb = true;
+          dataBase.bitacoraBox.put(bitacora);
+          return true;
+        default: //No se realizo con éxito el put
+          print("Error en actualizar producto inversión J3 Emi Web");
+          return false;
+      }  
+    } catch (e) {
+      print('ERROR - function syncUpdateProductoInversionJ3(): $e');
+      return false;
+    }
+  }
+
   Future<bool> syncUpdateJornada4(Jornadas jornada, Bitacora bitacora) async {
     print("Estoy en El syncUpdateJornada4() en Emi Web");
     try {
@@ -3382,6 +3744,44 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     }
   }
 
+  Future<bool> syncDeleteProductoInversionJ3(Bitacora bitacora) async {
+    print("Estoy en El syncDeleteProductoInversionJ3() en Emi Web");
+    try {
+      // Primero creamos el API para realizar la actualización
+      final eliminarProductoInversionJ3 =
+        Uri.parse('$baseUrlEmiWebServices/productos/proyectos/ids');
+      final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+      final responseDeleteProductoInversionJ3 = await put(eliminarProductoInversionJ3, 
+      headers: headers,
+      body: jsonEncode({
+        {
+          "productosProyectoDeleteRequests": [
+            {
+              "idProductoDeProyecto": bitacora.idEmiWeb
+            }
+          ]
+        }
+      }));
+      switch (responseDeleteProductoInversionJ3.statusCode) {
+        case 200:
+        print("Caso 200 en Emi Web Delete Producto Inversion J3");
+          //Se marca como realizada en EmiWeb la instrucción en Bitacora
+          bitacora.executeEmiWeb = true;
+          dataBase.bitacoraBox.put(bitacora);
+          return true;
+        default: //No se realizo con éxito el delete
+          print("Error en eliminar producto inversion J3 Emi Web");
+          return false;
+      }  
+    } catch (e) {
+      print('ERROR - function syncDeleteProductoInversionJ3(): $e');
+      return false;
+    }
+  }
+
   Future<bool> syncUpdateTareaConsultoria(Tareas tarea, Bitacora bitacora) async {
     print("Estoy en El syncUpdateTareaConsultoria de Emi Web");
     try {
@@ -3406,11 +3806,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           }));
           switch (responsePostImagenProductoEmp.statusCode) {
             case 200:
-              print("Caso 200 en Emi Web Imagen Producto Emprendedor");
+              print("Caso 200 en Emi Web Imagen Avance tarea");
               final responsePostImagenProductoEmpParse = postRegistroImagenExitosoEmiWebFromMap(
                 const Utf8Decoder().convert(responsePostImagenProductoEmp.bodyBytes));
               tarea.imagenes.first.idEmiWeb = responsePostImagenProductoEmpParse.payload.idDocumento.toString();
               dataBase.imagenesBox.put(tarea.imagenes.first);
+              // print("${responsePostImagenProductoEmpParse.payload.idDocumento.toString()}");
               // Segundo creamos la nueva tarea asociada a la consultoría
               final actualizarTareaConsultoriaUri =
                 Uri.parse('$baseUrlEmiWebServices/tareas');

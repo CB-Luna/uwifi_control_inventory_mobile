@@ -117,24 +117,13 @@ class UsuarioController extends ChangeNotifier {
     }
   }
 
-void update(int id, int newIdRol, String newNombre, String newApellidoP, String newApellidoM, String newTelefono) {
+void update(int id, int newIdRol) {
     var updateUsuario = dataBase.usuariosBox.get(id);
     if (updateUsuario != null) {
-      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateUsuario', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-      updateUsuario.nombre = newNombre;
-      updateUsuario.apellidoP = newApellidoP;
-      updateUsuario.apellidoM = newApellidoM;
-      updateUsuario.telefono = newTelefono;
       final updateRol = dataBase.rolesBox.get(newIdRol);
       if (updateRol != null) {
         updateUsuario.rol.target = updateRol; //Se actualiza el rol del Usuario
       }
-      final statusSyncUsuario = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateUsuario.statusSync.target?.id ?? -1)).build().findUnique();
-      if (statusSyncUsuario != null) {
-        statusSyncUsuario.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del usuario
-        dataBase.statusSyncBox.put(statusSyncUsuario);
-      } 
-      updateUsuario.bitacora.add(nuevaInstruccion);
       dataBase.usuariosBox.put(updateUsuario);
       print('Usuario actualizado exitosamente');
     }

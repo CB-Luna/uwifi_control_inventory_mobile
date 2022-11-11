@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'package:bizpro_app/providers/database_providers/producto_inversion_jornada_controller.dart';
 import 'package:bizpro_app/screens/jornadas/editar_jornada3_screen.dart';
 import 'package:bizpro_app/screens/jornadas/registros/agregar_producto_inversion_jornada.dart';
 import 'package:bizpro_app/screens/jornadas/registros/editar_producto_inversion_jornada.dart';
+import 'package:bizpro_app/screens/jornadas/registros/inversion_jornada3_actualizada.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -9,15 +11,19 @@ import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
 import 'package:bizpro_app/theme/theme.dart';
+import 'package:provider/provider.dart';
 
 class EditarInversionJornadaScreen extends StatefulWidget {
-  final Inversiones inversion;
+  final List<ProdSolicitado> prodSolicitados;
   final Jornadas jornada;
   final Emprendimientos emprendimiento;
+  final Inversiones inversion;
   const EditarInversionJornadaScreen({
     Key? key,
-    required this.inversion, 
-    required this.jornada, required this.emprendimiento,
+    required this.prodSolicitados, 
+    required this.jornada, 
+    required this.emprendimiento,
+    required this.inversion,
   }) : super(key: key);
 
   @override
@@ -29,7 +35,6 @@ class _EditarInversionJornadaScreenState
     extends State<EditarInversionJornadaScreen> with TickerProviderStateMixin {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   double totalProyecto = 0.0;
-  List<ProdSolicitado> prodSolicitados = [];
   
   @override
   void initState() {
@@ -39,8 +44,7 @@ class _EditarInversionJornadaScreenState
           .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
       this,
     );
-    prodSolicitados = widget.inversion.prodSolicitados.toList();
-    for (var element in prodSolicitados) {
+    for (var element in widget.prodSolicitados) {
       totalProyecto += (element.costoEstimado == null
           ? 0
           : element.costoEstimado! * element.cantidad);
@@ -49,6 +53,7 @@ class _EditarInversionJornadaScreenState
 
   @override
   Widget build(BuildContext context) {
+    final productoInversionJornadaProvider = Provider.of<ProductoInversionJornadaController>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -93,6 +98,7 @@ class _EditarInversionJornadaScreenState
                                 ),
                                 child: InkWell(
                                   onTap: () async {
+                                    productoInversionJornadaProvider.clearInformation();
                                     await Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -194,8 +200,8 @@ class _EditarInversionJornadaScreenState
                                           image: DecorationImage(
                                             fit: BoxFit.cover,
                                             image: Image.file(
-                                              File(widget.inversion.emprendimiento
-                                                  .target!.imagen.target!.path!),
+                                              File(widget.emprendimiento
+                                                  .imagen.target!.path!),
                                               fit: BoxFit.contain,
                                             ).image,
                                           ),
@@ -250,9 +256,7 @@ class _EditarInversionJornadaScreenState
                                                         children: [
                                                           Text(
                                                             widget
-                                                                .inversion
                                                                 .emprendimiento
-                                                                .target!
                                                                 .nombre,
                                                             style: AppTheme.of(
                                                                     context)
@@ -402,7 +406,7 @@ class _EditarInversionJornadaScreenState
                                                               ),
                                                             ),
                                                             Text(
-                                                              prodSolicitados
+                                                              widget.prodSolicitados
                                                                   .length
                                                                   .toString(),
                                                               style: AppTheme.of(
@@ -477,8 +481,20 @@ class _EditarInversionJornadaScreenState
                                                   MaterialPageRoute(
                                                     builder: (context) =>
                                                         AgregarProductoInversionJornadaScreen(
-                                                      idInversion:
-                                                          widget.inversion.id,
+                                                          emprendimiento: 
+                                                              widget.emprendimiento,
+                                                          jornada: 
+                                                              widget.jornada,
+                                                          inversion: 
+                                                              widget.inversion,
+                                                          emprendedor: 
+                                                              "${widget.emprendimiento
+                                                                .emprendedor.target!.nombre} ${widget
+                                                                .emprendimiento.emprendedor
+                                                                .target!.apellidos}",
+                                                          porcentajePago:
+                                                              widget.inversion
+                                                              .porcentajePago.toString(),
                                                     ),
                                                   ),
                                                 );
@@ -520,10 +536,10 @@ class _EditarInversionJornadaScreenState
                                             padding: EdgeInsets.zero,
                                             shrinkWrap: true,
                                             scrollDirection: Axis.vertical,
-                                            itemCount: prodSolicitados.length,
+                                            itemCount: widget.prodSolicitados.length,
                                             itemBuilder: (context, index) {
                                               final prodSolicitado =
-                                                  prodSolicitados[index];
+                                                  widget.prodSolicitados[index];
                                               return InkWell(
                                                 onTap: () async {
                                                   await Navigator.push(
@@ -535,7 +551,9 @@ class _EditarInversionJornadaScreenState
                                                                   prodSolicitado, 
                                                               jornada: 
                                                                   widget.jornada,
-                                                              emprendimientoActual: widget.emprendimiento,),
+                                                              emprendimientoActual: widget.emprendimiento,
+                                                              inversion: 
+                                                                  widget.inversion,),
                                                     ),
                                                   );
                                                 },
@@ -650,7 +668,7 @@ class _EditarInversionJornadaScreenState
                                                                                 ),
                                                                           ),
                                                                            Text(
-                                                                            prodSolicitado.unidadMedida.target?.unidadMedida ?? "SIN TIPO EMPAQUE",
+                                                                            prodSolicitado.tipoEmpaques.target?.tipo ?? "SIN TIPO EMPAQUE",
                                                                             style: AppTheme.of(context)
                                                                                 .subtitle1
                                                                                 .override(
@@ -752,6 +770,49 @@ class _EditarInversionJornadaScreenState
                                           );
                                         },
                                       ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            0, 20, 0, 10),
+                                        child: FFButtonWidget(
+                                          onPressed: () async {
+                                            productoInversionJornadaProvider
+                                              .updateProductosInversionJ3(widget.inversion);
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    InversionJornada3Actualizada(idEmprendimiento: widget.emprendimiento.id,),
+                                              ),
+                                            );
+                                          },
+                                          text: 'Actualizar',
+                                          icon: const Icon(
+                                            Icons.check_rounded,
+                                            size: 15,
+                                          ),
+                                          options: FFButtonOptions(
+                                            width: 130,
+                                            height: 40,
+                                            color: AppTheme.of(context).secondaryText,
+                                            textStyle: AppTheme.of(context)
+                                                .subtitle2
+                                                .override(
+                                                  fontFamily:
+                                                      AppTheme.of(context).subtitle2Family,
+                                                  color: Colors.white,
+                                                  fontSize: 15,
+                                                ),
+                                            borderSide: const BorderSide(
+                                              color: Colors.transparent,
+                                              width: 1,
+                                            ),
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 40,
+                                      )
                                     ],
                                   ),
                                 ).animated([

@@ -1054,7 +1054,7 @@ Future<bool> getProductosProv() async {
           //Se valida que el nuevo producto proyecto aún no existe en Objectbox
           final catalogoProyecto = dataBase.catalogoProyectoBox.query(CatalogoProyecto_.idDBR.equals(listProdProyecto[i].idCatalogoProyectoFk)).build().findUnique();
           final familiaProd = dataBase.familiaProductosBox.query(FamiliaProd_.idDBR.equals(listProdProyecto[i].idFamiliaProdFk)).build().findUnique();
-          final unidadMedida = dataBase.unidadesMedidaBox.query(UnidadMedida_.idDBR.equals(listProdProyecto[i].idUnidadMedidaFk)).build().findUnique();
+          final tipoEmpaque = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idDBR.equals(listProdProyecto[i].idTipoEmpaqueFk)).build().findUnique();
           final productoProyectoExistente = dataBase.productosProyectoBox.query(ProdProyecto_.idDBR.equals(listProdProyecto[i].id)).build().findUnique();
           if (productoProyectoExistente == null) {
             if (listProdProyecto[i].id.isNotEmpty) {
@@ -1070,10 +1070,10 @@ Future<bool> getProductosProv() async {
                 idEmiWeb: listProdProyecto[i].idEmiWeb,
                 );
               if (catalogoProyecto != null && familiaProd != null
-                  && unidadMedida != null) {
+                  && tipoEmpaque != null) {
                 nuevoProductoProyecto.catalogoProyecto.target = catalogoProyecto;
                 nuevoProductoProyecto.familiaProducto.target = familiaProd;
-                nuevoProductoProyecto.unidadMedida.target = unidadMedida;
+                nuevoProductoProyecto.tipoEmpaque.target = tipoEmpaque;
                 //Se agrega desde catálogo proyecto para visualizarlo en pantallas
                 catalogoProyecto.prodProyecto.add(nuevoProductoProyecto);
                 dataBase.catalogoProyectoBox.put(catalogoProyecto);
@@ -1087,7 +1087,7 @@ Future<bool> getProductosProv() async {
             //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
             if (productoProyectoExistente.fechaRegistro != listProdProyecto[i].updated) {
               if (catalogoProyecto != null && familiaProd != null
-                  && unidadMedida != null) {
+                  && tipoEmpaque != null) {
                 //Se actualiza el registro en Objectbox
                 productoProyectoExistente.producto = listProdProyecto[i].producto;
                 productoProyectoExistente.marcaSugerida = listProdProyecto[i].marcaSugerida;
@@ -1098,7 +1098,7 @@ Future<bool> getProductosProv() async {
                 productoProyectoExistente.costoEstimado = listProdProyecto[i].costoEstimado;
                 productoProyectoExistente.catalogoProyecto.target = catalogoProyecto;
                 productoProyectoExistente.familiaProducto.target = familiaProd;
-                productoProyectoExistente.unidadMedida.target = unidadMedida;
+                productoProyectoExistente.tipoEmpaque.target = tipoEmpaque;
                 dataBase.productosProyectoBox.put(productoProyectoExistente);
               }
               else {
