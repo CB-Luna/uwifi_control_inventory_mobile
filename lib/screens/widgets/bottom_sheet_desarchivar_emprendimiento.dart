@@ -1,20 +1,24 @@
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:bizpro_app/screens/archivados/archivados_screen.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-import '../emprendimientos/emprendimiento_archivado_screen.dart';
+import '../archivados/emprendimiento_desarchivado_screen.dart';
+import '../emprendimientos/emprendimientos_screen.dart';
 import 'flutter_flow_widgets.dart';
 
-class BottomSheetArchivarWidget extends StatefulWidget {
+class BottomSheetDesarchivarWidget extends StatefulWidget {
   final bool isVisible;
-  const BottomSheetArchivarWidget({Key? key, required this.isVisible}) : super(key: key);
+  const BottomSheetDesarchivarWidget({Key? key, required this.isVisible}) : super(key: key);
 
   @override
-  State<BottomSheetArchivarWidget> createState() => _BottomSheetArchivarWidgetState();
+  State<BottomSheetDesarchivarWidget> createState() => _BottomSheetDesarchivarWidgetState();
 }
 
-class _BottomSheetArchivarWidgetState extends State<BottomSheetArchivarWidget> {
+class _BottomSheetDesarchivarWidgetState extends State<BottomSheetDesarchivarWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -57,7 +61,7 @@ class _BottomSheetArchivarWidgetState extends State<BottomSheetArchivarWidget> {
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                               child: Text(
-                                '¿Estás seguro que desea archivar el registro?',
+                                '¿Estás seguro que desea dearchivar el registro?',
                                 textAlign: TextAlign.center,
                                 style: AppTheme.of(context).title2.override(
                                   fontFamily: AppTheme.of(context).title2Family,
@@ -76,7 +80,7 @@ class _BottomSheetArchivarWidgetState extends State<BottomSheetArchivarWidget> {
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(0,8,0,0),
                               child: Text(
-                                'El registro seleccionado sera archivado',
+                                'El registro seleccionado sera desarchivado',
                                 textAlign: TextAlign.center,
                                 style: AppTheme.of(context).bodyText2.override(
                                   fontFamily: 
@@ -144,11 +148,11 @@ class _BottomSheetArchivarWidgetState extends State<BottomSheetArchivarWidget> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          const EmprendimientoArchivadoScreen(),
+                                          const EmprendimientoDesarchivadoScreen(),
                                     ),
                                   );
                                 },
-                                text: 'ARCHIVAR',
+                                text: 'DESARCHIVAR',
                                 options: FFButtonOptions(
                                   width: 150,
                                   height: 50,
