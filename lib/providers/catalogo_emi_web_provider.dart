@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_ambito_consultoria_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_area_circulo_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_bancos_emi_web.dart';
@@ -9,6 +10,7 @@ import 'package:bizpro_app/modelsEmiWeb/get_condiciones_pago_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_estado_inversiones_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_familia_producto_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_fase_emprendimiento_emi_web.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_imagen_usuario_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_porcentaje_avance_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_prod_proyecto_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_productos_prov_by_id_emi_web.dart';
@@ -18,11 +20,14 @@ import 'package:bizpro_app/modelsEmiWeb/get_proveedores_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_tipo_empaques_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_tipo_tipo_proveedor_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_unidad_medida_emi_web.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_usuario_completo_emi_web.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_usuario_emi_web.dart';
 import 'package:bizpro_app/modelsPocketbase/get_catalogo_proyectos.dart';
 import 'package:bizpro_app/modelsPocketbase/get_comunidades.dart';
 import 'package:bizpro_app/modelsPocketbase/get_estados.dart';
 import 'package:bizpro_app/modelsPocketbase/get_municipios.dart';
 import 'package:bizpro_app/modelsPocketbase/get_tipo_proyecto.dart';
+import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 
@@ -49,6 +54,7 @@ import 'package:bizpro_app/modelsPocketbase/get_fases_emp.dart';
 import 'package:bizpro_app/modelsPocketbase/get_tipo_empaques.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 class CatalogoEmiWebProvider extends ChangeNotifier {
 
@@ -58,6 +64,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
   String tokenGlobal = "";
   List<bool> banderasExistoSync = [];
   bool exitoso = true;
+  bool usuarioExit = false;
 
   void procesoCargando(bool boleano) {
     procesocargando = boleano;
@@ -96,6 +103,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
       banderasExistoSync.add(await getProveedoresArchivados());
       banderasExistoSync.add(await getProductosProv());
       banderasExistoSync.add(await getProdProyecto());
+      banderasExistoSync.add(await getInfoUsuarioPerfil());
       for (var element in banderasExistoSync) {
         //Aplicamos una operación and para validar que no haya habido un catálogo con False
         exitoso = exitoso && element;
@@ -220,6 +228,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
               }
             }
           }
+          print("Exito 1");
           return true;
         case 401: //Error de Token incorrecto
           if(await getTokenOAuth()) {
@@ -302,6 +311,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
               }
             }
           }
+          print("Exito 2");
           return true;
         case 401: //Error de Token incorrecto
           if(await getTokenOAuth()) {
@@ -384,6 +394,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                 }
               }   
           }
+          print("Exito 3");
           return true;
         case 401: //Error de Token incorrecto
           if(await getTokenOAuth()) {
@@ -456,6 +467,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
               }
             }
           }
+          print("Exito 4");
           return true;
         case 401: //Error de Token incorrecto
           if(await getTokenOAuth()) {
@@ -538,6 +550,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
               }
             }
           }
+          print("Exito 5");
           return true;
         case 401: //Error de Token incorrecto
           if(await getTokenOAuth()) {
@@ -610,6 +623,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
               }
             }
           }
+          print("Exito 6");
           return true;
         case 401: //Error de Token incorrecto
           if(await getTokenOAuth()) {
@@ -682,6 +696,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
               }
             }
           }
+          print("Exito 7");
           return true;
         case 401: //Error de Token incorrecto
           if(await getTokenOAuth()) {
@@ -754,6 +769,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
               }
             }
           }
+          print("Exito 8");
           return true;
         case 401: //Error de Token incorrecto
           if(await getTokenOAuth()) {
@@ -826,6 +842,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
               }
             }
           }
+          print("Exito 9");
           return true;
         case 401: //Error de Token incorrecto
           if(await getTokenOAuth()) {
@@ -896,6 +913,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
               }
             }
           }
+          print("Exito 10");
           return true;
         case 401: //Error de Token incorrecto
           if(await getTokenOAuth()) {
@@ -965,6 +983,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
               }
             }
           }
+          print("Exito 11");
           return true;
         case 401: //Error de Token incorrecto
           if(await getTokenOAuth()) {
@@ -1034,6 +1053,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
               }
             }
           }
+          print("Exito 12");
           return true;
         case 401: //Error de Token incorrecto
           if(await getTokenOAuth()) {
@@ -1105,6 +1125,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
               }
             }
           }
+          print("Exito 13");
           return true;
         case 401: //Error de Token incorrecto
           if(await getTokenOAuth()) {
@@ -1176,6 +1197,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
               }
             }
           }
+          print("Exito 14");
           return true;
         case 401: //Error de Token incorrecto
           if(await getTokenOAuth()) {
@@ -1247,6 +1269,7 @@ Future<bool> getBancos() async {
               }
             }
           }
+          print("Exito 15");
           return true;
         case 401: //Error de Token incorrecto
           if(await getTokenOAuth()) {
@@ -1316,6 +1339,7 @@ Future<bool> getPorcentajeAvance() async {
               }
             }
           }
+          print("Exito 16");
           return true;
         case 401: //Error de Token incorrecto
           if(await getTokenOAuth()) {
@@ -1457,6 +1481,7 @@ Future<bool> getProveedoresNoArchivados() async {
               return false;
             }
           }
+          print("Exito 17");
           return true;
         case 401: //Error de Token incorrecto
           if(await getTokenOAuth()) {
@@ -1599,6 +1624,7 @@ Future<bool> getProveedoresArchivados() async {
               return false;
             }
           }
+          print("Exito 18");
           return true;
         case 401: //Error de Token incorrecto
           if(await getTokenOAuth()) {
@@ -1666,7 +1692,7 @@ Future<bool> getProductosProv() async {
                   batch: 200, 
                   filter: "id_emi_web='${responseProductoProveedor.payload!.idCatTipoProducto}'");
                 final recordUnidadMedida = await client.records.getFullList(
-                  'tipo_empaques', 
+                  'und_medida', 
                   batch: 200, 
                   filter: "id_emi_web='${responseProductoProveedor.payload!.idUnidadMedida}'");
                 if (recordProveedor.isNotEmpty && recordFamiliaProd.isNotEmpty 
@@ -1676,7 +1702,7 @@ Future<bool> getProductosProv() async {
                     "nombre_prod_prov": responseProductoProveedor.payload!.producto,
                     "descripcion_prod_prov": responseProductoProveedor.payload!.descripcion,
                     "marca": responseProductoProveedor.payload!.marca,
-                    "id_tipo_empaque_fk": recordUnidadMedida.first.id,
+                    "id_und_medida_fk": recordUnidadMedida.first.id,
                     "costo_prod_prov": responseProductoProveedor.payload!.costoUnidadMedida,
                     "id_proveedor_fk": recordProveedor.first.id,
                     "id_familia_prod_fk": recordFamiliaProd.first.id,
@@ -1734,6 +1760,7 @@ Future<bool> getProductosProv() async {
               return false;
             }
           }
+          print("Exito 19");
           return true;
         case 401: //Error de Token incorrecto
           if(await getTokenOAuth()) {
@@ -1869,6 +1896,7 @@ Future<bool> getProductosProv() async {
               return false;
             }
           }
+          print("Exito 20");
           return true;
         case 401: //Error de Token incorrecto
           if(await getTokenOAuth()) {
@@ -1887,4 +1915,221 @@ Future<bool> getProductosProv() async {
       return false;
     }
     }
+  
+  //Función para recuperar el catálogo de productos del proyecto desde Emi Web 
+  Future<bool> getInfoUsuarioPerfil() async {
+    try {
+      print("Sin entro a Usuario: ${prefs.getString("userId")}");
+      //Se recupera la información básica del usuario desde Emi Web
+      var urlGetUsuarioBasico = Uri.parse("$baseUrlEmiWebServices/usuarios?correo=${prefs.getString("userId")}");
+      final headers = ({
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $tokenGlobal',
+        });
+      var responseGetUsuarioDataBasico = await get(
+        urlGetUsuarioBasico,
+        headers: headers
+      );
+      print("${responseGetUsuarioDataBasico.body}");
+      print("${responseGetUsuarioDataBasico.statusCode}");
+      switch (responseGetUsuarioDataBasico.statusCode) {
+        case 200: //Caso éxitoso
+        print("Primer caso éxitoso");
+          final responseGetUsuarioDataBasicoParse = getUsuarioEmiWebFromMap(
+          const Utf8Decoder().convert(responseGetUsuarioDataBasico.bodyBytes));
+        print("Hola");
+          var urlGetUsuarioDataCompleto = Uri.parse("$baseUrlEmiWebServices/usuarios/registro/${responseGetUsuarioDataBasicoParse.payload!.idUsuario}");
+          final headers = ({
+              "Content-Type": "application/json",
+              'Authorization': 'Bearer $tokenGlobal',
+            });
+          var responseGetUsuarioDataCompleto = await http.get(
+            urlGetUsuarioDataCompleto,
+            headers: headers
+          );
+          print("${responseGetUsuarioDataCompleto.statusCode}");
+          print("${responseGetUsuarioDataCompleto.body}");
+          switch (responseGetUsuarioDataCompleto.statusCode) {
+            case 200: //Caso éxitoso
+                print("Segundo caso éxitoso");
+                final responseGetUsuarioDataCompletoParse = getUsuarioCompletoEmiWebFromMap(
+                  const Utf8Decoder().convert(responseGetUsuarioDataCompleto.bodyBytes));
+                List<String> listRoles = [];
+                //Se recuperan los id Emi Web de los roles del Usuario
+                for (var i = 0; i < responseGetUsuarioDataCompletoParse.payload!.tiposUsuario!.length; i++) {
+                  final rol = dataBase.rolesBox.query(Roles_.idEmiWeb.equals(responseGetUsuarioDataCompletoParse.payload!.tiposUsuario![i].idCatRoles.toString())).build().findUnique();
+                  if (rol != null) {
+                    if (rol.rol != "Staff Logística" && rol.rol != "Staff Dirección") {
+                      listRoles.add(rol.idDBR!);
+                    }
+                  } 
+                }
+                if(listRoles.isEmpty || responseGetUsuarioDataBasicoParse.payload!.archivado == true) {
+                  usuarioExit = true;
+                } 
+                //Se recupera al usuario
+                final updateUsuario = dataBase.usuariosBox.query(Usuarios_.idEmiWeb.equals(responseGetUsuarioDataBasicoParse.payload!.idUsuario.toString())).build().findUnique();
+                if (updateUsuario != null) {
+                  //Se recupera la imagen del Usuario
+                  if(responseGetUsuarioDataCompletoParse.payload!.idDocumento == 0) {
+                    print("No hay imagen asociada");
+                    //No hay imagen nueva asociada al usuario
+                    if (updateUsuario.imagen.target!.idDBR == null) {
+                      print("No había imagen previa");
+                      //Se actualiza Usuario emi_users nuevo en colección de pocketbase
+                      final updateRecordEmiUser = await client.records.update('emi_users', updateUsuario.idDBR.toString(), body: {
+                        "nombre_usuario": responseGetUsuarioDataCompletoParse.payload!.nombre,
+                        "apellido_p": responseGetUsuarioDataCompletoParse.payload!.apellidoPaterno,
+                        "apellido_m": responseGetUsuarioDataCompletoParse.payload!.apellidoMaterno,
+                        "telefono": responseGetUsuarioDataCompletoParse.payload!.telefono != "Vacío" ? responseGetUsuarioDataCompletoParse.payload!.telefono : "",
+                        "celular": responseGetUsuarioDataCompletoParse.payload!.celular != "Vacío" ? responseGetUsuarioDataCompletoParse.payload!.telefono : "",
+                        "id_roles_fk": listRoles,
+                        "id_status_sync_fk": "xx5X7zjT7DhRA8a",
+                        "archivado": responseGetUsuarioDataBasicoParse.payload!.archivado,
+                      });
+                      if (updateRecordEmiUser.id.isNotEmpty) {
+                        // Usuario actualizado éxitosamente en Pocketbase
+                        print("éxito en la actualización Usuario Pocketbase");
+                        return true;
+                      } else {
+                        // Usuario Emi Web no actualizado éxitosamente en Pocketbase
+                        print("no éxito en la actualización Usuario Pocketbase");
+                        return false;
+                      }
+                    } else {
+                      print("Ya había imagen previa");
+                      //Se actualiza Usuario emi_users nuevo en colección de pocketbase
+                      final updateRecordEmiUser = await client.records.update('emi_users', updateUsuario.idDBR.toString(), body: {
+                        "nombre_usuario": responseGetUsuarioDataCompletoParse.payload!.nombre,
+                        "apellido_p": responseGetUsuarioDataCompletoParse.payload!.apellidoPaterno,
+                        "apellido_m": responseGetUsuarioDataCompletoParse.payload!.apellidoMaterno,
+                        "telefono": responseGetUsuarioDataCompletoParse.payload!.telefono != "Vacío" ? responseGetUsuarioDataCompletoParse.payload!.telefono : "",
+                        "celular": responseGetUsuarioDataCompletoParse.payload!.celular != "Vacío" ? responseGetUsuarioDataCompletoParse.payload!.telefono : "",
+                        "id_roles_fk": listRoles,
+                        "id_status_sync_fk": "xx5X7zjT7DhRA8a",
+                        "id_imagen_fk": "",
+                        "archivado": responseGetUsuarioDataBasicoParse.payload!.archivado,
+                      });
+                      if (updateRecordEmiUser.id.isNotEmpty) {
+                        // Usuario actualizado éxitosamente en Pocketbase
+                        //Se elimina la imagen de Pocketbase anterior
+                        await client.records.delete('imagenes', '${updateUsuario.imagen.target!.idDBR}');
+                        return true;
+                      } else {
+                        // Usuario Emi Web no actualizado éxitosamente en Pocketbase
+                        return false;
+                      }
+                    }
+                  } else {
+                    print("Si hay imagen asociada");
+                    //Si hay imagen asociada al usuario
+                    print("ID Documento: ${responseGetUsuarioDataCompletoParse.payload!.idDocumento}");
+                    var url = Uri.parse("$baseUrlEmiWebServices/documentos?id=${responseGetUsuarioDataCompletoParse.payload!.idDocumento}");
+                    final headers = ({
+                        "Content-Type": "application/json",
+                        'Authorization': 'Bearer $tokenGlobal',
+                      });
+                    var responseImagenUsuario = await get(
+                      url,
+                      headers: headers
+                    );
+                    print("${responseImagenUsuario.body}");
+                    print("${responseImagenUsuario.statusCode}");
+                    switch (responseImagenUsuario.statusCode) {
+                      case 200: //Caso éxitoso
+                        print("Hay imagen éxitoso");
+                        final responseImagenUsuarioEmiWeb = getImagenUsuarioEmiWebFromMap(
+                          const Utf8Decoder().convert(responseImagenUsuario.bodyBytes));
+                        if(updateUsuario.imagen.target!.idDBR == null) {
+                          // Se crea la imagen
+                          print("Se crea imagen");
+                          final newRecordImagenUsuario = await client.records.create('imagenes', body: {
+                            "nombre": responseImagenUsuarioEmiWeb.payload!.nombreArchivo,
+                            "id_emi_web": responseImagenUsuarioEmiWeb.payload!.idUsuario.toString(),
+                            "base64": responseImagenUsuarioEmiWeb.payload!.archivo
+                          });
+                          if (newRecordImagenUsuario.id.isNotEmpty) {
+                            //Se actualiza Usuario emi_users nuevo en colección de pocketbase
+                            final updateRecordEmiUser = await client.records.update('emi_users', updateUsuario.idDBR.toString(), body: {
+                              "nombre_usuario": responseGetUsuarioDataCompletoParse.payload!.nombre,
+                              "apellido_p": responseGetUsuarioDataCompletoParse.payload!.apellidoPaterno,
+                              "apellido_m": responseGetUsuarioDataCompletoParse.payload!.apellidoMaterno,
+                              "telefono": responseGetUsuarioDataCompletoParse.payload!.telefono != "Vacío" ? responseGetUsuarioDataCompletoParse.payload!.telefono : "",
+                              "celular": responseGetUsuarioDataCompletoParse.payload!.celular != "Vacío" ? responseGetUsuarioDataCompletoParse.payload!.telefono : "",
+                              "id_roles_fk": listRoles,
+                              "id_status_sync_fk": "xx5X7zjT7DhRA8a",
+                              "archivado": responseGetUsuarioDataBasicoParse.payload!.archivado,
+                              "id_imagen_fk": newRecordImagenUsuario.id,
+                            });
+                            if (updateRecordEmiUser.id.isNotEmpty) {
+                              // Usuario actualizado éxitosamente en Pocketbase
+                              return true;
+                            } else {
+                              // Usuario Emi Web no actualizado éxitosamente en Pocketbase
+                              return false;
+                            }
+                          } else {
+                            // Imagen usuario Emi Web no agregado éxitosamente en Pocketbase
+                            return false;
+                          }
+                        } else {
+                          // Se actualiza la imagen
+                          print("Se actualiza imagen");
+                          print("${updateUsuario.imagen.target!.idDBR.toString()}");
+                          final updateRecordImagenUsuario = await client.records.update('imagenes', updateUsuario.imagen.target!.idDBR.toString(), body: {
+                            "nombre": responseImagenUsuarioEmiWeb.payload!.nombreArchivo,
+                            "id_emi_web": responseImagenUsuarioEmiWeb.payload!.idUsuario.toString(),
+                            "base64": responseImagenUsuarioEmiWeb.payload!.archivo
+                          });
+                          if (updateRecordImagenUsuario.id.isNotEmpty) {
+                            //Se actualiza Usuario emi_users nuevo en colección de pocketbase
+                            final updateRecordEmiUser = await client.records.update('emi_users', updateUsuario.idDBR.toString(), body: {
+                              "nombre_usuario": responseGetUsuarioDataCompletoParse.payload!.nombre,
+                              "apellido_p": responseGetUsuarioDataCompletoParse.payload!.apellidoPaterno,
+                              "apellido_m": responseGetUsuarioDataCompletoParse.payload!.apellidoMaterno,
+                              "telefono": responseGetUsuarioDataCompletoParse.payload!.telefono != "Vacío" ? responseGetUsuarioDataCompletoParse.payload!.telefono : "",
+                              "celular": responseGetUsuarioDataCompletoParse.payload!.celular != "Vacío" ? responseGetUsuarioDataCompletoParse.payload!.telefono : "",
+                              "id_roles_fk": listRoles,
+                              "id_status_sync_fk": "xx5X7zjT7DhRA8a",
+                              "archivado": responseGetUsuarioDataBasicoParse.payload!.archivado,
+                              "id_imagen_fk": updateRecordImagenUsuario.id,
+                            });
+                            if (updateRecordEmiUser.id.isNotEmpty) {
+                              // Usuario actualizado éxitosamente en Pocketbase
+                              print("Exito 21");
+                              return true;
+                            } else {
+                              // Usuario Emi Web no actualizado éxitosamente en Pocketbase
+                              return false;
+                            }
+                          } else {
+                            // Imagen usuario Emi Web no agregado éxitosamente en Pocketbase
+                            return false;
+                          }
+                        }
+                      default:
+                        // No se recuperó la imagen del usuario en Emi Web
+                        return false;
+                    }
+                  }       
+                } else {
+                  // No se encontró al usuario en ObjectBox
+                  return false;
+                }  
+              default:
+                // No se recuperaron los datos completos del usuario
+                return false;
+          }
+        default:
+          // No se recuperaron los datos básicos del usuario
+          return false;
+      }
+    } catch (e) {
+      print("Error en getInfoUsuarioPerfil: $e");
+      return false;
+    }
+    }
+
 }
+
+

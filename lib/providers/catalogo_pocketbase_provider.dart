@@ -1,14 +1,21 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/modelsPocketbase/get_bancos.dart';
 import 'package:bizpro_app/modelsPocketbase/get_condiciones_pago.dart';
+import 'package:bizpro_app/modelsPocketbase/get_imagen_usuario.dart';
 import 'package:bizpro_app/modelsPocketbase/get_porcentaje_avance.dart';
 import 'package:bizpro_app/modelsPocketbase/get_prod_proyecto.dart';
 import 'package:bizpro_app/modelsPocketbase/get_productos_prov.dart';
 import 'package:bizpro_app/modelsPocketbase/get_proveedores.dart';
 import 'package:bizpro_app/modelsPocketbase/get_tipo_proveedor.dart';
+import 'package:bizpro_app/modelsPocketbase/update_emi_user_pocketbase.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'package:bizpro_app/modelsPocketbase/get_tipo_proyecto.dart';
 import 'package:bizpro_app/modelsPocketbase/get_comunidades.dart';
@@ -25,12 +32,12 @@ import 'package:bizpro_app/modelsPocketbase/get_tipo_empaques.dart';
 import '../objectbox.g.dart';
 
 class CatalogoPocketbaseProvider extends ChangeNotifier {
-
   bool procesocargando = false;
   bool procesoterminado = false;
   bool procesoexitoso = false;
   List<bool> banderasExistoSync = [];
   bool exitoso = true;
+  bool usuarioExit = false;
 
   void procesoCargando(bool boleano) {
     procesocargando = boleano;
@@ -67,6 +74,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
     banderasExistoSync.add(await getProveedores());
     banderasExistoSync.add(await getProductosProv());
     banderasExistoSync.add(await getProdProyecto());
+    banderasExistoSync.add(await getInfoUsuarioPerfil());
     for (var element in banderasExistoSync) {
       //Aplicamos una operación and para validar que no haya habido un catálogo con False
       exitoso = exitoso && element;
@@ -1113,6 +1121,107 @@ Future<bool> getProductosProv() async {
         return false;
       }
     } catch (e) {
+      return false;
+    }
+  }
+
+//Función para recuperar el catálogo de productos proyecto desde Pocketbase
+  Future<bool> getInfoUsuarioPerfil() async {
+    try {
+      // Se recupera el usuario por id
+      final updateUsuario = dataBase.usuariosBox.query(Usuarios_.correo.equals("${prefs.getString("userId")}")).build().findUnique();
+      if (updateUsuario != null) {
+        final recordUsuario = await client.records.
+          getFullList('emi_users', batch: 200,
+           filter: "id='${updateUsuario.idDBR}'");
+        if (recordUsuario.isNotEmpty) {
+            final usuario = updateEmiUserPocketbaseFromMap(recordUsuario.first.toString());
+            updateUsuario.nombre = usuario.nombreUsuario;
+            updateUsuario.apellidoP = usuario.apellidoP;
+            updateUsuario.apellidoM = usuario.apellidoM;
+            updateUsuario.telefono = usuario.telefono;
+            updateUsuario.celular = usuario.celular;
+            updateUsuario.archivado = usuario.archivado;
+            //Se agregan los roles actualizados
+            updateUsuario.roles.clear();
+            for (var i = 0; i < usuario.idRolesFk.length; i++) {
+              final nuevoRol = dataBase.rolesBox.query(Roles_.idDBR.equals(usuario.idRolesFk[i])).build().findUnique(); //Se recupera el rol del Usuario
+              if (nuevoRol != null) {
+                updateUsuario.roles.add(nuevoRol);
+              }
+            } 
+            if (usuario.idImagenFk != "") {
+              print("Id Imagen Usuario: ${usuario.idImagenFk}");
+              final recordImagen = await client.records.
+                getFullList('imagenes', batch: 200,
+                filter: "id='${usuario.idImagenFk}'");
+              if (recordImagen.isNotEmpty) {
+                if (updateUsuario.imagen.target!.idDBR == null) {
+                  print("Se agrega imagen Pocketbase");
+                  // Se agrega nueva imagen
+                  final imagenUsuarioPocketbase = getImagenUsuarioFromMap(recordImagen[0].toString());
+                  final uInt8ListImagen = base64Decode(imagenUsuarioPocketbase.base64);
+                  final tempDir = await getTemporaryDirectory();
+                  File file = await File('${tempDir.path}/${imagenUsuarioPocketbase.nombre}').create();
+                  file.writeAsBytesSync(uInt8ListImagen);
+                  final nuevaImagenUsuario = Imagenes(
+                    imagenes: file.path,
+                    nombre: imagenUsuarioPocketbase.nombre,
+                    path: file.path,
+                    base64: imagenUsuarioPocketbase.base64,
+                    idEmiWeb: imagenUsuarioPocketbase.idEmiWeb,
+                    idDBR: imagenUsuarioPocketbase.id,
+                  ); 
+                  nuevaImagenUsuario.usuario.target = updateUsuario;
+                  dataBase.imagenesBox.put(nuevaImagenUsuario);
+                  updateUsuario.imagen.target = nuevaImagenUsuario;
+                } else {
+                  print("Se actualiza imagen Pocketbase");
+                  // Se actualiza imagen
+                  final imagenUsuarioPocketbase = getImagenUsuarioFromMap(recordImagen[0].toString());
+                  final uInt8ListImagen = base64Decode(imagenUsuarioPocketbase.base64);
+                  final tempDir = await getTemporaryDirectory();
+                  File file = await File('${tempDir.path}/${imagenUsuarioPocketbase.nombre}').create();
+                  file.writeAsBytesSync(uInt8ListImagen);
+                  updateUsuario.imagen.target!.imagenes = file.path;
+                  updateUsuario.imagen.target!.nombre = imagenUsuarioPocketbase.nombre;
+                  updateUsuario.imagen.target!.path = file.path;
+                  updateUsuario.imagen.target!.base64 = imagenUsuarioPocketbase.base64;
+                  dataBase.imagenesBox.put(updateUsuario.imagen.target!);
+                }
+              } else {
+                // No se encontró imagen en Pocketbase
+                print("No se encontro imagen en Pocketbase");
+                return false;
+              }
+            } else {
+              if (updateUsuario.imagen.target!.idDBR != null) {
+                // Se eliminan los datos de la imagen actual del usuario
+                updateUsuario.imagen.target!.imagenes = "";
+                updateUsuario.imagen.target!.nombre = null;
+                updateUsuario.imagen.target!.path = null;
+                updateUsuario.imagen.target!.base64 = null;
+                updateUsuario.imagen.target!.idDBR = null;
+                updateUsuario.imagen.target!.idEmiWeb = null;
+                updateUsuario.imagen.target!.fechaRegistro = DateTime.now();
+                dataBase.imagenesBox.put(updateUsuario.imagen.target!);
+              }
+            }
+            // Se actualiza el usuario con éxito
+            dataBase.usuariosBox.put(updateUsuario); 
+            return true;
+        } else {
+          // No se encontro al usuario en pocketbase
+          print("No se encontro usuario en Pocketbase");
+          return false;
+        }
+      } else {
+        // No se encontró el usuario a actualizar en ObjectBox
+        print("No se encontro usuario en ObjectBox");
+        return false;
+      }
+    } catch (e) {
+      print("Catch error Pocketbase Info usuario: $e");
       return false;
     }
   }

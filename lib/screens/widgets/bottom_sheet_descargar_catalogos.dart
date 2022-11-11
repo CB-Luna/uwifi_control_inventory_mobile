@@ -1,11 +1,7 @@
-import 'package:bizpro_app/providers/catalogo_emi_web_provider.dart';
 import 'package:bizpro_app/screens/sync/descarga_catalogos_emi_web_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/providers/catalogo_pocketbase_provider.dart';
-import 'package:bizpro_app/screens/sync/descarga_catalogos_pocketbase_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 class BottomSheetDescargarCatalogos extends StatefulWidget {
@@ -21,7 +17,6 @@ class _BottomSheetDescargarCatalogosState
     extends State<BottomSheetDescargarCatalogos> {
   @override
   Widget build(BuildContext context) {
-    final catalogoEmiWebProvider = Provider.of<CatalogoEmiWebProvider>(context);
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 350,

@@ -7,6 +7,7 @@ import 'package:bizpro_app/modelsEmiWeb/get_prod_emprendedor_by_emprendedor_emi_
 import 'package:bizpro_app/modelsEmiWeb/get_token_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_venta_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/post_registro_exitoso_emi_web.dart';
+import 'package:bizpro_app/modelsEmiWeb/post_registro_exitoso_emi_web_single.dart';
 import 'package:bizpro_app/modelsEmiWeb/post_registro_imagen_exitoso_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/post_simple_registro_exitoso_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/venta_crear_request_list_emi_web.dart';
@@ -1462,7 +1463,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           final responsePostEmprendedor = await post(crearEmprendedorUri, 
           headers: headers,
           body: jsonEncode({
-            "idUsuario": emprendedor.emprendimiento.target!.usuario.target!.idEmiWeb, //TODO: Cambiar a usuario correcto
+            "idUsuario": emprendedor.emprendimiento.target!.usuario.target!.idEmiWeb,
             "nombreUsuario": "${emprendedor.emprendimiento
             .target!.usuario.target!.nombre} ${emprendedor.emprendimiento
             .target!.usuario.target!.apellidoP} ${emprendedor.emprendimiento
@@ -1553,7 +1554,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           final responsePostJornada = await post(crearJornadaUri, 
           headers: headers,
           body: jsonEncode({
-            "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb, //TODO: Cambiar a usuario correcto
+            "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
             "nombreUsuario": "${jornada.emprendimiento
             .target!.usuario.target!.nombre} ${jornada.emprendimiento
             .target!.usuario.target!.apellidoP} ${jornada.emprendimiento
@@ -1816,7 +1817,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           final responsePostJornada = await post(crearJornadaUri, 
           headers: headers,
           body: jsonEncode({
-            "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb, //TODO: Cambiar a usuario correcto
+            "idUsuario": jornada.emprendimiento.target!.usuario.target!.idEmiWeb,
             "nombreUsuario": "${jornada.emprendimiento
             .target!.usuario.target!.nombre} ${jornada.emprendimiento
             .target!.usuario.target!.apellidoP} ${jornada.emprendimiento
@@ -2478,6 +2479,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       if (imagenToSync != null) {
         //Verificamos que no se haya posteado anteriormente la imagen
         if (imagenToSync.idEmiWeb == null) {
+          print("Primer if");
           //Aún no se ha posteado la imagen
           //Primero se postea la imagen
           final crearImagenProductoEmpUri =
@@ -2496,7 +2498,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           }));
           switch (responsePostImagenProductoEmp.statusCode) {
             case 200:
-              print("Caso 200 en Emi Web Imagen Producto Emprendedor");
+              print("Caso 200 en Emi Web Imagen Producto Emprendedor 1");
               final responsePostImagenProductoEmpParse = postRegistroImagenExitosoEmiWebFromMap(
                 const Utf8Decoder().convert(responsePostImagenProductoEmp.bodyBytes));
               imagenToSync.idEmiWeb = responsePostImagenProductoEmpParse.payload.idDocumento.toString();
@@ -2526,55 +2528,29 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               }));
               switch (responsePostProductoEmprendedor.statusCode) {
                 case 200:
-                  print("Caso 200 en Emi Web Producto Emprendedor");
-                  //Tercero se recupera el id Emi Web del Producto Emprendedor mediante otro API
-                  final url =
-                    Uri.parse('$baseUrlEmiWebServices/productosEmprendedor?idEmprendedor=${productoEmp.emprendimientos.target!.emprendedor.target!.idEmiWeb}');
-                  final headers = ({
-                    "Content-Type": "application/json",
-                    'Authorization': 'Bearer $tokenGlobal',
-                  });
-                  var responseIdProductoEmprendedor = await get(
-                    url,
-                    headers: headers
-                  );
-                  switch(responseIdProductoEmprendedor.statusCode) {
-                    case 200:
-                      print("Caso 200 en Emi Web Recuperación Id Producto Emprendedor");
-                      final responsePostProductosEmprendedorParse = getProdEmprendedorByEmprendedorEmiWebFromMap(
-                      const Utf8Decoder().convert(responseIdProductoEmprendedor.bodyBytes));
-                      for(var i = 0; i < responsePostProductosEmprendedorParse.payload!.toList().length; i++){
-                        if (productoEmp.nombre == responsePostProductosEmprendedorParse.payload![i].producto &&
-                            productoEmp.costo == responsePostProductosEmprendedorParse.payload![i].costoUnidadMedida &&
-                            productoEmp.unidadMedida.target!.unidadMedida == responsePostProductosEmprendedorParse.payload![i].unidadMedida) {
-                          //Se necesita hacer este paso para actualizar la información
-                          productoEmp.idEmiWeb = responsePostProductosEmprendedorParse.payload![i].idProductoEmprendedor.toString();
-                          dataBase.productosEmpBox.put(productoEmp);
-                          print("Se hace put al producto emprendedor");
-                          //Se marca como realizada en EmiWeb la instrucción en Bitacora
-                          bitacora.executeEmiWeb = true;
-                          dataBase.bitacoraBox.put(bitacora);
-                          return true;
-                        }
-                      }
-                      // No se encontró ningún producto con las caracerísticas establecidas
-                      print("No se encontró ningún producto con las caracerísticas establecidas");
-                      return false;
-                    default:
-                      // No se recuperó con éxito el id Emi Web del producto Emp
-                      print("Error en Emi Web Recuperación Id Producto Emprendedor");
-                      return false;
-                  }
+                  print("Caso 200 en Emi Web Producto Emprendedor 1");
+                  //Tercero se recupera el id Emi Web del Producto Emprendedor
+                  final responsePostProductoEmprendedorParse = postRegistroExitosoEmiWebSingleFromMap(
+                    const Utf8Decoder().convert(responsePostProductoEmprendedor.bodyBytes));
+                  //Se necesita hacer este paso para actualizar la información
+                  productoEmp.idEmiWeb = responsePostProductoEmprendedorParse.payload.toString();
+                  dataBase.productosEmpBox.put(productoEmp);
+                  print("Se hace put al producto emprendedor 1");
+                  //Se marca como realizada en EmiWeb la instrucción en Bitacora
+                  bitacora.executeEmiWeb = true;
+                  dataBase.bitacoraBox.put(bitacora);
+                  return true;
                 default: //No se realizo con éxito el post del producto Emp
-                  print("Error en Emi Web Producto Emprendedor");
+                  print("Error en Emi Web Producto Emprendedor 1");
                   return false;
               } 
             default:
               //No se realizo con éxito el post de la imagen asociada
-              print("Error en Emi Web Imagen Producto Emprendedor");
+              print("Error en Emi Web Imagen Producto Emprendedor 1");
               return false;
           }  
         } else {
+          print("Primer else");
           if (productoEmp.idEmiWeb == null) {
             // Segundo creamos el producto Emprendedor
             final crearProductoEmprendedorUri =
@@ -2599,49 +2575,24 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               "descripcion": productoEmp.descripcion,
               "costoUnidadMedida": productoEmp.costo,
             }));
+            print("${responsePostProductoEmprendedor.statusCode}");
+            print("${responsePostProductoEmprendedor.body.toString()}");
             switch (responsePostProductoEmprendedor.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Producto Emprendedor");
-                //Tercero se recupera el id Emi Web del Producto Emprendedor mediante otro API
-                final url =
-                  Uri.parse('$baseUrlEmiWebServices/productosEmprendedor?idEmprendedor=${productoEmp.emprendimientos.target!.emprendedor.target!.idEmiWeb}');
-                final headers = ({
-                  "Content-Type": "application/json",
-                  'Authorization': 'Bearer $tokenGlobal',
-                });
-                var responseIdProductoEmprendedor = await get(
-                  url,
-                  headers: headers
-                );
-                switch(responseIdProductoEmprendedor.statusCode) {
-                  case 200:
-                     print("Caso 200 en Emi Web Id Producto Emprendedor");
-                    final responsePostProductosEmprendedorParse = getProdEmprendedorByEmprendedorEmiWebFromMap(
-                    const Utf8Decoder().convert(responseIdProductoEmprendedor.bodyBytes));
-                    for(var i = 0; i < responsePostProductosEmprendedorParse.payload!.toList().length; i++){
-                      if (productoEmp.nombre == responsePostProductosEmprendedorParse.payload![i].producto &&
-                          productoEmp.costo == responsePostProductosEmprendedorParse.payload![i].costoUnidadMedida &&
-                          productoEmp.unidadMedida.target!.unidadMedida == responsePostProductosEmprendedorParse.payload![i].unidadMedida) {
-                        //Se necesita hacer este paso para actualizar la información
-                        productoEmp.idEmiWeb = responsePostProductosEmprendedorParse.payload![i].idProductoEmprendedor.toString();
-                        dataBase.productosEmpBox.put(productoEmp);
-                        print("Se hace put al producto emprendedor");
-                        //Se marca como realizada en EmiWeb la instrucción en Bitacora
-                        bitacora.executeEmiWeb = true;
-                        dataBase.bitacoraBox.put(bitacora);
-                        return true;
-                      }
-                    }
-                    // No se encontró ningún producto con las caracerísticas establecidas
-                    print("No se encontró ningún producto con las caracerísticas establecidas");
-                    return false;
-                  default:
-                    // No se recuperó con éxito el id Emi Web del producto Emp
-                    print("Error en Emi Web Recuperación Id Producto Emprendedor");
-                    return false;
-                }
+                print("Caso 200 en Emi Web Producto Emprendedor 2");
+                //Tercero se recupera el id Emi Web del Producto Emprendedor
+                final responsePostProductoEmprendedorParse = postRegistroExitosoEmiWebSingleFromMap(
+                    const Utf8Decoder().convert(responsePostProductoEmprendedor.bodyBytes));
+                //Se necesita hacer este paso para actualizar la información
+                productoEmp.idEmiWeb = responsePostProductoEmprendedorParse.payload.toString();
+                dataBase.productosEmpBox.put(productoEmp);
+                print("Se hace put al producto emprendedor 2");
+                //Se marca como realizada en EmiWeb la instrucción en Bitacora
+                bitacora.executeEmiWeb = true;
+                dataBase.bitacoraBox.put(bitacora);
+                return true;
               default: //No se realizo con éxito el post del producto Emp
-                print("Error en Emi Web Producto Emprendedor");
+                print("Error en Emi Web Producto Emprendedor 2");
                 return false;
             } 
           } else {
@@ -2679,47 +2630,20 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           }));
           switch (responsePostProductoEmprendedor.statusCode) {
             case 200:
-              print("Caso 200 en Emi Web Producto Emprendedor");
+              print("Caso 200 en Emi Web Producto Emprendedor 3");
               //Segundo se recupera el id Emi Web del Producto Emprendedor mediante otro API
-              final url =
-                Uri.parse('$baseUrlEmiWebServices/productosEmprendedor?idEmprendedor=${productoEmp.emprendimientos.target!.emprendedor.target!.idEmiWeb}');
-              final headers = ({
-                "Content-Type": "application/json",
-                'Authorization': 'Bearer $tokenGlobal',
-              });
-              var responseIdProductoEmprendedor = await get(
-                url,
-                headers: headers
-              );
-              switch(responseIdProductoEmprendedor.statusCode) {
-                case 200:
-                  print("Caso 200 en Emi Web Id Producto Emprendedor");
-                  final responsePostProductosEmprendedorParse = getProdEmprendedorByEmprendedorEmiWebFromMap(
-                  const Utf8Decoder().convert(responseIdProductoEmprendedor.bodyBytes));
-                  for(var i = 0; i < responsePostProductosEmprendedorParse.payload!.toList().length; i++){
-                    if (productoEmp.nombre == responsePostProductosEmprendedorParse.payload![i].producto &&
-                        productoEmp.costo == responsePostProductosEmprendedorParse.payload![i].costoUnidadMedida &&
-                        productoEmp.unidadMedida.target!.unidadMedida == responsePostProductosEmprendedorParse.payload![i].unidadMedida) {
-                      //Se necesita hacer este paso para actualizar la información
-                      productoEmp.idEmiWeb = responsePostProductosEmprendedorParse.payload![i].idProductoEmprendedor.toString();
-                      dataBase.productosEmpBox.put(productoEmp);
-                      print("Se hace put al producto emprendedor");
-                      //Se marca como realizada en EmiWeb la instrucción en Bitacora
-                      bitacora.executeEmiWeb = true;
-                      dataBase.bitacoraBox.put(bitacora);
-                      return true;
-                    }
-                  }
-                  // No se encontró ningún producto con las caracerísticas establecidas
-                  print("No se encontró ningún producto con las caracerísticas establecidas");
-                  return false;
-                default:
-                  // No se recuperó con éxito el id Emi Web del producto Emp
-                  print("Error en Emi Web Recuperación Id Producto Emprendedor");
-                  return false;
-              }
+              final responsePostProductoEmprendedorParse = postRegistroExitosoEmiWebSingleFromMap(
+                const Utf8Decoder().convert(responsePostProductoEmprendedor.bodyBytes));
+              //Se necesita hacer este paso para actualizar la información
+              productoEmp.idEmiWeb = responsePostProductoEmprendedorParse.payload.toString();
+              dataBase.productosEmpBox.put(productoEmp);
+              print("Se hace put al producto emprendedor 3");
+              //Se marca como realizada en EmiWeb la instrucción en Bitacora
+              bitacora.executeEmiWeb = true;
+              dataBase.bitacoraBox.put(bitacora);
+              return true;
             default: //No se realizo con éxito el post del producto Emp
-              print("Error en Emi Web Producto Emprendedor");
+              print("Error en Emi Web Producto Emprendedor 3");
               return false;
           } 
         } else {
@@ -2755,6 +2679,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             cantidadVendida: venta.prodVendidos[i].cantVendida, 
             precioVenta: venta.prodVendidos[i].precioVenta);
           ventaCrearRequestList.add(newVentaCreada.toMap());
+          if (venta.prodVendidos.toList()[i].idEmiWeb == null) {
+            //Se asigna el id Emi Web al prod Vendido
+            venta.prodVendidos.toList()[i].idEmiWeb = i.toString();
+            dataBase.productosVendidosBox.put(venta.prodVendidos.toList()[i]);
+          }
         }
         print(jsonEncode(ventaCrearRequestList));
         final responsePostVenta = await post(crearVentaUri, 
@@ -2775,36 +2704,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         print(responsePostVenta.body);     
         switch (responsePostVenta.statusCode) {
           case 200:
-          print("Caso 200 en Emi Web Venta");
-          //Se recupera el id Emi Web de la Venta
-          final recuperarVentaUri =
-            Uri.parse('$baseUrlEmiWebServices/ventas/filtros?idEmprendedor=${venta.emprendimiento.target!.emprendedor.target!.idEmiWeb}&archivado=false');
-          final headers = ({
-            "Content-Type": "application/json",
-            'Authorization': 'Bearer $tokenGlobal',
-          });
-          final responseGetVenta = await get(recuperarVentaUri, 
-          headers: headers);
-          switch(responseGetVenta.statusCode) {
-            case 200:
-              final responseGetVentaParse = getVentaEmiWebFromMap(
-              const Utf8Decoder().convert(responseGetVenta.bodyBytes));
-              //Se recupera el id Emi Web para prod Vendidos
-              for (var i = 0; i < venta.prodVendidos.length; i++) {
-                venta.prodVendidos[i].idEmiWeb = responseGetVentaParse.payload!.ids!.first.toString();
-                dataBase.productosVendidosBox.put(venta.prodVendidos[i]);
-              }
-              venta.idEmiWeb = responseGetVentaParse.payload!.ids!.first.toString();
-              dataBase.ventasBox.put(venta);
-              print("Se recupera el idEmiWeb para la venta");
-              //Se marca como realizada en EmiWeb la instrucción en Bitacora
-              bitacora.executeEmiWeb = true;
-              dataBase.bitacoraBox.put(bitacora);
-              return true;
-            default:
-              print("Error al recuperar Emi Web de la venta");
-              return false;
-          }
+            print("Caso 200 en Emi Web Venta");
+            //Se recupera el id Emi Web de la Venta
+            final responsePostVentaParse = postRegistroExitosoEmiWebSingleFromMap(
+            const Utf8Decoder().convert(responsePostVenta.bodyBytes));
+            venta.idEmiWeb = responsePostVentaParse.payload.toString();
+            dataBase.ventasBox.put(venta);
+            print("Se recupera el idEmiWeb para la venta");
+            //Se marca como realizada en EmiWeb la instrucción en Bitacora
+            bitacora.executeEmiWeb = true;
+            dataBase.bitacoraBox.put(bitacora);
+            return true;
           default: //No se realizo con éxito el post
             print("Error en postear venta Emi Web");
             return false;

@@ -1,3 +1,5 @@
+import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/providers/catalogo_pocketbase_provider.dart';
@@ -8,7 +10,11 @@ import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 class DescargaCatalogosPocketbaseScreen extends StatefulWidget {
-  const DescargaCatalogosPocketbaseScreen({Key? key}) : super(key: key);
+  final bool usuarioExit;
+  const DescargaCatalogosPocketbaseScreen({
+    Key? key, 
+    required this.usuarioExit
+    }) : super(key: key);
 
   @override
   State<DescargaCatalogosPocketbaseScreen> createState() => _DescargaCatalogosPocketbaseScreenState();
@@ -31,6 +37,7 @@ class _DescargaCatalogosPocketbaseScreenState extends State<DescargaCatalogosPoc
   @override
   Widget build(BuildContext context) {
     final catalogoPocketbaseProvider = Provider.of<CatalogoPocketbaseProvider>(context);
+    final UserState userState = Provider.of<UserState>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -145,14 +152,20 @@ class _DescargaCatalogosPocketbaseScreenState extends State<DescargaCatalogosPoc
                                     0, 100, 0, 0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const EmprendimientosScreen(),
-                                      ),
-                                    );
-                                    catalogoPocketbaseProvider.procesoTerminado(false);
+                                    if (widget.usuarioExit) {
+                                      snackbarKey.currentState?.showSnackBar(const SnackBar(
+                                        content: Text("El Usuario no cuenta con los permisos necesarios para estar en sesión, favor de comunicarse con el Administrador."),
+                                      ));
+                                      await userState.logout();
+                                    } else {
+                                        await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const EmprendimientosScreen(),
+                                        ),
+                                      );
+                                    }
                                   },
                                   text: 'Listo',
                                   options: FFButtonOptions(
@@ -199,13 +212,20 @@ class _DescargaCatalogosPocketbaseScreenState extends State<DescargaCatalogosPoc
                                         0, 30, 0, 0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const EmprendimientosScreen(),
-                                          ),
-                                        );
+                                        if (widget.usuarioExit) {
+                                          snackbarKey.currentState?.showSnackBar(const SnackBar(
+                                            content: Text("El Usuario no cuenta con los permisos necesarios para estar en sesión, favor de comunicarse con el Administrador."),
+                                          ));
+                                          await userState.logout();
+                                        } else { 
+                                          await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const EmprendimientosScreen(),
+                                              ),
+                                            );
+                                        }
                                       },
                                       text: 'Cerrar',
                                       options: FFButtonOptions(

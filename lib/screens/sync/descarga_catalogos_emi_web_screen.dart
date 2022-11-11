@@ -21,6 +21,7 @@ class _DescargaCatalogosEmiWebScreenState extends State<DescargaCatalogosEmiWebS
     super.initState();
       setState(() {
         context.read<CatalogoEmiWebProvider>().exitoso = true;
+        context.read<CatalogoEmiWebProvider>().usuarioExit = false;
         context.read<CatalogoEmiWebProvider>().procesoCargando(true);
         context.read<CatalogoEmiWebProvider>().procesoTerminado(false);
         context.read<CatalogoEmiWebProvider>().procesoExitoso(false);
@@ -32,7 +33,9 @@ class _DescargaCatalogosEmiWebScreenState extends State<DescargaCatalogosEmiWebS
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    const DescargaCatalogosPocketbaseScreen(),
+                    DescargaCatalogosPocketbaseScreen(
+                      usuarioExit: context.read<CatalogoEmiWebProvider>().usuarioExit,
+                    ),
               ),
             );
           }
