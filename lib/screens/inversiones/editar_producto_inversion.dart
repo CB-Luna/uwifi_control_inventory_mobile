@@ -57,7 +57,7 @@ class _EditarProductoInversionScreenState
   @override
   void initState() {
     super.initState();
-    newImagen = widget.prodSolicitado.imagen.target?.imagenes;
+    newImagen = widget.prodSolicitado.imagen.target?.path;
     emprendedor = "";
     newFamilia = widget.prodSolicitado.familiaProducto.target!.nombre;
     productoController = TextEditingController(text: widget.prodSolicitado.producto);
@@ -324,7 +324,7 @@ class _EditarProductoInversionScreenState
                                                 ClipRRect(
                                                   borderRadius:
                                                       BorderRadius.circular(8),
-                                                  child: getImage(image?.path),
+                                                  child: getImage(newImagen),
                                                 ),
                                               ],
                                             ),

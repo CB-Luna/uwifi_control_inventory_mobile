@@ -2786,8 +2786,8 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           dataBase.inversionesBox.put(inversion);
           print("Se recupera el idEmiWeb de la inversión");
           //Creamos los prod Solicitados
-          for(var i = 0; i < inversion.prodSolicitados.length; i++){
-            if (inversion.prodSolicitados[i].imagen.target != null) {
+          for(var i = 0; i < inversion.prodSolicitados.toList().length; i++){
+            if (inversion.prodSolicitados.toList()[i].imagen.target != null) {
               //El prod Solicitado está asociado a una imagen
               final crearImagenProdSolicitadoUri =
               Uri.parse('$baseUrlEmiWebServices/documentos/crear');
@@ -2795,8 +2795,8 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               headers: headers,
               body: jsonEncode({
                 "idCatTipoDocumento": "8", //Prod Solicitado
-                "nombreArchivo": inversion.prodSolicitados[i].imagen.target!.nombre,
-                "archivo": inversion.prodSolicitados[i].imagen.target!.base64,
+                "nombreArchivo": inversion.prodSolicitados.toList()[i].imagen.target!.nombre,
+                "archivo": inversion.prodSolicitados.toList()[i].imagen.target!.base64,
                 "idUsuario": inversion.emprendimiento.target!.usuario.target!.idEmiWeb,
               }));
               switch (responsePostImagenProdSolicitado.statusCode) {
@@ -2804,8 +2804,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   //Se recupera el id Emi Web de la imagen del Prod Solicitado
                   final responsePostImagenProdSolicitadoParse = postRegistroImagenExitosoEmiWebFromMap(
                   const Utf8Decoder().convert(responsePostImagenProdSolicitado.bodyBytes));
-                  inversion.prodSolicitados[i].imagen.target!.idEmiWeb = responsePostImagenProdSolicitadoParse.payload.idDocumento.toString();             
-                  dataBase.imagenesBox.put(inversion.prodSolicitados[i].imagen.target!);
+                  print("Id de la Imagen: ${responsePostImagenProdSolicitadoParse.payload.idDocumento.toString()}");
+                  inversion.prodSolicitados.toList()[i].imagen.target!.idEmiWeb = responsePostImagenProdSolicitadoParse.payload.idDocumento.toString();             
+                  dataBase.imagenesBox.put(inversion.prodSolicitados.toList()[i].imagen.target!);
                   print("Se recupera el idEmiWeb de la imagen prod solicitado");
                   final crearProdSolicitadosUri =
                     Uri.parse('$baseUrlEmiWebServices/productosSolicitados');
@@ -2837,12 +2838,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       continue;
                     default:
                       //No se postea con éxito el prod Solicitado
-                      i = inversion.prodSolicitados.length;
+                      i = inversion.prodSolicitados.toList().length;
                       return false;
                   }
                 default:
                   //No se postea con éxito la imagen del prod Solicitado
-                  i = inversion.prodSolicitados.length;
+                  i = inversion.prodSolicitados.toList().length;
                   return false;
               }
             } else {
@@ -2876,7 +2877,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   continue;
                 default:
                   //No se postea con éxito el prod Solicitado
-                  i = inversion.prodSolicitados.length;
+                  i = inversion.prodSolicitados.toList().length;
                   return false;
               }
             }
@@ -2892,9 +2893,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       } else {
         //Ya se ha posteado anteriormente la inversión
         //Creamos los prod Solicitados
-        for(var i = 0; i < inversion.prodSolicitados.length; i++){
-          if (inversion.prodSolicitados[i].idEmiWeb == null) {
-            if (inversion.prodSolicitados[i].imagen.target != null) {
+        for(var i = 0; i < inversion.prodSolicitados.toList().length; i++){
+          if (inversion.prodSolicitados.toList()[i].idEmiWeb == null) {
+            if (inversion.prodSolicitados.toList()[i].imagen.target != null) {
               //El prod Solicitado está asociado a una imagen
               final crearImagenProdSolicitadoUri =
               Uri.parse('$baseUrlEmiWebServices/documentos/crear');
@@ -2906,8 +2907,8 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               headers: headers,
               body: jsonEncode({
                 "idCatTipoDocumento": "8", //Prod Solicitado
-                "nombreArchivo": inversion.prodSolicitados[i].imagen.target!.nombre,
-                "archivo": inversion.prodSolicitados[i].imagen.target!.base64,
+                "nombreArchivo": inversion.prodSolicitados.toList()[i].imagen.target!.nombre,
+                "archivo": inversion.prodSolicitados.toList()[i].imagen.target!.base64,
                 "idUsuario": inversion.emprendimiento.target!.usuario.target!.idEmiWeb,
               }));
               switch (responsePostImagenProdSolicitado.statusCode) {
@@ -2915,8 +2916,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   //Se recupera el id Emi Web de la imagen del Prod Solicitado
                   final responsePostImagenProdSolicitadoParse = postRegistroImagenExitosoEmiWebFromMap(
                   const Utf8Decoder().convert(responsePostImagenProdSolicitado.bodyBytes));
-                  inversion.prodSolicitados[i].imagen.target!.idEmiWeb = responsePostImagenProdSolicitadoParse.payload.idDocumento.toString();
-                  dataBase.imagenesBox.put(inversion.prodSolicitados[i].imagen.target!);
+                  print("Id de la Imagen: ${responsePostImagenProdSolicitadoParse.payload.idDocumento.toString()}");
+                  inversion.prodSolicitados.toList()[i].imagen.target!.idEmiWeb = responsePostImagenProdSolicitadoParse.payload.idDocumento.toString();
+                  dataBase.imagenesBox.put(inversion.prodSolicitados.toList()[i].imagen.target!);
                   print("Se recupera el idEmiWeb de la imagen prod solicitado");
                   final crearProdSolicitadosUri =
                     Uri.parse('$baseUrlEmiWebServices/productosSolicitados');
@@ -2948,12 +2950,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       continue;
                     default:
                       //No se postea con éxito el prod Solicitado
-                      i = inversion.prodSolicitados.length;
+                      i = inversion.prodSolicitados.toList().length;
                       return false;
                   }
                 default:
                   //No se postea con éxito la imagen del prod Solicitado
-                  i = inversion.prodSolicitados.length;
+                  i = inversion.prodSolicitados.toList().length;
                   return false;
               }
             } else {
@@ -2991,7 +2993,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   continue;
                 default:
                   //No se postea con éxito el prod Solicitado
-                  i = inversion.prodSolicitados.length;
+                  i = inversion.prodSolicitados.toList().length;
                   return false;
               }
             }
@@ -4206,6 +4208,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
   Future<bool> validateInversionComprada(Inversiones inversion) async {
     try {
       if (await getTokenOAuth()) {
+        print("Id inversion Emi Web: ${inversion.idEmiWeb}");
         var url = Uri.parse("$baseUrlEmiWebServices/inversiones/${inversion.idEmiWeb}");
         final headers = ({
             "Content-Type": "application/json",

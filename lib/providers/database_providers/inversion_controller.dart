@@ -139,12 +139,12 @@ class InversionController extends ChangeNotifier {
       final tipoEmpaques = dataBase.tipoEmpaquesBox.get(idTipoEmpaques);
       if (emprendimiento != null && inversion != null && familiaProd != null && tipoEmpaques != null) {
         final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
-        final nuevaInstruccion = Bitacora(instruccion: 'syncAddProductoSolicitado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+        // final nuevaInstruccion = Bitacora(instruccion: 'syncAddProductoSolicitado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
         nuevoProdSolicitado.statusSync.target = nuevoSync;
         nuevoProdSolicitado.familiaProducto.target = familiaProd;
         nuevoProdSolicitado.tipoEmpaques.target = tipoEmpaques;
         nuevoProdSolicitado.inversion.target = inversion;
-        nuevoProdSolicitado.bitacora.add(nuevaInstruccion);
+        // nuevoProdSolicitado.bitacora.add(nuevaInstruccion);
         inversion.prodSolicitados.add(nuevoProdSolicitado);
         inversion.totalInversion += costo != '' ? (double.parse(costo) * double.parse(cantidad)) : 0.0;
         dataBase.inversionesBox.put(inversion);
@@ -158,11 +158,11 @@ class InversionController extends ChangeNotifier {
     final inversion = dataBase.inversionesBox.get(productoSolicitado.idInversion);
     if (inversion != null) {
       print("Tamaño productos solicitados antes de remover: ${dataBase.productosSolicitadosBox.getAll().length}");
-      final nuevaInstruccion = Bitacora(instruccion: 'syncDeleteProductoSolicitado', usuario: prefs.getString("userId")!, idDBR: productoSolicitado.idDBR); //Se crea la nueva instruccion a realizar en bitacora
+      // final nuevaInstruccion = Bitacora(instruccion: 'syncDeleteProductoSolicitado', usuario: prefs.getString("userId")!, idDBR: productoSolicitado.idDBR); //Se crea la nueva instruccion a realizar en bitacora
       //Se resta de la inversión el costo del Prod Solicitado
       inversion.totalInversion -= productoSolicitado.costoEstimado != null ? (productoSolicitado.cantidad * productoSolicitado.costoEstimado!) : 0.0;
       dataBase.inversionesBox.put(inversion);
-      productoSolicitado.bitacora.add(nuevaInstruccion);
+      // productoSolicitado.bitacora.add(nuevaInstruccion);
       dataBase.productosSolicitadosBox.remove(productoSolicitado.id); //Se elimina de bitacora la instruccion creada anteriormente?
       print("Tamaño productos solicitados después de remover: ${dataBase.productosSolicitadosBox.getAll().length}");
       notifyListeners(); 
