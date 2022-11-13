@@ -609,6 +609,9 @@ class Ventas {
 @Entity()
 class ProdVendidos {
   int id;
+  String nombreProd;
+  String descripcion;
+  double costo;
   int cantVendida;
   double subtotal;
   double precioVenta;
@@ -619,8 +622,12 @@ class ProdVendidos {
   final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
   final venta = ToOne<Ventas>();
+  final unidadMedida = ToOne<UnidadMedida>();
   final productoEmp = ToOne<ProductosEmp>();
   ProdVendidos({
+    required this.nombreProd,
+    required this.descripcion,
+    required this.costo,
     this.id = 0,
     required this.cantVendida,
     required this.subtotal,
@@ -1015,6 +1022,7 @@ class UnidadMedida {
   final productosEmp = ToMany<ProductosEmp>();
   final prodSolicitados = ToMany<ProdSolicitado>();
   final productosProv = ToMany<ProductosProv>();
+  final prodVendidos = ToMany<ProdVendidos>();
 
   UnidadMedida({
     this.id = 0,

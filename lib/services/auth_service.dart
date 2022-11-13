@@ -8,6 +8,7 @@ import 'package:bizpro_app/modelsEmiWeb/get_usuario_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_usuario_completo_emi_web.dart';
 import 'package:bizpro_app/modelsPocketbase/emi_user_by_id.dart';
 import 'package:bizpro_app/modelsPocketbase/get_imagen_usuario.dart';
+import 'package:bizpro_app/modelsPocketbase/get_one_emi_user.dart';
 import 'package:bizpro_app/modelsPocketbase/login_response.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
@@ -343,43 +344,50 @@ abstract class AuthService {
 
   static Future<bool> updateUsuarioPocketbase(GetUsuarioEmiWeb responseUsuarioEmiWeb, String password, String email, String idDBRUsers) async {
     try {
-      var url = Uri.parse("$baseUrlEmiWebServices/usuarios/registro/${responseUsuarioEmiWeb.payload!.idUsuario}");
-      var tokenActual = await storage.read(key: "tokenEmiWeb");
-      final headers = ({
-          "Content-Type": "application/json",
-          'Authorization': 'Bearer $tokenActual',
-        });
-      var responseGetUsuarioCompleto = await get(
-        url,
-        headers: headers
-      );
-      switch (responseGetUsuarioCompleto.statusCode) {
-        case 200: //Caso éxitoso
-          final responseGetUsuarioDataCompletoParse = getUsuarioCompletoEmiWebFromMap(
-            const Utf8Decoder().convert(responseGetUsuarioCompleto.bodyBytes));
-          List<String> listRoles = [];
-          //Se recuperan los id Emi Web de los roles del Usuario
-          for (var i = 0; i < responseGetUsuarioDataCompletoParse.payload!.tiposUsuario!.length; i++) {
-            final rol = dataBase.rolesBox.query(Roles_.idEmiWeb.equals(responseGetUsuarioDataCompletoParse.payload!.tiposUsuario![i].idCatRoles.toString())).build().findUnique();
-            if (rol != null) {
-              print("Se recupera el rol tipo: '${rol.rol}' del usuario a registrar con id: '${rol.idDBR}'");
-              if (rol.rol != "Staff Logística" && rol.rol != "Staff Dirección") {
-                listRoles.add(rol.idDBR!);
-              }
-            } 
-          }
-          print("Se termina de recuperar los roles");
-           //Se recupera al usuario
-          final updateUsuario = dataBase.usuariosBox.query(Usuarios_.correo.equals(email)).build().findUnique();
-          if (updateUsuario != null) {
+      //Verificamos que el usuario no exista en Pocketbase
+      final recordUsuario = await client.records.getFullList(
+        "emi_users",
+        batch: 200, 
+        filter: "id_emi_web='${responseUsuarioEmiWeb.payload!.idUsuario}'");
+      if (recordUsuario.isNotEmpty) {
+        final recordGetOneEmiUser = await client.records.getOne(
+          "emi_users", recordUsuario.first.id
+        );
+        final updateUsuario = getOneEmiUserFromMap(recordGetOneEmiUser.toString());
+        var url = Uri.parse("$baseUrlEmiWebServices/usuarios/registro/${responseUsuarioEmiWeb.payload!.idUsuario}");
+        var tokenActual = await storage.read(key: "tokenEmiWeb");
+        final headers = ({
+            "Content-Type": "application/json",
+            'Authorization': 'Bearer $tokenActual',
+          });
+        var responseGetUsuarioCompleto = await get(
+          url,
+          headers: headers
+        );
+        switch (responseGetUsuarioCompleto.statusCode) {
+          case 200: //Caso éxitoso
+            final responseGetUsuarioDataCompletoParse = getUsuarioCompletoEmiWebFromMap(
+              const Utf8Decoder().convert(responseGetUsuarioCompleto.bodyBytes));
+            List<String> listRoles = [];
+            //Se recuperan los id Emi Web de los roles del Usuario
+            for (var i = 0; i < responseGetUsuarioDataCompletoParse.payload!.tiposUsuario!.length; i++) {
+              final rol = dataBase.rolesBox.query(Roles_.idEmiWeb.equals(responseGetUsuarioDataCompletoParse.payload!.tiposUsuario![i].idCatRoles.toString())).build().findUnique();
+              if (rol != null) {
+                print("Se recupera el rol tipo: '${rol.rol}' del usuario a registrar con id: '${rol.idDBR}'");
+                if (rol.rol != "Staff Logística" && rol.rol != "Staff Dirección") {
+                  listRoles.add(rol.idDBR!);
+                }
+              } 
+            }
+            print("Se termina de recuperar los roles");
             //Se recupera la imagen del Usuario
             if(responseGetUsuarioDataCompletoParse.payload!.idDocumento == 0) {
               print("No hay imagen asociada");
               //No hay imagen nueva asociada al usuario
-              if (updateUsuario.imagen.target!.idDBR == null) {
+              if (updateUsuario.idImagenFk == "" || updateUsuario.idImagenFk == null) {
                 print("No había imagen previa");
                 //Se actualiza Usuario emi_users nuevo en colección de pocketbase
-                final updateRecordEmiUser = await client.records.update('emi_users', updateUsuario.idDBR.toString(), body: {
+                final updateRecordEmiUser = await client.records.update('emi_users', updateUsuario.id, body: {
                   "nombre_usuario": responseGetUsuarioDataCompletoParse.payload!.nombre,
                   "apellido_p": responseGetUsuarioDataCompletoParse.payload!.apellidoPaterno,
                   "apellido_m": responseGetUsuarioDataCompletoParse.payload!.apellidoMaterno,
@@ -412,7 +420,7 @@ abstract class AuthService {
               } else {
                 print("Ya había imagen previa");
                 //Se actualiza Usuario emi_users nuevo en colección de pocketbase
-                final updateRecordEmiUser = await client.records.update('emi_users', updateUsuario.idDBR.toString(), body: {
+                final updateRecordEmiUser = await client.records.update('emi_users', updateUsuario.id, body: {
                   "nombre_usuario": responseGetUsuarioDataCompletoParse.payload!.nombre,
                   "apellido_p": responseGetUsuarioDataCompletoParse.payload!.apellidoPaterno,
                   "apellido_m": responseGetUsuarioDataCompletoParse.payload!.apellidoMaterno,
@@ -426,7 +434,7 @@ abstract class AuthService {
                 if (updateRecordEmiUser.id.isNotEmpty) {
                   // Usuario actualizado éxitosamente en Pocketbase
                   //Se elimina la imagen de Pocketbase anterior
-                  await client.records.delete('imagenes', '${updateUsuario.imagen.target!.idDBR}');
+                  await client.records.delete('imagenes', '${updateUsuario.idImagenFk}');
                   // Usuario actualizado éxitosamente en Pocketbase
                   print("Entramos a actualizar password Usuario en updateUsuarioPocketbase");
                   //Se actualiza Usuario nuevo en Pocketbase
@@ -468,7 +476,7 @@ abstract class AuthService {
                   print("Hay imagen éxitoso");
                   final responseImagenUsuarioEmiWeb = getImagenUsuarioEmiWebFromMap(
                     const Utf8Decoder().convert(responseImagenUsuario.bodyBytes));
-                  if(updateUsuario.imagen.target!.idDBR == null) {
+                  if(updateUsuario.idImagenFk == "" || updateUsuario.idImagenFk == null) {
                     // Se crea la imagen
                     print("Se crea imagen");
                     final newRecordImagenUsuario = await client.records.create('imagenes', body: {
@@ -478,7 +486,7 @@ abstract class AuthService {
                     });
                     if (newRecordImagenUsuario.id.isNotEmpty) {
                       //Se actualiza Usuario emi_users nuevo en colección de pocketbase
-                      final updateRecordEmiUser = await client.records.update('emi_users', updateUsuario.idDBR.toString(), body: {
+                      final updateRecordEmiUser = await client.records.update('emi_users', updateUsuario.id, body: {
                         "nombre_usuario": responseGetUsuarioDataCompletoParse.payload!.nombre,
                         "apellido_p": responseGetUsuarioDataCompletoParse.payload!.apellidoPaterno,
                         "apellido_m": responseGetUsuarioDataCompletoParse.payload!.apellidoMaterno,
@@ -516,15 +524,14 @@ abstract class AuthService {
                   } else {
                     // Se actualiza la imagen
                     print("Se actualiza imagen");
-                    print("${updateUsuario.imagen.target!.idDBR.toString()}");
-                    final updateRecordImagenUsuario = await client.records.update('imagenes', updateUsuario.imagen.target!.idDBR.toString(), body: {
+                    final updateRecordImagenUsuario = await client.records.update('imagenes', updateUsuario.idImagenFk!, body: {
                       "nombre": responseImagenUsuarioEmiWeb.payload!.nombreArchivo,
                       "id_emi_web": responseImagenUsuarioEmiWeb.payload!.idUsuario.toString(),
                       "base64": responseImagenUsuarioEmiWeb.payload!.archivo
                     });
                     if (updateRecordImagenUsuario.id.isNotEmpty) {
                       //Se actualiza Usuario emi_users nuevo en colección de pocketbase
-                      final updateRecordEmiUser = await client.records.update('emi_users', updateUsuario.idDBR.toString(), body: {
+                      final updateRecordEmiUser = await client.records.update('emi_users', updateUsuario.id, body: {
                         "nombre_usuario": responseGetUsuarioDataCompletoParse.payload!.nombre,
                         "apellido_p": responseGetUsuarioDataCompletoParse.payload!.apellidoPaterno,
                         "apellido_m": responseGetUsuarioDataCompletoParse.payload!.apellidoMaterno,
@@ -565,25 +572,23 @@ abstract class AuthService {
                   return false;
               }
             }  
-          } else {
-            print("No se encontró al usuario en obkectBox");
-            // No se encontró al usuario en ObjectBox
+          case 401: //Error de Token incorrecto
+            print("Caso 401 en postUsuarioPocketbase");
+            if(await getTokenOAuthEmiWeb(email, password) != null) {
+              postUsuarioPocketbase(responseUsuarioEmiWeb, email, password);
+              return true;
+            } else{
+              return false;
+            }
+          case 404: //Error de ruta incorrecta
+            print("Caso 404 en postUsuarioPocketbase");
             return false;
-          }  
-        case 401: //Error de Token incorrecto
-          print("Caso 401 en postUsuarioPocketbase");
-          if(await getTokenOAuthEmiWeb(email, password) != null) {
-            postUsuarioPocketbase(responseUsuarioEmiWeb, email, password);
-            return true;
-          } else{
+          default:
+            print("Caso default en postUsuarioPocketbase");
             return false;
-          }
-        case 404: //Error de ruta incorrecta
-          print("Caso 404 en postUsuarioPocketbase");
-          return false;
-        default:
-          print("Caso default en postUsuarioPocketbase");
-          return false;
+        }
+      } else {
+        return false;
       }
     } catch (e) {
       print("Catch en updateUsuarioPasswordPocketbase");

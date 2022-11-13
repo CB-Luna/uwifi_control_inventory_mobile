@@ -970,22 +970,33 @@ class SyncProviderPocketbase extends ChangeNotifier {
             continue;
           }
         case "syncUpdateProductoEmprendedor":
-          final prodEmprendedorToSync = getFirstInversion(dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
-          if(prodEmprendedorToSync != null){
-            if(prodEmprendedorToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
-              print("Entro aqui en el if");
+          print("Entro al caso de syncUpdateProductoEmprendedor Pocketbase");
+          final productoEmprendedorToSync = getFirstProductoEmprendedor(dataBase.productosEmpBox.getAll(), instruccionesBitacora[i].id);
+          if(productoEmprendedorToSync != null){
+            final boolSyncUpdateProductoEmprendedor = await syncUpdateProductoEmprendedor(productoEmprendedorToSync, instruccionesBitacora[i]);
+            if (boolSyncUpdateProductoEmprendedor) {
+              banderasExistoSync.add(boolSyncUpdateProductoEmprendedor);
               continue;
             } else {
-              print("Entro aqui en el else");
-              if (prodEmprendedorToSync.idDBR != null) {
-                print("Ya ha sido enviado al backend");
-                // syncUpdateProductoEmprendedor(prodEmprendedorToSync);
-              } else {
-                print("No ha sido enviado al backend");
-              }
-            }   
-          }  
-          continue;
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(boolSyncUpdateProductoEmprendedor);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                emprendimiento: productoEmprendedorToSync.nombre,
+                instruccion: "Actualización Producto Emprendedor Servidor", 
+                fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }      
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+              emprendimiento: "No encontrado",
+              instruccion: "Actualización Producto Emprendedor Servidor", 
+              fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
         case "syncDeleteProductoVendido":
           final idDBRProdVendido = instruccionesBitacora[i].idDBR;
           print("Entro aqui en el DeleteProductoVendido");
@@ -2695,6 +2706,10 @@ class SyncProviderPocketbase extends ChangeNotifier {
               "precio_venta": productoVendido.precioVenta,
               "id_venta_fk": productoVendido.venta.target!.idDBR,
               "id_emi_web": productoVendido.idEmiWeb,
+              "costo": productoVendido.costo,
+              "descripcion": productoVendido.descripcion,
+              "id_und_medida_fk": productoVendido.unidadMedida.target!.idDBR,
+              "nombre_prod": productoVendido.nombreProd,
           });
           if (recordProdVendido.id.isNotEmpty) {
             //Se recupera el idDBR del prod Vendido
@@ -3832,12 +3847,50 @@ class SyncProviderPocketbase extends ChangeNotifier {
     }
 
   } 
+
 void deleteBitacora() {
   dataBase.bitacoraBox.removeAll();
   notifyListeners();
 }
 
+  Future<bool> syncUpdateProductoEmprendedor(ProductosEmp prodEmprendedor, Bitacora bitacora) async {
+    print("Estoy en El syncUpdateProductoEmprendedor");
+    try {
+      if (!bitacora.executePocketbase) {
+        final record = await client.records.update('productos_emp', prodEmprendedor.idDBR.toString(), body: {
+            "nombre_prod_emp": prodEmprendedor.nombre,
+            "descripcion": prodEmprendedor.descripcion,
+            "id_und_medida_fk": prodEmprendedor.unidadMedida.target!.idDBR,
+            "costo_prod_emp": prodEmprendedor.costo,
+            "archivado": prodEmprendedor.archivado,
+            // "id_imagen_fk": "RELATION_RECORD_ID",
+        }); 
 
+        if (record.id.isNotEmpty) {
+          //Se marca como realizada en Pocketbase la instrucción en Bitacora
+          bitacora.executePocketbase = true;
+          dataBase.bitacoraBox.put(bitacora);
+          if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+            //Se elimina la instrucción de la bitacora
+            dataBase.bitacoraBox.remove(bitacora.id);
+          }
+          return true;
+        }
+        else{
+          return false;
+        }
+      } else {
+        if (bitacora.executeEmiWeb) {
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
+        }
+        return true;
+      }
+    } catch (e) {
+      print('ERROR - function syncUpdateProductoEmprendedor(): $e');
+      return false;
+    }
+  } 
 
   Future<bool?> syncUpdateVenta(Ventas venta) async {
     print("Estoy en El syncUpdateVenta");

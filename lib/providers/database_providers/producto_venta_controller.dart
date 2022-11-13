@@ -85,15 +85,19 @@ void add(int idEmprendimiento, int idVenta) {
       final productoEmp = dataBase.productosEmpBox.get(productosVendidos[i].idProductoEmp);
       if (productoEmp !=  null) {
         final nuevoProdVendido = ProdVendidos(
-        cantVendida: productosVendidos[i].cantidad,
-        subtotal: productosVendidos[i].subTotal,
-        precioVenta: productosVendidos[i].precioVenta
+          nombreProd: productoEmp.nombre,
+          descripcion: productoEmp.descripcion,
+          costo: productoEmp.costo, 
+          cantVendida: productosVendidos[i].cantidad,
+          subtotal: productosVendidos[i].subTotal,
+          precioVenta: productosVendidos[i].precioVenta, 
         );
         final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
         final nuevaInstruccion = Bitacora(instruccion: 'syncAddProductoVendido', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
         nuevoProdVendido.productoEmp.target = productoEmp;
         nuevoProdVendido.statusSync.target = nuevoSync;
         nuevoProdVendido.venta.target = venta;
+        nuevoProdVendido.unidadMedida.target = productoEmp.unidadMedida.target;
         nuevoProdVendido.bitacora.add(nuevaInstruccion);
         venta.prodVendidos.add(nuevoProdVendido);
         dataBase.ventasBox.put(venta);
@@ -110,6 +114,9 @@ void addSingle(int idVenta, int idProductoEmp, String subTotal, ) {
   final productoEmp = dataBase.productosEmpBox.get(idProductoEmp);
   if (venta != null && productoEmp != null) {
       final nuevoProdVendido = ProdVendidos(
+        nombreProd: productoEmp.nombre,
+        descripcion: productoEmp.descripcion,
+        costo: productoEmp.costo, 
         cantVendida: int.parse(cantidad),
         subtotal: double.parse(subTotal),
         precioVenta: double.parse(precioVenta),
@@ -119,6 +126,7 @@ void addSingle(int idVenta, int idProductoEmp, String subTotal, ) {
       nuevoProdVendido.productoEmp.target = productoEmp;
       nuevoProdVendido.statusSync.target = nuevoSync;
       nuevoProdVendido.venta.target = venta;
+      nuevoProdVendido.unidadMedida.target = productoEmp.unidadMedida.target;
       nuevoProdVendido.bitacora.add(nuevaInstruccion);
       venta.prodVendidos.add(nuevoProdVendido);
       dataBase.ventasBox.put(venta);

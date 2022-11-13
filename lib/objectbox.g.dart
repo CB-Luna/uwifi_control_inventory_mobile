@@ -1716,7 +1716,11 @@ final _entities = <ModelEntity>[
         ModelRelation(
             id: const IdUid(80, 1530996088356897517),
             name: 'productosProv',
-            targetId: const IdUid(56, 7277108221751789003))
+            targetId: const IdUid(56, 7277108221751789003)),
+        ModelRelation(
+            id: const IdUid(82, 2481463102848550386),
+            name: 'prodVendidos',
+            targetId: const IdUid(51, 1596057038243167918))
       ],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
@@ -2111,7 +2115,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(51, 1596057038243167918),
       name: 'ProdVendidos',
-      lastPropertyId: const IdUid(12, 7341904985707626523),
+      lastPropertyId: const IdUid(17, 730995717057334540),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -2170,7 +2174,29 @@ final _entities = <ModelEntity>[
             id: const IdUid(12, 7341904985707626523),
             name: 'idEmiWeb',
             type: 9,
-            flags: 0)
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(13, 7390334429251842194),
+            name: 'nombreProd',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(14, 8938847561919678381),
+            name: 'descripcion',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(15, 6988363047260355471),
+            name: 'costo',
+            type: 8,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(16, 2167749983676750959),
+            name: 'unidadMedidaId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(264, 5616441566408550489),
+            relationTarget: 'UnidadMedida')
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -2786,8 +2812,8 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(62, 5967866020755512418),
-      lastIndexId: const IdUid(263, 8629799518235793864),
-      lastRelationId: const IdUid(80, 1530996088356897517),
+      lastIndexId: const IdUid(265, 3046345138494460818),
+      lastRelationId: const IdUid(82, 2481463102848550386),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
         1366246136666677579,
@@ -2886,7 +2912,8 @@ ModelDefinition getObjectBoxModel() {
         2068950816938160691,
         3859715238384420022,
         9136053496272878218,
-        6237524852571718855
+        6237524852571718855,
+        3046345138494460818
       ],
       retiredPropertyUids: const [
         7079790605743243388,
@@ -3176,7 +3203,8 @@ ModelDefinition getObjectBoxModel() {
         3609499592862844276,
         2161445370582181331,
         5352355597565608794,
-        1489335028833638286
+        1489335028833638286,
+        730995717057334540
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -3199,7 +3227,8 @@ ModelDefinition getObjectBoxModel() {
         5565418848143813218,
         3150796807169985253,
         4209805199751898594,
-        7559880855013026980
+        7559880855013026980,
+        2166414226903887086
       ],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -5076,7 +5105,8 @@ ModelDefinition getObjectBoxModel() {
               RelInfo<UnidadMedida>.toMany(23, object.id): object.productosEmp,
               RelInfo<UnidadMedida>.toMany(45, object.id):
                   object.prodSolicitados,
-              RelInfo<UnidadMedida>.toMany(80, object.id): object.productosProv
+              RelInfo<UnidadMedida>.toMany(80, object.id): object.productosProv,
+              RelInfo<UnidadMedida>.toMany(82, object.id): object.prodVendidos
             },
         getId: (UnidadMedida object) => object.id,
         setId: (UnidadMedida object, int id) {
@@ -5131,6 +5161,11 @@ ModelDefinition getObjectBoxModel() {
               object.productosProv,
               store,
               RelInfo<UnidadMedida>.toMany(80, object.id),
+              store.box<UnidadMedida>());
+          InternalToManyAccess.setRelInfo(
+              object.prodVendidos,
+              store,
+              RelInfo<UnidadMedida>.toMany(82, object.id),
               store.box<UnidadMedida>());
           return object;
         }),
@@ -5507,8 +5542,12 @@ ModelDefinition getObjectBoxModel() {
         }),
     ProdVendidos: EntityDefinition<ProdVendidos>(
         model: _entities[28],
-        toOneRelations: (ProdVendidos object) =>
-            [object.statusSync, object.productoEmp, object.venta],
+        toOneRelations: (ProdVendidos object) => [
+              object.statusSync,
+              object.productoEmp,
+              object.venta,
+              object.unidadMedida
+            ],
         toManyRelations: (ProdVendidos object) =>
             {RelInfo<ProdVendidos>.toMany(38, object.id): object.bitacora},
         getId: (ProdVendidos object) => object.id,
@@ -5521,7 +5560,9 @@ ModelDefinition getObjectBoxModel() {
           final idEmiWebOffset = object.idEmiWeb == null
               ? null
               : fbb.writeString(object.idEmiWeb!);
-          fbb.startTable(13);
+          final nombreProdOffset = fbb.writeString(object.nombreProd);
+          final descripcionOffset = fbb.writeString(object.descripcion);
+          fbb.startTable(18);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.cantVendida);
           fbb.addFloat64(2, object.subtotal);
@@ -5532,6 +5573,10 @@ ModelDefinition getObjectBoxModel() {
           fbb.addFloat64(9, object.precioVenta);
           fbb.addInt64(10, object.venta.targetId);
           fbb.addOffset(11, idEmiWebOffset);
+          fbb.addOffset(12, nombreProdOffset);
+          fbb.addOffset(13, descripcionOffset);
+          fbb.addFloat64(14, object.costo);
+          fbb.addInt64(15, object.unidadMedida.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -5540,6 +5585,12 @@ ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
 
           final object = ProdVendidos(
+              nombreProd: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 28, ''),
+              descripcion: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 30, ''),
+              costo:
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 32, 0),
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
               cantVendida:
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0),
@@ -5562,6 +5613,9 @@ ModelDefinition getObjectBoxModel() {
           object.venta.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
           object.venta.attach(store);
+          object.unidadMedida.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 34, 0);
+          object.unidadMedida.attach(store);
           InternalToManyAccess.setRelInfo(
               object.bitacora,
               store,
@@ -7195,6 +7249,10 @@ class UnidadMedida_ {
   /// see [UnidadMedida.productosProv]
   static final productosProv = QueryRelationToMany<UnidadMedida, ProductosProv>(
       _entities[23].relations[2]);
+
+  /// see [UnidadMedida.prodVendidos]
+  static final prodVendidos = QueryRelationToMany<UnidadMedida, ProdVendidos>(
+      _entities[23].relations[3]);
 }
 
 /// [Imagenes] entity fields to define ObjectBox queries.
@@ -7519,6 +7577,22 @@ class ProdVendidos_ {
   /// see [ProdVendidos.idEmiWeb]
   static final idEmiWeb =
       QueryStringProperty<ProdVendidos>(_entities[28].properties[9]);
+
+  /// see [ProdVendidos.nombreProd]
+  static final nombreProd =
+      QueryStringProperty<ProdVendidos>(_entities[28].properties[10]);
+
+  /// see [ProdVendidos.descripcion]
+  static final descripcion =
+      QueryStringProperty<ProdVendidos>(_entities[28].properties[11]);
+
+  /// see [ProdVendidos.costo]
+  static final costo =
+      QueryDoubleProperty<ProdVendidos>(_entities[28].properties[12]);
+
+  /// see [ProdVendidos.unidadMedida]
+  static final unidadMedida = QueryRelationToOne<ProdVendidos, UnidadMedida>(
+      _entities[28].properties[13]);
 
   /// see [ProdVendidos.bitacora]
   static final bitacora =
