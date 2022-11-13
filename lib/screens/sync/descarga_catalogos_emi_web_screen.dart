@@ -1,3 +1,5 @@
+import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/providers/catalogo_emi_web_provider.dart';
@@ -46,6 +48,7 @@ class _DescargaCatalogosEmiWebScreenState extends State<DescargaCatalogosEmiWebS
   @override
   Widget build(BuildContext context) {
     final catalogoEmiWebProvider = Provider.of<CatalogoEmiWebProvider>(context);
+    final UserState userState = Provider.of<UserState>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -171,13 +174,20 @@ class _DescargaCatalogosEmiWebScreenState extends State<DescargaCatalogosEmiWebS
                                         0, 30, 0, 0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const EmprendimientosScreen(),
-                                          ),
-                                        );
+                                        if (catalogoEmiWebProvider.usuarioExit) {
+                                          snackbarKey.currentState?.showSnackBar(const SnackBar(
+                                            content: Text("El Usuario no cuenta con los permisos necesarios para estar en sesión, favor de comunicarse con el Administrador."),
+                                          ));
+                                          await userState.logout();
+                                        } else {
+                                            await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const EmprendimientosScreen(),
+                                            ),
+                                          );
+                                        }
                                       },
                                       text: 'Cerrar',
                                       options: FFButtonOptions(

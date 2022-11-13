@@ -3,9 +3,8 @@ import 'dart:convert';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_inversion_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_prod_cotizados_emi_web.dart';
-import 'package:bizpro_app/modelsEmiWeb/get_prod_emprendedor_by_emprendedor_emi_web.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_roles_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_token_emi_web.dart';
-import 'package:bizpro_app/modelsEmiWeb/get_venta_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/post_registro_exitoso_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/post_registro_exitoso_emi_web_single.dart';
 import 'package:bizpro_app/modelsEmiWeb/post_registro_imagen_exitoso_emi_web.dart';
@@ -32,6 +31,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
   List<bool> banderasExistoSync = [];
   List<InstruccionNoSincronizada> instruccionesFallidas = [];
   bool exitoso = true;
+  bool usuarioExit = false;
 
   void procesoCargando(bool boleano) {
     procesocargando = boleano;
@@ -70,19 +70,123 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
       print(response.body);
 
-      switch (response.statusCode) {
+      final updateUsuario = dataBase.usuariosBox.query(Usuarios_.correo.equals(prefs.getString("userId")!)).build().findUnique();
+      if (updateUsuario != null) {
+        switch (response.statusCode) {
           case 200:
             final responseTokenEmiWeb = getTokenEmiWebFromMap(
             response.body);
             tokenGlobal = responseTokenEmiWeb.accessToken;
-            return true;
-          case 401:
+            var urlgetRolesUsuario = Uri.parse("$baseUrlEmiWebServices/catalogos/roles");
+            final headers = ({
+                "Content-Type": "application/json",
+                'Authorization': 'Bearer $tokenGlobal',
+              });
+            var responseGetRolesUsuario = await get(
+              urlgetRolesUsuario,
+              headers: headers
+            );
+            switch (responseGetRolesUsuario.statusCode) {
+              case 200: //Caso éxitoso
+                print("Caso exitoso 200 en get Roles Emi Web");
+                final responseListRoles = getRolesEmiWebFromMap(
+                const Utf8Decoder().convert(responseGetRolesUsuario.bodyBytes));
+                List<String> listRoles = [];
+                //Se recuperan los id Emi Web de los roles del Usuario
+                for (var i = 0; i < responseListRoles.payload!.length; i++) {
+                  final rol = dataBase.rolesBox.query(Roles_.idEmiWeb.equals(responseListRoles.payload![i].idCatRoles.toString())).build().findUnique();
+                  if (rol != null) {
+                    print("Se recupera el rol tipo: '${rol.rol}' del usuario a registrar con id: '${rol.idDBR}'");
+                    if (rol.rol != "Staff Logística" && rol.rol != "Staff Dirección") {
+                      listRoles.add(rol.idDBR!);
+                    }
+                  } 
+                }
+                if(listRoles.isEmpty) {
+                  final updateRecordEmiUser = await client.records.update('emi_users', updateUsuario.idDBR.toString(), body: {
+                    "id_roles_fk": [],
+                  });
+                  if (updateRecordEmiUser.id.isNotEmpty) {
+                    //Se agregan los roles actualizados
+                    updateUsuario.roles.clear();
+                    dataBase.usuariosBox.put(updateUsuario);
+                    snackbarKey.currentState?.showSnackBar(const SnackBar(
+                      content: Text("El Usuario no cuenta con los permisos necesarios para sincronizar, favor de comunicarse con el Administrador."),
+                    ));
+                    usuarioExit = true;
+                    return false;
+                  } else {
+                    snackbarKey.currentState?.showSnackBar(const SnackBar(
+                      content: Text("No se pudieron actualizar los roles del Usuario en Servidor."),
+                    ));
+                    return false;
+                  }
+                } else {
+                  final updateRecordEmiUser = await client.records.update('emi_users', updateUsuario.idDBR.toString(), body: {
+                    "id_roles_fk": listRoles,
+                  });
+                  if (updateRecordEmiUser.id.isNotEmpty) {
+                    //Se agregan los roles actualizados
+                    updateUsuario.roles.clear();
+                    for (var i = 0; i < listRoles.length; i++) {
+                      final nuevoRol = dataBase.rolesBox.query(Roles_.idDBR.equals(listRoles[i])).build().findUnique(); //Se recupera el rol del Usuario
+                      if (nuevoRol != null) {
+                        updateUsuario.roles.add(nuevoRol);
+                      }
+                    } 
+                    //Se asiga el rol actual que ocupará
+                    final rolActual = dataBase.rolesBox.query(Roles_.idDBR.equals(listRoles[0])).build().findUnique(); //Se recupera el rol actual del Usuario
+                    if (rolActual != null) {
+                      updateUsuario.rol.target = rolActual;
+                    }
+                    dataBase.usuariosBox.put(updateUsuario);
+                    return true;
+                  } else {
+                    snackbarKey.currentState?.showSnackBar(const SnackBar(
+                      content: Text("No se pudieron actualizar los roles del Usuario en Servidor."),
+                    ));
+                    return false;
+                  }
+                }
+              default:
+                return false;
+            } 
+           case 400:
+            snackbarKey.currentState?.showSnackBar(const SnackBar(
+              content: Text("Correo electrónico y/o contraseña incorrectos."),
+            ));
+            usuarioExit = true;
             return false;
-          case 404:
+          case 401:
+            //Se actualiza Usuario archivado en Pocketbase y objectBox
+            final updateUsuario = dataBase.usuariosBox.query(Usuarios_.correo.equals(prefs.getString("userId")!)).build().findUnique();
+            if (updateUsuario != null) {
+              final recordUsuario = await client.records.
+                getFullList('emi_users', batch: 200,
+                filter: "id='${updateUsuario.idDBR}'");
+              if (recordUsuario.isNotEmpty) {
+                // Se actualiza el usuario con éxito
+                updateUsuario.archivado = true;
+                dataBase.usuariosBox.put(updateUsuario); 
+              }
+            }
+            snackbarKey.currentState?.showSnackBar(const SnackBar(
+              content: Text("El usuario se encuentra archivado, comuníquese con el Administrador."),
+            ));
+            usuarioExit = true;
             return false;
           default:
+            snackbarKey.currentState?.showSnackBar(const SnackBar(
+              content: Text("Falló al conectarse con el servidor Emi Web."),
+            ));
             return false;
         }
+      } else {
+        snackbarKey.currentState?.showSnackBar(const SnackBar(
+          content: Text("Falló al recuperar usuario de forma local."),
+        ));
+        return false;
+      }
     } catch (e) {
       return false;
     }

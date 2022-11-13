@@ -162,11 +162,16 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
             response.body);
             tokenGlobal = responseTokenEmiWeb.accessToken;
             return true;
-          case 401:
+          case 400:
+            usuarioExit = true;
             return false;
-          case 404:
+          case 401:
+            //Se actualiza Usuario archivado en Pocketbase y objectBox
             return false;
           default:
+            snackbarKey.currentState?.showSnackBar(const SnackBar(
+              content: Text("Falló al conectarse con el servidor Emi Web."),
+            ));
             return false;
         }
     } catch (e) {

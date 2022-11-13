@@ -2,6 +2,7 @@ import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/providers/sync_provider_emi_web.dart';
+import 'package:bizpro_app/providers/user_provider.dart';
 import 'package:bizpro_app/screens/sync/sincronizacion_informacion_pocketbase_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -44,16 +45,21 @@ class _SincronizacionInformacionEmiWebScreenState extends State<SincronizacionIn
               ),
             );
           } else {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    SincronizacionInformacionPocketbaseScreen(
-                      instruccionesFallidasEmiWeb: context.read<SyncProviderEmiWeb>().instruccionesFallidas, 
-                      exitosoEmiWeb: false,
-                      ),
-              ),
-            );
+            if (context.read<SyncProviderEmiWeb>().usuarioExit) {
+              // Salimos de sesión
+              await context.read<UserState>().logout();
+            } else {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      SincronizacionInformacionPocketbaseScreen(
+                        instruccionesFallidasEmiWeb: context.read<SyncProviderEmiWeb>().instruccionesFallidas, 
+                        exitosoEmiWeb: false,
+                        ),
+                ),
+              );
+            }
           }
         });
       });

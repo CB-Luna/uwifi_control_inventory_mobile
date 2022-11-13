@@ -149,6 +149,11 @@ class UsuarioController extends ChangeNotifier {
           updateUsuario.roles.add(nuevoRol);
         }
       } 
+      //Se asiga el rol actual que ocupará
+      final rolActual = dataBase.rolesBox.query(Roles_.idDBR.equals(newRolesIdDBR[0])).build().findUnique(); //Se recupera el rol actual del Usuario
+      if (rolActual != null) {
+        updateUsuario.rol.target = rolActual;
+      }
       if (newImagen != null) {
         if (updateUsuario.imagen.target!.idDBR == null) {
           // Se agrega nueva imagen
