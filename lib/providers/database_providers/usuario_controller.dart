@@ -61,6 +61,7 @@ class UsuarioController extends ChangeNotifier {
       String? idDBR,
       List<String> rolesIdDBR,
       String idEmiWeb,
+      bool archivado,
       ) async {
     late Imagenes nuevaImagenUsuario;
     final nuevoUsuario = Usuarios(
@@ -73,6 +74,7 @@ class UsuarioController extends ChangeNotifier {
         password: password,
         idDBR: idDBR, 
         idEmiWeb: idEmiWeb,
+        archivado: archivado,
         );
     final nuevoSyncUsuario = StatusSync(); //Se crea el objeto estatus por dedault //M__ para Usuario
     if (imagen != null) {
@@ -117,7 +119,91 @@ class UsuarioController extends ChangeNotifier {
     }
   }
 
-void update(int id, int newIdRol) {
+  Future<bool> update(
+      String correo,
+      String newNombre,
+      String newApellidoP,
+      String? newApellidoM,
+      String? newTelefono,
+      String? newCelular,
+      String newPassword,
+      GetImagenUsuario? newImagen,
+      List<String> newRolesIdDBR,
+      bool newArchivado,
+      ) async {
+    // Se recupera el usuario por id
+    final updateUsuario = dataBase.usuariosBox.query(Usuarios_.correo.equals(correo)).build().findUnique();
+    if (updateUsuario != null) {
+      updateUsuario.nombre = newNombre;
+      updateUsuario.apellidoP = newApellidoP;
+      updateUsuario.apellidoM = newApellidoM;
+      updateUsuario.telefono = newTelefono;
+      updateUsuario.celular = newCelular;
+      updateUsuario.password = newPassword;
+      updateUsuario.archivado = newArchivado;
+      //Se agregan los roles actualizados
+      updateUsuario.roles.clear();
+      for (var i = 0; i < newRolesIdDBR.length; i++) {
+        final nuevoRol = dataBase.rolesBox.query(Roles_.idDBR.equals(newRolesIdDBR[i])).build().findUnique(); //Se recupera el rol del Usuario
+        if (nuevoRol != null) {
+          updateUsuario.roles.add(nuevoRol);
+        }
+      } 
+      if (newImagen != null) {
+        if (updateUsuario.imagen.target!.idDBR == null) {
+          // Se agrega nueva imagen
+          final uInt8ListImagen = base64Decode(newImagen.base64);
+          final tempDir = await getTemporaryDirectory();
+          File file = await File('${tempDir.path}/${newImagen.nombre}').create();
+          file.writeAsBytesSync(uInt8ListImagen);
+          final nuevaImagenUsuario = Imagenes(
+            imagenes: file.path,
+            nombre: newImagen.nombre,
+            path: file.path,
+            base64: newImagen.base64,
+            idEmiWeb: newImagen.idEmiWeb,
+            idDBR: newImagen.id,
+          ); 
+          nuevaImagenUsuario.usuario.target = updateUsuario;
+          dataBase.imagenesBox.put(nuevaImagenUsuario);
+          updateUsuario.imagen.target = nuevaImagenUsuario;
+        } else {
+          print("Se actualiza imagen Pocketbase");
+          // Se actualiza imagen
+          final uInt8ListImagen = base64Decode(newImagen.base64);
+          final tempDir = await getTemporaryDirectory();
+          File file = await File('${tempDir.path}/${newImagen.nombre}').create();
+          file.writeAsBytesSync(uInt8ListImagen);
+          updateUsuario.imagen.target!.imagenes = file.path;
+          updateUsuario.imagen.target!.nombre = newImagen.nombre;
+          updateUsuario.imagen.target!.path = file.path;
+          updateUsuario.imagen.target!.base64 = newImagen.base64;
+          dataBase.imagenesBox.put(updateUsuario.imagen.target!);
+        }
+      } else {
+        if (updateUsuario.imagen.target!.idDBR != null) {
+          // Se eliminan los datos de la imagen actual del usuario
+          updateUsuario.imagen.target!.imagenes = "";
+          updateUsuario.imagen.target!.nombre = null;
+          updateUsuario.imagen.target!.path = null;
+          updateUsuario.imagen.target!.base64 = null;
+          updateUsuario.imagen.target!.idDBR = null;
+          updateUsuario.imagen.target!.idEmiWeb = null;
+          updateUsuario.imagen.target!.fechaRegistro = DateTime.now();
+          dataBase.imagenesBox.put(updateUsuario.imagen.target!);
+        }
+      }
+      // Se actualiza el usuario con éxito
+      dataBase.usuariosBox.put(updateUsuario); 
+      return true;
+    } else {
+      // No se encontró el usuario a actualizar en ObjectBox
+      print("No se encontro usuario en ObjectBox");
+      return false;
+    }
+  }
+
+void updateRol(int id, int newIdRol) {
     var updateUsuario = dataBase.usuariosBox.get(id);
     if (updateUsuario != null) {
       final updateRol = dataBase.rolesBox.get(newIdRol);
@@ -175,14 +261,14 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
     return false;
   }
 
-  bool validateUserOffline(String email, String password) {
+  Usuarios? validateUserOffline(String email, String password) {
     final usuarios = dataBase.usuariosBox.getAll();
     for (int i = 0; i < usuarios.length; i++) {
       if (usuarios[i].correo == email && usuarios[i].password == password) {
-        return true;
+        return usuarios[i];
       }
     }
-    return false;
+    return null;
   }
 
   //Se recupera ID del Usuario ya existente

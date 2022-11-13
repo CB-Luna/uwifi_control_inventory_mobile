@@ -79,11 +79,20 @@ class RolesEmiWebProvider extends ChangeNotifier {
             response.body);
             storage.write(key: "tokenEmiWeb", value: responseTokenEmiWeb.accessToken);
             return true;
-          case 401:
+          case 400:
+            snackbarKey.currentState?.showSnackBar(const SnackBar(
+              content: Text("Correo electrónico y/o contraseña incorrectos."),
+            ));
             return false;
-          case 404:
+          case 401:
+            snackbarKey.currentState?.showSnackBar(const SnackBar(
+              content: Text("El usuario se encuentra archivado, comuníquese con el Administrador."),
+            ));
             return false;
           default:
+            snackbarKey.currentState?.showSnackBar(const SnackBar(
+              content: Text("Falló al conectarse con el servidor Emi Web."),
+            ));
             return false;
         }
     } catch (e) {
@@ -155,7 +164,6 @@ class RolesEmiWebProvider extends ChangeNotifier {
             return false;
           }
         case 404: //Error de ruta incorrecta
-          print("Caso 404 en Emi web");
           return false;
         default:
           return false;

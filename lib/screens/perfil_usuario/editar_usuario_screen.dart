@@ -575,7 +575,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                         .findFirst()
                                         ?.id;
                                     if (idRol != null) {
-                                      usuarioProvider.update(
+                                      usuarioProvider.updateRol(
                                         widget.usuario.id,
                                         idRol,
                                       );

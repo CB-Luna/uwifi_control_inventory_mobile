@@ -189,10 +189,23 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (passwordEncrypted == null) {
                                 return;
                               }
-                              if (usuarioProvider.validateUserOffline(
+                              final usuarioActual = usuarioProvider.validateUserOffline(
                                   userState.emailController.text,
-                                  passwordEncrypted)) {
+                                  passwordEncrypted);
+                              if (usuarioActual != null) {
                                 print('Usuario ya existente');
+                                if (usuarioActual.archivado) {
+                                  snackbarKey.currentState?.showSnackBar(const SnackBar(
+                                    content: Text("El usuario se encuentra archivado, comuníquese con el Administrador."),
+                                  ));
+                                  return;
+                                }
+                                if (usuarioActual.roles.toList().isEmpty) {
+                                  snackbarKey.currentState?.showSnackBar(const SnackBar(
+                                    content: Text("El Usuario no cuenta con los permisos necesarios para ingresar, favor de comunicarse con el Administrador."),
+                                  ));
+                                  return;
+                                }
                                 //Se guarda el ID DEL USUARIO (correo electrónico)
                                 prefs.setString(
                                     "userId", userState.emailController.text);
@@ -232,16 +245,17 @@ class _LoginScreenState extends State<LoginScreen> {
                             } else {
                               print("Proceso online");
                               //Proceso online
-                              final passwordEncrypted = processEncryption(userState.passwordController.text);
-                              if (passwordEncrypted == null) {
-                                return;
-                              }
-                              //Login a Pocketbase
-                              final loginResponsePocketbase = await AuthService.loginPocketbase(
-                                userState.emailController.text,
-                                passwordEncrypted,
-                              );
-                              if (loginResponsePocketbase == null) {
+                              // final passwordEncrypted = processEncryption(userState.passwordController.text);
+                              // if (passwordEncrypted == null) {
+                              //   return;
+                              // }
+                              // //Login a Pocketbase
+                              // final loginResponsePocketbase = await AuthService.loginPocketbase(
+                              //   userState.emailController.text,
+                              //   passwordEncrypted,
+                              // );
+                              // if (loginResponsePocketbase == null) {
+                                
                                 //Login a Emi Web
                                 final passwordEncrypted = processEncryption(userState.passwordController.text);
                                 if (passwordEncrypted == null) {
@@ -276,7 +290,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         snackbarKey.currentState
                                             ?.showSnackBar(const SnackBar(
                                           content: Text(
-                                              "Falló al validar Usuario."),
+                                              "Falló al validar Usuario en Servidor."),
                                         ));
                                       } else {
                                         if (await stringValidateUsuario == "NoUserExist") {
@@ -290,20 +304,23 @@ class _LoginScreenState extends State<LoginScreen> {
                                             snackbarKey.currentState
                                                 ?.showSnackBar(const SnackBar(
                                               content: Text(
-                                                  "Falló al recuperar Usuario."),
+                                                  "Falló al recuperar Usuario del Servidor."),
                                             ));
                                             return;
                                           }
                                         } else {
-                                          //Se actualiza Usuario en Pocketbase                       
-                                          if (!await AuthService.updateUsuarioPasswordPocketbase(
-                                            await stringValidateUsuario, 
-                                            passwordEncrypted)
+                                          //Se actualiza Usuario en Pocketbase                        
+                                          if (!await AuthService.updateUsuarioPocketbase(
+                                            loginResponseEmiWeb,
+                                            passwordEncrypted,
+                                            userState.emailController.text,
+                                            await stringValidateUsuario,
+                                            )
                                           ) {
                                             snackbarKey.currentState
                                                 ?.showSnackBar(const SnackBar(
                                               content: Text(
-                                                  "Falló al actualizar password de Usuario."),
+                                                  "Falló al actualizar datos de Usuario en Servidor."),
                                             ));
                                             return;
                                           }
@@ -340,8 +357,30 @@ class _LoginScreenState extends State<LoginScreen> {
                                           if (usuarioProvider.validateUsuario(userId)) {
                                             print('Usuario ya existente');
                                             usuarioProvider.getUser(userId);
-                                            usuarioProvider.updatePasswordLocal(
-                                                passwordEncrypted);
+                                            usuarioProvider.update(
+                                              loginResponsePocketbase.user.email,
+                                              emiUser.items![0].nombreUsuario,
+                                              emiUser.items![0].apellidoP,
+                                              emiUser.items![0].apellidoM,
+                                              emiUser.items![0].telefono,
+                                              emiUser.items![0].celular,
+                                              passwordEncrypted,
+                                              imageUser,
+                                              emiUser.items?[0].idRolesFk ?? [],
+                                              emiUser.items![0].archivado,
+                                              );
+                                            if (emiUser.items![0].idRolesFk!.isEmpty) {
+                                              snackbarKey.currentState?.showSnackBar(const SnackBar(
+                                                content: Text("El Usuario no cuenta con los permisos necesarios para iniciar sesión, favor de comunicarse con el Administrador."),
+                                              ));
+                                              return;
+                                            }
+                                            if (emiUser.items![0].archivado) {
+                                              snackbarKey.currentState?.showSnackBar(const SnackBar(
+                                                content: Text("El usuario se encuentra archivado, comuníquese con el Administrador."),
+                                              ));
+                                              return;
+                                            }
                                           } else {
                                             usuarioProvider.add(
                                               emiUser.items![0].nombreUsuario,
@@ -354,7 +393,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                               imageUser,
                                               idDBR,
                                               emiUser.items?[0].idRolesFk ?? [],
-                                              emiUser.items![0].idEmiWeb
+                                              emiUser.items![0].idEmiWeb,
+                                              emiUser.items![0].archivado,
                                             );
                                             usuarioProvider
                                                 .getUser(loginResponsePocketbase.user.email);
@@ -401,97 +441,93 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ));
                                   }
                                 } else {
-                                  snackbarKey.currentState
-                                      ?.showSnackBar(const SnackBar(
-                                    content: Text(
-                                        "Correo electrónico y/o contraseña incorrectos."),
-                                  ));
-                                }
-                              } else {
-                                //Login a Pocketbase
-                                await userState.setTokenPocketbase(loginResponsePocketbase.token);
-                                final userId = loginResponsePocketbase.user.email;
-
-                                //Se guarda el ID DEL USUARIO (correo)
-                                prefs.setString("userId", userId);
-                                //Se guarda el Password encriptado
-                                prefs.setString(
-                                    "passEncrypted", passwordEncrypted);
-
-                                //User Query
-                                final emiUser = await ApiService.getEmiUserPocketbase(
-                                    loginResponsePocketbase.user.id);
-
-                                final idDBR = await AuthService.userEMIByID(
-                                    loginResponsePocketbase.user.id);
-                                
-                                final imageUser = await AuthService.imagenUsuarioByID(
-                                     emiUser?.items?[0].idImagenFk ?? "empty");
-
-                                print("Hola miro el IdDBR $idDBR");
-                                if (emiUser == null) {
-                                  print("Si es null");
                                   return;
                                 }
-                                print("Hola miro el IdDBR post $idDBR");
-                                if (usuarioProvider.validateUsuario(userId)) {
-                                  print('Usuario ya existente');
-                                  usuarioProvider.getUser(userId);
-                                  usuarioProvider.updatePasswordLocal(
-                                      passwordEncrypted);
-                                } else {
-                                  print('Usuario no existente');
-                                  if (dataBase.catalogoProyectoBox.isEmpty()) {
-                                    rolesPocketbaseProvider.exitoso = true;
-                                    rolesPocketbaseProvider.procesoCargando(true);
-                                    rolesPocketbaseProvider.procesoTerminado(false);
-                                    rolesPocketbaseProvider.procesoExitoso(false);
-                                    Future<bool> booleanoPocketbase = rolesPocketbaseProvider.getRolesPocketbase();
-                                    if (await booleanoPocketbase == false) {
-                                      snackbarKey.currentState
-                                          ?.showSnackBar(const SnackBar(
-                                        content: Text(
-                                            "Falló al intentar recuperar los roles."),
-                                      ));
-                                      return;
-                                    }
-                                  }
-                                  usuarioProvider.add(
-                                    emiUser.items![0].nombreUsuario,
-                                    emiUser.items![0].apellidoP,
-                                    emiUser.items![0].apellidoM,
-                                    emiUser.items![0].telefono,
-                                    emiUser.items![0].celular,
-                                    loginResponsePocketbase.user.email,
-                                    passwordEncrypted,
-                                    imageUser,
-                                    idDBR,
-                                    emiUser.items?[0].idRolesFk ?? [],
-                                    emiUser.items![0].idEmiWeb
-                                  );
-                                  usuarioProvider
-                                      .getUser(loginResponsePocketbase.user.email);
-                                }
-                                if (userState.recuerdame == true) {
-                                  await userState.setEmail();
-                                  //TODO: quitar?
-                                  await userState.setPassword();
-                                } else {
-                                  userState.emailController.text = '';
-                                  userState.passwordController.text = '';
-                                  await prefs.remove('email');
-                                  await prefs.remove('password');
-                                }
+                              // } else {
+                              //   //Login a Pocketbase
+                              //   await userState.setTokenPocketbase(loginResponsePocketbase.token);
+                              //   final userId = loginResponsePocketbase.user.email;
 
-                                if (!mounted) return;
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const EmprendimientosScreen(),
-                                  ),
-                                );
-                              }
+                              //   //Se guarda el ID DEL USUARIO (correo)
+                              //   prefs.setString("userId", userId);
+                              //   //Se guarda el Password encriptado
+                              //   prefs.setString(
+                              //       "passEncrypted", passwordEncrypted);
+
+                              //   //User Query
+                              //   final emiUser = await ApiService.getEmiUserPocketbase(
+                              //       loginResponsePocketbase.user.id);
+
+                              //   final idDBR = await AuthService.userEMIByID(
+                              //       loginResponsePocketbase.user.id);
+                                
+                              //   final imageUser = await AuthService.imagenUsuarioByID(
+                              //        emiUser?.items?[0].idImagenFk ?? "empty");
+
+                              //   print("Hola miro el IdDBR $idDBR");
+                              //   if (emiUser == null) {
+                              //     print("Si es null");
+                              //     return;
+                              //   }
+                              //   print("Hola miro el IdDBR post $idDBR");
+                              //   if (usuarioProvider.validateUsuario(userId)) {
+                              //     print('Usuario ya existente');
+                              //     usuarioProvider.getUser(userId);
+                              //     usuarioProvider.updatePasswordLocal(
+                              //         passwordEncrypted);
+                              //   } else {
+                              //     print('Usuario no existente');
+                              //     if (dataBase.catalogoProyectoBox.isEmpty()) {
+                              //       rolesPocketbaseProvider.exitoso = true;
+                              //       rolesPocketbaseProvider.procesoCargando(true);
+                              //       rolesPocketbaseProvider.procesoTerminado(false);
+                              //       rolesPocketbaseProvider.procesoExitoso(false);
+                              //       Future<bool> booleanoPocketbase = rolesPocketbaseProvider.getRolesPocketbase();
+                              //       if (await booleanoPocketbase == false) {
+                              //         snackbarKey.currentState
+                              //             ?.showSnackBar(const SnackBar(
+                              //           content: Text(
+                              //               "Falló al intentar recuperar los roles."),
+                              //         ));
+                              //         return;
+                              //       }
+                              //     }
+                              //     usuarioProvider.add(
+                              //       emiUser.items![0].nombreUsuario,
+                              //       emiUser.items![0].apellidoP,
+                              //       emiUser.items![0].apellidoM,
+                              //       emiUser.items![0].telefono,
+                              //       emiUser.items![0].celular,
+                              //       loginResponsePocketbase.user.email,
+                              //       passwordEncrypted,
+                              //       imageUser,
+                              //       idDBR,
+                              //       emiUser.items?[0].idRolesFk ?? [],
+                              //       emiUser.items![0].idEmiWeb
+                              //     );
+                              //     usuarioProvider
+                              //         .getUser(loginResponsePocketbase.user.email);
+                              //   }
+                              //   if (userState.recuerdame == true) {
+                              //     await userState.setEmail();
+                              //     //TODO: quitar?
+                              //     await userState.setPassword();
+                              //   } else {
+                              //     userState.emailController.text = '';
+                              //     userState.passwordController.text = '';
+                              //     await prefs.remove('email');
+                              //     await prefs.remove('password');
+                              //   }
+
+                              //   if (!mounted) return;
+                              //   await Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //       builder: (context) =>
+                              //           const EmprendimientosScreen(),
+                              //     ),
+                              //   );
+                              // }
                             }
                           },
                           text: 'Ingresar',

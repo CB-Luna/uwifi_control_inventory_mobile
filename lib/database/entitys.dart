@@ -541,7 +541,7 @@ class Usuarios {
     required this.correo,
     required this.password,
     DateTime? fechaRegistro,
-    this.archivado = false,
+    required this.archivado,
     this.idDBR,
     required this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
