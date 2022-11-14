@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -34,6 +37,9 @@ class _EditarProductoEmprendedorScreenState
     final scaffoldKey = GlobalKey<ScaffoldState>();
     final formKey = GlobalKey<FormState>();
     XFile? image;
+    String path = "";
+    String base64 = "";
+    String nombreImagen = "";
     late String newImagen;
     String unidadMedida = "";
     List<String> listUnidadesMedida = [];
@@ -45,6 +51,9 @@ class _EditarProductoEmprendedorScreenState
   @override
   void initState() {
     super.initState();
+    path = "";
+    base64 = "";
+    nombreImagen = "";
     newImagen = widget.productoEmprendedor.imagen.target?.path ?? "";
     nombreController =
         TextEditingController(text: widget.productoEmprendedor.nombre);
@@ -221,9 +230,11 @@ class _EditarProductoEmprendedorScreenState
                                     0, 10, 0, 0),
                                 child: InkWell(
                                   onTap: () async {
-                                    String? option = await showModalBottomSheet(
+                                    String? option =
+                                        await showModalBottomSheet(
                                       context: context,
-                                      builder: (_) => const CustomBottomSheet(),
+                                      builder: (_) =>
+                                          const CustomBottomSheet(),
                                     );
 
                                     if (option == null) return;
@@ -250,8 +261,12 @@ class _EditarProductoEmprendedorScreenState
 
                                     setState(() {
                                       image = pickedFile;
-                                      newImagen =
-                                          image!.path;
+                                      File file = File(image!.path);
+                                      List<int> fileInByte = file.readAsBytesSync();
+                                      base64 = base64Encode(fileInByte);
+                                      path = image!.path;
+                                      newImagen = image!.path;
+                                      nombreImagen = image!.name;
                                     });
                                   },
                                   child: Container(
@@ -577,9 +592,7 @@ class _EditarProductoEmprendedorScreenState
                                   children: [
                                     FFButtonWidget(
                                       onPressed: () async {
-                                        if (newImagen !=
-                                              widget.productoEmprendedor.imagen.target?.path ||
-                                          nombreController.text !=
+                                        if (nombreController.text !=
                                               widget.productoEmprendedor.nombre ||
                                           descController.text !=
                                               widget.productoEmprendedor.descripcion ||
@@ -598,20 +611,36 @@ class _EditarProductoEmprendedorScreenState
                                               .findFirst()
                                               ?.id;
                                           if (idUnidadMedida != null) {
-                                                productoEmprendedorProvider.update(
-                                                    widget.productoEmprendedor.id,
-                                                    nombreController.text,
-                                                    descController.text,
-                                                    newImagen,
-                                                    costoController.text.replaceAll("\$", "").replaceAll(",", ""),
-                                                    idUnidadMedida);
-                                                await Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const ProductoEmprendedorActualizado(),
-                                                  ),
-                                                );
+                                              if (newImagen !=
+                                                  widget.productoEmprendedor.imagen.target?.path
+                                                ) {
+                                                  if (widget.productoEmprendedor.imagen.target?.path == null) {
+                                                    productoEmprendedorProvider.addImagenUsuario(
+                                                      nombreImagen,
+                                                      path,
+                                                      base64);
+                                                  } else {
+                                                    productoEmprendedorProvider.updateImagenUsuario(
+                                                      widget.productoEmprendedor.imagen.target!.id,
+                                                      nombreImagen,
+                                                      path,
+                                                      base64);
+                                                  }
+                                                }
+                                              productoEmprendedorProvider.update(
+                                                  widget.productoEmprendedor.id,
+                                                  nombreController.text,
+                                                  descController.text,
+                                                  newImagen,
+                                                  costoController.text.replaceAll("\$", "").replaceAll(",", ""),
+                                                  idUnidadMedida);
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const ProductoEmprendedorActualizado(),
+                                                ),
+                                              );
                                           }
                                         } else {
                                           await showDialog(
@@ -635,7 +664,31 @@ class _EditarProductoEmprendedorScreenState
                                           );
                                           return;
                                         }
-                                      } 
+                                      } else {
+                                        if (newImagen !=
+                                          widget.productoEmprendedor.imagen.target?.path
+                                        ) {
+                                          if (widget.productoEmprendedor.imagen.target?.path == null) {
+                                            productoEmprendedorProvider.addImagenUsuario(
+                                              nombreImagen,
+                                              path,
+                                              base64);
+                                          } else {
+                                            productoEmprendedorProvider.updateImagenUsuario(
+                                              widget.productoEmprendedor.imagen.target!.id,
+                                              nombreImagen,
+                                              path,
+                                              base64);
+                                          }
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const ProductoEmprendedorActualizado(),
+                                            ),
+                                          );
+                                        }
+                                      }
                                       },
                                       text: 'Actualizar',
                                       icon: const Icon(

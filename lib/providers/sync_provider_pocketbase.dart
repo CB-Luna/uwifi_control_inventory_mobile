@@ -401,6 +401,32 @@ class SyncProviderPocketbase extends ChangeNotifier {
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
           }
+        case "syncAddImagenProductoEmprendedor":
+          print("Entro al caso de syncAddImagenProductoEmprendedor Pocketbase");
+          final imagenToSync = getFirstImagen(dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
+          if(imagenToSync != null){
+            final boolSyncAddImagenProductoEmprendedor = await syncAddImagenProductoEmprendedor(imagenToSync, instruccionesBitacora[i]);
+            if (boolSyncAddImagenProductoEmprendedor) {
+              banderasExistoSync.add(boolSyncAddImagenProductoEmprendedor);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(boolSyncAddImagenProductoEmprendedor);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                instruccion: "Agregar Imagen del Producto Emprendedor Servidor", 
+                fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }      
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+              instruccion: "Agregar Imagen del Producto Emprendedor Servidor", 
+              fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
         case "syncAddVenta":
           print("Entro al caso de syncAddVenta Pocketbase");
           final ventaToSync = getFirstVenta(dataBase.ventasBox.getAll(), instruccionesBitacora[i].id);
@@ -993,6 +1019,33 @@ class SyncProviderPocketbase extends ChangeNotifier {
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
               instruccion: "Actualización Producto Emprendedor Servidor", 
+              fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
+        case "syncUpdateImagenProductoEmprendedor":
+          print("Entro al caso de syncUpdateImagenProductoEmprendedor Pocketbase");
+          final imagenToSync = getFirstImagen(dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
+          if(imagenToSync != null){
+            final boolSyncUpdateImagenProdEmprendedor = await syncUpdateImagenProductoEmprendedor(imagenToSync, instruccionesBitacora[i]);
+            if (boolSyncUpdateImagenProdEmprendedor) {
+              print("La respuesta es: $boolSyncUpdateImagenProdEmprendedor");
+              banderasExistoSync.add(boolSyncUpdateImagenProdEmprendedor);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(boolSyncUpdateImagenProdEmprendedor);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                instruccion: "Actualización Imagen del Producto Emprendedor Servidor", 
+                fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }     
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+              instruccion: "Actualización Imagen del Producto Emprendedor Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
@@ -2640,6 +2693,44 @@ class SyncProviderPocketbase extends ChangeNotifier {
     }
   }
 
+
+  Future<bool> syncAddImagenProductoEmprendedor(Imagenes imagen, Bitacora bitacora) async {
+    print("Estoy en syncAddImagenProductoEmprendedor");
+    try {
+      if (!bitacora.executePocketbase) {
+        final recordImagenProductoEmprendedor = await client.records.create('imagenes', body: {
+         "nombre": imagen.nombre,
+         "base64": imagen.base64,
+         "id_emi_web": imagen.idEmiWeb,
+        });
+        if (recordImagenProductoEmprendedor.id.isNotEmpty) {
+          //Se recupera el idDBR de la imagen
+          imagen.idDBR = recordImagenProductoEmprendedor.id;
+          dataBase.imagenesBox.put(imagen);
+          //Se marca como realizada en Pocketbase la instrucción en Bitacora
+          bitacora.executePocketbase = true;
+          dataBase.bitacoraBox.put(bitacora);
+          if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+            //Se elimina la instrucción de la bitacora
+            dataBase.bitacoraBox.remove(bitacora.id);
+          } 
+          return true;
+        } else {
+          return false;
+        }  
+      } else {
+        if (bitacora.executeEmiWeb) {
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
+        } 
+        return true;
+      }
+    } catch (e) {
+      print('ERROR - function syncAddImagenProductoEmprendedor(): $e');
+      return false;
+    }
+}
+
   Future<bool> syncAddVenta(Ventas venta, Bitacora bitacora) async {
     print("Estoy en El syncAddVenta");
     try {
@@ -3888,6 +3979,40 @@ void deleteBitacora() {
       }
     } catch (e) {
       print('ERROR - function syncUpdateProductoEmprendedor(): $e');
+      return false;
+    }
+  } 
+
+  Future<bool> syncUpdateImagenProductoEmprendedor(Imagenes imagen, Bitacora bitacora) async {
+    print("Estoy en El syncUpdateImagenProductoEmprendedor en Pocketbase");
+    try {
+      if (!bitacora.executePocketbase) {
+        final record = await client.records.update('imagenes', imagen.idDBR.toString(), body: {
+            "nombre": imagen.nombre,
+            "base64": imagen.base64,
+        }); 
+        if (record.id.isNotEmpty) {
+          //Se marca como realizada en Pocketbase la instrucción en Bitacora
+          bitacora.executePocketbase = true;
+          dataBase.bitacoraBox.put(bitacora);
+          if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+            //Se elimina la instrucción de la bitacora
+            dataBase.bitacoraBox.remove(bitacora.id);
+          }
+          return true;
+        }
+        else{
+          return false;
+        }
+      } else {
+        if (bitacora.executeEmiWeb) {
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
+        }
+        return true;
+      }
+    } catch (e) {
+      print('ERROR - function syncUpdateImagenProductoEmprendedor(): $e');
       return false;
     }
   } 

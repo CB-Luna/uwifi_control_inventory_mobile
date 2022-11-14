@@ -1726,7 +1726,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(47, 4406411524870188538),
       name: 'Imagenes',
-      lastPropertyId: const IdUid(14, 2276817419616758245),
+      lastPropertyId: const IdUid(15, 3259635853753189453),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1797,7 +1797,14 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(258, 2564110096327135084),
-            relationTarget: 'Tareas')
+            relationTarget: 'Tareas'),
+        ModelProperty(
+            id: const IdUid(15, 3259635853753189453),
+            name: 'productosEmpId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(266, 3634839339436258221),
+            relationTarget: 'ProductosEmp')
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -1816,10 +1823,6 @@ final _entities = <ModelEntity>[
             id: const IdUid(67, 3401496880925313742),
             name: 'prodProyecto',
             targetId: const IdUid(60, 794331956868775333)),
-        ModelRelation(
-            id: const IdUid(73, 134544593655180451),
-            name: 'productosEmp',
-            targetId: const IdUid(43, 8172937846526815489)),
         ModelRelation(
             id: const IdUid(74, 211223486003667531),
             name: 'bitacora',
@@ -2812,7 +2815,7 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(62, 5967866020755512418),
-      lastIndexId: const IdUid(265, 3046345138494460818),
+      lastIndexId: const IdUid(266, 3634839339436258221),
       lastRelationId: const IdUid(82, 2481463102848550386),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -3228,7 +3231,8 @@ ModelDefinition getObjectBoxModel() {
         3150796807169985253,
         4209805199751898594,
         7559880855013026980,
-        2166414226903887086
+        2166414226903887086,
+        134544593655180451
       ],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -5175,14 +5179,14 @@ ModelDefinition getObjectBoxModel() {
               object.usuario,
               object.emprendedor,
               object.emprendimiento,
-              object.tarea
+              object.tarea,
+              object.productosEmp
             ],
         toManyRelations: (Imagenes object) => {
               RelInfo<Imagenes>.toMany(46, object.id): object.prodSolicitados,
               RelInfo<Imagenes>.toMany(52, object.id): object.productosProv,
               RelInfo<Imagenes>.toMany(63, object.id): object.inversiones,
               RelInfo<Imagenes>.toMany(67, object.id): object.prodProyecto,
-              RelInfo<Imagenes>.toMany(73, object.id): object.productosEmp,
               RelInfo<Imagenes>.toMany(74, object.id): object.bitacora
             },
         getId: (Imagenes object) => object.id,
@@ -5202,7 +5206,7 @@ ModelDefinition getObjectBoxModel() {
               object.base64 == null ? null : fbb.writeString(object.base64!);
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(15);
+          fbb.startTable(16);
           fbb.addInt64(0, object.id);
           fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addOffset(3, imagenesOffset);
@@ -5215,6 +5219,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(11, object.emprendedor.targetId);
           fbb.addInt64(12, object.emprendimiento.targetId);
           fbb.addInt64(13, object.tarea.targetId);
+          fbb.addInt64(14, object.productosEmp.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -5250,6 +5255,9 @@ ModelDefinition getObjectBoxModel() {
           object.tarea.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0);
           object.tarea.attach(store);
+          object.productosEmp.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 32, 0);
+          object.productosEmp.attach(store);
           InternalToManyAccess.setRelInfo(object.prodSolicitados, store,
               RelInfo<Imagenes>.toMany(46, object.id), store.box<Imagenes>());
           InternalToManyAccess.setRelInfo(object.productosProv, store,
@@ -5258,8 +5266,6 @@ ModelDefinition getObjectBoxModel() {
               RelInfo<Imagenes>.toMany(63, object.id), store.box<Imagenes>());
           InternalToManyAccess.setRelInfo(object.prodProyecto, store,
               RelInfo<Imagenes>.toMany(67, object.id), store.box<Imagenes>());
-          InternalToManyAccess.setRelInfo(object.productosEmp, store,
-              RelInfo<Imagenes>.toMany(73, object.id), store.box<Imagenes>());
           InternalToManyAccess.setRelInfo(object.bitacora, store,
               RelInfo<Imagenes>.toMany(74, object.id), store.box<Imagenes>());
           return object;
@@ -7304,6 +7310,10 @@ class Imagenes_ {
   static final tarea =
       QueryRelationToOne<Imagenes, Tareas>(_entities[24].properties[11]);
 
+  /// see [Imagenes.productosEmp]
+  static final productosEmp =
+      QueryRelationToOne<Imagenes, ProductosEmp>(_entities[24].properties[12]);
+
   /// see [Imagenes.prodSolicitados]
   static final prodSolicitados =
       QueryRelationToMany<Imagenes, ProdSolicitado>(_entities[24].relations[0]);
@@ -7320,13 +7330,9 @@ class Imagenes_ {
   static final prodProyecto =
       QueryRelationToMany<Imagenes, ProdProyecto>(_entities[24].relations[3]);
 
-  /// see [Imagenes.productosEmp]
-  static final productosEmp =
-      QueryRelationToMany<Imagenes, ProductosEmp>(_entities[24].relations[4]);
-
   /// see [Imagenes.bitacora]
   static final bitacora =
-      QueryRelationToMany<Imagenes, Bitacora>(_entities[24].relations[5]);
+      QueryRelationToMany<Imagenes, Bitacora>(_entities[24].relations[4]);
 }
 
 /// [Inversiones] entity fields to define ObjectBox queries.

@@ -45,7 +45,7 @@ class ProductoEmprendedorController extends ChangeNotifier {
       descripcion: descripcion,
       costo: double.parse(costo),
       );
-      //Se agrega las imagene al producto emprendedor
+      //Se agrega las imagen al producto emprendedor
       if (imagen != null) {
         final nuevaImagenProductoEmp = Imagenes(
           imagenes: imagen!.path,
@@ -53,6 +53,7 @@ class ProductoEmprendedorController extends ChangeNotifier {
           path: imagen!.path,
           base64: imagen!.base64,
           ); //Se crea el objeto imagenes para la ProductoEmp
+        nuevaImagenProductoEmp.productosEmp.target = nuevoProductoEmp;
         nuevoProductoEmp.imagen.target = nuevaImagenProductoEmp;
       }
       final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
@@ -96,19 +97,34 @@ class ProductoEmprendedorController extends ChangeNotifier {
     print('Producto Emprendedor actualizado exitosamente');
     notifyListeners();
 }
-  //TODO Eliminar producto del backend, agregando un campo idbr en la bitacora
 
-  // void remove(ProductosEmp productosEmp) {
-  //   print("Tamaño productos antes de remover: ${dataBase.productosEmpBox.getAll().length}");
-  //   final nuevaInstruccion = Bitacora(instrucciones: 'syncDeleteProductoEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-  //   dataBase.productosEmpBox.remove(productosEmp.id); //Se elimina de bitacora la instruccion creada anteriormente
-  //   print("Tamaño productos después de remover: ${dataBase.productosEmpBox.getAll().length}");
-  //   notifyListeners(); 
-  // }
+void updateImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPath, String newBase64) {
+    var updateImagenUsuario = dataBase.imagenesBox.get(idImagenUsuario);
+    final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateImagenProductoEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+    if (updateImagenUsuario != null) {
+      updateImagenUsuario.imagenes = newPath; //Se actualiza la imagen del usuario
+      updateImagenUsuario.nombre = newNombreImagen;
+      updateImagenUsuario.base64 = newBase64;
+      updateImagenUsuario.path = newPath;
+      updateImagenUsuario.bitacora.add(nuevaInstruccion);
+      dataBase.imagenesBox.put(updateImagenUsuario);
+      print('Imagen Prod Emprendedor actualizada exitosamente');
+    }
+    notifyListeners();
+  }
 
-  // getAll() {
-  //   emprendimientos = dataBase.emprendimientosBox.getAll();
-  //   notifyListeners();
-  // }
+void addImagenUsuario(String newNombreImagen, String newPath, String newBase64) {
+    final nuevaInstruccion = Bitacora(instruccion: 'syncAddImagenProductoEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final newImagenUsuario = Imagenes(
+        imagenes: newPath,
+        nombre: newNombreImagen,
+        base64: newBase64,
+        path: newPath,
+      );
+      newImagenUsuario.bitacora.add(nuevaInstruccion);
+      dataBase.imagenesBox.put(newImagenUsuario);
+      print('Imagen Prod Emprendedor agregada exitosamente');
+    notifyListeners();
+  }
   
 }

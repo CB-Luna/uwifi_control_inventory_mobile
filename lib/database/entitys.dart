@@ -1192,7 +1192,7 @@ class Imagenes {
   final productosProv = ToMany<ProductosProv>();
   final prodProyecto = ToMany<ProdProyecto>();
   final inversiones = ToMany<Inversiones>();
-  final productosEmp = ToMany<ProductosEmp>();
+  final productosEmp = ToOne<ProductosEmp>();
   final bitacora = ToMany<Bitacora>();
   final emprendedor = ToOne<Emprendedores>();
   final emprendimiento = ToOne<Emprendimientos>();
