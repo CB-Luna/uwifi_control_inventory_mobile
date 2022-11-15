@@ -15,7 +15,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/providers/providers.dart';
 import 'package:bizpro_app/screens/emprendimientos/grid_emprendimientos_screen.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -76,7 +75,6 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
     final emprendimientoProvider =
         Provider.of<EmprendimientoController>(context);
     final Usuarios currentUser = usuarioProvider.usuarioCurrent!;
-    final UserState userState = Provider.of<UserState>(context);
     emprendimientos = [];
     emprendimientos = usuarioProvider.getEmprendimientos();
     return WillPopScope(
@@ -692,13 +690,6 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                                             );
                                                           },
                                                         );
-                                                        // Navigator.push(
-                                                        // context,
-                                                        // MaterialPageRoute(
-                                                        // builder: (context) =>
-                                                        //     const EmprendimientoArchivadoScreen(),
-                                                        //       ),
-                                                        // );
                                                       }
                                                     }),
                                               ]),

@@ -1,10 +1,14 @@
 import 'dart:io';
+import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/id_prod_emp_nombre_prod_vendido.dart';
+import 'package:bizpro_app/providers/database_providers/producto_venta_controller.dart';
 import 'package:bizpro_app/screens/ventas/editar_venta.dart';
+import 'package:bizpro_app/screens/ventas/productos_vendidos_actualizados.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/providers/database_providers/producto_venta_controller.dart';
 import 'package:bizpro_app/providers/database_providers/venta_controller.dart';
 import 'package:bizpro_app/screens/ventas/agregar_producto_venta.dart';
 import 'package:bizpro_app/screens/ventas/editar_producto_venta.dart';
@@ -14,12 +18,14 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
 import 'package:bizpro_app/theme/theme.dart';
 
 class RegistroVentaScreen extends StatefulWidget {
+  final List<ProdVendidos> prodVendidos;
   final Ventas venta;
   final Emprendimientos emprendimiento;
   const RegistroVentaScreen({
     Key? key,
     required this.venta, 
-    required this.emprendimiento,
+    required this.emprendimiento, 
+    required this.prodVendidos,
   }) : super(key: key);
 
   @override
@@ -43,19 +49,19 @@ class _RegistroVentaScreenState
 
   @override
   Widget build(BuildContext context) {
-    final productoVentaController =
+    final productoVentaProvider =
         Provider.of<ProductoVentaController>(context);
     final ventaController =
         Provider.of<VentaController>(context);
-    List<ProdVendidos> productosVendidos =
-        widget.venta.prodVendidos.toList();
-    List<String> nombreProductosVendidos = [];
-    List<ProdVendidos> prodRegistradosVendidos = [];
+    List<IdProdEmpNombreProdVendido> listIdProdEmpNombreProdVendidos = [];
     double totalProyecto = 0;
     ventaController.total = "";
-    for (var element in productosVendidos) {
-      prodRegistradosVendidos.add(element);
-      nombreProductosVendidos.add(element.productoEmp.target?.nombre ?? "SIN NOMBRE");
+    for (var element in widget.prodVendidos) {
+      final newIdProdEmpNombreProdVendido = IdProdEmpNombreProdVendido(
+        idProductoEmp: element.productoEmp.target!.id,
+        nombreProdVendido: element.nombreProd
+        );
+      listIdProdEmpNombreProdVendidos.add(newIdProdEmpNombreProdVendido);
       totalProyecto += (element.subtotal);
     }
     ventaController.total = totalProyecto.toString();
@@ -103,6 +109,7 @@ class _RegistroVentaScreenState
                                 ),
                                 child: InkWell(
                                   onTap: () async {
+                                    productoVentaProvider.clearInformation();
                                     await Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -411,7 +418,7 @@ class _RegistroVentaScreenState
                                                               ),
                                                             ),
                                                             Text(
-                                                              prodRegistradosVendidos
+                                                              widget.prodVendidos
                                                                   .length
                                                                   .toString(),
                                                               style: AppTheme.of(
@@ -487,8 +494,8 @@ class _RegistroVentaScreenState
                                                     builder: (context) =>
                                                         AgregarProductoVenta(
                                                           emprendimiento: widget.venta.emprendimiento.target!,
-                                                          prodRegistradosVendidos: nombreProductosVendidos,
-                                                          idVenta: widget.venta.id,
+                                                          prodRegistradosEmpVendidos: listIdProdEmpNombreProdVendidos,
+                                                          venta: widget.venta,
                                                         ),
                                                   ),
                                                 );
@@ -530,10 +537,10 @@ class _RegistroVentaScreenState
                                             padding: EdgeInsets.zero,
                                             shrinkWrap: true,
                                             scrollDirection: Axis.vertical,
-                                            itemCount: prodRegistradosVendidos.length,
+                                            itemCount: widget.prodVendidos.length,
                                             itemBuilder: (context, index) {
                                               final prodVendido =
-                                                  prodRegistradosVendidos[index];
+                                                  widget.prodVendidos[index];
                                               return InkWell(
                                                 onTap: () async {
                                                   await Navigator.push(
@@ -782,6 +789,54 @@ class _RegistroVentaScreenState
                                           );
                                         },
                                       ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            0, 20, 0, 10),
+                                        child: FFButtonWidget(
+                                          onPressed: () async {
+                                            if (productoVentaProvider.instruccionesProdVendido.isNotEmpty) {
+                                              productoVentaProvider
+                                                .updateProductosVendidos(widget.venta);
+                                              final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateProductosVendidosVenta', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+                                              widget.venta.bitacora.add(nuevaInstruccion);
+                                              dataBase.ventasBox.put(widget.venta);
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ProductosVendidosActualizadosScreen(idEmprendimiento: widget.emprendimiento.id,),
+                                                ),
+                                              );
+                                            }
+                                          },
+                                          text: 'Actualizar',
+                                          icon: const Icon(
+                                            Icons.check_rounded,
+                                            size: 15,
+                                          ),
+                                          options: FFButtonOptions(
+                                            width: 130,
+                                            height: 40,
+                                            color: AppTheme.of(context).secondaryText,
+                                            textStyle: AppTheme.of(context)
+                                                .subtitle2
+                                                .override(
+                                                  fontFamily:
+                                                      AppTheme.of(context).subtitle2Family,
+                                                  color: Colors.white,
+                                                  fontSize: 15,
+                                                ),
+                                            borderSide: const BorderSide(
+                                              color: Colors.transparent,
+                                              width: 1,
+                                            ),
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 40,
+                                      )
                                     ],
                                   ),
                                 ).animated([

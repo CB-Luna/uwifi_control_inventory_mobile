@@ -1,3 +1,6 @@
+import 'package:bizpro_app/modelsPocketbase/temporals/id_prod_emp_nombre_prod_vendido.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/save_instruccion_producto_vendido.dart';
+import 'package:bizpro_app/screens/ventas/registro_venta_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:flutter/services.dart';
@@ -7,8 +10,6 @@ import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/screens/ventas/producto_venta_creado.dart';
-import 'package:bizpro_app/providers/database_providers/venta_controller.dart';
 import 'package:bizpro_app/providers/database_providers/producto_venta_controller.dart';
 
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
@@ -16,13 +17,13 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 class AgregarProductoVenta extends StatefulWidget {
   final Emprendimientos emprendimiento;
-  final List<String> prodRegistradosVendidos;
-  final int idVenta;
+  final List<IdProdEmpNombreProdVendido> prodRegistradosEmpVendidos;
+  final Ventas venta;
   const AgregarProductoVenta({
     Key? key, 
     required this.emprendimiento, 
-    required this.prodRegistradosVendidos,
-    required this.idVenta
+    required this.prodRegistradosEmpVendidos,
+    required this.venta
     }) : super(key: key);
 
   @override
@@ -39,6 +40,7 @@ class _AgregarProductoVentaState
     TextEditingController precioVenta =  TextEditingController();
     TextEditingController subTotal =  TextEditingController();
     TextEditingController costoUnitario = TextEditingController();
+    String descripcion = "";
     String producto = "";
     TextEditingController unidadMedida = TextEditingController();
     List<String> listProductos = [];
@@ -46,26 +48,26 @@ class _AgregarProductoVentaState
   void initState() {
     super.initState();
     idProductoEmp = -1;
+    descripcion = "";
     cantidadVendida.text = "";
     precioVenta.text =  "";
     subTotal.text = "";
     costoUnitario = TextEditingController();
     producto = "";
     unidadMedida = TextEditingController();
-    listProductos = [];
-    widget.emprendimiento.productosEmp.toList().forEach((element) {
-      if (!widget.prodRegistradosVendidos.contains(element.nombre)) {
-        listProductos.add(element.nombre);
+    final productosEmp = dataBase.productosEmpBox.getAll().toList();
+    for (var i = 0; i < productosEmp.length; i++) {
+      var index = widget.prodRegistradosEmpVendidos.indexWhere((element) => element.idProductoEmp == productosEmp[i].id);
+      if (index == -1) {
+        listProductos.add(productosEmp[i].nombre);
       }
-    });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final productoVentaProvider =
         Provider.of<ProductoVentaController>(context);
-    final ventaProvider =
-        Provider.of<VentaController>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -184,12 +186,14 @@ class _AgregarProductoVentaState
                                           idProductoEmp = -1;
                                           costoUnitario = TextEditingController(text: "");
                                           unidadMedida = TextEditingController(text: "");
+                                          descripcion = "";
                                           producto = val!;
                                           dataBase.productosEmpBox
                                               .getAll()
                                               .forEach((element) {
                                             if (element.nombre ==
                                                 producto) {
+                                              descripcion = element.descripcion;
                                               costoUnitario.text = 
                                                 currencyFormat.format(element.costo.toStringAsFixed(2));
                                               unidadMedida.text = 
@@ -564,36 +568,38 @@ class _AgregarProductoVentaState
                                       onPressed: () async {
                                         if (productoVentaProvider
                                                 .validateForm(formKey)) {
-                                          final idUnidadMedida = dataBase.unidadesMedidaBox
+                                          final newUnidadMedida = dataBase.unidadesMedidaBox
                                               .query(UnidadMedida_.unidadMedida
                                                   .equals(unidadMedida.text))
                                               .build()
-                                              .findFirst()
-                                              ?.id;
-                                          if (idUnidadMedida != null) {
-                                            productoVentaProvider.addSingle(
-                                              widget.idVenta,
-                                              idProductoEmp,
-                                              subTotal.text
-                                              );
-                                            // dataBase.ventasBox.query(StatusSync_.id.equals(updateJornada.statusSync.target!.id)).build().findUnique();
-                                            double totalVentas = 0.00;
-                                            Ventas venta = dataBase.ventasBox.get(widget.idVenta)!;
-                                            List<ProdVendidos> productosVenta = venta.prodVendidos.toList();
-                                            for (var i = 0; i < productosVenta.length; i++) {
-                                              totalVentas += productosVenta[i].subtotal;
-                                            }
-                                            ventaProvider.update(
-                                              venta.id,
-                                              venta.fechaInicio,
-                                              venta.fechaTermino,
-                                              totalVentas,
-                                              );
+                                              .findFirst();
+                                          if (newUnidadMedida != null) {
+                                            final newProductoVendido = ProdVendidos(
+                                              nombreProd: producto, 
+                                              descripcion: descripcion, 
+                                              costo: double.parse(costoUnitario.text),
+                                              cantVendida: int.parse(cantidadVendida.text),
+                                              subtotal: double.parse(subTotal.text.replaceAll("\$", "").replaceAll(",","")),
+                                              precioVenta: double.parse(precioVenta.text.replaceAll("\$", "").replaceAll(",","")),
+                                            );
+                                            newProductoVendido.unidadMedida.target = newUnidadMedida;
+                                            final newInstruccionProdVendido = SaveInstruccionProductoVendido(
+                                              instruccion: "syncAddProductoVendido", 
+                                              prodVendido: newProductoVendido,
+                                            );
+                                            productoVentaProvider
+                                              .listProdVendidosActual.add(newProductoVendido);
+                                            productoVentaProvider
+                                              .instruccionesProdVendido.add(newInstruccionProdVendido);
                                             await Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const ProductoVentaCreadoScreen(),
+                                                    RegistroVentaScreen(
+                                                      venta: widget.venta, 
+                                                      emprendimiento: widget.emprendimiento, 
+                                                      prodVendidos: productoVentaProvider.listProdVendidosActual,
+                                                    ),
                                               ),
                                             );
                                           }

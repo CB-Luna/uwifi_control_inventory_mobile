@@ -11,16 +11,6 @@ class RecepcionYEntregaController extends ChangeNotifier {
 
   GlobalKey<FormState> recepcionYentregaInversionFormKey = GlobalKey<FormState>();
 
-  //Recepcion y Entrega Inversion
-  // String numJornada = '';
-  // DateTime? fechaRevision = DateTime.now();
-  // DateTime? fechaRegistro = DateTime.now();
-  // String tarea = "";
-  // String observacion = "";
-  // String descripcion = "";
-  // List<String> imagenes = [];
-  // bool activo = true;
-
   bool validateForm(GlobalKey<FormState> recepcionYentregaInversionKey) {
     return recepcionYentregaInversionKey.currentState!.validate() ? true : false;
   }
@@ -30,14 +20,6 @@ class RecepcionYEntregaController extends ChangeNotifier {
   {
     prodCotizadosTemp.clear();
     inversionXProdCotizadosTemp = null;
-    // numJornada = '';
-    // fechaRevision = null;
-    // fechaRegistro = null;
-    // tarea = "";
-    // observacion = "";
-    // descripcion = "";
-    // imagenes = [];
-    // activo = true;
   }
 
   double getProdCotizadosEinversionXprodCotizados(List<ProdCotizados> actualProdCotizados, InversionesXProdCotizados actualInversionXprodCotizados) {
@@ -54,16 +36,19 @@ class RecepcionYEntregaController extends ChangeNotifier {
     for (var i = 0; i < prodCotizadosTemp.length; i++) {
       final updateProdCotizado = dataBase.productosCotBox.get(prodCotizadosTemp[i].id);
        if (updateProdCotizado != null) {
-        final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateProdCotizado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-        updateProdCotizado.aceptado = prodCotizadosTemp[i].aceptado;
-        final statusSyncProdcotizado = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateProdCotizado.statusSync.target!.id)).build().findUnique();
-        if (statusSyncProdcotizado != null) {
-          statusSyncProdcotizado.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del prod Cotizado
-          dataBase.statusSyncBox.put(statusSyncProdcotizado);
+        if (prodCotizadosTemp[i].aceptado) {
+          final nuevaInstruccion = Bitacora(instruccion: 'syncAcceptProdCotizado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+          updateProdCotizado.aceptado = prodCotizadosTemp[i].aceptado;
+          updateProdCotizado.bitacora.add(nuevaInstruccion);
+          dataBase.productosCotBox.put(updateProdCotizado);
+          print('Prod Cotizado aceptado exitosamente');
+        } else {
+          final nuevaInstruccion = Bitacora(instruccion: 'syncRejectProdCotizado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+          updateProdCotizado.aceptado = prodCotizadosTemp[i].aceptado;
+          updateProdCotizado.bitacora.add(nuevaInstruccion);
+          dataBase.productosCotBox.put(updateProdCotizado);
+          print('Prod Cotizado rechazado exitosamente');
         }
-        updateProdCotizado.bitacora.add(nuevaInstruccion);
-        dataBase.productosCotBox.put(updateProdCotizado);
-        print('Prod Cotizado actualizado exitosamente');
       }
     }
   }
@@ -72,13 +57,8 @@ class RecepcionYEntregaController extends ChangeNotifier {
     for (var i = 0; i < prodCotizadosTemp.length; i++) {
       final updateProdCotizado = dataBase.productosCotBox.get(prodCotizadosTemp[i].id);
        if (updateProdCotizado != null) {
-        final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateProdCotizado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+        final nuevaInstruccion = Bitacora(instruccion: 'syncAcceptProdCotizado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
         updateProdCotizado.aceptado = prodCotizadosTemp[i].aceptado;
-        final statusSyncProdcotizado = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateProdCotizado.statusSync.target!.id)).build().findUnique();
-        if (statusSyncProdcotizado != null) {
-          statusSyncProdcotizado.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del prod Cotizado
-          dataBase.statusSyncBox.put(statusSyncProdcotizado);
-        }
         updateProdCotizado.bitacora.add(nuevaInstruccion);
         dataBase.productosCotBox.put(updateProdCotizado);
         print('Prod Cotizado actualizado exitosamente');
@@ -87,13 +67,8 @@ class RecepcionYEntregaController extends ChangeNotifier {
 
     final updateInversionXprodCotizado = dataBase.inversionesXprodCotizadosBox.get(inversionXProdCotizados.id);
        if (updateInversionXprodCotizado != null) {
-        final nuevaInstruccionInversionXprodCotizado = Bitacora(instruccion: 'syncUpdateInversionXProdCotizado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+        final nuevaInstruccionInversionXprodCotizado = Bitacora(instruccion: 'syncAcceptInversionXProdCotizado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
         updateInversionXprodCotizado.aceptado = inversionXProdCotizados.aceptado;
-        final statusSyncInversionXProdCotizados = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateInversionXprodCotizado.statusSync.target!.id)).build().findUnique();
-        if (statusSyncInversionXProdCotizados != null) {
-          statusSyncInversionXProdCotizados.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del prod Cotizado X Inversion
-          dataBase.statusSyncBox.put(statusSyncInversionXProdCotizados);
-        }
         updateInversionXprodCotizado.bitacora.add(nuevaInstruccionInversionXprodCotizado);
         dataBase.inversionesXprodCotizadosBox.put(updateInversionXprodCotizado);
         print('Inversion X Prod Cotizado actualizado exitosamente');
@@ -104,15 +79,10 @@ class RecepcionYEntregaController extends ChangeNotifier {
     final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Entregada Al Promotor")).build().findFirst();
     final updateInversion = dataBase.inversionesBox.get(inversionXProdCotizados.inversion.target!.id);
     if (newEstadoInversion != null && updateInversion != null) {
-      final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateInversion.statusSync.target!.id)).build().findUnique();
-      if (statusSync != null) {
-        statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del emprendimiento
-        dataBase.statusSyncBox.put(statusSync);
-        updateInversion.estadoInversion.target = newEstadoInversion;
-        updateInversion.bitacora.add(nuevaInstruccionEstadoInversion);
-        dataBase.inversionesBox.put(updateInversion);
-        print("Inversion updated succesfully");
-      }
+      updateInversion.estadoInversion.target = newEstadoInversion;
+      updateInversion.bitacora.add(nuevaInstruccionEstadoInversion);
+      dataBase.inversionesBox.put(updateInversion);
+      print("Inversion updated succesfully");
     }
   }
 
@@ -203,10 +173,6 @@ void updatePago(double newMontoAbonado, int idInversion) {
 
 
   void remove(ProdCotizados prodCotizados) {
-    notifyListeners(); 
-  }
-
-   void notification() {
     notifyListeners(); 
   }
 

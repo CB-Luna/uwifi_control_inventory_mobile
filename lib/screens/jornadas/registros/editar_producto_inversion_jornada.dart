@@ -1087,18 +1087,6 @@ class _EditarProductoInversionJornadaState
                                               .findFirst();
                                           if (nuevaFamiliaProd != null &&
                                               nuevoTipoEmpaque != null) {
-                                            //   productoInversionJornadaController.update(
-                                            //   widget.productoSol.id,
-                                            //   productoController.text,
-                                            //   marcaController.text,
-                                            //   descripcionController.text,
-                                            //   proveedorController.text,
-                                            //   costoController.text.replaceAll("\$", "").replaceAll(",", ""),
-                                            //   cantidadController.text,
-                                            //   newIdFamiliaProd,
-                                            //   newIdTipoEmpaque,
-                                            //   newImagen ?? ''
-                                            // );
                                             final indexUpdateProdSolicitado = productoInversionJornadaController
                                                 .listProdSolicitadosActual
                                                 .indexOf(widget.productoSol);

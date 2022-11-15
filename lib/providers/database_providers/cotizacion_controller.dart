@@ -109,7 +109,7 @@ class CotizacionController extends ChangeNotifier {
             dataBase.inversionesBox.put(inversion);
             print("Inversion updated succesfully");
             if (await getTokenOAuth()) {
-              // Se crea el API para realizar la actualización en Emi Web
+              // Se crea el API para realizar la actualización de estado inversión en Emi Web
               final actualizarEstadoInversionUri =
                 Uri.parse('$baseUrlEmiWebServices/inversion/estadoInversion');
               final headers = ({
@@ -131,9 +131,40 @@ class CotizacionController extends ChangeNotifier {
               print("Id Inversión: ${inversion.idEmiWeb}");
               switch (responsePutUpdateEstadoInversion.statusCode) {
                 case 200:
-                print("Caso 200 en Emi Web Update Estado Inversión");
-                  //Se actualiza el estado de la Inversión en Pocketbase
-                  final record = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
+                  print("Caso 200 en Emi Web Update Estado Inversión");
+                  // Se crea el API para realizar la actualización de montos y saldos de inversión en Emi Web
+                  final actualizarMontoSaldoCostoInversionUri =
+                    Uri.parse('$baseUrlEmiWebServices/inversiones/promotor/inversionRecibida');
+                  final headers = ({
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer $tokenGlobal',
+                  });
+                  print("Datos");
+                  print("${inversion.emprendimiento.target!.usuario.target!.idEmiWeb}");
+                  print("${inversion.emprendimiento
+                      .target!.usuario.target!.nombre} ${inversion.emprendimiento
+                      .target!.usuario.target!.apellidoP} ${inversion.emprendimiento
+                      .target!.usuario.target!.apellidoM}");
+                  print("${inversion.idEmiWeb}");
+                  //Se actualiza el estado de la inversión en Emi Web
+                  final responseUpdateMontoSaldoCostoInversion = await put(actualizarMontoSaldoCostoInversionUri, 
+                  headers: headers,
+                  body: jsonEncode({
+                    "idUsuario": inversion.emprendimiento.target!.usuario.target!.idEmiWeb,
+                    "nombreUsuario": "${inversion.emprendimiento
+                      .target!.usuario.target!.nombre} ${inversion.emprendimiento
+                      .target!.usuario.target!.apellidoP} ${inversion.emprendimiento
+                      .target!.usuario.target!.apellidoM}",
+                    "idInversiones": inversion.idEmiWeb,
+                    "inversionRecibida": true,
+                  }));
+                  print("${responseUpdateMontoSaldoCostoInversion.statusCode}");
+                  print("${responseUpdateMontoSaldoCostoInversion.body}");
+                  switch (responseUpdateMontoSaldoCostoInversion.statusCode) {
+                  case 200:
+                    print("Caso 200 en Emi Web Update Saldo Monto Costo Inversión");
+                    //Se actualiza el estado de la Inversión en Pocketbase
+                    final record = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
                       "id_estado_inversion_fk": newEstadoInversion.idDBR,
                       "monto_pagar": double.parse(((montoPagarYSaldoInicial * inversion.porcentajePago)/100).toStringAsFixed(2)),
                       "saldo": double.parse(((montoPagarYSaldoInicial * inversion.porcentajePago)/100).toStringAsFixed(2)),
@@ -145,8 +176,12 @@ class CotizacionController extends ChangeNotifier {
                       return false;
                     }
                 default: //No se realizo con éxito el put
-                  print("Error en actualizar estado inversión Emi Web");
+                  print("Error en actualizar saldo monto costo inversión Emi Web");
                   return false;
+                }  
+              default: //No se realizo con éxito el put
+                print("Error en actualizar estado inversión Emi Web");
+                return false;
               }  
             } else {
               print("Fallo en el Token");

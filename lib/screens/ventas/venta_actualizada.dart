@@ -3,7 +3,6 @@ import 'package:lottie/lottie.dart';
 
 import 'package:bizpro_app/theme/theme.dart';
 
-import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 import '../emprendimientos/detalle_emprendimiento_screen.dart';

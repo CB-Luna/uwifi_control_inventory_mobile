@@ -1,18 +1,16 @@
+import 'package:bizpro_app/modelsPocketbase/temporals/save_instruccion_producto_vendido.dart';
+import 'package:bizpro_app/screens/ventas/registro_venta_screen.dart';
+import 'package:bizpro_app/screens/widgets/drop_down_disabled.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
-import 'package:bizpro_app/screens/ventas/producto_venta_eliminado.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_eliminar_producto.dart';
-import 'package:bizpro_app/screens/widgets/drop_down.dart';
-import 'package:bizpro_app/providers/database_providers/venta_controller.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:bizpro_app/screens/ventas/producto_venta_actualizado.dart';
 import 'package:bizpro_app/providers/database_providers/producto_venta_controller.dart';
 
 class EditarProductoVenta extends StatefulWidget {
@@ -36,7 +34,6 @@ class _EditarProductoVentaState
     extends State<EditarProductoVenta> {
     final scaffoldKey = GlobalKey<ScaffoldState>();
     final formKey = GlobalKey<FormState>();
-    int idProductoEmp = -1;
     String producto = "";
     TextEditingController unidadMedida = TextEditingController();
     TextEditingController cantidadVendida = TextEditingController();
@@ -47,27 +44,19 @@ class _EditarProductoVentaState
   @override
   void initState() {
     super.initState();
-    producto = widget.prodVendido.productoEmp.target!.nombre;
+    producto = widget.prodVendido.nombreProd;
     unidadMedida.text = widget.prodVendido.productoEmp.target!.unidadMedida.target!.unidadMedida;
     cantidadVendida.text = widget.prodVendido.cantVendida.toString();
     costoUnitario.text = currencyFormat.format(widget.prodVendido.productoEmp.target!.costo.toStringAsFixed(2));
     precioVenta.text = currencyFormat.format(widget.prodVendido.precioVenta.toStringAsFixed(2));
     subTotal.text = widget.prodVendido.subtotal.toStringAsFixed(2);
-    listProductos = [];
-    widget.emprendimiento.productosEmp.toList().forEach((element) {
-      listProductos.add(element.nombre);
-      if (element.nombre == producto) {
-        idProductoEmp = element.id;
-      }
-    });
+    listProductos = [producto];
   }
 
   @override
   Widget build(BuildContext context) {
     final productoVentaProvider =
         Provider.of<ProductoVentaController>(context);
-    final ventaProvider =
-        Provider.of<VentaController>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -160,28 +149,36 @@ class _EditarProductoVentaState
                                           const BottomSheetEliminarProducto(),
                                     );
                                     if (option == 'eliminar') {
-                                      productoVentaProvider.remove(widget.prodVendido);
-                                      double totalVentas = 0.00;
-                                      Ventas venta = widget.prodVendido.venta.target!;
-                                      List<ProdVendidos> productosVenta = venta.prodVendidos.toList();
-                                      for (var i = 0; i < productosVenta.length; i++) {
-                                        totalVentas += productosVenta[i].subtotal;
-                                      }
-                                      ventaProvider.update(
-                                        venta.id,
-                                        venta.fechaInicio,
-                                        venta.fechaTermino,
-                                        totalVentas,
-                                        );
+                                      productoVentaProvider.listProdVendidosActual.remove(widget.prodVendido);
+                                      final newInstruccionProdVendido = SaveInstruccionProductoVendido(
+                                        instruccion: "syncDeleteProductoVendido", 
+                                        prodVendido: widget.prodVendido,
+                                      );
+                                      productoVentaProvider.instruccionesProdVendido.add(newInstruccionProdVendido);
+                                      // productoVentaProvider.remove(widget.prodVendido);
+                                      // double totalVentas = 0.00;
+                                      // Ventas venta = widget.prodVendido.venta.target!;
+                                      // List<ProdVendidos> productosVenta = venta.prodVendidos.toList();
+                                      // for (var i = 0; i < productosVenta.length; i++) {
+                                      //   totalVentas += productosVenta[i].subtotal;
+                                      // }
+                                      // ventaProvider.update(
+                                      //   venta.id,
+                                      //   venta.fechaInicio,
+                                      //   venta.fechaTermino,
+                                      //   totalVentas,
+                                      //   );
                                       // ignore: use_build_context_synchronously
                                       await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                      builder: (context) =>
-                                           ProductoVentaEliminado(venta: 
-                                              widget.venta,
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              RegistroVentaScreen(
+                                                venta: widget.venta, 
+                                                emprendimiento: widget.emprendimiento, 
+                                                prodVendidos: productoVentaProvider.listProdVendidosActual,
                                               ),
-                                            ),
+                                        ),
                                       );
                                     } else { //Se aborta la opción
                                       return;
@@ -228,37 +225,9 @@ class _EditarProductoVentaState
                                   return Padding(
                                     padding: const EdgeInsetsDirectional
                                         .fromSTEB(5, 0, 5, 10),
-                                    child: DropDown(
+                                    child: DropDownDisabled(
                                       initialOption: producto,
                                       options: listProductos,
-                                      onChanged: (val) => setState(() {
-                                        if (listProductos.isEmpty) {
-                                          snackbarKey.currentState
-                                              ?.showSnackBar(
-                                                  const SnackBar(
-                                            content: Text(
-                                                "Debes agregar productos al emprendimiento desde el módulo 'Productos'"),
-                                          ));
-                                        } else {
-                                          idProductoEmp = -1;
-                                          costoUnitario = TextEditingController(text: "");
-                                          unidadMedida = TextEditingController(text: "");
-                                          producto = val!;
-                                          dataBase.productosEmpBox
-                                              .getAll()
-                                              .forEach((element) {
-                                            if (element.nombre ==
-                                                producto) {
-                                              costoUnitario.text = 
-                                                currencyFormat.format(element.costo.toStringAsFixed(2));
-                                              unidadMedida.text = 
-                                                element.unidadMedida.target!.unidadMedida;
-                                              idProductoEmp = 
-                                                element.id;
-                                            }
-                                          });
-                                        }
-                                      }),
                                       width: double.infinity,
                                       height: 50,
                                       textStyle: AppTheme.of(context)
@@ -490,7 +459,7 @@ class _EditarProductoVentaState
                                   maxLines: 1,
                                   validator: (val) {
                                             if(val!.length > 1){
-                                              double costo = double.parse(val.replaceAll('\$', ''));
+                                              double costo = double.parse(val.replaceAll('\$', '').replaceAll(",", ""));
                                             if (costo == 0) {
                                               return 'Para continuar, ingrese un costo sugerido.';
                                             }
@@ -575,9 +544,9 @@ class _EditarProductoVentaState
                                       ),
                                   maxLines: 1,
                                   validator: (val) {
-                                            double cantidad = double.tryParse(val!) ?? 0;
-                                            if (cantidad <= 0) {
-                                              return 'Para continuar, ingrese una cantidad.';
+                                            double precio = (val == null || val == "") ? 0 : double.parse(val.replaceAll("\$", "").replaceAll(",", ""));
+                                            if (precio <= 0) {
+                                              return 'Para continuar, ingrese un precio.';
                                             }
 
                                             return null;
@@ -630,58 +599,76 @@ class _EditarProductoVentaState
                                       onPressed: () async {
                                         if (productoVentaProvider
                                                 .validateForm(formKey)) {
-                                          if (producto !=
-                                                widget.prodVendido
-                                                .productoEmp
-                                                .target!
-                                                .nombre ||
-                                            cantidadVendida.text !=
+
+                                          if (cantidadVendida.text !=
                                                 widget.prodVendido
                                                     .cantVendida
                                                     .toString() ||
-                                            precioVenta.text !=
+                                            precioVenta.text.replaceAll("\$", "").replaceAll(",", "") !=
                                                 widget.prodVendido
                                                     .precioVenta
                                                     .toStringAsFixed(2) ||
-                                            subTotal.text !=
+                                            subTotal.text.replaceAll("\$", "").replaceAll(",", "") !=
                                                 widget.prodVendido
                                                     .subtotal
                                                     .toStringAsFixed(2))
                                             {
-                                              final idUnidadMedida = dataBase.unidadesMedidaBox
+                                              final updateUnidadMedida = dataBase.unidadesMedidaBox
                                               .query(UnidadMedida_.unidadMedida
                                                   .equals(unidadMedida.text))
                                               .build()
-                                              .findFirst()
-                                              ?.id;
-                                              if (idUnidadMedida != null) {
-                                                productoVentaProvider.update(
-                                                  widget.prodVendido.id,
-                                                  idProductoEmp,
-                                                  double.parse(precioVenta.text.replaceAll("\$", "").replaceAll(",", "")),
-                                                  int.parse(cantidadVendida.text),
-                                                  double.parse(subTotal.text),
-                                                  );
-                                                // dataBase.ventasBox.query(StatusSync_.id.equals(updateJornada.statusSync.target!.id)).build().findUnique();
-                                                double totalVentas = 0.00;
-                                                Ventas venta = widget.prodVendido.venta.target!;
-                                                List<ProdVendidos> productosVenta = venta.prodVendidos.toList();
-                                                for (var i = 0; i < productosVenta.length; i++) {
-                                                  totalVentas += productosVenta[i].subtotal;
-                                                }
-                                                ventaProvider.update(
-                                                  venta.id,
-                                                  venta.fechaInicio,
-                                                  venta.fechaTermino,
-                                                  totalVentas,
-                                                  );
+                                              .findFirst();
+                                              if (updateUnidadMedida != null) {
+                                                final indexUpdateProdSolicitado = productoVentaProvider
+                                                .listProdVendidosActual
+                                                .indexOf(widget.prodVendido);
+                                                // productoVentaProvider.listProdVendidosActual[indexUpdateProdSolicitado].nombreProd = producto;
+                                                productoVentaProvider.listProdVendidosActual[indexUpdateProdSolicitado].cantVendida = int.parse(cantidadVendida.text);
+                                                productoVentaProvider.listProdVendidosActual[indexUpdateProdSolicitado].costo = double.parse(costoUnitario.text.replaceAll("\$", "").replaceAll(",", ""));
+                                                productoVentaProvider.listProdVendidosActual[indexUpdateProdSolicitado].unidadMedida.target = updateUnidadMedida;
+                                                final newInstruccionProdVendido = SaveInstruccionProductoVendido(
+                                                  instruccion: "syncUpdateProductoVendido", 
+                                                  prodVendido: productoVentaProvider.listProdVendidosActual[indexUpdateProdSolicitado],
+                                                );
+                                                productoVentaProvider.instruccionesProdVendido.add(newInstruccionProdVendido);
                                                 await Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        const ProductoVentaActualizadoScreen(),
+                                                        RegistroVentaScreen(
+                                                          venta: widget.venta, 
+                                                          emprendimiento: widget.emprendimiento, 
+                                                          prodVendidos: productoVentaProvider.listProdVendidosActual,
+                                                        ),
                                                   ),
                                                 );
+                                                // productoVentaProvider.update(
+                                                //   widget.prodVendido.id,
+                                                //   idProductoEmp,
+                                                //   double.parse(precioVenta.text.replaceAll("\$", "").replaceAll(",", "")),
+                                                //   int.parse(cantidadVendida.text),
+                                                //   double.parse(subTotal.text),
+                                                //   );
+                                                // // dataBase.ventasBox.query(StatusSync_.id.equals(updateJornada.statusSync.target!.id)).build().findUnique();
+                                                // double totalVentas = 0.00;
+                                                // Ventas venta = widget.prodVendido.venta.target!;
+                                                // List<ProdVendidos> productosVenta = venta.prodVendidos.toList();
+                                                // for (var i = 0; i < productosVenta.length; i++) {
+                                                //   totalVentas += productosVenta[i].subtotal;
+                                                // }
+                                                // ventaProvider.update(
+                                                //   venta.id,
+                                                //   venta.fechaInicio,
+                                                //   venta.fechaTermino,
+                                                //   totalVentas,
+                                                //   );
+                                                // await Navigator.push(
+                                                //   context,
+                                                //   MaterialPageRoute(
+                                                //     builder: (context) =>
+                                                //         const ProductoVentaActualizadoScreen(),
+                                                //   ),
+                                                // );
                                               }
                                             }
                                         } else {
