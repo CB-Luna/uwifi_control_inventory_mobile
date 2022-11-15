@@ -1134,6 +1134,62 @@ class SyncProviderPocketbase extends ChangeNotifier {
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
           }
+        case "syncArchivarEmprendimiento":
+          print("Entro al caso de syncArchivarEmprendimiento Pocketbase");
+          final emprendedorToSync = getFirstEmprendimiento(dataBase.emprendimientosBox.getAll(), instruccionesBitacora[i].id);
+          if(emprendedorToSync != null){
+            final boolSyncArchivarEmprendimiento = await syncArchivarEmprendimiento(emprendedorToSync, instruccionesBitacora[i]);
+            if (boolSyncArchivarEmprendimiento) {
+              banderasExistoSync.add(boolSyncArchivarEmprendimiento);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(boolSyncArchivarEmprendimiento);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                emprendimiento: emprendedorToSync.nombre,
+                instruccion: "Archivar Emprendimiento Servidor", 
+                fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }      
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+              emprendimiento: "No encontrado",
+              instruccion: "Archivar Emprendimiento Servidor", 
+              fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
+        case "syncDesarchivarEmprendimiento":
+          print("Entro al caso de syncDesarchivarEmprendimiento Pocketbase");
+          final emprendedorToSync = getFirstEmprendimiento(dataBase.emprendimientosBox.getAll(), instruccionesBitacora[i].id);
+          if(emprendedorToSync != null){
+            final boolSyncDesarchivarEmprendimiento = await syncDesarchivarEmprendimiento(emprendedorToSync, instruccionesBitacora[i]);
+            if (boolSyncDesarchivarEmprendimiento) {
+              banderasExistoSync.add(boolSyncDesarchivarEmprendimiento);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(boolSyncDesarchivarEmprendimiento);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                emprendimiento: emprendedorToSync.nombre,
+                instruccion: "Desarchivar Emprendimiento Servidor", 
+                fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }      
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+              emprendimiento: "No encontrado",
+              instruccion: "Desarchivar Emprendimiento Servidor", 
+              fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
         case "syncAcceptInversionXProdCotizado":
           print("Entro al caso de syncAcceptInversionXProdCotizado Pocketbase");
           final inversionXproductoCotizadoToSync = getFirstInversionXProductosCotizados(dataBase.inversionesXprodCotizadosBox.getAll(), instruccionesBitacora[i].id);
@@ -1162,6 +1218,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
           }
+          
         case "syncDeleteProductoVendido":
           print("Entro al caso de syncDeleteProductoVendido Pocketbase");
           final boolSyncDeleteProductoVendido = await syncDeleteProductoVendido(instruccionesBitacora[i]);
@@ -4288,6 +4345,77 @@ void deleteBitacora() {
       return false;
     }
   }
+
+  Future<bool> syncArchivarEmprendimiento(Emprendimientos emprendimiento, Bitacora bitacora) async {
+    print("Estoy en El syncArchivarEmprendimiento");
+    try {
+      if (!bitacora.executePocketbase) {
+        final record = await client.records.update('emprendimientos', emprendimiento.idDBR.toString(), body: {
+          "archivado": true,
+      }); 
+
+        if (record.id.isNotEmpty) {
+          //Se marca como realizada en Pocketbase la instrucción en Bitacora
+          bitacora.executePocketbase = true;
+          dataBase.bitacoraBox.put(bitacora);
+          if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+            //Se elimina la instrucción de la bitacora
+            dataBase.bitacoraBox.remove(bitacora.id);
+          }
+          return true;
+        }
+        else{
+          return false;
+        }
+      } else {
+        if (bitacora.executeEmiWeb) {
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
+        }
+        return true;
+      }
+
+    } catch (e) {
+      print('ERROR - function syncArchivarEmprendimiento(): $e');
+      return false;
+    }
+  } 
+
+  Future<bool> syncDesarchivarEmprendimiento(Emprendimientos emprendimiento, Bitacora bitacora) async {
+    print("Estoy en El syncDesarchivarEmprendimiento");
+    try {
+      if (!bitacora.executePocketbase) {
+        final record = await client.records.update('emprendimientos', emprendimiento.idDBR.toString(), body: {
+          "archivado": false,
+      }); 
+
+        if (record.id.isNotEmpty) {
+          //Se marca como realizada en Pocketbase la instrucción en Bitacora
+          bitacora.executePocketbase = true;
+          dataBase.bitacoraBox.put(bitacora);
+          if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+            //Se elimina la instrucción de la bitacora
+            dataBase.bitacoraBox.remove(bitacora.id);
+          }
+          return true;
+        }
+        else{
+          return false;
+        }
+      } else {
+        if (bitacora.executeEmiWeb) {
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
+        }
+        return true;
+      }
+
+    } catch (e) {
+      print('ERROR - function syncDesarchivarEmprendimiento(): $e');
+      return false;
+    }
+  } 
+
 
 //   Future<bool> syncUpdateInversion(Inversiones inversion, Bitacora bitacora) async {
 //     try {

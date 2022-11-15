@@ -1553,6 +1553,76 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               banderasExistoSync.add(true);
               continue;
             }
+          case "syncArchivarEmprendimiento":
+            print("Entro al caso de syncArchivarEmprendimiento Emi Web");
+            if (!instruccionesBitacora[i].executeEmiWeb) {
+              final emprendimientoToSync = getFirstEmprendimiento(dataBase.emprendimientosBox.getAll(), instruccionesBitacora[i].id);
+              if(emprendimientoToSync != null){
+                //Se encontró al emprendimiento y se puede archivar
+                final boolSyncArchivarEmprendimiento = await syncArchivarEmprendimiento(emprendimientoToSync, instruccionesBitacora[i]);
+                if (boolSyncArchivarEmprendimiento) {
+                  banderasExistoSync.add(boolSyncArchivarEmprendimiento);
+                  continue;
+                } else {
+                  //Recuperamos la instrucción que no se ejecutó
+                  banderasExistoSync.add(boolSyncArchivarEmprendimiento);
+                  final instruccionNoSincronizada = InstruccionNoSincronizada(
+                    emprendimiento: emprendimientoToSync.nombre,
+                    instruccion: "Archivar Emprendimiento Emi Web", 
+                    fecha: instruccionesBitacora[i].fechaRegistro);
+                  instruccionesFallidas.add(instruccionNoSincronizada);
+                  continue;
+                }
+              } else {
+                //Recuperamos la instrucción que no se ejecutó
+                banderasExistoSync.add(false);
+                final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  emprendimiento: "No encontrado",
+                  instruccion: "Archivar Emprendimiento Emi Web",
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+                instruccionesFallidas.add(instruccionNoSincronizada);
+                continue;
+              }
+            } else {
+              // Ya se ha ejecutado esta instrucción en Emi Web
+              banderasExistoSync.add(true);
+              continue;
+            }
+          case "syncDesarchivarEmprendimiento":
+            print("Entro al caso de syncDesarchivarEmprendimiento Emi Web");
+            if (!instruccionesBitacora[i].executeEmiWeb) {
+              final emprendimientoToSync = getFirstEmprendimiento(dataBase.emprendimientosBox.getAll(), instruccionesBitacora[i].id);
+              if(emprendimientoToSync != null){
+                //Se encontró al emprendimiento y se puede desarchivar
+                final boolSyncDesarchivarEmprendimiento = await syncDesarchivarEmprendimiento(emprendimientoToSync, instruccionesBitacora[i]);
+                if (boolSyncDesarchivarEmprendimiento) {
+                  banderasExistoSync.add(boolSyncDesarchivarEmprendimiento);
+                  continue;
+                } else {
+                  //Recuperamos la instrucción que no se ejecutó
+                  banderasExistoSync.add(boolSyncDesarchivarEmprendimiento);
+                  final instruccionNoSincronizada = InstruccionNoSincronizada(
+                    emprendimiento: emprendimientoToSync.nombre,
+                    instruccion: "Desarchivar Emprendimiento Emi Web", 
+                    fecha: instruccionesBitacora[i].fechaRegistro);
+                  instruccionesFallidas.add(instruccionNoSincronizada);
+                  continue;
+                }
+              } else {
+                //Recuperamos la instrucción que no se ejecutó
+                banderasExistoSync.add(false);
+                final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  emprendimiento: "No encontrado",
+                  instruccion: "Desarchivar Emprendimiento Emi Web",
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+                instruccionesFallidas.add(instruccionNoSincronizada);
+                continue;
+              }
+            } else {
+              // Ya se ha ejecutado esta instrucción en Emi Web
+              banderasExistoSync.add(true);
+              continue;
+            }
           case "syncAcceptInversionXProdCotizado":
             print("Entro al caso de syncAcceptInversionXProdCotizado Emi Web");
             if (!instruccionesBitacora[i].executeEmiWeb) {
@@ -3635,7 +3705,6 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       print('Catch en syncUpdateEmprendimiento(): $e');
       return false;
     }
-
   } 
 
   Future<bool> syncUpdateFaseEmprendimiento(Emprendimientos emprendimiento, Bitacora bitacora) async {
@@ -4736,6 +4805,85 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     }
   }
 
+  Future<bool> syncArchivarEmprendimiento(Emprendimientos emprendimiento, Bitacora bitacora) async {
+    print("Estoy en El syncArchivarEmprendimiento Emi Web");
+    try {
+      // Primero creamos el API para realizar el archivado
+      final archivarEmprendimientoUri =
+        Uri.parse('$baseUrlEmiWebServices/proyectos/archivar');
+      final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+      final responseArchivarEmprendimiento = await put(archivarEmprendimientoUri, 
+      headers: headers,
+      body: jsonEncode({
+        "idUsuarioRegistra": emprendimiento.usuario.target!.idEmiWeb,
+        "usuarioRegistra": "${emprendimiento.usuario
+            .target!.nombre} ${emprendimiento.usuario
+            .target!.apellidoP} ${emprendimiento.usuario
+            .target!.apellidoM}",
+        "id": emprendimiento.idEmiWeb,
+        "archivado": true,
+      }));
+      print(responseArchivarEmprendimiento.statusCode);
+      print(responseArchivarEmprendimiento.body);
+      switch (responseArchivarEmprendimiento.statusCode) {
+        case 200:
+        print("Caso 200 en Emi Web Archivar Emprendedor");
+          //Se marca como realizada en EmiWeb la instrucción en Bitacora
+          bitacora.executeEmiWeb = true;
+          dataBase.bitacoraBox.put(bitacora);
+          return true;
+        default: //No se realizo con éxito el update
+          print("Error en archivar Emprendedor Emi Web");
+          return false;
+      }  
+    } catch (e) {
+      print('Catch en syncArchivarEmprendimiento(): $e');
+      return false;
+    }
+  } 
+
+  Future<bool> syncDesarchivarEmprendimiento(Emprendimientos emprendimiento, Bitacora bitacora) async {
+    print("Estoy en El syncDesarchivarEmprendimiento Emi Web");
+    try {
+      // Primero creamos el API para realizar el desarchivado
+      final desarchivarEmprendimientoUri =
+        Uri.parse('$baseUrlEmiWebServices/proyectos/archivar');
+      final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+      final responseDesarchivarEmprendimiento = await put(desarchivarEmprendimientoUri, 
+      headers: headers,
+      body: jsonEncode({
+        "idUsuarioRegistra": emprendimiento.usuario.target!.idEmiWeb,
+        "usuarioRegistra": "${emprendimiento.usuario
+            .target!.nombre} ${emprendimiento.usuario
+            .target!.apellidoP} ${emprendimiento.usuario
+            .target!.apellidoM}",
+        "id": emprendimiento.idEmiWeb,
+        "archivado": false,
+      }));
+      print(responseDesarchivarEmprendimiento.statusCode);
+      print(responseDesarchivarEmprendimiento.body);
+      switch (responseDesarchivarEmprendimiento.statusCode) {
+        case 200:
+        print("Caso 200 en Emi Web Desarchivar Emprendedor");
+          //Se marca como realizada en EmiWeb la instrucción en Bitacora
+          bitacora.executeEmiWeb = true;
+          dataBase.bitacoraBox.put(bitacora);
+          return true;
+        default: //No se realizo con éxito el update
+          print("Error en desarchivar Emprendedor Emi Web");
+          return false;
+      }  
+    } catch (e) {
+      print('Catch en syncDesarchivarEmprendimiento(): $e');
+      return false;
+    }
+  } 
  
 // PROCESO DE OBTENCIÓN DE PRODUCTOS COTIZADOS 
   Future<bool> executeProductosCotizadosEmiWeb(Inversiones inversion) async {
