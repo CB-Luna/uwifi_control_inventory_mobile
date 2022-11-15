@@ -2156,7 +2156,7 @@
     },
     {
       "id": "51:1596057038243167918",
-      "lastPropertyId": "17:730995717057334540",
+      "lastPropertyId": "18:4465631852815783681",
       "name": "ProdVendidos",
       "properties": [
         {
@@ -2243,6 +2243,11 @@
           "flags": 520,
           "indexId": "264:5616441566408550489",
           "relationTarget": "UnidadMedida"
+        },
+        {
+          "id": "18:4465631852815783681",
+          "name": "postEmiWeb",
+          "type": 1
         }
       ],
       "relations": [

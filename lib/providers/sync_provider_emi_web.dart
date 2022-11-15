@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_inversion_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_prod_cotizados_emi_web.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_productos_vendidos_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_roles_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_token_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/post_registro_exitoso_emi_web.dart';
@@ -771,7 +772,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               final prodVendidoToSync = getFirstProductoVendido(dataBase.productosVendidosBox.getAll(), instruccionesBitacora[i].id);
               if(prodVendidoToSync != null){
                 //Se encontró el producto vendido y se puede agregar
-                var boolSyncAddProductoVendido = syncAddProductoVendido(instruccionesBitacora[i]);
+                var boolSyncAddProductoVendido = await syncAddProductoVendido(prodVendidoToSync, instruccionesBitacora[i]);
                 if (boolSyncAddProductoVendido) {
                   banderasExistoSync.add(boolSyncAddProductoVendido);
                   continue;
@@ -791,6 +792,40 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 final instruccionNoSincronizada = InstruccionNoSincronizada(
                   emprendimiento: "No encontrado",
                   instruccion: "Agregar Producto Vendido Emi Web",
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+                instruccionesFallidas.add(instruccionNoSincronizada);
+                continue;
+              }
+            } else {
+              // Ya se ha ejecutado esta instrucción en Emi Web
+              banderasExistoSync.add(true);
+              continue;
+            }
+          case "syncAddSingleProductoVendido":
+            if (!instruccionesBitacora[i].executeEmiWeb) {
+              final prodVendidoToSync = getFirstProductoVendido(dataBase.productosVendidosBox.getAll(), instruccionesBitacora[i].id);
+              if(prodVendidoToSync != null){
+                //Se encontró el producto vendido y se puede agregar
+                var boolSyncAddSingleProductoVendido = await syncAddSingleProductoVendido(prodVendidoToSync, instruccionesBitacora[i]);
+                if (boolSyncAddSingleProductoVendido) {
+                  banderasExistoSync.add(boolSyncAddSingleProductoVendido);
+                  continue;
+                } else {
+                  //Recuperamos la instrucción que no se ejecutó
+                  banderasExistoSync.add(boolSyncAddSingleProductoVendido);
+                  final instruccionNoSincronizada = InstruccionNoSincronizada(
+                    emprendimiento: prodVendidoToSync.venta.target!.emprendimiento.target!.nombre,
+                    instruccion: "Agregar un Producto Vendido en Emi Web", 
+                    fecha: instruccionesBitacora[i].fechaRegistro);
+                  instruccionesFallidas.add(instruccionNoSincronizada);
+                  continue;
+                }
+              } else {
+                //Recuperamos la instrucción que no se ejecutó
+                banderasExistoSync.add(false);
+                final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  emprendimiento: "No encontrado",
+                  instruccion: "Agregar un Producto Vendido en Emi Web",
                   fecha: instruccionesBitacora[i].fechaRegistro);
                 instruccionesFallidas.add(instruccionNoSincronizada);
                 continue;
@@ -1423,7 +1458,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               final prodVendidoToSync = getFirstProductoVendido(dataBase.productosVendidosBox.getAll(), instruccionesBitacora[i].id);
               if(prodVendidoToSync != null){
                 //Se encontró el producto vendido y se puede agregar
-                var boolSyncUpdateProductoVendido = syncUpdateProductoVendido(instruccionesBitacora[i]);
+                var boolSyncUpdateProductoVendido = await syncUpdateProductoVendido(prodVendidoToSync, instruccionesBitacora[i]);
                 if (boolSyncUpdateProductoVendido) {
                   banderasExistoSync.add(boolSyncUpdateProductoVendido);
                   continue;
@@ -1458,7 +1493,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               final ventaToSync = getFirstVenta(dataBase.ventasBox.getAll(), instruccionesBitacora[i].id);
               if(ventaToSync != null){
                 //Se encontró la venta y se puede agregar
-                var boolSyncUpdateProductosVendidosVenta = await syncUpdateProductosVendidosVenta(ventaToSync, instruccionesBitacora[i]);
+                var boolSyncUpdateProductosVendidosVenta = syncUpdateProductosVendidosVenta(instruccionesBitacora[i]);
                 if (boolSyncUpdateProductosVendidosVenta) {
                   banderasExistoSync.add(boolSyncUpdateProductosVendidosVenta);
                   continue;
@@ -1534,7 +1569,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           case "syncDeleteProductoVendido":
             print("Entro al caso de syncDeleteProductoVendido Emi Web");
             if (!instruccionesBitacora[i].executeEmiWeb) {
-              var boolSyncDeleteProductoVendido = syncDeleteProductoVendido(instruccionesBitacora[i]);
+              var boolSyncDeleteProductoVendido = await syncDeleteProductoVendido(instruccionesBitacora[i]);
               if (boolSyncDeleteProductoVendido) {
                 banderasExistoSync.add(boolSyncDeleteProductoVendido);
                 continue;
@@ -3256,11 +3291,6 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             cantidadVendida: venta.prodVendidos[i].cantVendida, 
             precioVenta: venta.prodVendidos[i].precioVenta);
           ventaCrearRequestList.add(newVentaCreada.toMap());
-          if (venta.prodVendidos.toList()[i].idEmiWeb == null) {
-            //Se asigna el id Emi Web al prod Vendido
-            venta.prodVendidos.toList()[i].idEmiWeb = i.toString();
-            dataBase.productosVendidosBox.put(venta.prodVendidos.toList()[i]);
-          }
         }
         print(jsonEncode(ventaCrearRequestList));
         final responsePostVenta = await post(crearVentaUri, 
@@ -3287,21 +3317,91 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             const Utf8Decoder().convert(responsePostVenta.bodyBytes));
             venta.idEmiWeb = responsePostVentaParse.payload.toString();
             dataBase.ventasBox.put(venta);
-            print("Se recupera el idEmiWeb para la venta");
-            //Se marca como realizada en EmiWeb la instrucción en Bitacora
-            bitacora.executeEmiWeb = true;
-            dataBase.bitacoraBox.put(bitacora);
-            return true;
+            // Se recuperan los ids de los productos vendidos
+            final obtenerProductosVendidosUri =
+              Uri.parse('$baseUrlEmiWebServices/ventas/${responsePostVentaParse.payload.toString()}');
+            final headers = ({
+              "Content-Type": "application/json",
+              'Authorization': 'Bearer $tokenGlobal',
+            });
+            final responseGetProductosVendidos = await get(obtenerProductosVendidosUri, 
+              headers: headers,
+            );
+            print("Respuesta Get Productos Vendidos");
+            print(responseGetProductosVendidos.body);     
+            switch (responseGetProductosVendidos.statusCode) {
+              case 200:
+                //Se recupera el id Emi Web de los Prod Vendidos
+                final responseGetProductosVendidosParse = getProductosVendidosEmiWebFromMap(
+                const Utf8Decoder().convert(responseGetProductosVendidos.bodyBytes));
+                for (var i = 0; i < responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList!.length; i++) {
+                  for (var element in venta.prodVendidos.toList()) {
+                    if (element.nombreProd == responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList![i].productoEmprendedorDto!.producto && 
+                    element.costo == responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList![i].productoEmprendedorDto!.costoUnidadMedida &&
+                    element.cantVendida == responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList![i].productoEmprendedorDto!.cantidadVendida &&
+                    element.precioVenta == responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList![i].productoEmprendedorDto!.precioVenta &&
+                    element.unidadMedida.target!.unidadMedida == responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList![i].productoEmprendedorDto!.unidadMedida) {
+                      if (venta.prodVendidos.toList()[i].idEmiWeb == null) {
+                        //Se asigna el id Emi Web al prod Vendido
+                        venta.prodVendidos.toList()[i].idEmiWeb = responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList![i].id.toString();
+                        dataBase.productosVendidosBox.put(venta.prodVendidos.toList()[i]);
+                      }
+                    }
+                  }
+                }
+                //Se marca como realizada en EmiWeb la instrucción en Bitacora
+                bitacora.executeEmiWeb = true;
+                dataBase.bitacoraBox.put(bitacora);
+                return true;
+              default:
+                //No se obtiene con éxito los prod Vendidos
+                return false;
+            }
           default: //No se realizo con éxito el post
             print("Error en postear venta Emi Web");
             return false;
         }       
       } else {
-        //Ya se ha posteado anteriormente
-        //Se marca como realizada en EmiWeb la instrucción en Bitacora
-        bitacora.executeEmiWeb = true;
-        dataBase.bitacoraBox.put(bitacora);
-        return true;
+        // Se recuperan los ids de los productos vendidos
+        final obtenerProductosVendidosUri =
+          Uri.parse('$baseUrlEmiWebServices/ventas/${venta.idEmiWeb}');
+        final headers = ({
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $tokenGlobal',
+        });
+        final responseGetProductosVendidos = await get(obtenerProductosVendidosUri, 
+          headers: headers,
+        );
+        print("Respuesta Get Productos Vendidos");
+        print(responseGetProductosVendidos.body);     
+        switch (responseGetProductosVendidos.statusCode) {
+          case 200:
+            //Se recupera el id Emi Web de los Prod Vendidos
+            final responseGetProductosVendidosParse = getProductosVendidosEmiWebFromMap(
+            const Utf8Decoder().convert(responseGetProductosVendidos.bodyBytes));
+            for (var i = 0; i < responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList!.length; i++) {
+              for (var element in venta.prodVendidos.toList()) {
+                if (element.nombreProd == responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList![i].productoEmprendedorDto!.producto && 
+                element.costo == responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList![i].productoEmprendedorDto!.costoUnidadMedida &&
+                element.cantVendida == responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList![i].productoEmprendedorDto!.cantidadVendida &&
+                element.precioVenta == responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList![i].productoEmprendedorDto!.precioVenta &&
+                element.unidadMedida.target!.unidadMedida == responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList![i].productoEmprendedorDto!.unidadMedida) {
+                  if (venta.prodVendidos.toList()[i].idEmiWeb == null) {
+                    //Se asigna el id Emi Web al prod Vendido
+                    venta.prodVendidos.toList()[i].idEmiWeb = responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList![i].id.toString();
+                    dataBase.productosVendidosBox.put(venta.prodVendidos.toList()[i]);
+                  }
+                }
+              }
+            }
+            //Se marca como realizada en EmiWeb la instrucción en Bitacora
+            bitacora.executeEmiWeb = true;
+            dataBase.bitacoraBox.put(bitacora);
+            return true;
+          default:
+            //No se obtiene con éxito los prod Vendidos
+            return false;
+        }
       }
     } catch (e) { //Fallo en el momento se sincronizar
       print("Catch de syncAddVenta: $e");
@@ -3309,39 +3409,246 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     }
 }
 
-  bool syncAddProductoVendido(Bitacora bitacora) {
+  Future<bool> syncAddProductoVendido(ProdVendidos prodVendido, Bitacora bitacora) async {
     print("Estoy en El syncAddProductoVendido de Emi Web");
-    try {
+     try {
       //Se marca como realizada en EmiWeb la instrucción en Bitacora
       bitacora.executeEmiWeb = true;
       dataBase.bitacoraBox.put(bitacora);
       return true;
-    } catch (e) {
+    } catch (e) { //Fallo en el momento se sincronizar
       print('ERROR - function syncAddProductoVendido(): $e');
       return false;
     }
   }
-
-  bool syncUpdateProductoVendido(Bitacora bitacora) {
-    print("Estoy en El syncUpdateProductoVendido de Emi Web");
-    try {
-      //Se marca como realizada en EmiWeb la instrucción en Bitacora
-      bitacora.executeEmiWeb = true;
-      dataBase.bitacoraBox.put(bitacora);
-      return true;
-    } catch (e) {
-      print('ERROR - function syncUpdateProductoVendido(): $e');
+  Future<bool> syncAddSingleProductoVendido(ProdVendidos prodVendido, Bitacora bitacora) async {
+    print("Estoy en El syncAddSingleProductoVendido de Emi Web");
+     try {
+      List<dynamic> ventaActualizarRequestList = [];
+      if (!prodVendido.postEmiWeb) {
+        //Creamos el API para agregar el prod Vendido
+        final actualizarProdVendidoUri =
+          Uri.parse('$baseUrlEmiWebServices/ventas');
+        final headers = ({
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $tokenGlobal',
+        });
+        var newProdVendido = VentaActualizarRequestList(
+          id: 0,
+          idProductoEmprendedor: prodVendido.productoEmp.target!.idEmiWeb!, 
+          cantidadVendida: prodVendido.cantVendida, 
+          precioVenta: prodVendido.precioVenta,
+          nombreProducto: prodVendido.nombreProd,
+          costoUnitario: prodVendido.costo,
+          unidadMedida: prodVendido.unidadMedida.target!.idEmiWeb,
+        );
+        ventaActualizarRequestList.add(newProdVendido.toMap());
+        final responseAddProdVendido = await put(actualizarProdVendidoUri, 
+        headers: headers,
+        body: jsonEncode({   
+          "idUsuarioRegistra": prodVendido.venta.target!.emprendimiento.target!.usuario.target!.idEmiWeb,
+          "usuarioRegistra": "${prodVendido.venta.target!.emprendimiento
+          .target!.usuario.target!.nombre} ${prodVendido.venta.target!.emprendimiento
+          .target!.usuario.target!.apellidoP} ${prodVendido.venta.target!.emprendimiento
+          .target!.usuario.target!.apellidoM}",
+          "idVentas": prodVendido.venta.target!.idEmiWeb,
+          "idProyecto": prodVendido.venta.target!.emprendimiento.target!.idEmiWeb,
+          "fechaInicio": DateFormat("yyyy-MM-ddTHH:mm:ss").format(prodVendido.venta.target!.fechaInicio),
+          "fechaTermino": DateFormat("yyyy-MM-ddTHH:mm:ss").format(prodVendido.venta.target!.fechaTermino),
+          "total": prodVendido.venta.target!.total,
+          "ventaActualizarRequestList": ventaActualizarRequestList,     
+        }));
+        print("Respuesta Add prod vendido");
+        print(responseAddProdVendido.body);     
+        switch (responseAddProdVendido.statusCode) {
+          case 200:
+            print("Caso 200 en Emi Web Prod Vendido");
+            prodVendido.postEmiWeb = true;
+            dataBase.productosVendidosBox.put(prodVendido);
+            // Se recuperan el id del producto vendido
+            final obtenerProductosVendidosUri =
+              Uri.parse('$baseUrlEmiWebServices/ventas/${prodVendido.venta.target!.idEmiWeb}');
+            final headers = ({
+              "Content-Type": "application/json",
+              'Authorization': 'Bearer $tokenGlobal',
+            });
+            final responseGetProductosVendidos = await get(obtenerProductosVendidosUri, 
+              headers: headers,
+            );
+            print("Respuesta Get Productos Vendidos");
+            print(responseGetProductosVendidos.body);     
+            switch (responseGetProductosVendidos.statusCode) {
+              case 200:
+                //Se recupera el id Emi Web del Prod Vendido
+                final responseGetProductosVendidosParse = getProductosVendidosEmiWebFromMap(
+                const Utf8Decoder().convert(responseGetProductosVendidos.bodyBytes));
+                for (var i = 0; i < responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList!.length; i++) {
+                  if (prodVendido.nombreProd == responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList![i].productoEmprendedorDto!.producto && 
+                    prodVendido.costo == responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList![i].productoEmprendedorDto!.costoUnidadMedida &&
+                    prodVendido.cantVendida == responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList![i].productoEmprendedorDto!.cantidadVendida &&
+                    prodVendido.precioVenta == responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList![i].productoEmprendedorDto!.precioVenta &&
+                    prodVendido.unidadMedida.target!.unidadMedida == responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList![i].productoEmprendedorDto!.unidadMedida) {
+                    if (prodVendido.idEmiWeb == null) {
+                      //Se asigna el id Emi Web al prod Vendido
+                      prodVendido.idEmiWeb = responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList![i].id.toString();
+                      dataBase.productosVendidosBox.put(prodVendido);
+                      //Se marca como realizada en EmiWeb la instrucción en Bitacora
+                      bitacora.executeEmiWeb = true;
+                      dataBase.bitacoraBox.put(bitacora);
+                      return true;
+                    }
+                  }
+                }
+                return false;
+              default:
+                //No se obtiene con éxito los prod Vendidos
+                return false;
+            }
+          default: //No se realizo con éxito el agregar
+            print("Error en agregar prod Vendido Emi Web");
+            return false;
+        }     
+      } else {
+        // Se recuperan el id del producto vendido
+        final obtenerProductosVendidosUri =
+          Uri.parse('$baseUrlEmiWebServices/ventas/${prodVendido.venta.target!.idEmiWeb}');
+        final headers = ({
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $tokenGlobal',
+        });
+        final responseGetProductosVendidos = await get(obtenerProductosVendidosUri, 
+          headers: headers,
+        );
+        print("Respuesta Get Productos Vendidos");
+        print(responseGetProductosVendidos.body);     
+        switch (responseGetProductosVendidos.statusCode) {
+          case 200:
+            //Se recupera el id Emi Web del Prod Vendido
+            final responseGetProductosVendidosParse = getProductosVendidosEmiWebFromMap(
+            const Utf8Decoder().convert(responseGetProductosVendidos.bodyBytes));
+            for (var i = 0; i < responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList!.length; i++) {
+              if (prodVendido.nombreProd == responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList![i].productoEmprendedorDto!.producto && 
+                prodVendido.costo == responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList![i].productoEmprendedorDto!.costoUnidadMedida &&
+                prodVendido.cantVendida == responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList![i].productoEmprendedorDto!.cantidadVendida &&
+                prodVendido.precioVenta == responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList![i].productoEmprendedorDto!.precioVenta &&
+                prodVendido.unidadMedida.target!.unidadMedida == responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList![i].productoEmprendedorDto!.unidadMedida) {
+                if (prodVendido.idEmiWeb == null) {
+                  //Se asigna el id Emi Web al prod Vendido
+                  prodVendido.idEmiWeb = responseGetProductosVendidosParse.payload!.ventasXProductoEmprenedorList![i].id.toString();
+                  dataBase.productosVendidosBox.put(prodVendido);
+                  //Se marca como realizada en EmiWeb la instrucción en Bitacora
+                  bitacora.executeEmiWeb = true;
+                  dataBase.bitacoraBox.put(bitacora);
+                  return true;
+                }
+              }
+            }
+            return false;
+          default:
+            //No se obtiene con éxito los prod Vendidos
+            return false;
+        }
+      }
+    } catch (e) { //Fallo en el momento se sincronizar
+      print('ERROR - function syncAddSingleProductoVendido(): $e');
       return false;
     }
   }
 
-  bool syncDeleteProductoVendido(Bitacora bitacora) {
+  Future<bool> syncUpdateProductoVendido(ProdVendidos prodVendido, Bitacora bitacora) async {
+    print("Estoy en El syncUpdateProductoVendido de Emi Web");
+    try {
+      List<dynamic> ventaActualizarRequestList = [];
+      //Creamos el API para actualizar el prod Vendido
+      final actualizarProdVendidoUri =
+        Uri.parse('$baseUrlEmiWebServices/ventas');
+      final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+      print("${prodVendido.idEmiWeb!}");
+      print("${prodVendido.productoEmp.target!.idEmiWeb!}");
+      print("${prodVendido.cantVendida}");
+      print("${prodVendido.precioVenta}");
+      print("${prodVendido.nombreProd}");
+      print("${prodVendido.costo}");
+      print("${prodVendido.unidadMedida.target!.idEmiWeb}");
+      var updateProdVenido = VentaActualizarRequestList(
+        id: int.parse(prodVendido.idEmiWeb!),
+        idProductoEmprendedor: prodVendido.productoEmp.target!.idEmiWeb!, 
+        cantidadVendida: prodVendido.cantVendida, 
+        precioVenta: prodVendido.precioVenta,
+        nombreProducto: prodVendido.nombreProd,
+        costoUnitario: prodVendido.costo,
+        unidadMedida: prodVendido.unidadMedida.target!.idEmiWeb,
+      );
+      ventaActualizarRequestList.add(updateProdVenido.toMap());
+      print(jsonEncode(ventaActualizarRequestList));
+      print("Total: ${prodVendido.venta.target!.total}");
+      final responsePutProdVendido = await put(actualizarProdVendidoUri, 
+      headers: headers,
+      body: jsonEncode({   
+        "idUsuarioRegistra": prodVendido.venta.target!.emprendimiento.target!.usuario.target!.idEmiWeb,
+        "usuarioRegistra": "${prodVendido.venta.target!.emprendimiento
+        .target!.usuario.target!.nombre} ${prodVendido.venta.target!.emprendimiento
+        .target!.usuario.target!.apellidoP} ${prodVendido.venta.target!.emprendimiento
+        .target!.usuario.target!.apellidoM}",
+        "idVentas": prodVendido.venta.target!.idEmiWeb,
+        "idProyecto": prodVendido.venta.target!.emprendimiento.target!.idEmiWeb,
+        "fechaInicio": DateFormat("yyyy-MM-ddTHH:mm:ss").format(prodVendido.venta.target!.fechaInicio),
+        "fechaTermino": DateFormat("yyyy-MM-ddTHH:mm:ss").format(prodVendido.venta.target!.fechaTermino),
+        "total": prodVendido.venta.target!.total,
+        "ventaActualizarRequestList": ventaActualizarRequestList,     
+      }));
+      print("Respuesta Put prod vendido");
+      print(responsePutProdVendido.body);     
+      switch (responsePutProdVendido.statusCode) {
+        case 200:
+          print("Caso 200 en Emi Web Prod Vendido");
+          //Se marca como realizada en EmiWeb la instrucción en Bitacora
+          bitacora.executeEmiWeb = true;
+          dataBase.bitacoraBox.put(bitacora);
+          return true;
+        default: //No se realizo con éxito el actualizar
+          print("Error en actualizar prod Vendido Emi Web");
+          return false;
+      }       
+    } catch (e) { //Fallo en el momento se sincronizar
+      print("Catch de syncUpdateProductoVendido: $e");
+      return false;
+    }
+  }
+
+  Future<bool> syncDeleteProductoVendido(Bitacora bitacora) async {
     print("Estoy en El syncDeleteProductoVendido de Emi Web");
     try {
-      //Se marca como realizada en EmiWeb la instrucción en Bitacora
-      bitacora.executeEmiWeb = true;
-      dataBase.bitacoraBox.put(bitacora);
-      return true;
+      // Primero creamos el API para realizar la eliminación
+      final eliminarProductoVendido =
+        Uri.parse('$baseUrlEmiWebServices/ventasXProductoEmprendedor');
+      final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+      final responseDeleteProdVendido = await put(eliminarProductoVendido, 
+      headers: headers,
+      body: jsonEncode({
+        "ventasXProductoDeleteRequests": [
+            {
+              "id": "${bitacora.idEmiWeb}"
+            }
+          ]
+      }));
+      switch (responseDeleteProdVendido.statusCode) {
+        case 200:
+        print("Caso 200 en Emi Web Delete Prod vendido");
+          //Se marca como realizada en EmiWeb la instrucción en Bitacora
+          bitacora.executeEmiWeb = true;
+          dataBase.bitacoraBox.put(bitacora);
+          return true;
+        default: //No se realizo con éxito el delete
+          print("Error en eliminar prod vendido Emi Web");
+          return false;
+      }  
     } catch (e) {
       print('ERROR - function syncDeleteProductoVendido(): $e');
       return false;
@@ -4192,7 +4499,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
   Future<bool> syncDeleteImagenJornada(Bitacora bitacora) async {
     print("Estoy en El syncDeleteImagenJornada() en Emi Web");
     try {
-      // Primero creamos el API para realizar la actualización
+      // Primero creamos el API para realizar la eliminación
       final eliminarImagenJornada =
         Uri.parse('$baseUrlEmiWebServices/documentos/eliminar?id=${bitacora.idEmiWeb}');
       final headers = ({
@@ -4528,20 +4835,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         'Authorization': 'Bearer $tokenGlobal',
       });
       for (var i = 0; i < venta.prodVendidos.length; i++) {
-        var newVentaCreada = VentaActualizarRequestList(
-          id: i,
-          idProductoEmprendedor: venta.prodVendidos[i].productoEmp.target!.idEmiWeb!, 
-          cantidadVendida: venta.prodVendidos[i].cantVendida, 
-          precioVenta: venta.prodVendidos[i].precioVenta,
-          nombreProducto: venta.prodVendidos[i].nombreProd,
-          costoUnitario: venta.prodVendidos[i].costo,
-          unidadMedida: venta.prodVendidos[i].unidadMedida.target!.idEmiWeb,
+        if (venta.prodVendidos.toList()[i].idEmiWeb != null) {
+          var newVentaCreada = VentaActualizarRequestList(
+            id: int.parse(venta.prodVendidos.toList()[i].idEmiWeb!),
+            idProductoEmprendedor: venta.prodVendidos[i].productoEmp.target!.idEmiWeb!, 
+            cantidadVendida: venta.prodVendidos[i].cantVendida, 
+            precioVenta: venta.prodVendidos[i].precioVenta,
+            nombreProducto: venta.prodVendidos[i].nombreProd,
+            costoUnitario: venta.prodVendidos[i].costo,
+            unidadMedida: venta.prodVendidos[i].unidadMedida.target!.idEmiWeb,
           );
-        ventaActualizarRequestList.add(newVentaCreada.toMap());
-        if (venta.prodVendidos.toList()[i].idEmiWeb == null) {
-          //Se asigna el id Emi Web al prod Vendido
-          venta.prodVendidos.toList()[i].idEmiWeb = i.toString();
-          dataBase.productosVendidosBox.put(venta.prodVendidos.toList()[i]);
+          ventaActualizarRequestList.add(newVentaCreada.toMap());
         }
       }
       print(jsonEncode(ventaActualizarRequestList));
@@ -4619,64 +4923,13 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     }
   } 
 
-  Future<bool> syncUpdateProductosVendidosVenta(Ventas venta, Bitacora bitacora) async {
+  bool syncUpdateProductosVendidosVenta(Bitacora bitacora) {
     print("Estoy en El syncUpdateProductosVendidosVenta de Emi Web");
     try {
-      List<dynamic> ventaActualizarRequestList = [];
-      //Creamos la venta asociada a los productos vendidos
-      final actualizarVentaUri =
-        Uri.parse('$baseUrlEmiWebServices/ventas');
-      final headers = ({
-        "Content-Type": "application/json",
-        'Authorization': 'Bearer $tokenGlobal',
-      });
-      for (var i = 0; i < venta.prodVendidos.length; i++) {
-        print("producto Vendido: ${venta.prodVendidos[i].nombreProd}");
-        var newVentaCreada = VentaActualizarRequestList(
-          id: i,
-          idProductoEmprendedor: venta.prodVendidos[i].productoEmp.target!.idEmiWeb!, 
-          cantidadVendida: venta.prodVendidos[i].cantVendida, 
-          precioVenta: venta.prodVendidos[i].precioVenta,
-          nombreProducto: venta.prodVendidos[i].nombreProd,
-          costoUnitario: venta.prodVendidos[i].costo,
-          unidadMedida: venta.prodVendidos[i].unidadMedida.target!.idEmiWeb,
-          );
-        ventaActualizarRequestList.add(newVentaCreada.toMap());
-        if (venta.prodVendidos.toList()[i].idEmiWeb == null) {
-          //Se asigna el id Emi Web al prod Vendido
-          venta.prodVendidos.toList()[i].idEmiWeb = i.toString();
-          dataBase.productosVendidosBox.put(venta.prodVendidos.toList()[i]);
-        }
-      }
-      print(jsonEncode(ventaActualizarRequestList));
-      final responsePutVenta = await put(actualizarVentaUri, 
-      headers: headers,
-      body: jsonEncode({   
-        "idUsuarioRegistra": venta.emprendimiento.target!.usuario.target!.idEmiWeb,
-        "usuarioRegistra": "${venta.emprendimiento
-        .target!.usuario.target!.nombre} ${venta.emprendimiento
-        .target!.usuario.target!.apellidoP} ${venta.emprendimiento
-        .target!.usuario.target!.apellidoM}",
-        "idVentas": venta.idEmiWeb,
-        "idProyecto": venta.emprendimiento.target!.idEmiWeb,
-        "fechaInicio": DateFormat("yyyy-MM-ddTHH:mm:ss").format(venta.fechaInicio),
-        "fechaTermino": DateFormat("yyyy-MM-ddTHH:mm:ss").format(venta.fechaTermino),
-        "total": venta.total,
-        "ventaActualizarRequestList": ventaActualizarRequestList,     
-      }));
-      print("Respuesta Put Venta");
-      print(responsePutVenta.body);     
-      switch (responsePutVenta.statusCode) {
-        case 200:
-          print("Caso 200 en Emi Web Venta");
-          //Se marca como realizada en EmiWeb la instrucción en Bitacora
-          bitacora.executeEmiWeb = true;
-          dataBase.bitacoraBox.put(bitacora);
-          return true;
-        default: //No se realizo con éxito el actualizar
-          print("Error en actualizar productos vendidos venta Emi Web");
-          return false;
-      }       
+      //Se marca como realizada en EmiWeb la instrucción en Bitacora
+      bitacora.executeEmiWeb = true;
+      dataBase.bitacoraBox.put(bitacora);
+      return true;  
     } catch (e) { //Fallo en el momento se sincronizar
       print("Catch de syncUpdateProductosVendidosVenta: $e");
       return false;

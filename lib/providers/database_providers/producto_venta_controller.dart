@@ -85,6 +85,7 @@ class ProductoVentaController extends ChangeNotifier {
 void add(int idEmprendimiento, int idVenta) {
   final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
   final venta = dataBase.ventasBox.get(idVenta);
+  var total = 0.0;
   if (emprendimiento != null && venta != null) {
     for (var i = 0; i < productosVendidos.length; i++) {
       final productoEmp = dataBase.productosEmpBox.get(productosVendidos[i].idProductoEmp);
@@ -97,6 +98,7 @@ void add(int idEmprendimiento, int idVenta) {
           subtotal: productosVendidos[i].subTotal,
           precioVenta: productosVendidos[i].precioVenta, 
         );
+        total += productosVendidos[i].subTotal;
         final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
         final nuevaInstruccion = Bitacora(instruccion: 'syncAddProductoVendido', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
         nuevoProdVendido.productoEmp.target = productoEmp;
@@ -104,6 +106,7 @@ void add(int idEmprendimiento, int idVenta) {
         nuevoProdVendido.venta.target = venta;
         nuevoProdVendido.unidadMedida.target = productoEmp.unidadMedida.target;
         nuevoProdVendido.bitacora.add(nuevaInstruccion);
+        venta.total = total;
         venta.prodVendidos.add(nuevoProdVendido);
         dataBase.ventasBox.put(venta);
       }
@@ -114,42 +117,17 @@ void add(int idEmprendimiento, int idVenta) {
   }
 }
 
-void addSingle(int idVenta, int idProductoEmp, String subTotal, ) {
-  final venta = dataBase.ventasBox.get(idVenta);
-  final productoEmp = dataBase.productosEmpBox.get(idProductoEmp);
-  if (venta != null && productoEmp != null) {
-      final nuevoProdVendido = ProdVendidos(
-        nombreProd: productoEmp.nombre,
-        descripcion: productoEmp.descripcion,
-        costo: productoEmp.costo, 
-        cantVendida: int.parse(cantidad),
-        subtotal: double.parse(subTotal),
-        precioVenta: double.parse(precioVenta),
-      );
-      final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
-      final nuevaInstruccion = Bitacora(instruccion: 'syncAddProductoVendido', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-      nuevoProdVendido.productoEmp.target = productoEmp;
-      nuevoProdVendido.statusSync.target = nuevoSync;
-      nuevoProdVendido.venta.target = venta;
-      nuevoProdVendido.unidadMedida.target = productoEmp.unidadMedida.target;
-      nuevoProdVendido.bitacora.add(nuevaInstruccion);
-      venta.prodVendidos.add(nuevoProdVendido);
-      dataBase.ventasBox.put(venta);
-      print('Producto Vendido agregado exitosamente');
-      clearInformation();
-      notifyListeners();
-  }
-  }
 
   void updateProductosVendidos(Ventas venta) {
     for (var i = 0; i < instruccionesProdVendido.length; i++) {
       switch (instruccionesProdVendido[i].instruccion) {
-        case "syncAddProductoVendido":
-          final nuevaInstruccion = Bitacora(instruccion: 'syncAddProductoVendido', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+        case "syncAddSingleProductoVendido":
+          venta.total += (instruccionesProdVendido[i].prodVendido.cantVendida * instruccionesProdVendido[i].prodVendido.costo);
+          final nuevaInstruccion = Bitacora(instruccion: 'syncAddSingleProductoVendido', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
           instruccionesProdVendido[i].prodVendido.bitacora.add(nuevaInstruccion);
+          // instruccionesProdVendido[i].prodVendido.totalActual = venta.total;
           int idNuevoProductoVendido = dataBase.productosVendidosBox.put(instruccionesProdVendido[i].prodVendido);
           venta.prodVendidos.add(dataBase.productosVendidosBox.get(idNuevoProductoVendido)!);
-          venta.total += (instruccionesProdVendido[i].prodVendido.cantVendida * instruccionesProdVendido[i].prodVendido.costo);
           dataBase.ventasBox.put(venta);
           continue;
         case "syncUpdateProductoVendido":
@@ -160,6 +138,9 @@ void addSingle(int idVenta, int idProductoEmp, String subTotal, ) {
             updateProductoVendido.costo = instruccionesProdVendido[i].prodVendido.costo;
             updateProductoVendido.cantVendida = instruccionesProdVendido[i].prodVendido.cantVendida;
             venta.total += (updateProductoVendido.cantVendida * updateProductoVendido.costo);
+            // updateProductoVendido.totalActual = venta.total;
+            // print("Actualizando total en update Producto vendido");
+            // print("Update Total${updateProductoVendido.totalActual}");
             dataBase.ventasBox.put(venta);
             updateProductoVendido.bitacora.add(nuevaInstruccion);
             dataBase.productosVendidosBox.put(updateProductoVendido);

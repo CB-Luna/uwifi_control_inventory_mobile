@@ -145,7 +145,7 @@ class _EditarVentaScreenState extends State<EditarVentaScreen> {
                                       ),
                                       child: InkWell(
                                         onTap: () async {
-                                          productoVentaProvider.clearInformation();
+                                          ventaProvider.clearInformation();
                                           await Navigator.push(
                                           context,
                                           MaterialPageRoute(

@@ -616,6 +616,7 @@ class ProdVendidos {
   double subtotal;
   double precioVenta;
   DateTime fechaRegistro;
+  bool postEmiWeb;
   @Unique()
   String? idDBR;
   String? idEmiWeb;
@@ -633,6 +634,7 @@ class ProdVendidos {
     required this.subtotal,
     required this.precioVenta,
     DateTime? fechaRegistro,
+    this.postEmiWeb = false,
     this.idDBR,
     this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
