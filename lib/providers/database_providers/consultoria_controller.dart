@@ -123,14 +123,9 @@ class ConsultoriaController extends ChangeNotifier {
     void archivarConsultoria(int idConsultoria) {
     final consultoria = dataBase.consultoriasBox.get(idConsultoria);
     if (consultoria != null) {
-      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateEstadoConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncArchivarConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza el estado de la Consultoria
       consultoria.archivado = true;
-      final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(consultoria.statusSync.target!.id)).build().findUnique();
-      if (statusSync != null) {
-        statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del consultoria
-        dataBase.statusSyncBox.put(statusSync);
-      }
       consultoria.bitacora.add(nuevaInstruccion);
       dataBase.consultoriasBox.put(consultoria);
       print('Consultoria actualizada exitosamente');
@@ -140,14 +135,9 @@ class ConsultoriaController extends ChangeNotifier {
   void desarchivarConsultoria(int idConsultoria) {
     final consultoria = dataBase.consultoriasBox.get(idConsultoria);
     if (consultoria != null) {
-      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateEstadoConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncDesarchivarConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza el estado de la Consultoria
       consultoria.archivado = false;
-      final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(consultoria.statusSync.target!.id)).build().findUnique();
-      if (statusSync != null) {
-        statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del consultoria
-        dataBase.statusSyncBox.put(statusSync);
-      }
       consultoria.bitacora.add(nuevaInstruccion);
       dataBase.consultoriasBox.put(consultoria);
       print('Consultoria actualizada exitosamente');

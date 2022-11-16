@@ -153,7 +153,8 @@ class Inversiones {
   final inversionXprodCotizados = ToMany<InversionesXProdCotizados>();
   final estadoInversion = ToOne<EstadoInversion>();
   final pagos = ToMany<Pagos>();
-  final imagenes = ToMany<Imagenes>();
+  final imagenFirmaRecibido = ToOne<Imagenes>();
+  final imagenProductoEntregado = ToOne<Imagenes>();
   
   Inversiones({
     this.id = 0,
@@ -1193,7 +1194,7 @@ class Imagenes {
   final prodSolicitados = ToMany<ProdSolicitado>();
   final productosProv = ToMany<ProductosProv>();
   final prodProyecto = ToMany<ProdProyecto>();
-  final inversiones = ToMany<Inversiones>();
+  final inversion = ToOne<Inversiones>();
   final productosEmp = ToOne<ProductosEmp>();
   final bitacora = ToMany<Bitacora>();
   final emprendedor = ToOne<Emprendedores>();

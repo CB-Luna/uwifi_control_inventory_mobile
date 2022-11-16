@@ -1218,6 +1218,62 @@ class SyncProviderPocketbase extends ChangeNotifier {
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
           }
+        case "syncArchivarConsultoria":
+          print("Entro al caso de syncArchivarConsultoria Pocketbase");
+          final consultoriaToSync = getFirstConsultoria(dataBase.consultoriasBox.getAll(), instruccionesBitacora[i].id);
+          if(consultoriaToSync != null){
+            final boolSyncArchivarConsultoria = await syncArchivarConsultoria(consultoriaToSync, instruccionesBitacora[i]);
+            if (boolSyncArchivarConsultoria) {
+              banderasExistoSync.add(boolSyncArchivarConsultoria);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(boolSyncArchivarConsultoria);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                emprendimiento: consultoriaToSync.emprendimiento.target!.nombre,
+                instruccion: "Archivar Consultoria Servidor", 
+                fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }      
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+              emprendimiento: "No encontrado",
+              instruccion: "Archivar Consultoria Servidor", 
+              fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
+        case "syncDesarchivarConsultoria":
+          print("Entro al caso de syncDesarchivarConsultoria Pocketbase");
+          final consultoriaToSync = getFirstConsultoria(dataBase.consultoriasBox.getAll(), instruccionesBitacora[i].id);
+          if(consultoriaToSync != null){
+            final boolSyncDesarchivarConsultoria = await syncDesarchivarConsultoria(consultoriaToSync, instruccionesBitacora[i]);
+            if (boolSyncDesarchivarConsultoria) {
+              banderasExistoSync.add(boolSyncDesarchivarConsultoria);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(boolSyncDesarchivarConsultoria);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                emprendimiento: consultoriaToSync.emprendimiento.target!.nombre,
+                instruccion: "Desarchivar Consultoria Servidor", 
+                fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }      
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+              emprendimiento: "No encontrado",
+              instruccion: "Desarchivar Consultoria Servidor", 
+              fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
         case "syncAcceptInversionXProdCotizado":
           print("Entro al caso de syncAcceptInversionXProdCotizado Pocketbase");
           final inversionXproductoCotizadoToSync = getFirstInversionXProductosCotizados(dataBase.inversionesXprodCotizadosBox.getAll(), instruccionesBitacora[i].id);
@@ -1246,7 +1302,34 @@ class SyncProviderPocketbase extends ChangeNotifier {
             instruccionesFallidas.add(instruccionNoSincronizada);
             continue;
           }
-          
+        case "syncAcceptProdCotizado":
+          print("Entro al caso de syncAcceptProdCotizado Pocketbase");
+          final productoCotizadoToSync = getFirstProductoCotizado(dataBase.productosCotBox.getAll(), instruccionesBitacora[i].id);
+          if(productoCotizadoToSync != null){
+            final boolSyncAcceptProductoCotizado = await syncAcceptProdCotizado(productoCotizadoToSync, instruccionesBitacora[i]);
+            if (boolSyncAcceptProductoCotizado) {
+              banderasExistoSync.add(boolSyncAcceptProductoCotizado);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(boolSyncAcceptProductoCotizado);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                emprendimiento: productoCotizadoToSync.inversionXprodCotizados.target!.inversion.target!.emprendimiento.target!.nombre,
+                instruccion: "Aceptar Producto Cotizado Servidor", 
+                fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }      
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+              emprendimiento: "No encontrado",
+              instruccion: "Aceptar Producto Cotizado Servidor", 
+              fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
         case "syncDeleteProductoVendido":
           print("Entro al caso de syncDeleteProductoVendido Pocketbase");
           final boolSyncDeleteProductoVendido = await syncDeleteProductoVendido(instruccionesBitacora[i]);
@@ -1287,6 +1370,34 @@ class SyncProviderPocketbase extends ChangeNotifier {
           } 
           }         
           continue;
+        case "syncAddImagenesEntregaInversion":
+          print("Entro al caso de syncAddImagenesEntregaInversion Pocketbase");
+          final inversionToSync = getFirstInversion(dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
+          if(inversionToSync != null){
+            final boolSyncAddImagenesEntregaInversion = await syncAddImagenesEntregaInversion(inversionToSync, instruccionesBitacora[i]);
+            if (boolSyncAddImagenesEntregaInversion) {
+              banderasExistoSync.add(boolSyncAddImagenesEntregaInversion);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(boolSyncAddImagenesEntregaInversion);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                emprendimiento: inversionToSync.emprendimiento.target!.nombre,
+                instruccion: "Agregar Imágenes Entrega Inversión Servidor", 
+                fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }      
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+              emprendimiento: "No encontrado",
+              instruccion: "Agregar Imágenes Entrega Inversión Servidor", 
+              fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
         default:
          continue;
       }   
@@ -4331,14 +4442,25 @@ void deleteBitacora() {
           "aceptado": inversionXprodCotizados.aceptado,
         });
         if (recordInversionXProdCotizados.id.isNotEmpty) {
-          //Se marca como realizada en Pocketbase la instrucción en Bitacora
-          bitacora.executePocketbase = true;
-          dataBase.bitacoraBox.put(bitacora);
-          if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
-            //Se elimina la instrucción de la bitacora
-            dataBase.bitacoraBox.remove(bitacora.id);
-          } 
-          return true;
+          //Se actualiza monto, saldo y total de inversión
+          final recordInversion = await client.records.update('inversiones', inversionXprodCotizados.inversion.target!.idDBR.toString(), body: {
+            "id_estado_inversion_fk": inversionXprodCotizados.inversion.target!.estadoInversion.target!.idDBR,
+            "monto_pagar": inversionXprodCotizados.inversion.target!.montoPagar,
+            "saldo": inversionXprodCotizados.inversion.target!.saldo,
+            "total_inversion": inversionXprodCotizados.inversion.target!.totalInversion,
+          }); 
+          if (recordInversion.id.isNotEmpty) {
+            //Se marca como realizada en Pocketbase la instrucción en Bitacora
+            bitacora.executePocketbase = true;
+            dataBase.bitacoraBox.put(bitacora);
+            if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+              //Se elimina la instrucción de la bitacora
+              dataBase.bitacoraBox.remove(bitacora.id);
+            } 
+            return true;
+          } else {
+            return false;
+          }
         } else {
           //No se pudo aceptar la inversion x prod cotizados a Pocketbase
           return false;
@@ -4352,6 +4474,39 @@ void deleteBitacora() {
       }
     } catch (e) {
       print('ERROR - function syncAcceptInversionesXProductosCotizados(): $e');
+      return false;
+    }
+  }
+
+    Future<bool> syncAcceptProdCotizado(ProdCotizados prodCotizado, Bitacora bitacora) async {
+    print("Estoy en syncAcceptProductoCotizado");
+    try {
+      if (!bitacora.executePocketbase) {
+        final recordProdCotizados = await client.records.update('productos_cotizados', prodCotizado.idDBR.toString(), body: {
+          "aceptado": true,
+        });
+        if (recordProdCotizados.id.isNotEmpty) {
+          //Se marca como realizada en Pocketbase la instrucción en Bitacora
+          bitacora.executePocketbase = true;
+          dataBase.bitacoraBox.put(bitacora);
+          if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+            //Se elimina la instrucción de la bitacora
+            dataBase.bitacoraBox.remove(bitacora.id);
+          } 
+          return true;
+        } else {
+          //No se pudo aceptar el prod cotizado a Pocketbase
+          return false;
+        }   
+      } else {
+        if (bitacora.executeEmiWeb) {
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
+        } 
+        return true;
+      }
+    } catch (e) {
+      print('ERROR - function syncAcceptProductoCotizado(): $e');
       return false;
     }
   }
@@ -4506,6 +4661,75 @@ void deleteBitacora() {
     }
   } 
 
+  Future<bool> syncArchivarConsultoria(Consultorias consultoria, Bitacora bitacora) async {
+    print("Estoy en El syncArchivarConsultoria");
+    try {
+      if (!bitacora.executePocketbase) {
+        final record = await client.records.update('consultorias', consultoria.idDBR.toString(), body: {
+          "archivado": true,
+      }); 
+
+        if (record.id.isNotEmpty) {
+          //Se marca como realizada en Pocketbase la instrucción en Bitacora
+          bitacora.executePocketbase = true;
+          dataBase.bitacoraBox.put(bitacora);
+          if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+            //Se elimina la instrucción de la bitacora
+            dataBase.bitacoraBox.remove(bitacora.id);
+          }
+          return true;
+        }
+        else{
+          return false;
+        }
+      } else {
+        if (bitacora.executeEmiWeb) {
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
+        }
+        return true;
+      }
+
+    } catch (e) {
+      print('ERROR - function syncArchivarConsultoria(): $e');
+      return false;
+    }
+  } 
+
+  Future<bool> syncDesarchivarConsultoria(Consultorias consultoria, Bitacora bitacora) async {
+    print("Estoy en El syncDesarchivarConsultoria");
+    try {
+      if (!bitacora.executePocketbase) {
+        final record = await client.records.update('consultorias', consultoria.idDBR.toString(), body: {
+          "archivado": false,
+      }); 
+
+        if (record.id.isNotEmpty) {
+          //Se marca como realizada en Pocketbase la instrucción en Bitacora
+          bitacora.executePocketbase = true;
+          dataBase.bitacoraBox.put(bitacora);
+          if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+            //Se elimina la instrucción de la bitacora
+            dataBase.bitacoraBox.remove(bitacora.id);
+          }
+          return true;
+        }
+        else{
+          return false;
+        }
+      } else {
+        if (bitacora.executeEmiWeb) {
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
+        }
+        return true;
+      }
+
+    } catch (e) {
+      print('ERROR - function syncDesarchivarConsultoria(): $e');
+      return false;
+    }
+  } 
 
 //   Future<bool> syncUpdateInversion(Inversiones inversion, Bitacora bitacora) async {
 //     try {
@@ -4631,6 +4855,92 @@ void deleteBitacora() {
         return false;
       }
     return null;
+}
+
+  Future<bool> syncAddImagenesEntregaInversion(Inversiones inversion, Bitacora bitacora) async {
+    print("Estoy en syncAddImagenesEntregaInversion");
+    try {
+      if (!bitacora.executePocketbase) {
+        if (inversion.imagenFirmaRecibido.target!.idDBR == null) {
+          //Primero creamos la imagen de firma de recibo
+          final recordImagenFirmaRecibido = await client.records.create('imagenes', body: {
+            "nombre": inversion.imagenFirmaRecibido.target!.nombre,
+            "id_emi_web": inversion.imagenFirmaRecibido.target!.idEmiWeb,
+            "base64": inversion.imagenFirmaRecibido.target!.base64,
+          });
+
+          if (recordImagenFirmaRecibido.id.isNotEmpty) {
+            //Se recupera el idDBR de la imagen
+            inversion.imagenFirmaRecibido.target!.idDBR = recordImagenFirmaRecibido.id;
+            dataBase.imagenesBox.put(inversion.imagenFirmaRecibido.target!);
+            //Segundo creamos la imagen de Producto Entregado 
+            final recordImagenProductoEntregado = await client.records.create('imagenes', body: {
+              "nombre": inversion.imagenProductoEntregado.target!.nombre,
+              "id_emi_web": inversion.imagenProductoEntregado.target!.idEmiWeb,
+              "base64": inversion.imagenProductoEntregado.target!.base64,
+            });
+
+            if (recordImagenProductoEntregado.id.isNotEmpty) {
+              //Se recupera el idDBR de la imagen
+              inversion.imagenProductoEntregado.target!.idDBR = recordImagenProductoEntregado.id;
+              dataBase.imagenesBox.put(inversion.imagenProductoEntregado.target!);
+              //Se marca como realizada en Pocketbase la instrucción en Bitacora
+              bitacora.executePocketbase = true;
+              dataBase.bitacoraBox.put(bitacora);
+              if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+                //Se elimina la instrucción de la bitacora
+                dataBase.bitacoraBox.remove(bitacora.id);
+              } 
+              return true;
+            } else {
+              return false;
+            }
+          } else {
+            return false;
+          }
+        } else {
+          if (inversion.imagenProductoEntregado.target!.idDBR == null) {
+            //Segundo creamos la imagen de Producto Entregado 
+            final recordImagenProductoEntregado = await client.records.create('imagenes', body: {
+              "nombre": inversion.imagenProductoEntregado.target!.nombre,
+              "id_emi_web": inversion.imagenProductoEntregado.target!.idEmiWeb,
+              "base64": inversion.imagenProductoEntregado.target!.base64,
+            });
+
+            if (recordImagenProductoEntregado.id.isNotEmpty) {
+              //Se recupera el idDBR de la imagen
+              inversion.imagenProductoEntregado.target!.idDBR = recordImagenProductoEntregado.id;
+              dataBase.imagenesBox.put(inversion.imagenProductoEntregado.target!);
+              //Se marca como realizada en Pocketbase la instrucción en Bitacora
+              bitacora.executePocketbase = true;
+              dataBase.bitacoraBox.put(bitacora);
+              if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+                //Se elimina la instrucción de la bitacora
+                dataBase.bitacoraBox.remove(bitacora.id);
+              } 
+              return true;
+            } else {
+              return false;
+            }
+          } else {
+            if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+              //Se elimina la instrucción de la bitacora
+              dataBase.bitacoraBox.remove(bitacora.id);
+            } 
+            return true;
+          }
+        }
+      } else {
+        if (bitacora.executeEmiWeb) {
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
+        } 
+        return true;
+      }
+    } catch (e) {
+      print('ERROR - function syncAddImagenesEntregaInversion(): $e');
+      return false;
+    }
 }
 
 // PROCESO DE OBTENCIÓN DE PRODUCTOS COTIZADOS 

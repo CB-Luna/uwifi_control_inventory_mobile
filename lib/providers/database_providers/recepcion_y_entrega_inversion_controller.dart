@@ -27,7 +27,9 @@ class RecepcionYEntregaController extends ChangeNotifier {
     prodCotizadosTemp = actualProdCotizados;
     inversionXProdCotizadosTemp = actualInversionXprodCotizados;
     for (var i = 0; i < actualProdCotizados.length; i++) {
-      totalProyecto += actualProdCotizados[i].costoTotal;
+      if (actualProdCotizados[i].aceptado) {
+        totalProyecto += actualProdCotizados[i].costoTotal;
+      }
     }
     return totalProyecto;
   }
@@ -37,15 +39,11 @@ class RecepcionYEntregaController extends ChangeNotifier {
       final updateProdCotizado = dataBase.productosCotBox.get(prodCotizadosTemp[i].id);
        if (updateProdCotizado != null) {
         if (prodCotizadosTemp[i].aceptado) {
-          final nuevaInstruccion = Bitacora(instruccion: 'syncAcceptProdCotizado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
           updateProdCotizado.aceptado = prodCotizadosTemp[i].aceptado;
-          updateProdCotizado.bitacora.add(nuevaInstruccion);
           dataBase.productosCotBox.put(updateProdCotizado);
           print('Prod Cotizado aceptado exitosamente');
         } else {
-          final nuevaInstruccion = Bitacora(instruccion: 'syncRejectProdCotizado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
           updateProdCotizado.aceptado = prodCotizadosTemp[i].aceptado;
-          updateProdCotizado.bitacora.add(nuevaInstruccion);
           dataBase.productosCotBox.put(updateProdCotizado);
           print('Prod Cotizado rechazado exitosamente');
         }
@@ -53,32 +51,36 @@ class RecepcionYEntregaController extends ChangeNotifier {
     }
   }
 
-   void finishRecepcionInversion(InversionesXProdCotizados inversionXProdCotizados) {
+  void finishRecepcionInversion(InversionesXProdCotizados inversionXProdCotizados, int porcentaje) {
     for (var i = 0; i < prodCotizadosTemp.length; i++) {
       final updateProdCotizado = dataBase.productosCotBox.get(prodCotizadosTemp[i].id);
        if (updateProdCotizado != null) {
-        final nuevaInstruccion = Bitacora(instruccion: 'syncAcceptProdCotizado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-        updateProdCotizado.aceptado = prodCotizadosTemp[i].aceptado;
-        updateProdCotizado.bitacora.add(nuevaInstruccion);
-        dataBase.productosCotBox.put(updateProdCotizado);
-        print('Prod Cotizado actualizado exitosamente');
+        if (prodCotizadosTemp[i].aceptado) {
+          final nuevaInstruccion = Bitacora(instruccion: 'syncAcceptProdCotizado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+          updateProdCotizado.bitacora.add(nuevaInstruccion);
+          dataBase.productosCotBox.put(updateProdCotizado);
+        }
       }
     }
-
-    final updateInversionXprodCotizado = dataBase.inversionesXprodCotizadosBox.get(inversionXProdCotizados.id);
-       if (updateInversionXprodCotizado != null) {
-        final nuevaInstruccionInversionXprodCotizado = Bitacora(instruccion: 'syncAcceptInversionXProdCotizado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-        updateInversionXprodCotizado.aceptado = inversionXProdCotizados.aceptado;
-        updateInversionXprodCotizado.bitacora.add(nuevaInstruccionInversionXprodCotizado);
-        dataBase.inversionesXprodCotizadosBox.put(updateInversionXprodCotizado);
-        print('Inversion X Prod Cotizado actualizado exitosamente');
-      }
-
-    //Se actualiza el estado de la inversión
+    var totalProyecto = 0.0;
+    final nuevaInstruccionInversionXprodCotizado = Bitacora(instruccion: 'syncAcceptInversionXProdCotizado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+    inversionXProdCotizados.aceptado = true;
+    inversionXProdCotizados.bitacora.add(nuevaInstruccionInversionXprodCotizado);
+    dataBase.inversionesXprodCotizadosBox.put(inversionXProdCotizados);
+    print('Inversion X Prod Cotizado actualizado exitosamente');
+    //Se actualiza el estado de la inversión, monto, saldo y total de la inversión
     final nuevaInstruccionEstadoInversion = Bitacora(instruccion: 'syncUpdateEstadoInversion', instruccionAdicional: "Entregada Al Promotor", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
     final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Entregada Al Promotor")).build().findFirst();
     final updateInversion = dataBase.inversionesBox.get(inversionXProdCotizados.inversion.target!.id);
     if (newEstadoInversion != null && updateInversion != null) {
+      for (var i = 0; i < inversionXProdCotizados.prodCotizados.toList().length; i++) {
+        if (inversionXProdCotizados.prodCotizados.toList()[i].aceptado) {
+          totalProyecto += inversionXProdCotizados.prodCotizados.toList()[i].costoTotal;
+        }
+      }
+      updateInversion.montoPagar = totalProyecto * (porcentaje * 0.01);
+      updateInversion.saldo = totalProyecto * (porcentaje * 0.01);
+      updateInversion.totalInversion = totalProyecto;
       updateInversion.estadoInversion.target = newEstadoInversion;
       updateInversion.bitacora.add(nuevaInstruccionEstadoInversion);
       dataBase.inversionesBox.put(updateInversion);
@@ -86,33 +88,29 @@ class RecepcionYEntregaController extends ChangeNotifier {
     }
   }
 
-   void entregaInversion(String imagenFirma, String imagenProducto, int idInversion) {
+   void entregaInversion(Imagenes imagenFirma, Imagenes imagenProductoEntregado, int idInversion) {
 
     final updateInversion = dataBase.inversionesBox.get(idInversion);
     if (updateInversion != null) {
-      final nuevaInstruccionImagenInversion = Bitacora(instruccion: 'syncUpdateImagenInversion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Se agrega la imagen de la Firma
-      final nuevaImagenFirma = Imagenes(imagenes: imagenFirma); //Se crea el objeto imagenes para la Inversion
-      updateInversion.imagenes.add(nuevaImagenFirma);
-      //Se agrega la imagen del Producto
-      final nuevaImagenProducto = Imagenes(imagenes: imagenProducto); //Se crea el objeto imagenes para el Producto
-      updateInversion.imagenes.add(nuevaImagenProducto);
+      final nuevaInstruccionImagenesEntregaInversion = Bitacora(instruccion: 'syncAddImagenesEntregaInversion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      imagenFirma.inversion.target = updateInversion;
+      updateInversion.imagenFirmaRecibido.target = imagenFirma;
+      dataBase.imagenesBox.put(imagenFirma);
+      //Se agrega la imagen del Producto Entregado
+      imagenProductoEntregado.inversion.target = updateInversion;
+      updateInversion.imagenProductoEntregado.target = imagenProductoEntregado;
+      dataBase.imagenesBox.put(imagenProductoEntregado);
       //Se actualiza el estado de la inversión
       final nuevaInstruccionEstadoInversion = Bitacora(instruccion: 'syncUpdateEstadoInversion', instruccionAdicional: "Entregada Al Emprendedor", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Entregada Al Emprendedor")).build().findFirst();
       if (newEstadoInversion != null) {
-        final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateInversion.statusSync.target!.id)).build().findUnique();
-        if (statusSync != null) {
-          statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la inversion
-          dataBase.statusSyncBox.put(statusSync);
-          updateInversion.estadoInversion.target = newEstadoInversion;
-          updateInversion.bitacora.add(nuevaInstruccionImagenInversion);
-          updateInversion.bitacora.add(nuevaInstruccionEstadoInversion);
-          dataBase.inversionesBox.put(updateInversion);
-          print("Inversion updated succesfully");
-        }
+        updateInversion.estadoInversion.target = newEstadoInversion;
+        updateInversion.bitacora.add(nuevaInstruccionImagenesEntregaInversion);
+        updateInversion.bitacora.add(nuevaInstruccionEstadoInversion);
+        dataBase.inversionesBox.put(updateInversion);
+        print("Inversion updated succesfully");
       }
-      
     }
   }
 

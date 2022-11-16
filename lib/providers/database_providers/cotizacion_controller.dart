@@ -80,114 +80,57 @@ class CotizacionController extends ChangeNotifier {
     try {
       final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Autorizada")).build().findFirst();
       if (newEstadoInversion != null) {
-        //Se actualiza el estado y el monto en ObjectBox
-        double montoPagarYSaldoInicial = 0.0;
-        //Se actualiza es el estado de los prod Cotizados
+        //Se actualiza el estado en ObjectBox
         final inversionXprodCotizados = dataBase.inversionesXprodCotizadosBox.get(idInversionesXProdCotizados);
         if (inversionXprodCotizados != null) {
           final listProdCotizados = inversionXprodCotizados.prodCotizados.toList();
           for (var i = 0; i < listProdCotizados.length; i++) {
-            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(listProdCotizados[i].statusSync.target!.id)).build().findUnique();
-            if (statusSync != null) {
-              statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del prod Cotizado
-              dataBase.statusSyncBox.put(statusSync);
-              listProdCotizados[i].aceptado = true;
-              dataBase.productosCotBox.put(listProdCotizados[i]);
-              print("Prod Cotizado updated succesfully");
-            }
-            //Se suma el total del Prod Cotizado al monto a pagar y saldo
-            montoPagarYSaldoInicial += listProdCotizados[i].costoTotal;
+            listProdCotizados[i].aceptado = true;
+            dataBase.productosCotBox.put(listProdCotizados[i]);
+            print("Prod Cotizado updated succesfully");
           }
-          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(inversion.statusSync.target!.id)).build().findUnique();
-          if (statusSync != null) {
-            statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
-            dataBase.statusSyncBox.put(statusSync);
-            inversion.estadoInversion.target = newEstadoInversion;
-            //Se asigna monto a Pagar y el Saldo inicial
-            inversion.montoPagar = double.parse(((montoPagarYSaldoInicial * inversion.porcentajePago)/100).toStringAsFixed(2));
-            inversion.saldo = double.parse(((montoPagarYSaldoInicial * inversion.porcentajePago)/100).toStringAsFixed(2));
-            dataBase.inversionesBox.put(inversion);
-            print("Inversion updated succesfully");
-            if (await getTokenOAuth()) {
-              // Se crea el API para realizar la actualización de estado inversión en Emi Web
-              final actualizarEstadoInversionUri =
-                Uri.parse('$baseUrlEmiWebServices/inversion/estadoInversion');
-              final headers = ({
-                "Content-Type": "application/json",
-                'Authorization': 'Bearer $tokenGlobal',
-              });
-              //Se actualiza el estado de la inversión en Emi Web
-              final responsePutUpdateEstadoInversion = await put(actualizarEstadoInversionUri, 
-              headers: headers,
-              body: jsonEncode({
-                "idUsuarioRegistra": inversion.emprendimiento.target!.usuario.target!.idEmiWeb,
-                "usuarioRegistra": "${inversion.emprendimiento
-                .target!.usuario.target!.nombre} ${inversion.emprendimiento
-                .target!.usuario.target!.apellidoP} ${inversion.emprendimiento
-                .target!.usuario.target!.apellidoM}",
-                "idInversiones": inversion.idEmiWeb,
-                "idCatEstadoInversion": newEstadoInversion.idEmiWeb,
-              }));
-              print("Id Inversión: ${inversion.idEmiWeb}");
-              switch (responsePutUpdateEstadoInversion.statusCode) {
-                case 200:
-                  print("Caso 200 en Emi Web Update Estado Inversión");
-                  // Se crea el API para realizar la actualización de montos y saldos de inversión en Emi Web
-                  final actualizarMontoSaldoCostoInversionUri =
-                    Uri.parse('$baseUrlEmiWebServices/inversiones/promotor/inversionRecibida');
-                  final headers = ({
-                    "Content-Type": "application/json",
-                    'Authorization': 'Bearer $tokenGlobal',
-                  });
-                  print("Datos");
-                  print("${inversion.emprendimiento.target!.usuario.target!.idEmiWeb}");
-                  print("${inversion.emprendimiento
-                      .target!.usuario.target!.nombre} ${inversion.emprendimiento
-                      .target!.usuario.target!.apellidoP} ${inversion.emprendimiento
-                      .target!.usuario.target!.apellidoM}");
-                  print("${inversion.idEmiWeb}");
-                  //Se actualiza el estado de la inversión en Emi Web
-                  final responseUpdateMontoSaldoCostoInversion = await put(actualizarMontoSaldoCostoInversionUri, 
-                  headers: headers,
-                  body: jsonEncode({
-                    "idUsuario": inversion.emprendimiento.target!.usuario.target!.idEmiWeb,
-                    "nombreUsuario": "${inversion.emprendimiento
-                      .target!.usuario.target!.nombre} ${inversion.emprendimiento
-                      .target!.usuario.target!.apellidoP} ${inversion.emprendimiento
-                      .target!.usuario.target!.apellidoM}",
-                    "idInversiones": inversion.idEmiWeb,
-                    "inversionRecibida": true,
-                  }));
-                  print("${responseUpdateMontoSaldoCostoInversion.statusCode}");
-                  print("${responseUpdateMontoSaldoCostoInversion.body}");
-                  switch (responseUpdateMontoSaldoCostoInversion.statusCode) {
-                  case 200:
-                    print("Caso 200 en Emi Web Update Saldo Monto Costo Inversión");
-                    //Se actualiza el estado de la Inversión en Pocketbase
-                    final record = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
-                      "id_estado_inversion_fk": newEstadoInversion.idDBR,
-                      "monto_pagar": double.parse(((montoPagarYSaldoInicial * inversion.porcentajePago)/100).toStringAsFixed(2)),
-                      "saldo": double.parse(((montoPagarYSaldoInicial * inversion.porcentajePago)/100).toStringAsFixed(2)),
-                      "total_inversion": montoPagarYSaldoInicial,
-                    }); 
-                    if (record.id.isNotEmpty) {
-                      return true;
-                    } else {
-                      return false;
-                    }
-                default: //No se realizo con éxito el put
-                  print("Error en actualizar saldo monto costo inversión Emi Web");
+          inversion.estadoInversion.target = newEstadoInversion;
+          dataBase.inversionesBox.put(inversion);
+          print("Inversion updated succesfully");
+          if (await getTokenOAuth()) {
+            // Se crea el API para realizar la actualización de estado inversión en Emi Web
+            final actualizarEstadoInversionUri =
+              Uri.parse('$baseUrlEmiWebServices/inversion/estadoInversion');
+            final headers = ({
+              "Content-Type": "application/json",
+              'Authorization': 'Bearer $tokenGlobal',
+            });
+            //Se actualiza el estado de la inversión en Emi Web
+            final responsePutUpdateEstadoInversion = await put(actualizarEstadoInversionUri, 
+            headers: headers,
+            body: jsonEncode({
+              "idUsuarioRegistra": inversion.emprendimiento.target!.usuario.target!.idEmiWeb,
+              "usuarioRegistra": "${inversion.emprendimiento
+              .target!.usuario.target!.nombre} ${inversion.emprendimiento
+              .target!.usuario.target!.apellidoP} ${inversion.emprendimiento
+              .target!.usuario.target!.apellidoM}",
+              "idInversiones": inversion.idEmiWeb,
+              "idCatEstadoInversion": newEstadoInversion.idEmiWeb,
+            }));
+            print("Id Inversión: ${inversion.idEmiWeb}");
+            switch (responsePutUpdateEstadoInversion.statusCode) {
+              case 200:
+                print("Caso 200 en Emi Web Update Estado Inversión");
+                //Se actualiza el estado de la Inversión en Pocketbase
+                final record = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
+                  "id_estado_inversion_fk": newEstadoInversion.idDBR,
+                }); 
+                if (record.id.isNotEmpty) {
+                  return true;
+                } else {
                   return false;
-                }  
-              default: //No se realizo con éxito el put
-                print("Error en actualizar estado inversión Emi Web");
-                return false;
-              }  
-            } else {
-              print("Fallo en el Token");
+                }
+            default: //No se realizo con éxito el put
+              print("Error en actualizar estado inversión Emi Web");
               return false;
-            }
+            }  
           } else {
+            print("Fallo en el Token");
             return false;
           }
         } else {

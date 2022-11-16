@@ -48,7 +48,7 @@ with TickerProviderStateMixin {
     totalProyecto = 0.00;
     for (var element in widget.inversionesXprodCotizados.prodCotizados) {
       productosCot.add(element);
-      totalProyecto += (element.costoTotal); 
+      totalProyecto += (element.costoTotal * element.cantidad); 
     }
   }
 

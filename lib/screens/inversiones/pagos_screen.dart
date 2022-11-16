@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:bizpro_app/helpers/constants.dart';
@@ -45,20 +46,19 @@ class _PagosScreenState extends State<PagosScreen> {
   final formKey = GlobalKey<FormState>();
   List<Pagos> listPagos = [];
   double totalProyecto = 0.00;
-  late String imageFirma;
-  late String imageProducto;
+  Imagenes? imagenFirma;
+  Imagenes? imagenProducto;
 
   @override
   void initState() {
     super.initState();
     actualInversion = dataBase.inversionesBox.get(widget.idInversion);
     if (actualInversion != null) {
-      if (actualInversion!.imagenes.isNotEmpty) {
-        imageFirma = actualInversion!.imagenes.first.imagenes;
-        imageProducto = actualInversion!.imagenes.last.imagenes;
-      } else {
-        imageFirma = "";
-        imageProducto = "";
+      if (actualInversion!.imagenFirmaRecibido.target?.path != null) {
+        imagenFirma = actualInversion!.imagenFirmaRecibido.target!;
+      } 
+      if (actualInversion!.imagenProductoEntregado.target?.path != null) {
+        imagenProducto = actualInversion!.imagenProductoEntregado.target!;
       }
       listPagos = actualInversion!.pagos.toList();
       montoPagar = TextEditingController(
@@ -655,7 +655,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                             "Comprada") {
                                                           if ((!recepcionYentregaProvider
                                                                   .prodCotizadosTemp
-                                                                  .every((element) =>
+                                                                  .any((element) =>
                                                                       element
                                                                           .aceptado ==
                                                                       true)) &&
@@ -668,7 +668,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                 ?.showSnackBar(
                                                                     const SnackBar(
                                                               content: Text(
-                                                                  "Para finalizar la recepción debes de seleccionar todos los productos."),
+                                                                  "Para finalizar la recepción debes de seleccionar al menos un producto."),
                                                             ));
                                                           } else {
                                                             if (recepcionYentregaProvider
@@ -678,7 +678,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                   .finishRecepcionInversion(
                                                                       actualInversion!
                                                                           .inversionXprodCotizados
-                                                                          .last);
+                                                                          .last,
+                                                                      actualInversion!.porcentajePago);
                                                               await Navigator
                                                                   .push(
                                                                 context,
@@ -920,8 +921,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                         .fade,
                                                                 child:
                                                                     FlutterFlowExpandedImageView(
-                                                                  image: imageFirma ==
-                                                                          ""
+                                                                  image: imagenFirma ==
+                                                                          null
                                                                       ? Image
                                                                           .asset(
                                                                           'assets/images/default_image.png',
@@ -931,7 +932,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                       : Image
                                                                           .file(
                                                                           File(
-                                                                              imageFirma),
+                                                                              imagenFirma!.path!),
                                                                           fit: BoxFit
                                                                               .contain,
                                                                         ),
@@ -955,8 +956,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                       .circular(
                                                                           5),
                                                               child:
-                                                                  imageFirma ==
-                                                                          ""
+                                                                  imagenFirma ==
+                                                                          null
                                                                       ? Image
                                                                           .asset(
                                                                           'assets/images/default_image.png',
@@ -970,7 +971,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                       : Image
                                                                           .file(
                                                                           File(
-                                                                              imageFirma),
+                                                                              imagenFirma!.path!),
                                                                           width:
                                                                               200,
                                                                           height:
@@ -1053,9 +1054,14 @@ class _PagosScreenState extends State<PagosScreen> {
                                                             }
 
                                                             setState(() {
-                                                              imageFirma =
-                                                                  pickedFile!
-                                                                      .path;
+                                                              File file = File(pickedFile!.path);
+                                                              List<int> fileInByte = file.readAsBytesSync();
+                                                              String base64 = base64Encode(fileInByte);
+                                                              imagenFirma = Imagenes(
+                                                                imagenes: pickedFile.path,
+                                                                nombre: pickedFile.name, 
+                                                                path: pickedFile.path, 
+                                                                base64: base64);
                                                             });
                                                           },
                                                           text: 'Agregar',
@@ -1168,8 +1174,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                         .fade,
                                                                 child:
                                                                     FlutterFlowExpandedImageView(
-                                                                  image: imageProducto ==
-                                                                          ""
+                                                                  image: imagenProducto ==
+                                                                          null
                                                                       ? Image
                                                                           .asset(
                                                                           'assets/images/default_image.png',
@@ -1179,7 +1185,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                       : Image
                                                                           .file(
                                                                           File(
-                                                                              imageProducto),
+                                                                              imagenProducto!.path!),
                                                                           fit: BoxFit
                                                                               .contain,
                                                                         ),
@@ -1204,8 +1210,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                       .circular(
                                                                           5),
                                                               child:
-                                                                  imageProducto ==
-                                                                          ""
+                                                                  imagenProducto ==
+                                                                          null
                                                                       ? Image
                                                                           .asset(
                                                                           'assets/images/default_image.png',
@@ -1219,7 +1225,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                       : Image
                                                                           .file(
                                                                           File(
-                                                                              imageProducto),
+                                                                              imagenProducto!.path!),
                                                                           width:
                                                                               200,
                                                                           height:
@@ -1302,9 +1308,14 @@ class _PagosScreenState extends State<PagosScreen> {
                                                             }
 
                                                             setState(() {
-                                                              imageProducto =
-                                                                  pickedFile!
-                                                                      .path;
+                                                              File file = File(pickedFile!.path);
+                                                              List<int> fileInByte = file.readAsBytesSync();
+                                                              String base64 = base64Encode(fileInByte);
+                                                              imagenProducto= Imagenes(
+                                                                imagenes: pickedFile.path,
+                                                                nombre: pickedFile.name, 
+                                                                path: pickedFile.path, 
+                                                                base64: base64);
                                                             });
                                                           },
                                                           text: 'Agregar',
@@ -1383,14 +1394,14 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                 .target!
                                                                 .estado ==
                                                             "Entregada Al Promotor") {
-                                                          if (imageFirma !=
-                                                                  "" &&
-                                                              imageProducto !=
-                                                                  "") {
+                                                          if (imagenFirma !=
+                                                                  null &&
+                                                              imagenProducto !=
+                                                                  null) {
                                                             recepcionYentregaProvider
                                                                 .entregaInversion(
-                                                                    imageFirma,
-                                                                    imageProducto,
+                                                                    imagenFirma!,
+                                                                    imagenProducto!,
                                                                     actualInversion!
                                                                         .id);
                                                             await Navigator
