@@ -1357,19 +1357,33 @@ class SyncProviderPocketbase extends ChangeNotifier {
           }
           continue;
         case "syncAddPagoInversion":
-          print("Entro aqui");
+          print("Entro al caso de syncAddPagoInversion Pocketbase");
           final pagoToSync = getFirstPago(dataBase.pagosBox.getAll(), instruccionesBitacora[i].id);
           if(pagoToSync != null){
-            if(pagoToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
-            print("Entro aqui en el if");
-            continue;
+            final boolSyncAddPago = await syncAddPagoInversion(pagoToSync, instruccionesBitacora[i]);
+            if (boolSyncAddPago) {
+              banderasExistoSync.add(boolSyncAddPago);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              banderasExistoSync.add(boolSyncAddPago);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                emprendimiento: pagoToSync.inversion.target!.emprendimiento.target!.nombre,
+                instruccion: "Agregar Pago Inversión Servidor", 
+                fecha: instruccionesBitacora[i].fechaRegistro);
+              instruccionesFallidas.add(instruccionNoSincronizada);
+              continue;
+            }      
           } else {
-            print("Entro aqui en el else");
-            
-            await syncAddPagoInversion(pagoToSync);
-          } 
-          }         
-          continue;
+            //Recuperamos la instrucción que no se ejecutó
+            banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+              emprendimiento: "No encontrado",
+              instruccion: "Agregar Pago Inversión Servidor", 
+              fecha: instruccionesBitacora[i].fechaRegistro);
+            instruccionesFallidas.add(instruccionNoSincronizada);
+            continue;
+          }
         case "syncAddImagenesEntregaInversion":
           print("Entro al caso de syncAddImagenesEntregaInversion Pocketbase");
           final inversionToSync = getFirstInversion(dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
@@ -1653,6 +1667,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
       }
       return null;
     }
+
 
   Future<bool> syncAddEmprendedor(Emprendedores emprendedor, Bitacora bitacora) async {
     print("Estoy en El syncAddEmprendedor de Pocketbase");
@@ -4511,37 +4526,71 @@ void deleteBitacora() {
     }
   }
 
-  Future<bool?> syncAddPagoInversion(Pagos pago) async {
-    print("Estoy en El syncAddPagoInversion");
-      try {
-      final record = await client.records.create('pagos', body: {
+  Future<bool> syncAddPagoInversion(Pagos pago, Bitacora bitacora) async {
+    print("Estoy en syncAddPagoInversion");
+    try {
+      if (!bitacora.executePocketbase) {
+        if (pago.idDBR == null) {
+          //Primero creamos el pago
+          final pagoTarea = await client.records.create('pagos', body: {
           "monto_abonado": pago.montoAbonado,
           "fecha_movimiento": pago.fechaMovimiento.toUtc().toString(),
           "id_inversion_fk": pago.inversion.target!.idDBR,
           "id_usuario_fk": pago.inversion.target!.emprendimiento.target!.usuario.target!.idDBR,
-      });
-      if (record.id.isNotEmpty) {
-        String idDBR = record.id;
-        print("Pago created succesfully");
-        var updatePago = dataBase.pagosBox.get(pago.id);
-        if (updatePago != null) {
-            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updatePago.statusSync.target!.id)).build().findUnique();
-            if (statusSync != null) {
-              statusSync.status = "HoI36PzYw1wtbO1";
-              dataBase.statusSyncBox.put(statusSync);
-            }
-          updatePago.idDBR = idDBR;
-          dataBase.pagosBox.put(updatePago);
-          return true;
-        }
-        else {
-          return false;
-        }
-      }
-      else{
-        return false;
-      }
+          "id_emi_web": pago.idEmiWeb,
+          });
+          if (pagoTarea.id.isNotEmpty) {
+            //Se recupera el idDBR del pago
+            pago.idDBR = pagoTarea.id;
+            dataBase.pagosBox.put(pago);
+            //Segundo actualizamos la inversión   
+            final recordInversion = await client.records.update('inversiones', pago.inversion.target!.idDBR.toString(),body: {
+              "monto_pagar": pago.inversion.target!.montoPagar,
+              "saldo": pago.inversion.target!.saldo,
+            });
 
+            if (recordInversion.id.isNotEmpty) {
+              //Se marca como realizada en Pocketbase la instrucción en Bitacora
+              bitacora.executePocketbase = true;
+              dataBase.bitacoraBox.put(bitacora);
+              if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+                //Se elimina la instrucción de la bitacora
+                dataBase.bitacoraBox.remove(bitacora.id);
+              } 
+              return true;
+            } else {
+              return false;
+            }
+          } else {
+            return false;
+          }
+        } else {
+          //Segundo actualizamos la inversión   
+          final recordInversion = await client.records.update('inversiones', pago.inversion.target!.idDBR.toString(),body: {
+            "monto_pagar": pago.inversion.target!.montoPagar,
+            "saldo": pago.inversion.target!.saldo,
+          });
+
+          if (recordInversion.id.isNotEmpty) {
+            //Se marca como realizada en Pocketbase la instrucción en Bitacora
+            bitacora.executePocketbase = true;
+            dataBase.bitacoraBox.put(bitacora);
+            if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+              //Se elimina la instrucción de la bitacora
+              dataBase.bitacoraBox.remove(bitacora.id);
+            } 
+            return true;
+          } else {
+            return false;
+          }
+        }
+      } else {
+        if (bitacora.executeEmiWeb) {
+          //Se elimina la instrucción de la bitacora
+          dataBase.bitacoraBox.remove(bitacora.id);
+        } 
+        return true;
+      }
     } catch (e) {
       print('ERROR - function syncAddPagoInversion(): $e');
       return false;

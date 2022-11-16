@@ -2565,7 +2565,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(58, 6428801880818699617),
       name: 'Pagos',
-      lastPropertyId: const IdUid(8, 8776328160547757904),
+      lastPropertyId: const IdUid(9, 8582847983321332165),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -2614,7 +2614,13 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(201, 5830096455343665109),
-            relationTarget: 'Usuarios')
+            relationTarget: 'Usuarios'),
+        ModelProperty(
+            id: const IdUid(9, 8582847983321332165),
+            name: 'idEmiWeb',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(271, 8536477397944553514))
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -2833,7 +2839,7 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(62, 5967866020755512418),
-      lastIndexId: const IdUid(270, 5674494763222124400),
+      lastIndexId: const IdUid(271, 8536477397944553514),
       lastRelationId: const IdUid(82, 2481463102848550386),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -6000,7 +6006,10 @@ ModelDefinition getObjectBoxModel() {
         objectToFB: (Pagos object, fb.Builder fbb) {
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(9);
+          final idEmiWebOffset = object.idEmiWeb == null
+              ? null
+              : fbb.writeString(object.idEmiWeb!);
+          fbb.startTable(10);
           fbb.addInt64(0, object.id);
           fbb.addFloat64(1, object.montoAbonado);
           fbb.addInt64(2, object.fechaMovimiento.millisecondsSinceEpoch);
@@ -6009,6 +6018,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(5, object.statusSync.targetId);
           fbb.addInt64(6, object.inversion.targetId);
           fbb.addInt64(7, object.usuario.targetId);
+          fbb.addOffset(8, idEmiWebOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -6025,7 +6035,9 @@ ModelDefinition getObjectBoxModel() {
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 12));
+                  .vTableGetNullable(buffer, rootOffset, 12),
+              idEmiWeb: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 20));
           object.statusSync.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
           object.statusSync.attach(store);
@@ -7909,6 +7921,10 @@ class Pagos_ {
   /// see [Pagos.usuario]
   static final usuario =
       QueryRelationToOne<Pagos, Usuarios>(_entities[34].properties[7]);
+
+  /// see [Pagos.idEmiWeb]
+  static final idEmiWeb =
+      QueryStringProperty<Pagos>(_entities[34].properties[8]);
 
   /// see [Pagos.bitacora]
   static final bitacora =

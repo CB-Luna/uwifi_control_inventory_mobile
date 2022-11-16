@@ -1833,6 +1833,41 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               banderasExistoSync.add(true);
               continue;
             }
+          case "syncAddPagoInversion":
+            print("Entro al caso de syncAddPagoInversion Emi Web");
+            if (!instruccionesBitacora[i].executeEmiWeb) {
+              final pagoToSync = getFirstPago(dataBase.pagosBox.getAll(), instruccionesBitacora[i].id);
+              if(pagoToSync != null){
+                //Se encontró el pago y se puede agregar
+                var boolSyncAddPagoInversion = await syncAddPagoInversion(pagoToSync, instruccionesBitacora[i]);
+                if (boolSyncAddPagoInversion) {
+                  banderasExistoSync.add(boolSyncAddPagoInversion);
+                  continue;
+                } else {
+                  //Recuperamos la instrucción que no se ejecutó
+                  banderasExistoSync.add(boolSyncAddPagoInversion);
+                  final instruccionNoSincronizada = InstruccionNoSincronizada(
+                    emprendimiento: pagoToSync.inversion.target!.emprendimiento.target!.nombre,
+                    instruccion: "Agregar Pago Inversión Emi Web", 
+                    fecha: instruccionesBitacora[i].fechaRegistro);
+                  instruccionesFallidas.add(instruccionNoSincronizada);
+                  continue;
+                }
+              } else {
+                //Recuperamos la instrucción que no se ejecutó
+                banderasExistoSync.add(false);
+                final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  emprendimiento: "No encontrado",
+                  instruccion: "Agregar Pago Inversión Emi Web",
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+                instruccionesFallidas.add(instruccionNoSincronizada);
+                continue;
+              }
+            } else {
+              // Ya se ha ejecutado esta instrucción en Emi Web
+              banderasExistoSync.add(true);
+              continue;
+            }
           default:
             continue;
         }
@@ -2084,7 +2119,21 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       }
       return null;
     }
+  Pagos? getFirstPago(List<Pagos> pagos, int idInstruccionesBitacora)
+    {
+      for (var i = 0; i < pagos.length; i++) {
+        if (pagos[i].bitacora.isEmpty) {
 
+        } else {
+          for (var j = 0; j < pagos[i].bitacora.length; j++) {
+            if (pagos[i].bitacora[j].id == idInstruccionesBitacora) {
+              return pagos[i];
+            } 
+          }
+        }
+      }
+      return null;
+    }
 
   Future<bool?> syncAddEmprendedor(Emprendedores emprendedor, Bitacora bitacora) async {
     print("Estoy en El syncAddEmprendedor de Emi Web");
@@ -3988,6 +4037,58 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       }
     } catch (e) { //Fallo en el momento se sincronizar
       print("Catch de syncAddInversion: $e");
+      return false;
+    }
+}
+
+  Future<bool> syncAddPagoInversion(Pagos pago, Bitacora bitacora) async {
+    print("Estoy en El syncAddPagoInversion de Emi Web");
+    try {
+      //Verificamos que no se haya posteado anteriormente el pago
+      if (pago.idEmiWeb == null) {
+        final crearPagoUri =
+          Uri.parse('$baseUrlEmiWebServices/inversiones/pago');
+        final headers = ({
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $tokenGlobal',
+        });
+        final responsePostPago = await post(crearPagoUri, 
+        headers: headers,
+        body: jsonEncode({
+          "idInversion": pago.inversion.target!.idEmiWeb,
+          "montoAbonado": pago.montoAbonado,
+          "idUsuario": pago.inversion.target!.emprendimiento.target!.usuario.target!.idEmiWeb,
+          "nombreUsuario": "${pago.inversion.target!.emprendimiento
+          .target!.usuario.target!.nombre} ${pago.inversion.target!.emprendimiento
+          .target!.usuario.target!.apellidoP} ${pago.inversion.target!.emprendimiento
+          .target!.usuario.target!.apellidoM}",
+        }));
+        print("Respuesta Post Pago");
+        print(responsePostPago.body);
+        switch (responsePostPago.statusCode) {
+          case 200:
+            print("Caso 200 en Emi Web Pago");
+            //Se recupera el id Emi Web del Pago
+            final responsePostPagoParse = postRegistroExitosoEmiWebFromMap(
+            const Utf8Decoder().convert(responsePostPago.bodyBytes));
+            pago.idEmiWeb = responsePostPagoParse.payload!.id.toString();
+            dataBase.pagosBox.put(pago);
+            //Se marca como realizada en EmiWeb la instrucción en Bitacora
+            bitacora.executeEmiWeb = true;
+            dataBase.bitacoraBox.put(bitacora);
+            return true;
+          default: //No se realizo con éxito el post
+            print("Error en postear pago Emi Web");
+            return false;
+        }       
+      } else {
+        //Se marca como realizada en EmiWeb la instrucción en Bitacora
+        bitacora.executeEmiWeb = true;
+        dataBase.bitacoraBox.put(bitacora);
+        return true;
+      }
+    } catch (e) { //Fallo en el momento se sincronizar
+    print("ERROR - function syncAddPagoInversion(): $e");
       return false;
     }
 }

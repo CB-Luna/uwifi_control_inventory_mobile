@@ -2638,7 +2638,7 @@
     },
     {
       "id": "58:6428801880818699617",
-      "lastPropertyId": "8:8776328160547757904",
+      "lastPropertyId": "9:8582847983321332165",
       "name": "Pagos",
       "properties": [
         {
@@ -2692,6 +2692,13 @@
           "flags": 520,
           "indexId": "201:5830096455343665109",
           "relationTarget": "Usuarios"
+        },
+        {
+          "id": "9:8582847983321332165",
+          "name": "idEmiWeb",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "271:8536477397944553514"
         }
       ],
       "relations": [
@@ -2902,7 +2909,7 @@
     }
   ],
   "lastEntityId": "62:5967866020755512418",
-  "lastIndexId": "270:5674494763222124400",
+  "lastIndexId": "271:8536477397944553514",
   "lastRelationId": "82:2481463102848550386",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

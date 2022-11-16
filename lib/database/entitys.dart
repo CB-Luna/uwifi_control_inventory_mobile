@@ -183,6 +183,8 @@ class Pagos {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
+  @Unique()
+  String? idEmiWeb;
   final statusSync = ToOne<StatusSync>();
   final inversion = ToOne<Inversiones>();
   final usuario = ToOne<Usuarios>();
@@ -194,6 +196,7 @@ class Pagos {
     required this.fechaMovimiento,
     DateTime? fechaRegistro,
     this.idDBR,
+    this.idEmiWeb,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
