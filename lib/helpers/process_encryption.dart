@@ -2,7 +2,7 @@ import 'package:encrypt/encrypt.dart';
 
 // void main(List<String> args) {
 //   // print("Primer método con crypto: ${encryptAESCryptoJS("Carmen2022", 'HuxR1bZVNumSBLEN')}");
-//   print("Password: ${processEncryption('Felix2022')}");
+//   print("Password: ${processEncryption('Ememi.2022')}");
 // }
 
 String? processEncryption(String password) {

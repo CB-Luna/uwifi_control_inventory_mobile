@@ -1,12 +1,26 @@
+import 'package:bizpro_app/database/entitys.dart';
+import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_token_emi_web.dart';
 import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/services/navigation_service.dart';
+import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 import 'package:jwt_decode/jwt_decode.dart';
 
 
 class UserState extends ChangeNotifier {
+
+  String tokenGlobal = "";
+  GlobalKey<FormState> contrasenaFormKey = GlobalKey<FormState>();
+
+  bool validateForm(GlobalKey<FormState> contrasenaKey) {
+    return contrasenaKey.currentState!.validate() ? true : false;
+  }
+
   //EMAIL
   String _email = '';
   //Almacenar email
@@ -113,7 +127,105 @@ class UserState extends ChangeNotifier {
     }
   }
 
+  //Función inicial para recuperar el Token para la actualización de password
+  Future<bool> updatePassword(Usuarios usuario, String actualPasswordEncrypted, String newPasswordEncrypted) async {
+    try {
+      var url = Uri.parse("$baseUrlEmiWebSecurity/oauth/token");
+      final headers = ({
+          "Authorization": "Basic Yml6cHJvOmFkbWlu",
+        });
+      final bodyMsg = ({
+          "grant_type": "password",
+          "scope": "webclient",
+          "username": prefs.getString("userId"),
+          "password": actualPasswordEncrypted,
+        });
+      
+      var response = await post(
+        url, 
+        headers: headers,
+        body: bodyMsg
+      );
 
+      switch (response.statusCode) {
+        case 200:
+          final responseTokenEmiWeb = getTokenEmiWebFromMap(
+          response.body);
+          tokenGlobal = responseTokenEmiWeb.accessToken;
+          //Se actualiza la contraseña en Pocketbase
+          await client.admins.authViaEmail('uzziel.palma@cbluna.com', 'cbluna2021\$');
+          //Verificamos que el usuario no exista en Pocketbase
+          final recordUsuario = await client.users.getFullList(
+            batch: 200, 
+            filter: "email='${prefs.getString("userId")}'");
+          if (recordUsuario.isNotEmpty) {
+            final usuarioUpdated = await client.users.update(
+              recordUsuario.first.id,
+              body: {
+                'password': newPasswordEncrypted,
+                'passwordConfirm': newPasswordEncrypted,
+            });
+            if(usuarioUpdated.id.isNotEmpty) {
+              var urlUpdateContrasenaUsuario = Uri.parse("$baseUrlEmiWebServices/usuarios/actualizar/contrasena");
+              final headers = ({
+                  "Content-Type": "application/json",
+                  'Authorization': 'Bearer $tokenGlobal',
+                });
+              var responseUpdateContrasenaUsuario = await put(
+                urlUpdateContrasenaUsuario,
+                headers: headers,
+                body: jsonEncode({
+                  "id": usuario.idEmiWeb,
+                  "contrasenaActual": actualPasswordEncrypted,
+                  "contrasenaNueva": newPasswordEncrypted
+                })
+              );
+              switch (responseUpdateContrasenaUsuario.statusCode) {
+                case 200: //Caso éxitoso
+                  print("Caso exitoso 200 en put Contraseña Usuario");
+                  usuario.password = newPasswordEncrypted;
+                  dataBase.usuariosBox.put(usuario);
+                  prefs.setString("passEncrypted", newPasswordEncrypted);
+                  return true;
+                default:
+                  snackbarKey.currentState?.showSnackBar(const SnackBar(
+                    content: Text("No se actualizó con éxito la contraseña en Emi Web."),
+                  ));
+                  return false;
+              } 
+            } else {
+              snackbarKey.currentState?.showSnackBar(const SnackBar(
+                content: Text("No se actualizó con éxito la contraseña de forma local."),
+              ));
+              return false;
+            }
+          } else {
+            snackbarKey.currentState?.showSnackBar(const SnackBar(
+              content: Text("No se encontró al usuario actual en el servidor."),
+            ));
+            return false;
+          }
+        case 400:
+          snackbarKey.currentState?.showSnackBar(const SnackBar(
+            content: Text("Contraseña actual incorrecta, verifíque la información ingresada."),
+          ));
+          return false;
+        case 401:
+          snackbarKey.currentState?.showSnackBar(const SnackBar(
+            content: Text("El usuario se encuentra archivado, comuníquese con el Administrador."),
+          ));
+          return false;
+        default:
+          snackbarKey.currentState?.showSnackBar(const SnackBar(
+            content: Text("Falló al conectarse con el servidor Emi Web."),
+          ));
+          return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+  
   @override
   void dispose() {
     emailController.dispose();

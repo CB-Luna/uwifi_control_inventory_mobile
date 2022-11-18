@@ -183,26 +183,14 @@ class CotizacionController extends ChangeNotifier {
                   if (inversionXprodCotizados != null) {
                     final listProdCotizados = inversionXprodCotizados.prodCotizados.toList();
                     for (var i = 0; i < listProdCotizados.length; i++) {
-                      final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(listProdCotizados[i].statusSync.target!.id)).build().findUnique();
-                      if (statusSync != null) {
-                        statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del prod Cotizado
-                        listProdCotizados[i].aceptado = false;
-                        dataBase.statusSyncBox.put(statusSync);
-                        dataBase.productosCotBox.put(listProdCotizados[i]);
-                        print("Prod Cotizado updated succesfully");
-                      }
+                      listProdCotizados[i].aceptado = false;
+                      dataBase.productosCotBox.put(listProdCotizados[i]);
+                      print("Prod Cotizado updated succesfully");
                     }
-                    final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(inversion.statusSync.target!.id)).build().findUnique();
-                    if (statusSync != null) {
-                      statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
-                      dataBase.statusSyncBox.put(statusSync);
-                      inversion.estadoInversion.target = newEstadoInversion;
-                      dataBase.inversionesBox.put(inversion);
-                      print("Inversion updated succesfully");
-                      return true;
-                    } else {
-                      return false;
-                    }
+                    inversion.estadoInversion.target = newEstadoInversion;
+                    dataBase.inversionesBox.put(inversion);
+                    print("Inversion updated succesfully");
+                    return true;
                   } else {
                     return false;
                   }
@@ -264,33 +252,19 @@ class CotizacionController extends ChangeNotifier {
                   if (inversionXprodCotizados != null) {
                     final listProdCotizados = inversionXprodCotizados.prodCotizados.toList();
                     for (var i = 0; i < listProdCotizados.length; i++) {
-                      final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(listProdCotizados[i].statusSync.target!.id)).build().findUnique();
-                      if (statusSync != null) {
-                        statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del prod Cotizado
-                        listProdCotizados[i].aceptado = false;
-                        dataBase.statusSyncBox.put(statusSync);
-                        dataBase.productosCotBox.put(listProdCotizados[i]);
-                        print("Prod Cotizado updated succesfully");
-                      }
+                      listProdCotizados[i].aceptado = false;
+                      dataBase.productosCotBox.put(listProdCotizados[i]);
+                      print("Prod Cotizado updated succesfully");
                     }
-                    final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(inversion.statusSync.target!.id)).build().findUnique();
-                    if (statusSync != null) {
-                      final nuevaInversionXprodCotizados = InversionesXProdCotizados(); //Se crea la instancia inversion x prod Cotizados
-                      final nuevoSyncInversionXprodCotizados = StatusSync(); //Se crea el objeto estatus por dedault //M__
-                      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateEstadoInversion', instruccionAdicional: "Solicitada", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-                      nuevaInversionXprodCotizados.statusSync.target = nuevoSyncInversionXprodCotizados;
-                      statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la inversión
-                      dataBase.statusSyncBox.put(statusSync);
-                      inversion.estadoInversion.target = newEstadoInversion;
-                      nuevaInversionXprodCotizados.inversion.target = inversion;
-                      inversion.bitacora.add(nuevaInstruccion);
-                      inversion.inversionXprodCotizados.add(nuevaInversionXprodCotizados);
-                      dataBase.inversionesBox.put(inversion);
-                      print("Inversion updated succesfully");
+                    final nuevaInversionXprodCotizados = InversionesXProdCotizados(); //Se crea la instancia inversion x prod Cotizados
+                    // final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateEstadoInversion', instruccionAdicional: "Solicitada", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+                    inversion.estadoInversion.target = newEstadoInversion;
+                    nuevaInversionXprodCotizados.inversion.target = inversion;
+                    // inversion.bitacora.add(nuevaInstruccion);
+                    inversion.inversionXprodCotizados.add(nuevaInversionXprodCotizados);
+                    dataBase.inversionesBox.put(inversion);
+                    print("Inversion updated succesfully");
                       return true;
-                    } else {
-                      return false;
-                    }
                   } else {
                     return false;
                   }

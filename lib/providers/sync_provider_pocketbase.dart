@@ -5023,8 +5023,6 @@ void deleteBitacora() {
       }'",
     sort: "-created");
     if (recordsInversionXProdCotizado.isNotEmpty) {
-    for (var element in recordsInversionXProdCotizado) {
-    }
     final inversionXprodCotizadosParse =  getInversionXProdCotizadosFromMap(recordsInversionXProdCotizado[0].toString());
     //Obtenemos los productos cotizados
     final recordInversion = await client.records.
@@ -5051,58 +5049,108 @@ void deleteBitacora() {
           print("Dentro de En Cotización");
           print("****Informacion productos cotizados****");
           // Se recupera el idDBR de la instancia de inversion x prod Cotizados
-          final nuevaIversionXprodCotizados = InversionesXProdCotizados(
-            idDBR: inversionXprodCotizadosParse.id,
-            idEmiWeb: inversionXprodCotizadosParse.idEmiWeb,
-          );
-          final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1");
-          nuevaIversionXprodCotizados.statusSync.target = nuevoSync;
-          for (var i = 0; i < recordProdCotizados.length; i++) {
-            //Se valida que el nuevo prod Cotizado aún no existe en Objectbox
-            final prodCotizadoExistente = dataBase.productosCotBox.query(ProdCotizados_.idDBR.equals(listProdCotizados[i].id)).build().findUnique();
-            if (prodCotizadoExistente == null) {
-              final nuevoProductoCotizado = ProdCotizados(
-              cantidad: listProdCotizados[i].cantidad,
-              costoTotal: listProdCotizados[i].costoTotal,
-              idDBR: listProdCotizados[i].id,
-              aceptado: listProdCotizados[i].aceptado,
-              idEmiWeb: listProdCotizados[i].idEmiWeb,
-              );
-              final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
-              final productoProv = dataBase.productosProvBox.query(ProductosProv_.idDBR.equals(listProdCotizados[i].idProductoProvFk)).build().findUnique();
-              if (productoProv != null) {
-                nuevoProductoCotizado.statusSync.target = nuevoSync;
-                nuevoProductoCotizado.inversionXprodCotizados.target = nuevaIversionXprodCotizados;
-                nuevoProductoCotizado.productosProv.target = productoProv;
-                dataBase.productosCotBox.put(nuevoProductoCotizado);
-                nuevaIversionXprodCotizados.prodCotizados.add(nuevoProductoCotizado);
-                dataBase.inversionesXprodCotizadosBox.put(nuevaIversionXprodCotizados);
+          if(inversion.inversionXprodCotizados.last.idEmiWeb == null) {
+            // Se debe actualizar la IversionXprodCotizados
+            inversion.inversionXprodCotizados.last.idDBR = inversionXprodCotizadosParse.id;
+            inversion.inversionXprodCotizados.last.idEmiWeb = inversionXprodCotizadosParse.idEmiWeb;
+            final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1");
+            inversion.inversionXprodCotizados.last.statusSync.target = nuevoSync;
+            for (var i = 0; i < recordProdCotizados.length; i++) {
+              //Se valida que el nuevo prod Cotizado aún no existe en Objectbox
+              final prodCotizadoExistente = dataBase.productosCotBox.query(ProdCotizados_.idDBR.equals(listProdCotizados[i].id)).build().findUnique();
+              if (prodCotizadoExistente == null) {
+                final nuevoProductoCotizado = ProdCotizados(
+                cantidad: listProdCotizados[i].cantidad,
+                costoTotal: listProdCotizados[i].costoTotal,
+                idDBR: listProdCotizados[i].id,
+                aceptado: listProdCotizados[i].aceptado,
+                idEmiWeb: listProdCotizados[i].idEmiWeb,
+                );
+                final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
+                final productoProv = dataBase.productosProvBox.query(ProductosProv_.idDBR.equals(listProdCotizados[i].idProductoProvFk)).build().findUnique();
+                if (productoProv != null) {
+                  nuevoProductoCotizado.statusSync.target = nuevoSync;
+                  nuevoProductoCotizado.inversionXprodCotizados.target = inversion.inversionXprodCotizados.last;
+                  nuevoProductoCotizado.productosProv.target = productoProv;
+                  dataBase.productosCotBox.put(nuevoProductoCotizado);
+                  inversion.inversionXprodCotizados.last.prodCotizados.add(nuevoProductoCotizado);
+                  dataBase.inversionesXprodCotizadosBox.put(inversion.inversionXprodCotizados.last);
+                } else {
+                  return false;
+                }
+              }
+            }
+            //Se actualiza el estado de la inversión en ObjectBox
+            final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En Cotización")).build().findFirst();
+            if (newEstadoInversion != null) {
+              final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(inversion.statusSync.target!.id)).build().findUnique();
+              if (statusSync != null) {
+                statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
+                dataBase.statusSyncBox.put(statusSync);
+                inversion.estadoInversion.target = newEstadoInversion;
+                dataBase.inversionesXprodCotizadosBox.put(inversion.inversionXprodCotizados.last);
+                dataBase.inversionesBox.put(inversion);
+                print("Inversion updated succesfully");
+                return true;
               } else {
                 return false;
               }
             } else {
-
-            }
-          }
-          //Se actualiza el estado de la inversión en ObjectBox
-          final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En Cotización")).build().findFirst();
-          if (newEstadoInversion != null) {
-            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(inversion.statusSync.target!.id)).build().findUnique();
-            if (statusSync != null) {
-              statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
-              dataBase.statusSyncBox.put(statusSync);
-              inversion.estadoInversion.target = newEstadoInversion;
-              nuevaIversionXprodCotizados.inversion.target = inversion; //Posible solución al error de PAGOS SCREEN
-              dataBase.inversionesXprodCotizadosBox.put(nuevaIversionXprodCotizados);
-              inversion.inversionXprodCotizados.add(nuevaIversionXprodCotizados);
-              dataBase.inversionesBox.put(inversion);
-              print("Inversion updated succesfully");
-              return true;
-            } else {
               return false;
             }
           } else {
-            return false;
+            // Se debe crear una nuevaIversionXprodCotizados
+            final nuevaIversionXprodCotizados = InversionesXProdCotizados(
+              idDBR: inversionXprodCotizadosParse.id,
+              idEmiWeb: inversionXprodCotizadosParse.idEmiWeb,
+            );
+            final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1");
+            nuevaIversionXprodCotizados.statusSync.target = nuevoSync;
+            for (var i = 0; i < recordProdCotizados.length; i++) {
+              //Se valida que el nuevo prod Cotizado aún no existe en Objectbox
+              final prodCotizadoExistente = dataBase.productosCotBox.query(ProdCotizados_.idDBR.equals(listProdCotizados[i].id)).build().findUnique();
+              if (prodCotizadoExistente == null) {
+                final nuevoProductoCotizado = ProdCotizados(
+                cantidad: listProdCotizados[i].cantidad,
+                costoTotal: listProdCotizados[i].costoTotal,
+                idDBR: listProdCotizados[i].id,
+                aceptado: listProdCotizados[i].aceptado,
+                idEmiWeb: listProdCotizados[i].idEmiWeb,
+                );
+                final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
+                final productoProv = dataBase.productosProvBox.query(ProductosProv_.idDBR.equals(listProdCotizados[i].idProductoProvFk)).build().findUnique();
+                if (productoProv != null) {
+                  nuevoProductoCotizado.statusSync.target = nuevoSync;
+                  nuevoProductoCotizado.inversionXprodCotizados.target = nuevaIversionXprodCotizados;
+                  nuevoProductoCotizado.productosProv.target = productoProv;
+                  dataBase.productosCotBox.put(nuevoProductoCotizado);
+                  nuevaIversionXprodCotizados.prodCotizados.add(nuevoProductoCotizado);
+                  dataBase.inversionesXprodCotizadosBox.put(nuevaIversionXprodCotizados);
+                } else {
+                  return false;
+                }
+              }
+            }
+            //Se actualiza el estado de la inversión en ObjectBox
+            final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En Cotización")).build().findFirst();
+            if (newEstadoInversion != null) {
+              final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(inversion.statusSync.target!.id)).build().findUnique();
+              if (statusSync != null) {
+                statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
+                dataBase.statusSyncBox.put(statusSync);
+                inversion.estadoInversion.target = newEstadoInversion;
+                nuevaIversionXprodCotizados.inversion.target = inversion; //Posible solución al error de PAGOS SCREEN
+                dataBase.inversionesXprodCotizadosBox.put(nuevaIversionXprodCotizados);
+                inversion.inversionXprodCotizados.add(nuevaIversionXprodCotizados);
+                dataBase.inversionesBox.put(inversion);
+                print("Inversion updated succesfully");
+                return true;
+              } else {
+                return false;
+              }
+            } else {
+              return false;
+            }
           }
         } else {
           print("No se encuentar en Cotización la inversión");

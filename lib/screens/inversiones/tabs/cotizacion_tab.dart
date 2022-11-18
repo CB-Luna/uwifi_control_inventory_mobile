@@ -48,7 +48,7 @@ with TickerProviderStateMixin {
     totalProyecto = 0.00;
     for (var element in widget.inversionesXprodCotizados.prodCotizados) {
       productosCot.add(element);
-      totalProyecto += (element.costoTotal * element.cantidad); 
+      totalProyecto += (element.costoTotal); 
     }
   }
 
@@ -427,44 +427,23 @@ with TickerProviderStateMixin {
                                               ));
                                             }
                                             else {
-                                              if (widget.inversionesXprodCotizados.idEmiWeb == null) {
-                                                if (await syncProviderEmiWeb.validateCotizacionFirstTimeEmiWeb(widget.inversion)) {
-                                                  // ignore: use_build_context_synchronously
-                                                  await Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) => CotizacionesEmiWebScreen(
-                                                            emprendimiento: widget.emprendimiento, 
-                                                            inversion: widget.inversion,
-                                                      ),
+                                              if (await syncProviderEmiWeb.validateCotizacionFirstTimeEmiWeb(widget.inversion)) {
+                                                // ignore: use_build_context_synchronously
+                                                await Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) => CotizacionesEmiWebScreen(
+                                                          emprendimiento: widget.emprendimiento, 
+                                                          inversion: widget.inversion,
                                                     ),
-                                                  );
-                                                } else {
-                                                  snackbarKey.currentState
-                                                    ?.showSnackBar(const SnackBar(
-                                                  content: Text(
-                                                      "Aún no hay datos de cotización de esta inversión."),
-                                                  ));
-                                                }
+                                                  ),
+                                                );
                                               } else {
-                                                if (await syncProviderEmiWeb.validateCotizacionNTimeEmiWeb(widget.inversion)) {
-                                                  // ignore: use_build_context_synchronously
-                                                  await Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) => CotizacionesEmiWebScreen(
-                                                            emprendimiento: widget.emprendimiento, 
-                                                            inversion: widget.inversion,
-                                                      ),
-                                                    ),
-                                                  );
-                                                } else {
-                                                  snackbarKey.currentState
-                                                    ?.showSnackBar(const SnackBar(
-                                                  content: Text(
-                                                      "Aún no hay datos de cotización de esta inversión."),
-                                                  ));
-                                                }
+                                                snackbarKey.currentState
+                                                  ?.showSnackBar(const SnackBar(
+                                                content: Text(
+                                                    "Aún no hay datos de cotización de esta inversión."),
+                                                ));
                                               }
                                             }
                                             break;
@@ -484,11 +463,35 @@ with TickerProviderStateMixin {
                                           ));
                                           break;
                                         case "Buscar Otra Cotización":
-                                          snackbarKey.currentState
-                                            ?.showSnackBar(const SnackBar(
-                                          content: Text(
-                                              "Debes volver a sincronizar tu información."),
-                                          ));
+                                          final connectivityResult =
+                                            await (Connectivity().checkConnectivity());
+                                          if(connectivityResult == ConnectivityResult.none) {
+                                            snackbarKey.currentState
+                                              ?.showSnackBar(const SnackBar(
+                                            content: Text(
+                                                "Necesitas conexión a internet para obtener la cotización."),
+                                            ));
+                                          }
+                                          else {
+                                            if (await syncProviderEmiWeb.validateCotizacionNTimeEmiWeb(widget.inversion)) {
+                                              // ignore: use_build_context_synchronously
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => CotizacionesEmiWebScreen(
+                                                        emprendimiento: widget.emprendimiento, 
+                                                        inversion: widget.inversion,
+                                                  ),
+                                                ),
+                                              );
+                                            } else {
+                                              snackbarKey.currentState
+                                                ?.showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "Aún no hay datos de cotización de esta inversión."),
+                                              ));
+                                            }
+                                          }
                                           break;
                                         default:
                                           break;

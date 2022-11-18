@@ -5697,11 +5697,18 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         );
         switch (response.statusCode) {
           case 200: //Caso éxitoso
+            print("Caso exitoso");
+            print("${inversion.idEmiWeb}");
+            print("Tamaño: ${inversion.inversionXprodCotizados.toList().length}");
             final responseListProdCotizados = getProdCotizadosEmiWebFromMap(
-                  const Utf8Decoder().convert(response.bodyBytes));
-            if(responseListProdCotizados.payload![int.parse(inversion.inversionXprodCotizados.last.idEmiWeb!) +1] != []){
+              const Utf8Decoder().convert(response.bodyBytes));
+            print("Indice a buscar: ${int.parse(inversion.inversionXprodCotizados.toList()[inversion.inversionXprodCotizados.toList().length - 2].idEmiWeb!)}");
+            print("${responseListProdCotizados.payload![int.parse(inversion.inversionXprodCotizados.toList()[inversion.inversionXprodCotizados.toList().length - 2].idEmiWeb!)] != []}");
+            if(responseListProdCotizados.payload![int.parse(inversion.inversionXprodCotizados.toList()[inversion.inversionXprodCotizados.toList().length - 2].idEmiWeb!)] != []){
+              print("es true");
               return true;
             } else{
+              print("Es false");
               return false;
             }
           case 404: //Error no existen productos cotizados a esta inversión
