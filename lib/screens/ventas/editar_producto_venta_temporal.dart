@@ -579,8 +579,12 @@ class _EditarProductoVentaTemporalState
                                             if (precio <= 0) {
                                               return 'Para continuar, ingrese un costo sugerido.';
                                             }
-
-                                            return null;
+                                            else{
+                                              return null;
+                                            }
+                                            }
+                                            else{
+                                              return null;
                                             }
                                             
                                           },

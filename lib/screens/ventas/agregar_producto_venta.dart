@@ -305,7 +305,7 @@ class _AgregarProductoVentaState
                                     productoVentaProvider.cantidad = value;
                                      try {
                                       if (value != "" && precioVenta.text != "" ) {
-                                      subTotal.text = currencyFormat.format((double.parse(value) * double.parse(precioVenta.text)).toStringAsFixed(2));
+                                      subTotal.text = (double.parse(value) * double.parse(precioVenta.text.replaceAll("\$", "").replaceAll(",", ""))).toStringAsFixed(2);
                                       }  
                                     } catch (e) {
                                       null;
@@ -369,14 +369,21 @@ class _AgregarProductoVentaState
                                       ),
                                   maxLines: 1,
                                   validator: (val) {
-                                           
-                                               double costo = double.parse(val!.replaceAll('\$', '').replaceAll(',', ''));
+                                           if(val!.isNotEmpty){
+                                               double costo = double.parse(val);
                                             if (costo <= 0) {
                                               return 'Para continuar, ingrese una cantidad mayor a 0.';
                                             }
+                                            else{
+                                              return null;
 
-                                            return null;
+                                            }
+
                                             
+                                           }
+                                           else{
+                                            return 'Ingrese una cantidad';
+                                           }
                                             
                                           },
                                 ),
@@ -509,12 +516,14 @@ class _AgregarProductoVentaState
                                       ),
                                   maxLines: 1,
                                   validator: (val) {
-                                            double cantidad = double.tryParse(val!) ?? 0;
-                                            if (cantidad <= 0) {
-                                              return 'Para continuar, ingrese una cantidad.';
+                                           if(val!.length > 1){
+                                               double venta = double.parse(val.replaceAll('\$', '').replaceAll(',', ''));
+                                            if (venta <= 0) {
+                                              return 'Para continuar, ingrese un costo mayor a 0.';
                                             }
 
                                             return null;
+                                            }
                                           },
                                 ),
                               ),
