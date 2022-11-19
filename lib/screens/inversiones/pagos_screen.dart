@@ -674,11 +674,20 @@ class _PagosScreenState extends State<PagosScreen> {
                                                             if (recepcionYentregaProvider
                                                                 .inversionXProdCotizadosTemp!
                                                                 .aceptado) {
+                                                                  // print("Elementos aceptados");
+                                                                  // for (var element in actualInversion!.inversionXprodCotizados.last.prodCotizados.toList()) {
+                                                                  //   if (element.aceptado) {
+                                                                  //     print("${element.productosProv.target!.nombre}");
+                                                                  //   }
+                                                                  // }
                                                               recepcionYentregaProvider
                                                                   .finishRecepcionInversion(
                                                                       actualInversion!
                                                                           .inversionXprodCotizados
                                                                           .last,
+                                                                      actualInversion!
+                                                                          .inversionXprodCotizados
+                                                                          .last.prodCotizados.toList(),
                                                                       actualInversion!.porcentajePago);
                                                               await Navigator
                                                                   .push(

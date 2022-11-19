@@ -51,16 +51,13 @@ class RecepcionYEntregaController extends ChangeNotifier {
     }
   }
 
-  void finishRecepcionInversion(InversionesXProdCotizados inversionXProdCotizados, int porcentaje) {
-    for (var i = 0; i < prodCotizadosTemp.length; i++) {
-      final updateProdCotizado = dataBase.productosCotBox.get(prodCotizadosTemp[i].id);
-       if (updateProdCotizado != null) {
-        if (prodCotizadosTemp[i].aceptado) {
+  void finishRecepcionInversion(InversionesXProdCotizados inversionXProdCotizados, List<ProdCotizados> prodCotizados, int porcentaje) {
+    for (var i = 0; i < prodCotizados.length; i++) {
+        if (prodCotizados[i].aceptado) {
           final nuevaInstruccion = Bitacora(instruccion: 'syncAcceptProdCotizado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-          updateProdCotizado.bitacora.add(nuevaInstruccion);
-          dataBase.productosCotBox.put(updateProdCotizado);
+          prodCotizados[i].bitacora.add(nuevaInstruccion);
+          dataBase.productosCotBox.put(prodCotizados[i]);
         }
-      }
     }
     var totalProyecto = 0.0;
     final nuevaInstruccionInversionXprodCotizado = Bitacora(instruccion: 'syncAcceptInversionXProdCotizado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
