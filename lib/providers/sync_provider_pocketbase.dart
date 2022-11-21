@@ -2624,11 +2624,28 @@ class SyncProviderPocketbase extends ChangeNotifier {
   Future<bool> syncAddJornada4(Jornadas jornada, Bitacora bitacora) async {
     print("Estoy en syncAddJornada4");
     final List<String> idsDBRImagenes = [];
+    final listJornadas = jornada.emprendimiento.target!.jornadas.toList();
     try {
       if (!bitacora.executePocketbase) {
         final tareaToSync = dataBase.tareasBox.query(Tareas_.id.equals(jornada.tarea.target!.id)).build().findUnique();
         if (tareaToSync != null) {  
           if (tareaToSync.idDBR == null) {
+            //Antes finalizamos las jornadas previas 
+            for (var i = 0; i < listJornadas.length; i++) {
+              if (listJornadas[i].numJornada != "4") {
+                final recordJornada = await client.records.update('jornadas', listJornadas[i].idDBR.toString(), body: {
+                    "completada": true,
+                    "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                  }); 
+                if (recordJornada.id.isNotEmpty) {
+                  continue;
+                }
+                else{
+                  //No se pudo actualizar jornada en Pocketbase
+                  return false;
+                } 
+              }
+            }
             // Creamos y enviamos las imágenes de la jornada
             for (var i = 0; i < jornada.tarea.target!.imagenes.toList().length; i++) {
               if (jornada.tarea.target!.imagenes.toList()[i].idDBR == null) {

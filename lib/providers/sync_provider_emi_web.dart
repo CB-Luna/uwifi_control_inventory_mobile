@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_emprendimiento_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_inversion_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_prod_cotizados_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_productos_vendidos_emi_web.dart';
@@ -2138,10 +2139,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
   Future<bool?> syncAddEmprendedor(Emprendedores emprendedor, Bitacora bitacora) async {
     print("Estoy en El syncAddEmprendedor de Emi Web");
     try {
-      final emprendimientoToSync = dataBase.emprendimientosBox.get(emprendedor.emprendimiento.target!.id);
-      if (emprendimientoToSync != null) {
+      if (emprendedor.emprendimiento.target!.idEmiWeb == null) {
         //Verificamos que no se haya posteado anteriormente el emprendedor y emprendimiento
-        if (emprendedor.idEmiWeb == null && emprendimientoToSync.idEmiWeb == null) {
+        if (emprendedor.idEmiWeb == null) {
           // Primero creamos el emprendedor asociado al emprendimiento
           final crearEmprendedorUri =
             Uri.parse('$baseUrlEmiWebServices/emprendedores/registro/crear');
@@ -2181,13 +2181,33 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             emprendedor.idEmiWeb = responsePostEmprendedorParse.payload!.id.toString();
             dataBase.emprendedoresBox.put(emprendedor);
             //Segundo creamos el emprendimiento
-            //Se recupera el id Emi Web del Emprendimiento
-            emprendimientoToSync.idEmiWeb = responsePostEmprendedorParse.payload!.id.toString();
-            dataBase.emprendimientosBox.put(emprendimientoToSync);
-            //Se marca como realizada en EmiWeb la instrucción en Bitacora
-            bitacora.executeEmiWeb = true;
-            dataBase.bitacoraBox.put(bitacora);
-            return true;
+            // Recuperamos el id asociado al emprendimiento
+            final obtenerEmprendimientoUri =
+              Uri.parse('$baseUrlEmiWebServices/proyectos/${emprendedor.idEmiWeb}');
+            final headers = ({
+              "Content-Type": "application/json",
+              'Authorization': 'Bearer $tokenGlobal',
+            });
+            final responseGetEmprendimiento = await get(obtenerEmprendimientoUri, 
+              headers: headers,
+            );
+            print("Respuesta Get Emprendimiento");
+            print(responseGetEmprendimiento.body);     
+            switch (responseGetEmprendimiento.statusCode) {
+              case 200:
+                //Se recupera el id Emi Web del emprendimiento
+                final responseGetEmprendimientoParse = getEmprendimientoEmiWebFromMap(
+                const Utf8Decoder().convert(responseGetEmprendimiento.bodyBytes));
+                emprendedor.emprendimiento.target!.idEmiWeb = responseGetEmprendimientoParse.payload!.id.toString();
+                dataBase.emprendimientosBox.put(emprendedor.emprendimiento.target!);
+                //Se marca como realizada en EmiWeb la instrucción en Bitacora
+                bitacora.executeEmiWeb = true;
+                dataBase.bitacoraBox.put(bitacora);
+                return true;
+              default:
+                //No se obtiene con éxito el emprendimiento
+                return false;
+            }
             case 409:
               return null;
             default: //No se realizo con éxito el post
@@ -2195,14 +2215,39 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               return false;
           }       
         } else {
-          //Se marca como realizada en EmiWeb la instrucción en Bitacora
-          bitacora.executeEmiWeb = true;
-          dataBase.bitacoraBox.put(bitacora);
-          return true;
+          // Recuperamos el id asociado al emprendimiento
+          final obtenerEmprendimientoUri =
+            Uri.parse('$baseUrlEmiWebServices/proyectos/${emprendedor.idEmiWeb}');
+          final headers = ({
+            "Content-Type": "application/json",
+            'Authorization': 'Bearer $tokenGlobal',
+          });
+          final responseGetEmprendimiento = await get(obtenerEmprendimientoUri, 
+            headers: headers,
+          );
+          print("Respuesta Get Emprendimiento");
+          print(responseGetEmprendimiento.body);     
+          switch (responseGetEmprendimiento.statusCode) {
+            case 200:
+              //Se recupera el id Emi Web del emprendimiento
+              final responseGetEmprendimientoParse = getEmprendimientoEmiWebFromMap(
+              const Utf8Decoder().convert(responseGetEmprendimiento.bodyBytes));
+              emprendedor.emprendimiento.target!.idEmiWeb = responseGetEmprendimientoParse.payload!.id.toString();
+              dataBase.emprendimientosBox.put(emprendedor.emprendimiento.target!);
+              //Se marca como realizada en EmiWeb la instrucción en Bitacora
+              bitacora.executeEmiWeb = true;
+              dataBase.bitacoraBox.put(bitacora);
+              return true;
+            default:
+              //No se obtiene con éxito el emprendimiento
+              return false;
+          }
         }
       } else {
-        //No existe un emprendimiento asociado al emprendedor de forma local
-        return false;
+        //Se marca como realizada en EmiWeb la instrucción en Bitacora
+        bitacora.executeEmiWeb = true;
+        dataBase.bitacoraBox.put(bitacora);
+        return true;
       }
     } catch (e) { //Fallo en el momento se sincronizar
     print("ERROR - function syncAddEmprendedor(): $e");
@@ -2856,11 +2901,49 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<bool> syncAddJornada4(Jornadas jornada, Bitacora bitacora) async {
     print("Estoy en El syncAddJornada4 de Emi Web");
+    final listJornadas = jornada.emprendimiento.target!.jornadas.toList();
     try {
       final tareaToSync = dataBase.tareasBox.get(jornada.tarea.target!.id);
       if (tareaToSync != null) {
         //Verificamos que no se haya posteado anteriormente la jornada y tarea
         if (jornada.idEmiWeb == null) {
+          //Antes finalizamos las jornadas previas 
+          for (var i = 0; i < listJornadas.length; i++) {
+            if (listJornadas[i].numJornada != "4") {
+              final actualizarJornada1Uri =
+                Uri.parse('$baseUrlEmiWebServices/jornadas?id=${listJornadas[i].idEmiWeb!.split("?")[0]}&jornada=${listJornadas[i].numJornada}');
+              final headers = ({
+                "Content-Type": "application/json",
+                'Authorization': 'Bearer $tokenGlobal',
+              });
+              final responseUpdateJornada = await put(actualizarJornada1Uri, 
+              headers: headers,
+              body: jsonEncode({
+                "idUsuario": listJornadas[i].emprendimiento.target!.usuario.target!.idEmiWeb,
+                "nombreUsuario": "${listJornadas[i].emprendimiento
+                    .target!.usuario.target!.nombre} ${listJornadas[i].emprendimiento
+                    .target!.usuario.target!.apellidoP} ${listJornadas[i].emprendimiento
+                    .target!.usuario.target!.apellidoM}",
+                "fechaRegistro": DateFormat("yyyy-MM-ddTHH:mm:ss").format(listJornadas[i].fechaRegistro),
+                "registrarTarea": listJornadas[i].tarea.target!.tarea,
+                "fechaRevision": DateFormat("yyyy-MM-ddTHH:mm:ss").format(listJornadas[i].fechaRevision),
+                "comentarios": listJornadas[i].tarea.target!.comentarios,
+                "tareaCompletada": true,
+                "descripcion": listJornadas[i].tarea.target!.descripcion,
+                "idProyecto": listJornadas[i].emprendimiento.target!.idEmiWeb,
+                "nombreEmprendimiento": listJornadas[i].emprendimiento.target!.nombre,
+              }));
+
+              switch (responseUpdateJornada.statusCode) {
+                case 200:
+                print("Caso 200 en Emi Web Update Jornada");
+                  continue;
+                default: //No se realizo con éxito el update
+                  print("Error en actualizar jornadas Emi Web");
+                  return false;
+              }  
+            }
+          }
           // Primero creamos la jornada asociada a la tarea
           final crearJornadaUri =
             Uri.parse('$baseUrlEmiWebServices/jornadas?jornada=${jornada.numJornada}');
