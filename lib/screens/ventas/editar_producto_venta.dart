@@ -466,6 +466,7 @@ class _EditarProductoVentaState
                                   autovalidateMode: AutovalidateMode
                                       .onUserInteraction,
                                   onChanged: (value) {
+                                    
                                     try {
                                       if (value != "" && cantidadVendida.text != "" ) {
                                       subTotal.text = currencyFormat.format((double.parse(value.replaceAll("\$", "").replaceAll(",", "")) * double.parse(cantidadVendida.text)).toStringAsFixed(2));
@@ -537,6 +538,7 @@ class _EditarProductoVentaState
                                             }
 
                                             return null;
+                                            }
                                           },
                                 ),
                               ),

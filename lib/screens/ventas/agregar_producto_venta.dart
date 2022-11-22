@@ -376,14 +376,21 @@ class _AgregarProductoVentaState
                                       ),
                                   maxLines: 1,
                                   validator: (val) {
-                                           
-                                               double costo = double.parse(val!.replaceAll('\$', '').replaceAll(',', ''));
+                                           if(val!.isNotEmpty){
+                                               double costo = double.parse(val);
                                             if (costo <= 0) {
                                               return 'Para continuar, ingrese una cantidad mayor a 0.';
                                             }
+                                            else{
+                                              return null;
 
-                                            return null;
+                                            }
+
                                             
+                                           }
+                                           else{
+                                            return 'Ingrese una cantidad';
+                                           }
                                             
                                           },
                                 ),

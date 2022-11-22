@@ -748,6 +748,7 @@ class _AgregarPrimerProductoInversionScreenState
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
                                           maxLength:5,
+                                          
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
@@ -812,13 +813,27 @@ class _AgregarPrimerProductoInversionScreenState
                                               ),
                                           maxLines: 1,
                                           validator: (value){
-                                            if(value!.length > 1)
+                                            if(value != null){
+                                              if(value.length > 0)
                                             {
                                             double cant = double.parse(value);
                                             if(cant <= 0){
                                               return 'Para continuar, ingrese una cantidad mayor a 0.';
                                             }
+                                            else{
+                                              return null;
                                             }
+                                            }
+                                            else{
+                                              return null;
+                                            }
+                                            }
+                                            else{
+                                              return 'Ingrese un Dato';
+                                            }
+                                            
+                                            
+                                            
                                           }
                                           
                                         ),
@@ -894,7 +909,7 @@ class _AgregarPrimerProductoInversionScreenState
                                               ),
                                           maxLines: 1,
                                           validator: (val) {
-                                            if(val!.length > 1){
+                                            if(val!.length > 0){
                                                double costo = double.parse(val.replaceAll('\$', '').replaceAll(',', ''));
                                             if (costo <= 0) {
                                               return 'Para continuar, ingrese un costo mayor a 0.';
@@ -902,6 +917,7 @@ class _AgregarPrimerProductoInversionScreenState
 
                                             return null;
                                             }
+                                            
                                             
                                           },
                                         ),
