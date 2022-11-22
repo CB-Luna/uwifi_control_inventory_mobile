@@ -495,7 +495,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
               //Recuperamos la instrucción que no se ejecutó
               banderasExistoSync.add(boolSyncAddSingleProductoVendido);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
-                emprendimiento: prodVendidoToSync.venta.target!.emprendimiento.target!.nombre,
+                emprendimiento: prodVendidoToSync.venta.target?.emprendimiento.target?.nombre ?? "SIN EMPRENDIMIENTO",
                 instruccion: "Agregar un Producto Vendido en Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
               instruccionesFallidas.add(instruccionNoSincronizada);

@@ -29,6 +29,7 @@ class ProductoVentaController extends ChangeNotifier {
   void clearInformation()
   {
     cantidad = '';
+    precioVenta = '';
     fechaRegistro = DateTime.now();
     productosVendidos.clear();
     instruccionesProdVendido.clear();
@@ -122,10 +123,11 @@ void add(int idEmprendimiento, int idVenta) {
     for (var i = 0; i < instruccionesProdVendido.length; i++) {
       switch (instruccionesProdVendido[i].instruccion) {
         case "syncAddSingleProductoVendido":
-          venta.total += (instruccionesProdVendido[i].prodVendido.cantVendida * instruccionesProdVendido[i].prodVendido.costo);
+          venta.total += (instruccionesProdVendido[i].prodVendido.cantVendida * instruccionesProdVendido[i].prodVendido.precioVenta);
           final nuevaInstruccion = Bitacora(instruccion: 'syncAddSingleProductoVendido', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
           instruccionesProdVendido[i].prodVendido.bitacora.add(nuevaInstruccion);
-          // instruccionesProdVendido[i].prodVendido.totalActual = venta.total;
+          instruccionesProdVendido[i].prodVendido.venta.target = venta;
+          dataBase.productosVendidosBox.put(instruccionesProdVendido[i].prodVendido);
           int idNuevoProductoVendido = dataBase.productosVendidosBox.put(instruccionesProdVendido[i].prodVendido);
           venta.prodVendidos.add(dataBase.productosVendidosBox.get(idNuevoProductoVendido)!);
           dataBase.ventasBox.put(venta);
@@ -134,13 +136,10 @@ void add(int idEmprendimiento, int idVenta) {
           final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateProductoVendido', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
           final updateProductoVendido = dataBase.productosVendidosBox.get(instruccionesProdVendido[i].prodVendido.id);
           if(updateProductoVendido != null) {
-            venta.total -= (updateProductoVendido.cantVendida * updateProductoVendido.costo);
-            updateProductoVendido.costo = instruccionesProdVendido[i].prodVendido.costo;
+            venta.total -= (updateProductoVendido.cantVendida * updateProductoVendido.precioVenta);
+            updateProductoVendido.precioVenta = instruccionesProdVendido[i].prodVendido.precioVenta;
             updateProductoVendido.cantVendida = instruccionesProdVendido[i].prodVendido.cantVendida;
-            venta.total += (updateProductoVendido.cantVendida * updateProductoVendido.costo);
-            // updateProductoVendido.totalActual = venta.total;
-            // print("Actualizando total en update Producto vendido");
-            // print("Update Total${updateProductoVendido.totalActual}");
+            venta.total += (updateProductoVendido.cantVendida * updateProductoVendido.precioVenta);
             dataBase.ventasBox.put(venta);
             updateProductoVendido.bitacora.add(nuevaInstruccion);
             dataBase.productosVendidosBox.put(updateProductoVendido);
@@ -151,6 +150,7 @@ void add(int idEmprendimiento, int idVenta) {
         case "syncDeleteProductoVendido":
           final deleteProductoVendido = dataBase.productosVendidosBox.get(instruccionesProdVendido[i].prodVendido.id);
           if(deleteProductoVendido != null) {
+            print("Se elimina producto Vendido");
             final nuevaInstruccion = Bitacora(
               instruccion: 'syncDeleteProductoVendido', 
               usuario: prefs.getString("userId")!,
@@ -159,12 +159,14 @@ void add(int idEmprendimiento, int idVenta) {
               emprendimiento: venta.emprendimiento.target!.nombre,
             ); //Se crea la nueva instruccion a realizar en bitacora
             deleteProductoVendido.bitacora.add(nuevaInstruccion);
+            dataBase.productosVendidosBox.put(deleteProductoVendido);
             // Se elimina prodVendido de ObjectBox
-            venta.total -= (instruccionesProdVendido[i].prodVendido.cantVendida* instruccionesProdVendido[i].prodVendido.costo);
+            venta.total -= (instruccionesProdVendido[i].prodVendido.cantVendida * instruccionesProdVendido[i].prodVendido.precioVenta);
             dataBase.ventasBox.put(venta);
             dataBase.productosVendidosBox.remove(deleteProductoVendido.id);
             continue;
           } else {
+            print("No se elimina producto Vendido");
             continue;
           }
         default:

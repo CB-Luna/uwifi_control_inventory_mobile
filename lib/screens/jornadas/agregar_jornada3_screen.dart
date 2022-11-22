@@ -736,7 +736,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                                 fontFamily: 'Montserrat',
                                                 color: AppTheme.of(context)
                                                     .secondaryText,
-                                                fontSize: 12,
+                                                fontSize: 15,
                                                 fontWeight: FontWeight.normal,
                                               ),
                                       hintText: 'Ingresa fecha de revisión...',

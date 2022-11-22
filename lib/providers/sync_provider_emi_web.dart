@@ -812,10 +812,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   banderasExistoSync.add(boolSyncAddSingleProductoVendido);
                   continue;
                 } else {
+                  print("Mira esta es la venta: ${prodVendidoToSync.venta.target?.total}");
                   //Recuperamos la instrucción que no se ejecutó
                   banderasExistoSync.add(boolSyncAddSingleProductoVendido);
                   final instruccionNoSincronizada = InstruccionNoSincronizada(
-                    emprendimiento: prodVendidoToSync.venta.target!.emprendimiento.target!.nombre,
+                    emprendimiento: prodVendidoToSync.venta.target?.emprendimiento.target?.nombre ?? "SIN EMPRENDIMIENTO",
                     instruccion: "Agregar un Producto Vendido en Emi Web", 
                     fecha: instruccionesBitacora[i].fechaRegistro);
                   instruccionesFallidas.add(instruccionNoSincronizada);
@@ -1494,7 +1495,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               final ventaToSync = getFirstVenta(dataBase.ventasBox.getAll(), instruccionesBitacora[i].id);
               if(ventaToSync != null){
                 //Se encontró la venta y se puede agregar
-                var boolSyncUpdateProductosVendidosVenta = syncUpdateProductosVendidosVenta(instruccionesBitacora[i]);
+                var boolSyncUpdateProductosVendidosVenta = await syncUpdateProductosVendidosVenta(ventaToSync, instruccionesBitacora[i]);
                 if (boolSyncUpdateProductosVendidosVenta) {
                   banderasExistoSync.add(boolSyncUpdateProductosVendidosVenta);
                   continue;
@@ -3635,6 +3636,13 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           "Content-Type": "application/json",
           'Authorization': 'Bearer $tokenGlobal',
         });
+        print("Información");
+        print("${prodVendido.productoEmp.target!.idEmiWeb!}");
+        print("${prodVendido.cantVendida}");
+        print("${prodVendido.precioVenta}");
+        print("${prodVendido.nombreProd}");
+        print("${prodVendido.costo}");
+        print("${prodVendido.unidadMedida.target!.idEmiWeb}");
         var newProdVendido = VentaActualizarRequestList(
           id: 0,
           idProductoEmprendedor: prodVendido.productoEmp.target!.idEmiWeb!, 
@@ -3645,6 +3653,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           unidadMedida: prodVendido.unidadMedida.target!.idEmiWeb,
         );
         ventaActualizarRequestList.add(newProdVendido.toMap());
+        print("Información 2****");
+        print("${prodVendido.venta.target!.emprendimiento.target!.usuario.target!.idEmiWeb}");
+        print("${prodVendido.venta.target!.emprendimiento
+          .target!.usuario.target!.nombre} ${prodVendido.venta.target!.emprendimiento
+          .target!.usuario.target!.apellidoP} ${prodVendido.venta.target!.emprendimiento
+          .target!.usuario.target!.apellidoM}");
+        print("${prodVendido.venta.target!.idEmiWeb}");
+        print("${prodVendido.venta.target!.emprendimiento.target!.idEmiWeb}");
+        print("${DateFormat("yyyy-MM-ddTHH:mm:ss").format(prodVendido.venta.target!.fechaInicio)}");
+        print("${DateFormat("yyyy-MM-ddTHH:mm:ss").format(prodVendido.venta.target!.fechaTermino)}");
+        print("${prodVendido.venta.target!.total}");
         final responseAddProdVendido = await put(actualizarProdVendidoUri, 
         headers: headers,
         body: jsonEncode({   
@@ -5177,13 +5196,60 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     }
   } 
 
-  bool syncUpdateProductosVendidosVenta(Bitacora bitacora) {
+  Future<bool> syncUpdateProductosVendidosVenta(Ventas venta, Bitacora bitacora) async {
     print("Estoy en El syncUpdateProductosVendidosVenta de Emi Web");
     try {
-      //Se marca como realizada en EmiWeb la instrucción en Bitacora
-      bitacora.executeEmiWeb = true;
-      dataBase.bitacoraBox.put(bitacora);
-      return true;  
+      List<dynamic> ventaActualizarRequestList = [];
+      //Actualizamos la venta con las nuevas modificaciones a los prod Vendidos
+      final actualizarVentaUri =
+        Uri.parse('$baseUrlEmiWebServices/ventas');
+      final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+      for (var i = 0; i < venta.prodVendidos.length; i++) {
+        if (venta.prodVendidos.toList()[i].idEmiWeb != null) {
+          var newVentaCreada = VentaActualizarRequestList(
+            id: int.parse(venta.prodVendidos.toList()[i].idEmiWeb!),
+            idProductoEmprendedor: venta.prodVendidos[i].productoEmp.target!.idEmiWeb!, 
+            cantidadVendida: venta.prodVendidos[i].cantVendida, 
+            precioVenta: venta.prodVendidos[i].precioVenta,
+            nombreProducto: venta.prodVendidos[i].nombreProd,
+            costoUnitario: venta.prodVendidos[i].costo,
+            unidadMedida: venta.prodVendidos[i].unidadMedida.target!.idEmiWeb,
+          );
+          ventaActualizarRequestList.add(newVentaCreada.toMap());
+        }
+      }
+      print(jsonEncode(ventaActualizarRequestList));
+      final responsePutVenta = await put(actualizarVentaUri, 
+      headers: headers,
+      body: jsonEncode({   
+        "idUsuarioRegistra": venta.emprendimiento.target!.usuario.target!.idEmiWeb,
+        "usuarioRegistra": "${venta.emprendimiento
+        .target!.usuario.target!.nombre} ${venta.emprendimiento
+        .target!.usuario.target!.apellidoP} ${venta.emprendimiento
+        .target!.usuario.target!.apellidoM}",
+        "idVentas": venta.idEmiWeb,
+        "idProyecto": venta.emprendimiento.target!.idEmiWeb,
+        "fechaInicio": DateFormat("yyyy-MM-ddTHH:mm:ss").format(venta.fechaInicio),
+        "fechaTermino": DateFormat("yyyy-MM-ddTHH:mm:ss").format(venta.fechaTermino),
+        "total": venta.total,
+        "ventaActualizarRequestList": ventaActualizarRequestList,     
+      }));
+      print("Respuesta Put Venta");
+      print(responsePutVenta.body);     
+      switch (responsePutVenta.statusCode) {
+        case 200:
+          print("Caso 200 en Emi Web Venta");
+          //Se marca como realizada en EmiWeb la instrucción en Bitacora
+          bitacora.executeEmiWeb = true;
+          dataBase.bitacoraBox.put(bitacora);
+          return true;
+        default: //No se realizo con éxito el actualizar
+          print("Error en actualizar venta Emi Web");
+          return false;
+      }    
     } catch (e) { //Fallo en el momento se sincronizar
       print("Catch de syncUpdateProductosVendidosVenta: $e");
       return false;

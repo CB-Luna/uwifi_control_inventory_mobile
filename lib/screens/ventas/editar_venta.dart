@@ -55,7 +55,7 @@ class _EditarVentaScreenState extends State<EditarVentaScreen> {
     totalVenta = 0.00;
     for (var element in widget.venta.prodVendidos.toList()) {
       prodVendidos.add(element);
-      totalVenta += element.subtotal;
+      totalVenta += (element.subtotal * element.cantVendida);
     }
   }
 

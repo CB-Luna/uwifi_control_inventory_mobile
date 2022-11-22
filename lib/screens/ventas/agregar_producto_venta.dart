@@ -36,6 +36,7 @@ class _AgregarProductoVentaState
     final scaffoldKey = GlobalKey<ScaffoldState>();
     final formKey = GlobalKey<FormState>();
     int idProductoEmp = -1;
+    ProductosEmp? newProductoEmp;
     TextEditingController cantidadVendida = TextEditingController();
     TextEditingController precioVenta =  TextEditingController();
     TextEditingController subTotal =  TextEditingController();
@@ -55,7 +56,7 @@ class _AgregarProductoVentaState
     costoUnitario = TextEditingController();
     producto = "";
     unidadMedida = TextEditingController();
-    final productosEmp = dataBase.productosEmpBox.getAll().toList();
+    final productosEmp = widget.emprendimiento.productosEmp.toList();
     for (var i = 0; i < productosEmp.length; i++) {
       var index = widget.prodRegistradosEmpVendidos.indexWhere((element) => element.idProductoEmp == productosEmp[i].id);
       if (index == -1) {
@@ -200,6 +201,7 @@ class _AgregarProductoVentaState
                                                 element.unidadMedida.target!.unidadMedida;
                                               idProductoEmp = 
                                                 element.id;
+                                              newProductoEmp = element;
                                             }
                                           });
                                         }
@@ -309,7 +311,8 @@ class _AgregarProductoVentaState
                                     productoVentaProvider.cantidad = value;
                                      try {
                                       if (value != "" && precioVenta.text != "" ) {
-                                      subTotal.text = currencyFormat.format((double.parse(value) * double.parse(precioVenta.text)).toStringAsFixed(2));
+                                      subTotal.text = currencyFormat.format((double.parse(value) * double.parse(precioVenta.text.replaceAll("\$", "").replaceAll(",", "")))
+                                      .toStringAsFixed(2));
                                       }  
                                     } catch (e) {
                                       null;
@@ -450,7 +453,7 @@ class _AgregarProductoVentaState
                                     productoVentaProvider.precioVenta = value.replaceAll("\$", "").replaceAll(",", "");
                                     try {
                                       if (value != "" && cantidadVendida.text != "" ) {
-                                      subTotal.text = currencyFormat.format((double.parse(value) * double.parse(cantidadVendida.text)).toStringAsFixed(2));
+                                      subTotal.text = currencyFormat.format((double.parse(value.replaceAll("\$", "").replaceAll(",", "")) * double.parse(cantidadVendida.text)).toStringAsFixed(2));
                                     }  
                                     } catch (e) {
                                       null;
@@ -513,13 +516,13 @@ class _AgregarProductoVentaState
                                       ),
                                   maxLines: 1,
                                   validator: (val) {
-                                            double cantidad = double.tryParse(val!) ?? 0;
-                                            if (cantidad <= 0) {
-                                              return 'Para continuar, ingrese una cantidad.';
-                                            }
+                                  double precio = (val == null || val == "") ? 0 : double.parse(val.replaceAll("\$", "").replaceAll(",", ""));
+                                    if (precio <= 0) {
+                                      return 'Para continuar, ingrese un precio.';
+                                    }
 
-                                            return null;
-                                          },
+                                  return null;
+                                },
                                 ),
                               ),
                               Padding(
@@ -577,14 +580,15 @@ class _AgregarProductoVentaState
                                             final newProductoVendido = ProdVendidos(
                                               nombreProd: producto, 
                                               descripcion: descripcion, 
-                                              costo: double.parse(costoUnitario.text),
+                                              costo: double.parse(costoUnitario.text.replaceAll("\$", "").replaceAll(",","")),
                                               cantVendida: int.parse(cantidadVendida.text),
                                               subtotal: double.parse(subTotal.text.replaceAll("\$", "").replaceAll(",","")),
                                               precioVenta: double.parse(precioVenta.text.replaceAll("\$", "").replaceAll(",","")),
                                             );
+                                            newProductoVendido.productoEmp.target = newProductoEmp;
                                             newProductoVendido.unidadMedida.target = newUnidadMedida;
                                             final newInstruccionProdVendido = SaveInstruccionProductoVendido(
-                                              instruccion: "syncAddProductoVendido", 
+                                              instruccion: "syncAddSingleProductoVendido", 
                                               prodVendido: newProductoVendido,
                                             );
                                             productoVentaProvider

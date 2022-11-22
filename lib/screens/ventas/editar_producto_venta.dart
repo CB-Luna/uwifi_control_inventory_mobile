@@ -155,19 +155,6 @@ class _EditarProductoVentaState
                                         prodVendido: widget.prodVendido,
                                       );
                                       productoVentaProvider.instruccionesProdVendido.add(newInstruccionProdVendido);
-                                      // productoVentaProvider.remove(widget.prodVendido);
-                                      // double totalVentas = 0.00;
-                                      // Ventas venta = widget.prodVendido.venta.target!;
-                                      // List<ProdVendidos> productosVenta = venta.prodVendidos.toList();
-                                      // for (var i = 0; i < productosVenta.length; i++) {
-                                      //   totalVentas += productosVenta[i].subtotal;
-                                      // }
-                                      // ventaProvider.update(
-                                      //   venta.id,
-                                      //   venta.fechaInicio,
-                                      //   venta.fechaTermino,
-                                      //   totalVentas,
-                                      //   );
                                       // ignore: use_build_context_synchronously
                                       await Navigator.push(
                                         context,
@@ -624,7 +611,9 @@ class _EditarProductoVentaState
                                                 .indexOf(widget.prodVendido);
                                                 // productoVentaProvider.listProdVendidosActual[indexUpdateProdSolicitado].nombreProd = producto;
                                                 productoVentaProvider.listProdVendidosActual[indexUpdateProdSolicitado].cantVendida = int.parse(cantidadVendida.text);
+                                                productoVentaProvider.listProdVendidosActual[indexUpdateProdSolicitado].precioVenta = double.parse(precioVenta.text.replaceAll("\$", "").replaceAll(",", ""));
                                                 productoVentaProvider.listProdVendidosActual[indexUpdateProdSolicitado].costo = double.parse(costoUnitario.text.replaceAll("\$", "").replaceAll(",", ""));
+                                                productoVentaProvider.listProdVendidosActual[indexUpdateProdSolicitado].subtotal = int.parse(cantidadVendida.text) * double.parse(precioVenta.text.replaceAll("\$", "").replaceAll(",", ""));
                                                 productoVentaProvider.listProdVendidosActual[indexUpdateProdSolicitado].unidadMedida.target = updateUnidadMedida;
                                                 final newInstruccionProdVendido = SaveInstruccionProductoVendido(
                                                   instruccion: "syncUpdateProductoVendido", 
@@ -642,33 +631,6 @@ class _EditarProductoVentaState
                                                         ),
                                                   ),
                                                 );
-                                                // productoVentaProvider.update(
-                                                //   widget.prodVendido.id,
-                                                //   idProductoEmp,
-                                                //   double.parse(precioVenta.text.replaceAll("\$", "").replaceAll(",", "")),
-                                                //   int.parse(cantidadVendida.text),
-                                                //   double.parse(subTotal.text),
-                                                //   );
-                                                // // dataBase.ventasBox.query(StatusSync_.id.equals(updateJornada.statusSync.target!.id)).build().findUnique();
-                                                // double totalVentas = 0.00;
-                                                // Ventas venta = widget.prodVendido.venta.target!;
-                                                // List<ProdVendidos> productosVenta = venta.prodVendidos.toList();
-                                                // for (var i = 0; i < productosVenta.length; i++) {
-                                                //   totalVentas += productosVenta[i].subtotal;
-                                                // }
-                                                // ventaProvider.update(
-                                                //   venta.id,
-                                                //   venta.fechaInicio,
-                                                //   venta.fechaTermino,
-                                                //   totalVentas,
-                                                //   );
-                                                // await Navigator.push(
-                                                //   context,
-                                                //   MaterialPageRoute(
-                                                //     builder: (context) =>
-                                                //         const ProductoVentaActualizadoScreen(),
-                                                //   ),
-                                                // );
                                               }
                                             }
                                         } else {
