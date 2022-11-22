@@ -32,6 +32,7 @@ import 'package:bizpro_app/services/navigation_service.dart';
 import 'package:bizpro_app/internationalization/internationalization.dart';
 
 import 'providers/database_providers/venta_controller.dart';
+import 'providers/sync_emprendimientos_externos_provider.dart';
 
 late ObjectBoxDatabase dataBase;
 DeepLinkBloc bloc = DeepLinkBloc();
@@ -100,6 +101,10 @@ void main() async {
         ),
         ChangeNotifierProvider<RecepcionYEntregaController>(
           create: (context) => RecepcionYEntregaController(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<EmpExternosPocketbaseProvider>(
+          create: (context) => EmpExternosPocketbaseProvider(),
           lazy: false,
         ),
         ChangeNotifierProvider<SyncProviderPocketbase>(

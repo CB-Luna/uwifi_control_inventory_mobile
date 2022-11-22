@@ -8,6 +8,7 @@ import 'package:bizpro_app/screens/archivados/archivados_screen.dart';
 import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_cerrar_sesion.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_recover_catalogos.dart';
+import 'package:bizpro_app/screens/widgets/bottom_sheet_recover_proyectos.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_sincronizar_widget.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -279,6 +280,48 @@ class SideMenu extends StatelessWidget {
                                           isVisible: false,
                                         )
                                       : const BottomSheetSincronizarWidget(
+                                          isVisible: true,
+                                        ),
+                                ),
+                              );
+                            },
+                          );
+                        }
+                      },
+                    ),
+
+                    CustomMenuItem(
+                      label: 'Sinc. Proyectos',
+                      iconData: Icons.downloading_outlined,
+                      lineHeight: 1.2,
+                      onTap: () async {
+                        if (currentUser.rol.target!.rol == "Voluntario Estratégico" ||
+                            currentUser.rol.target!.rol == "Amigo del Cambio" ||
+                            currentUser.rol.target!.rol == "Emprendedor") {
+                          snackbarKey.currentState
+                              ?.showSnackBar(const SnackBar(
+                            content: Text(
+                                "Este usuario no tiene permisos para esta acción."),
+                          ));
+                        } else {
+                          final connectivityResult =
+                              await (Connectivity().checkConnectivity());
+                          await showModalBottomSheet(
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            builder: (context) {
+                              return Padding(
+                                padding: MediaQuery.of(context).viewInsets,
+                                child: SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.45,
+                                  child: connectivityResult ==
+                                              ConnectivityResult.none 
+                                      ? const BottomSheetRecoverProyectosWidget(
+                                          isVisible: false,
+                                        )
+                                      : const BottomSheetRecoverProyectosWidget(
                                           isVisible: true,
                                         ),
                                 ),

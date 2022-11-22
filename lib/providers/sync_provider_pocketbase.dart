@@ -1689,6 +1689,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 "id_emprendimiento_fk": "",
                 "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                 "id_emi_web": emprendedor.idEmiWeb,
+                "id_usuario_registra_fk": emprendedor.emprendimiento.target!.usuario.target!.idDBR,
             });
 
             if (recordEmprendedor.id.isNotEmpty) {
