@@ -804,10 +804,9 @@ class _AgregarProductoInversionScreenState
                                               ),
                                           maxLines: 1,
                                           validator: (value){
-                                            // if(value!.length > 1)
-                                            // {
-                                              
-                                            double cant = double.parse(value!);
+                                            if(value!.length > 1)
+                                            {
+                                            double cant = double.parse(value);
                                             if(cant <= 0){
                                               return 'Para continuar, ingrese una cantidad mayor a 0.';
                                             }

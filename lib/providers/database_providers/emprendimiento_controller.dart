@@ -187,34 +187,24 @@ class EmprendimientoController extends ChangeNotifier {
     void archivarEmprendimiento(int idEmprendimiento) {
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     if (emprendimiento != null) {
-      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncArchivarEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza el estado del Emprendimiento
       emprendimiento.archivado = true;
-      final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(emprendimiento.statusSync.target!.id)).build().findUnique();
-      if (statusSync != null) {
-        statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del emprendimiento
-        dataBase.statusSyncBox.put(statusSync);
-      }
       emprendimiento.bitacora.add(nuevaInstruccion);
       dataBase.emprendimientosBox.put(emprendimiento);
-      print('Emprendimiento actualizado exitosamente');
+      print('Emprendimiento archivado exitosamente');
     }
   }
 
   void desarchivarEmprendimiento(int idEmprendimiento) {
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     if (emprendimiento != null) {
-      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncDesarchivarEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza el estado del Emprendimiento
       emprendimiento.archivado = false;
-      final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(emprendimiento.statusSync.target!.id)).build().findUnique();
-      if (statusSync != null) {
-        statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del emprendimiento
-        dataBase.statusSyncBox.put(statusSync);
-      }
       emprendimiento.bitacora.add(nuevaInstruccion);
       dataBase.emprendimientosBox.put(emprendimiento);
-      print('Emprendimiento actualizado exitosamente');
+      print('Emprendimiento desarchivado exitosamente');
     }
   }
 

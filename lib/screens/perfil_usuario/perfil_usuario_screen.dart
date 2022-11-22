@@ -2,15 +2,14 @@ import 'dart:io';
 
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/screens/perfil_usuario/device_information_widget.dart';
+import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/perfil_usuario/editar_usuario_screen.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_drop_down.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
@@ -29,7 +28,6 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     listRoles = [];
     dataBase.rolesBox.getAll().forEach((element) {
@@ -128,7 +126,13 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                                   ),
                                   child: InkWell(
                                     onTap: () async {
-                                      Navigator.pop(context);
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const EmprendimientosScreen(),
+                                        ),
+                                      );
                                     },
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,

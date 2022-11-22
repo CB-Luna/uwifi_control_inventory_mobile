@@ -775,7 +775,9 @@ class _EditarInversionJornadaScreenState
                                             0, 20, 0, 10),
                                         child: FFButtonWidget(
                                           onPressed: () async {
-                                            productoInversionJornadaProvider
+                                            if (productoInversionJornadaProvider
+                                                .instruccionesProdInversionJ3Temp.isNotEmpty) {
+                                              productoInversionJornadaProvider
                                               .updateProductosInversionJ3(widget.inversion);
                                             await Navigator.push(
                                               context,
@@ -784,6 +786,7 @@ class _EditarInversionJornadaScreenState
                                                     InversionJornada3Actualizada(idEmprendimiento: widget.emprendimiento.id,),
                                               ),
                                             );
+                                            }
                                           },
                                           text: 'Actualizar',
                                           icon: const Icon(

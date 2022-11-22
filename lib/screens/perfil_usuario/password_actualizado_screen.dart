@@ -1,19 +1,20 @@
+import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:bizpro_app/theme/theme.dart';
 
-import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
-class ProductoVentaActualizadoScreen extends StatefulWidget {
-  const ProductoVentaActualizadoScreen({Key? key}) : super(key: key);
+
+class PasswordActualizadoScreen extends StatefulWidget {
+  const PasswordActualizadoScreen({Key? key}) : super(key: key);
 
   @override
-  State<ProductoVentaActualizadoScreen> createState() => _ProductoVentaActualizadoScreenState();
+  State<PasswordActualizadoScreen> createState() => _PasswordActualizadoScreenState();
 }
 
-class _ProductoVentaActualizadoScreenState extends State<ProductoVentaActualizadoScreen> {
+class _PasswordActualizadoScreenState extends State<PasswordActualizadoScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -38,7 +39,7 @@ class _ProductoVentaActualizadoScreenState extends State<ProductoVentaActualizad
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                       child: Text(
-                        '¡Producto Vendido\nActualizado!',
+                        '¡Contraseña\nActualizada!',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -51,7 +52,7 @@ class _ProductoVentaActualizadoScreenState extends State<ProductoVentaActualizad
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: Text(
-                        'Listo, el producto vendido se actualizará \nen su venta.',
+                        'Listo, la contraseña se\nactualizó con éxito.',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -81,7 +82,7 @@ class _ProductoVentaActualizadoScreenState extends State<ProductoVentaActualizad
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const EmprendimientosScreen(),
+                                   const PerfilUsuarioScreen(),
                             ),
                           );
                         },

@@ -153,7 +153,8 @@ class Inversiones {
   final inversionXprodCotizados = ToMany<InversionesXProdCotizados>();
   final estadoInversion = ToOne<EstadoInversion>();
   final pagos = ToMany<Pagos>();
-  final imagenes = ToMany<Imagenes>();
+  final imagenFirmaRecibido = ToOne<Imagenes>();
+  final imagenProductoEntregado = ToOne<Imagenes>();
   
   Inversiones({
     this.id = 0,
@@ -182,6 +183,8 @@ class Pagos {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
+  @Unique()
+  String? idEmiWeb;
   final statusSync = ToOne<StatusSync>();
   final inversion = ToOne<Inversiones>();
   final usuario = ToOne<Usuarios>();
@@ -193,6 +196,7 @@ class Pagos {
     required this.fechaMovimiento,
     DateTime? fechaRegistro,
     this.idDBR,
+    this.idEmiWeb,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -616,6 +620,7 @@ class ProdVendidos {
   double subtotal;
   double precioVenta;
   DateTime fechaRegistro;
+  bool postEmiWeb;
   @Unique()
   String? idDBR;
   String? idEmiWeb;
@@ -633,6 +638,7 @@ class ProdVendidos {
     required this.subtotal,
     required this.precioVenta,
     DateTime? fechaRegistro,
+    this.postEmiWeb = false,
     this.idDBR,
     this.idEmiWeb,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
@@ -1191,7 +1197,7 @@ class Imagenes {
   final prodSolicitados = ToMany<ProdSolicitado>();
   final productosProv = ToMany<ProductosProv>();
   final prodProyecto = ToMany<ProdProyecto>();
-  final inversiones = ToMany<Inversiones>();
+  final inversion = ToOne<Inversiones>();
   final productosEmp = ToOne<ProductosEmp>();
   final bitacora = ToMany<Bitacora>();
   final emprendedor = ToOne<Emprendedores>();

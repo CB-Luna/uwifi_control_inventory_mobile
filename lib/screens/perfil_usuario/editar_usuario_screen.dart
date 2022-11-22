@@ -1,9 +1,10 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/objectbox.g.dart';
+import 'package:bizpro_app/screens/perfil_usuario/cambiar_password_screen.dart';
+import 'package:bizpro_app/screens/widgets/custom_button.dart';
 import 'package:bizpro_app/screens/widgets/drop_down.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
@@ -15,11 +16,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/perfil_usuario/usuario_actualizado.dart';
-import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
-import 'package:bizpro_app/screens/widgets/custom_button.dart';
 import 'package:bizpro_app/theme/theme.dart';
-
-import '../../modelsPocketbase/temporals/save_imagenes_local.dart';
 
 class EditarUsuarioScreen extends StatefulWidget {
   const EditarUsuarioScreen({
@@ -252,87 +249,6 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                     ),
                                   ),
                                 ),
-                          // FormField(
-                          //   builder: (state) {
-                          //     return Row(
-                          //       mainAxisSize: MainAxisSize.max,
-                          //       mainAxisAlignment: MainAxisAlignment.center,
-                          //       children: [
-                          //         Padding(
-                          //           padding:
-                          //               const EdgeInsetsDirectional.fromSTEB(
-                          //                   0, 10, 0, 0),
-                          //           child: CustomButton(
-                          //             onPressed: () async {
-                          //               String? option =
-                          //                   await showModalBottomSheet(
-                          //                 context: context,
-                          //                 builder: (_) =>
-                          //                     const CustomBottomSheet(),
-                          //               );
-
-                          //               if (option == null) return;
-
-                          //               final picker = ImagePicker();
-
-                          //               late final XFile? pickedFile;
-
-                          //               if (option == 'camera') {
-                          //                 pickedFile = await picker.pickImage(
-                          //                   source: ImageSource.camera,
-                          //                   imageQuality: 100,
-                          //                 );
-                          //               } else {
-                          //                 pickedFile = await picker.pickImage(
-                          //                   source: ImageSource.gallery,
-                          //                   imageQuality: 100,
-                          //                 );
-                          //               }
-
-                          //               if (pickedFile == null) {
-                          //                 return;
-                          //               }
-
-                          //               setState(() {
-                          //                 image = pickedFile;
-                          //                 File file = File(image!.path);
-                          //                 List<int> fileInByte = file.readAsBytesSync();
-                          //                 base64 = base64Encode(fileInByte);
-                          //                 path = image!.path;
-                          //                 nombreImagen = image!.name;
-                          //               });
-                          //             },
-                          //             text: 'Agregar Foto',
-                          //             icon: const Icon(
-                          //               Icons.add_a_photo,
-                          //               color: Color(0xFF221573),
-                          //               size: 15,
-                          //             ),
-                          //             options: ButtonOptions(
-                          //               width: 150,
-                          //               height: 30,
-                          //               color: Colors.white,
-                          //               textStyle: AppTheme.of(context)
-                          //                   .subtitle2
-                          //                   .override(
-                          //                     fontFamily: AppTheme.of(context)
-                          //                         .subtitle2Family,
-                          //                     color: const Color(0xFF221573),
-                          //                     fontSize: 10,
-                          //                     fontWeight: FontWeight.w500,
-                          //                   ),
-                          //               borderSide: const BorderSide(
-                          //                 color: Color(0xFF221573),
-                          //                 width: 2,
-                          //               ),
-                          //               borderRadius: BorderRadius.circular(8),
-                          //             ),
-                          //           ),
-                          //         ),
-                          //       ],
-                          //     );
-                          //   },
-                          // ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 20, 0, 0),
@@ -345,6 +261,71 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                     fontWeight: FontWeight.w500,
                                   ),
                             ),
+                          ),
+                          FormField(
+                            builder: (state) {
+                              return Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 30, 0, 0),
+                                    child: CustomButton(
+                                      onPressed: () async {
+                                        if (rolUsuario !=
+                                                widget.usuario.rol.target!.rol) {
+                                            final idRol = dataBase.rolesBox
+                                                .query(Roles_.rol.equals(rolUsuario))
+                                                .build()
+                                                .findFirst()
+                                                ?.id;
+                                            if (idRol != null) {
+                                              usuarioProvider.updateRol(
+                                                widget.usuario.id,
+                                                idRol,
+                                              );
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const UsuarioActualizado(),
+                                                ),
+                                              );
+                                            }
+                                        }
+                                      },
+                                      text: 'Guardar cambios',
+                                      icon: const Icon(
+                                        Icons.check_rounded,
+                                        color: Color(0xFF221573),
+                                        size: 15,
+                                      ),
+                                      options: ButtonOptions(
+                                        width: 150,
+                                        height: 30,
+                                        color: Colors.white,
+                                        textStyle: AppTheme.of(context)
+                                            .subtitle2
+                                            .override(
+                                              fontFamily: AppTheme.of(context)
+                                                  .subtitle2Family,
+                                              color: const Color(0xFF221573),
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                        borderSide: const BorderSide(
+                                          color: Color(0xFF221573),
+                                          width: 2,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
                           ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
@@ -567,35 +548,21 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                 0, 50, 0, 20),
                             child: FFButtonWidget(
                               onPressed: () async {
-                                if (rolUsuario !=
-                                        widget.usuario.rol.target!.rol) {
-                                    final idRol = dataBase.rolesBox
-                                        .query(Roles_.rol.equals(rolUsuario))
-                                        .build()
-                                        .findFirst()
-                                        ?.id;
-                                    if (idRol != null) {
-                                      usuarioProvider.updateRol(
-                                        widget.usuario.id,
-                                        idRol,
-                                      );
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const UsuarioActualizado(),
-                                        ),
-                                      );
-                                    }
-                                }
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        CambiarPasswordScreen(usuario: widget.usuario,),
+                                  ),
+                                );
                               },
-                              text: 'Guardar cambios',
+                              text: 'Cambiar contraseña',
                               icon: const Icon(
-                                Icons.check_rounded,
+                                Icons.password_outlined,
                                 size: 15,
                               ),
                               options: FFButtonOptions(
-                                width: 160,
+                                width: 180,
                                 height: 40,
                                 color: AppTheme.of(context).secondaryText,
                                 textStyle: AppTheme.of(context)

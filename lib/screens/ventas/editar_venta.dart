@@ -145,7 +145,7 @@ class _EditarVentaScreenState extends State<EditarVentaScreen> {
                                       ),
                                       child: InkWell(
                                         onTap: () async {
-                                          productoVentaProvider.clearInformation();
+                                          ventaProvider.clearInformation();
                                           await Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -441,11 +441,17 @@ class _EditarVentaScreenState extends State<EditarVentaScreen> {
                                       elevation: 4,
                                       child: FFButtonWidget(
                                         onPressed: () async {
+                                          productoVentaProvider
+                                            .listProdVendidosActual = widget.venta.prodVendidos.toList();
                                           await Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  RegistroVentaScreen(venta: widget.venta,emprendimiento: widget.idEmp,),
+                                                  RegistroVentaScreen(
+                                                    venta: widget.venta,
+                                                    emprendimiento: widget.idEmp, 
+                                                    prodVendidos: productoVentaProvider.listProdVendidosActual,
+                                                    ),
                                             ),
                                           );
                                         },
@@ -489,8 +495,7 @@ class _EditarVentaScreenState extends State<EditarVentaScreen> {
                           child: FFButtonWidget(
                             onPressed: () async {
                               if (ventaProvider
-                                      .validateForm(formKey)
-                                      && totalProductos != "0") {
+                                      .validateForm(formKey)) {
                                   if (fechaInicio != 
                                         widget.venta.fechaInicio ||
                                       fechaTermino != 

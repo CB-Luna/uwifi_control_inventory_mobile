@@ -539,10 +539,46 @@ class _CuerpoDetalleEmprendimientoState extends State<CuerpoDetalleEmprendimient
                                           }
                                         ),
                                       ]),
-                                    child: TarjetaDescripcionConsultoria(
-                                      consultoria: consultoria,
-                                      index: index, 
-                                      backgroundColor: const Color(0xFFBA0000)),
+                                    child: Stack(
+                                      children: [
+                                        TarjetaDescripcionConsultoria(
+                                          consultoria: consultoria,
+                                          index: index, 
+                                          backgroundColor: const Color(0xFFBA0000)),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                  15, 10, 15, 10),
+                                          child: Container(
+                                            width: 40,
+                                            height: 120,
+                                            decoration: BoxDecoration(
+                                              gradient:
+                                                  const LinearGradient(
+                                                colors: [
+                                                  Color.fromARGB(46, 207, 207, 207),
+                                                  Color(0xFFBA0000),
+                                                ],
+                                                stops: [0, 1],
+                                                begin:
+                                                    Alignment.centerLeft,
+                                                end:
+                                                    Alignment.centerRight,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      8),
+                                            ),
+                                            child: const Icon(
+                                              Icons.double_arrow_rounded,
+                                              size: 65,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                 )
                                 :
                                 Slidable(
@@ -574,10 +610,46 @@ class _CuerpoDetalleEmprendimientoState extends State<CuerpoDetalleEmprendimient
                                           }
                                         ),
                                       ]),
-                                    child: TarjetaDescripcionConsultoria(
-                                      consultoria: consultoria,
-                                      index: index, 
-                                      backgroundColor: const Color(0xFF1F68CB)),
+                                    child: Stack(
+                                      children: [
+                                        TarjetaDescripcionConsultoria(
+                                          consultoria: consultoria,
+                                          index: index, 
+                                          backgroundColor: const Color(0xFF1F68CB)),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                  15, 10, 15, 10),
+                                          child: Container(
+                                            width: 40,
+                                            height: 120,
+                                            decoration: BoxDecoration(
+                                              gradient:
+                                                  const LinearGradient(
+                                                colors: [
+                                                  Color.fromARGB(46, 207, 207, 207),
+                                                  Color(0xFF1F68CB),
+                                                ],
+                                                stops: [0, 1],
+                                                begin:
+                                                    Alignment.centerLeft,
+                                                end:
+                                                    Alignment.centerRight,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      8),
+                                            ),
+                                            child: const Icon(
+                                              Icons.double_arrow_rounded,
+                                              size: 65,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                 )
                                 ;
                               },
