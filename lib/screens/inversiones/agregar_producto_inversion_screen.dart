@@ -739,6 +739,7 @@ class _AgregarProductoInversionScreenState
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
                                           maxLength: 5,
+                                          
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
@@ -803,13 +804,14 @@ class _AgregarProductoInversionScreenState
                                               ),
                                           maxLines: 1,
                                           validator: (value){
-                                            if(value!.length > 1)
-                                            {
-                                            double cant = double.parse(value);
+                                            // if(value!.length > 1)
+                                            // {
+                                              
+                                            double cant = double.parse(value!);
                                             if(cant <= 0){
                                               return 'Para continuar, ingrese una cantidad mayor a 0.';
                                             }
-                                            }
+                                            //}
                                           }
                                         ),
                                       ),
@@ -829,7 +831,7 @@ class _AgregarProductoInversionScreenState
                                           },
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            labelText: 'Costo por unidad estimado',
+                                            labelText: 'Costo por unidad estimado*',
                                             labelStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(
