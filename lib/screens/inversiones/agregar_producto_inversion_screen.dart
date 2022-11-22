@@ -810,7 +810,7 @@ class _AgregarProductoInversionScreenState
                                             if(cant <= 0){
                                               return 'Para continuar, ingrese una cantidad mayor a 0.';
                                             }
-                                            //}
+                                            }
                                           }
                                         ),
                                       ),

@@ -539,7 +539,6 @@ class _EditarProductoVentaState
 
                                             return null;
                                             }
-                                          },
                                 ),
                               ),
                               Padding(
