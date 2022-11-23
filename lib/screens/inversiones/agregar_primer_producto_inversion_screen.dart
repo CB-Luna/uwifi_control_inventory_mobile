@@ -814,7 +814,7 @@ class _AgregarPrimerProductoInversionScreenState
                                           maxLines: 1,
                                           validator: (value){
                                             if(value != null){
-                                              if(value.length > 0)
+                                              if(value.isNotEmpty)
                                             {
                                             double cant = double.parse(value);
                                             if(cant <= 0){
@@ -825,7 +825,7 @@ class _AgregarPrimerProductoInversionScreenState
                                             }
                                             }
                                             else{
-                                              return null;
+                                              return 'Ingrese un Dato';
                                             }
                                             }
                                             else{
@@ -1032,6 +1032,7 @@ class _AgregarPrimerProductoInversionScreenState
                                             .findFirst()
                                             ?.id;
                                         if (idFamiliaProducto != null && idTipoEmpaques != null) {
+                                          print("Sí lo deja pasar");
                                           inversionProvider.addProductoSolicitado(
                                               actualEmprendimiento!.id,
                                               inversionProvider.addInversion(

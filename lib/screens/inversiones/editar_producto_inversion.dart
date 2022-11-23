@@ -849,12 +849,23 @@ class _EditarProductoInversionScreenState
                                               ),
                                           maxLines: 1,
                                           validator: (value){
-                                            if(value!.length > 1)
+                                            if(value != null){
+                                              if(value.isNotEmpty)
                                             {
                                             double cant = double.parse(value);
                                             if(cant <= 0){
                                               return 'Para continuar, ingrese una cantidad mayor a 0.';
                                             }
+                                            else{
+                                              return null;
+                                            }
+                                            }
+                                            else{
+                                              return 'Ingrese un Dato';
+                                            }
+                                            }
+                                            else{
+                                              return 'Ingrese un Dato';
                                             }
                                           }
                                         ),

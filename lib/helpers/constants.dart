@@ -7,10 +7,10 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
 
 //Producción
-// const String baseUrl = 'https://pocketbase.cbluna-dev.com';
+const String baseUrl = 'https://pocketbase.cbluna-dev.com';
 
 //Desarrollo
-const String baseUrl = 'https://emi-des.cbluna-dev.com';
+// const String baseUrl = 'https://emi-des.cbluna-dev.com';
 
 const String baseUrlEmiWebServices = "http://20.186.180.168:9021/ememi-secure-services/api";
 const String baseUrlEmiWebSecurity = "http://20.186.180.168:9021/ememi-secure-security/api";

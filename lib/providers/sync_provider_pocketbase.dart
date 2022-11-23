@@ -3295,7 +3295,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
               "producto_entregado": false,
               "id_emi_web": inversion.idEmiWeb,
             });
-
           if (recordInversion.id.isNotEmpty) {     
             //Se recupera el idDBR de la inversion
             inversion.idDBR = recordInversion.id;
@@ -3328,6 +3327,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "id_emi_web": prodSolicitadosToSync[i].idEmiWeb,
                     "id_imagen_fk": prodSolicitadosToSync[i].imagen.target!.idDBR,
                   });
+                  print("No postea productos");
                   if (recordProdSolicitado.id.isNotEmpty) {
                     //Se recupera el idDBR del prod Solicitado
                     prodSolicitadosToSync[i].idDBR = recordProdSolicitado.id;
