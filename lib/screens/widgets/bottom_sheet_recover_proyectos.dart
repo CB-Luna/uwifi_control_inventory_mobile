@@ -1,5 +1,5 @@
 import 'package:bizpro_app/providers/sync_emprendimientos_externos_provider.dart';
-import 'package:bizpro_app/screens/emprendimientos_externos/emprendimientos_externos_screen.dart';
+import 'package:bizpro_app/screens/emprendimientos_externos/usuarios_externos_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -153,7 +153,8 @@ class _BottomSheetRecoverProyectosWidgetState
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          EmprendimientosExternosScreen(listEmiUsers: listEmiUsers ?? []),
+                                          // EmprendimientosExternosScreen(listEmiUsers: listEmiUsers ?? []),
+                                           const UsuariosExternosScreen(),
                                     ),
                                   );
                                 },
