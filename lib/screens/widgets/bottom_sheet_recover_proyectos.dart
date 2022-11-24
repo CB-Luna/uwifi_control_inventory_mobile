@@ -147,14 +147,15 @@ class _BottomSheetRecoverProyectosWidgetState
                               visible: widget.isVisible,
                               child: FFButtonWidget(
                                 onPressed: () async {
-                                  final listEmiUsers = await empExternosProvider.getEmiUsersPocketbase();
+                                  final listUsuariosProyectosTemp = await empExternosProvider.getUsuariosProyectosPocketbase();
+                                  print("******Tamaño de list Usuarios Proyectos: ${listUsuariosProyectosTemp?.length}");
                                   // ignore: use_build_context_synchronously
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
                                           // EmprendimientosExternosScreen(listEmiUsers: listEmiUsers ?? []),
-                                           const UsuariosExternosScreen(),
+                                           UsuariosExternosScreen(listUsuariosProyectosTemp: listUsuariosProyectosTemp ?? [],),
                                     ),
                                   );
                                 },
