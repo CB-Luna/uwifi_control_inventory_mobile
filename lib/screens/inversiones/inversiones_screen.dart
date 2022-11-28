@@ -586,10 +586,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                 Text(
                                                                   dateTimeFormat(
                                                                       "dd/MMM/yyyy",
-                                                                      actualEmprendimiento!
-                                                                          .emprendedor
-                                                                          .target!
-                                                                          .fechaRegistro),
+                                                                      inversion.fechaRegistro),
                                                                   style: AppTheme.of(
                                                                           context)
                                                                       .bodyText1,

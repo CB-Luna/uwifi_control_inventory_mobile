@@ -1,11 +1,14 @@
 import 'dart:ui';
 import 'package:bizpro_app/modelsPocketbase/temporals/usuario_proyectos_temporal.dart';
+import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/emprendimientos_externos/usuarios_externos_screen.dart';
+import 'package:bizpro_app/screens/sync/descarga_proyectos_externos_pocketbase_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:bizpro_app/screens/widgets/toggle_icon.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PerfilUsuarioExternoScreen extends StatefulWidget {
   final List<UsuarioProyectosTemporal> listUsuariosProyectosTemp;
@@ -72,6 +75,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
 
   @override
   Widget build(BuildContext context) {
+    final usuarioProvider = Provider.of<UsuarioController>(context);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
@@ -84,7 +88,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  height: 320,
+                  height: MediaQuery.of(context).size.height * 0.33,
                   decoration: const BoxDecoration(
                     color: Color(0xFF4672FF),
                     borderRadius: BorderRadius.only(
@@ -378,7 +382,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
               ],
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(10, 15, 10, 10),
+              padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 5),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -388,14 +392,79 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                     style: AppTheme.of(context).bodyText1.override(
                           fontFamily: 'Poppins',
                           color: const Color(0xFF4672FF),
+                          fontSize: 15
                         ),
                   ),
                 ],
               ),
             ),
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(
+                  10, 5, 10, 10),
+              child: FFButtonWidget(
+                onPressed: () async {
+                  if (listEmprendimientosSelected.isNotEmpty) {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                          DescargaProyectosExternosPocketbaseScreen(
+                            listIdEmprendimientos: listEmprendimientosSelected,
+                            usuario: usuarioProvider.usuarioCurrent!,
+                          ),
+                      ),
+                    );
+                  } else {
+                    await showDialog(
+                      context: context,
+                      builder: (alertDialogContext) {
+                        return AlertDialog(
+                          title:
+                              const Text('Campos vacíos'),
+                          content: const Text(
+                              'Para continuar, debes seleccionar al menos un emprendimientos de la lista.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pop(
+                                      alertDialogContext),
+                              child: const Text('Bien'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                    return;
+                  }
+                },
+                text: 'Descargar Proyectos',
+                icon: const Icon(
+                  Icons.check_rounded,
+                  size: 20,
+                ),
+                options: FFButtonOptions(
+                  width: 200,
+                  height: 40,
+                  color: AppTheme.of(context).secondaryText,
+                  textStyle: AppTheme.of(context)
+                      .subtitle2
+                      .override(
+                        fontFamily:
+                            AppTheme.of(context).subtitle2Family,
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
+                  borderSide: const BorderSide(
+                    color: Colors.transparent,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
             SizedBox(
               width: MediaQuery.of(context).size.width,
-              height: 430,
+              height: MediaQuery.of(context).size.height * 0.5,
               child: ListView.builder(
                 padding: const EdgeInsetsDirectional
                     .fromSTEB(10, 0, 10, 10),
@@ -415,6 +484,10 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                               emprendimientoTemp.selected = !emprendimientoTemp.selected;
                               if (emprendimientoTemp.selected) {
                                 listEmprendimientosSelected.add(emprendimientoTemp.id);
+                              } else {
+                                if (listEmprendimientosSelected.contains(emprendimientoTemp.id)) {
+                                  listEmprendimientosSelected.remove(emprendimientoTemp.id);
+                                }
                               }
                             });
                           },
@@ -540,43 +613,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                   );
                 },
               ),
-            ),
-            Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(
-                  0, 20, 0, 10),
-              child: FFButtonWidget(
-                onPressed: () async {
-                  print("Los emprendimientos a descargar son");
-                  print(listEmprendimientosSelected);
-                },
-                text: 'Descargar Proyectos',
-                icon: const Icon(
-                  Icons.check_rounded,
-                  size: 20,
-                ),
-                options: FFButtonOptions(
-                  width: 200,
-                  height: 40,
-                  color: AppTheme.of(context).secondaryText,
-                  textStyle: AppTheme.of(context)
-                      .subtitle2
-                      .override(
-                        fontFamily:
-                            AppTheme.of(context).subtitle2Family,
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
-                  borderSide: const BorderSide(
-                    color: Colors.transparent,
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 40,
-            ),
+            ),            
           ],
         ),
       ),

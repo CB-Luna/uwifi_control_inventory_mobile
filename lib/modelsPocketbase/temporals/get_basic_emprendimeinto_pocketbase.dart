@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-GetEmpExternoPocketbaseTemp getEmpExternoPocketbaseTempFromMap(String str) => GetEmpExternoPocketbaseTemp.fromMap(json.decode(str));
+GetBasicEmprendimientoPocketbase getBasicEmprendimientoPocketbaseFromMap(String str) => GetBasicEmprendimientoPocketbase.fromMap(json.decode(str));
 
-String getEmpExternoPocketbaseTempToMap(GetEmpExternoPocketbaseTemp data) => json.encode(data.toMap());
+String getBasicEmprendimientoPocketbaseToMap(GetBasicEmprendimientoPocketbase data) => json.encode(data.toMap());
 
-class GetEmpExternoPocketbaseTemp {
-    GetEmpExternoPocketbaseTemp({
+class GetBasicEmprendimientoPocketbase {
+    GetBasicEmprendimientoPocketbase({
         required this.page,
         required this.perPage,
         required this.totalItems,
@@ -15,13 +15,13 @@ class GetEmpExternoPocketbaseTemp {
     final int page;
     final int perPage;
     final int totalItems;
-    final List<EmprendimientoTemp> items;
+    final List<BasicEmprendimiento> items;
 
-    factory GetEmpExternoPocketbaseTemp.fromMap(Map<String, dynamic> json) => GetEmpExternoPocketbaseTemp(
+    factory GetBasicEmprendimientoPocketbase.fromMap(Map<String, dynamic> json) => GetBasicEmprendimientoPocketbase(
         page: json["page"],
         perPage: json["perPage"],
         totalItems: json["totalItems"],
-        items: List<EmprendimientoTemp>.from(json["items"].map((x) => EmprendimientoTemp.fromMap(x))),
+        items: List<BasicEmprendimiento>.from(json["items"].map((x) => BasicEmprendimiento.fromMap(x))),
     );
 
     Map<String, dynamic> toMap() => {
@@ -32,8 +32,8 @@ class GetEmpExternoPocketbaseTemp {
     };
 }
 
-class EmprendimientoTemp {
-    EmprendimientoTemp({
+class BasicEmprendimiento{
+    BasicEmprendimiento({
         required this.collectionId,
         required this.collectionName,
         required this.expand,
@@ -51,12 +51,11 @@ class EmprendimientoTemp {
         required this.idStatusSyncFk,
         required this.nombreEmprendimiento,
         required this.updated,
-        required this.selected,
     });
 
     final String collectionId;
     final String collectionName;
-    final EmprendedorUsuarioExpand expand;
+    final BasicEmprendedorExpand expand;
     final bool activo;
     final bool archivado;
     final DateTime? created;
@@ -71,12 +70,11 @@ class EmprendimientoTemp {
     final String idStatusSyncFk;
     final String nombreEmprendimiento;
     final DateTime? updated;
-    bool selected = false;
 
-    factory EmprendimientoTemp.fromMap(Map<String, dynamic> json) => EmprendimientoTemp(
+    factory BasicEmprendimiento.fromMap(Map<String, dynamic> json) => BasicEmprendimiento(
         collectionId: json["@collectionId"],
         collectionName: json["@collectionName"],
-        expand: EmprendedorUsuarioExpand.fromMap(json["@expand"]),
+        expand: BasicEmprendedorExpand.fromMap(json["@expand"]),
         activo: json["activo"],
         archivado: json["archivado"],
         created: json["created"] == null ? null : DateTime.parse(json["created"]),
@@ -90,8 +88,7 @@ class EmprendimientoTemp {
         idPromotorFk: json["id_promotor_fk"],
         idStatusSyncFk: json["id_status_sync_fk"],
         nombreEmprendimiento: json["nombre_emprendimiento"],
-        updated: json["updated"] == null ? null : DateTime.parse(json["updated"]), 
-        selected: false,
+        updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
     );
 
     Map<String, dynamic> toMap() => {
@@ -112,34 +109,38 @@ class EmprendimientoTemp {
         "id_status_sync_fk": idStatusSyncFk,
         "nombre_emprendimiento": nombreEmprendimiento,
         "updated": updated == null ? null : updated!.toIso8601String(),
-        "selected": false,
     };
 }
 
-class EmprendedorUsuarioExpand {
-    EmprendedorUsuarioExpand({
+class BasicEmprendedorExpand {
+    BasicEmprendedorExpand({
         required this.idEmprendedorFk,
-        required this.idPromotorFk,
+        required this.idFaseEmpFk,
+        required this.idNombreProyectoFk,
     });
 
-    final EmprendedorTemp idEmprendedorFk;
-    final UsuarioTemp idPromotorFk;
+    final BasicEmprendedor idEmprendedorFk;
+    final BasicFaseEmp idFaseEmpFk;
+    final BasicNombreProyecto? idNombreProyectoFk;
 
-    factory EmprendedorUsuarioExpand.fromMap(Map<String, dynamic> json) => EmprendedorUsuarioExpand(
-        idEmprendedorFk: EmprendedorTemp.fromMap(json["id_emprendedor_fk"]),
-        idPromotorFk: UsuarioTemp.fromMap(json["id_promotor_fk"]),
+    factory BasicEmprendedorExpand.fromMap(Map<String, dynamic> json) => BasicEmprendedorExpand(
+        idEmprendedorFk: BasicEmprendedor.fromMap(json["id_emprendedor_fk"]),
+        idFaseEmpFk: BasicFaseEmp.fromMap(json["id_fase_emp_fk"]),
+        idNombreProyectoFk: json["id_nombre_proyecto_fk"] == null ? null : BasicNombreProyecto.fromMap(json["id_nombre_proyecto_fk"]),
     );
 
     Map<String, dynamic> toMap() => {
         "id_emprendedor_fk": idEmprendedorFk.toMap(),
-        "id_promotor_fk": idPromotorFk.toMap(),
+        "id_fase_emp_fk": idFaseEmpFk.toMap(),
+        "id_nombre_proyecto_fk": idNombreProyectoFk == null ? null : idNombreProyectoFk!.toMap(),
     };
 }
 
-class EmprendedorTemp {
-    EmprendedorTemp({
+class BasicEmprendedor {
+    BasicEmprendedor({
         required this.collectionId,
         required this.collectionName,
+        required this.expand,
         required this.apellidosEmp,
         required this.comentarios,
         required this.created,
@@ -156,6 +157,7 @@ class EmprendedorTemp {
 
     final String collectionId;
     final String collectionName;
+    final IdBasicEmprendedorFkExpand expand;
     final String apellidosEmp;
     final String? comentarios;
     final DateTime? created;
@@ -169,9 +171,10 @@ class EmprendedorTemp {
     final String? telefono;
     final DateTime? updated;
 
-    factory EmprendedorTemp.fromMap(Map<String, dynamic> json) => EmprendedorTemp(
+    factory BasicEmprendedor.fromMap(Map<String, dynamic> json) => BasicEmprendedor(
         collectionId: json["@collectionId"],
         collectionName: json["@collectionName"],
+        expand: IdBasicEmprendedorFkExpand.fromMap(json["@expand"]),
         apellidosEmp: json["apellidos_emp"],
         comentarios: json["comentarios"],
         created: json["created"] == null ? null : DateTime.parse(json["created"]),
@@ -189,6 +192,7 @@ class EmprendedorTemp {
     Map<String, dynamic> toMap() => {
         "@collectionId": collectionId,
         "@collectionName": collectionName,
+        "@expand": expand.toMap(),
         "apellidos_emp": apellidosEmp,
         "comentarios": comentarios,
         "created": created == null ? null : created!.toIso8601String(),
@@ -204,80 +208,162 @@ class EmprendedorTemp {
     };
 }
 
-class UsuarioTemp {
-    UsuarioTemp({
+class IdBasicEmprendedorFkExpand {
+    IdBasicEmprendedorFkExpand({
+        required this.idComunidadFk,
+    });
+
+    final BasicComunidad idComunidadFk;
+
+    factory IdBasicEmprendedorFkExpand.fromMap(Map<String, dynamic> json) => IdBasicEmprendedorFkExpand(
+        idComunidadFk: BasicComunidad.fromMap(json["id_comunidad_fk"]),
+    );
+
+    Map<String, dynamic> toMap() => {
+        "id_comunidad_fk": idComunidadFk.toMap(),
+    };
+}
+
+class BasicComunidad {
+    BasicComunidad({
         required this.collectionId,
         required this.collectionName,
-        required this.apellidoM,
-        required this.apellidoP,
-        required this.archivado,
-        required this.celular,
+        required this.activo,
         required this.created,
         required this.id,
         required this.idEmiWeb,
-        required this.idImagenFk,
-        required this.idRolesFk,
+        required this.idMunicipioFk,
         required this.idStatusSyncFk,
-        required this.nombreUsuario,
-        required this.telefono,
+        required this.nombreComunidad,
         required this.updated,
-        required this.user,
     });
 
     final String collectionId;
     final String collectionName;
-    final String? apellidoM;
-    final String apellidoP;
-    final bool archivado;
-    final String? celular;
+    final bool activo;
     final DateTime? created;
     final String id;
     final String idEmiWeb;
-    final String? idImagenFk;
-    final List<String>? idRolesFk;
-    final String idStatusSyncFk;
-    final String nombreUsuario;
-    final String? telefono;
+    final String idMunicipioFk;
+    final String? idStatusSyncFk;
+    final String nombreComunidad;
     final DateTime? updated;
-    final String user;
 
-    factory UsuarioTemp.fromMap(Map<String, dynamic> json) => UsuarioTemp(
+    factory BasicComunidad.fromMap(Map<String, dynamic> json) => BasicComunidad(
         collectionId: json["@collectionId"],
         collectionName: json["@collectionName"],
-        apellidoM: json["apellido_m"],
-        apellidoP: json["apellido_p"],
-        archivado: json["archivado"],
-        celular: json["celular"],
+        activo: json["activo"],
         created: json["created"] == null ? null : DateTime.parse(json["created"]),
         id: json["id"],
         idEmiWeb: json["id_emi_web"],
-        idImagenFk: json["id_imagen_fk"],
-        idRolesFk: json["id_roles_fk"] == null ? null : List<String>.from(json["id_roles_fk"].map((x) => x)),
+        idMunicipioFk: json["id_municipio_fk"],
         idStatusSyncFk: json["id_status_sync_fk"],
-        nombreUsuario: json["nombre_usuario"],
-        telefono: json["telefono"],
+        nombreComunidad: json["nombre_comunidad"],
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
-        user: json["user"],
     );
 
     Map<String, dynamic> toMap() => {
         "@collectionId": collectionId,
         "@collectionName": collectionName,
-        "apellido_m": apellidoM,
-        "apellido_p": apellidoP,
-        "archivado": archivado,
-        "celular": celular,
+        "activo": activo,
         "created": created == null ? null : created!.toIso8601String(),
         "id": id,
         "id_emi_web": idEmiWeb,
-        "id_imagen_fk": idImagenFk,
-        "id_roles_fk": idRolesFk == null ? null : List<dynamic>.from(idRolesFk!.map((x) => x)),
+        "id_municipio_fk": idMunicipioFk,
         "id_status_sync_fk": idStatusSyncFk,
-        "nombre_usuario": nombreUsuario,
-        "telefono": telefono,
+        "nombre_comunidad": nombreComunidad,
         "updated": updated == null ? null : updated!.toIso8601String(),
-        "user": user,
     };
 }
 
+class BasicFaseEmp {
+    BasicFaseEmp({
+        required this.collectionId,
+        required this.collectionName,
+        required this.created,
+        required this.fase,
+        required this.id,
+        required this.idEmiWeb,
+        required this.idStatusSyncFk,
+        required this.updated,
+    });
 
+    final String collectionId;
+    final String collectionName;
+    final DateTime? created;
+    final String fase;
+    final String id;
+    final String idEmiWeb;
+    final String? idStatusSyncFk;
+    final DateTime? updated;
+
+    factory BasicFaseEmp.fromMap(Map<String, dynamic> json) => BasicFaseEmp(
+        collectionId: json["@collectionId"],
+        collectionName: json["@collectionName"],
+        created: json["created"] == null ? null : DateTime.parse(json["created"]),
+        fase: json["fase"],
+        id: json["id"],
+        idEmiWeb: json["id_emi_web"],
+        idStatusSyncFk: json["id_status_sync_fk"],
+        updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
+    );
+
+    Map<String, dynamic> toMap() => {
+        "@collectionId": collectionId,
+        "@collectionName": collectionName,
+        "created": created == null ? null : created!.toIso8601String(),
+        "fase": fase,
+        "id": id,
+        "id_emi_web": idEmiWeb,
+        "id_status_sync_fk": idStatusSyncFk,
+        "updated": updated == null ? null : updated!.toIso8601String(),
+    };
+}
+
+class BasicNombreProyecto {
+    BasicNombreProyecto({
+        required this.collectionId,
+        required this.collectionName,
+        required this.activo,
+        required this.created,
+        required this.id,
+        required this.idEmiWeb,
+        required this.idTipoProyectoFk,
+        required this.nombreProyecto,
+        required this.updated,
+    });
+
+    final String collectionId;
+    final String collectionName;
+    final bool activo;
+    final DateTime? created;
+    final String id;
+    final String idEmiWeb;
+    final String idTipoProyectoFk;
+    final String nombreProyecto;
+    final DateTime? updated;
+
+    factory BasicNombreProyecto.fromMap(Map<String, dynamic> json) => BasicNombreProyecto(
+        collectionId: json["@collectionId"],
+        collectionName: json["@collectionName"],
+        activo: json["activo"],
+        created: json["created"] == null ? null : DateTime.parse(json["created"]),
+        id: json["id"],
+        idEmiWeb: json["id_emi_web"],
+        idTipoProyectoFk: json["id_tipo_proyecto_fk"],
+        nombreProyecto: json["nombre_proyecto"],
+        updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
+    );
+
+    Map<String, dynamic> toMap() => {
+        "@collectionId": collectionId,
+        "@collectionName": collectionName,
+        "activo": activo,
+        "created": created == null ? null : created!.toIso8601String(),
+        "id": id,
+        "id_emi_web": idEmiWeb,
+        "id_tipo_proyecto_fk": idTipoProyectoFk,
+        "nombre_proyecto": nombreProyecto,
+        "updated": updated == null ? null : updated!.toIso8601String(),
+    };
+}

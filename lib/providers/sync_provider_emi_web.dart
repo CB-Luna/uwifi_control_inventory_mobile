@@ -3920,98 +3920,100 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           print("Se recupera el idEmiWeb de la inversión");
           //Creamos los prod Solicitados
           for(var i = 0; i < inversion.prodSolicitados.toList().length; i++){
-            if (inversion.prodSolicitados.toList()[i].imagen.target != null) {
-              //El prod Solicitado está asociado a una imagen
-              final crearImagenProdSolicitadoUri =
-              Uri.parse('$baseUrlEmiWebServices/documentos/crear');
-              final responsePostImagenProdSolicitado = await post(crearImagenProdSolicitadoUri, 
-              headers: headers,
-              body: jsonEncode({
-                "idCatTipoDocumento": "8", //Prod Solicitado
-                "nombreArchivo": inversion.prodSolicitados.toList()[i].imagen.target!.nombre,
-                "archivo": inversion.prodSolicitados.toList()[i].imagen.target!.base64,
-                "idUsuario": inversion.emprendimiento.target!.usuario.target!.idEmiWeb,
-              }));
-              switch (responsePostImagenProdSolicitado.statusCode) {
-                case 200:
-                  //Se recupera el id Emi Web de la imagen del Prod Solicitado
-                  final responsePostImagenProdSolicitadoParse = postRegistroImagenExitosoEmiWebFromMap(
-                  const Utf8Decoder().convert(responsePostImagenProdSolicitado.bodyBytes));
-                  print("Id de la Imagen: ${responsePostImagenProdSolicitadoParse.payload.idDocumento.toString()}");
-                  inversion.prodSolicitados.toList()[i].imagen.target!.idEmiWeb = responsePostImagenProdSolicitadoParse.payload.idDocumento.toString();             
-                  dataBase.imagenesBox.put(inversion.prodSolicitados.toList()[i].imagen.target!);
-                  print("Se recupera el idEmiWeb de la imagen prod solicitado");
-                  final crearProdSolicitadosUri =
-                    Uri.parse('$baseUrlEmiWebServices/productosSolicitados');
-                  final responsePostProdSolicitado = await post(crearProdSolicitadosUri, 
-                  headers: headers,
-                  body: jsonEncode({   
-                    "idInversion": responsePostInversionParse.payload,
-                    "producto": inversion.prodSolicitados.toList()[i].producto,
-                    "descripcion": inversion.prodSolicitados.toList()[i].descripcion,
-                    "idCatTipoEmpaque": inversion.prodSolicitados.toList()[i].tipoEmpaques.target!.idEmiWeb,
-                    "cantidad": inversion.prodSolicitados.toList()[i].cantidad,
-                    "idUsuario": inversion.emprendimiento.target!.usuario.target!.idEmiWeb,
-                    "nombreUsuario": "${inversion.emprendimiento
-                    .target!.usuario.target!.nombre} ${inversion.emprendimiento
-                    .target!.usuario.target!.apellidoP} ${inversion.emprendimiento
-                    .target!.usuario.target!.apellidoM}",
-                    "marcaSugerida": inversion.prodSolicitados.toList()[i].marcaSugerida,
-                    "proveedorSugerido": inversion.prodSolicitados.toList()[i].proveedorSugerido,
-                    "costoEstimado": inversion.prodSolicitados.toList()[i].costoEstimado,
-                    "idDocumento": responsePostImagenProdSolicitadoParse.payload.idDocumento,
-                  }));       
-                  switch (responsePostProdSolicitado.statusCode) {
-                    case 200:
-                      //Se recupera el id Emi Web del Prod Solicitado
-                      final responsePostProdSolicitadoParse = postRegistroExitosoEmiWebFromMap(
-                      const Utf8Decoder().convert(responsePostProdSolicitado.bodyBytes));
-                      inversion.prodSolicitados.toList()[i].idEmiWeb = responsePostProdSolicitadoParse.payload!.id.toString();
-                      dataBase.productosSolicitadosBox.put(inversion.prodSolicitados.toList()[i]);
-                      continue;
-                    default:
-                      //No se postea con éxito el prod Solicitado
-                      i = inversion.prodSolicitados.toList().length;
-                      return false;
-                  }
-                default:
-                  //No se postea con éxito la imagen del prod Solicitado
-                  i = inversion.prodSolicitados.toList().length;
-                  return false;
-              }
-            } else {
-              //El prod Solicitado no está asociado a una imagen
-              final crearProdSolicitadosUri =
-                Uri.parse('$baseUrlEmiWebServices/productosSolicitados');
-              final responsePostProdSolicitado = await post(crearProdSolicitadosUri, 
-              headers: headers,
-              body: jsonEncode({   
-                "idInversion": responsePostInversionParse.payload,
-                "producto": inversion.prodSolicitados.toList()[i].producto,
-                "descripcion": inversion.prodSolicitados.toList()[i].descripcion,
-                "idCatTipoEmpaque": inversion.prodSolicitados.toList()[i].tipoEmpaques.target!.idEmiWeb,
-                "cantidad": inversion.prodSolicitados.toList()[i].cantidad,
-                "idUsuario": inversion.emprendimiento.target!.usuario.target!.idEmiWeb,
-                "nombreUsuario": "${inversion.emprendimiento
-                .target!.usuario.target!.nombre} ${inversion.emprendimiento
-                .target!.usuario.target!.apellidoP} ${inversion.emprendimiento
-                .target!.usuario.target!.apellidoM}",
-                "marcaSugerida": inversion.prodSolicitados.toList()[i].marcaSugerida,
-                "proveedorSugerido": inversion.prodSolicitados.toList()[i].proveedorSugerido,
-                "costoEstimado": inversion.prodSolicitados.toList()[i].costoEstimado,
-              }));       
-              switch (responsePostProdSolicitado.statusCode) {
-                case 200:
-                  //Se recupera el id Emi Web del Prod Solicitado
-                  final responsePostProdSolicitadoParse = postRegistroExitosoEmiWebFromMap(
-                  const Utf8Decoder().convert(responsePostProdSolicitado.bodyBytes));
-                  inversion.prodSolicitados.toList()[i].idEmiWeb = responsePostProdSolicitadoParse.payload!.id.toString();
-                  dataBase.productosSolicitadosBox.put(inversion.prodSolicitados.toList()[i]);
-                  continue;
-                default:
-                  //No se postea con éxito el prod Solicitado
-                  i = inversion.prodSolicitados.toList().length;
-                  return false;
+            if (inversion.prodSolicitados.toList()[i].idEmiWeb == null) {
+              if (inversion.prodSolicitados.toList()[i].imagen.target != null) {
+                //El prod Solicitado está asociado a una imagen
+                final crearImagenProdSolicitadoUri =
+                Uri.parse('$baseUrlEmiWebServices/documentos/crear');
+                final responsePostImagenProdSolicitado = await post(crearImagenProdSolicitadoUri, 
+                headers: headers,
+                body: jsonEncode({
+                  "idCatTipoDocumento": "8", //Prod Solicitado
+                  "nombreArchivo": inversion.prodSolicitados.toList()[i].imagen.target!.nombre,
+                  "archivo": inversion.prodSolicitados.toList()[i].imagen.target!.base64,
+                  "idUsuario": inversion.emprendimiento.target!.usuario.target!.idEmiWeb,
+                }));
+                switch (responsePostImagenProdSolicitado.statusCode) {
+                  case 200:
+                    //Se recupera el id Emi Web de la imagen del Prod Solicitado
+                    final responsePostImagenProdSolicitadoParse = postRegistroImagenExitosoEmiWebFromMap(
+                    const Utf8Decoder().convert(responsePostImagenProdSolicitado.bodyBytes));
+                    print("Id de la Imagen: ${responsePostImagenProdSolicitadoParse.payload.idDocumento.toString()}");
+                    inversion.prodSolicitados.toList()[i].imagen.target!.idEmiWeb = responsePostImagenProdSolicitadoParse.payload.idDocumento.toString();             
+                    dataBase.imagenesBox.put(inversion.prodSolicitados.toList()[i].imagen.target!);
+                    print("Se recupera el idEmiWeb de la imagen prod solicitado");
+                    final crearProdSolicitadosUri =
+                      Uri.parse('$baseUrlEmiWebServices/productosSolicitados');
+                    final responsePostProdSolicitado = await post(crearProdSolicitadosUri, 
+                    headers: headers,
+                    body: jsonEncode({   
+                      "idInversion": responsePostInversionParse.payload,
+                      "producto": inversion.prodSolicitados.toList()[i].producto,
+                      "descripcion": inversion.prodSolicitados.toList()[i].descripcion,
+                      "idCatTipoEmpaque": inversion.prodSolicitados.toList()[i].tipoEmpaques.target!.idEmiWeb,
+                      "cantidad": inversion.prodSolicitados.toList()[i].cantidad,
+                      "idUsuario": inversion.emprendimiento.target!.usuario.target!.idEmiWeb,
+                      "nombreUsuario": "${inversion.emprendimiento
+                      .target!.usuario.target!.nombre} ${inversion.emprendimiento
+                      .target!.usuario.target!.apellidoP} ${inversion.emprendimiento
+                      .target!.usuario.target!.apellidoM}",
+                      "marcaSugerida": inversion.prodSolicitados.toList()[i].marcaSugerida,
+                      "proveedorSugerido": inversion.prodSolicitados.toList()[i].proveedorSugerido,
+                      "costoEstimado": (inversion.prodSolicitados.toList()[i].cantidad * (inversion.prodSolicitados.toList()[i].costoEstimado ?? 0)),
+                      "idDocumento": responsePostImagenProdSolicitadoParse.payload.idDocumento,
+                    }));       
+                    switch (responsePostProdSolicitado.statusCode) {
+                      case 200:
+                        //Se recupera el id Emi Web del Prod Solicitado
+                        final responsePostProdSolicitadoParse = postRegistroExitosoEmiWebFromMap(
+                        const Utf8Decoder().convert(responsePostProdSolicitado.bodyBytes));
+                        inversion.prodSolicitados.toList()[i].idEmiWeb = responsePostProdSolicitadoParse.payload!.id.toString();
+                        dataBase.productosSolicitadosBox.put(inversion.prodSolicitados.toList()[i]);
+                        continue;
+                      default:
+                        //No se postea con éxito el prod Solicitado
+                        i = inversion.prodSolicitados.toList().length;
+                        return false;
+                    }
+                  default:
+                    //No se postea con éxito la imagen del prod Solicitado
+                    i = inversion.prodSolicitados.toList().length;
+                    return false;
+                }
+              } else {
+                //El prod Solicitado no está asociado a una imagen
+                final crearProdSolicitadosUri =
+                  Uri.parse('$baseUrlEmiWebServices/productosSolicitados');
+                final responsePostProdSolicitado = await post(crearProdSolicitadosUri, 
+                headers: headers,
+                body: jsonEncode({   
+                  "idInversion": responsePostInversionParse.payload,
+                  "producto": inversion.prodSolicitados.toList()[i].producto,
+                  "descripcion": inversion.prodSolicitados.toList()[i].descripcion,
+                  "idCatTipoEmpaque": inversion.prodSolicitados.toList()[i].tipoEmpaques.target!.idEmiWeb,
+                  "cantidad": inversion.prodSolicitados.toList()[i].cantidad,
+                  "idUsuario": inversion.emprendimiento.target!.usuario.target!.idEmiWeb,
+                  "nombreUsuario": "${inversion.emprendimiento
+                  .target!.usuario.target!.nombre} ${inversion.emprendimiento
+                  .target!.usuario.target!.apellidoP} ${inversion.emprendimiento
+                  .target!.usuario.target!.apellidoM}",
+                  "marcaSugerida": inversion.prodSolicitados.toList()[i].marcaSugerida,
+                  "proveedorSugerido": inversion.prodSolicitados.toList()[i].proveedorSugerido,
+                  "costoEstimado": (inversion.prodSolicitados.toList()[i].cantidad * (inversion.prodSolicitados.toList()[i].costoEstimado ?? 0)),
+                }));       
+                switch (responsePostProdSolicitado.statusCode) {
+                  case 200:
+                    //Se recupera el id Emi Web del Prod Solicitado
+                    final responsePostProdSolicitadoParse = postRegistroExitosoEmiWebFromMap(
+                    const Utf8Decoder().convert(responsePostProdSolicitado.bodyBytes));
+                    inversion.prodSolicitados.toList()[i].idEmiWeb = responsePostProdSolicitadoParse.payload!.id.toString();
+                    dataBase.productosSolicitadosBox.put(inversion.prodSolicitados.toList()[i]);
+                    continue;
+                  default:
+                    //No se postea con éxito el prod Solicitado
+                    i = inversion.prodSolicitados.toList().length;
+                    return false;
+                }
               }
             }
           }
@@ -4070,7 +4072,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     .target!.usuario.target!.apellidoM}",
                     "marcaSugerida": inversion.prodSolicitados.toList()[i].marcaSugerida,
                     "proveedorSugerido": inversion.prodSolicitados.toList()[i].proveedorSugerido,
-                    "costoEstimado": inversion.prodSolicitados.toList()[i].costoEstimado,
+                    "costoEstimado": (inversion.prodSolicitados.toList()[i].cantidad * (inversion.prodSolicitados.toList()[i].costoEstimado ?? 0)),
                     "idDocumento": responsePostImagenProdSolicitadoParse.payload.idDocumento,
                   }));       
                   switch (responsePostProdSolicitado.statusCode) {
@@ -4114,7 +4116,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 .target!.usuario.target!.apellidoM}",
                 "marcaSugerida": inversion.prodSolicitados.toList()[i].marcaSugerida,
                 "proveedorSugerido": inversion.prodSolicitados.toList()[i].proveedorSugerido,
-                "costoEstimado": inversion.prodSolicitados.toList()[i].costoEstimado,
+                "costoEstimado": (inversion.prodSolicitados.toList()[i].cantidad * (inversion.prodSolicitados.toList()[i].costoEstimado ?? 0)),
               }));       
               switch (responsePostProdSolicitado.statusCode) {
                 case 200:

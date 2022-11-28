@@ -1689,7 +1689,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 "id_emprendimiento_fk": "",
                 "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                 "id_emi_web": emprendedor.idEmiWeb,
-                "id_usuario_registra_fk": emprendedor.emprendimiento.target!.usuario.target!.idDBR,
             });
 
             if (recordEmprendedor.id.isNotEmpty) {
@@ -3303,44 +3302,46 @@ class SyncProviderPocketbase extends ChangeNotifier {
             final prodSolicitadosToSync = inversion.prodSolicitados.toList();
             if (prodSolicitadosToSync.isNotEmpty) {  
               for (var i = 0; i < prodSolicitadosToSync.length; i++) {
-                // Creamos y enviamos las imágenes de los prod Solicitados
-                if (prodSolicitadosToSync[i].imagen.target != null) {
-                  // El prod Solicitado está asociado a una imagen
-                  final recordImagen = await client.records.create('imagenes', body: {
-                    "nombre": prodSolicitadosToSync[i].imagen.target!.nombre,
-                    "id_emi_web": prodSolicitadosToSync[i].imagen.target!.idEmiWeb,
-                    "base64": prodSolicitadosToSync[i].imagen.target!.base64,
-                  });
-                if (recordImagen.id.isNotEmpty) {
-                  prodSolicitadosToSync[i].imagen.target!.idDBR = recordImagen.id;
-                  dataBase.imagenesBox.put(prodSolicitadosToSync[i].imagen.target!);
-                  final recordProdSolicitado = await client.records.create('productos_solicitados', body: {
-                    "producto": prodSolicitadosToSync[i].producto,
-                    "marca_sugerida": prodSolicitadosToSync[i].marcaSugerida,
-                    "descripcion": prodSolicitadosToSync[i].descripcion,
-                    "proveedo_sugerido": prodSolicitadosToSync[i].proveedorSugerido,
-                    "cantidad": prodSolicitadosToSync[i].cantidad,
-                    "costo_estimado": prodSolicitadosToSync[i].costoEstimado,
-                    "id_familia_prod_fk": prodSolicitadosToSync[i].familiaProducto.target!.idDBR,
-                    "id_tipo_empaques_fk": prodSolicitadosToSync[i].tipoEmpaques.target!.idDBR,
-                    "id_inversion_fk": inversion.idDBR,
-                    "id_emi_web": prodSolicitadosToSync[i].idEmiWeb,
-                    "id_imagen_fk": prodSolicitadosToSync[i].imagen.target!.idDBR,
-                  });
-                  print("No postea productos");
-                  if (recordProdSolicitado.id.isNotEmpty) {
-                    //Se recupera el idDBR del prod Solicitado
-                    prodSolicitadosToSync[i].idDBR = recordProdSolicitado.id;
-                    dataBase.productosSolicitadosBox.put(prodSolicitadosToSync[i]);
+                // Se verifica que no se haya posteado el prod Solicitado anteriormente
+                if (prodSolicitadosToSync[i].idDBR == null) {
+                  // Creamos y enviamos las imágenes de los prod Solicitados
+                  if (prodSolicitadosToSync[i].imagen.target != null) {
+                    // El prod Solicitado está asociado a una imagen
+                    final recordImagen = await client.records.create('imagenes', body: {
+                      "nombre": prodSolicitadosToSync[i].imagen.target!.nombre,
+                      "id_emi_web": prodSolicitadosToSync[i].imagen.target!.idEmiWeb,
+                      "base64": prodSolicitadosToSync[i].imagen.target!.base64,
+                    });
+                  if (recordImagen.id.isNotEmpty) {
+                    prodSolicitadosToSync[i].imagen.target!.idDBR = recordImagen.id;
+                    dataBase.imagenesBox.put(prodSolicitadosToSync[i].imagen.target!);
+                    final recordProdSolicitado = await client.records.create('productos_solicitados', body: {
+                      "producto": prodSolicitadosToSync[i].producto,
+                      "marca_sugerida": prodSolicitadosToSync[i].marcaSugerida,
+                      "descripcion": prodSolicitadosToSync[i].descripcion,
+                      "proveedo_sugerido": prodSolicitadosToSync[i].proveedorSugerido,
+                      "cantidad": prodSolicitadosToSync[i].cantidad,
+                      "costo_estimado": prodSolicitadosToSync[i].costoEstimado,
+                      "id_familia_prod_fk": prodSolicitadosToSync[i].familiaProducto.target!.idDBR,
+                      "id_tipo_empaques_fk": prodSolicitadosToSync[i].tipoEmpaques.target!.idDBR,
+                      "id_inversion_fk": inversion.idDBR,
+                      "id_emi_web": prodSolicitadosToSync[i].idEmiWeb,
+                      "id_imagen_fk": prodSolicitadosToSync[i].imagen.target!.idDBR,
+                    });
+                    print("No postea productos");
+                    if (recordProdSolicitado.id.isNotEmpty) {
+                      //Se recupera el idDBR del prod Solicitado
+                      prodSolicitadosToSync[i].idDBR = recordProdSolicitado.id;
+                      dataBase.productosSolicitadosBox.put(prodSolicitadosToSync[i]);
+                    } else {
+                      //No se pudo postear el producto Solicitado a Pocketbase
+                      return false;
+                    }
                   } else {
-                    //No se pudo postear el producto Solicitado a Pocketbase
+                    // No se pudo postear la imagen del prod Solicitado a Pocketbase
                     return false;
                   }
-                } else {
-                  // No se pudo postear la imagen del prod Solicitado a Pocketbase
-                  return false;
-                }
-                } else {
+                  } else {
                   // El prod Solicitado no está asociado a una imagen
                   final recordProdSolicitado = await client.records.create('productos_solicitados', body: {
                     "producto": prodSolicitadosToSync[i].producto,
@@ -3364,18 +3365,19 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   }
                   }
                 }
-                //Se marca como realizada en Pocketbase la instrucción en Bitacora
-                bitacora.executePocketbase = true;
-                dataBase.bitacoraBox.put(bitacora);
-                if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
-                  //Se elimina la instrucción de la bitacora
-                  dataBase.bitacoraBox.remove(bitacora.id);
-                } 
-                return true;
-              } else {
-                //No se encontraron productos Solicitados asociados a la inversión
-                return false;
               }
+              //Se marca como realizada en Pocketbase la instrucción en Bitacora
+              bitacora.executePocketbase = true;
+              dataBase.bitacoraBox.put(bitacora);
+              if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+                //Se elimina la instrucción de la bitacora
+                dataBase.bitacoraBox.remove(bitacora.id);
+              } 
+              return true;
+            } else {
+              //No se encontraron productos Solicitados asociados a la inversión
+              return false;
+            }
           } else {
             //No se pudo postear la inversión en Pocketbase
             return false;
