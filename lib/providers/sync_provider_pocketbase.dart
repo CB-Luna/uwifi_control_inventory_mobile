@@ -3483,33 +3483,38 @@ class SyncProviderPocketbase extends ChangeNotifier {
   Future<bool> syncAddImagenUsuario(Imagenes imagen, Bitacora bitacora) async {
     print("Estoy en syncAddImagenUsuario");
     try {
-      if (!bitacora.executePocketbase) {
-        final recordImagenUsuario = await client.records.create('imagenes', body: {
-         "nombre": imagen.nombre,
-         "base64": imagen.base64,
-         "id_emi_web": imagen.idEmiWeb,
-        });
-        if (recordImagenUsuario.id.isNotEmpty) {
-          //Se recupera el idDBR de la imagen
-          imagen.idDBR = recordImagenUsuario.id;
-          dataBase.imagenesBox.put(imagen);
-          //Se marca como realizada en Pocketbase la instrucción en Bitacora
-          bitacora.executePocketbase = true;
-          dataBase.bitacoraBox.put(bitacora);
-          if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+      if (bitacora.executeEmiWeb) {
+        if (!bitacora.executePocketbase) {
+          final recordImagenUsuario = await client.records.create('imagenes', body: {
+          "nombre": imagen.nombre,
+          "base64": imagen.base64,
+          "id_emi_web": imagen.idEmiWeb,
+          });
+          if (recordImagenUsuario.id.isNotEmpty) {
+            //Se recupera el idDBR de la imagen
+            imagen.idDBR = recordImagenUsuario.id;
+            dataBase.imagenesBox.put(imagen);
+            //Se marca como realizada en Pocketbase la instrucción en Bitacora
+            bitacora.executePocketbase = true;
+            dataBase.bitacoraBox.put(bitacora);
+            if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+              //Se elimina la instrucción de la bitacora
+              dataBase.bitacoraBox.remove(bitacora.id);
+            } 
+            return true;
+          } else {
+            return false;
+          }  
+        } else {
+          if (bitacora.executeEmiWeb) {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           } 
           return true;
-        } else {
-          return false;
-        }  
+        }
       } else {
-        if (bitacora.executeEmiWeb) {
-          //Se elimina la instrucción de la bitacora
-          dataBase.bitacoraBox.remove(bitacora.id);
-        } 
-        return true;
+        // No se ha agregado imagen del usuario en Emi Web
+        return false;
       }
     } catch (e) {
       print('ERROR - function syncAddImagenUsuario(): $e');
@@ -3520,30 +3525,35 @@ class SyncProviderPocketbase extends ChangeNotifier {
   Future<bool> syncUpdateImagenUsuario(Imagenes imagen, Bitacora bitacora) async {
     print("Estoy en El syncUpdateImagenUsuario en Pocketbase");
     try {
-      if (!bitacora.executePocketbase) {
-        final record = await client.records.update('imagenes', imagen.idDBR.toString(), body: {
-            "nombre": imagen.nombre,
-            "base64": imagen.base64,
-        }); 
-        if (record.id.isNotEmpty) {
-          //Se marca como realizada en Pocketbase la instrucción en Bitacora
-          bitacora.executePocketbase = true;
-          dataBase.bitacoraBox.put(bitacora);
-          if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+      if (bitacora.executeEmiWeb) {
+        if (!bitacora.executePocketbase) {
+          final record = await client.records.update('imagenes', imagen.idDBR.toString(), body: {
+              "nombre": imagen.nombre,
+              "base64": imagen.base64,
+          }); 
+          if (record.id.isNotEmpty) {
+            //Se marca como realizada en Pocketbase la instrucción en Bitacora
+            bitacora.executePocketbase = true;
+            dataBase.bitacoraBox.put(bitacora);
+            if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+              //Se elimina la instrucción de la bitacora
+              dataBase.bitacoraBox.remove(bitacora.id);
+            }
+            return true;
+          }
+          else{
+            return false;
+          }
+        } else {
+          if (bitacora.executeEmiWeb) {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           }
           return true;
         }
-        else{
-          return false;
-        }
       } else {
-        if (bitacora.executeEmiWeb) {
-          //Se elimina la instrucción de la bitacora
-          dataBase.bitacoraBox.remove(bitacora.id);
-        }
-        return true;
+        // No se ha actualizado imagen del usuario en Emi Web
+        return false;
       }
     } catch (e) {
       print('ERROR - function syncUpdateImagenUsuario(): $e');
@@ -4286,35 +4296,40 @@ class SyncProviderPocketbase extends ChangeNotifier {
   Future<bool> syncUpdateUsuario(Usuarios usuario, Bitacora bitacora) async {
     print("Estoy en El syncUpdateUsuario");
     try {
-      if (!bitacora.executePocketbase) {
-        final record = await client.records.update('emi_users', usuario.idDBR.toString(), body: {
-          "nombre_usuario": usuario.nombre,
-          "apellido_p": usuario.apellidoP,
-          "apellido_m": usuario.apellidoM,
-          "telefono": usuario.telefono,
-          "id_status_sync_fk": "HoI36PzYw1wtbO1"
-        }); 
+      if (bitacora.executeEmiWeb) {
+        if (!bitacora.executePocketbase) {
+          final record = await client.records.update('emi_users', usuario.idDBR.toString(), body: {
+            "nombre_usuario": usuario.nombre,
+            "apellido_p": usuario.apellidoP,
+            "apellido_m": usuario.apellidoM,
+            "telefono": usuario.telefono,
+            "id_status_sync_fk": "HoI36PzYw1wtbO1"
+          }); 
 
-        if (record.id.isNotEmpty) {
-          print("Usuario updated succesfully");
-          //Se marca como realizada en Pocketbase la instrucción en Bitacora
-          bitacora.executePocketbase = true;
-          dataBase.bitacoraBox.put(bitacora);
-          if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+          if (record.id.isNotEmpty) {
+            print("Usuario updated succesfully");
+            //Se marca como realizada en Pocketbase la instrucción en Bitacora
+            bitacora.executePocketbase = true;
+            dataBase.bitacoraBox.put(bitacora);
+            if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+              //Se elimina la instrucción de la bitacora
+              dataBase.bitacoraBox.remove(bitacora.id);
+            }
+            return true;
+          }
+          else{
+            return false;
+          }
+        } else {
+          if (bitacora.executeEmiWeb) {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           }
           return true;
-        }
-        else{
-          return false;
-        }
+      }
       } else {
-        if (bitacora.executeEmiWeb) {
-          //Se elimina la instrucción de la bitacora
-          dataBase.bitacoraBox.remove(bitacora.id);
-        }
-        return true;
+        // No se ha actualizado datos del usuario en Emi Web
+        return false;
       }
     } catch (e) {
       print('ERROR - function syncUpdateUsuario(): $e');

@@ -221,6 +221,21 @@ void updateRol(int id, int newIdRol) {
     notifyListeners();
   }
 
+void updateDatos(int id, String newNombre, String newApellidoP, String newApellidoM, String newTelefono) {
+    var updateUsuario = dataBase.usuariosBox.get(id);
+    if (updateUsuario != null) {
+      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateUsuario', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      updateUsuario.nombre = newNombre;
+      updateUsuario.apellidoP = newApellidoP;
+      updateUsuario.apellidoM = newApellidoM;
+      updateUsuario.telefono = newTelefono;
+      updateUsuario.bitacora.add(nuevaInstruccion);
+      dataBase.usuariosBox.put(updateUsuario);
+      print('Usuario actualizado exitosamente');
+    }
+    notifyListeners();
+  }
+
 void updateImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPath, String newBase64) {
     var updateImagenUsuario = dataBase.imagenesBox.get(idImagenUsuario);
     final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateImagenUsuario', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
