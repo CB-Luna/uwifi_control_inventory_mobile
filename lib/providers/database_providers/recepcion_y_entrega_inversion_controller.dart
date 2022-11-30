@@ -72,10 +72,10 @@ class RecepcionYEntregaController extends ChangeNotifier {
     if (newEstadoInversion != null && updateInversion != null) {
       for (var i = 0; i < inversionXProdCotizados.prodCotizados.toList().length; i++) {
         if (inversionXProdCotizados.prodCotizados.toList()[i].aceptado) {
-          totalProyecto += inversionXProdCotizados.prodCotizados.toList()[i].costoTotal;
+          totalProyecto += inversionXProdCotizados.prodCotizados.toList()[i].costoTotal; //aqui tambien se cambia
         }
       }
-      updateInversion.montoPagar = totalProyecto * (porcentaje * 0.01);
+      updateInversion.montoPagar = totalProyecto * (porcentaje * 0.01); //Se actualiza el monto a pagar
       updateInversion.saldo = totalProyecto * (porcentaje * 0.01);
       updateInversion.totalInversion = totalProyecto;
       updateInversion.estadoInversion.target = newEstadoInversion;

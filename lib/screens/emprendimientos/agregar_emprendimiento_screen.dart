@@ -41,6 +41,7 @@ class _AgregarEmprendimientoScreenState
 
   @override
   Widget build(BuildContext context) {
+    String? mensaje = "Imagen*";
     final emprendimientoProvider =
         Provider.of<EmprendimientoController>(context);
     final emprendedorProvider = Provider.of<EmprendedorController>(context);
@@ -169,6 +170,7 @@ class _AgregarEmprendimientoScreenState
                                         source: ImageSource.gallery,
                                         imageQuality: 100,
                                       );
+                                      
                                     }
 
                                     if (pickedFile == null) {
@@ -178,14 +180,17 @@ class _AgregarEmprendimientoScreenState
                                     setState(() {
                                       image = pickedFile;
                                       File file = File(image!.path);
-                                      List<int> fileInByte = file.readAsBytesSync();
+                                      List<int> fileInByte =
+                                          file.readAsBytesSync();
                                       String base64 = base64Encode(fileInByte);
                                       var newImagenLocal = Imagenes(
-                                        imagenes: image!.path,
-                                        nombre: image!.name, 
-                                        path: image!.path, 
-                                        base64: base64);
-                                      emprendimientoProvider.imagenLocal = newImagenLocal;
+                                          imagenes: image!.path,
+                                          nombre: image!.name,
+                                          path: image!.path,
+                                          base64: base64);
+                                      emprendimientoProvider.imagenLocal =
+                                          newImagenLocal;
+                                        
                                     });
                                   },
                                   child: Container(
@@ -217,6 +222,7 @@ class _AgregarEmprendimientoScreenState
                                               BorderRadius.circular(8),
                                           child: getImage(image?.path),
                                         ),
+                                        
                                       ],
                                     ),
                                   ),
@@ -293,10 +299,21 @@ class _AgregarEmprendimientoScreenState
                                         fontWeight: FontWeight.normal,
                                       ),
                                   validator: (value) {
-                                    return capitalizadoCharacters
-                                            .hasMatch(value ?? '')
-                                        ? null
-                                        : 'Para continuar, ingrese el nombre empezando por mayúscula';
+                                    if(capitalizadoCharacters
+                                            .hasMatch(value ?? '')){
+                                              
+                                              if(nombreCharacters.hasMatch(value ?? '')){
+                                                return null;
+                                              }
+                                                else{
+                                                  return 'Evita usar numeros y caracteres especiales como dieresis';
+                                                }
+                                    }
+                                    else{
+                                              return 'Para continuar, ingrese el nombre empezando por mayúscula';
+                                    }
+                                         
+                                         
                                   },
                                 ),
                               ),
@@ -427,40 +444,41 @@ class _AgregarEmprendimientoScreenState
                                         if (emprendimientoProvider
                                                 .validateForm(formKey) &&
                                             emprendedorProvider.asociado) {
-                                            print("En asociar emprendedor");
+                                          print("En asociar emprendedor");
                                           // comunidadProvider.add();
                                           //Se crea emprendimiento sin emprendedor
-                                                emprendimientoProvider
-                                                    .add();
+                                          emprendimientoProvider.add();
                                           //Se asigna el emprendimiento al usuario actual
-                                                usuarioProvider
-                                                    .addEmprendimiento(
-                                                        emprendimientoProvider
-                                                            .emprendimiento!);
-                                                if (emprendimientoProvider
-                                                        .idEmprendimiento !=
-                                                    null) {
+                                          usuarioProvider.addEmprendimiento(
+                                              emprendimientoProvider
+                                                  .emprendimiento!);
+                                          if (emprendimientoProvider
+                                                  .idEmprendimiento !=
+                                              null) {
+                                            emprendedorProvider.add(
+                                                emprendimientoProvider
+                                                    .idEmprendimiento!);
 
-                                                    emprendedorProvider.add(
-                                                      emprendimientoProvider
-                                                          .idEmprendimiento!);
-                                                    
-                                                    if (emprendedorProvider.imagenLocal != null) {
-                                                      emprendedorProvider
-                                                        .addImagen(emprendimientoProvider
-                                                          .idEmprendimiento!);
-                                                    }
-                                                    
-                                                    emprendedorProvider.clearInformation();
-                                                    emprendimientoProvider.clearInformation();
-                                                }
-                                                await Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const EmprendimientoCreado(),
-                                                  ),
-                                                );
+                                            if (emprendedorProvider
+                                                    .imagenLocal !=
+                                                null) {
+                                              emprendedorProvider.addImagen(
+                                                  emprendimientoProvider
+                                                      .idEmprendimiento!);
+                                            }
+
+                                            emprendedorProvider
+                                                .clearInformation();
+                                            emprendimientoProvider
+                                                .clearInformation();
+                                          }
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const EmprendimientoCreado(),
+                                            ),
+                                          );
                                         } else {
                                           await showDialog(
                                             context: context,
