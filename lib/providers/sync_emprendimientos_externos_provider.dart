@@ -1,6 +1,7 @@
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_emprendimeinto_pocketbase.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_jornada_pocketbase.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/get_emp_externo_pocketbase_temp.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/usuario_proyectos_temporal.dart';
 import 'package:bizpro_app/objectbox.g.dart';
@@ -32,10 +33,10 @@ class EmpExternosPocketbaseProvider extends ChangeNotifier {
   }
 
   Future<bool> getProyectosExternos(List<String> idEmprendimientos, Usuarios usuario) async {
-    for (var elementId in idEmprendimientos) {
-      print("Nombre emp: ${elementId}");
+    for (var elementEmpId in idEmprendimientos) {
+      print("Nombre emp: ${elementEmpId}");
       //Se recupera toda la colección de datos emprendimientos en Pocketbase
-      var url = Uri.parse("$baseUrl/api/collections/emprendimientos/records?filter=(id='$elementId')&expand=id_emprendedor_fk.id_comunidad_fk,id_fase_emp_fk,id_nombre_proyecto_fk");
+      var url = Uri.parse("$baseUrl/api/collections/emprendimientos/records?filter=(id='$elementEmpId')&expand=id_emprendedor_fk.id_comunidad_fk,id_fase_emp_fk,id_nombre_proyecto_fk");
       final headers = ({
           "Content-Type": "application/json",
         });
@@ -60,6 +61,8 @@ class EmpExternosPocketbaseProvider extends ChangeNotifier {
             descripcion: basicEmprendimiento.items[0].descripcion,
             activo: basicEmprendimiento.items[0].activo,
             archivado: basicEmprendimiento.items[0].archivado,
+            idDBR: basicEmprendimiento.items[0].id,
+            idEmiWeb: basicEmprendimiento.items[0].idEmiWeb,
           );
           nuevoEmprendimiento.faseEmp.add(faseEmp);
           nuevoEmprendimiento.statusSync.target = nuevoSyncEmprendimiento;
@@ -74,6 +77,8 @@ class EmpExternosPocketbaseProvider extends ChangeNotifier {
             integrantesFamilia: basicEmprendimiento.items[0].expand.idEmprendedorFk.integrantesFamilia.toString(), 
             telefono: basicEmprendimiento.items[0].expand.idEmprendedorFk.telefono, 
             comentarios: basicEmprendimiento.items[0].expand.idEmprendedorFk.comentarios ?? '', 
+            idDBR: basicEmprendimiento.items[0].expand.idEmprendedorFk.id,
+            idEmiWeb: basicEmprendimiento.items[0].expand.idEmprendedorFk.idEmiWeb,
           );
           final nuevaImagen = Imagenes(imagenes: "");
           nuevaImagen.emprendedor.target = nuevoEmprendedor;
@@ -86,7 +91,51 @@ class EmpExternosPocketbaseProvider extends ChangeNotifier {
           dataBase.emprendimientosBox.put(nuevoEmprendimiento);
           usuario.emprendimientos.add(nuevoEmprendimiento);
           dataBase.usuariosBox.put(usuario);
-          banderasExitoSync.add(true);
+          //Se recupera colección de datos jornadas en Pocketbase
+          var urlJornadas = Uri.parse("$baseUrl/api/collections/jornadas/records?filter=(id_emprendimiento_fk='$elementEmpId')&expand=id_tarea_fk.id_imagenes_fk");
+          final headers = ({
+              "Content-Type": "application/json",
+            });
+          var responseJornada = await get(
+            urlJornadas,
+            headers: headers
+          );
+          var basicJornadas = getBasicJornadaPocketbaseFromMap(responseJornada.body);
+          if (responseJornada.statusCode == 200) {
+            print("éxito en recuperar jornadas");
+            for (var elementJornada in basicJornadas.items) {
+              if (elementJornada.numJornada == 1) {
+                final nuevaJornada1 = Jornadas(
+                  numJornada: elementJornada.numJornada.toString(),
+                  fechaRevision: elementJornada.proximaVisita!,
+                  fechaRegistro: elementJornada.created,
+                  completada: elementJornada.completada,
+                  idDBR: elementJornada.id,
+                  idEmiWeb: elementJornada.idEmiWeb,
+                );
+                final nuevaTarea1 = Tareas(
+                  tarea: elementJornada.expand.idTareaFk.tarea,
+                  descripcion: "Creación Jornada 1",
+                  fechaRevision: elementJornada.expand.idTareaFk.fechaRevision!,
+                  fechaRegistro: elementJornada.expand.idTareaFk.created,
+                  idDBR: elementJornada.expand.idTareaFk.id,
+                  idEmiWeb: elementJornada.expand.idTareaFk.idEmiWeb,
+                );
+                nuevaJornada1.tarea.target = nuevaTarea1;
+                nuevaJornada1.emprendimiento.target = nuevoEmprendimiento;
+                nuevaTarea1.jornada.target = nuevaJornada1;
+                nuevoEmprendimiento.jornadas.add(nuevaJornada1);
+                dataBase.jornadasBox.put(nuevaJornada1);
+                dataBase.tareasBox.put(nuevaTarea1);
+                dataBase.emprendimientosBox.put(nuevoEmprendimiento);
+              }
+            }
+            banderasExitoSync.add(true);
+          } else {
+            print("No éxito en recuperar jornadas");
+            banderasExitoSync.add(false);
+            continue;
+          }
         } else {
           banderasExitoSync.add(false);
           continue;

@@ -481,7 +481,7 @@ abstract class AuthService {
                     print("Se crea imagen");
                     final newRecordImagenUsuario = await client.records.create('imagenes', body: {
                       "nombre": responseImagenUsuarioEmiWeb.payload!.nombreArchivo,
-                      "id_emi_web": responseImagenUsuarioEmiWeb.payload!.idUsuario.toString(),
+                      "id_emi_web": responseGetUsuarioDataCompletoParse.payload!.idDocumento.toString(),
                       "base64": responseImagenUsuarioEmiWeb.payload!.archivo
                     });
                     if (newRecordImagenUsuario.id.isNotEmpty) {
@@ -526,7 +526,7 @@ abstract class AuthService {
                     print("Se actualiza imagen");
                     final updateRecordImagenUsuario = await client.records.update('imagenes', updateUsuario.idImagenFk!, body: {
                       "nombre": responseImagenUsuarioEmiWeb.payload!.nombreArchivo,
-                      "id_emi_web": responseImagenUsuarioEmiWeb.payload!.idUsuario.toString(),
+                      "id_emi_web": responseGetUsuarioDataCompletoParse.payload!.idDocumento.toString(),
                       "base64": responseImagenUsuarioEmiWeb.payload!.archivo
                     });
                     if (updateRecordImagenUsuario.id.isNotEmpty) {

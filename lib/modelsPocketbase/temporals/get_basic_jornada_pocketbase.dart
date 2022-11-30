@@ -132,7 +132,7 @@ class TareaBasic {
 
     final String collectionId;
     final String collectionName;
-    final TareaBasicExpand expand;
+    final TareaBasicExpand? expand;
     final String? comentarios;
     final DateTime? created;
     final String descripcion;
@@ -148,7 +148,7 @@ class TareaBasic {
     factory TareaBasic.fromMap(Map<String, dynamic> json) => TareaBasic(
         collectionId: json["@collectionId"],
         collectionName: json["@collectionName"],
-        expand: TareaBasicExpand.fromMap(json["@expand"]),
+        expand: json["@expand"] == null ? null : TareaBasicExpand.fromMap(json["@expand"]),
         comentarios: json["comentarios"],
         created: json["created"] == null ? null : DateTime.parse(json["created"]),
         descripcion: json["descripcion"],
@@ -165,7 +165,7 @@ class TareaBasic {
     Map<String, dynamic> toMap() => {
         "@collectionId": collectionId,
         "@collectionName": collectionName,
-        "@expand": expand.toMap(),
+        "@expand": expand == null ? null : expand!.toMap(),
         "comentarios": comentarios,
         "created": created == null ? null : created!.toIso8601String(),
         "descripcion": descripcion,

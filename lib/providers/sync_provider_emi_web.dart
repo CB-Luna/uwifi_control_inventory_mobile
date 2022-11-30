@@ -5419,6 +5419,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
   Future<bool> syncUpdateImagenUsuario(Imagenes imagen, Bitacora bitacora) async {
     print("Estoy en El syncUpdateImagenUsuario() en Emi Web");
     try {
+      print("ID IMAGEN: ${imagen.idEmiWeb}");
       // Primero creamos el API para realizar la actualización
       final actualizarImagenUsuarioUri =
         Uri.parse('$baseUrlEmiWebServices/documentos/actualizar?id=${imagen.idEmiWeb}');
@@ -5430,10 +5431,6 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       headers: headers,
       body: jsonEncode({
         "idUsuario": imagen.usuario.target!.idEmiWeb,
-        "nombreUsuario": "${imagen.usuario
-            .target!.nombre} ${imagen.usuario
-            .target!.apellidoP} ${imagen.usuario
-            .target!.apellidoM}",
         "idCatTipoDocumento": "1", //Foto perfil Usuario
         "nombreArchivo": imagen.nombre,
         "archivo": imagen.base64,
@@ -5482,6 +5479,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                const Utf8Decoder().convert(responsePostAddImagenUsuario.bodyBytes));
           imagen.idEmiWeb = responsePostImagenUsuarioParse.payload.idDocumento.toString();
           dataBase.imagenesBox.put(imagen);
+          print("ID DE IMAGEN NUEVO: ${responsePostImagenUsuarioParse.payload.idDocumento.toString()}");
           //Se marca como realizada en EmiWeb la instrucción en Bitacora
           bitacora.executeEmiWeb = true;
           dataBase.bitacoraBox.put(bitacora);
@@ -5706,10 +5704,32 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   const Utf8Decoder().convert(responsePostImagenProductoEntregado.bodyBytes));
                 inversion.imagenProductoEntregado.target!.idEmiWeb = responsePostImagenProductoEntregadoParse.payload.idDocumento.toString();
                 dataBase.imagenesBox.put(inversion.imagenProductoEntregado.target!);
-                //Se marca como realizada en EmiWeb la instrucción en Bitacora
-                bitacora.executeEmiWeb = true;
-                dataBase.bitacoraBox.put(bitacora);
-                return true;
+                //Se asocian las imágenes creadas con la inversión
+                final actualizarImagenFirmaRecibidoUri =
+                Uri.parse('$baseUrlEmiWebServices/inversiones/actualizar/documentos');
+                final headers = ({
+                  "Content-Type": "application/json",
+                  'Authorization': 'Bearer $tokenGlobal',
+                });
+                final responseActualizarImagenesFirmaRecibidoProductoEntregado = await put(actualizarImagenFirmaRecibidoUri, 
+                headers: headers,
+                body: jsonEncode({
+                  "idInversion": inversion.idEmiWeb,
+                  "pagoRecibido": responsePostImagenFirmaRecibidoParse.payload.idDocumento.toString(),
+                  "productoEntregado": responsePostImagenProductoEntregadoParse.payload.idDocumento.toString(),
+                }));
+                switch (responseActualizarImagenesFirmaRecibidoProductoEntregado.statusCode) {
+                  case 200:
+                    print("Caso 200 en Emi Web Actualizar Imagen Frirma de recibo y Producto Entregado");
+                    //Se marca como realizada en EmiWeb la instrucción en Bitacora
+                    bitacora.executeEmiWeb = true;
+                    dataBase.bitacoraBox.put(bitacora);
+                    return true;
+                  default:
+                    //No se realizo con éxito el put de la acción
+                    print("Error en Emi Web Imagen Firma de recibo y Producto Entregado");
+                    return false;
+                }  
               default: //No se realizo con éxito el post
                 print("Error en Emi Web Imagen Producto Entregado");
                 return false;
@@ -5745,20 +5765,63 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 const Utf8Decoder().convert(responsePostImagenProductoEntregado.bodyBytes));
               inversion.imagenProductoEntregado.target!.idEmiWeb = responsePostImagenProductoEntregadoParse.payload.idDocumento.toString();
               dataBase.imagenesBox.put(inversion.imagenProductoEntregado.target!);
-              //Se marca como realizada en EmiWeb la instrucción en Bitacora
-              bitacora.executeEmiWeb = true;
-              dataBase.bitacoraBox.put(bitacora);
-              return true;
+              //Se asocian las imágenes creadas con la inversión
+              final actualizarImagenFirmaRecibidoUri =
+              Uri.parse('$baseUrlEmiWebServices/inversiones/actualizar/documentos');
+              final headers = ({
+                "Content-Type": "application/json",
+                'Authorization': 'Bearer $tokenGlobal',
+              });
+              final responseActualizarImagenesFirmaRecibidoProductoEntregado = await put(actualizarImagenFirmaRecibidoUri, 
+              headers: headers,
+              body: jsonEncode({
+                "idInversion": inversion.idEmiWeb,
+                "pagoRecibido": inversion.imagenFirmaRecibido.target!.idEmiWeb,
+                "productoEntregado": responsePostImagenProductoEntregadoParse.payload.idDocumento.toString(),
+              }));
+              switch (responseActualizarImagenesFirmaRecibidoProductoEntregado.statusCode) {
+                case 200:
+                  print("Caso 200 en Emi Web Actualizar Imagen Frirma de recibo y Producto Entregado");
+                  //Se marca como realizada en EmiWeb la instrucción en Bitacora
+                  bitacora.executeEmiWeb = true;
+                  dataBase.bitacoraBox.put(bitacora);
+                  return true;
+                default:
+                  //No se realizo con éxito el put de la acción
+                  print("Error en Emi Web Imagen Firma de recibo y Producto Entregado");
+                  return false;
+              }  
             default: //No se realizo con éxito el post
               print("Error en Emi Web Imagen Producto Entregado");
               return false;
           }  
         } else {
-          //Ya se ha posteado anteriormente
-          //Se marca como realizada en EmiWeb la instrucción en Bitacora
-          bitacora.executeEmiWeb = true;
-          dataBase.bitacoraBox.put(bitacora);
-          return true;
+          //Se asocian las imágenes creadas con la inversión
+          final actualizarImagenFirmaRecibidoUri =
+          Uri.parse('$baseUrlEmiWebServices/inversiones/actualizar/documentos');
+          final headers = ({
+            "Content-Type": "application/json",
+            'Authorization': 'Bearer $tokenGlobal',
+          });
+          final responseActualizarImagenesFirmaRecibidoProductoEntregado = await put(actualizarImagenFirmaRecibidoUri, 
+          headers: headers,
+          body: jsonEncode({
+            "idInversion": inversion.idEmiWeb,
+            "pagoRecibido": inversion.imagenFirmaRecibido.target!.idEmiWeb,
+            "productoEntregado": inversion.imagenProductoEntregado.target!.idEmiWeb,
+          }));
+          switch (responseActualizarImagenesFirmaRecibidoProductoEntregado.statusCode) {
+            case 200:
+              print("Caso 200 en Emi Web Actualizar Imagen Frirma de recibo y Producto Entregado");
+              //Se marca como realizada en EmiWeb la instrucción en Bitacora
+              bitacora.executeEmiWeb = true;
+              dataBase.bitacoraBox.put(bitacora);
+              return true;
+            default:
+              //No se realizo con éxito el put de la acción
+              print("Error en Emi Web Imagen Firma de recibo y Producto Entregado");
+              return false;
+          }  
         }
       }
     } catch (e) { //Fallo en el momento se sincronizar

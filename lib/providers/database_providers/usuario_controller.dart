@@ -173,8 +173,9 @@ class UsuarioController extends ChangeNotifier {
           dataBase.imagenesBox.put(nuevaImagenUsuario);
           updateUsuario.imagen.target = nuevaImagenUsuario;
         } else {
-          print("Se actualiza imagen Pocketbase");
+          print("Se actualiza imagen USUARIO");
           // Se actualiza imagen
+          print("ID IMAGEN: ${newImagen.idEmiWeb}");
           final uInt8ListImagen = base64Decode(newImagen.base64);
           final tempDir = await getTemporaryDirectory();
           File file = await File('${tempDir.path}/${newImagen.nombre}').create();
@@ -246,6 +247,7 @@ void updateImagenUsuario(int idImagenUsuario, String newNombreImagen, String new
       updateImagenUsuario.path = newPath;
       updateImagenUsuario.bitacora.add(nuevaInstruccion);
       dataBase.imagenesBox.put(updateImagenUsuario);
+      print("ID IMAGEN CONFIRMAR: ${updateImagenUsuario.idEmiWeb}");
       print('Imagen Usuario actualizado exitosamente');
     }
     notifyListeners();

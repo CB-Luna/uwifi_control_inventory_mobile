@@ -207,7 +207,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          imagenTemp == ""
+                          imagenTemp == null
                               ? Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 30, 0, 0),
@@ -362,6 +362,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                             0, 20, 0, 0),
                                     child: CustomButton(
                                       onPressed: () async {
+                                        print("ID IMAGEN: ${widget.usuario.imagen.target?.idEmiWeb}");
                                         if (imagenTemp != widget.usuario.imagen.target?.path) {
                                           print("Sí");
                                           if (nombreController.text !=

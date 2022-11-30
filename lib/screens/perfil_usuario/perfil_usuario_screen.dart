@@ -51,10 +51,6 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
 
     final Usuarios currentUser = usuarioProvider.usuarioCurrent!;
 
-    //TODO: almacenar imagen?
-    const String currentUserPhoto =
-        'assets/images/default-user-profile-picture.jpg';
-
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
