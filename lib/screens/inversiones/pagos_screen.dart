@@ -371,6 +371,11 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                       .prodCotizadosTemp[
                                                                           index]
                                                                       .aceptado;
+                                                              if(recepcionYentregaProvider.prodCotizadosTemp[index].aceptado){
+                                                                        totalProyecto = productoCot.costoTotal + totalProyecto;
+                                                                      }else{
+                                                                        totalProyecto = totalProyecto - productoCot.costoTotal;
+                                                                      }        
                                                             });
                                                           },
                                                           value: recepcionYentregaProvider
