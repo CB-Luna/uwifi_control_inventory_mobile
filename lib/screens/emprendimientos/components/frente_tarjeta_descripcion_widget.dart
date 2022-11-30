@@ -78,7 +78,7 @@ class _FrenteTarjetaDescripcionWidgetState extends State<FrenteTarjetaDescripcio
                   topRight: Radius.circular(8),
                 ),
                 child:
-                    getImage(widget.emprendimiento.imagen.target!.path),
+                    getImage(widget.emprendimiento.imagen.target?.path),
               ),
             ),
             Padding(

@@ -89,8 +89,13 @@ Emprendimientos? emprendimientoActual;
                             height: 200,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: FileImage(
-                                    File(emprendimientoActual!.imagen.target!.path!)),
+                                image: emprendimientoActual!.imagen.target != null ?
+                                FileImage(
+                                    File(emprendimientoActual!.imagen.target!.path!))
+                                :
+                                Image.asset(
+                                    "assets/images/default_image.png",
+                                  ).image,
                                 fit: BoxFit.cover,
                                 filterQuality: FilterQuality.high,
                               ),

@@ -1,3 +1,4 @@
+import 'package:bizpro_app/modelsPocketbase/temporals/usuario_proyectos_temporal.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/emprendimientos_externos/perfil_usuario_externo_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_icon_button.dart';
@@ -5,7 +6,13 @@ import 'package:bizpro_app/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 class UsuariosExternosScreen extends StatefulWidget {
-  const UsuariosExternosScreen({Key? key}) : super(key: key);
+
+  final List<UsuarioProyectosTemporal> listUsuariosProyectosTemp;
+
+  const UsuariosExternosScreen({
+    Key? key, 
+    required this.listUsuariosProyectosTemp,
+  }) : super(key: key);
 
   @override
   _UsuariosExternosScreenState createState() =>
@@ -200,12 +207,16 @@ class _UsuariosExternosScreenState extends State<UsuariosExternosScreen>
               Expanded(
                 child: Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
-                  child: ListView(
+                  child: ListView.builder(
                     padding: EdgeInsets.zero,
+                    controller: ScrollController(),
+                    shrinkWrap: true,
                     scrollDirection: Axis.vertical,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 1),
+                    itemCount: widget.listUsuariosProyectosTemp.length,
+                    itemBuilder: (context, index) {
+                      final usuarioProyectoTemp = widget.listUsuariosProyectosTemp[index];
+                      return Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(10, 15, 15, 10),
                         child: Material(
                           color: Colors.transparent,
                           elevation: 5,
@@ -239,11 +250,24 @@ class _UsuariosExternosScreenState extends State<UsuariosExternosScreen>
                                         child: ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(40),
-                                          child: Image.asset(
-                                            'assets/images/default-user-profile-picture.png',
+                                          child: SizedBox(
                                             width: 60,
                                             height: 60,
-                                            fit: BoxFit.cover,
+                                            child: Center(
+                                              child: Text(
+                                                "${usuarioProyectoTemp.usuarioTemp.nombreUsuario
+                                                .substring(0, 1)} ${usuarioProyectoTemp
+                                                .usuarioTemp.apellidoP.substring(0, 1)}",
+                                                style:
+                                                  AppTheme.of(context).bodyText1.override(
+                                                        fontFamily: AppTheme.of(context)
+                                                            .bodyText1Family,
+                                                        color: Colors.white,
+                                                        fontSize: 20,
+                                                        fontWeight: FontWeight.bold,
+                                                      ),
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -260,7 +284,12 @@ class _UsuariosExternosScreenState extends State<UsuariosExternosScreen>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   12, 0, 0, 0),
                                           child: Text(
-                                            'Miguel Aguirre',
+                                            "${usuarioProyectoTemp
+                                              .usuarioTemp.nombreUsuario} ${
+                                              usuarioProyectoTemp
+                                              .usuarioTemp.apellidoP} ${
+                                              usuarioProyectoTemp
+                                              .usuarioTemp.apellidoM}",
                                             style: AppTheme.of(context)
                                                 .subtitle1
                                                 .override(
@@ -282,7 +311,10 @@ class _UsuariosExternosScreenState extends State<UsuariosExternosScreen>
                                                 padding: const EdgeInsetsDirectional
                                                     .fromSTEB(12, 0, 0, 0),
                                                 child: Text(
-                                                  'Tlaxcala, México.',
+                                                  'Celular: ${
+                                                  usuarioProyectoTemp
+                                                  .usuarioTemp
+                                                  .celular ?? "Sin celular"}',
                                                   style: AppTheme.of(
                                                           context)
                                                       .bodyText2
@@ -308,7 +340,12 @@ class _UsuariosExternosScreenState extends State<UsuariosExternosScreen>
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                                const PerfilUsuarioExternoScreen(),
+                                                PerfilUsuarioExternoScreen(
+                                                  listUsuariosProyectosTemp: 
+                                                    widget.listUsuariosProyectosTemp,
+                                                  usuarioProyectosTemporal:
+                                                    usuarioProyectoTemp,
+                                                ),
                                         ),
                                       );
                                     },
@@ -335,8 +372,8 @@ class _UsuariosExternosScreenState extends State<UsuariosExternosScreen>
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      );
+                    },
                   ),
                 ),
               ),

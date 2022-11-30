@@ -489,8 +489,13 @@ class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
                                 color: const Color(0xFFAEAEAE),
                                 image: DecorationImage(
                                   fit: BoxFit.cover,
-                                  image: Image.file(
+                                  image: emprendimientosEmprendedor.imagen.target != null ?
+                                  Image.file(
                                     File(emprendimientosEmprendedor.imagen.target!.path!),
+                                  ).image
+                                  :
+                                  Image.asset(
+                                    "assets/images/default_image.png",
                                   ).image,
                                 ),
                                 borderRadius: BorderRadius.circular(8),

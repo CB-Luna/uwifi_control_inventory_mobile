@@ -1,12 +1,24 @@
 import 'dart:ui';
+import 'package:bizpro_app/modelsPocketbase/temporals/usuario_proyectos_temporal.dart';
+import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/emprendimientos_externos/usuarios_externos_screen.dart';
+import 'package:bizpro_app/screens/sync/descarga_proyectos_externos_pocketbase_screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:bizpro_app/screens/widgets/toggle_icon.dart';
 import 'package:bizpro_app/theme/theme.dart';
+import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PerfilUsuarioExternoScreen extends StatefulWidget {
-  const PerfilUsuarioExternoScreen({Key? key}) : super(key: key);
+  final List<UsuarioProyectosTemporal> listUsuariosProyectosTemp;
+  final UsuarioProyectosTemporal usuarioProyectosTemporal;
+
+  const PerfilUsuarioExternoScreen({
+    Key? key, 
+    required this.listUsuariosProyectosTemp, 
+    required this.usuarioProyectosTemporal,
+  }) : super(key: key);
 
   @override
   _PerfilUsuarioExternoScreenState createState() =>
@@ -54,14 +66,16 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
   //   ),
   // };
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
+  List<String> listEmprendimientosSelected = [];
   @override
   void initState() {
+    listEmprendimientosSelected = [];
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final usuarioProvider = Provider.of<UsuarioController>(context);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
@@ -74,7 +88,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  height: 370,
+                  height: MediaQuery.of(context).size.height * 0.33,
                   decoration: const BoxDecoration(
                     color: Color(0xFF4672FF),
                     borderRadius: BorderRadius.only(
@@ -122,7 +136,9 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                        const UsuariosExternosScreen(),
+                                                        UsuariosExternosScreen(
+                                                          listUsuariosProyectosTemp: widget.listUsuariosProyectosTemp
+                                                          ,),
                                                 ),
                                               );
                                             },
@@ -171,22 +187,35 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                     child: Container(
                                       width: 130,
                                       height: 130,
-                                      decoration: const BoxDecoration(
-                                        color: Color(0xFF4672FF),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFF4672FF),
                                         shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: Colors.blueAccent,
+                                          width: 3.0,
+                                        ),
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsetsDirectional.fromSTEB(
                                             5, 5, 5, 5),
-                                        child: Container(
+                                        child: SizedBox(
                                           width: 80,
                                           height: 80,
-                                          clipBehavior: Clip.antiAlias,
-                                          decoration: const BoxDecoration(
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: Image.asset(
-                                            'assets/images/default-user-profile-picture.png',
+                                          child: Center(
+                                            child: Text(
+                                              "${widget.usuarioProyectosTemporal.usuarioTemp
+                                              .nombreUsuario.substring(0, 1)} ${widget
+                                              .usuarioProyectosTemporal.usuarioTemp
+                                              .apellidoP.substring(0, 1)}",
+                                              style:
+                                                AppTheme.of(context).bodyText1.override(
+                                                  fontFamily: AppTheme.of(context)
+                                                      .bodyText1Family,
+                                                  color: Colors.white,
+                                                  fontSize: 50,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -205,7 +234,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                           Expanded(
                             child: Padding(
                               padding:
-                                  const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                  const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -214,7 +243,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         0, 0, 5, 0),
                                     child: Text(
-                                      '[Nombre]',
+                                      widget.usuarioProyectosTemporal.usuarioTemp.nombreUsuario,
                                       style: AppTheme.of(context)
                                           .title1
                                           .override(
@@ -226,7 +255,10 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                     ),
                                   ),
                                   Text(
-                                    '[Apellido]',
+                                    "${widget.usuarioProyectosTemporal.
+                                      usuarioTemp.apellidoP} ${widget
+                                      .usuarioProyectosTemporal
+                                      .usuarioTemp.apellidoM}",
                                     style: AppTheme.of(context)
                                         .title1
                                         .override(
@@ -241,94 +273,6 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                             ),
                           ),
                         ],
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                            child: Text(
-                              'User.name@domainname.com',
-                              style: AppTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Lexend Deca',
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(10, 5, 10, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              'Comunidad:',
-                              style: AppTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                              child: Text(
-                                'Tijuana, Baja California, México.',
-                                style: AppTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(10, 5, 10, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              'CURP:',
-                              style: AppTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                              child: Text(
-                                'AHGS937Y4HID893',
-                                style: AppTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                              ),
-                            ),
-                          ],
-                        ),
                       ),
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(10, 5, 10, 0),
@@ -350,7 +294,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                               padding:
                                   const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                               child: Text(
-                                '+ (52) 1-435-3214',
+                                widget.usuarioProyectosTemporal.usuarioTemp.telefono ?? "Sin teléfono",
                                 style: AppTheme.of(context)
                                     .bodyText1
                                     .override(
@@ -365,12 +309,12 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(10, 5, 10, 0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Text(
-                              'Integrantes Familia:',
+                              'Celular:',
                               style: AppTheme.of(context)
                                   .bodyText1
                                   .override(
@@ -384,7 +328,41 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                               padding:
                                   const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                               child: Text(
-                                '4',
+                                widget.usuarioProyectosTemporal.usuarioTemp.celular ?? "Sin celular",
+                                style: AppTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(10, 5, 10, 0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Text(
+                              'Usuario Archivado:',
+                              style: AppTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                              child: Text(
+                                widget.usuarioProyectosTemporal.usuarioTemp.archivado == true ? "Sí" : "No",
                                 style: AppTheme.of(context)
                                     .bodyText1
                                     .override(
@@ -404,146 +382,60 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
               ],
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(10, 5, 10, 10),
+              padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 5),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Emprendimientos de [Nombre]',
+                    'Emprendimientos de ${widget.usuarioProyectosTemporal.usuarioTemp.nombreUsuario}',
                     style: AppTheme.of(context).bodyText1.override(
                           fontFamily: 'Poppins',
                           color: const Color(0xFF4672FF),
+                          fontSize: 15
                         ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: 400,
-              child: ListView(
-                controller: ScrollController(),
-                padding: const EdgeInsetsDirectional
-                    .fromSTEB(10, 0, 10, 30),
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                children: [
-                  Row(
-                    children: [
-                      ToggleIcon(
-                        onPressed: () {
-                        },
-                        value: false,
-                        onIcon: Icon(
-                          Icons.check_box,
-                          color: AppTheme.of(
-                                  context)
-                              .primaryText,
-                          size: 40,
-                        ),
-                        offIcon: Icon(
-                          Icons
-                              .check_box_outline_blank,
-                          color: AppTheme.of(
-                                  context)
-                              .primaryText,
-                          size: 40,
-                        ),
-                      ),
-                      Container(
-                        width: 350,
-                        height: 160,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: Image.asset(
-                              'assets/images/mesgbluegradient.jpeg',
-                            ).image,
-                          ),
-                          boxShadow: const [
-                            BoxShadow(
-                              blurRadius: 5,
-                              color: Color(0x2B202529),
-                              offset: Offset(0, 3),
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              ClipRRect(
-                                child: BackdropFilter(
-                                  filter: ImageFilter.blur(
-                                    sigmaX: 10,
-                                    sigmaY: 5,
-                                  ),
-                                  child: Container(
-                                    width: 350,
-                                    height: 120,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0x6CFFFFFF),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          10, 10, 10, 10),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Plantando árboles',
-                                            style: AppTheme.of(context)
-                                                .title2
-                                                .override(
-                                                  fontFamily: 'Outfit',
-                                                  color: Colors.white,
-                                                  fontSize: 22,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                                0, 4, 0, 0),
-                                            child: Text(
-                                              'Vamos a sembrar 100 árboles frutales, entre ellos habrán árboles de manzana, naranjos, guayabos y árboles de mango.',
-                                              style: AppTheme.of(context)
-                                                  .bodyText1
-                                                  .override(
-                                                    fontFamily: 'Outfit',
-                                                    color: Colors.white,
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.normal,
-                                                  ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
                   ),
                 ],
               ),
             ),
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(
-                  0, 20, 0, 10),
+                  10, 5, 10, 10),
               child: FFButtonWidget(
                 onPressed: () async {
+                  if (listEmprendimientosSelected.isNotEmpty) {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                          DescargaProyectosExternosPocketbaseScreen(
+                            listIdEmprendimientos: listEmprendimientosSelected,
+                            usuario: usuarioProvider.usuarioCurrent!,
+                          ),
+                      ),
+                    );
+                  } else {
+                    await showDialog(
+                      context: context,
+                      builder: (alertDialogContext) {
+                        return AlertDialog(
+                          title:
+                              const Text('Campos vacíos'),
+                          content: const Text(
+                              'Para continuar, debes seleccionar al menos un emprendimientos de la lista.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pop(
+                                      alertDialogContext),
+                              child: const Text('Bien'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                    return;
+                  }
                 },
                 text: 'Descargar Proyectos',
                 icon: const Icon(
@@ -570,9 +462,158 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                 ),
               ),
             ),
-            const SizedBox(
-              height: 40,
-            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.5,
+              child: ListView.builder(
+                padding: const EdgeInsetsDirectional
+                    .fromSTEB(10, 0, 10, 10),
+                controller: ScrollController(),
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                itemCount: widget.usuarioProyectosTemporal.emprendimientosTemp.length,
+                itemBuilder: (context, index) {
+                  final emprendimientoTemp = widget.usuarioProyectosTemporal.emprendimientosTemp[index];
+                  return Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                    child: Row(
+                      children: [
+                        ToggleIcon(
+                          onPressed: () {
+                            setState(() {
+                              emprendimientoTemp.selected = !emprendimientoTemp.selected;
+                              if (emprendimientoTemp.selected) {
+                                listEmprendimientosSelected.add(emprendimientoTemp.id);
+                              } else {
+                                if (listEmprendimientosSelected.contains(emprendimientoTemp.id)) {
+                                  listEmprendimientosSelected.remove(emprendimientoTemp.id);
+                                }
+                              }
+                            });
+                          },
+                          value: emprendimientoTemp.selected,
+                          onIcon: Icon(
+                            Icons.check_box,
+                            color: AppTheme.of(
+                                    context)
+                                .primaryText,
+                            size: 40,
+                          ),
+                          offIcon: Icon(
+                            Icons
+                                .check_box_outline_blank,
+                            color: AppTheme.of(
+                                    context)
+                                .primaryText,
+                            size: 40,
+                          ),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          height: 165,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: Image.asset(
+                                'assets/images/mesgbluegradient.jpeg',
+                              ).image,
+                            ),
+                            boxShadow: const [
+                              BoxShadow(
+                                blurRadius: 5,
+                                color: Color(0x2B202529),
+                                offset: Offset(0, 3),
+                              )
+                            ],
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                ClipRRect(
+                                  child: BackdropFilter(
+                                    filter: ImageFilter.blur(
+                                      sigmaX: 10,
+                                      sigmaY: 5,
+                                    ),
+                                    child: Container(
+                                      width: 350,
+                                      height: 130,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0x6CFFFFFF),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            10, 10, 10, 10),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              maybeHandleOverflow(emprendimientoTemp.nombreEmprendimiento, 25, "..."),
+                                              style: AppTheme.of(context)
+                                                  .title2
+                                                  .override(
+                                                    fontFamily: 'Outfit',
+                                                    color: Colors.white,
+                                                    fontSize: 22,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                                  0, 4, 0, 4),
+                                              child: Text(
+                                                maybeHandleOverflow("${emprendimientoTemp
+                                                .expand.idEmprendedorFk.nombreEmprendedor} ${emprendimientoTemp
+                                                .expand.idEmprendedorFk.apellidosEmp}", 40, "..."),
+                                                style: AppTheme.of(context)
+                                                    .bodyText1
+                                                    .override(
+                                                      fontFamily: 'Outfit',
+                                                      color: Colors.white,
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                                  0, 4, 0, 4),
+                                              child: Text(
+                                                maybeHandleOverflow(emprendimientoTemp.descripcion, 120, "..."),
+                                                style: AppTheme.of(context)
+                                                    .bodyText1
+                                                    .override(
+                                                      fontFamily: 'Outfit',
+                                                      color: Colors.white,
+                                                      fontSize: 15,
+                                                      fontWeight: FontWeight.normal,
+                                                    ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),            
           ],
         ),
       ),
