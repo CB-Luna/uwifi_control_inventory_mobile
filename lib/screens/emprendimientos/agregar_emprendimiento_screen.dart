@@ -139,6 +139,23 @@ class _AgregarEmprendimientoScreenState
                             ],
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(25, 10, 0, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Imagen*',
+                                style: AppTheme.of(context).title3.override(
+                                              fontFamily: 'Poppins',
+                                              color: const Color(0xFF4672FF),
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                              ),
+                            ],
+                          ),
+                        ),
                         FormField(builder: (state) {
                           return Row(
                             mainAxisSize: MainAxisSize.max,

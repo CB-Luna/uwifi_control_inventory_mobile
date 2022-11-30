@@ -323,10 +323,21 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
                                         fontWeight: FontWeight.normal,
                                       ),
                                   validator: (value) {
-                                    return capitalizadoCharacters
-                                            .hasMatch(value ?? '')
-                                        ? null
-                                        : 'Para continuar, ingrese el nombre empezando por mayúscula';
+                                    if(capitalizadoCharacters
+                                            .hasMatch(value ?? '')){
+                                              
+                                              if(nombreCharacters.hasMatch(value ?? '')){
+                                                return null;
+                                              }
+                                                else{
+                                                  return 'Evita usar numeros y caracteres especiales como dieresis';
+                                                }
+                                    }
+                                    else{
+                                              return 'Para continuar, ingrese el nombre empezando por mayúscula';
+                                    }
+                                         
+                                         
                                   },
                                 ),
                               ),
