@@ -5175,7 +5175,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         "usuarioRegistra": "${usuario.nombre} ${usuario
             .apellidoP} ${usuario.apellidoM}",
         "idUsuario": usuario.idEmiWeb,
-        "nombreUsuario": usuario.nombre,
+        "nombre": usuario.nombre,
         "apellidoPaterno": usuario.apellidoP,
         "apellidoMaterno": usuario.apellidoM,
         "telefono": usuario.telefono,
