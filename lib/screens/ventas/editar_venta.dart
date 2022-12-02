@@ -85,7 +85,14 @@ class _EditarVentaScreenState extends State<EditarVentaScreen> {
                       height: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: FileImage(File(widget.venta.emprendimiento.target!.imagen.target!.path!)),
+                          image: widget.venta.emprendimiento.target!.imagen.target != null ?
+                            FileImage(
+                              File(
+                                widget.venta.emprendimiento.target!.imagen.target!.path!))
+                            :
+                            Image.asset(
+                              "assets/images/default_image_placeholder.jpeg",
+                            ).image,
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
                         ),

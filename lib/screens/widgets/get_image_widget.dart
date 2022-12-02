@@ -149,7 +149,7 @@ Widget getWidgetCoverImage(String? image) {
     return Container(
       color: Colors.grey,
       child: const Image(
-        image: AssetImage("assets/images/default_image.png"),
+        image: AssetImage("assets/images/default_image_placeholder.jpeg"),
         fit: BoxFit.cover,
       ),
     );

@@ -8,6 +8,8 @@ import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_emprendimeinto_p
 import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_imagen_pocketbase.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_jornada_pocketbase.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_producto_emp_pocketbase.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_producto_vendido.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_venta_pocketbase.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/get_emp_externo_pocketbase_temp.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/usuario_proyectos_temporal.dart';
 import 'package:bizpro_app/objectbox.g.dart';
@@ -393,6 +395,71 @@ class EmpExternosPocketbaseProvider extends ChangeNotifier {
           } else {
             print(responseProductosEmp.statusCode);
             print("No éxito en recuperar productos emp");
+            banderasExitoSync.add(false);
+            continue;
+          }
+          //Se recupera colección de datos ventas en Pocketbase
+          var urlVentas = Uri.parse("$baseUrl/api/collections/ventas/records?filter=(id_emprendimiento_fk='$elementEmpId')");
+
+          var responseVentas = await get(
+            urlVentas,
+            headers: headers
+          );
+          var basicVentas = getBasicVentaPocketbaseFromMap(responseVentas.body);
+          if (responseVentas.statusCode == 200) {
+            for (var elementVenta in basicVentas.items) {
+              final nuevaVenta = Ventas(
+                fechaInicio: elementVenta.fechaInicio,
+                fechaTermino: elementVenta.fechaTermino,
+                total: elementVenta.total,
+                idDBR: elementVenta.id,
+                idEmiWeb: elementVenta.idEmiWeb,
+              );
+              var urlProdVendidos = Uri.parse("$baseUrl/api/collections/prod_vendidos/records?filter=(id_venta_fk='${elementVenta.id}')&expand=id_und_medida_fk");
+
+              var responseProdVendidos = await get(
+                urlProdVendidos,
+                headers: headers
+              );
+              var basicProdVendidos = getBasicProductoVendidoPocketbaseFromMap(responseProdVendidos.body);
+              if (responseProdVendidos.statusCode == 200) {
+                for (var elementProdVendido in basicProdVendidos.items) {
+                    // Se agrega nuevo prod vendido a la venta
+                    final nuevoProdVendido = ProdVendidos(
+                      nombreProd: elementProdVendido.nombreProd,
+                      descripcion: elementProdVendido.descripcion,
+                      costo: elementProdVendido.costo, 
+                      cantVendida: elementProdVendido.cantidadVendida,
+                      subtotal: elementProdVendido.subTotal,
+                      precioVenta: elementProdVendido.precioVenta, 
+                      idDBR: elementProdVendido.id,
+                      idEmiWeb: elementProdVendido.idEmiWeb,
+                    );
+                    final productoEmp = dataBase.productosEmpBox.query(ProductosEmp_.idDBR.equals(elementProdVendido.idProductosEmpFk)).build().findFirst();
+                    final unidadMedida = dataBase.unidadesMedidaBox.query(UnidadMedida_.idEmiWeb.equals(elementProdVendido.expand.idUndMedidaFk.idEmiWeb)).build().findFirst();
+                    if (unidadMedida != null && productoEmp != null) {
+                      nuevoProdVendido.productoEmp.target = productoEmp;
+                      nuevoProdVendido.unidadMedida.target = unidadMedida;
+                    }
+                    nuevoProdVendido.venta.target = nuevaVenta;
+                    dataBase.productosVendidosBox.put(nuevoProdVendido);
+                    nuevaVenta.prodVendidos.add(nuevoProdVendido);
+                }
+              } else {
+                print(responseProdVendidos.statusCode);
+                print("No éxito en recuperar prod vendidos");
+                banderasExitoSync.add(false);
+                continue;
+              }
+              nuevaVenta.emprendimiento.target = nuevoEmprendimiento;
+              nuevoEmprendimiento.ventas.add(nuevaVenta);
+              dataBase.ventasBox.put(nuevaVenta);
+              dataBase.emprendimientosBox.put(nuevoEmprendimiento);
+            }
+            banderasExitoSync.add(true);
+          } else {
+            print(responseVentas.statusCode);
+            print("No éxito en recuperar ventas");
             banderasExitoSync.add(false);
             continue;
           }
