@@ -77,8 +77,16 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
               children: [
                 Stack(
                   children: [
+                    widget.consultoria.emprendimiento.target?.imagen.target?.path != null ?
                     Image.file(
                       File(widget.consultoria.emprendimiento.target!.imagen.target!.path!),
+                      width: double.infinity,
+                      height: 200,
+                      fit: BoxFit.cover,
+                    )
+                    :
+                    Image.asset(
+                      "assets/images/default_image_placeholder.jpeg",
                       width: double.infinity,
                       height: 200,
                       fit: BoxFit.cover,
@@ -893,14 +901,18 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                                             }
                                                           },
                                                           child: Hero(
-                                                            tag: tareas[index + 1].imagenes.last.imagenes,
+                                                            tag: tareas[index + 1].imagenes.isNotEmpty ?
+                                                            tareas[index + 1].imagenes.last.imagenes :
+                                                             "No image",
                                                             transitionOnUserGestures: true,
                                                             child: ClipRRect(
                                                               borderRadius:
                                                                   BorderRadius.circular(8),
                                                               child: 
                                                               getWidgetContainerImage(
-                                                                tareas[index + 1].imagenes.last.imagenes, 
+                                                                tareas[index + 1].imagenes.isNotEmpty ?
+                                                                tareas[index + 1].imagenes.last.imagenes :
+                                                                null, 
                                                                 170, 
                                                                 120,
                                                                 ),

@@ -1,4 +1,3 @@
-import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:diacritic/diacritic.dart';
@@ -616,7 +615,12 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                           0,
                                                                           0),
                                                                   child: Text(
-                                                                    'Total Inversión:',
+                                                                    inversion.estadoInversion.target?.estado == "Entregada Al Emprendedor" ||
+                                                                    inversion.estadoInversion.target?.estado == "Entregada Al Promotor" ||
+                                                                    inversion.estadoInversion.target?.estado == "Pagado" ?
+                                                                    'Total Inversión'
+                                                                    :
+                                                                    'Total Cotización:',
                                                                     style: AppTheme.of(
                                                                             context)
                                                                         .bodyText1,

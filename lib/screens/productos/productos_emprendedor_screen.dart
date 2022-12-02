@@ -14,7 +14,6 @@ import 'package:bizpro_app/screens/widgets/pdf/models/invoice_info.dart';
 import 'package:bizpro_app/screens/widgets/pdf/models/productos_emprendedor_invoice.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:bizpro_app/providers/user_provider.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 import '../widgets/get_image_widget.dart';
@@ -433,7 +432,7 @@ class _ProductosEmprendedorScreenState
                                     });
                                   }
                                   return ListView.builder(
-                                    padding: EdgeInsets.zero,
+                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 100),
                                     shrinkWrap: true,
                                     scrollDirection: Axis.vertical,
                                     itemCount: listActualProductosEmp.length,

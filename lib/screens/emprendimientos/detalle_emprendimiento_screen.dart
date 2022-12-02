@@ -94,7 +94,7 @@ Emprendimientos? emprendimientoActual;
                                     File(emprendimientoActual!.imagen.target!.path!))
                                 :
                                 Image.asset(
-                                    "assets/images/default_image.png",
+                                    "assets/images/default_image_placeholder.jpeg",
                                   ).image,
                                 fit: BoxFit.cover,
                                 filterQuality: FilterQuality.high,
