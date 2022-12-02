@@ -17,7 +17,7 @@ const String baseUrlEmiWebSecurity = "http://20.186.180.168:9021/ememi-secure-se
 const String baseUrlEmiWebNonSecure = "http://20.186.180.168:9023/ememi-nonsecure-services/api";
 
 final client = PocketBase(baseUrl);
-
+                                 //^[a-zA-Z\sñÑà-úÀ-Ú]*$
 final nombreCharacters = RegExp(r'^(([A-Z]{1}|[ÁÉÍÓÚÑ]{1})[a-zá-ÿ]+[ ]?)+$');
 final curpCharacters = RegExp(r'^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$');
 final telefonoCharacters = RegExp(r'^[0-9\-() ]+$');
