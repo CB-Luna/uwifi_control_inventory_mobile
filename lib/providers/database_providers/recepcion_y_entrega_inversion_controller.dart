@@ -40,6 +40,8 @@ class RecepcionYEntregaController extends ChangeNotifier {
        if (updateProdCotizado != null) {
         if (prodCotizadosTemp[i].aceptado) {
           updateProdCotizado.aceptado = prodCotizadosTemp[i].aceptado;
+          updateProdCotizado.cantidad = prodCotizadosTemp[i].cantidad;
+          updateProdCotizado.costoTotal = prodCotizadosTemp[i].costoTotal;
           dataBase.productosCotBox.put(updateProdCotizado);
           print('Prod Cotizado aceptado exitosamente');
         } else {

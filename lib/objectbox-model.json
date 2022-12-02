@@ -2388,7 +2388,7 @@
     },
     {
       "id": "54:858406953056318390",
-      "lastPropertyId": "16:8734737385801163286",
+      "lastPropertyId": "17:1023970263587459046",
       "name": "ProdCotizados",
       "properties": [
         {
@@ -2454,6 +2454,11 @@
           "type": 9,
           "flags": 2080,
           "indexId": "248:3698332697706038826"
+        },
+        {
+          "id": "17:1023970263587459046",
+          "name": "costoUnitario",
+          "type": 8
         }
       ],
       "relations": [

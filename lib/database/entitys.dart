@@ -693,6 +693,7 @@ class ProdCotizados {
   String? idDBR;
   @Unique()
   String idEmiWeb;
+  double costoUnitario;
   final statusSync = ToOne<StatusSync>();
   final inversionXprodCotizados = ToOne<InversionesXProdCotizados>();
   final productosProv = ToOne<ProductosProv>();
@@ -703,6 +704,7 @@ class ProdCotizados {
     this.aceptado = false,
     required this.cantidad,
     required this.costoTotal,
+    required this.costoUnitario,
     DateTime? fechaRegistro,
     this.idDBR,
     required this.idEmiWeb,

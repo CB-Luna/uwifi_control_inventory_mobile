@@ -12,6 +12,7 @@ import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -48,6 +49,7 @@ class _PagosScreenState extends State<PagosScreen> {
   double totalProyecto = 0.00;
   Imagenes? imagenFirma;
   Imagenes? imagenProducto;
+  bool bandera = false;
 
   @override
   void initState() {
@@ -56,7 +58,7 @@ class _PagosScreenState extends State<PagosScreen> {
     if (actualInversion != null) {
       if (actualInversion!.imagenFirmaRecibido.target?.path != null) {
         imagenFirma = actualInversion!.imagenFirmaRecibido.target!;
-      } 
+      }
       if (actualInversion!.imagenProductoEntregado.target?.path != null) {
         imagenProducto = actualInversion!.imagenProductoEntregado.target!;
       }
@@ -371,11 +373,20 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                       .prodCotizadosTemp[
                                                                           index]
                                                                       .aceptado;
-                                                              if(recepcionYentregaProvider.prodCotizadosTemp[index].aceptado){
-                                                                        totalProyecto = productoCot.costoTotal + totalProyecto;
-                                                                      }else{
-                                                                        totalProyecto = totalProyecto - productoCot.costoTotal;
-                                                                      }        
+                                                              if (recepcionYentregaProvider
+                                                                  .prodCotizadosTemp[
+                                                                      index]
+                                                                  .aceptado) {
+                                                                totalProyecto =
+                                                                    productoCot
+                                                                            .costoTotal +
+                                                                        totalProyecto;
+                                                              } else {
+                                                                totalProyecto =
+                                                                    totalProyecto -
+                                                                        productoCot
+                                                                            .costoTotal;
+                                                              }
                                                             });
                                                           },
                                                           value: recepcionYentregaProvider
@@ -428,26 +439,81 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                               AppTheme.of(context).bodyText1Family),
                                                                     ),
                                                               ),
-                                                              Text(
-                                                                productoCot
-                                                                    .cantidad
-                                                                    .toString(),
-                                                                style: AppTheme.of(
-                                                                        context)
-                                                                    .bodyText1
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          AppTheme.of(context)
-                                                                              .bodyText1Family,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .normal,
-                                                                      useGoogleFonts: GoogleFonts
-                                                                              .asMap()
-                                                                          .containsKey(
-                                                                              AppTheme.of(context).bodyText1Family),
-                                                                    ),
+
+                                                              SizedBox(
+                                                                width: 40,
+                                                                height: 40,
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .all(
+                                                                          8.0),
+                                                                  child:
+                                                                      TextFormField(
+                                                                    keyboardType:
+                                                                        TextInputType
+                                                                            .number,
+                                                                    initialValue:
+                                                                        productoCot
+                                                                            .cantidad
+                                                                            .toString(),
+                                                                    autovalidateMode:
+                                                                        AutovalidateMode
+                                                                            .onUserInteraction,
+                                                                    onChanged:
+                                                                        (value) {
+                                                                      setState(
+                                                                          () {
+                                                                        if (value !=
+                                                                                "" &&
+                                                                            value !=
+                                                                                "0") {
+                                                                          totalProyecto =
+                                                                              totalProyecto - productoCot.costoTotal;
+                                                                          productoCot.cantidad =
+                                                                              int.parse(value);
+                                                                          productoCot.costoTotal =
+                                                                              productoCot.cantidad * productoCot.costoUnitario;
+
+                                                                          totalProyecto =
+                                                                              totalProyecto + productoCot.costoTotal;
+                                                                          bandera = false;
+                                                                        } else {
+                                                                          bandera = true;
+                                                                          snackbarKey
+                                                                              .currentState
+                                                                              ?.showSnackBar(const SnackBar(
+                                                                            content:
+                                                                                Text("No puede ser 0 o nula la cantidad requerida."),
+                                                                          ));
+                                                                        }
+                                                                      });
+                                                                    },
+                                                                    obscureText:
+                                                                        false,
+                                                                    
+                                                                    style: AppTheme.of(
+                                                                            context)
+                                                                        .title3
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Poppins',
+                                                                          color:
+                                                                              const Color(0xFF221573),
+                                                                          fontSize:
+                                                                              15,
+                                                                          fontWeight:
+                                                                              FontWeight.normal,
+                                                                        ),
+                                                                    inputFormatters: [
+                                                                      LengthLimitingTextInputFormatter(
+                                                                          2),
+                                                                    ],
+                                                                    
+                                                                  ),
+                                                                ),
                                                               ),
+                                                             
                                                               Text(
                                                                 currencyFormat.format(
                                                                     (productoCot
@@ -679,21 +745,40 @@ class _PagosScreenState extends State<PagosScreen> {
                                                             if (recepcionYentregaProvider
                                                                 .inversionXProdCotizadosTemp!
                                                                 .aceptado) {
-                                                                  // print("Elementos aceptados");
-                                                                  // for (var element in actualInversion!.inversionXprodCotizados.last.prodCotizados.toList()) {
-                                                                  //   if (element.aceptado) {
-                                                                  //     print("${element.productosProv.target!.nombre}");
-                                                                  //   }
-                                                                  // }
+                                                                  if(bandera==true){
+                                                                    snackbarKey
+                                                                .currentState
+                                                                ?.showSnackBar(
+                                                                    const SnackBar(
+                                                              content: Text(
+                                                                  "Cantidades de productos Invalidas."),
+                                                            ));
+                                                                  }
+                                                                  else{
+                                                              print("Elementos aceptados Finales");
+                                                              // for (var element in actualInversion!.inversionXprodCotizados.last.prodCotizados.toList()) {
+                                                              //   if(element.cantidad == 0){
+                                                                  
+                                                              //   }
+                                                              //   if (element.aceptado) {
+                                                              //     print("${element.productosProv.target!.nombre}");
+                                                              //     print("${element.cantidad}");
+                                                              //     print("${element.costoTotal}");
+                                                              //   }
+                                                              // }
                                                               recepcionYentregaProvider
-                                                                  .finishRecepcionInversion(
-                                                                      actualInversion!
-                                                                          .inversionXprodCotizados
-                                                                          .last,
-                                                                      actualInversion!
-                                                                          .inversionXprodCotizados
-                                                                          .last.prodCotizados.toList(),
-                                                                      actualInversion!.porcentajePago);
+                                                                  .updateRecepcionInversion();
+                                                              recepcionYentregaProvider.finishRecepcionInversion(
+                                                                  actualInversion!
+                                                                      .inversionXprodCotizados
+                                                                      .last,
+                                                                  actualInversion!
+                                                                      .inversionXprodCotizados
+                                                                      .last
+                                                                      .prodCotizados
+                                                                      .toList(),
+                                                                  actualInversion!
+                                                                      .porcentajePago);
                                                               await Navigator
                                                                   .push(
                                                                 context,
@@ -708,8 +793,28 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                             .id,
                                                                   ),
                                                                 ),
-                                                              );
+                                                              ); 
+                                                                  }         
                                                             } else {
+                                                              
+                                                              if(bandera == true)
+                                                              {snackbarKey
+                                                                .currentState
+                                                                ?.showSnackBar(
+                                                                    const SnackBar(
+                                                              content: Text(
+                                                                  "Cantidades de productos Invalidas."),
+                                                            ));}
+                                                              else{
+                                                              print("Elementos Actualizados");
+                                                              // for (var element in actualInversion!.inversionXprodCotizados.last.prodCotizados.toList()) {
+                                                                 
+                                                                  
+                                                              //   if (element.aceptado) {
+                                                              //     print("${element.productosProv.target!.nombre}");
+                                                                  
+                                                              //   }
+                                                              // }
                                                               recepcionYentregaProvider
                                                                   .updateRecepcionInversion();
                                                               snackbarKey
@@ -734,6 +839,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                   ),
                                                                 ),
                                                               );
+                                                            }
                                                             }
                                                           }
                                                         } else {
@@ -945,8 +1051,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                         )
                                                                       : Image
                                                                           .file(
-                                                                          File(
-                                                                              imagenFirma!.path!),
+                                                                          File(imagenFirma!
+                                                                              .path!),
                                                                           fit: BoxFit
                                                                               .contain,
                                                                         ),
@@ -984,8 +1090,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                         )
                                                                       : Image
                                                                           .file(
-                                                                          File(
-                                                                              imagenFirma!.path!),
+                                                                          File(imagenFirma!
+                                                                              .path!),
                                                                           width:
                                                                               200,
                                                                           height:
@@ -1068,14 +1174,27 @@ class _PagosScreenState extends State<PagosScreen> {
                                                             }
 
                                                             setState(() {
-                                                              File file = File(pickedFile!.path);
-                                                              List<int> fileInByte = file.readAsBytesSync();
-                                                              String base64 = base64Encode(fileInByte);
+                                                              File file = File(
+                                                                  pickedFile!
+                                                                      .path);
+                                                              List<int>
+                                                                  fileInByte =
+                                                                  file.readAsBytesSync();
+                                                              String base64 =
+                                                                  base64Encode(
+                                                                      fileInByte);
                                                               imagenFirma = Imagenes(
-                                                                imagenes: pickedFile.path,
-                                                                nombre: pickedFile.name, 
-                                                                path: pickedFile.path, 
-                                                                base64: base64);
+                                                                  imagenes:
+                                                                      pickedFile
+                                                                          .path,
+                                                                  nombre:
+                                                                      pickedFile
+                                                                          .name,
+                                                                  path:
+                                                                      pickedFile
+                                                                          .path,
+                                                                  base64:
+                                                                      base64);
                                                             });
                                                           },
                                                           text: 'Agregar',
@@ -1198,8 +1317,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                         )
                                                                       : Image
                                                                           .file(
-                                                                          File(
-                                                                              imagenProducto!.path!),
+                                                                          File(imagenProducto!
+                                                                              .path!),
                                                                           fit: BoxFit
                                                                               .contain,
                                                                         ),
@@ -1238,8 +1357,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                         )
                                                                       : Image
                                                                           .file(
-                                                                          File(
-                                                                              imagenProducto!.path!),
+                                                                          File(imagenProducto!
+                                                                              .path!),
                                                                           width:
                                                                               200,
                                                                           height:
@@ -1322,14 +1441,27 @@ class _PagosScreenState extends State<PagosScreen> {
                                                             }
 
                                                             setState(() {
-                                                              File file = File(pickedFile!.path);
-                                                              List<int> fileInByte = file.readAsBytesSync();
-                                                              String base64 = base64Encode(fileInByte);
-                                                              imagenProducto= Imagenes(
-                                                                imagenes: pickedFile.path,
-                                                                nombre: pickedFile.name, 
-                                                                path: pickedFile.path, 
-                                                                base64: base64);
+                                                              File file = File(
+                                                                  pickedFile!
+                                                                      .path);
+                                                              List<int>
+                                                                  fileInByte =
+                                                                  file.readAsBytesSync();
+                                                              String base64 =
+                                                                  base64Encode(
+                                                                      fileInByte);
+                                                              imagenProducto = Imagenes(
+                                                                  imagenes:
+                                                                      pickedFile
+                                                                          .path,
+                                                                  nombre:
+                                                                      pickedFile
+                                                                          .name,
+                                                                  path:
+                                                                      pickedFile
+                                                                          .path,
+                                                                  base64:
+                                                                      base64);
                                                             });
                                                           },
                                                           text: 'Agregar',

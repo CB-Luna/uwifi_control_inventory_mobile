@@ -5100,6 +5100,7 @@ void deleteBitacora() {
                 idDBR: listProdCotizados[i].id,
                 aceptado: listProdCotizados[i].aceptado,
                 idEmiWeb: listProdCotizados[i].idEmiWeb,
+                costoUnitario:listProdCotizados[i].costoTotal/listProdCotizados[i].cantidad,
                 );
                 final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
                 final productoProv = dataBase.productosProvBox.query(ProductosProv_.idDBR.equals(listProdCotizados[i].idProductoProvFk)).build().findUnique();
@@ -5151,6 +5152,7 @@ void deleteBitacora() {
                 idDBR: listProdCotizados[i].id,
                 aceptado: listProdCotizados[i].aceptado,
                 idEmiWeb: listProdCotizados[i].idEmiWeb,
+                costoUnitario:listProdCotizados[i].costoTotal/listProdCotizados[i].cantidad,
                 );
                 final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
                 final productoProv = dataBase.productosProvBox.query(ProductosProv_.idDBR.equals(listProdCotizados[i].idProductoProvFk)).build().findUnique();

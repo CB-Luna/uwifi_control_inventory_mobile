@@ -415,12 +415,17 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                           return (nombreCharacters.hasMatch(value ?? ''))
                                           ? null
                                           : 'Evite usar números o caracteres especiales como diéresis';
-                                        }
+                                        },
+                                        // (value){
+                                        //   if(value == "de" || value == "del" || value == "la" || value == "las" ){
+                                        //     return null;
+                                        //   }
+                                        //   else{
+                                        //     return "Nombres intermedios solo aceptables: de, del, la, las";
+                                        //   }
+                                        // }
                                     ]),
-                                      // return capitalizadoCharacters
-                                      //         .hasMatch(value ?? '')
-                                      //     ? null
-                                      //     : 'Para continuar, ingrese el nombre empezando por mayúscula.';
+                                     
                                 
                                   ),
                                 ),

@@ -2334,7 +2334,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(54, 858406953056318390),
       name: 'ProdCotizados',
-      lastPropertyId: const IdUid(16, 8734737385801163286),
+      lastPropertyId: const IdUid(17, 1023970263587459046),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -2394,7 +2394,12 @@ final _entities = <ModelEntity>[
             name: 'idEmiWeb',
             type: 9,
             flags: 2080,
-            indexId: const IdUid(248, 3698332697706038826))
+            indexId: const IdUid(248, 3698332697706038826)),
+        ModelProperty(
+            id: const IdUid(17, 1023970263587459046),
+            name: 'costoUnitario',
+            type: 8,
+            flags: 0)
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -5795,7 +5800,7 @@ ModelDefinition getObjectBoxModel() {
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
           final idEmiWebOffset = fbb.writeString(object.idEmiWeb);
-          fbb.startTable(17);
+          fbb.startTable(18);
           fbb.addInt64(0, object.id);
           fbb.addInt64(2, object.cantidad);
           fbb.addInt64(5, object.fechaRegistro.millisecondsSinceEpoch);
@@ -5806,6 +5811,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(13, object.inversionXprodCotizados.targetId);
           fbb.addBool(14, object.aceptado);
           fbb.addOffset(15, idEmiWebOffset);
+          fbb.addFloat64(16, object.costoUnitario);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -5821,6 +5827,8 @@ ModelDefinition getObjectBoxModel() {
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0),
               costoTotal:
                   const fb.Float64Reader().vTableGet(buffer, rootOffset, 24, 0),
+              costoUnitario:
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 36, 0),
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true)
@@ -7773,6 +7781,10 @@ class ProdCotizados_ {
   /// see [ProdCotizados.idEmiWeb]
   static final idEmiWeb =
       QueryStringProperty<ProdCotizados>(_entities[31].properties[9]);
+
+  /// see [ProdCotizados.costoUnitario]
+  static final costoUnitario =
+      QueryDoubleProperty<ProdCotizados>(_entities[31].properties[10]);
 
   /// see [ProdCotizados.bitacora]
   static final bitacora =
