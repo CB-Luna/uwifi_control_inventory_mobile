@@ -6,8 +6,11 @@ import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_consultoria_pocketbase.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_emprendimeinto_pocketbase.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_imagen_pocketbase.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_inversion_pocketbase.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_inversion_x_prod_cotizados.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_jornada_pocketbase.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_producto_emp_pocketbase.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_producto_solicitado_pocketbase.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_producto_vendido.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_venta_pocketbase.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/get_emp_externo_pocketbase_temp.dart';
@@ -424,26 +427,26 @@ class EmpExternosPocketbaseProvider extends ChangeNotifier {
               var basicProdVendidos = getBasicProductoVendidoPocketbaseFromMap(responseProdVendidos.body);
               if (responseProdVendidos.statusCode == 200) {
                 for (var elementProdVendido in basicProdVendidos.items) {
-                    // Se agrega nuevo prod vendido a la venta
-                    final nuevoProdVendido = ProdVendidos(
-                      nombreProd: elementProdVendido.nombreProd,
-                      descripcion: elementProdVendido.descripcion,
-                      costo: elementProdVendido.costo, 
-                      cantVendida: elementProdVendido.cantidadVendida,
-                      subtotal: elementProdVendido.subTotal,
-                      precioVenta: elementProdVendido.precioVenta, 
-                      idDBR: elementProdVendido.id,
-                      idEmiWeb: elementProdVendido.idEmiWeb,
-                    );
-                    final productoEmp = dataBase.productosEmpBox.query(ProductosEmp_.idDBR.equals(elementProdVendido.idProductosEmpFk)).build().findFirst();
-                    final unidadMedida = dataBase.unidadesMedidaBox.query(UnidadMedida_.idEmiWeb.equals(elementProdVendido.expand.idUndMedidaFk.idEmiWeb)).build().findFirst();
-                    if (unidadMedida != null && productoEmp != null) {
-                      nuevoProdVendido.productoEmp.target = productoEmp;
-                      nuevoProdVendido.unidadMedida.target = unidadMedida;
-                    }
-                    nuevoProdVendido.venta.target = nuevaVenta;
-                    dataBase.productosVendidosBox.put(nuevoProdVendido);
-                    nuevaVenta.prodVendidos.add(nuevoProdVendido);
+                  // Se agrega nuevo prod vendido a la venta
+                  final nuevoProdVendido = ProdVendidos(
+                    nombreProd: elementProdVendido.nombreProd,
+                    descripcion: elementProdVendido.descripcion,
+                    costo: elementProdVendido.costo, 
+                    cantVendida: elementProdVendido.cantidadVendida,
+                    subtotal: elementProdVendido.subTotal,
+                    precioVenta: elementProdVendido.precioVenta, 
+                    idDBR: elementProdVendido.id,
+                    idEmiWeb: elementProdVendido.idEmiWeb,
+                  );
+                  final productoEmp = dataBase.productosEmpBox.query(ProductosEmp_.idDBR.equals(elementProdVendido.idProductosEmpFk)).build().findFirst();
+                  final unidadMedida = dataBase.unidadesMedidaBox.query(UnidadMedida_.idEmiWeb.equals(elementProdVendido.expand.idUndMedidaFk.idEmiWeb)).build().findFirst();
+                  if (unidadMedida != null && productoEmp != null) {
+                    nuevoProdVendido.productoEmp.target = productoEmp;
+                    nuevoProdVendido.unidadMedida.target = unidadMedida;
+                  }
+                  nuevoProdVendido.venta.target = nuevaVenta;
+                  dataBase.productosVendidosBox.put(nuevoProdVendido);
+                  nuevaVenta.prodVendidos.add(nuevoProdVendido);
                 }
               } else {
                 print(responseProdVendidos.statusCode);
@@ -460,6 +463,126 @@ class EmpExternosPocketbaseProvider extends ChangeNotifier {
           } else {
             print(responseVentas.statusCode);
             print("No éxito en recuperar ventas");
+            banderasExitoSync.add(false);
+            continue;
+          }
+          //Se recupera colección de datos inveriones en Pocketbase
+          var urlInversiones = Uri.parse("$baseUrl/api/collections/inversiones/records?filter=(id_emprendimiento_fk='$elementEmpId')&expand=id_estado_inversion_fk");
+
+          var responseInverisones = await get(
+            urlInversiones,
+            headers: headers
+          );
+          var basicInversion = getBasicInversionPocketbaseFromMap(responseInverisones.body);
+          if (responseInverisones.statusCode == 200) {
+            for (var elementInversion in basicInversion.items) {
+              final nuevaInversion = Inversiones(
+                porcentajePago: elementInversion.porcentajePago,
+                montoPagar: elementInversion.montoPagar,
+                saldo: elementInversion.saldo,
+                totalInversion: elementInversion.totalInversion,
+                fechaRegistro: elementInversion.created,
+                idDBR: elementInversion.id,
+                idEmiWeb: elementInversion.idEmiWeb,
+              );
+              final estadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.idDBR.equals(elementInversion.expand.idEstadoInversionFk.id)).build().findFirst();
+              if (estadoInversion != null) {
+                nuevaInversion.estadoInversion.target = estadoInversion;
+              }
+
+              var urlInversionXProdCotizados = Uri.parse("$baseUrl/api/collections/inversion_x_prod_cotizados/records?filter=(id_inversion_fk='${elementInversion.id}')");
+
+              var responseInversionXProdCotizados = await get(
+                urlInversionXProdCotizados,
+                headers: headers
+              );
+              var basicInversionXProdCotizados = getBasicInversionXProdCotizadosPocketbaseFromMap(responseInversionXProdCotizados.body);
+              if (responseInversionXProdCotizados.statusCode == 200) {
+                for (var elementInversionXProdCotizados in basicInversionXProdCotizados.items) {
+                  // Se agrega nuevo prod solicitado a la inversion
+                  final nuevaInversionXProdCotizados = InversionesXProdCotizados(
+                    aceptado: elementInversionXProdCotizados.aceptado,
+                    fechaRegistro: elementInversionXProdCotizados.created,
+                    idDBR: elementInversionXProdCotizados.id,
+                    idEmiWeb: elementInversionXProdCotizados.idEmiWeb,
+                  );
+                  nuevaInversionXProdCotizados.inversion.target = nuevaInversion;
+                  dataBase.inversionesXprodCotizadosBox.put(nuevaInversionXProdCotizados);
+                  nuevaInversion.inversionXprodCotizados.add(nuevaInversionXProdCotizados);
+                }
+              } else {
+                print(responseInversionXProdCotizados.statusCode);
+                print("No éxito en recuperar inversiones x Prod cotizados");
+                banderasExitoSync.add(false);
+                continue;
+              }
+
+              nuevaInversion.emprendimiento.target = nuevoEmprendimiento;
+              nuevoEmprendimiento.inversiones.add(nuevaInversion);
+              final idInversion = dataBase.inversionesBox.put(nuevaInversion);
+              dataBase.emprendimientosBox.put(nuevoEmprendimiento); 
+
+              var urlProdSolicitados = Uri.parse("$baseUrl/api/collections/productos_solicitados/records?filter=(id_inversion_fk='${elementInversion.id}')&expand=id_familia_prod_fk,id_tipo_empaques_fk,id_imagen_fk");
+
+              var responseProdSolicitados = await get(
+                urlProdSolicitados,
+                headers: headers
+              );
+              var basicProdSolicitados = getBasicProductoSolicitadoPocketbaseFromMap(responseProdSolicitados.body);
+              if (responseProdSolicitados.statusCode == 200) {
+                for (var elementProdSolicitado in basicProdSolicitados.items) {
+                  // Se agrega nuevo prod solicitado a la inversion
+                  final nuevoProdSolicitado = ProdSolicitado(
+                    idInversion: idInversion,
+                    producto: elementProdSolicitado.producto,
+                    marcaSugerida: elementProdSolicitado.marcaSugerida,
+                    descripcion: elementProdSolicitado.descripcion,
+                    proveedorSugerido: elementProdSolicitado.proveedoSugerido,
+                    cantidad: elementProdSolicitado.cantidad, 
+                    costoEstimado: elementProdSolicitado.costoEstimado,
+                    fechaRegistro: elementProdSolicitado.created,
+                    idDBR: elementProdSolicitado.id,
+                    idEmiWeb: elementProdSolicitado.idEmiWeb,
+                  );
+                  final familiaProd = dataBase.familiaProductosBox.query(FamiliaProd_.idDBR.equals(elementProdSolicitado.idFamiliaProdFk)).build().findFirst();
+                  final tipoEmpaques = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idDBR.equals(elementProdSolicitado.idTipoEmpaquesFk)).build().findFirst();
+                  if (familiaProd != null && tipoEmpaques != null) {
+                    nuevoProdSolicitado.familiaProducto.target = familiaProd;
+                    nuevoProdSolicitado.tipoEmpaques.target = tipoEmpaques;
+                  }
+                  if (elementProdSolicitado.expand.idImagenFk?.created != null) {
+                    // Se agrega nueva imagen del producto Solicitado
+                    final uInt8ListImagen = base64Decode(elementProdSolicitado.expand.idImagenFk!.base64);
+                    final tempDir = await getTemporaryDirectory();
+                    File file = await File('${tempDir.path}/${elementProdSolicitado.expand.idImagenFk!.nombre}').create();
+                    file.writeAsBytesSync(uInt8ListImagen);
+                    final nuevaImagenProdSolicitado = Imagenes(
+                      imagenes: file.path,
+                      nombre: elementProdSolicitado.expand.idImagenFk!.nombre,
+                      path: file.path,
+                      base64: elementProdSolicitado.expand.idImagenFk!.base64,
+                      idDBR: elementProdSolicitado.expand.idImagenFk!.id,
+                      idEmiWeb: elementProdSolicitado.expand.idImagenFk!.idEmiWeb,
+                      ); //Se crea el objeto imagenes para el producto Solicitado
+                    dataBase.imagenesBox.put(nuevaImagenProdSolicitado);
+                    nuevoProdSolicitado.imagen.target = nuevaImagenProdSolicitado;
+                  }
+                  nuevoProdSolicitado.inversion.target = nuevaInversion;
+                  dataBase.productosSolicitadosBox.put(nuevoProdSolicitado);
+                  nuevaInversion.prodSolicitados.add(nuevoProdSolicitado);
+                  dataBase.inversionesBox.put(nuevaInversion);
+                }
+              } else {
+                print(responseProdSolicitados.statusCode);
+                print("No éxito en recuperar prod solicitados");
+                banderasExitoSync.add(false);
+                continue;
+              }
+            }
+            banderasExitoSync.add(true);
+          } else {
+            print(responseInverisones.statusCode);
+            print("No éxito en recuperar inversiones");
             banderasExitoSync.add(false);
             continue;
           }

@@ -4536,6 +4536,8 @@ void deleteBitacora() {
       if (!bitacora.executePocketbase) {
         final recordProdCotizados = await client.records.update('productos_cotizados', prodCotizado.idDBR.toString(), body: {
           "aceptado": true,
+          "cantidad": prodCotizado.cantidad,
+          "costo_total": prodCotizado.costoTotal,
         });
         if (recordProdCotizados.id.isNotEmpty) {
           //Se marca como realizada en Pocketbase la instrucción en Bitacora

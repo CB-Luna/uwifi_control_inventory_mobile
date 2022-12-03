@@ -489,7 +489,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                               width: 120,
                                                               child: getWidgetCoverImage(
                                                                   actualEmprendimiento!
-                                                                      .imagen.target!.path!),
+                                                                      .imagen.target?.path),
                                                             ),
                                                           ),
                                                           Text(

@@ -115,9 +115,13 @@ with TickerProviderStateMixin {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: Image.file(
+                          image: widget.emprendimiento.imagen.target != null ?
+                          Image.file(
                             File(widget.emprendimiento.imagen.target!.path!),
-                            fit: BoxFit.contain,
+                          ).image
+                          :
+                          Image.asset(
+                            "assets/images/default_image_placeholder.jpeg",
                           ).image,
                         ),
                         boxShadow: const [

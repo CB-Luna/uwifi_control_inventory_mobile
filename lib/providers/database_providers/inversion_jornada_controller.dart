@@ -1,4 +1,3 @@
-import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/main.dart';
