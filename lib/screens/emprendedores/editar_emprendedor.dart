@@ -406,13 +406,13 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                           fontWeight: FontWeight.normal,
                                         ),
                                     validator: FormBuilderValidators.compose([
+                                        // (value){
+                                        //   return (capitalizadoCharacters.hasMatch(value ?? ''))
+                                        //   ? null
+                                        //   : 'Para continuar, ingrese el nombre empezando por mayúscula.';
+                                        // },
                                         (value){
-                                          return (capitalizadoCharacters.hasMatch(value ?? ''))
-                                          ? null
-                                          : 'Para continuar, ingrese el nombre empezando por mayúscula.';
-                                        },
-                                        (value){
-                                          return (nombreCharacters.hasMatch(value ?? ''))
+                                          return (palabras.hasMatch(value ?? ''))
                                           ? null
                                           : 'Evite usar números o caracteres especiales como diéresis';
                                         },
@@ -482,13 +482,13 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                           fontWeight: FontWeight.normal,
                                         ),
                                     validator: FormBuilderValidators.compose([
+                                        // (value){
+                                        //   return (capitalizadoCharacters.hasMatch(value ?? ''))
+                                        //   ? null
+                                        //   : 'Para continuar, ingrese el nombre empezando por mayúscula.';
+                                        // },
                                         (value){
-                                          return (capitalizadoCharacters.hasMatch(value ?? ''))
-                                          ? null
-                                          : 'Para continuar, ingrese el nombre empezando por mayúscula.';
-                                        },
-                                        (value){
-                                          return (nombreCharacters.hasMatch(value ?? ''))
+                                          return (palabras.hasMatch(value ?? ''))
                                           ? null
                                           : 'Evite usar números o caracteres especiales como diéresis';
                                         }
