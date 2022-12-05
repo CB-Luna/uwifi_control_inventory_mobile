@@ -511,7 +511,7 @@ class _VentasScreenState extends State<VentasScreen> {
                                                                 child: getWidgetCoverImage(
                                                                     widget
                                                                         .emprendimiento
-                                                                        .imagen.target!.path!),
+                                                                        .imagen.target?.path),
                                                               ),
                                                             ),
                                                           ],

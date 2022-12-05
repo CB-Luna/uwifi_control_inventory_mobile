@@ -84,9 +84,16 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
                       height: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: FileImage(File(actualEmprendimiento!.imagen.target!.path!)),
-                          fit: BoxFit.cover,
-                          filterQuality: FilterQuality.high,
+                          image: actualEmprendimiento!.imagen.target != null ?
+                          FileImage(
+                            File(
+                              actualEmprendimiento!.imagen.target!.path!))
+                          :
+                          Image.asset(
+                            "assets/images/default_image_placeholder.jpeg",
+                          ).image,
+                        fit: BoxFit.cover,
+                        filterQuality: FilterQuality.high,
                         ),
                       ),
                       child: Container(

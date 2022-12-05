@@ -210,11 +210,16 @@ class _RegistroVentaScreenState
                                         height: 200,
                                         decoration: BoxDecoration(
                                           image: DecorationImage(
+                                            image: widget.venta.emprendimiento.target!.imagen.target != null ?
+                                              FileImage(
+                                                File(
+                                                  widget.venta.emprendimiento.target!.imagen.target!.path!))
+                                              :
+                                              Image.asset(
+                                                "assets/images/default_image_placeholder.jpeg",
+                                              ).image,
                                             fit: BoxFit.cover,
-                                            image: Image.file(
-                                              File(widget.venta.emprendimiento.target!.imagen.target!.path!),
-                                              fit: BoxFit.contain,
-                                            ).image,
+                                            filterQuality: FilterQuality.high,
                                           ),
                                           boxShadow: const [
                                             BoxShadow(

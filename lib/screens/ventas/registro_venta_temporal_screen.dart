@@ -203,10 +203,15 @@ class _RegistroVentaTemporalScreenState
                                         decoration: BoxDecoration(
                                           image: DecorationImage(
                                             fit: BoxFit.cover,
-                                            image: Image.file(
-                                              File(widget.emprendimiento.imagen.target!.path!),
-                                              fit: BoxFit.contain,
-                                            ).image,
+                                            image: widget.emprendimiento.imagen.target != null ?
+                                              FileImage(
+                                                File(
+                                                  widget.emprendimiento.imagen.target!.path!))
+                                              :
+                                              Image.asset(
+                                                "assets/images/default_image_placeholder.jpeg",
+                                              ).image,
+                                            filterQuality: FilterQuality.high,
                                           ),
                                           boxShadow: const [
                                             BoxShadow(

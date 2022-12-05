@@ -46,8 +46,14 @@ class _DetalleProductoEmprendedorState extends State<DetalleProductoEmprendedor>
                       height: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: FileImage(File(
-                              widget.productoEmprendedor.emprendimientos.target!.imagen.target!.path!)),
+                          image: widget.productoEmprendedor.emprendimientos.target!.imagen.target != null ?
+                            FileImage(
+                              File(
+                                widget.productoEmprendedor.emprendimientos.target!.imagen.target!.path!))
+                            :
+                            Image.asset(
+                              "assets/images/default_image_placeholder.jpeg",
+                            ).image,
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
                         ),

@@ -304,30 +304,40 @@ class SideMenu extends StatelessWidget {
                                 "Este usuario no tiene permisos para esta acción."),
                           ));
                         } else {
-                          final connectivityResult =
-                              await (Connectivity().checkConnectivity());
-                          await showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (context) {
-                              return Padding(
-                                padding: MediaQuery.of(context).viewInsets,
-                                child: SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.45,
-                                  child: connectivityResult ==
-                                              ConnectivityResult.none 
-                                      ? const BottomSheetRecoverProyectosWidget(
-                                          isVisible: false,
-                                        )
-                                      : const BottomSheetRecoverProyectosWidget(
-                                          isVisible: true,
-                                        ),
-                                ),
-                              );
-                            },
-                          );
+                          List<ProdProyecto> listProdProyecto =
+                            dataBase.productosProyectoBox.getAll();
+                          if (listProdProyecto.isNotEmpty) {
+                            final connectivityResult =
+                                await (Connectivity().checkConnectivity());
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              context: context,
+                              builder: (context) {
+                                return Padding(
+                                  padding: MediaQuery.of(context).viewInsets,
+                                  child: SizedBox(
+                                    height:
+                                        MediaQuery.of(context).size.height * 0.45,
+                                    child: connectivityResult ==
+                                                ConnectivityResult.none 
+                                        ? const BottomSheetRecoverProyectosWidget(
+                                            isVisible: false,
+                                          )
+                                        : const BottomSheetRecoverProyectosWidget(
+                                            isVisible: true,
+                                          ),
+                                  ),
+                                );
+                              },
+                            );
+                          } else {
+                              snackbarKey.currentState
+                                ?.showSnackBar(const SnackBar(
+                              content: Text(
+                                  "Para esta acción es necesario descargar primero los catálogos."),
+                            ));
+                          }
                         }
                       },
                     ),

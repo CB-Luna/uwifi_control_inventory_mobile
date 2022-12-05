@@ -4093,7 +4093,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
     List<String> tareasConsultoria = [];
     try {
       if (!bitacora.executePocketbase) {
-        if (tarea.imagenes.isNotEmpty) {  
+        if (tarea.imagenes.toList().isNotEmpty) {
           if (tarea.imagenes.first.idDBR == null) {
             //Primero creamos la imagen asociada al producto Emp
             final recordImagen = await client.records.create('imagenes', body: {
@@ -4113,6 +4113,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 "id_porcentaje_fk": tarea.porcentaje.target!.idDBR,
                 "fecha_revision": tarea.fechaRevision.toUtc().toString(),
                 "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                "id_imagenes_fk": recordImagen.id,
                 "id_emi_web": tarea.idEmiWeb,
               });
               if (recordTarea.id.isNotEmpty) {
@@ -4169,6 +4170,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 "id_porcentaje_fk": tarea.porcentaje.target!.idDBR,
                 "fecha_revision": tarea.fechaRevision.toUtc().toString(),
                 "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                "id_imagenes_fk": tarea.imagenes.first.idDBR,
                 "id_emi_web": tarea.idEmiWeb,
               });
               if (recordTarea.id.isNotEmpty) {
@@ -4534,6 +4536,8 @@ void deleteBitacora() {
       if (!bitacora.executePocketbase) {
         final recordProdCotizados = await client.records.update('productos_cotizados', prodCotizado.idDBR.toString(), body: {
           "aceptado": true,
+          "cantidad": prodCotizado.cantidad,
+          "costo_total": prodCotizado.costoTotal,
         });
         if (recordProdCotizados.id.isNotEmpty) {
           //Se marca como realizada en Pocketbase la instrucción en Bitacora

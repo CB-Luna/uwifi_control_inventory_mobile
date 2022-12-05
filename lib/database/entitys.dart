@@ -457,7 +457,6 @@ class Jornadas {
   bool completada;
   @Unique()
   String? idDBR;
-  @Unique()
   String? idEmiWeb;
   final emprendimiento = ToOne<Emprendimientos>();
   final tarea = ToOne<Tareas>();
