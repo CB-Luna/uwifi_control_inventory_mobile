@@ -132,6 +132,22 @@ class _SincronizacionInformacionEmiWebScreenState extends State<SincronizacionIn
                                     ),
                               ),
                             ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 10, 0, 0),
+                              child: Text(
+                                'En caso de tardar demasiado\npresione la pantalla.',
+                                textAlign: TextAlign.center,
+                                maxLines: 5,
+                                style: AppTheme.of(context).bodyText1.override(
+                                      fontFamily:
+                                          AppTheme.of(context).bodyText1Family,
+                                      color: AppTheme.of(context).secondaryText,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                              ),
+                            ),
                             syncProviderEmiWeb.procesocargando
                                 ? Visibility(
                                   visible: syncProviderEmiWeb.procesocargando,

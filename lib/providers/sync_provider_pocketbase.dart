@@ -2141,6 +2141,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   "pago_recibido": false,
                   "producto_entregado": false,
                   "id_emi_web": "0",
+                  // "jornada_3": inversionJornada3.jornada3,
                 });
                 if (recordInversion.id.isNotEmpty) {     
                   //Se recupera el idDBR de la inversion
@@ -3293,6 +3294,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
               "pago_recibido": false,
               "producto_entregado": false,
               "id_emi_web": inversion.idEmiWeb,
+              // "jornada_3": inversion.jornada3,
             });
           if (recordInversion.id.isNotEmpty) {     
             //Se recupera el idDBR de la inversion

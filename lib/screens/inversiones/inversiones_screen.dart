@@ -529,7 +529,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                             padding:
                                                                 const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                    5, 0, 5, 5),
+                                                                    5, 0, 5, 0),
                                                             child: Row(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -572,8 +572,9 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                           ),
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
+                                                                const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                    5, 0, 5, 0),
                                                             child: Row(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -687,6 +688,28 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                             child: Text(
                                                               maybeHandleOverflow(
                                                                   "Tipo de proyecto: ${actualEmprendimiento!.catalogoProyecto.target!.nombre}",
+                                                                  30,
+                                                                  "..."),
+                                                              style: AppTheme.of(
+                                                                      context)
+                                                                  .bodyText1
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        AppTheme.of(context)
+                                                                            .bodyText1Family,
+                                                                    fontSize:
+                                                                        12,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                    5, 0, 5, 0),
+                                                            child: Text(
+                                                              maybeHandleOverflow(
+                                                                  "ID Emi Web: ${inversion.idEmiWeb ?? 'Sin ID'}",
                                                                   30,
                                                                   "..."),
                                                               style: AppTheme.of(
