@@ -2349,7 +2349,7 @@ class _PagosScreenState extends State<PagosScreen> {
     cells: <DataCell>[
       DataCell(Center(
         child: Text(
-          prodCotizado.productosProv.target!.nombre,
+          maybeHandleOverflow(prodCotizado.productosProv.target!.nombre,15,"..."),
           style: GoogleFonts.roboto(
                 fontSize: 14.0,
                 fontWeight: FontWeight.w400,
