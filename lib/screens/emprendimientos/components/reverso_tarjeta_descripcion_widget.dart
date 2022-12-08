@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:bizpro_app/helpers/constants.dart';
+import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -21,34 +22,35 @@ class ReversoTarjetaDescripcionWidget extends StatefulWidget {
 }
 
 DataRow _getDataRow(ProdSolicitado prodSolicitado) {
+  double size = 9.0;
   return DataRow(
     cells: <DataCell>[
       DataCell(Text(
         prodSolicitado.producto,
         style: GoogleFonts.roboto(
-              fontSize: 7.0,
+              fontSize: size,
               fontWeight: FontWeight.w400,
               color: Colors.white)
       )),
       DataCell(Text(prodSolicitado.proveedorSugerido ?? '',
           style: GoogleFonts.roboto(
-              fontSize: 7.0,
+              fontSize: size,
               fontWeight: FontWeight.w400,
               color: Colors.white))),
       
       DataCell(Text(prodSolicitado.marcaSugerida ?? '',
           style: GoogleFonts.roboto(
-              fontSize: 7.0,
+              fontSize: size,
               fontWeight: FontWeight.w400,
               color: Colors.white))),
       DataCell(Text(prodSolicitado.unidadMedida.target?.unidadMedida ?? "-",
           style: GoogleFonts.roboto(
-              fontSize: 7.0,
+              fontSize: size,
               fontWeight: FontWeight.w400,
               color: Colors.white))),
       DataCell(Text(prodSolicitado.cantidad.toString(),
           style: GoogleFonts.roboto(
-              fontSize: 7.0,
+              fontSize: size,
               fontWeight: FontWeight.w400,
               color: Colors.white))),
       DataCell(Text(prodSolicitado.costoEstimado != null
@@ -56,7 +58,7 @@ DataRow _getDataRow(ProdSolicitado prodSolicitado) {
               .format(prodSolicitado.costoEstimado!.toStringAsFixed(2))
           : "-",
           style: GoogleFonts.roboto(
-              fontSize: 7.0,
+              fontSize: size,
               fontWeight: FontWeight.w400,
               color: Colors.white))),
     ],
@@ -88,7 +90,7 @@ class _ReversoTarjetaDescripcionWidgetState
 
   @override
   Widget build(BuildContext context) {
-    double size = 7.0;
+    double size = 10.0;
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(15, 10, 15, 10),
       child: Container(
@@ -110,6 +112,7 @@ class _ReversoTarjetaDescripcionWidgetState
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             DataTable(
               columnSpacing: 2.0,
@@ -150,7 +153,7 @@ class _ReversoTarjetaDescripcionWidgetState
                 ))),
                 DataColumn(
                     label: Expanded(
-                        child: Text('Unidad\n de medida',
+                        child: Text(maybeHandleOverflow('Unidad\n de medida',10,"..."),
                             textAlign: TextAlign.center,
                             style: AppTheme.of(context).bodyText1.override(
                                 fontFamily:
@@ -188,8 +191,7 @@ class _ReversoTarjetaDescripcionWidgetState
             ),
             Text(
               "Monto Total:${inversionJornada3 != null ?
-              currencyFormat.format(inversionJornada3!.totalInversion.toStringAsFixed(2) ): "-"}",
-              
+              currencyFormat.format(inversionJornada3!.totalInversion.toStringAsFixed(2) ): "-"}", 
               textAlign: TextAlign.end,
               style:
               AppTheme.of(context).bodyText1.override(
