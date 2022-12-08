@@ -271,47 +271,6 @@ class _PagosScreenState extends State<PagosScreen> {
                                                     BorderRadius.circular(8),
                                               ),
                                             ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(0, 10, 0, 0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'Producto',
-                                                    style: AppTheme.of(context)
-                                                        .bodyText1,
-                                                  ),
-                                                  Text(
-                                                    'Cantidad',
-                                                    style: AppTheme.of(context)
-                                                        .bodyText1,
-                                                  ),
-                                                  Text(
-                                                    'Costo final',
-                                                    style: AppTheme.of(context)
-                                                        .bodyText1,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.9,
-                                              height: 1,
-                                              decoration: BoxDecoration(
-                                                color: AppTheme.of(context)
-                                                    .secondaryText,
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                              ),
-                                            ),
                                             IgnorePointer(
                                               ignoring: actualInversion!
                                                           .estadoInversion
@@ -336,214 +295,256 @@ class _PagosScreenState extends State<PagosScreen> {
                                                           .target!
                                                           .rol ==
                                                       "Emprendedor",
-                                              child:
-                                                  Builder(builder: (context) {
-                                                return ListView.builder(
-                                                  padding: EdgeInsets.zero,
-                                                  shrinkWrap: true,
-                                                  scrollDirection:
-                                                      Axis.vertical,
-                                                  controller:
-                                                      ScrollController(),
-                                                  itemCount:
-                                                      recepcionYentregaProvider
-                                                          .prodCotizadosTemp
-                                                          .length,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    final productoCot =
-                                                        recepcionYentregaProvider
-                                                                .prodCotizadosTemp[
-                                                            index];
-                                                    return Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        ToggleIcon(
-                                                          onPressed: () {
-                                                            setState(() {
-                                                              recepcionYentregaProvider
-                                                                      .prodCotizadosTemp[
-                                                                          index]
-                                                                      .aceptado =
-                                                                  !recepcionYentregaProvider
-                                                                      .prodCotizadosTemp[
-                                                                          index]
-                                                                      .aceptado;
-                                                              if (recepcionYentregaProvider
-                                                                  .prodCotizadosTemp[
-                                                                      index]
-                                                                  .aceptado) {
-                                                                totalProyecto =
-                                                                    productoCot
-                                                                            .costoTotal +
-                                                                        totalProyecto;
-                                                              } else {
-                                                                totalProyecto =
-                                                                    totalProyecto -
-                                                                        productoCot
-                                                                            .costoTotal;
-                                                              }
-                                                            });
-                                                          },
-                                                          value: recepcionYentregaProvider
-                                                              .prodCotizadosTemp[
-                                                                  index]
-                                                              .aceptado,
-                                                          onIcon: Icon(
-                                                            Icons.check_box,
-                                                            color: AppTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                            size: 25,
-                                                          ),
-                                                          offIcon: Icon(
-                                                            Icons
-                                                                .check_box_outline_blank,
-                                                            color: AppTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                            size: 25,
-                                                          ),
-                                                        ),
-                                                        Expanded(
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              Text(
-                                                                productoCot
-                                                                    .productosProv
-                                                                    .target!
-                                                                    .nombre,
-                                                                style: AppTheme.of(
-                                                                        context)
-                                                                    .bodyText1
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          AppTheme.of(context)
-                                                                              .bodyText1Family,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .normal,
-                                                                      useGoogleFonts: GoogleFonts
-                                                                              .asMap()
-                                                                          .containsKey(
-                                                                              AppTheme.of(context).bodyText1Family),
-                                                                    ),
-                                                              ),
+                                              child: DataTable(
+                                                showCheckboxColumn: true,
+                                                columnSpacing: 60.0,
+                                                columns: <DataColumn>[
+                                                  DataColumn( 
+                                                      label: Expanded(
+                                                          child: Text(
+                                                    'Producto',
+                                                    style: AppTheme.of(context)
+                                                            .bodyText1,
+                                                  ))),
+                                                  DataColumn(
+                                                    label: Expanded(
+                                                        child: Text('Cantidad',
+                                                            textAlign: TextAlign.center,
+                                                            style: AppTheme.of(context)
+                                                                  .bodyText1)),
+                                                  ),
+                                                  DataColumn(
+                                                      label: Expanded(
+                                                          child: Text(
+                                                    'Costo\nTotal',
+                                                    textAlign: TextAlign.center,
+                                                    style: AppTheme.of(context)
+                                                          .bodyText1,
+                                                  ))),
+                                                ],
+                                                rows: List.generate(recepcionYentregaProvider.prodCotizadosTemp.length,
+                                                    (index) => _getDataRow(recepcionYentregaProvider.prodCotizadosTemp.toList()[index], index, recepcionYentregaProvider)),
+                                              ),
+                                              //     Builder(builder: (context) {
+                                              //   return ListView.builder(
+                                              //     padding: EdgeInsets.zero,
+                                              //     shrinkWrap: true,
+                                              //     scrollDirection:
+                                              //         Axis.vertical,
+                                              //     controller:
+                                              //         ScrollController(),
+                                              //     itemCount:
+                                              //         recepcionYentregaProvider
+                                              //             .prodCotizadosTemp
+                                              //             .length,
+                                              //     itemBuilder:
+                                              //         (context, index) {
+                                              //       final productoCot =
+                                              //           recepcionYentregaProvider
+                                              //                   .prodCotizadosTemp[
+                                              //               index];
+                                              //       return Row(
+                                              //         mainAxisSize:
+                                              //             MainAxisSize.max,
+                                              //         mainAxisAlignment:
+                                              //             MainAxisAlignment
+                                              //                 .start,
+                                              //         children: [
+                                              //           ToggleIcon(
+                                              //             onPressed: () {
+                                              //               setState(() {
+                                              //                 recepcionYentregaProvider
+                                              //                         .prodCotizadosTemp[
+                                              //                             index]
+                                              //                         .aceptado =
+                                              //                     !recepcionYentregaProvider
+                                              //                         .prodCotizadosTemp[
+                                              //                             index]
+                                              //                         .aceptado;
+                                              //                 if (recepcionYentregaProvider
+                                              //                     .prodCotizadosTemp[
+                                              //                         index]
+                                              //                     .aceptado) {
+                                              //                   totalProyecto =
+                                              //                       productoCot
+                                              //                               .costoTotal +
+                                              //                           totalProyecto;
+                                              //                 } else {
+                                              //                   totalProyecto =
+                                              //                       totalProyecto -
+                                              //                           productoCot
+                                              //                               .costoTotal;
+                                              //                 }
+                                              //               });
+                                              //             },
+                                              //             value: recepcionYentregaProvider
+                                              //                 .prodCotizadosTemp[
+                                              //                     index]
+                                              //                 .aceptado,
+                                              //             onIcon: Icon(
+                                              //               Icons.check_box,
+                                              //               color: AppTheme.of(
+                                              //                       context)
+                                              //                   .primaryText,
+                                              //               size: 25,
+                                              //             ),
+                                              //             offIcon: Icon(
+                                              //               Icons
+                                              //                   .check_box_outline_blank,
+                                              //               color: AppTheme.of(
+                                              //                       context)
+                                              //                   .primaryText,
+                                              //               size: 25,
+                                              //             ),
+                                              //           ),
+                                              //           Expanded(
+                                              //             child: Row(
+                                              //               mainAxisSize:
+                                              //                   MainAxisSize
+                                              //                       .max,
+                                              //               mainAxisAlignment:
+                                              //                   MainAxisAlignment
+                                              //                       .spaceBetween,
+                                              //               children: [
+                                              //                 Text(
+                                              //                   productoCot
+                                              //                       .productosProv
+                                              //                       .target!
+                                              //                       .nombre,
+                                              //                   style: AppTheme.of(
+                                              //                           context)
+                                              //                       .bodyText1
+                                              //                       .override(
+                                              //                         fontFamily:
+                                              //                             AppTheme.of(context)
+                                              //                                 .bodyText1Family,
+                                              //                         fontWeight:
+                                              //                             FontWeight
+                                              //                                 .normal,
+                                              //                         useGoogleFonts: GoogleFonts
+                                              //                                 .asMap()
+                                              //                             .containsKey(
+                                              //                                 AppTheme.of(context).bodyText1Family),
+                                              //                       ),
+                                              //                 ),
 
-                                                              SizedBox(
-                                                                width: 40,
-                                                                height: 40,
-                                                                child: Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .all(
-                                                                          8.0),
-                                                                  child:
-                                                                      TextFormField(
-                                                                    keyboardType:
-                                                                        TextInputType
-                                                                            .number,
-                                                                    initialValue:
-                                                                        productoCot
-                                                                            .cantidad
-                                                                            .toString(),
-                                                                    autovalidateMode:
-                                                                        AutovalidateMode
-                                                                            .onUserInteraction,
-                                                                    onChanged:
-                                                                        (value) {
-                                                                      setState(
-                                                                          () {
-                                                                        if (value !=
-                                                                                "" &&
-                                                                            value !=
-                                                                                "0") {
-                                                                          totalProyecto =
-                                                                              totalProyecto - productoCot.costoTotal;
-                                                                          productoCot.cantidad =
-                                                                              int.parse(value);
-                                                                          productoCot.costoTotal =
-                                                                              productoCot.cantidad * productoCot.costoUnitario;
+                                              //                 SizedBox(
+                                              //                   width: 40,
+                                              //                   height: 40,
+                                              //                   child: Padding(
+                                              //                     padding:
+                                              //                         const EdgeInsets
+                                              //                                 .all(
+                                              //                             8.0),
+                                              //                     child:
+                                              //                         TextFormField(
+                                              //                       keyboardType:
+                                              //                           TextInputType
+                                              //                               .number,
+                                              //                       initialValue:
+                                              //                           productoCot
+                                              //                               .cantidad
+                                              //                               .toString(),
+                                              //                       autovalidateMode:
+                                              //                           AutovalidateMode
+                                              //                               .onUserInteraction,
+                                              //                       onChanged:
+                                              //                           (value) {
+                                              //                         setState(
+                                              //                             () {
+                                              //                           if (value !=
+                                              //                                   "" &&
+                                              //                               value !=
+                                              //                                   "0") {
+                                              //                             totalProyecto =
+                                              //                                 totalProyecto - productoCot.costoTotal;
+                                              //                             productoCot.cantidad =
+                                              //                                 int.parse(value);
+                                              //                             productoCot.costoTotal =
+                                              //                                 productoCot.cantidad * productoCot.costoUnitario;
 
-                                                                          totalProyecto =
-                                                                              totalProyecto + productoCot.costoTotal;
-                                                                          bandera = false;
-                                                                        } else {
-                                                                          bandera = true;
-                                                                          snackbarKey
-                                                                              .currentState
-                                                                              ?.showSnackBar(const SnackBar(
-                                                                            content:
-                                                                                Text("No puede ser 0 o nula la cantidad requerida."),
-                                                                          ));
-                                                                        }
-                                                                      });
-                                                                    },
-                                                                    obscureText:
-                                                                        false,
+                                              //                             totalProyecto =
+                                              //                                 totalProyecto + productoCot.costoTotal;
+                                              //                             bandera = false;
+                                              //                           } else {
+                                              //                             bandera = true;
+                                              //                             snackbarKey
+                                              //                                 .currentState
+                                              //                                 ?.showSnackBar(const SnackBar(
+                                              //                               content:
+                                              //                                   Text("No puede ser 0 o nula la cantidad requerida."),
+                                              //                             ));
+                                              //                           }
+                                              //                         });
+                                              //                       },
+                                              //                       obscureText:
+                                              //                           false,
                                                                     
-                                                                    style: AppTheme.of(
-                                                                            context)
-                                                                        .title3
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Poppins',
-                                                                          color:
-                                                                              const Color(0xFF221573),
-                                                                          fontSize:
-                                                                              15,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                        ),
-                                                                    inputFormatters: [
-                                                                      LengthLimitingTextInputFormatter(
-                                                                          2),
-                                                                    ],
+                                              //                       style: AppTheme.of(
+                                              //                               context)
+                                              //                           .title3
+                                              //                           .override(
+                                              //                             fontFamily:
+                                              //                                 'Poppins',
+                                              //                             color:
+                                              //                                 const Color(0xFF221573),
+                                              //                             fontSize:
+                                              //                                 15,
+                                              //                             fontWeight:
+                                              //                                 FontWeight.normal,
+                                              //                           ),
+                                              //                       inputFormatters: [
+                                              //                         LengthLimitingTextInputFormatter(
+                                              //                             2),
+                                              //                       ],
                                                                     
-                                                                  ),
-                                                                ),
-                                                              ),
+                                              //                     ),
+                                              //                   ),
+                                              //                 ),
                                                              
-                                                              Text(
-                                                                currencyFormat.format(
-                                                                    (productoCot
-                                                                            .costoTotal)
-                                                                        .toStringAsFixed(
-                                                                            2)),
-                                                                style: AppTheme.of(
-                                                                        context)
-                                                                    .bodyText1
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          AppTheme.of(context)
-                                                                              .bodyText1Family,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .normal,
-                                                                      useGoogleFonts: GoogleFonts
-                                                                              .asMap()
-                                                                          .containsKey(
-                                                                              AppTheme.of(context).bodyText1Family),
-                                                                    ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    );
-                                                  },
-                                                );
-                                              }),
+                                              //                 Text(
+                                              //                   currencyFormat.format(
+                                              //                       (productoCot
+                                              //                               .costoTotal)
+                                              //                           .toStringAsFixed(
+                                              //                               2)),
+                                              //                   style: AppTheme.of(
+                                              //                           context)
+                                              //                       .bodyText1
+                                              //                       .override(
+                                              //                         fontFamily:
+                                              //                             AppTheme.of(context)
+                                              //                                 .bodyText1Family,
+                                              //                         fontWeight:
+                                              //                             FontWeight
+                                              //                                 .normal,
+                                              //                         useGoogleFonts: GoogleFonts
+                                              //                                 .asMap()
+                                              //                             .containsKey(
+                                              //                                 AppTheme.of(context).bodyText1Family),
+                                              //                       ),
+                                              //                 ),
+                                              //               ],
+                                              //             ),
+                                              //           ),
+                                              //         ],
+                                              //       );
+                                              //     },
+                                              //   );
+                                              // }),
+                                            ),
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.9,
+                                              height: 1,
+                                              decoration: BoxDecoration(
+                                                color: AppTheme.of(context)
+                                                    .secondaryText,
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
                                             ),
                                             IgnorePointer(
                                               ignoring: actualInversion!
@@ -2309,4 +2310,118 @@ class _PagosScreenState extends State<PagosScreen> {
       ),
     );
   }
+
+  DataRow _getDataRow(ProdCotizados prodCotizado, int index, RecepcionYEntregaController recepcionYentregaProvider) {
+  return DataRow(
+    color: MaterialStateProperty.all(Colors.transparent),
+    selected: prodCotizado.aceptado,
+    onSelectChanged: (value) {
+      setState(() {
+      recepcionYentregaProvider
+              .prodCotizadosTemp[
+                  index]
+              .aceptado =
+          !recepcionYentregaProvider
+              .prodCotizadosTemp[
+                  index]
+              .aceptado;
+      if (recepcionYentregaProvider
+          .prodCotizadosTemp[
+              index]
+          .aceptado) {
+        totalProyecto =
+            prodCotizado
+                    .costoTotal +
+                totalProyecto;
+      } else {
+        totalProyecto =
+            totalProyecto -
+                prodCotizado
+                    .costoTotal;
+      }
+    });
+    },
+    cells: <DataCell>[
+      DataCell(Center(
+        child: Text(
+          prodCotizado.productosProv.target!.nombre,
+          style: GoogleFonts.roboto(
+                fontSize: 14.0,
+                fontWeight: FontWeight.w400,
+                color: Colors.black)
+        ),
+      )),
+      DataCell(Center(
+        child: TextFormField(
+          keyboardType:
+              const TextInputType
+                  .numberWithOptions(signed: true),
+          initialValue:
+              prodCotizado.cantidad.toString(),
+          autovalidateMode:
+              AutovalidateMode
+                  .onUserInteraction,
+          onChanged:
+              (value) {
+            setState(
+                () {
+              if (value !=
+                      "" &&
+                  value !=
+                      "0") {
+                totalProyecto =
+                    totalProyecto - prodCotizado.costoTotal;
+                prodCotizado.cantidad =
+                    int.parse(value);
+                prodCotizado.costoTotal =
+                    prodCotizado.cantidad * prodCotizado.costoUnitario;
+
+                totalProyecto =
+                    totalProyecto + prodCotizado.costoTotal;
+                bandera = false;
+              } else {
+                bandera = true;
+                snackbarKey
+                    .currentState
+                    ?.showSnackBar(const SnackBar(
+                  content:
+                      Text("No puede ser 0 o nula la cantidad requerida."),
+                ));
+              }
+            });
+          },
+          obscureText:
+              false,
+          
+          style: AppTheme.of(
+                  context)
+              .title3
+              .override(
+                fontFamily:
+                    'Poppins',
+                color:
+                    const Color(0xFF221573),
+                fontSize:
+                    15,
+                fontWeight:
+                    FontWeight.normal,
+              ),
+          inputFormatters: [
+            LengthLimitingTextInputFormatter(
+                2),
+            FilteringTextInputFormatter.allow(RegExp(r'^[1-9][0-9]*'))
+          ],                                   
+        ),
+      )),
+      
+      DataCell(Center(
+        child: Text(prodCotizado.costoTotal.toString(),
+            style: GoogleFonts.roboto(
+                fontSize: 14.0,
+                fontWeight: FontWeight.w400,
+                color: Colors.black)),
+      )),
+    ],
+  );
+}
 }

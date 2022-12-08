@@ -86,11 +86,6 @@ class ProductoEmprendedorController extends ChangeNotifier {
       // updateProdEmprendedor.imagen =  newImagen;
       updateProdEmprendedor.costo = double.parse(newCosto);
       updateProdEmprendedor.unidadMedida.target = updateUnidadMedida;
-      final statusSyncJornada = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateProdEmprendedor.statusSync.target!.id)).build().findUnique();
-      if (statusSyncJornada != null) {
-        statusSyncJornada.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del prod Solicitado
-        dataBase.statusSyncBox.put(statusSyncJornada);
-      }
       updateProdEmprendedor.bitacora.add(nuevaInstruccion);
       dataBase.productosEmpBox.put(updateProdEmprendedor);
     }
