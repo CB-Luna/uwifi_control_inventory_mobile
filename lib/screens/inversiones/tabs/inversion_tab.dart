@@ -137,7 +137,7 @@ class _InversionTabState extends State<InversionTab>
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Text(
-                                          widget.emprendimiento.nombre,
+                                          maybeHandleOverflow(widget.emprendimiento.nombre, 30, "..."),
                                           style: AppTheme.of(context)
                                               .bodyText1
                                               .override(

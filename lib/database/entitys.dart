@@ -144,7 +144,6 @@ class Inversiones {
   bool jornada3;
   @Unique()
   String? idDBR;
-  @Unique()
   String? idEmiWeb;
   final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();

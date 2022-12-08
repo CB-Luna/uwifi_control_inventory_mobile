@@ -2141,6 +2141,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   "pago_recibido": false,
                   "producto_entregado": false,
                   "id_emi_web": "0",
+                  "jornada_3": inversionJornada3.jornada3,
                 });
                 if (recordInversion.id.isNotEmpty) {     
                   //Se recupera el idDBR de la inversion
@@ -3293,6 +3294,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
               "pago_recibido": false,
               "producto_entregado": false,
               "id_emi_web": inversion.idEmiWeb,
+              "jornada_3": inversion.jornada3,
             });
           if (recordInversion.id.isNotEmpty) {     
             //Se recupera el idDBR de la inversion
@@ -4972,14 +4974,23 @@ void deleteBitacora() {
               //Se recupera el idDBR de la imagen
               inversion.imagenProductoEntregado.target!.idDBR = recordImagenProductoEntregado.id;
               dataBase.imagenesBox.put(inversion.imagenProductoEntregado.target!);
-              //Se marca como realizada en Pocketbase la instrucción en Bitacora
-              bitacora.executePocketbase = true;
-              dataBase.bitacoraBox.put(bitacora);
-              if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
-                //Se elimina la instrucción de la bitacora
-                dataBase.bitacoraBox.remove(bitacora.id);
-              } 
-              return true;
+              //Se actualiza Inversión en Pocketbase
+              final recordInversion = await client.records.update('inversiones', inversion.idDBR!, body: {
+                "id_imagen_firma_recibido_fk": recordImagenFirmaRecibido.id,
+                "id_imagen_producto_entregado_fk": recordImagenProductoEntregado.id,
+              });
+              if (recordInversion.id.isNotEmpty) {
+                //Se marca como realizada en Pocketbase la instrucción en Bitacora
+                bitacora.executePocketbase = true;
+                dataBase.bitacoraBox.put(bitacora);
+                if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+                  //Se elimina la instrucción de la bitacora
+                  dataBase.bitacoraBox.remove(bitacora.id);
+                } 
+                return true;
+              } else {
+                return false;
+              }
             } else {
               return false;
             }

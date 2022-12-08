@@ -197,7 +197,7 @@ with TickerProviderStateMixin {
                                               .max,
                                       children: [
                                         Text(
-                                          widget.emprendimiento.nombre,
+                                          maybeHandleOverflow(widget.emprendimiento.nombre, 30, "..."),
                                           style: AppTheme.of(context)
                                               .bodyText1
                                               .override(
