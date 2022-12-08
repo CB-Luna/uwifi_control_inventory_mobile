@@ -1,6 +1,7 @@
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
+import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
@@ -89,7 +90,7 @@ class _FrenteTarjetaDescripcionWidgetState extends State<FrenteTarjetaDescripcio
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    widget.emprendimiento.nombre,
+                    maybeHandleOverflow(widget.emprendimiento.nombre, 26, "..."),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTheme.of(context)

@@ -32,7 +32,6 @@ class Payload {
         required this.archivadoStaff,
         required this.idCatEstadoInversion,
         required this.fechaDeCompra,
-        this.factura,
         required this.porcentajePago,
         required this.montoPagar,
         required this.saldo,
@@ -47,7 +46,6 @@ class Payload {
     final bool archivadoStaff;
     final int idCatEstadoInversion;
     final DateTime? fechaDeCompra;
-    final int? factura;
     final double porcentajePago;
     final double montoPagar;
     final double saldo;
@@ -62,7 +60,6 @@ class Payload {
         archivadoStaff: json["archivadoStaff"],
         idCatEstadoInversion: json["idCatEstadoInversion"],
         fechaDeCompra: json["fechaDeCompra"] == null ? null : DateTime.parse(json["fechaDeCompra"]),
-        factura: json["factura"],
         porcentajePago: json["porcentajePago"].toDouble(),
         montoPagar: json["montoPagar"].toDouble(),
         saldo: json["saldo"].toDouble(),
@@ -78,7 +75,6 @@ class Payload {
         "archivadoStaff": archivadoStaff,
         "idCatEstadoInversion": idCatEstadoInversion,
         "fechaDeCompra": fechaDeCompra == null ? null : "${fechaDeCompra!.year.toString().padLeft(4, '0')}-${fechaDeCompra!.month.toString().padLeft(2, '0')}-${fechaDeCompra!.day.toString().padLeft(2, '0')}",
-        "factura": factura,
         "porcentajePago": porcentajePago,
         "montoPagar": montoPagar,
         "saldo": saldo,

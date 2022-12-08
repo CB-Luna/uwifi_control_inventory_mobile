@@ -2649,7 +2649,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                             "proveedorSugerido": inversionJornada3.prodSolicitados.toList()[i].proveedorSugerido,
                             "idProyecto": jornada.emprendimiento.target!.idEmiWeb,
                             "idFamilia": inversionJornada3.prodSolicitados.toList()[i].familiaProducto.target!.idEmiWeb,
-                            "unidadMedida": inversionJornada3.prodSolicitados.toList()[i].tipoEmpaques.target!.idEmiWeb,
+                            "unidadMedida": inversionJornada3.prodSolicitados.toList()[i].tipoEmpaques.target!.idEmiWeb, //TODO: Posible falla en sincronización, Unidad medida-Tipo empaque
                           }));
                           final responsePostProductoProyectoParse = postRegistroExitosoEmiWebFromMap(
                           const Utf8Decoder().convert(responsePostProductoProyecto.bodyBytes));

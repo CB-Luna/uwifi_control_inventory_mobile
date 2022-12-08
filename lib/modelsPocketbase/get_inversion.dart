@@ -13,7 +13,6 @@ class GetInversion {
         required this.updated,
         required this.idEmprendimientoFk,
         required this.idEstadoInversionFk,
-        this.factura,
         this.porcentajePago,
         required this.inversionRecibida,
         required this.pagoRecibido,
@@ -27,7 +26,6 @@ class GetInversion {
     final DateTime? updated;
     final String idEmprendimientoFk;
     final String idEstadoInversionFk;
-    final String? factura;
     final int? porcentajePago;
     final bool inversionRecibida;
     final bool pagoRecibido;
@@ -41,7 +39,6 @@ class GetInversion {
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
         idEmprendimientoFk: json["id_emprendimiento_fk"],
         idEstadoInversionFk: json["id_estado_inversion_fk"],
-        factura: json["factura"] == null ? null : json["factura"]!,
         porcentajePago: json["porcentaje_pago"] == null ? null : json["porcentaje_pago"]!,
         inversionRecibida: json["inversion_recibida"],
         pagoRecibido: json["pago_recibido"],
@@ -56,7 +53,6 @@ class GetInversion {
         "updated": updated == null ? null : updated!.toIso8601String(),
         "id_emprendimiento_fk": idEmprendimientoFk,
         "id_estado_inversion_fk": idEstadoInversionFk,
-        "factura": factura == null ? null : factura!,
         "porcentaje_pago": porcentajePago == null ? null : porcentajePago!,
         "inversion_recibida": inversionRecibida,
         "pago_recibido": pagoRecibido,
