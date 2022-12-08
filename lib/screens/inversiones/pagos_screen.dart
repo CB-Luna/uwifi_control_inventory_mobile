@@ -297,7 +297,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                       "Emprendedor",
                                               child: DataTable(
                                                 showCheckboxColumn: true,
-                                                columnSpacing: 60.0,
+                                                columnSpacing: 40.0,
                                                 columns: <DataColumn>[
                                                   DataColumn( 
                                                       label: Expanded(
@@ -2317,7 +2317,8 @@ class _PagosScreenState extends State<PagosScreen> {
     selected: prodCotizado.aceptado,
     onSelectChanged: (value) {
       setState(() {
-      recepcionYentregaProvider
+      
+        recepcionYentregaProvider
               .prodCotizadosTemp[
                   index]
               .aceptado =
@@ -2333,12 +2334,16 @@ class _PagosScreenState extends State<PagosScreen> {
             prodCotizado
                     .costoTotal +
                 totalProyecto;
+                bandera=false;
       } else {
         totalProyecto =
             totalProyecto -
                 prodCotizado
                     .costoTotal;
+                    bandera=true;
       }
+
+      
     });
     },
     cells: <DataCell>[
@@ -2353,6 +2358,7 @@ class _PagosScreenState extends State<PagosScreen> {
       )),
       DataCell(Center(
         child: TextFormField(
+          readOnly: bandera,
           keyboardType:
               const TextInputType
                   .numberWithOptions(signed: true),
@@ -2378,9 +2384,9 @@ class _PagosScreenState extends State<PagosScreen> {
 
                 totalProyecto =
                     totalProyecto + prodCotizado.costoTotal;
-                bandera = false;
+                
               } else {
-                bandera = true;
+                
                 snackbarKey
                     .currentState
                     ?.showSnackBar(const SnackBar(
