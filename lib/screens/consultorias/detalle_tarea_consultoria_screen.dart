@@ -472,7 +472,10 @@ class _DetalleTareaConsultoriaScreenState
                                           borderRadius:
                                               BorderRadius.circular(8),
                                           child: getImageTareaConsultoria(
-                                            widget.tarea.imagenes.last.imagenes,
+                                            widget.tarea.imagenes.isNotEmpty ?
+                                            widget.tarea.imagenes.last.imagenes
+                                            :
+                                            null,
                                             height: 200,
                                             width: 250
                                           ),

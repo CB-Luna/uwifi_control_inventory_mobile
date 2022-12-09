@@ -4096,6 +4096,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
     try {
       if (!bitacora.executePocketbase) {
         if (tarea.imagenes.toList().isNotEmpty) {
+          print("SI ES NOT EMPTY");
           if (tarea.imagenes.first.idDBR == null) {
             //Primero creamos la imagen asociada al producto Emp
             final recordImagen = await client.records.create('imagenes', body: {
@@ -4224,7 +4225,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
             }
           }
         } else {
-          if (tarea.imagenes.first.idDBR == null) {
+          print("NO ES NOT EMPTY");
+          if (tarea.idDBR == null) {
             // No hay imagen asociada al producto Emp
             //Segundo creamos la tarea asociada a la consultoria
             final recordTarea = await client.records.create('tareas', body: {

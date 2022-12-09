@@ -838,7 +838,7 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                                                       0),
                                                               child: AutoSizeText(
                                                                 tareas[index + 1]
-                                                                    .tarea,
+                                                                    .descripcion,
                                                                 maxLines: 2,
                                                                 style: AppTheme.of(
                                                                         context)
@@ -882,7 +882,7 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                                         ),
                                                         child: InkWell(
                                                           onTap: () async {
-                                                            if (tareas[index + 1].imagenes.last.imagenes != "") {
+                                                            if (tareas[index + 1].imagenes.isNotEmpty) {
                                                               await Navigator.push(
                                                               context,
                                                               PageTransition(
