@@ -3248,8 +3248,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
   Future<bool> syncAddProductoEmprendedor(ProductosEmp productoEmp, Bitacora bitacora) async {
     print("Estoy en El syncAddProductoEmprendedor de Emi Web");
     try {
-      final imagenToSync = dataBase.imagenesBox.get(productoEmp.imagen.target?.id ?? -1);
+      final imagenToSync = dataBase.imagenesBox.query(Imagenes_.id.equals(productoEmp.imagen.target?.id ?? -1)).build().findUnique();
       if (imagenToSync != null) {
+        print("SÍ HAY IMAGEN ASOCIADA EN EMI WEB");
         //Verificamos que no se haya posteado anteriormente la imagen
         if (imagenToSync.idEmiWeb == null) {
           print("Primer if");
@@ -3378,6 +3379,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           }
         }
       } else {
+        print("NO HAY IMAGEN ASOCIADA EN EMI WEB");
         if (productoEmp.idEmiWeb == null) {
           //No existe una imagen asociada al producto Emp
           // Primero creamos el producto Emprendedor
@@ -3444,13 +3446,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         "Content-Type": "application/json",
         'Authorization': 'Bearer $tokenGlobal',
       });
+      print("DATOS DE LA IMAGEN DEL PROD EMPRENDEDOR");
+      print(imagen.nombre);
+      print(imagen.base64);
+      print(imagen.productosEmp.target!.emprendimientos.target!.usuario.target!.idEmiWeb);
       final responsePostAddImagenProductoEmprendedor = await post(crearImagenProductoEmprendedorUri, 
       headers: headers,
       body: jsonEncode({
         "idCatTipoDocumento": "3", //Imagen Producto Emprendedor
         "nombreArchivo": imagen.nombre,
         "archivo": imagen.base64,
-        "idUsuario": imagen.usuario.target!.idEmiWeb,
+        "idUsuario": imagen.productosEmp.target!.emprendimientos.target!.usuario.target!.idEmiWeb,
       }));
 
       switch (responsePostAddImagenProductoEmprendedor.statusCode) {
@@ -4780,6 +4786,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 "siguientesPasos": tarea.tarea,
                 "idConsultoria": tarea.consultoria.target!.idEmiWeb,
                 "fechaRegistro": DateFormat("yyyy-MM-ddTHH:mm:ss").format(tarea.fechaRegistro),
+                "idDocumento": responsePostImagenProductoEmpParse.payload.idDocumento,
               }));
               print(responsePostConsultoria.statusCode);
               print(responsePostConsultoria.body);
@@ -4825,6 +4832,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               "siguientesPasos": tarea.tarea,
               "idConsultoria": tarea.consultoria.target!.idEmiWeb,
               "fechaRegistro": DateFormat("yyyy-MM-ddTHH:mm:ss").format(tarea.fechaRegistro),
+              "idDocumento": tarea.imagenes.first.idEmiWeb,
             }));
             print(responsePostConsultoria.statusCode);
             print(responsePostConsultoria.body);

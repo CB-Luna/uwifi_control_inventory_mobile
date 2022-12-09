@@ -2940,6 +2940,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
       if (!bitacora.executePocketbase) {
         final imagenToSync = dataBase.imagenesBox.query(Imagenes_.id.equals(productoEmp.imagen.target?.id ?? -1)).build().findUnique();
         if (imagenToSync != null) {  
+          print("SÍ HAY IMAGEN ASOCIADA");
           if (imagenToSync.idDBR == null) {
             //Primero creamos la imagen asociada al producto Emp
             final recordImagen = await client.records.create('imagenes', body: {
@@ -3020,8 +3021,17 @@ class SyncProviderPocketbase extends ChangeNotifier {
             }
           }
         } else {
+          print("NO HAY IMAGEN ASOCIADA");
           // No hay imagen asociada al producto Emp
           if (productoEmp.idDBR == null) {
+            print("Info productos");
+            print(productoEmp.nombre);
+            print(productoEmp.descripcion);
+            print(productoEmp.unidadMedida.target!.idDBR);
+            print(productoEmp.costo);
+            print(productoEmp.emprendimientos.target!.idDBR);
+            print(productoEmp.archivado);
+            print(productoEmp.idEmiWeb);
             //Primero creamos el producto Emp 
             final recordProductoEmp = await client.records.create('productos_emp', body: {
               "nombre_prod_emp": productoEmp.nombre,
@@ -3064,6 +3074,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return true;
       }
     } catch (e) {
+      print("Orale es CATCH");
       print('ERROR - function syncAddProductoEmp(): $e');
       return false;
     }

@@ -93,31 +93,34 @@ class ProductoEmprendedorController extends ChangeNotifier {
     notifyListeners();
 }
 
-void updateImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPath, String newBase64) {
-    var updateImagenUsuario = dataBase.imagenesBox.get(idImagenUsuario);
+void updateImagenProductoEmp(int idImagenProductoEmp, String newNombreImagen, String newPath, String newBase64) {
+    var updateImagenProductoEmp = dataBase.imagenesBox.get(idImagenProductoEmp);
     final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateImagenProductoEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-    if (updateImagenUsuario != null) {
-      updateImagenUsuario.imagenes = newPath; //Se actualiza la imagen del usuario
-      updateImagenUsuario.nombre = newNombreImagen;
-      updateImagenUsuario.base64 = newBase64;
-      updateImagenUsuario.path = newPath;
-      updateImagenUsuario.bitacora.add(nuevaInstruccion);
-      dataBase.imagenesBox.put(updateImagenUsuario);
+    if (updateImagenProductoEmp != null) {
+      updateImagenProductoEmp.imagenes = newPath; //Se actualiza la imagen del producto emprendedor
+      updateImagenProductoEmp.nombre = newNombreImagen;
+      updateImagenProductoEmp.base64 = newBase64;
+      updateImagenProductoEmp.path = newPath;
+      updateImagenProductoEmp.bitacora.add(nuevaInstruccion);
+      dataBase.imagenesBox.put(updateImagenProductoEmp);
       print('Imagen Prod Emprendedor actualizada exitosamente');
     }
     notifyListeners();
   }
 
-void addImagenUsuario(String newNombreImagen, String newPath, String newBase64) {
+void addImagenProductoEmp(ProductosEmp productoEmp, String newNombreImagen, String newPath, String newBase64) {
     final nuevaInstruccion = Bitacora(instruccion: 'syncAddImagenProductoEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-      final newImagenUsuario = Imagenes(
+      final nuevaImagenProductoEmp = Imagenes(
         imagenes: newPath,
         nombre: newNombreImagen,
         base64: newBase64,
         path: newPath,
       );
-      newImagenUsuario.bitacora.add(nuevaInstruccion);
-      dataBase.imagenesBox.put(newImagenUsuario);
+      nuevaImagenProductoEmp.productosEmp.target = productoEmp;
+      productoEmp.imagen.target = nuevaImagenProductoEmp;
+      nuevaImagenProductoEmp.bitacora.add(nuevaInstruccion);
+      dataBase.imagenesBox.put(nuevaImagenProductoEmp);
+      dataBase.productosEmpBox.put(productoEmp);
       print('Imagen Prod Emprendedor agregada exitosamente');
     notifyListeners();
   }

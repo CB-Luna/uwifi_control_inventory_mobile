@@ -663,8 +663,8 @@ class _RegistroVentaScreenState
                                                                                 .spaceBetween,
                                                                         children: [
                                                                           Text(
-                                                                            prodVendido
-                                                                                .productoEmp.target?.nombre ?? "SIN NOMBRE",
+                                                                            maybeHandleOverflow(prodVendido
+                                                                                .productoEmp.target?.nombre ?? "SIN NOMBRE", 18, "..."),
                                                                             style: AppTheme.of(context)
                                                                                 .subtitle1
                                                                                 .override(
@@ -673,10 +673,10 @@ class _RegistroVentaScreenState
                                                                                 ),
                                                                           ),
                                                                           Text(
-                                                                            'Und: ${prodVendido.
+                                                                            maybeHandleOverflow('Und: ${prodVendido.
                                                                                     productoEmp.
                                                                                     target?.
-                                                                                    unidadMedida.target?.unidadMedida ?? "SIN UNIDADES"}',
+                                                                                    unidadMedida.target?.unidadMedida ?? "SIN UNIDADES"}', 12, "..."),
                                                                             style: AppTheme.of(context)
                                                                                 .subtitle1
                                                                                 .override(

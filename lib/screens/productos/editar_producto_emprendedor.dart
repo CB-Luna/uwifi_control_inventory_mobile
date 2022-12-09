@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bizpro_app/screens/productos/detalle_producto_emprendedor.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -40,7 +41,7 @@ class _EditarProductoEmprendedorScreenState
     String path = "";
     String base64 = "";
     String nombreImagen = "";
-    late String newImagen;
+    String newImagen = "";
     String unidadMedida = "";
     List<String> listUnidadesMedida = [];
 
@@ -117,7 +118,14 @@ class _EditarProductoEmprendedorScreenState
                               ),
                               child: InkWell(
                                 onTap: () async {
-                                  Navigator.pop(context);
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                    builder: (context) =>
+                                        DetalleProductoEmprendedor(
+                                        productoEmprendedor: widget.productoEmprendedor
+                                        ,)),
+                                  );
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
@@ -615,12 +623,15 @@ class _EditarProductoEmprendedorScreenState
                                                   widget.productoEmprendedor.imagen.target?.path
                                                 ) {
                                                   if (widget.productoEmprendedor.imagen.target?.path == null) {
-                                                    productoEmprendedorProvider.addImagenUsuario(
+                                                    print("SE AGREGA IMAGEN NUEVA");
+                                                    productoEmprendedorProvider.addImagenProductoEmp(
+                                                      widget.productoEmprendedor,
                                                       nombreImagen,
                                                       path,
                                                       base64);
                                                   } else {
-                                                    productoEmprendedorProvider.updateImagenUsuario(
+                                                    print("SE AACTUALIZA IMAGEN NUEVA");
+                                                    productoEmprendedorProvider.updateImagenProductoEmp(
                                                       widget.productoEmprendedor.imagen.target!.id,
                                                       nombreImagen,
                                                       path,
@@ -669,12 +680,13 @@ class _EditarProductoEmprendedorScreenState
                                           widget.productoEmprendedor.imagen.target?.path
                                         ) {
                                           if (widget.productoEmprendedor.imagen.target?.path == null) {
-                                            productoEmprendedorProvider.addImagenUsuario(
+                                            productoEmprendedorProvider.addImagenProductoEmp(
+                                              widget.productoEmprendedor,
                                               nombreImagen,
                                               path,
                                               base64);
                                           } else {
-                                            productoEmprendedorProvider.updateImagenUsuario(
+                                            productoEmprendedorProvider.updateImagenProductoEmp(
                                               widget.productoEmprendedor.imagen.target!.id,
                                               nombreImagen,
                                               path,

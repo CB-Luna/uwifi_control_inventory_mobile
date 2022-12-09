@@ -650,8 +650,8 @@ class _RegistroVentaTemporalScreenState
                                                                                 .spaceBetween,
                                                                         children: [
                                                                           Text(
-                                                                            prodVendido
-                                                                                .producto,
+                                                                            maybeHandleOverflow(prodVendido
+                                                                                .producto, 18, "..."),
                                                                             style: AppTheme.of(context)
                                                                                 .subtitle1
                                                                                 .override(
@@ -660,7 +660,7 @@ class _RegistroVentaTemporalScreenState
                                                                                 ),
                                                                           ),
                                                                           Text(
-                                                                            'Und: ${prodVendido.unidadMedida}',
+                                                                            maybeHandleOverflow('Und: ${prodVendido.unidadMedida}', 12, "..."),
                                                                             style: AppTheme.of(context)
                                                                                 .subtitle1
                                                                                 .override(

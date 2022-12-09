@@ -301,7 +301,7 @@ class JornadaController extends ChangeNotifier {
             continue;
           }
         case "syncDeleteImagenJornada":
-          final deleteImagen = dataBase.imagenesBox.get(listInstruccionesImagenesTemp[i].imagenLocal.id ?? -1);
+          final deleteImagen = dataBase.imagenesBox.query(Imagenes_.id.equals(listInstruccionesImagenesTemp[i].imagenLocal.id ?? -1)).build().findUnique();
           if(deleteImagen != null) {
             final nuevaInstruccion = Bitacora(
               instruccion: 'syncDeleteImagenJornada', 
