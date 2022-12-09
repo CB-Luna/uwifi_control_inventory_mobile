@@ -655,52 +655,60 @@ class EmpExternosPocketbaseProvider extends ChangeNotifier {
                   );
                   var basicInversionXProdCotizados = getBasicInversionXProdCotizadosPocketbaseFromMap(responseInversionXProdCotizados.body);
                   if (responseInversionXProdCotizados.statusCode == 200) {
-                    for (var elementInversionXProdCotizados in basicInversionXProdCotizados.items) {
-                      // Se agrega nueva InversionXProdCotizados a la inversion
-                      final nuevaInversionXProdCotizados = InversionesXProdCotizados(
-                        aceptado: elementInversionXProdCotizados.aceptado,
-                        fechaRegistro: elementInversionXProdCotizados.created,
-                        idDBR: elementInversionXProdCotizados.id,
-                        idEmiWeb: elementInversionXProdCotizados.idEmiWeb,
-                      );
-                      nuevaInversionXProdCotizados.inversion.target = nuevaInversion;
-                      dataBase.inversionesXprodCotizadosBox.put(nuevaInversionXProdCotizados);
-                      nuevaInversion.inversionXprodCotizados.add(nuevaInversionXProdCotizados);
-                      dataBase.inversionesBox.put(nuevaInversion);
+                    if (basicInversionXProdCotizados.items.toList().isEmpty) {
+                        final nuevaInversionXProdCotizados = InversionesXProdCotizados(); //Se crea la inversion x prod Cotizados
+                        nuevaInversionXProdCotizados.inversion.target = nuevaInversion;
+                        dataBase.inversionesXprodCotizadosBox.put(nuevaInversionXProdCotizados);
+                        nuevaInversion.inversionXprodCotizados.add(nuevaInversionXProdCotizados);
+                        dataBase.inversionesBox.put(nuevaInversion);
+                    } else {
+                      for (var elementInversionXProdCotizados in basicInversionXProdCotizados.items) {
+                        // Se agrega nueva InversionXProdCotizados a la inversion
+                        final nuevaInversionXProdCotizados = InversionesXProdCotizados(
+                          aceptado: elementInversionXProdCotizados.aceptado,
+                          fechaRegistro: elementInversionXProdCotizados.created,
+                          idDBR: elementInversionXProdCotizados.id,
+                          idEmiWeb: elementInversionXProdCotizados.idEmiWeb,
+                        );
+                        nuevaInversionXProdCotizados.inversion.target = nuevaInversion;
+                        dataBase.inversionesXprodCotizadosBox.put(nuevaInversionXProdCotizados);
+                        nuevaInversion.inversionXprodCotizados.add(nuevaInversionXProdCotizados);
+                        dataBase.inversionesBox.put(nuevaInversion);
 
-                      var urlProductosCotizados = Uri.parse("$baseUrl/api/collections/productos_cotizados/records?filter=(id_inversion_x_prod_cotizados_fk='${elementInversionXProdCotizados.id}')&expand=id_producto_prov_fk");
+                        var urlProductosCotizados = Uri.parse("$baseUrl/api/collections/productos_cotizados/records?filter=(id_inversion_x_prod_cotizados_fk='${elementInversionXProdCotizados.id}')&expand=id_producto_prov_fk");
 
-                      var responseProductosCotizados = await get(
-                        urlProductosCotizados,
-                        headers: headers
-                      );
-                      var basicProductosCotizados = getBasicProductosCotizadosPocketbaseFromMap(responseProductosCotizados.body);
-                      if (responseProductosCotizados.statusCode == 200) {
-                        for (var elementProductosCotizados in basicProductosCotizados.items) {
-                          // Se agrega nueva ProductosCotizados a la inversion
-                          final nuevoProductoCotizado = ProdCotizados(
-                            aceptado: elementProductosCotizados.aceptado,
-                            cantidad: elementProductosCotizados.cantidad,
-                            costoTotal: elementProductosCotizados.costoTotal,
-                            costoUnitario: (elementProductosCotizados.costoTotal/elementProductosCotizados.cantidad),
-                            fechaRegistro: elementProductosCotizados.created,
-                            idDBR: elementProductosCotizados.id,
-                            idEmiWeb: elementProductosCotizados.idEmiWeb,
-                          );
-                          final productoProv = dataBase.productosProvBox.query(ProductosProv_.idDBR.equals(elementProductosCotizados.idProductoProvFk)).build().findFirst();
-                          if (productoProv != null) {
-                            nuevoProductoCotizado.productosProv.target = productoProv;
+                        var responseProductosCotizados = await get(
+                          urlProductosCotizados,
+                          headers: headers
+                        );
+                        var basicProductosCotizados = getBasicProductosCotizadosPocketbaseFromMap(responseProductosCotizados.body);
+                        if (responseProductosCotizados.statusCode == 200) {
+                          for (var elementProductosCotizados in basicProductosCotizados.items) {
+                            // Se agrega nueva ProductosCotizados a la inversion
+                            final nuevoProductoCotizado = ProdCotizados(
+                              aceptado: elementProductosCotizados.aceptado,
+                              cantidad: elementProductosCotizados.cantidad,
+                              costoTotal: elementProductosCotizados.costoTotal,
+                              costoUnitario: (elementProductosCotizados.costoTotal/elementProductosCotizados.cantidad),
+                              fechaRegistro: elementProductosCotizados.created,
+                              idDBR: elementProductosCotizados.id,
+                              idEmiWeb: elementProductosCotizados.idEmiWeb,
+                            );
+                            final productoProv = dataBase.productosProvBox.query(ProductosProv_.idDBR.equals(elementProductosCotizados.idProductoProvFk)).build().findFirst();
+                            if (productoProv != null) {
+                              nuevoProductoCotizado.productosProv.target = productoProv;
+                            }
+                            nuevoProductoCotizado.inversionXprodCotizados.target = nuevaInversionXProdCotizados;
+                            dataBase.productosCotBox.put(nuevoProductoCotizado);
+                            nuevaInversionXProdCotizados.prodCotizados.add(nuevoProductoCotizado);
+                            dataBase.inversionesXprodCotizadosBox.put(nuevaInversionXProdCotizados);
                           }
-                          nuevoProductoCotizado.inversionXprodCotizados.target = nuevaInversionXProdCotizados;
-                          dataBase.productosCotBox.put(nuevoProductoCotizado);
-                          nuevaInversionXProdCotizados.prodCotizados.add(nuevoProductoCotizado);
-                          dataBase.inversionesXprodCotizadosBox.put(nuevaInversionXProdCotizados);
+                        } else {
+                          print(responseProductosCotizados.statusCode);
+                          print("No éxito en recuperar Prod cotizados");
+                          banderasExitoSync.add(false);
+                          continue;
                         }
-                      } else {
-                        print(responseProductosCotizados.statusCode);
-                        print("No éxito en recuperar Prod cotizados");
-                        banderasExitoSync.add(false);
-                        continue;
                       }
                     }
                   } else {
