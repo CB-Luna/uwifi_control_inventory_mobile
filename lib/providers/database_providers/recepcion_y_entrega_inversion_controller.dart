@@ -135,18 +135,19 @@ void updatePago(double newMontoAbonado, int idInversion) {
   void finishPago(double newMontoAbonado, int idInversion) {
   final updateInversion = dataBase.inversionesBox.get(idInversion);
   if (updateInversion != null) {
-    final nuevaInstruccionPagoInversion = Bitacora(instruccion: 'syncFinishPagoInversion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+    final nuevaInstruccionPago = Bitacora(instruccion: 'syncAddPagoInversion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
     //Se agrega el nuevo pago para la Inversion
     final nuevoPago = Pagos(
       montoAbonado: newMontoAbonado,
       fechaMovimiento: DateTime.now()
       );
-    final nuevoSyncPago = StatusSync(); //Se crea el objeto estatus por dedault //M__ para el Pago
-    nuevoPago.statusSync.target = nuevoSyncPago;
+    nuevoPago.inversion.target = updateInversion;
+    nuevoPago.bitacora.add(nuevaInstruccionPago);
+    dataBase.pagosBox.put(nuevoPago);
     updateInversion.pagos.add(nuevoPago);
-    //Se resta el nuevo monto abonado al saldo de la Inversion
+    //Se actualiza a 0.0 el saldo de la Inversión
     updateInversion.saldo = 0.0;
-    updateInversion.bitacora.add(nuevaInstruccionPagoInversion);
+    dataBase.inversionesBox.put(updateInversion);
     //Se actualiza el estado de la inversión
     final nuevaInstruccionEstadoInversion = Bitacora(instruccion: 'syncUpdateEstadoInversion', instruccionAdicional: "Pagado", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
     final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Pagado")).build().findFirst();
