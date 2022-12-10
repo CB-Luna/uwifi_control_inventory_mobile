@@ -76,7 +76,6 @@ class UsuarioController extends ChangeNotifier {
         idEmiWeb: idEmiWeb,
         archivado: archivado,
         );
-    final nuevoSyncUsuario = StatusSync(); //Se crea el objeto estatus por dedault //M__ para Usuario
     if (imagen != null) {
       final uInt8ListImagen = base64Decode(imagen.base64);
       final tempDir = await getTemporaryDirectory();
@@ -109,7 +108,6 @@ class UsuarioController extends ChangeNotifier {
     final rolActual = dataBase.rolesBox.query(Roles_.idDBR.equals(rolesIdDBR[0])).build().findUnique(); //Se recupera el rol actual del Usuario
     if (rolActual != null) {
       nuevoUsuario.rol.target = rolActual;
-      nuevoUsuario.statusSync.target = nuevoSyncUsuario;
       nuevoUsuario.imagen.target = nuevaImagenUsuario;
       nuevaImagenUsuario.usuario.target = nuevoUsuario;
       dataBase.usuariosBox.put(nuevoUsuario);

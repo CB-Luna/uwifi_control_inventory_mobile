@@ -60,13 +60,10 @@ class JornadaController extends ChangeNotifier {
       descripcion: "Creación Jornada 1",
       fechaRevision: fechaRevision ?? DateTime.now(),
       fechaRegistro: fechaRegistro);
-    final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
-    nuevaTarea.statusSync.target = nuevoSyncTarea;
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Jornada 1")).build().findFirst();
     if (emprendimiento != null && faseEmp != null) {
       print("Fase de Add1: ${faseEmp.fase}");
-      final nuevoSyncJornada = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Jornada 1
       final nuevaInstruccionJornada = Bitacora(instruccion: 'syncAddJornada1', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Jornada 1", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza la fase del Emprendimiento
@@ -74,7 +71,6 @@ class JornadaController extends ChangeNotifier {
       emprendimiento.faseEmp.add(faseEmp);
       emprendimiento.faseAnterior = faseEmp.fase;
       emprendimiento.faseActual = faseEmp.fase;
-      nuevaJornada.statusSync.target = nuevoSyncJornada;
       nuevaJornada.tarea.target = nuevaTarea;
       nuevaJornada.emprendimiento.target = emprendimiento;
       nuevaJornada.bitacora.add(nuevaInstruccionJornada);
@@ -98,22 +94,12 @@ class JornadaController extends ChangeNotifier {
       updateTarea.fechaRegistro = newFechaRegistro;
       updateTarea.fechaRevision = newFechaRevision;
       updateTarea.tarea = newTarea;
-      final statusSyncTarea = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateTarea.statusSync.target!.id)).build().findUnique();
-      if (statusSyncTarea != null) {
-          statusSyncTarea.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la tarea
-          dataBase.statusSyncBox.put(statusSyncTarea);
-        }
       dataBase.tareasBox.put(updateTarea);
       var updateJornada = dataBase.jornadasBox.get(id);
       if (updateJornada !=  null) {
         updateJornada.fechaRegistro = newFechaRegistro;
         updateJornada.fechaRevision = newFechaRevision;
         updateJornada.completada = newCompletada;
-        final statusSyncJornada = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateJornada.statusSync.target!.id)).build().findUnique();
-        if (statusSyncJornada != null) {
-          statusSyncJornada.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la jornada
-          dataBase.statusSyncBox.put(statusSyncJornada);
-        }
         updateJornada.bitacora.add(nuevaInstruccion);
         dataBase.jornadasBox.put(updateJornada);
         print('Jornada actualizada exitosamente');
@@ -138,8 +124,6 @@ class JornadaController extends ChangeNotifier {
       fechaRevision: fechaRevision ?? DateTime.now(),
       fechaRegistro: fechaRegistro,
       );
-    final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
-    nuevaTarea.statusSync.target = nuevoSyncTarea;
     //Se agregan las imagenes a la Tarea
     for (var i = 0; i < imagenes.length; i++) {
       final nuevaImagenTarea = Imagenes(
@@ -155,7 +139,6 @@ class JornadaController extends ChangeNotifier {
     final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Jornada 2")).build().findFirst();
     if (emprendimiento != null && faseEmp != null) {
       print("Fase de Add2: ${faseEmp.fase}");
-      final nuevoSyncJornada = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Jornada 2
       final nuevaInstruccionJornada = Bitacora(instruccion: 'syncAddJornada2', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Jornada 2", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza la fase del Emprendimiento
@@ -163,7 +146,6 @@ class JornadaController extends ChangeNotifier {
       emprendimiento.faseEmp.add(faseEmp);
       emprendimiento.faseAnterior = faseEmp.fase;
       emprendimiento.faseActual = faseEmp.fase;
-      nuevaJornada.statusSync.target = nuevoSyncJornada;
       nuevaJornada.tarea.target = nuevaTarea;
       nuevaJornada.emprendimiento.target = emprendimiento;
       nuevaJornada.bitacora.add(nuevaInstruccionJornada);
@@ -190,21 +172,11 @@ class JornadaController extends ChangeNotifier {
       updateTarea.comentarios = newComentarios;
       //Se actualiza la tarea con las nuevas imagenes
       dataBase.tareasBox.put(updateTarea);
-      final statusSyncTarea = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateTarea.statusSync.target!.id)).build().findUnique();
-      if (statusSyncTarea != null) {
-          statusSyncTarea.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la tarea
-          dataBase.statusSyncBox.put(statusSyncTarea);
-        }
       final updateJornada = dataBase.jornadasBox.get(id);
       if (updateJornada !=  null) {
         updateJornada.fechaRegistro = newFechaRegistro;
         updateJornada.fechaRevision = newFechaRevision;
         updateJornada.completada = newCompletada;
-        final statusSyncJornada = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateJornada.statusSync.target!.id)).build().findUnique();
-        if (statusSyncJornada != null) {
-          statusSyncJornada.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la jornada
-          dataBase.statusSyncBox.put(statusSyncJornada);
-        }
         updateJornada.bitacora.add(nuevaInstruccion);
         dataBase.jornadasBox.put(updateJornada);
         print('Jornada actualizada exitosamente');
@@ -339,8 +311,6 @@ class JornadaController extends ChangeNotifier {
       fechaRevision: fechaRevision ?? DateTime.now(),
       fechaRegistro: fechaRegistro,
       );
-    final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
-    nuevaTarea.statusSync.target = nuevoSyncTarea;
     //Se agregan las imagenes a la Tarea
     for (var i = 0; i < imagenes.length; i++) {
       final nuevaImagenTarea = Imagenes(
@@ -358,7 +328,6 @@ class JornadaController extends ChangeNotifier {
     final catalogoProyecto = dataBase.catalogoProyectoBox.get(idCatalogoProyecto);
     if (emprendimiento != null && catalogoProyecto != null && faseEmp != null) {
       print("Fase de Add3: ${faseEmp.fase}");
-      final nuevoSyncJornada = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Jornada 3
       final nuevaInstruccionJornada = Bitacora(instruccion: 'syncAddJornada3', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Jornada 3", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza la fase del Emprendimiento
@@ -366,7 +335,6 @@ class JornadaController extends ChangeNotifier {
       emprendimiento.faseEmp.add(faseEmp);
       emprendimiento.faseAnterior = faseEmp.fase;
       emprendimiento.faseActual = faseEmp.fase;
-      nuevaJornada.statusSync.target = nuevoSyncJornada;
       nuevaJornada.tarea.target = nuevaTarea;
       nuevaJornada.emprendimiento.target = emprendimiento;
       nuevaJornada.bitacora.add(nuevaInstruccionJornada);
@@ -380,11 +348,6 @@ class JornadaController extends ChangeNotifier {
       jornadas.add(nuevaJornada);
       print('Jornada 3 agregada exitosamente');
       // Se actualiza el estado del emprendimiento porque se cambia su clasificacionEmp
-      final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(emprendimiento.statusSync.target!.id)).build().findUnique();
-      if (statusSync != null) {
-        statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del emprendimiento
-        dataBase.statusSyncBox.put(statusSync);
-      }
       clearInformation(); //Se limpia información para usar el mismo controller en otro registro
       notifyListeners();
     }
@@ -403,22 +366,12 @@ class JornadaController extends ChangeNotifier {
       updateTarea.descripcion = newDescripcion;
       //Se actualiza la tarea con las nuevas imagenes
       dataBase.tareasBox.put(updateTarea);
-      final statusSyncTarea = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateTarea.statusSync.target!.id)).build().findUnique();
-      if (statusSyncTarea != null) {
-        statusSyncTarea.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la tarea
-        dataBase.statusSyncBox.put(statusSyncTarea);
-      }
       dataBase.tareasBox.put(updateTarea);
       var updateJornada = dataBase.jornadasBox.get(id);
       if (updateJornada !=  null) {
         updateJornada.fechaRegistro = newFechaRegistro;
         updateJornada.fechaRevision = newFechaRevision;
         updateJornada.completada = newCompletada;
-        final statusSyncJornada = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateJornada.statusSync.target!.id)).build().findUnique();
-        if (statusSyncJornada != null) {
-          statusSyncJornada.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la jornada
-          dataBase.statusSyncBox.put(statusSyncJornada);
-        }
         dataBase.jornadasBox.put(updateJornada);
         final updateEmprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
         final updateCatalogoProyecto = dataBase.catalogoProyectoBox.get(newIdProyecto);
@@ -428,11 +381,6 @@ class JornadaController extends ChangeNotifier {
           //Indispensable para que se muestre en la lista de jornadas
           dataBase.emprendimientosBox.put(updateEmprendimiento);
           // Se actualiza el estado del emprendimiento porque se cambia su clasificacionEmp
-          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendimiento.statusSync.target!.id)).build().findUnique();
-          if (statusSync != null) {
-            statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del emprendimiento
-            dataBase.statusSyncBox.put(statusSync);
-          }
           updateJornada.bitacora.add(nuevaInstruccion);
           notifyListeners();
           print('Jornada 3 actualizada exitosamente');
@@ -457,8 +405,6 @@ class JornadaController extends ChangeNotifier {
       fechaRegistro: fechaRegistro,
       );
       print("Entro aca");
-    final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
-    nuevaTarea.statusSync.target = nuevoSyncTarea;
     //Se agregan las imagenes a la Tarea
     for (var i = 0; i < imagenes.length; i++) {
       final nuevaImagenTarea = Imagenes(
@@ -478,16 +424,10 @@ class JornadaController extends ChangeNotifier {
       jornadas = emprendimiento.jornadas.toList();
       for (var i = 0; i < jornadas.length; i++) {
         jornadas[i].completada = true;
-        final statusSyncJornada = dataBase.statusSyncBox.query(StatusSync_.id.equals(jornadas[i].statusSync.target!.id)).build().findUnique();
-        if (statusSyncJornada != null) {
-            statusSyncJornada.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la jornada
-            dataBase.statusSyncBox.put(statusSyncJornada);
-          }
         dataBase.jornadasBox.put(jornadas[i]);
         print('Jornada ${i + 1} actualizada exitosamente');
       }
       print("Entro aca");
-      final nuevoSyncJornada = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Jornada 1
       final nuevaInstruccionJornada = Bitacora(instruccion: 'syncAddJornada4', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Jornada 4", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza la fase del Emprendimiento
@@ -495,7 +435,6 @@ class JornadaController extends ChangeNotifier {
       emprendimiento.faseEmp.add(faseEmp);
       emprendimiento.faseAnterior = faseEmp.fase;
       emprendimiento.faseActual = faseEmp.fase;
-      nuevaJornada.statusSync.target = nuevoSyncJornada;
       nuevaJornada.tarea.target = nuevaTarea;
       nuevaJornada.emprendimiento.target = emprendimiento;
       nuevaJornada.bitacora.add(nuevaInstruccionJornada);
@@ -520,21 +459,11 @@ class JornadaController extends ChangeNotifier {
       updateTarea.comentarios = newComentarios;
       //Se actualiza la tarea con las nuevas imagenes
       dataBase.tareasBox.put(updateTarea);
-      final statusSyncTarea = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateTarea.statusSync.target!.id)).build().findUnique();
-      if (statusSyncTarea != null) {
-          statusSyncTarea.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la tarea
-          dataBase.statusSyncBox.put(statusSyncTarea);
-        }
       dataBase.tareasBox.put(updateTarea);
       var updateJornada = dataBase.jornadasBox.get(id);
       if (updateJornada !=  null) {
         updateJornada.fechaRegistro = newFechaRegistro;
         updateJornada.completada = newCompletada;
-        final statusSyncJornada = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateJornada.statusSync.target!.id)).build().findUnique();
-        if (statusSyncJornada != null) {
-          statusSyncJornada.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la jornada
-          dataBase.statusSyncBox.put(statusSyncJornada);
-        }
         updateJornada.bitacora.add(nuevaInstruccion);
         dataBase.jornadasBox.put(updateJornada);
         print('Jornada actualizada exitosamente');

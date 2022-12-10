@@ -59,9 +59,7 @@ class ProductoEmprendedorController extends ChangeNotifier {
       final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
       final unidadMedidad = dataBase.unidadesMedidaBox.get(idUnidadMedida);
       if (emprendimiento != null && unidadMedidad != null) {
-        final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
         final nuevaInstruccion = Bitacora(instruccion: 'syncAddProductoEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-        nuevoProductoEmp.statusSync.target = nuevoSync;
         nuevoProductoEmp.emprendimientos.target = emprendimiento;
         nuevoProductoEmp.unidadMedida.target = unidadMedidad;
         nuevoProductoEmp.bitacora.add(nuevaInstruccion);
@@ -109,7 +107,8 @@ void updateImagenProductoEmp(int idImagenProductoEmp, String newNombreImagen, St
   }
 
 void addImagenProductoEmp(ProductosEmp productoEmp, String newNombreImagen, String newPath, String newBase64) {
-    final nuevaInstruccion = Bitacora(instruccion: 'syncAddImagenProductoEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+    final nuevaInstruccionImagen = Bitacora(instruccion: 'syncAddImagenProductoEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+    final nuevaInstruccionProductoEmp = Bitacora(instruccion: 'syncUpdateProductoEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       final nuevaImagenProductoEmp = Imagenes(
         imagenes: newPath,
         nombre: newNombreImagen,
@@ -118,7 +117,8 @@ void addImagenProductoEmp(ProductosEmp productoEmp, String newNombreImagen, Stri
       );
       nuevaImagenProductoEmp.productosEmp.target = productoEmp;
       productoEmp.imagen.target = nuevaImagenProductoEmp;
-      nuevaImagenProductoEmp.bitacora.add(nuevaInstruccion);
+      productoEmp.bitacora.add(nuevaInstruccionProductoEmp);
+      nuevaImagenProductoEmp.bitacora.add(nuevaInstruccionImagen);
       dataBase.imagenesBox.put(nuevaImagenProductoEmp);
       dataBase.productosEmpBox.put(productoEmp);
       print('Imagen Prod Emprendedor agregada exitosamente');

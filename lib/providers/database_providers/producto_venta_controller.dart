@@ -100,10 +100,8 @@ void add(int idEmprendimiento, int idVenta) {
           precioVenta: productosVendidos[i].precioVenta, 
         );
         total += productosVendidos[i].subTotal;
-        final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
         final nuevaInstruccion = Bitacora(instruccion: 'syncAddProductoVendido', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
         nuevoProdVendido.productoEmp.target = productoEmp;
-        nuevoProdVendido.statusSync.target = nuevoSync;
         nuevoProdVendido.venta.target = venta;
         nuevoProdVendido.unidadMedida.target = productoEmp.unidadMedida.target;
         nuevoProdVendido.bitacora.add(nuevaInstruccion);
@@ -186,11 +184,6 @@ void update(int id, int idProductoEmp, double newPrecioVenta, int newCantidad, d
       updateProdVendido.cantVendida = newCantidad;
       updateProdVendido.precioVenta =  newPrecioVenta;
       updateProdVendido.subtotal = newSubTotal;
-      final statusSyncProdVendido = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateProdVendido.statusSync.target!.id)).build().findUnique();
-      if (statusSyncProdVendido != null) {
-        statusSyncProdVendido.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del prod Solicitado
-        dataBase.statusSyncBox.put(statusSyncProdVendido);
-      }
       updateProdVendido.bitacora.add(nuevaInstruccion);
       dataBase.productosVendidosBox.put(updateProdVendido);
     }

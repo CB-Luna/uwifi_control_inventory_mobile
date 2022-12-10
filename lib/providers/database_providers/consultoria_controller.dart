@@ -42,8 +42,6 @@ class ConsultoriaController extends ChangeNotifier {
     //Se agrega la imagen a la Tarea y el porcentaje de avance
     final nuevaImagenTarea = Imagenes(imagenes: ""); //Se crea el objeto imagenes para la Tarea
     nuevaTarea.imagenes.add(nuevaImagenTarea);
-    final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
-    nuevaTarea.statusSync.target = nuevoSyncTarea;
     //Se recupera el primer porcentaje de la Tarea
     final porcentajeAvance = dataBase.porcentajeAvanceBox.query(PorcentajeAvance_.porcentajeAvance.equals("1")).build().findFirst();
     if (porcentajeAvance != null) {
@@ -55,10 +53,8 @@ class ConsultoriaController extends ChangeNotifier {
     final ambito = dataBase.ambitoConsultoriaBox.get(idAmbito);
     final areaCirculo = dataBase.areaCirculoBox.get(idAreaCirculo);
     if (emprendimiento != null && ambito != null && areaCirculo != null && faseEmp != null) {
-      final nuevoSyncConsultoria = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Consultoria
       final nuevaInstruccionConsultoria = Bitacora(instruccion: 'syncAddConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Consultorías", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-      nuevaConsultoria.statusSync.target = nuevoSyncConsultoria;
       //Se asigna un ambito y un area del circulo a la nuevaConsultoria
       nuevaConsultoria.ambitoConsultoria.target = ambito;
       nuevaConsultoria.areaCirculo.target = areaCirculo;
@@ -92,8 +88,6 @@ class ConsultoriaController extends ChangeNotifier {
     if (imagenLocal != null) {
       nuevaTarea.imagenes.add(imagenLocal!);
     }
-    final nuevoSyncTarea = StatusSync(); //Se crea el objeto estatus por dedault //M__ para la Tarea
-    nuevaTarea.statusSync.target = nuevoSyncTarea;
     //Se actualiza el porcentaje de la Tarea
     final porcentajeAvance = dataBase.porcentajeAvanceBox.get(idPorcentajeAvance);
     if (porcentajeAvance != null) {
@@ -106,11 +100,6 @@ class ConsultoriaController extends ChangeNotifier {
       nuevaTarea.consultoria.target = updateConsultoria;
       updateConsultoria.tareas.add(nuevaTarea);
       final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateTareaConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-      final statusSyncConsultoria = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateConsultoria.statusSync.target!.id)).build().findUnique();
-      if (statusSyncConsultoria != null) {
-        statusSyncConsultoria.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la consultoria
-        dataBase.statusSyncBox.put(statusSyncConsultoria);
-      }
       dataBase.consultoriasBox.put(updateConsultoria);
       nuevaTarea.bitacora.add(nuevaInstruccion);
       dataBase.tareasBox.put(nuevaTarea);

@@ -597,18 +597,13 @@ class SyncProviderPocketbase extends ChangeNotifier {
         case "syncUpdateNameEmprendimiento":
           final emprendimientoToSync = getFirstEmprendimiento(dataBase.emprendimientosBox.getAll(), instruccionesBitacora[i].id);
           if(emprendimientoToSync != null){
-            if(emprendimientoToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
-              print("Entro aqui en el if");
-              continue;
+            print("Entro aqui en el else");
+            if (emprendimientoToSync.idDBR != null) {
+              print("Ya ha sido enviado al backend");
+              syncUpdateNameEmprendimiento(emprendimientoToSync);
             } else {
-              print("Entro aqui en el else");
-              if (emprendimientoToSync.idDBR != null) {
-                print("Ya ha sido enviado al backend");
-                syncUpdateNameEmprendimiento(emprendimientoToSync);
-              } else {
-                print("No ha sido enviado al backend");
-              }
-            }   
+              print("No ha sido enviado al backend");
+            }
           }  
           continue;
         case "syncUpdateEmprendedor":
@@ -954,10 +949,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
         case "syncUpdateEstadoConsultoria":
           final consultoriaToSync = getFirstConsultoria(dataBase.consultoriasBox.getAll(), instruccionesBitacora[i].id);
           if(consultoriaToSync != null){
-            if(consultoriaToSync.statusSync.target!.status == "HoI36PzYw1wtbO1") {
-              print("Entro aqui en el if");
-              continue;
-            } else {
               print("Entro aqui en el else");
               if (consultoriaToSync.idDBR != null) {
                 print("Ya ha sido enviado al backend");
@@ -965,7 +956,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
               } else {
                 print("No ha sido enviado al backend");
               }
-            }   
           }  
           continue;
         case "syncUpdateUsuario":
@@ -3708,11 +3698,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
       if (record.id.isNotEmpty) {
         var updateEmprendimiento = dataBase.emprendimientosBox.get(emprendimiento.id);
         if (updateEmprendimiento  != null) {
-          final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendimiento.statusSync.target!.id)).build().findUnique();
-          if (statusSync != null) {
-            statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
-            dataBase.statusSyncBox.put(statusSync);
-          }
         }
       }
       else{
@@ -4079,11 +4064,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
       if (record.id.isNotEmpty) {
         var updateConsultoria = dataBase.consultoriasBox.get(consultoria.id);
         if (record.id.isNotEmpty && updateConsultoria != null) {
-            final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateConsultoria.statusSync.target!.id)).build().findUnique();
-            if (statusSync != null) {
-              statusSync.status = "HoI36PzYw1wtbO1";
-              dataBase.statusSyncBox.put(statusSync);
-            }
           return true;
         }
         else {
@@ -4403,19 +4383,26 @@ void deleteBitacora() {
     print("Estoy en El syncUpdateImagenProductoEmprendedor en Pocketbase");
     try {
       if (!bitacora.executePocketbase) {
-        final record = await client.records.update('imagenes', imagen.idDBR.toString(), body: {
+        final recordImagen = await client.records.update('imagenes', imagen.idDBR.toString(), body: {
             "nombre": imagen.nombre,
             "base64": imagen.base64,
         }); 
-        if (record.id.isNotEmpty) {
-          //Se marca como realizada en Pocketbase la instrucción en Bitacora
-          bitacora.executePocketbase = true;
-          dataBase.bitacoraBox.put(bitacora);
-          if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
-            //Se elimina la instrucción de la bitacora
-            dataBase.bitacoraBox.remove(bitacora.id);
+        if (recordImagen.id.isNotEmpty) {
+          final recordProductoEmp = await client.records.update('productos_emp', imagen.productosEmp.target!.idDBR.toString(), body: {
+            "id_imagen_fk": recordImagen.id,
+        }); 
+          if (recordProductoEmp.id.isNotEmpty) {
+            //Se marca como realizada en Pocketbase la instrucción en Bitacora
+            bitacora.executePocketbase = true;
+            dataBase.bitacoraBox.put(bitacora);
+            if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+              //Se elimina la instrucción de la bitacora
+              dataBase.bitacoraBox.remove(bitacora.id);
+            }
+            return true;
+          } else {
+            return false;
           }
-          return true;
         }
         else{
           return false;
@@ -5116,8 +5103,6 @@ void deleteBitacora() {
             // Se debe actualizar la IversionXprodCotizados
             inversion.inversionXprodCotizados.last.idDBR = inversionXprodCotizadosParse.id;
             inversion.inversionXprodCotizados.last.idEmiWeb = inversionXprodCotizadosParse.idEmiWeb;
-            final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1");
-            inversion.inversionXprodCotizados.last.statusSync.target = nuevoSync;
             for (var i = 0; i < recordProdCotizados.length; i++) {
               //Se valida que el nuevo prod Cotizado aún no existe en Objectbox
               final prodCotizadoExistente = dataBase.productosCotBox.query(ProdCotizados_.idDBR.equals(listProdCotizados[i].id)).build().findUnique();
@@ -5130,10 +5115,8 @@ void deleteBitacora() {
                 idEmiWeb: listProdCotizados[i].idEmiWeb,
                 costoUnitario:listProdCotizados[i].costoTotal/listProdCotizados[i].cantidad,
                 );
-                final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
                 final productoProv = dataBase.productosProvBox.query(ProductosProv_.idDBR.equals(listProdCotizados[i].idProductoProvFk)).build().findUnique();
                 if (productoProv != null) {
-                  nuevoProductoCotizado.statusSync.target = nuevoSync;
                   nuevoProductoCotizado.inversionXprodCotizados.target = inversion.inversionXprodCotizados.last;
                   nuevoProductoCotizado.productosProv.target = productoProv;
                   dataBase.productosCotBox.put(nuevoProductoCotizado);
@@ -5147,18 +5130,11 @@ void deleteBitacora() {
             //Se actualiza el estado de la inversión en ObjectBox
             final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En Cotización")).build().findFirst();
             if (newEstadoInversion != null) {
-              final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(inversion.statusSync.target!.id)).build().findUnique();
-              if (statusSync != null) {
-                statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
-                dataBase.statusSyncBox.put(statusSync);
-                inversion.estadoInversion.target = newEstadoInversion;
-                dataBase.inversionesXprodCotizadosBox.put(inversion.inversionXprodCotizados.last);
-                dataBase.inversionesBox.put(inversion);
-                print("Inversion updated succesfully");
-                return true;
-              } else {
-                return false;
-              }
+              inversion.estadoInversion.target = newEstadoInversion;
+              dataBase.inversionesXprodCotizadosBox.put(inversion.inversionXprodCotizados.last);
+              dataBase.inversionesBox.put(inversion);
+              print("Inversion updated succesfully");
+              return true;
             } else {
               return false;
             }
@@ -5168,8 +5144,6 @@ void deleteBitacora() {
               idDBR: inversionXprodCotizadosParse.id,
               idEmiWeb: inversionXprodCotizadosParse.idEmiWeb,
             );
-            final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1");
-            nuevaIversionXprodCotizados.statusSync.target = nuevoSync;
             for (var i = 0; i < recordProdCotizados.length; i++) {
               //Se valida que el nuevo prod Cotizado aún no existe en Objectbox
               final prodCotizadoExistente = dataBase.productosCotBox.query(ProdCotizados_.idDBR.equals(listProdCotizados[i].id)).build().findUnique();
@@ -5182,10 +5156,8 @@ void deleteBitacora() {
                 idEmiWeb: listProdCotizados[i].idEmiWeb,
                 costoUnitario:listProdCotizados[i].costoTotal/listProdCotizados[i].cantidad,
                 );
-                final nuevoSync = StatusSync(status: "HoI36PzYw1wtbO1"); //Se crea el objeto estatus sync //MO_
                 final productoProv = dataBase.productosProvBox.query(ProductosProv_.idDBR.equals(listProdCotizados[i].idProductoProvFk)).build().findUnique();
                 if (productoProv != null) {
-                  nuevoProductoCotizado.statusSync.target = nuevoSync;
                   nuevoProductoCotizado.inversionXprodCotizados.target = nuevaIversionXprodCotizados;
                   nuevoProductoCotizado.productosProv.target = productoProv;
                   dataBase.productosCotBox.put(nuevoProductoCotizado);
@@ -5198,11 +5170,7 @@ void deleteBitacora() {
             }
             //Se actualiza el estado de la inversión en ObjectBox
             final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("En Cotización")).build().findFirst();
-            if (newEstadoInversion != null) {
-              final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(inversion.statusSync.target!.id)).build().findUnique();
-              if (statusSync != null) {
-                statusSync.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado del emprendimiento
-                dataBase.statusSyncBox.put(statusSync);
+            if (newEstadoInversion != null) {  
                 inversion.estadoInversion.target = newEstadoInversion;
                 nuevaIversionXprodCotizados.inversion.target = inversion; //Posible solución al error de PAGOS SCREEN
                 dataBase.inversionesXprodCotizadosBox.put(nuevaIversionXprodCotizados);
@@ -5210,9 +5178,6 @@ void deleteBitacora() {
                 dataBase.inversionesBox.put(inversion);
                 print("Inversion updated succesfully");
                 return true;
-              } else {
-                return false;
-              }
             } else {
               return false;
             }

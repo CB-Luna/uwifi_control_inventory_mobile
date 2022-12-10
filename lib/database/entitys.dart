@@ -22,7 +22,6 @@ class Emprendimientos {
   final proveedores = ToMany<Proveedores>();
   final jornadas = ToMany<Jornadas>();
   final emprendedor = ToOne<Emprendedores>();
-  final statusSync = ToOne<StatusSync>();
   final imagen = ToOne<Imagenes>();
   final bitacora = ToMany<Bitacora>();
   final faseEmp = ToMany<FasesEmp>();
@@ -73,7 +72,6 @@ class ProdSolicitado {
   final tipoEmpaques = ToOne<TipoEmpaques>();
   final inversion = ToOne<Inversiones>();
   final imagen = ToOne<Imagenes>();
-  final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
 
   ProdSolicitado({
@@ -112,7 +110,6 @@ class ProdProyecto {
   final tipoEmpaque = ToOne<TipoEmpaques>();
   final catalogoProyecto = ToOne<CatalogoProyecto>();
   final imagen = ToOne<Imagenes>();
-  final statusSync = ToOne<StatusSync>();
 
   ProdProyecto({
     this.id = 0,
@@ -145,7 +142,6 @@ class Inversiones {
   @Unique()
   String? idDBR;
   String? idEmiWeb;
-  final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
   final emprendimiento = ToOne<Emprendimientos>();
   final prodSolicitados = ToMany<ProdSolicitado>();
@@ -184,7 +180,6 @@ class Pagos {
   String? idDBR;
   @Unique()
   String? idEmiWeb;
-  final statusSync = ToOne<StatusSync>();
   final inversion = ToOne<Inversiones>();
   final usuario = ToOne<Usuarios>();
   final bitacora = ToMany<Bitacora>();
@@ -210,7 +205,6 @@ class InversionesXProdCotizados {
   @Unique()
   String? idDBR;
   String? idEmiWeb;
-  final statusSync = ToOne<StatusSync>();
   final inversion = ToOne<Inversiones>();
   final prodCotizados = ToMany<ProdCotizados>();
   final bitacora = ToMany<Bitacora>();
@@ -306,7 +300,6 @@ class Emprendedores {
   String? idEmiWeb;
   final comunidad = ToOne<Comunidades>();
   final emprendimiento = ToOne<Emprendimientos>();
-  final statusSync = ToOne<StatusSync>();
   final imagen = ToOne<Imagenes>();
   final bitacora = ToMany<Bitacora>();
 
@@ -339,7 +332,6 @@ class TipoProyecto {
   @Unique()
   String idEmiWeb;
   final categoriasProyecto = ToMany<CatalogoProyecto>();
-  final statusSync = ToOne<StatusSync>();
   
   TipoProyecto({
     this.id = 0,
@@ -366,7 +358,6 @@ class CatalogoProyecto {
   final emprendimientos = ToMany<Emprendimientos>();
   final tipoProyecto = ToOne<TipoProyecto>();
   final prodProyecto = ToMany<ProdProyecto>();
-  final statusSync = ToOne<StatusSync>();
   
   CatalogoProyecto({
     this.id = 0,
@@ -388,7 +379,6 @@ class PrioridadEmp {
   @Unique()
   String? idDBR;
   final emprendimientos = ToMany<Emprendimientos>();
-  final statusSync = ToOne<StatusSync>();
 
   PrioridadEmp({
     this.id = 0,
@@ -411,7 +401,6 @@ class EstadoInversion {
   @Unique()
   String idEmiWeb;
   final emprendimientos = ToMany<Inversiones>();
-  final statusSync = ToOne<StatusSync>();
 
   EstadoInversion({
     this.id = 0,
@@ -434,7 +423,6 @@ class FasesEmp {
   @Unique()
   String idEmiWeb;
   final emprendimientos = ToMany<Emprendimientos>();
-  final statusSync = ToOne<StatusSync>();
 
   FasesEmp({
     this.id = 0,
@@ -459,7 +447,6 @@ class Jornadas {
   String? idEmiWeb;
   final emprendimiento = ToOne<Emprendimientos>();
   final tarea = ToOne<Tareas>();
-  final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
   Jornadas({
     this.id = 0,
@@ -488,7 +475,6 @@ class Tareas {
   String? idEmiWeb;
   final jornada = ToOne<Jornadas>();
   final consultoria = ToOne<Consultorias>();
-  final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
   final imagenes = ToMany<Imagenes>();
   final porcentaje = ToOne<PorcentajeAvance>();
@@ -523,7 +509,6 @@ class Usuarios {
   String? idDBR;
   @Unique()
   String idEmiWeb;
-  final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
   final rol = ToOne<Roles>();
   final roles = ToMany<Roles>();
@@ -560,7 +545,6 @@ class Roles {
   String? idDBR;
   @Unique()
   String idEmiWeb;
-  final statusSync = ToOne<StatusSync>();
   final bitacora = ToOne<Bitacora>();
   final usuarios = ToMany<Usuarios>();
 
@@ -587,7 +571,6 @@ class Ventas {
   String? idDBR;
   @Unique()
   String? idEmiWeb;
-  final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
   final emprendimiento = ToOne<Emprendimientos>();
   final prodVendidos= ToMany<ProdVendidos>();
@@ -622,7 +605,6 @@ class ProdVendidos {
   @Unique()
   String? idDBR;
   String? idEmiWeb;
-  final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
   final venta = ToOne<Ventas>();
   final unidadMedida = ToOne<UnidadMedida>();
@@ -657,7 +639,6 @@ class ProductosEmp {
   String? idDBR;
   @Unique()
   String? idEmiWeb;
-  final statusSync = ToOne<StatusSync>();
   final emprendimientos = ToOne<Emprendimientos>();
   final unidadMedida = ToOne<UnidadMedida>();
   final imagen = ToOne<Imagenes>();
@@ -692,7 +673,6 @@ class ProdCotizados {
   @Unique()
   String idEmiWeb;
   double costoUnitario;
-  final statusSync = ToOne<StatusSync>();
   final inversionXprodCotizados = ToOne<InversionesXProdCotizados>();
   final productosProv = ToOne<ProductosProv>();
   final bitacora = ToMany<Bitacora>();
@@ -722,7 +702,6 @@ class TipoEmpaques {
   String? idDBR;
   @Unique()
   String idEmiWeb;
-  final statusSync = ToOne<StatusSync>();
   final prodSolicitados = ToMany<ProdSolicitado>();
   final productosProyecto = ToMany<ProdProyecto>();
 
@@ -749,7 +728,6 @@ class FamiliaProd {
   String? idDBR;
   @Unique()
   String idEmiWeb;
-  final statusSync = ToOne<StatusSync>();
   final prodSolicitados = ToMany<ProdSolicitado>();
   final productosEmp = ToMany<ProductosEmp>();
   final productosProv = ToMany<ProductosProv>();
@@ -783,7 +761,6 @@ class Consultorias {
   final emprendimiento = ToOne<Emprendimientos>();
   final areaCirculo = ToOne<AreaCirculo>();
   final ambitoConsultoria = ToOne<AmbitoConsultoria>();
-  final statusSync = ToOne<StatusSync>();
   final bitacora = ToMany<Bitacora>();
   final tareas = ToMany<Tareas>();
   Consultorias({
@@ -810,7 +787,6 @@ class AreaCirculo {
   @Unique()
   String idEmiWeb;
   final consultoria = ToOne<Consultorias>();
-  final statusSync = ToOne<StatusSync>();
   final bitacora = ToOne<Bitacora>();
 
   AreaCirculo({
@@ -837,7 +813,6 @@ class AmbitoConsultoria {
   @Unique()
   String idEmiWeb;
   final consultorias = ToMany<Consultorias>();
-  final statusSync = ToOne<StatusSync>();
   final bitacora = ToOne<Bitacora>();
 
   AmbitoConsultoria({
@@ -864,7 +839,6 @@ class Comunidades {
   @Unique()
   String idEmiWeb;
   final municipios = ToOne<Municipios>();
-  final statusSync = ToOne<StatusSync>();
   @Backlink()
   final emprendedores = ToMany<Emprendedores>();
 
@@ -892,7 +866,6 @@ class Municipios {
   @Unique()
   String idEmiWeb;
   final estados = ToOne<Estados>();
-  final statusSync = ToOne<StatusSync>();
   @Backlink()
   final comunidades = ToMany<Comunidades>();
 
@@ -919,7 +892,6 @@ class Estados {
   String? idDBR;
   @Unique()
   String idEmiWeb;
-  final statusSync = ToOne<StatusSync>();
   @Backlink()
   final municipios = ToMany<Municipios>();
 
@@ -951,7 +923,6 @@ class Proveedores {
   String idEmiWeb;
   @Unique()
   String? idDBR;
-  final statusSync = ToOne<StatusSync>();
   final tipoProveedor = ToOne<TipoProveedor>();
   final comunidades = ToOne<Comunidades>();
   final condicionPago = ToOne<CondicionesPago>();
@@ -990,7 +961,6 @@ class ProductosProv{
   String? idDBR;
   @Unique()
   String idEmiWeb;
-  final statusSync = ToOne<StatusSync>();
   final proveedor = ToOne<Proveedores>();
   final prodCotizados = ToMany<ProdCotizados>();
   final unidadMedida = ToOne<UnidadMedida>();
@@ -1024,7 +994,6 @@ class UnidadMedida {
   String? idDBR;
   @Unique()
   String idEmiWeb;
-  final statusSync = ToOne<StatusSync>();
   final productosEmp = ToMany<ProductosEmp>();
   final prodSolicitados = ToMany<ProdSolicitado>();
   final productosProv = ToMany<ProductosProv>();
@@ -1119,68 +1088,6 @@ class TipoProveedor {
 
 }
 
-@Entity()
-class StatusSync {
-  int id;
-  String status;
-  DateTime fechaRegistro;
-  @Backlink()
-  final emprendedores = ToMany<Emprendedores>();
-  @Backlink()
-  final emprendimientos = ToMany<Emprendimientos>();
-  @Backlink()
-  final tareas = ToMany<Tareas>();
-  @Backlink()
-  final consultorias = ToMany<Consultorias>();
-  @Backlink()
-  final usuarios = ToMany<Usuarios>();
-  @Backlink()
-  final jornadas = ToMany<Jornadas>();
-  @Backlink()
-  final comunidades = ToMany<Comunidades>();
-  @Backlink()
-  final municipios = ToMany<Municipios>();
-  @Backlink()
-  final estados = ToMany<Estados>();
-  @Backlink()
-  final clasificacionesEmp = ToMany<TipoProyecto>();
-  @Backlink()
-  final fasesEmp = ToMany<FasesEmp>();
-  @Backlink()
-  final prioridadesEmp = ToMany<PrioridadEmp>();
-  @Backlink()
-  final productosEmp = ToMany<ProductosEmp>();
-  @Backlink()
-  final productosCot = ToMany<ProdCotizados>();
-  @Backlink()
-  final unidadesMedida = ToMany<UnidadMedida>();
-  @Backlink()
-  final inversiones = ToMany<Inversiones>();
-  @Backlink()
-  final prodSolicitado = ToMany<ProdSolicitado>();
-  @Backlink()
-  final ventas = ToMany<Ventas>();
-  @Backlink()
-  final prodVendidos = ToMany<ProdVendidos>();
-  @Backlink()
-  final proveedores = ToMany<Proveedores>();
-  @Backlink()
-  final productosProv = ToMany<ProductosProv>();
-  @Backlink()
-  final prodProyecto = ToMany<ProdProyecto>();
-  @Backlink()
-  final inversionXprodCotizados = ToMany<InversionesXProdCotizados>();
-  @Backlink()
-  final pagos = ToMany<Pagos>();
-  StatusSync({
-    this.id = 0,
-    this.status = "0E3hoVIByUxMUMZ", //M__
-    DateTime? fechaRegistro,
-    }): fechaRegistro = fechaRegistro ?? DateTime.now();
-
-  String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
-
-}
 
 @Entity()
 class Imagenes {

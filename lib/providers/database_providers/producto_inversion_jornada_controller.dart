@@ -126,11 +126,9 @@ void add(int idEmprendimiento, int idInversion) {
       final familiaProd = dataBase.familiaProductosBox.get(productosSolicitados[i].idFamiliaProd);
       final tipoEmpaque = dataBase.tipoEmpaquesBox.get(productosSolicitados[i].idTipoEmpaques!);
       if (familiaProd != null && tipoEmpaque != null) {
-        final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
         // final nuevaInstruccion = Bitacora(instrucciones: 'syncAddProductoSolicitado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
         nuevoProdSolicitado.familiaProducto.target = familiaProd;
         nuevoProdSolicitado.tipoEmpaques.target = tipoEmpaque;
-        nuevoProdSolicitado.statusSync.target = nuevoSync;
         nuevoProdSolicitado.inversion.target = inversion;
         // nuevoProdSolicitado.bitacora.add(nuevaInstruccion);
         inversion.prodSolicitados.add(nuevoProdSolicitado);
@@ -231,11 +229,6 @@ void update(int id, String newProducto, String? newMarcaSugerida, String newDesc
       updateProdSolicitado.cantidad = int.parse(newCantidad);
       updateProdSolicitado.familiaProducto.target = updateFamiliaProd;
       updateProdSolicitado.tipoEmpaques.target = updateTipoEmpaque;
-      final statusSyncJornada = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateProdSolicitado.statusSync.target!.id)).build().findUnique();
-      if (statusSyncJornada != null) {
-        statusSyncJornada.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del prod Solicitado
-        dataBase.statusSyncBox.put(statusSyncJornada);
-      }
       // updateProdSolicitado.bitacora.add(nuevaInstruccion);
       dataBase.productosSolicitadosBox.put(updateProdSolicitado);
     }

@@ -66,8 +66,6 @@ class EmpExternosPocketbaseProvider extends ChangeNotifier {
           final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals(basicEmprendimiento.items[0].expand.idFaseEmpFk.fase)).build().findFirst();
           final comunidad = dataBase.comunidadesBox.query(Comunidades_.nombre.equals(basicEmprendimiento.items[0].expand.idEmprendedorFk.expand.idComunidadFk.nombreComunidad)).build().findFirst();
           final catalogoProyecto = dataBase.catalogoProyectoBox.query(CatalogoProyecto_.nombre.equals(basicEmprendimiento.items[0].expand.idNombreProyectoFk?.nombreProyecto ?? "")).build().findFirst();
-          final nuevoSyncEmprendimiento = StatusSync(); //Se crea el objeto estatus por dedault //M__
-          final nuevoSyncEmprendedor = StatusSync(); //Se crea el objeto estatus por dedault //M__
           if (faseEmp != null && comunidad != null) {
             final nuevoEmprendimiento = Emprendimientos(
               faseActual: faseEmp.fase, 
@@ -80,7 +78,6 @@ class EmpExternosPocketbaseProvider extends ChangeNotifier {
               idEmiWeb: basicEmprendimiento.items[0].idEmiWeb,
             );
             nuevoEmprendimiento.faseEmp.add(faseEmp);
-            nuevoEmprendimiento.statusSync.target = nuevoSyncEmprendimiento;
             if (catalogoProyecto != null) {
               nuevoEmprendimiento.catalogoProyecto.target = catalogoProyecto;
             }
@@ -99,7 +96,6 @@ class EmpExternosPocketbaseProvider extends ChangeNotifier {
             nuevaImagen.emprendedor.target = nuevoEmprendedor;
             nuevoEmprendedor.comunidad.target = comunidad;
             nuevoEmprendedor.imagen.target = nuevaImagen;
-            nuevoEmprendedor.statusSync.target = nuevoSyncEmprendedor;
             nuevoEmprendedor.emprendimiento.target = nuevoEmprendimiento;
             nuevoEmprendimiento.emprendedor.target = nuevoEmprendedor;
             nuevoEmprendimiento.usuario.target = usuario;

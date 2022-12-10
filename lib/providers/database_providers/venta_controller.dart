@@ -38,9 +38,7 @@ class VentaController extends ChangeNotifier {
     );
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     if (emprendimiento != null) {
-      final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
       final nuevaInstruccion = Bitacora(instruccion: 'syncAddVenta', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-      nuevaVenta.statusSync.target = nuevoSync;
       nuevaVenta.emprendimiento.target = emprendimiento;
       nuevaVenta.bitacora.add(nuevaInstruccion);
       idVenta = dataBase.ventasBox.put(nuevaVenta);
@@ -61,11 +59,6 @@ void update(int id, DateTime newFechaInicio, DateTime newFechaTermino, double ne
       updateVenta.fechaInicio = newFechaInicio;
       updateVenta.fechaTermino = newFechaTermino;
       updateVenta.total = newTotal;
-      final statusSyncVenta = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateVenta.statusSync.target!.id)).build().findUnique();
-      if (statusSyncVenta != null) {
-        statusSyncVenta.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado de la venta
-        dataBase.statusSyncBox.put(statusSyncVenta);
-      }
       updateVenta.bitacora.add(nuevaInstruccion);
       dataBase.ventasBox.put(updateVenta);
       notifyListeners();

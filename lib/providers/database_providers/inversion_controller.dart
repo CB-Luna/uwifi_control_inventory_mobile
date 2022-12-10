@@ -51,12 +51,8 @@ class InversionController extends ChangeNotifier {
       if (emprendimiento != null && estadoInversion != null) {
         final nuevaInversionXprodCotizados = InversionesXProdCotizados(); //Se crea la instancia inversion x prod Cotizados
         nuevaInversionXprodCotizados.inversion.target = nuevaInversion;
-        final nuevoSyncInversion = StatusSync(); //Se crea el objeto estatus por dedault //M__
-        final nuevoSyncInversionXprodCotizados = StatusSync(); //Se crea el objeto estatus por dedault //M__
         final nuevaInstruccion = Bitacora(instruccion: 'syncAddInversion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-        nuevaInversionXprodCotizados.statusSync.target = nuevoSyncInversionXprodCotizados;
         nuevaInversion.inversionXprodCotizados.add(nuevaInversionXprodCotizados); //Se agrega la nueva instancia de inversion x prod Cotizados
-        nuevaInversion.statusSync.target = nuevoSyncInversion;
         nuevaInversion.estadoInversion.target = estadoInversion;
         nuevaInversion.emprendimiento.target = emprendimiento;
         nuevaInversion.bitacora.add(nuevaInstruccion);
@@ -138,9 +134,7 @@ class InversionController extends ChangeNotifier {
       final familiaProd = dataBase.familiaProductosBox.get(idFamiliaProd);
       final tipoEmpaques = dataBase.tipoEmpaquesBox.get(idTipoEmpaques);
       if (emprendimiento != null && inversion != null && familiaProd != null && tipoEmpaques != null) {
-        final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
         // final nuevaInstruccion = Bitacora(instruccion: 'syncAddProductoSolicitado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-        nuevoProdSolicitado.statusSync.target = nuevoSync;
         nuevoProdSolicitado.familiaProducto.target = familiaProd;
         nuevoProdSolicitado.tipoEmpaques.target = tipoEmpaques;
         nuevoProdSolicitado.inversion.target = inversion;

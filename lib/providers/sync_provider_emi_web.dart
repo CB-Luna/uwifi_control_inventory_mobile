@@ -4939,6 +4939,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         "idUnidadMedida": productoEmprendedor.unidadMedida.target!.idEmiWeb,
         "descripcion": productoEmprendedor.descripcion,
         "costoUnidadMedida": productoEmprendedor.costo,
+        "idDocumento": productoEmprendedor.imagen.target?.idEmiWeb ?? "",
       }));
       print(responseUpdateEmprendedor.statusCode);
       print(responseUpdateEmprendedor.body);
@@ -4981,7 +4982,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       }));
       switch (responseUpdateImagenProductoEmprendedor.statusCode) {
         case 200:
-        print("Caso 200 en Emi Web Update Imagen Prod Emprendedor");
+          print("Caso 200 en Emi Web Update Imagen Prod Emprendedor");
           //Se marca como realizada en EmiWeb la instrucción en Bitacora
           bitacora.executeEmiWeb = true;
           dataBase.bitacoraBox.put(bitacora);
@@ -5981,17 +5982,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if (record.id.isEmpty) {
                   return false;
                 } else {
-                  final statusSyncInversion = dataBase.statusSyncBox.query(StatusSync_.id.equals(inversion.statusSync.target!.id)).build().findUnique();
-                  if (statusSyncInversion != null) {
-                    statusSyncInversion.status = "HoI36PzYw1wtbO1"; //Se actualiza el estado de la inversion
-                    dataBase.statusSyncBox.put(statusSyncInversion);
                     inversion.estadoInversion.target = estadoInversion;
                     dataBase.inversionesBox.put(inversion);
                     return true;
-                  }
-                  else{
-                    return false;
-                  }
               }
               } else {
                 return false;

@@ -290,57 +290,57 @@ class SideMenu extends StatelessWidget {
                       },
                     ),
 
-                    CustomMenuItem(
-                      label: 'Sinc. Proyectos',
-                      iconData: Icons.downloading_outlined,
-                      lineHeight: 1.2,
-                      onTap: () async {
-                        if (currentUser.rol.target!.rol == "Voluntario Estratégico" ||
-                            currentUser.rol.target!.rol == "Amigo del Cambio" ||
-                            currentUser.rol.target!.rol == "Emprendedor") {
-                          snackbarKey.currentState
-                              ?.showSnackBar(const SnackBar(
-                            content: Text(
-                                "Este usuario no tiene permisos para esta acción."),
-                          ));
-                        } else {
-                          List<ProdProyecto> listProdProyecto =
-                            dataBase.productosProyectoBox.getAll();
-                          if (listProdProyecto.isNotEmpty) {
-                            final connectivityResult =
-                                await (Connectivity().checkConnectivity());
-                            await showModalBottomSheet(
-                              isScrollControlled: true,
-                              backgroundColor: Colors.transparent,
-                              context: context,
-                              builder: (context) {
-                                return Padding(
-                                  padding: MediaQuery.of(context).viewInsets,
-                                  child: SizedBox(
-                                    height:
-                                        MediaQuery.of(context).size.height * 0.45,
-                                    child: connectivityResult ==
-                                                ConnectivityResult.none 
-                                        ? const BottomSheetRecoverProyectosWidget(
-                                            isVisible: false,
-                                          )
-                                        : const BottomSheetRecoverProyectosWidget(
-                                            isVisible: true,
-                                          ),
-                                  ),
-                                );
-                              },
-                            );
-                          } else {
-                              snackbarKey.currentState
-                                ?.showSnackBar(const SnackBar(
-                              content: Text(
-                                  "Para esta acción es necesario descargar primero los catálogos."),
-                            ));
-                          }
-                        }
-                      },
-                    ),
+                    // CustomMenuItem(
+                    //   label: 'Sinc. Proyectos',
+                    //   iconData: Icons.downloading_outlined,
+                    //   lineHeight: 1.2,
+                    //   onTap: () async {
+                    //     if (currentUser.rol.target!.rol == "Voluntario Estratégico" ||
+                    //         currentUser.rol.target!.rol == "Amigo del Cambio" ||
+                    //         currentUser.rol.target!.rol == "Emprendedor") {
+                    //       snackbarKey.currentState
+                    //           ?.showSnackBar(const SnackBar(
+                    //         content: Text(
+                    //             "Este usuario no tiene permisos para esta acción."),
+                    //       ));
+                    //     } else {
+                    //       List<ProdProyecto> listProdProyecto =
+                    //         dataBase.productosProyectoBox.getAll();
+                    //       if (listProdProyecto.isNotEmpty) {
+                    //         final connectivityResult =
+                    //             await (Connectivity().checkConnectivity());
+                    //         await showModalBottomSheet(
+                    //           isScrollControlled: true,
+                    //           backgroundColor: Colors.transparent,
+                    //           context: context,
+                    //           builder: (context) {
+                    //             return Padding(
+                    //               padding: MediaQuery.of(context).viewInsets,
+                    //               child: SizedBox(
+                    //                 height:
+                    //                     MediaQuery.of(context).size.height * 0.45,
+                    //                 child: connectivityResult ==
+                    //                             ConnectivityResult.none 
+                    //                     ? const BottomSheetRecoverProyectosWidget(
+                    //                         isVisible: false,
+                    //                       )
+                    //                     : const BottomSheetRecoverProyectosWidget(
+                    //                         isVisible: true,
+                    //                       ),
+                    //               ),
+                    //             );
+                    //           },
+                    //         );
+                    //       } else {
+                    //           snackbarKey.currentState
+                    //             ?.showSnackBar(const SnackBar(
+                    //           content: Text(
+                    //               "Para esta acción es necesario descargar primero los catálogos."),
+                    //         ));
+                    //       }
+                    //     }
+                    //   },
+                    // ),
 
                     CustomMenuItem(
                       label: 'Sinc. Catálogos',

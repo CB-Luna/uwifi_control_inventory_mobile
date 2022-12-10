@@ -37,7 +37,6 @@ class EmprendimientoController extends ChangeNotifier {
   }
 
   void add() {
-      final nuevoSync = StatusSync(); //Se crea el objeto estatus por dedault //M__
       final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Inscrito")).build().findFirst(); //Agregamos fase actual al emprendimiento
       final nuevaInstruccion = Bitacora(instruccion: 'syncAddEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       if (faseEmp != null) {
@@ -50,13 +49,11 @@ class EmprendimientoController extends ChangeNotifier {
         archivado: false,
         );
         nuevoEmprendimiento.imagen.target = imagenLocal;
-        nuevoEmprendimiento.statusSync.target = nuevoSync;
         nuevoEmprendimiento.faseEmp.add(faseEmp); //Agregamos fase actual al emprendimiento
         nuevoEmprendimiento.bitacora.add(nuevaInstruccion);
         //Agregamos el emprendimiento en objectBox y recuperamos el Id
         idEmprendimiento = dataBase.emprendimientosBox.put(nuevoEmprendimiento);
         emprendimiento = nuevoEmprendimiento;
-        print("TAMANÑO STATUSSYNC: ${dataBase.statusSyncBox.getAll().length}");
         print('Emprendimiento agregado exitosamente');
         notifyListeners();
       }
@@ -68,11 +65,6 @@ class EmprendimientoController extends ChangeNotifier {
     if (updateEmprendimiento != null) {
       updateEmprendimiento.nombre = newNombre;
       updateEmprendimiento.descripcion = newDescripcion;
-      final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendimiento.statusSync.target!.id)).build().findUnique();
-      if (statusSync != null) {
-        statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del emprendimiento
-        dataBase.statusSyncBox.put(statusSync);
-      }
       updateEmprendimiento.bitacora.add(nuevaInstruccion);
       dataBase.emprendimientosBox.put(updateEmprendimiento);
       print('Emprendimiento actualizado exitosamente');
@@ -100,11 +92,6 @@ class EmprendimientoController extends ChangeNotifier {
     final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateNameEmprendimiento', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
     if (updateEmprendimiento != null) {
       updateEmprendimiento.nombre = newNombre;
-      final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(updateEmprendimiento.statusSync.target!.id)).build().findUnique();
-      if (statusSync != null) {
-        statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del emprendimiento
-        dataBase.statusSyncBox.put(statusSync);
-      }
       updateEmprendimiento.bitacora.add(nuevaInstruccion);
       dataBase.emprendimientosBox.put(updateEmprendimiento);
       print('Nombre de Emprendimiento actualizado exitosamente');
@@ -136,11 +123,6 @@ class EmprendimientoController extends ChangeNotifier {
       emprendimiento.faseEmp.add(faseEmp);
       emprendimiento.faseActual = faseEmp.fase;
       emprendimiento.faseEmp.toList().forEach((element) {print(element.fase);});
-      final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(emprendimiento.statusSync.target!.id)).build().findUnique();
-      if (statusSync != null) {
-        statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del emprendimiento
-        dataBase.statusSyncBox.put(statusSync);
-      }
       emprendimiento.bitacora.add(nuevaInstruccionEmprendimiento);
       dataBase.emprendimientosBox.put(emprendimiento);
       print('Emprendimiento actualizado exitosamente');
@@ -154,11 +136,6 @@ class EmprendimientoController extends ChangeNotifier {
       //Se actualiza la fase del Emprendimiento
       emprendimiento.faseEmp.removeWhere((element) => element.fase == emprendimiento.faseActual);
       emprendimiento.faseActual = emprendimiento.faseAnterior;
-      final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(emprendimiento.statusSync.target!.id)).build().findUnique();
-      if (statusSync != null) {
-        statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del emprendimiento
-        dataBase.statusSyncBox.put(statusSync);
-      }
       emprendimiento.bitacora.add(nuevaInstruccionEmprendimiento);
       dataBase.emprendimientosBox.put(emprendimiento);
       print('Emprendimiento actualizado exitosamente');
@@ -173,11 +150,6 @@ class EmprendimientoController extends ChangeNotifier {
       //Se actualiza la fase del Emprendimiento
       emprendimiento.faseEmp.add(faseEmp);
       emprendimiento.faseActual = faseEmp.fase;
-      final statusSync = dataBase.statusSyncBox.query(StatusSync_.id.equals(emprendimiento.statusSync.target!.id)).build().findUnique();
-      if (statusSync != null) {
-        statusSync.status = "0E3hoVIByUxMUMZ"; //Se actualiza el estado del emprendimiento
-        dataBase.statusSyncBox.put(statusSync);
-      }
       emprendimiento.bitacora.add(nuevaInstruccionEmprendimiento);
       dataBase.emprendimientosBox.put(emprendimiento);
       print('Emprendimiento actualizado exitosamente');
