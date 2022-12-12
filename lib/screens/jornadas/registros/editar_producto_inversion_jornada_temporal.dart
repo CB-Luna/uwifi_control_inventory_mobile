@@ -997,7 +997,7 @@ class _EditarProductoInversionJornadaTemporalState
                                             proveedorController.text !=
                                                 widget.productoSol
                                                     .proveedorSugerido ||
-                                            costoController.text.substring(1) !=
+                                            costoController.text.substring(1).replaceAll(",", "") !=
                                                 widget.productoSol.costoEstimado
                                                     ?.toStringAsFixed(2) ||
                                             cantidadController.text !=

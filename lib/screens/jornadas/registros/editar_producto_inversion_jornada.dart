@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:bizpro_app/modelsPocketbase/temporals/save_instruccion_producto_inversion_j3_temporal.dart';
 import 'package:bizpro_app/screens/jornadas/registros/editar_inversion_jornada.dart';
 import 'package:bizpro_app/screens/widgets/bottom_sheet_eliminar_producto.dart';
@@ -50,6 +53,9 @@ class _EditarProductoInversionJornadaState
   String emprendedor = "";
   String? newImagen;
   XFile? image;
+  String path = "";
+  String base64 = "";
+  String nombreImagen = "";
   late TextEditingController productoController;
   late TextEditingController descripcionController;
   late TextEditingController marcaController;
@@ -61,6 +67,9 @@ class _EditarProductoInversionJornadaState
   @override
   void initState() {
     super.initState();
+    path = "";
+    base64 = "";
+    nombreImagen = "";
     newImagen = widget.productoSol.imagen.target?.imagenes;
     newFamilia = widget.productoSol.familiaProducto.target!.nombre;
     newTipoEmpaque = widget.productoSol.tipoEmpaques.target!.tipo;
@@ -323,8 +332,12 @@ class _EditarProductoInversionJornadaState
 
                                                   setState(() {
                                                     image = pickedFile;
-                                                    newImagen =
-                                                        image!.path;
+                                                    File file = File(image!.path);
+                                                    List<int> fileInByte = file.readAsBytesSync();
+                                                    base64 = base64Encode(fileInByte);
+                                                    path = image!.path;
+                                                    newImagen = image!.path;
+                                                    nombreImagen = image!.name;
                                                   });
                                                 },
                                                 child: Container(
@@ -1047,18 +1060,19 @@ class _EditarProductoInversionJornadaState
                                       print("Desde inversion");
                                       if (productoInversionJornadaController
                                           .validateForm(formKey)) {
+                                          print("Holaaaaaax");
                                         if (productoController.text !=
-                                                widget.productoSol.producto ||
+                                                widget.productoSol.producto  ||
                                             marcaController.text !=
                                                 widget.productoSol
-                                                    .marcaSugerida ||
+                                                    .marcaSugerida  ||
                                             descripcionController.text !=
                                                 widget
                                                     .productoSol.descripcion ||
                                             proveedorController.text !=
                                                 widget.productoSol
                                                     .proveedorSugerido ||
-                                            costoController.text.substring(1) !=
+                                            costoController.text.substring(1).replaceAll(",", "") !=
                                                 widget.productoSol.costoEstimado
                                                     ?.toStringAsFixed(2) ||
                                             cantidadController.text !=
@@ -1072,48 +1086,106 @@ class _EditarProductoInversionJornadaState
                                                     .nombre ||
                                             newTipoEmpaque !=
                                                 widget.productoSol.tipoEmpaques
-                                                    .target!.tipo) {
-                                          final nuevaFamiliaProd = dataBase
-                                              .familiaProductosBox
-                                              .query(FamiliaProd_.nombre
-                                                  .equals(newFamilia))
-                                              .build()
-                                              .findFirst();
-                                          final nuevoTipoEmpaque = dataBase
-                                              .tipoEmpaquesBox
-                                              .query(TipoEmpaques_.tipo
-                                                  .equals(newTipoEmpaque))
-                                              .build()
-                                              .findFirst();
-                                          if (nuevaFamiliaProd != null &&
-                                              nuevoTipoEmpaque != null) {
-                                            final indexUpdateProdSolicitado = productoInversionJornadaController
-                                                .listProdSolicitadosActual
-                                                .indexOf(widget.productoSol);
-                                            productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado].marcaSugerida = marcaController.text;
-                                            productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado].proveedorSugerido = proveedorController.text;
-                                            productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado].cantidad = int.parse(cantidadController.text);
-                                            productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado].costoEstimado = double.parse(costoController.text.replaceAll("\$", "").replaceAll(",", ""));
-                                            productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado].tipoEmpaques.target = nuevoTipoEmpaque;
-                                            productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado].familiaProducto.target = nuevaFamiliaProd;
-                                            final newInstruccionProdInversionJ3 = SaveInstruccionProductoInversionJ3Temporal(
-                                              instruccion: "syncUpdateProductoInversionJ3", 
-                                              prodSolicitado: productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado],
-                                            );
-                                            productoInversionJornadaController.instruccionesProdInversionJ3Temp.add(newInstruccionProdInversionJ3);
-                                            await Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    EditarInversionJornadaScreen(
-                                                      emprendimiento: widget.emprendimientoActual, 
-                                                      jornada: widget.jornada, 
-                                                      prodSolicitados: productoInversionJornadaController.listProdSolicitadosActual,
-                                                      inversion: widget.inversion,
-                                                    ),
-                                              ),
-                                            );
-                                          }
+                                                    .target!.tipo
+                                                    ) {
+                                                      print("Si se va a actualizar");
+                                            if (newImagen !=
+                                                    widget.productoSol.imagen.target?.imagenes
+                                              ) {
+                                                if (widget.productoSol.imagen.target?.path == null) {
+                                                  print("SE AGREGA IMAGEN NUEVA");
+                                                  productoInversionJornadaController.addImagenProductoSol(
+                                                    widget.productoSol,
+                                                    nombreImagen,
+                                                    path,
+                                                    base64);
+                                                } else {
+                                                  print("SE ACTUALIZA IMAGEN NUEVA");
+                                                  productoInversionJornadaController.updateImagenProductoSol(
+                                                    widget.productoSol,
+                                                    widget.productoSol.imagen.target!.id,
+                                                    nombreImagen,
+                                                    path,
+                                                    base64);
+                                                }
+                                              }
+                                            final nuevaFamiliaProd = dataBase
+                                                .familiaProductosBox
+                                                .query(FamiliaProd_.nombre
+                                                    .equals(newFamilia))
+                                                .build()
+                                                .findFirst();
+                                            final nuevoTipoEmpaque = dataBase
+                                                .tipoEmpaquesBox
+                                                .query(TipoEmpaques_.tipo
+                                                    .equals(newTipoEmpaque))
+                                                .build()
+                                                .findFirst();
+                                            if (nuevaFamiliaProd != null &&
+                                                nuevoTipoEmpaque != null) {
+                                              final indexUpdateProdSolicitado = productoInversionJornadaController
+                                                  .listProdSolicitadosActual
+                                                  .indexOf(widget.productoSol);
+                                              productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado].marcaSugerida = marcaController.text;
+                                              productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado].proveedorSugerido = proveedorController.text;
+                                              productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado].cantidad = int.parse(cantidadController.text);
+                                              productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado].costoEstimado = double.parse(costoController.text.replaceAll("\$", "").replaceAll(",", ""));
+                                              productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado].tipoEmpaques.target = nuevoTipoEmpaque;
+                                              productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado].familiaProducto.target = nuevaFamiliaProd;
+                                              final newInstruccionProdInversionJ3 = SaveInstruccionProductoInversionJ3Temporal(
+                                                instruccion: "syncUpdateProductoInversionJ3", 
+                                                prodSolicitado: productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado],
+                                              );
+                                              productoInversionJornadaController.instruccionesProdInversionJ3Temp.add(newInstruccionProdInversionJ3);
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditarInversionJornadaScreen(
+                                                        emprendimiento: widget.emprendimientoActual, 
+                                                        jornada: widget.jornada, 
+                                                        prodSolicitados: productoInversionJornadaController.listProdSolicitadosActual,
+                                                        inversion: widget.inversion,
+                                                      ),
+                                                ),
+                                              );
+                                            }
+                                        } else {
+                                          if (newImagen !=
+                                                    widget.productoSol.imagen.target?.imagenes
+                                              ) {
+                                                if (widget.productoSol.imagen.target?.path == null) {
+                                                  print("SE AGREGA IMAGEN NUEVA");
+                                                  productoInversionJornadaController.addImagenProductoSol(
+                                                    widget.productoSol,
+                                                    nombreImagen,
+                                                    path,
+                                                    base64);
+                                                } else {
+                                                  print("SE ACTUALIZA IMAGEN NUEVA");
+                                                  productoInversionJornadaController.updateImagenProductoSol(
+                                                    widget.productoSol,
+                                                    widget.productoSol.imagen.target!.id,
+                                                    nombreImagen,
+                                                    path,
+                                                    base64);
+                                                }
+                                                snackbarKey.currentState?.showSnackBar(const SnackBar(
+                                                  content: Text("Se actualiza éxitosamente la imagen del Producto."),
+                                                ));
+                                                await Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        EditarInversionJornadaScreen(
+                                                          emprendimiento: widget.emprendimientoActual, 
+                                                          jornada: widget.jornada, 
+                                                          prodSolicitados: productoInversionJornadaController.listProdSolicitadosActual,
+                                                          inversion: widget.inversion,
+                                                        ),
+                                                  ),
+                                                );
+                                              }
                                         }
                                       } else {
                                         await showDialog(

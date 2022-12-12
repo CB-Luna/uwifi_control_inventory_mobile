@@ -630,7 +630,7 @@ class _EditarProductoEmprendedorScreenState
                                                       path,
                                                       base64);
                                                   } else {
-                                                    print("SE AACTUALIZA IMAGEN NUEVA");
+                                                    print("SE ACTUALIZA IMAGEN NUEVA");
                                                     productoEmprendedorProvider.updateImagenProductoEmp(
                                                       widget.productoEmprendedor.imagen.target!.id,
                                                       nombreImagen,

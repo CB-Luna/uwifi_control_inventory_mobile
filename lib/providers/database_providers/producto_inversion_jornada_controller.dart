@@ -236,4 +236,33 @@ void update(int id, String newProducto, String? newMarcaSugerida, String newDesc
     notifyListeners();
 }
 
+void updateImagenProductoSol(ProdSolicitado updateProdSol, int idImagenProductoSol, String newNombreImagen, String newPath, String newBase64) {
+    var updateImagenProductoSol = dataBase.imagenesBox.get(idImagenProductoSol);
+    if (updateImagenProductoSol != null) {
+      updateImagenProductoSol.imagenes = newPath; //Se actualiza la imagen del producto solicitado
+      updateImagenProductoSol.nombre = newNombreImagen;
+      updateImagenProductoSol.base64 = newBase64;
+      updateImagenProductoSol.path = newPath;
+      dataBase.imagenesBox.put(updateImagenProductoSol);
+      updateProdSol.imagen.target = updateImagenProductoSol;
+      dataBase.productosSolicitadosBox.put(updateProdSol);
+      print('Imagen Prod Solicitado actualizada exitosamente');
+    }
+    notifyListeners();
+  }
+
+void addImagenProductoSol(ProdSolicitado productoSol, String newNombreImagen, String newPath, String newBase64) {
+      final nuevaImagenProductoSol = Imagenes(
+        imagenes: newPath,
+        nombre: newNombreImagen,
+        base64: newBase64,
+        path: newPath,
+      );
+      productoSol.imagen.target = nuevaImagenProductoSol;
+      dataBase.imagenesBox.put(nuevaImagenProductoSol);
+      dataBase.productosSolicitadosBox.put(productoSol);
+      print('Imagen Prod Solicitado agregada exitosamente');
+    notifyListeners();
+  }
+
 }
