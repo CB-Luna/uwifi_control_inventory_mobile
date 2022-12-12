@@ -323,15 +323,9 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
                                         fontWeight: FontWeight.normal,
                                       ),
                                   validator: (value) {
-                                    if(capitalizadoCharacters
-                                            .hasMatch(value ?? '')){
-                                              
-                                              if(nombreCharacters.hasMatch(value ?? '')){
-                                                return null;
-                                              }
-                                                else{
-                                                  return 'Evita usar numeros y caracteres especiales como dieresis';
-                                                }
+                                    if(palabras
+                                            .hasMatch(value ?? '')){                                                                                         
+                                                return null;                                              
                                     }
                                     else{
                                               return 'Para continuar, ingrese el nombre empezando por mayúscula';

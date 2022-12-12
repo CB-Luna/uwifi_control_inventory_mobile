@@ -351,18 +351,12 @@ class _EditarEmprendimientoScreenState
                                         fontWeight: FontWeight.normal,
                                       ),
                                   validator: (value) {
-                                    if(capitalizadoCharacters
+                                    if(palabras
                                             .hasMatch(value ?? '')){
-                                              
-                                              if(nombreCharacters.hasMatch(value ?? '')){
-                                                return null;
-                                              }
-                                                else{
-                                                  return 'Evita usar numeros y caracteres especiales como dieresis';
-                                                }
+                                              return null;
                                     }
                                     else{
-                                              return 'Para continuar, ingrese el nombre empezando por mayúscula';
+                                              return 'Evita usar numeros y caracteres especiales como dieresis';
                                     }
                                          
                                          
