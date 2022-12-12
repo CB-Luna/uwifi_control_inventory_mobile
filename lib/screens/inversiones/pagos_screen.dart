@@ -297,7 +297,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                       "Emprendedor",
                                               child: DataTable(
                                                 showCheckboxColumn: true,
-                                                columnSpacing: 40.0,
+                                                columnSpacing: 30.0,
+                                                checkboxHorizontalMargin: 0.0,
                                                 columns: <DataColumn>[
                                                   DataColumn( 
                                                       label: Expanded(
@@ -746,17 +747,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                             if (recepcionYentregaProvider
                                                                 .inversionXProdCotizadosTemp!
                                                                 .aceptado) {
-                                                                  if(bandera==true){
-                                                                    snackbarKey
-                                                                .currentState
-                                                                ?.showSnackBar(
-                                                                    const SnackBar(
-                                                              content: Text(
-                                                                  "Cantidades de productos Invalidas."),
-                                                            ));
-                                                                  }
-                                                                  else{
-                                                              print("Elementos aceptados Finales");
+                                                                  
                                                               // for (var element in actualInversion!.inversionXprodCotizados.last.prodCotizados.toList()) {
                                                               //   if(element.cantidad == 0){
                                                                   
@@ -795,19 +786,10 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                   ),
                                                                 ),
                                                               ); 
-                                                                  }         
+                                                                           
                                                             } else {
                                                               
-                                                              if(bandera == true)
-                                                              {snackbarKey
-                                                                .currentState
-                                                                ?.showSnackBar(
-                                                                    const SnackBar(
-                                                              content: Text(
-                                                                  "Cantidades de productos Invalidas."),
-                                                            ));}
-                                                              else{
-                                                              print("Elementos Actualizados");
+                                                              
                                                               // for (var element in actualInversion!.inversionXprodCotizados.last.prodCotizados.toList()) {
                                                                  
                                                                   
@@ -840,7 +822,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                   ),
                                                                 ),
                                                               );
-                                                            }
+                                                            
                                                             }
                                                           }
                                                         } else {
@@ -2351,79 +2333,84 @@ class _PagosScreenState extends State<PagosScreen> {
         child: Text(
           maybeHandleOverflow(prodCotizado.productosProv.target!.nombre,15,"..."),
           style: GoogleFonts.roboto(
-                fontSize: 14.0,
+                fontSize: 12.0,
                 fontWeight: FontWeight.w400,
                 color: Colors.black)
         ),
       )),
       DataCell(Center(
-        child: TextFormField(
-          readOnly: bandera,
-          keyboardType:
-              const TextInputType
-                  .numberWithOptions(signed: true),
-          initialValue:
-              prodCotizado.cantidad.toString(),
-          autovalidateMode:
-              AutovalidateMode
-                  .onUserInteraction,
-          onChanged:
-              (value) {
-            setState(
-                () {
-              if (value !=
-                      "" &&
-                  value !=
-                      "0") {
-                totalProyecto =
-                    totalProyecto - prodCotizado.costoTotal;
-                prodCotizado.cantidad =
-                    int.parse(value);
-                prodCotizado.costoTotal =
-                    prodCotizado.cantidad * prodCotizado.costoUnitario;
+        child: Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: TextFormField(
+            readOnly: bandera,
+           //maxLength: 2,
+            maxLines: 1,
+            keyboardType:
+                const TextInputType
+                    .numberWithOptions(signed: true),
+            initialValue:
+                prodCotizado.cantidad.toString(),
+            autovalidateMode:
+                AutovalidateMode
+                    .onUserInteraction,
+            onChanged:
+                (value) {
+              setState(
+                  () {
+                if (value !=
+                        "" &&
+                    value !=
+                        "0") {
+                  totalProyecto =
+                      totalProyecto - prodCotizado.costoTotal;
+                  prodCotizado.cantidad =
+                      int.parse(value);
+                  prodCotizado.costoTotal =
+                      prodCotizado.cantidad * prodCotizado.costoUnitario;
 
-                totalProyecto =
-                    totalProyecto + prodCotizado.costoTotal;
-                
-              } else {
-                
-                snackbarKey
-                    .currentState
-                    ?.showSnackBar(const SnackBar(
-                  content:
-                      Text("No puede ser 0 o nula la cantidad requerida."),
-                ));
-              }
-            });
-          },
-          obscureText:
-              false,
-          
-          style: AppTheme.of(
-                  context)
-              .title3
-              .override(
-                fontFamily:
-                    'Poppins',
-                color:
-                    const Color(0xFF221573),
-                fontSize:
-                    15,
-                fontWeight:
-                    FontWeight.normal,
-              ),
-          inputFormatters: [
-            LengthLimitingTextInputFormatter(
-                2),
-            FilteringTextInputFormatter.allow(RegExp(r'^[1-9][0-9]*'))
-          ],                                   
+                  totalProyecto =
+                      totalProyecto + prodCotizado.costoTotal;
+                  
+                } else {
+                  
+                  snackbarKey
+                      .currentState
+                      ?.showSnackBar(const SnackBar(
+                    content:
+                        Text("No puede ser 0 o nula la cantidad requerida."),
+                  ));
+                }
+              });
+            },
+            obscureText:
+                false,
+            
+            style: AppTheme.of(
+                    context)
+                .title3
+                .override(
+                  fontFamily:
+                      'Poppins',
+                  color:
+                      const Color(0xFF221573),
+                  fontSize:
+                      12,
+                  fontWeight:
+                      FontWeight.normal,
+                ),
+            inputFormatters: [
+              LengthLimitingTextInputFormatter(
+                  2),
+              FilteringTextInputFormatter.allow(RegExp(r'^[1-9][0-9]*'))
+            ],                                   
+          ),
         ),
       )),
       
       DataCell(Center(
-        child: Text(prodCotizado.costoTotal.toString(),
+        child: Text(prodCotizado.costoTotal.toStringAsFixed(2),
             style: GoogleFonts.roboto(
-                fontSize: 14.0,
+                fontSize: 12.0,
                 fontWeight: FontWeight.w400,
                 color: Colors.black)),
       )),
