@@ -96,6 +96,7 @@ class _EditarProductoInversionJornadaTemporalState
 
   @override
   Widget build(BuildContext context) {
+    print("Imagen es: $newImagen");
     final productoInversionJornadaController =
         Provider.of<ProductoInversionJornadaController>(context);
     final inversionJornadaController =
@@ -343,7 +344,7 @@ class _EditarProductoInversionJornadaTemporalState
                                                       ClipRRect(
                                                         borderRadius:
                                                             BorderRadius.circular(8),
-                                                        child: getImage(image?.path),
+                                                        child: getImage(newImagen),
                                                       ),
                                                     ],
                                                   ),

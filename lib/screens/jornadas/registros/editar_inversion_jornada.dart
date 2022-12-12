@@ -168,7 +168,7 @@ class _EditarInversionJornadaScreenState
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      'Inversión sugerida',
+                                      'Inversión Sugerida',
                                       style:
                                           AppTheme.of(context).bodyText1.override(
                                                 fontFamily: AppTheme.of(context)
@@ -255,9 +255,7 @@ class _EditarInversionJornadaScreenState
                                                             MainAxisSize.max,
                                                         children: [
                                                           Text(
-                                                            widget
-                                                                .emprendimiento
-                                                                .nombre,
+                                                            maybeHandleOverflow(widget.emprendimiento.nombre, 30, "..."),
                                                             style: AppTheme.of(
                                                                     context)
                                                                 .bodyText1
@@ -658,8 +656,7 @@ class _EditarInversionJornadaScreenState
                                                                                 .spaceBetween,
                                                                         children: [
                                                                           Text(
-                                                                            prodSolicitado
-                                                                                .producto,
+                                                                            maybeHandleOverflow(prodSolicitado.producto, 12, "..."),
                                                                             style: AppTheme.of(context)
                                                                                 .subtitle1
                                                                                 .override(
@@ -668,7 +665,7 @@ class _EditarInversionJornadaScreenState
                                                                                 ),
                                                                           ),
                                                                            Text(
-                                                                            prodSolicitado.tipoEmpaques.target?.tipo ?? "SIN TIPO EMPAQUE",
+                                                                            maybeHandleOverflow(prodSolicitado.tipoEmpaques.target?.tipo ?? "",8,"..."),
                                                                             style: AppTheme.of(context)
                                                                                 .subtitle1
                                                                                 .override(

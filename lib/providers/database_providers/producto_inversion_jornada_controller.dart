@@ -118,8 +118,9 @@ void add(int idEmprendimiento, int idInversion) {
         cantidad: productosSolicitados[i].cantidad,
         fechaRegistro: productosSolicitados[i].fechaRegistro,
       );
-      if (imagen != '') {
-        final nuevaImagenProdSolicitado = Imagenes(imagenes: imagen); //Se crea el objeto imagenes para el Prod Solicitado
+      if (productosSolicitados[i].imagen != '' && productosSolicitados[i].imagen != null) {
+        print("A ver contenido del producto $i: ${productosSolicitados[i].imagen}");
+        final nuevaImagenProdSolicitado = Imagenes(imagenes: productosSolicitados[i].imagen!); //Se crea el objeto imagenes para el Prod Solicitado
         nuevoProdSolicitado.imagen.target = nuevaImagenProdSolicitado;
       }
       //Se recupera la familia y tipoEmpaque
