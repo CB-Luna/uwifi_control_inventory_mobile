@@ -328,7 +328,7 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
                                                 return null;                                              
                                     }
                                     else{
-                                              return 'Para continuar, ingrese el nombre empezando por mayúscula';
+                                              return 'Evita usar números y caracteres especiales como diéresis';
                                     }
                                          
                                          

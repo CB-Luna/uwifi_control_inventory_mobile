@@ -356,7 +356,7 @@ class _EditarEmprendimientoScreenState
                                               return null;
                                     }
                                     else{
-                                              return 'Evita usar numeros y caracteres especiales como dieresis';
+                                              return 'Evita usar números y caracteres especiales como diéresis';
                                     }
                                          
                                          
