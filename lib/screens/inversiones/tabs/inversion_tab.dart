@@ -94,7 +94,7 @@ class _InversionTabState extends State<InversionTab>
                           ).image
                           :
                           Image.asset(
-                            "assets/images/default_image_placeholder.jpeg",
+                            "assets/images/default_image.png",
                           ).image,
                         ),
                         boxShadow: const [

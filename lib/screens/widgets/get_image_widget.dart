@@ -6,7 +6,7 @@ Widget? getImageEmprendimiento(String? image, {double height = 180}) {
     return Image(
         height: height,
         width: double.infinity,
-        image: const AssetImage("assets/images/default_image_placeholder.jpeg"),
+        image: const AssetImage("assets/images/default_image.png"),
         fit: BoxFit.cover,
       );
   } else if (image.startsWith('http') || image.startsWith('https')) {
@@ -149,7 +149,7 @@ Widget getWidgetCoverImage(String? image) {
     return Container(
       color: Colors.grey,
       child: const Image(
-        image: AssetImage("assets/images/default_image_placeholder.jpeg"),
+        image: AssetImage("assets/images/default_image.png"),
         fit: BoxFit.cover,
       ),
     );

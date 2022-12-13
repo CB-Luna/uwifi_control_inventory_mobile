@@ -495,7 +495,7 @@ class _DetallesEmprendedorScreenState extends State<DetallesEmprendedorScreen> {
                                   ).image
                                   :
                                   Image.asset(
-                                    "assets/images/default_image_placeholder.jpeg",
+                                    "assets/images/default_image.png",
                                   ).image,
                                 ),
                                 borderRadius: BorderRadius.circular(8),

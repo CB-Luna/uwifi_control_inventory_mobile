@@ -86,7 +86,7 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                     )
                     :
                     Image.asset(
-                      "assets/images/default_image_placeholder.jpeg",
+                      "assets/images/default_image.png",
                       width: double.infinity,
                       height: 200,
                       fit: BoxFit.cover,

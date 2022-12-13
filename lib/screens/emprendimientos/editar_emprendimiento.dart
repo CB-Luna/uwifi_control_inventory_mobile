@@ -78,7 +78,7 @@ class _EditarEmprendimientoScreenState
                           FileImage(File(widget.emprendimiento.imagen.target!.path!))
                           :
                           Image.asset(
-                              "assets/images/default_image_placeholder.jpeg",
+                              "assets/images/default_image.png",
                             ).image,
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,

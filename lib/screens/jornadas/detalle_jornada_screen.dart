@@ -92,7 +92,7 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                     )
                     :
                     Image.asset(
-                      "assets/images/default_image_placeholder.jpeg",
+                      "assets/images/default_image.png",
                       width: double.infinity,
                       height: 200,
                       fit: BoxFit.cover,

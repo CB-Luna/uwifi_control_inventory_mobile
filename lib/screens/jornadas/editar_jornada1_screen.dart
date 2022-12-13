@@ -87,7 +87,7 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
                                 widget.jornada.emprendimiento.target!.imagen.target!.path!))
                             :
                             Image.asset(
-                              "assets/images/default_image_placeholder.jpeg",
+                              "assets/images/default_image.png",
                             ).image,
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,

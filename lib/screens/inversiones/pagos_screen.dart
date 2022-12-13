@@ -295,36 +295,41 @@ class _PagosScreenState extends State<PagosScreen> {
                                                           .target!
                                                           .rol ==
                                                       "Emprendedor",
-                                              child: DataTable(
-                                                showCheckboxColumn: true,
-                                                columnSpacing: 30.0,
-                                                checkboxHorizontalMargin: 0.0,
-                                                columns: <DataColumn>[
-                                                  DataColumn( 
+                                              child: Container(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                child: DataTable(
+                                                  showCheckboxColumn: true,
+                                                  columnSpacing: 60.0,
+                                                  checkboxHorizontalMargin: 0.0,
+                                                  columns: <DataColumn>[
+                                                    DataColumn( 
+                                                        label: Expanded(
+                                                            child: Text(
+                                                      'Producto',
+                                                      style: AppTheme.of(context)
+                                                              .bodyText1,
+                                                    ))),
+                                                    DataColumn(
                                                       label: Expanded(
-                                                          child: Text(
-                                                    'Producto',
-                                                    style: AppTheme.of(context)
+                                                          child: Text('Cantidad',
+                                                              textAlign: TextAlign.center,
+                                                              style: AppTheme.of(context)
+                                                                    .bodyText1)),
+                                                    ),
+                                                    DataColumn(
+                                                        label: Expanded(
+                                                            child: Text(
+                                                      'Costo\nTotal',
+                                                      textAlign: TextAlign.center,
+                                                      style: AppTheme.of(context)
                                                             .bodyText1,
-                                                  ))),
-                                                  DataColumn(
-                                                    label: Expanded(
-                                                        child: Text('Cantidad',
-                                                            textAlign: TextAlign.center,
-                                                            style: AppTheme.of(context)
-                                                                  .bodyText1)),
-                                                  ),
-                                                  DataColumn(
-                                                      label: Expanded(
-                                                          child: Text(
-                                                    'Costo\nTotal',
-                                                    textAlign: TextAlign.center,
-                                                    style: AppTheme.of(context)
-                                                          .bodyText1,
-                                                  ))),
-                                                ],
-                                                rows: List.generate(recepcionYentregaProvider.prodCotizadosTemp.length,
-                                                    (index) => _getDataRow(recepcionYentregaProvider.prodCotizadosTemp.toList()[index], index, recepcionYentregaProvider)),
+                                                    ))),
+                                                  ],
+                                                  rows: List.generate(recepcionYentregaProvider.prodCotizadosTemp.length,
+                                                      (index) => _getDataRow(recepcionYentregaProvider.prodCotizadosTemp.toList()[index], index, recepcionYentregaProvider)),
+                                                ),
                                               ),
                                               //     Builder(builder: (context) {
                                               //   return ListView.builder(
@@ -643,7 +648,11 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                   'Finalizar recepción',
                                                                   style: AppTheme.of(
                                                                           context)
-                                                                      .bodyText1,
+                                                                      .bodyText1.override(
+                                                                        fontFamily:
+                                                                            AppTheme.of(context).bodyText1Family,
+                                                                        fontSize:15,
+                                                                      ),
                                                                 ),
                                                                 Row(
                                                                   mainAxisSize:
@@ -661,7 +670,10 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                           Text(
                                                                         'Total',
                                                                         style: AppTheme.of(context)
-                                                                            .bodyText1,
+                                                                            .bodyText1.override(
+                                                                              fontFamily: AppTheme.of(context).bodyText1Family,
+                                                                              fontSize: 15,
+                                                                            ),
                                                                       ),
                                                                     ),
                                                                     Text(
@@ -675,7 +687,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                             fontFamily:
                                                                                 AppTheme.of(context).bodyText1Family,
                                                                             fontSize:
-                                                                                18,
+                                                                                15,
                                                                             useGoogleFonts:
                                                                                 GoogleFonts.asMap().containsKey(AppTheme.of(context).bodyText1Family),
                                                                           ),

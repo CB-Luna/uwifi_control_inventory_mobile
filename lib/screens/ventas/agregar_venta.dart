@@ -90,7 +90,7 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
                               actualEmprendimiento!.imagen.target!.path!))
                           :
                           Image.asset(
-                            "assets/images/default_image_placeholder.jpeg",
+                            "assets/images/default_image.png",
                           ).image,
                         fit: BoxFit.cover,
                         filterQuality: FilterQuality.high,

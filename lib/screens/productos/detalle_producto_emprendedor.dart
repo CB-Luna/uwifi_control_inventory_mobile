@@ -52,7 +52,7 @@ class _DetalleProductoEmprendedorState extends State<DetalleProductoEmprendedor>
                                 widget.productoEmprendedor.emprendimientos.target!.imagen.target!.path!))
                             :
                             Image.asset(
-                              "assets/images/default_image_placeholder.jpeg",
+                              "assets/images/default_image.png",
                             ).image,
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,

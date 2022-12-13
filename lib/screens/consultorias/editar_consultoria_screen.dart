@@ -94,7 +94,7 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                 widget.consultoria.emprendimiento.target!.imagen.target!.path!))
                             :
                             Image.asset(
-                              "assets/images/default_image_placeholder.jpeg",
+                              "assets/images/default_image.png",
                             ).image,
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
