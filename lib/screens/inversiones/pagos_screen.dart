@@ -50,6 +50,7 @@ class _PagosScreenState extends State<PagosScreen> {
   Imagenes? imagenFirma;
   Imagenes? imagenProducto;
   bool bandera = false;
+  
 
   @override
   void initState() {
@@ -295,41 +296,36 @@ class _PagosScreenState extends State<PagosScreen> {
                                                           .target!
                                                           .rol ==
                                                       "Emprendedor",
-                                              child: Container(
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                child: DataTable(
-                                                  showCheckboxColumn: true,
-                                                  columnSpacing: 60.0,
-                                                  checkboxHorizontalMargin: 0.0,
-                                                  columns: <DataColumn>[
-                                                    DataColumn( 
-                                                        label: Expanded(
-                                                            child: Text(
-                                                      'Producto',
-                                                      style: AppTheme.of(context)
-                                                              .bodyText1,
-                                                    ))),
-                                                    DataColumn(
+                                              child: DataTable(
+                                                showCheckboxColumn: true,
+                                                columnSpacing: 60.0,
+                                                checkboxHorizontalMargin: 0.0,
+                                                columns: <DataColumn>[
+                                                  DataColumn( 
                                                       label: Expanded(
-                                                          child: Text('Cantidad',
-                                                              textAlign: TextAlign.center,
-                                                              style: AppTheme.of(context)
-                                                                    .bodyText1)),
-                                                    ),
-                                                    DataColumn(
-                                                        label: Expanded(
-                                                            child: Text(
-                                                      'Costo\nTotal',
-                                                      textAlign: TextAlign.center,
-                                                      style: AppTheme.of(context)
+                                                          child: Text(
+                                                    'Producto',
+                                                    style: AppTheme.of(context)
                                                             .bodyText1,
-                                                    ))),
-                                                  ],
-                                                  rows: List.generate(recepcionYentregaProvider.prodCotizadosTemp.length,
-                                                      (index) => _getDataRow(recepcionYentregaProvider.prodCotizadosTemp.toList()[index], index, recepcionYentregaProvider)),
-                                                ),
+                                                  ))),
+                                                  DataColumn(
+                                                    label: Expanded(
+                                                        child: Text('Cantidad',
+                                                            textAlign: TextAlign.center,
+                                                            style: AppTheme.of(context)
+                                                                  .bodyText1)),
+                                                  ),
+                                                  DataColumn(
+                                                      label: Expanded(
+                                                          child: Text(
+                                                    'Costo\nTotal',
+                                                    textAlign: TextAlign.center,
+                                                    style: AppTheme.of(context)
+                                                          .bodyText1,
+                                                  ))),
+                                                ],
+                                                rows: List.generate(recepcionYentregaProvider.prodCotizadosTemp.length,
+                                                    (index) => _getDataRow(recepcionYentregaProvider.prodCotizadosTemp.toList()[index], index, recepcionYentregaProvider)),
                                               ),
                                               //     Builder(builder: (context) {
                                               //   return ListView.builder(
@@ -651,7 +647,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                       .bodyText1.override(
                                                                         fontFamily:
                                                                             AppTheme.of(context).bodyText1Family,
-                                                                        fontSize:15,
+                                                                        fontSize:12,
                                                                       ),
                                                                 ),
                                                                 Row(
@@ -672,7 +668,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                         style: AppTheme.of(context)
                                                                             .bodyText1.override(
                                                                               fontFamily: AppTheme.of(context).bodyText1Family,
-                                                                              fontSize: 15,
+                                                                              fontSize: 12,
                                                                             ),
                                                                       ),
                                                                     ),
@@ -687,7 +683,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                             fontFamily:
                                                                                 AppTheme.of(context).bodyText1Family,
                                                                             fontSize:
-                                                                                15,
+                                                                                12,
                                                                             useGoogleFonts:
                                                                                 GoogleFonts.asMap().containsKey(AppTheme.of(context).bodyText1Family),
                                                                           ),
@@ -1040,7 +1036,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                           null
                                                                       ? Image
                                                                           .asset(
-                                                                          'assets/images/default_image.png',
+                                                                          'assets\images\animation_500_l3ur8tqa.gif',
                                                                           fit: BoxFit
                                                                               .contain,
                                                                         )
@@ -1075,7 +1071,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                           null
                                                                       ? Image
                                                                           .asset(
-                                                                          'assets/images/default_image.png',
+                                                                          'assets\images\animation_500_l3ur8tqa.gif',
                                                                           width:
                                                                               200,
                                                                           height:
@@ -1306,7 +1302,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                           null
                                                                       ? Image
                                                                           .asset(
-                                                                          'assets/images/default_image.png',
+                                                                          'assets\images\animation_500_l3ur8tqa.gif',
                                                                           fit: BoxFit
                                                                               .contain,
                                                                         )
@@ -1342,7 +1338,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                           null
                                                                       ? Image
                                                                           .asset(
-                                                                          'assets/images/default_image.png',
+                                                                          'assets\images\animation_500_l3ur8tqa.gif',
                                                                           width:
                                                                               200,
                                                                           height:
@@ -2420,7 +2416,7 @@ class _PagosScreenState extends State<PagosScreen> {
       )),
       
       DataCell(Center(
-        child: Text(prodCotizado.costoTotal.toStringAsFixed(2),
+        child: Text(currencyFormat.format(prodCotizado.costoTotal.toStringAsFixed(2)),
             style: GoogleFonts.roboto(
                 fontSize: 12.0,
                 fontWeight: FontWeight.w400,
