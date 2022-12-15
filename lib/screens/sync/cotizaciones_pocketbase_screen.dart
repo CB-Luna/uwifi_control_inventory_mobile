@@ -143,9 +143,9 @@ class _CotizacionesPocketbaseScreenState extends State<CotizacionesPocketbaseScr
                                           EdgeInsetsDirectional.fromSTEB(
                                               0, 70, 0, 0),
                                       child: Icon(
-                                          Icons.cancel_outlined,
-                                          color: Color.fromARGB(228, 255, 82, 70),
-                                          size: 250,
+                                          Icons.warning_amber_outlined,
+                                          color: Color.fromARGB(255, 255, 176, 7),
+                                          size: 150,
                                           ),
                                     ),
                                   ),
@@ -193,7 +193,7 @@ class _CotizacionesPocketbaseScreenState extends State<CotizacionesPocketbaseScr
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         0, 50, 0, 0),
                                     child: Text(
-                                      'Error al descargar productos.\nLa descarga no se hizo con éxito.\nVuelva a probar más tarde.',
+                                      'La descarga no se hizo con éxito.\nVuelva a probar más tarde.',
                                       textAlign: TextAlign.center,
                                       maxLines: 4,
                                       style: AppTheme.of(context).bodyText1.override(

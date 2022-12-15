@@ -143,9 +143,9 @@ class _DescargaCatalogosEmiWebScreenState extends State<DescargaCatalogosEmiWebS
                                           EdgeInsetsDirectional.fromSTEB(
                                               0, 70, 0, 0),
                                       child: Icon(
-                                          Icons.cancel_outlined,
-                                          color: Color.fromARGB(228, 255, 82, 70),
-                                          size: 250,
+                                          Icons.warning_amber_outlined,
+                                          color: Color.fromARGB(255, 255, 176, 7),
+                                          size: 150,
                                           ),
                                     ),
                                   ),
@@ -157,7 +157,7 @@ class _DescargaCatalogosEmiWebScreenState extends State<DescargaCatalogosEmiWebS
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         0, 50, 0, 0),
                                     child: Text(
-                                      'Error al conectar.\nLa conexión con EMI Web no se hizo con éxito.\nVuelva a probar más tarde.',
+                                      '\nLa conexión con EMI Web no se hizo con éxito.\nVuelva a probar más tarde.',
                                       textAlign: TextAlign.center,
                                       maxLines: 4,
                                       style: AppTheme.of(context).bodyText1.override(

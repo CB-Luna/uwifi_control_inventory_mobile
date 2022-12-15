@@ -167,7 +167,7 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
                                         child: Icon(
                                             Icons.warning_amber_outlined,
                                             color: Color.fromARGB(255, 255, 176, 7),
-                                            size: 250,
+                                            size: 150,
                                             ),
                                       ),
                                     ),
@@ -215,7 +215,7 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
                                       padding: const EdgeInsetsDirectional.fromSTEB(
                                           0, 10, 0, 0),
                                       child: Text(
-                                        'Sincronización incompleta,\nfalló al sincronizar algunos datos.\nPara más información\nvea los problemas registrados.',
+                                        'Sincronización incompleta.\nPara más información\nvea los detalles registrados.',
                                         textAlign: TextAlign.center,
                                         maxLines: 4,
                                         style: AppTheme.of(context).bodyText1.override(
@@ -255,7 +255,7 @@ class _SincronizacionInformacionPocketbaseScreenState extends State<Sincronizaci
                                                     ),
                                                   ),
                                                   Text(
-                                                    'Errores Registrados',
+                                                    'Detalles Registrados',
                                                     style: AppTheme.of(context)
                                                         .title1
                                                         .override(
