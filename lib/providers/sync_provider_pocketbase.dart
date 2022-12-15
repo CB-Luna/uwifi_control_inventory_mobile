@@ -53,7 +53,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 instruccion: "Agregar Imagen de Perfil Usuario Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -62,7 +63,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               instruccion: "Agregar Imagen de Perfil Usuario Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddEmprendedor":
@@ -80,7 +82,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: emprendedorToSync.emprendimiento.target!.nombre,
                 instruccion: "Agregar Emprendedor al Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -90,7 +93,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Agregar Emprendedor al Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddEmprendimiento":
@@ -108,7 +112,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: emprendimientoToSync.nombre,
                 instruccion: "Agregar Emprendimiento Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -118,7 +123,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Agregar Emprendimiento Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddJornada1":
@@ -136,7 +142,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: jornadaToSync.emprendimiento.target!.nombre,
                 instruccion: "Agregar Jornada 1 Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -146,7 +153,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Agregar Jornada 1 Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddJornada2":
@@ -164,7 +172,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: jornadaToSync.emprendimiento.target!.nombre,
                 instruccion: "Agregar Jornada 2 Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -174,7 +183,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Agregar Jornada 2 Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddImagenJornada2":
@@ -192,7 +202,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: imagenToSync.tarea.target!.jornada.target!.emprendimiento.target!.nombre,
                 instruccion: "Agregar Imagen Jornada 2 Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -202,7 +213,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Agregar Imagen Jornada 2 Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddJornada3":
@@ -220,7 +232,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: jornadaToSync.emprendimiento.target!.nombre,
                 instruccion: "Agregar Jornada 3 Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -230,7 +243,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Agregar Jornada 3 Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddImagenJornada3":
@@ -248,7 +262,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: imagenToSync.tarea.target!.jornada.target!.emprendimiento.target!.nombre,
                 instruccion: "Agregar Imagen Jornada 3 Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -258,7 +273,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Agregar Imagen Jornada 3 Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddProductoInversionJ3":
@@ -276,7 +292,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: prodSolicitadoToSync.inversion.target!.emprendimiento.target!.nombre,
                 instruccion: "Agregar Producto Inversión Jornada 3 Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -286,7 +303,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Agregar Producto Inversión Jornada 3 Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddJornada4":
@@ -304,7 +322,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: jornadaToSync.emprendimiento.target!.nombre,
                 instruccion: "Agregar Jornada 4 Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -314,7 +333,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Agregar Jornada 4 Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddImagenJornada4":
@@ -332,7 +352,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: imagenToSync.tarea.target!.jornada.target!.emprendimiento.target!.nombre,
                 instruccion: "Agregar Imagen Jornada 4 Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -342,7 +363,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Agregar Imagen Jornada 4 Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddConsultoria":
@@ -360,7 +382,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: consultoriaToSync.emprendimiento.target!.nombre,
                 instruccion: "Agregar Consultoría Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -370,7 +393,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Agregar Consultoría Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddProductoEmprendedor":
@@ -388,7 +412,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: productoEmpToSync.emprendimientos.target!.nombre,
                 instruccion: "Agregar Producto Emprendedor Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -398,7 +423,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Agregar Producto Emprendedor Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddImagenProductoEmprendedor":
@@ -415,7 +441,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 instruccion: "Agregar Imagen del Producto Emprendedor Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -424,7 +451,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               instruccion: "Agregar Imagen del Producto Emprendedor Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddVenta":
@@ -442,7 +470,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: ventaToSync.emprendimiento.target!.nombre,
                 instruccion: "Agregar Venta Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -452,7 +481,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Agregar Venta Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddProductoVendido":
@@ -470,7 +500,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: prodVendidoToSync.venta.target!.emprendimiento.target!.nombre,
                 instruccion: "Agregar Producto Vendido Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -480,7 +511,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Agregar Producto Vendido Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddSingleProductoVendido":
@@ -498,7 +530,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: prodVendidoToSync.venta.target?.emprendimiento.target?.nombre ?? "SIN EMPRENDIMIENTO",
                 instruccion: "Agregar un Producto Vendido en Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -508,7 +541,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Agregar un Producto Vendido en Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddInversion":
@@ -526,7 +560,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: inversionToSync.emprendimiento.target!.nombre,
                 instruccion: "Agregar Inversión Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -536,7 +571,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Agregar Inversión Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateFaseEmprendimiento":
@@ -554,7 +590,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: emprendimientoToSync.nombre,
                 instruccion: "Actualización Fase Emprendimiento a ${instruccionesBitacora[i].instruccionAdicional} Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -564,7 +601,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Actualización Fase Emprendimiento a ${instruccionesBitacora[i].instruccionAdicional} Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateImagenUsuario":
@@ -582,7 +620,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 instruccion: "Actualización Imagen de Perfil Usuario Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }     
           } else {
@@ -591,7 +630,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               instruccion: "Actualización Imagen de Perfil Usuario Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateNameEmprendimiento":
@@ -621,7 +661,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: emprendedorToSync.nombre,
                 instruccion: "Actualización Emprendedor Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -631,7 +672,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Actualización Emprendedor Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateEmprendimiento":
@@ -649,7 +691,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: emprendedorToSync.nombre,
                 instruccion: "Actualización Emprendimiento Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -659,7 +702,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Actualización Emprendimiento Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateJornada1":
@@ -677,7 +721,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: jornadaToSync.emprendimiento.target!.nombre,
                 instruccion: "Actualización Jornada 1 Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -687,7 +732,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Actualización Jornada 1 Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateJornada2":
@@ -705,7 +751,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: jornadaToSync.emprendimiento.target!.nombre,
                 instruccion: "Actualización Jornada 2 Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -715,7 +762,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Actualización Jornada 2 Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateImagenJornada2":
@@ -733,7 +781,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: imagenToSync.emprendimiento.target!.nombre,
                 instruccion: "Actualización Imagen Jornada 2 Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -743,7 +792,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Actualización Imagen Jornada 2 Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateJornada3":
@@ -761,7 +811,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: jornadaToSync.emprendimiento.target!.nombre,
                 instruccion: "Actualización Jornada 3 Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -771,7 +822,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Actualización Jornada 3 Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateImagenJornada3":
@@ -789,7 +841,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: imagenToSync.emprendimiento.target!.nombre,
                 instruccion: "Actualización Imagen Jornada 3 Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -799,7 +852,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Actualización Imagen Jornada 3 Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateProductoInversionJ3":
@@ -817,7 +871,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: prodSolicitadoToSync.inversion.target!.emprendimiento.target!.nombre,
                 instruccion: "Actualización Producto Inversión Jornada 3 Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -827,7 +882,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Actualización Producto Inversión Jornada 3 Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateJornada4":
@@ -845,7 +901,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: jornadaToSync.emprendimiento.target!.nombre,
                 instruccion: "Actualización Jornada 4 Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -855,7 +912,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Actualización Jornada 4 Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateImagenJornada4":
@@ -873,7 +931,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: imagenToSync.emprendimiento.target!.nombre,
                 instruccion: "Actualización Imagen Jornada 4 Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -883,7 +942,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Actualización Imagen Jornada 4 Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncDeleteImagenJornada":
@@ -899,7 +959,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: instruccionesBitacora[i].emprendimiento,
               instruccion: "Eliminar ${instruccionesBitacora[i].instruccionAdicional} Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncDeleteProductoInversionJ3":
@@ -915,7 +976,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: instruccionesBitacora[i].emprendimiento,
               instruccion: "Eliminar Producto Inversión J3 Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateTareaConsultoria":
@@ -933,7 +995,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: tareaToSync.consultoria.target!.emprendimiento.target!.nombre,
                 instruccion: "Actualización Tarea Consultoría Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -943,7 +1006,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Actualización Tarea Consultoría Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateEstadoConsultoria":
@@ -973,7 +1037,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 instruccion: "Actualización Datos Usuario Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -982,7 +1047,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               instruccion: "Actualización Datos Usuario Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateEstadoInversion":
@@ -1000,7 +1066,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: inversionToSync.emprendimiento.target!.nombre,
                 instruccion: "Actualizar Estado Inversión Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -1010,7 +1077,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Actualizar Estado Inversión Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateProductoEmprendedor":
@@ -1028,7 +1096,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: productoEmprendedorToSync.nombre,
                 instruccion: "Actualización Producto Emprendedor Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -1038,7 +1107,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Actualización Producto Emprendedor Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateImagenProductoEmprendedor":
@@ -1056,7 +1126,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 instruccion: "Actualización Imagen del Producto Emprendedor Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }     
           } else {
@@ -1065,7 +1136,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               instruccion: "Actualización Imagen del Producto Emprendedor Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateProductoVendido":
@@ -1083,7 +1155,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: prodVendidoToSync.venta.target!.emprendimiento.target!.nombre,
                 instruccion: "Actualización Producto Vendido Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -1093,7 +1166,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Actualización Producto Vendido Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateVenta":
@@ -1111,7 +1185,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: ventaToSync.emprendimiento.target!.nombre,
                 instruccion: "Actualización Venta Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -1121,7 +1196,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Actualización Venta Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateProductosVendidosVenta":
@@ -1139,7 +1215,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: ventaToSync.emprendimiento.target!.nombre,
                 instruccion: "Actualización Productos Vendidos Venta Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -1149,7 +1226,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Actualización Productos Vendidos Venta Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncArchivarEmprendimiento":
@@ -1167,7 +1245,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: emprendedorToSync.nombre,
                 instruccion: "Archivar Emprendimiento Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -1177,7 +1256,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Archivar Emprendimiento Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncDesarchivarEmprendimiento":
@@ -1195,7 +1275,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: emprendedorToSync.nombre,
                 instruccion: "Desarchivar Emprendimiento Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -1205,7 +1286,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Desarchivar Emprendimiento Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncArchivarConsultoria":
@@ -1223,7 +1305,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: consultoriaToSync.emprendimiento.target!.nombre,
                 instruccion: "Archivar Consultoria Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -1233,7 +1316,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Archivar Consultoria Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncDesarchivarConsultoria":
@@ -1251,7 +1335,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: consultoriaToSync.emprendimiento.target!.nombre,
                 instruccion: "Desarchivar Consultoria Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -1261,7 +1346,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Desarchivar Consultoria Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAcceptInversionXProdCotizado":
@@ -1279,7 +1365,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: inversionXproductoCotizadoToSync.inversion.target!.emprendimiento.target!.nombre,
                 instruccion: "Aceptar Inversion por Productos Cotizados Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -1289,7 +1376,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Aceptar Inversion por Productos Cotizados Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAcceptProdCotizado":
@@ -1307,7 +1395,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: productoCotizadoToSync.inversionXprodCotizados.target!.inversion.target!.emprendimiento.target!.nombre,
                 instruccion: "Aceptar Producto Cotizado Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -1317,7 +1406,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Aceptar Producto Cotizado Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncDeleteProductoVendido":
@@ -1333,7 +1423,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: instruccionesBitacora[i].emprendimiento,
               instruccion: "Eliminar Producto Vendido Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncDeleteProductoSolicitado":
@@ -1361,7 +1452,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: pagoToSync.inversion.target!.emprendimiento.target!.nombre,
                 instruccion: "Agregar Pago Inversión Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -1371,7 +1463,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Agregar Pago Inversión Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddImagenesEntregaInversion":
@@ -1389,7 +1482,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: inversionToSync.emprendimiento.target!.nombre,
                 instruccion: "Agregar Imágenes Entrega Inversión Servidor", 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              instruccionesFallidas.add(instruccionNoSincronizada);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
               continue;
             }      
           } else {
@@ -1399,7 +1493,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               emprendimiento: "No encontrado",
               instruccion: "Agregar Imágenes Entrega Inversión Servidor", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            instruccionesFallidas.add(instruccionNoSincronizada);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         default:
