@@ -74,12 +74,12 @@ class _EditarEmprendimientoScreenState
                       height: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: widget.emprendimiento.imagen.target != null ?
-                          FileImage(File(widget.emprendimiento.imagen.target!.path!))
-                          :
-                          Image.asset(
-                              "assets/images/default_image.png",
-                            ).image,
+                          image: widget.emprendimiento.imagen.target != null
+                              ? FileImage(File(
+                                  widget.emprendimiento.imagen.target!.path!))
+                              : Image.asset(
+                                  "assets/image/animation_500_l3ur8tqa.gif",
+                                ).image,
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
                         ),
@@ -194,7 +194,7 @@ class _EditarEmprendimientoScreenState
                       ),
                     ),
                   ],
-                ),         
+                ),
                 //Formulario
                 SingleChildScrollView(
                   child: Form(
@@ -224,13 +224,13 @@ class _EditarEmprendimientoScreenState
                                 context: context,
                                 builder: (_) => const CustomBottomSheet(),
                               );
-                    
+
                               if (option == null) return;
-                    
+
                               final picker = ImagePicker();
-                    
+
                               late final XFile? pickedFile;
-                    
+
                               if (option == 'camera') {
                                 pickedFile = await picker.pickImage(
                                   source: ImageSource.camera,
@@ -242,11 +242,11 @@ class _EditarEmprendimientoScreenState
                                   imageQuality: 100,
                                 );
                               }
-                    
+
                               if (pickedFile == null) {
                                 return;
                               }
-                    
+
                               setState(() {
                                 image = pickedFile;
                                 imagenTemp = image!.path;
@@ -254,10 +254,10 @@ class _EditarEmprendimientoScreenState
                                 List<int> fileInByte = file.readAsBytesSync();
                                 String base64 = base64Encode(fileInByte);
                                 newImagen = Imagenes(
-                                  imagenes: image!.path,
-                                  nombre: image!.name, 
-                                  path: image!.path, 
-                                  base64: base64);
+                                    imagenes: image!.path,
+                                    nombre: image!.name,
+                                    path: image!.path,
+                                    base64: base64);
                                 emprendimientoProvider.imagenLocal = newImagen;
                               });
                             },
@@ -351,15 +351,11 @@ class _EditarEmprendimientoScreenState
                                         fontWeight: FontWeight.normal,
                                       ),
                                   validator: (value) {
-                                    if(palabras
-                                            .hasMatch(value ?? '')){
-                                              return null;
+                                    if (palabras.hasMatch(value ?? '')) {
+                                      return null;
+                                    } else {
+                                      return 'Evita usar números y caracteres especiales como diéresis';
                                     }
-                                    else{
-                                              return 'Evita usar números y caracteres especiales como diéresis';
-                                    }
-                                         
-                                         
                                   },
                                 ),
                               ),
@@ -375,8 +371,7 @@ class _EditarEmprendimientoScreenState
                                   obscureText: false,
                                   controller: descController,
                                   decoration: InputDecoration(
-                                    labelText:
-                                        'Descripción de emprendimiento',
+                                    labelText: 'Descripción de emprendimiento',
                                     labelStyle:
                                         AppTheme.of(context).title3.override(
                                               fontFamily: 'Montserrat',
@@ -433,25 +428,22 @@ class _EditarEmprendimientoScreenState
                                     if (nombreController.text !=
                                             widget.emprendimiento.nombre ||
                                         descController.text !=
-                                            widget
-                                                .emprendimiento.descripcion
-                                        ) {
+                                            widget.emprendimiento.descripcion) {
                                       if (emprendimientoProvider
                                           .validateForm(formKey)) {
-                                        
                                         if (newImagen !=
-                                            widget.emprendimiento.imagen.target) {
-                                          emprendimientoProvider
-                                          .updateImagen(
-                                            widget.emprendimiento.imagen.target!.id, 
+                                            widget
+                                                .emprendimiento.imagen.target) {
+                                          emprendimientoProvider.updateImagen(
+                                            widget.emprendimiento.imagen.target!
+                                                .id,
                                             newImagen!,
                                           );
                                         }
                                         emprendimientoProvider.update(
                                             widget.emprendimiento.id,
                                             nombreController.text,
-                                            descController.text
-                                            );
+                                            descController.text);
                                         await Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -483,16 +475,15 @@ class _EditarEmprendimientoScreenState
                                       }
                                     } else {
                                       if (newImagen !=
-                                            widget.emprendimiento.imagen.target) {
-                                          if (emprendimientoProvider
-                                          .validateForm(formKey)) {
-                                          
-                                          emprendimientoProvider
-                                          .updateImagen(
-                                            widget.emprendimiento.imagen.target!.id, 
+                                          widget.emprendimiento.imagen.target) {
+                                        if (emprendimientoProvider
+                                            .validateForm(formKey)) {
+                                          emprendimientoProvider.updateImagen(
+                                            widget.emprendimiento.imagen.target!
+                                                .id,
                                             newImagen!,
                                           );
-                                          
+
                                           await Navigator.push(
                                             context,
                                             MaterialPageRoute(

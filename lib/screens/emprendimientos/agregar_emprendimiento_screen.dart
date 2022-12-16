@@ -140,18 +140,19 @@ class _AgregarEmprendimientoScreenState
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(25, 10, 0, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              25, 10, 0, 0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
                                 'Imagen*',
                                 style: AppTheme.of(context).title3.override(
-                                              fontFamily: 'Poppins',
-                                              color: const Color(0xFF4672FF),
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.normal,
-                                            ),
+                                      fontFamily: 'Poppins',
+                                      color: const Color(0xFF4672FF),
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.normal,
+                                    ),
                               ),
                             ],
                           ),
@@ -187,7 +188,6 @@ class _AgregarEmprendimientoScreenState
                                         source: ImageSource.gallery,
                                         imageQuality: 100,
                                       );
-                                      
                                     }
 
                                     if (pickedFile == null) {
@@ -207,7 +207,6 @@ class _AgregarEmprendimientoScreenState
                                           base64: base64);
                                       emprendimientoProvider.imagenLocal =
                                           newImagenLocal;
-                                        
                                     });
                                   },
                                   child: Container(
@@ -239,7 +238,6 @@ class _AgregarEmprendimientoScreenState
                                               BorderRadius.circular(8),
                                           child: getImage(image?.path),
                                         ),
-                                        
                                       ],
                                     ),
                                   ),
@@ -316,17 +314,11 @@ class _AgregarEmprendimientoScreenState
                                         fontWeight: FontWeight.normal,
                                       ),
                                   validator: (value) {
-                                    if(palabras
-                                            .hasMatch(value ?? '')){
-                                                                                          
-                                                return null;
-                                              
+                                    if (palabras.hasMatch(value ?? '')) {
+                                      return null;
+                                    } else {
+                                      return 'Evita usar números y caracteres especiales como diéresis';
                                     }
-                                    else{
-                                              return 'Evita usar números y caracteres especiales como diéresis';
-                                    }
-                                         
-                                         
                                   },
                                 ),
                               ),

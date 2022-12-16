@@ -31,18 +31,19 @@ class DetalleEmprendimientoScreen extends StatefulWidget {
 class _DetalleEmprendimientoScreenState
     extends State<DetalleEmprendimientoScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-Emprendimientos? emprendimientoActual;
+  Emprendimientos? emprendimientoActual;
   @override
   void initState() {
     super.initState();
     emprendimientoActual =
         dataBase.emprendimientosBox.get(widget.idEmprendimiento);
-    if (emprendimientoActual != null) {
-    }
+    if (emprendimientoActual != null) {}
   }
+
   @override
   Widget build(BuildContext context) {
-    final emprendimientoProvider = Provider.of<EmprendimientoController>(context);
+    final emprendimientoProvider =
+        Provider.of<EmprendimientoController>(context);
     String emprendedor = "";
     if (emprendimientoActual!.emprendedor.target != null) {
       emprendedor =
@@ -89,13 +90,13 @@ Emprendimientos? emprendimientoActual;
                             height: 200,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: emprendimientoActual!.imagen.target != null ?
-                                FileImage(
-                                    File(emprendimientoActual!.imagen.target!.path!))
-                                :
-                                Image.asset(
-                                    "assets/images/default_image.png",
-                                  ).image,
+                                image:
+                                    emprendimientoActual!.imagen.target != null
+                                        ? FileImage(File(emprendimientoActual!
+                                            .imagen.target!.path!))
+                                        : Image.asset(
+                                            "assets/images/animation_500_l3ur8tqa.gif",
+                                          ).image,
                                 fit: BoxFit.cover,
                                 filterQuality: FilterQuality.high,
                               ),
@@ -174,9 +175,15 @@ Emprendimientos? emprendimientoActual;
                                   ),
                                   child: InkWell(
                                     onTap: () async {
-                                      if (emprendimientoActual!.usuario.target!.rol.target!.rol == "Voluntario Estratégico" ||
-                                          emprendimientoActual!.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
-                                          emprendimientoActual!.usuario.target!.rol.target!.rol == "Emprendedor") {
+                                      if (emprendimientoActual!.usuario.target!
+                                                  .rol.target!.rol ==
+                                              "Voluntario Estratégico" ||
+                                          emprendimientoActual!.usuario.target!
+                                                  .rol.target!.rol ==
+                                              "Amigo del Cambio" ||
+                                          emprendimientoActual!.usuario.target!
+                                                  .rol.target!.rol ==
+                                              "Emprendedor") {
                                         snackbarKey.currentState
                                             ?.showSnackBar(const SnackBar(
                                           content: Text(
@@ -235,7 +242,8 @@ Emprendimientos? emprendimientoActual;
                                 height: 55,
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Container(
                                       width: 60,
@@ -246,36 +254,60 @@ Emprendimientos? emprendimientoActual;
                                       ),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           InkWell(
                                             onTap: () async {
-                                              if (emprendimientoActual!.usuario.target!.rol.target!.rol == "Voluntario Estratégico" ||
-                                                  emprendimientoActual!.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
-                                                  emprendimientoActual!.usuario.target!.rol.target!.rol == "Emprendedor") {
+                                              if (emprendimientoActual!
+                                                          .usuario
+                                                          .target!
+                                                          .rol
+                                                          .target!
+                                                          .rol ==
+                                                      "Voluntario Estratégico" ||
+                                                  emprendimientoActual!
+                                                          .usuario
+                                                          .target!
+                                                          .rol
+                                                          .target!
+                                                          .rol ==
+                                                      "Amigo del Cambio" ||
+                                                  emprendimientoActual!
+                                                          .usuario
+                                                          .target!
+                                                          .rol
+                                                          .target!
+                                                          .rol ==
+                                                      "Emprendedor") {
                                                 snackbarKey.currentState
-                                                    ?.showSnackBar(const SnackBar(
+                                                    ?.showSnackBar(
+                                                        const SnackBar(
                                                   content: Text(
                                                       "Este usuario no tiene permisos para esta acción."),
                                                 ));
                                               } else {
                                                 String? option =
-                                                  await showModalBottomSheet(
+                                                    await showModalBottomSheet(
                                                   context: context,
                                                   builder: (_) =>
                                                       const BottomSheetDetenerEmprendimiento(),
                                                 );
                                                 if (option == 'aceptar') {
-                                                  emprendimientoProvider.detenerEmprendimiento(emprendimientoActual!.id);
+                                                  emprendimientoProvider
+                                                      .detenerEmprendimiento(
+                                                          emprendimientoActual!
+                                                              .id);
                                                   // ignore: use_build_context_synchronously
                                                   await Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const EmprendimientoDetenidoScreen(),
-                                                        ),
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const EmprendimientoDetenidoScreen(),
+                                                    ),
                                                   );
-                                                } else { //Se aborta la opción
+                                                } else {
+                                                  //Se aborta la opción
                                                   return;
                                                 }
                                               }
@@ -287,61 +319,91 @@ Emprendimientos? emprendimientoActual;
                                             ),
                                           ),
                                           Text(
-                                          'Detener',
-                                          style:
-                                              AppTheme.of(context).bodyText1.override(
-                                                    fontFamily: 'Poppins',
-                                                    color: Colors.white,
-                                                    fontSize: 10,
-                                                  ),
-                                        ),
+                                            'Detener',
+                                            style: AppTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  color: Colors.white,
+                                                  fontSize: 10,
+                                                ),
+                                          ),
                                         ],
                                       ),
                                     ),
                                     Visibility(
-                                      visible: emprendimientoActual!.faseEmp.last.fase == "Jornada 4" ||
-                                      emprendimientoActual!.faseEmp.last.fase == "Consultorías",
+                                      visible: emprendimientoActual!
+                                                  .faseEmp.last.fase ==
+                                              "Jornada 4" ||
+                                          emprendimientoActual!
+                                                  .faseEmp.last.fase ==
+                                              "Consultorías",
                                       child: Container(
                                         width: 60,
                                         height: 50,
                                         decoration: BoxDecoration(
                                           color: const Color(0xFF4672FF),
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                         ),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             InkWell(
                                               onTap: () async {
-                                                if (emprendimientoActual!.usuario.target!.rol.target!.rol == "Voluntario Estratégico" ||
-                                                      emprendimientoActual!.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
-                                                      emprendimientoActual!.usuario.target!.rol.target!.rol == "Emprendedor") {
-                                                    snackbarKey.currentState
-                                                        ?.showSnackBar(const SnackBar(
-                                                      content: Text(
-                                                          "Este usuario no tiene permisos para esta acción."),
-                                                    ));
-                                                  } else {
-                                                    String? option =
+                                                if (emprendimientoActual!
+                                                            .usuario
+                                                            .target!
+                                                            .rol
+                                                            .target!
+                                                            .rol ==
+                                                        "Voluntario Estratégico" ||
+                                                    emprendimientoActual!
+                                                            .usuario
+                                                            .target!
+                                                            .rol
+                                                            .target!
+                                                            .rol ==
+                                                        "Amigo del Cambio" ||
+                                                    emprendimientoActual!
+                                                            .usuario
+                                                            .target!
+                                                            .rol
+                                                            .target!
+                                                            .rol ==
+                                                        "Emprendedor") {
+                                                  snackbarKey.currentState
+                                                      ?.showSnackBar(
+                                                          const SnackBar(
+                                                    content: Text(
+                                                        "Este usuario no tiene permisos para esta acción."),
+                                                  ));
+                                                } else {
+                                                  String? option =
                                                       await showModalBottomSheet(
-                                                      context: context,
-                                                      builder: (_) =>
-                                                          const BottomSheetConsolidarEmprendimiento(),
-                                                    );
-                                                    if (option == 'aceptar') {
-                                                      emprendimientoProvider.consolidarEmprendimiento(emprendimientoActual!.id);
-                                                      // ignore: use_build_context_synchronously
-                                                      await Navigator.push(
+                                                    context: context,
+                                                    builder: (_) =>
+                                                        const BottomSheetConsolidarEmprendimiento(),
+                                                  );
+                                                  if (option == 'aceptar') {
+                                                    emprendimientoProvider
+                                                        .consolidarEmprendimiento(
+                                                            emprendimientoActual!
+                                                                .id);
+                                                    // ignore: use_build_context_synchronously
+                                                    await Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const EmprendimientoConsolidadoScreen(),
-                                                            ),
-                                                      );
-                                                    } else { //Se aborta la opción
-                                                      return;
-                                                    }
+                                                        builder: (context) =>
+                                                            const EmprendimientoConsolidadoScreen(),
+                                                      ),
+                                                    );
+                                                  } else {
+                                                    //Se aborta la opción
+                                                    return;
+                                                  }
                                                 }
                                               },
                                               child: const Icon(
@@ -351,14 +413,15 @@ Emprendimientos? emprendimientoActual;
                                               ),
                                             ),
                                             Text(
-                                            'Consolidar',
-                                            style:
-                                                AppTheme.of(context).bodyText1.override(
-                                                      fontFamily: 'Poppins',
-                                                      color: Colors.white,
-                                                      fontSize: 10,
-                                                    ),
-                                          ),
+                                              'Consolidar',
+                                              style: AppTheme.of(context)
+                                                  .bodyText1
+                                                  .override(
+                                                    fontFamily: 'Poppins',
+                                                    color: Colors.white,
+                                                    fontSize: 10,
+                                                  ),
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -371,17 +434,13 @@ Emprendimientos? emprendimientoActual;
                         ],
                       ),
                       CuerpoDetalleEmprendimiento(
-                        emprendimiento: 
-                        emprendimientoActual!
-                      ),
+                          emprendimiento: emprendimientoActual!),
                     ],
                   ),
                 ),
                 //Menu inferior
                 MenuInferiorDetalleEmprendimiento(
-                  emprendimiento: 
-                  emprendimientoActual!
-                  ),
+                    emprendimiento: emprendimientoActual!),
               ],
             ),
           ),

@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 Widget? getImageEmprendimiento(String? image, {double height = 180}) {
   if (image == null || image == '') {
     return Image(
-        height: height,
-        width: double.infinity,
-        image: const AssetImage("assets/images/default_image.png"),
-        fit: BoxFit.cover,
-      );
+      height: height,
+      width: double.infinity,
+      image: const AssetImage("assets/images/animation_500_l3ur8tqa.gif"),
+      fit: BoxFit.cover,
+    );
   } else if (image.startsWith('http') || image.startsWith('https')) {
     return FadeInImage(
       height: 180,
@@ -29,11 +29,11 @@ Widget? getImageEmprendimiento(String? image, {double height = 180}) {
 Widget? getImage(String? image, {double height = 180}) {
   if (image == null || image == '') {
     return Image(
-        height: height,
-        width: double.infinity,
-        image: const AssetImage("assets/images/default_image.png"),
-        fit: BoxFit.cover,
-      );
+      height: height,
+      width: double.infinity,
+      image: const AssetImage("assets/images/animation_500_l3ur8tqa.gif"),
+      fit: BoxFit.cover,
+    );
   } else if (image.startsWith('http') || image.startsWith('https')) {
     return FadeInImage(
       height: 180,
@@ -51,7 +51,8 @@ Widget? getImage(String? image, {double height = 180}) {
   );
 }
 
-Widget? getImageTareaConsultoria(String? image, {double height = 180, double width = 180}) {
+Widget? getImageTareaConsultoria(String? image,
+    {double height = 180, double width = 180}) {
   if (image == null || image == '') {
     return null;
   } else if (image.startsWith('http') || image.startsWith('https')) {
@@ -71,7 +72,8 @@ Widget? getImageTareaConsultoria(String? image, {double height = 180, double wid
   );
 }
 
-Widget? getImageProductoEmprendedor(String? image, {double height = 180, double width = 180}) {
+Widget? getImageProductoEmprendedor(String? image,
+    {double height = 180, double width = 180}) {
   if (image == null || image == '') {
     return null;
   } else if (image.startsWith('http') || image.startsWith('https')) {
@@ -94,11 +96,11 @@ Widget? getImageProductoEmprendedor(String? image, {double height = 180, double 
 Widget getImageEmprendedor(String? image, {double height = 180}) {
   if (image == null || image == '') {
     return Image(
-        height: height,
-        width: double.infinity,
-        image: const AssetImage("assets/images/default-user-profile-picture.png"),
-        fit: BoxFit.cover,
-      );
+      height: height,
+      width: double.infinity,
+      image: const AssetImage("assets/images/default-user-profile-picture.png"),
+      fit: BoxFit.cover,
+    );
   } else if (image.startsWith('http') || image.startsWith('https')) {
     return FadeInImage(
       height: height,
@@ -149,13 +151,13 @@ Widget getWidgetCoverImage(String? image) {
     return Container(
       color: Colors.grey,
       child: const Image(
-        image: AssetImage("assets/images/default_image.png"),
+        image: AssetImage("assets/images/animation_500_l3ur8tqa.gif"),
         fit: BoxFit.cover,
       ),
     );
   } else if (image.startsWith('http') || image.startsWith('https')) {
     return FadeInImage(
-      placeholder: const AssetImage('assets/images/default-image.jpeg'),
+      placeholder: const AssetImage('assets/images/animation_500_l3ur8tqa.gif'),
       image: NetworkImage(image),
       fit: BoxFit.cover,
     );
@@ -172,13 +174,13 @@ Widget getWidgetContainImage(String? image) {
     return Container(
       color: Colors.transparent,
       child: const Image(
-        image: AssetImage("assets/images/default_image.png"),
+        image: AssetImage("assets/images/animation_500_l3ur8tqa.gif"),
         fit: BoxFit.contain,
       ),
     );
   } else if (image.startsWith('http') || image.startsWith('https')) {
     return FadeInImage(
-      placeholder: const AssetImage('assets/images/default-image.jpeg'),
+      placeholder: const AssetImage('assets/images/animation_500_l3ur8tqa.gif'),
       image: NetworkImage(image),
       fit: BoxFit.contain,
     );
@@ -190,7 +192,6 @@ Widget getWidgetContainImage(String? image) {
   );
 }
 
-
 Widget? getWidgetContainerImage(String? image, double height, double width) {
   if (image == null || image == '') {
     return Container(
@@ -198,7 +199,7 @@ Widget? getWidgetContainerImage(String? image, double height, double width) {
       width: width,
       color: Colors.grey,
       child: const Image(
-        image: AssetImage("assets/images/default_image.png"),
+        image: AssetImage("assets/images/animation_500_l3ur8tqa.gif"),
         fit: BoxFit.cover,
       ),
     );
@@ -206,7 +207,7 @@ Widget? getWidgetContainerImage(String? image, double height, double width) {
     return FadeInImage(
       height: height,
       width: width,
-      placeholder: const AssetImage('assets/images/default-image.jpeg'),
+      placeholder: const AssetImage('assets/images/animation_500_l3ur8tqa.gif'),
       image: NetworkImage(image),
       fit: BoxFit.cover,
     );
