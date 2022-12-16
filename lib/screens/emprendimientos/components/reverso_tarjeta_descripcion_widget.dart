@@ -43,7 +43,7 @@ DataRow _getDataRow(ProdSolicitado prodSolicitado) {
               fontSize: size,
               fontWeight: FontWeight.w400,
               color: Colors.white))),
-      DataCell(Text(prodSolicitado.unidadMedida.target?.unidadMedida ?? "-",
+      DataCell(Text(prodSolicitado.tipoEmpaques.target!.tipo,
           style: GoogleFonts.roboto(
               fontSize: size,
               fontWeight: FontWeight.w400,
