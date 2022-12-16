@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:bizpro_app/screens/inversiones/main_tab_opciones.dart';
 import 'package:bizpro_app/screens/inversiones/producto_inversion_actualizado.dart';
 import 'package:bizpro_app/screens/inversiones/producto_inversion_eliminado.dart';
@@ -41,7 +44,6 @@ class _EditarProductoInversionScreenState
     extends State<EditarProductoInversionScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
-  String? newImagen;
   String emprendedor = "";
   String newFamilia = "";
   TextEditingController productoController = TextEditingController();
@@ -53,11 +55,18 @@ class _EditarProductoInversionScreenState
   TextEditingController costoController = TextEditingController();
   String porcentaje = "";
   XFile? image;
+  String path = "";
+  String base64 = "";
+  String nombreImagen = "";
+  String newImagen = "";
 
   @override
   void initState() {
     super.initState();
-    newImagen = widget.prodSolicitado.imagen.target?.path;
+    path = "";
+    base64 = "";
+    nombreImagen = "";
+    newImagen = widget.prodSolicitado.imagen.target?.path ?? "";
     emprendedor = "";
     newFamilia = widget.prodSolicitado.familiaProducto.target!.nombre;
     productoController = TextEditingController(text: widget.prodSolicitado.producto);
@@ -294,7 +303,12 @@ class _EditarProductoInversionScreenState
 
                                             setState(() {
                                               image = pickedFile;
+                                              File file = File(image!.path);
+                                              List<int> fileInByte = file.readAsBytesSync();
+                                              base64 = base64Encode(fileInByte);
+                                              path = image!.path;
                                               newImagen = image!.path;
+                                              nombreImagen = image!.name;
                                             });
                                           },
                                           child: Container(
@@ -1035,10 +1049,7 @@ class _EditarProductoInversionScreenState
                                       && widget.inversion.idDBR == null) {
                                         if (inversionProvider
                                           .validateForm(formKey)) {
-                                          if (newImagen != 
-                                                  widget.prodSolicitado
-                                                  .imagen.target?.imagenes ||
-                                              newFamilia !=
+                                          if (newFamilia !=
                                                   widget
                                                       .prodSolicitado
                                                       .familiaProducto
@@ -1063,6 +1074,26 @@ class _EditarProductoInversionScreenState
                                                   widget.prodSolicitado.costoEstimado
                                                       ?.toStringAsFixed(2)
                                                 ) {
+                                            if (newImagen !=
+                                              widget.prodSolicitado.imagen.target?.imagenes
+                                            ) {
+                                              if (widget.prodSolicitado.imagen.target?.imagenes == null) {
+                                                print("SE AGREGA IMAGEN NUEVA");
+                                                inversionProvider.addImagenProductoSolicitado(
+                                                  widget.prodSolicitado,
+                                                  nombreImagen,
+                                                  path,
+                                                  base64);
+                                              } else {
+                                                print("SE ACTUALIZA IMAGEN NUEVA");
+                                                inversionProvider.updateImagenProductoSolicitado(
+                                                  widget.prodSolicitado,
+                                                  widget.prodSolicitado.imagen.target!.id,
+                                                  nombreImagen,
+                                                  path,
+                                                  base64);
+                                              }
+                                            }
                                             final idFamiliaProducto = dataBase
                                             .familiaProductosBox
                                             .query(FamiliaProd_.nombre
@@ -1090,8 +1121,7 @@ class _EditarProductoInversionScreenState
                                                   costoController.text != '' ? 
                                                   double.parse(costoController.text.replaceAll("\$", "").replaceAll(",", ""))
                                                   :
-                                                  null,
-                                                  newImagen ?? '',
+                                                  null
                                                 );
                                                 await Navigator.push(
                                                   context,
@@ -1102,6 +1132,33 @@ class _EditarProductoInversionScreenState
                                                 );
                                             }
                                         } else {
+                                        if (newImagen !=
+                                          widget.prodSolicitado.imagen.target?.path
+                                        ) {
+                                          if (widget.prodSolicitado.imagen.target?.path == null) {
+                                          inversionProvider.addImagenProductoSolicitado(
+                                              widget.prodSolicitado,
+                                              nombreImagen,
+                                              path,
+                                              base64);
+                                          } else {
+                                          inversionProvider.updateImagenProductoSolicitado(
+                                              widget.prodSolicitado,
+                                              widget.prodSolicitado.imagen.target!.id,
+                                              nombreImagen,
+                                              path,
+                                              base64);
+                                          }
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const ProductoInversionActualizado(),
+                                            ),
+                                          );
+                                        }
+                                      }
+                                      } else {
                                           await showDialog(
                                             context: context,
                                             builder: (alertDialogContext) {
@@ -1123,7 +1180,6 @@ class _EditarProductoInversionScreenState
                                           );
                                           return;
                                         }
-                                      }
                                       } else {
                                         snackbarKey.currentState
                                             ?.showSnackBar(const SnackBar(

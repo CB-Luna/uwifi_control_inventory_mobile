@@ -66,7 +66,7 @@ class InversionController extends ChangeNotifier {
   }
 
   void updateProductoSolicitado(int idProdSolicitado, int idInversion, int newIdFamiliaProd, String? newMarcaSugerida,
-  String? newProveedorSugerido, int newIdTipoEmpaques, int newCantidad, double? newCostoTotalEstimado, String newImagen) {
+  String? newProveedorSugerido, int newIdTipoEmpaques, int newCantidad, double? newCostoTotalEstimado) {
     final updateProdSolicitado = dataBase.productosSolicitadosBox.get(idProdSolicitado);
     final updateInversion = dataBase.inversionesBox.get(idInversion);
     final newFamiliaProd = dataBase.familiaProductosBox.get(newIdFamiliaProd);
@@ -75,22 +75,6 @@ class InversionController extends ChangeNotifier {
       // final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateInversion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
       //Restamos actual costoTotal
       updateInversion.totalInversion -= (updateProdSolicitado.costoEstimado == null ? 0.0 : (updateProdSolicitado.costoEstimado! * updateProdSolicitado.cantidad));
-      if (newImagen != '') {
-        if (updateProdSolicitado.imagen.target != null) {
-          final updateImagen  = dataBase.imagenesBox.get(updateProdSolicitado.imagen.target!.id);
-          if (updateImagen != null) {
-            updateImagen.imagenes = newImagen;
-          }
-        } else {
-          final nuevaImagenProdSolicitado = Imagenes(
-          imagenes: imagen!.path,
-          nombre: imagen!.nombre,
-          path: imagen!.path,
-          base64: imagen!.base64,
-          ); //Se crea el objeto imagenes para el Prod Solicitado
-          updateProdSolicitado.imagen.target = nuevaImagenProdSolicitado;
-        }
-      }
       updateProdSolicitado.familiaProducto.target = newFamiliaProd;
       updateProdSolicitado.marcaSugerida = newMarcaSugerida;
       updateProdSolicitado.proveedorSugerido =  newProveedorSugerido;
@@ -105,6 +89,35 @@ class InversionController extends ChangeNotifier {
       clearInformation();
       notifyListeners();
     }
+  }
+
+  void updateImagenProductoSolicitado(ProdSolicitado updateProdSol, int idImagenProductoSol, String newNombreImagen, String newPath, String newBase64) {
+    var updateImagenProductoSol = dataBase.imagenesBox.get(idImagenProductoSol);
+    if (updateImagenProductoSol != null) {
+      updateImagenProductoSol.imagenes = newPath; //Se actualiza la imagen del producto solicitado
+      updateImagenProductoSol.nombre = newNombreImagen;
+      updateImagenProductoSol.base64 = newBase64;
+      updateImagenProductoSol.path = newPath;
+      dataBase.imagenesBox.put(updateImagenProductoSol);
+      updateProdSol.imagen.target = updateImagenProductoSol;
+      dataBase.productosSolicitadosBox.put(updateProdSol);
+      print('Imagen Prod Solicitado actualizada exitosamente');
+    }
+    notifyListeners();
+  }
+
+void addImagenProductoSolicitado(ProdSolicitado productoSol, String newNombreImagen, String newPath, String newBase64) {
+      final nuevaImagenProductoSol = Imagenes(
+        imagenes: newPath,
+        nombre: newNombreImagen,
+        base64: newBase64,
+        path: newPath,
+      );
+      productoSol.imagen.target = nuevaImagenProductoSol;
+      dataBase.imagenesBox.put(nuevaImagenProductoSol);
+      dataBase.productosSolicitadosBox.put(productoSol);
+      print('Imagen Prod Solicitado agregada exitosamente');
+    notifyListeners();
   }
 
   void addProductoSolicitado(int idEmprendimiento, int idInversion, int idFamiliaProd, int idTipoEmpaques) {
