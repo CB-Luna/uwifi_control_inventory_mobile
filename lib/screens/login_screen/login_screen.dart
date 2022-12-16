@@ -36,7 +36,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final UserState userState = Provider.of<UserState>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
-    final rolesPocketbaseProvider = Provider.of<RolesPocketbaseProvider>(context);
+    final rolesPocketbaseProvider =
+        Provider.of<RolesPocketbaseProvider>(context);
     final rolesEmiWebProvider = Provider.of<RolesEmiWebProvider>(context);
     return WillPopScope(
       onWillPop: () async => false,
@@ -135,8 +136,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           obscuringCharacter: '*',
                           validator: (value) {
                             final RegExp regex = RegExp(
-                                r"^(?=.*[A-Z])(?=.*\d)(?=.*\d)[A-Za-z\d!#\$%&/\(\)=?¡¿+\*\.-_:,;]{8,50}$");
+                                r"^(?=.*[A-Z])(?=.*\d)(?=.*\d)[A-Za-z\d!#\$%&/\(\)=?¡¿+\*\.\-_:,;]{8,50}$");
                             if (value == null || value.isEmpty) {
+                              //contrasena.hasMatch(value ?? '')
                               return 'La contraseña es requerida';
                             } else if (!regex.hasMatch(value)) {
                               return 'La contraseña debe tener al menos 8 caracteres, una letra mayúscula y dos números.\nLos caracteres especiales válidos son: !#\$%&/()=?¡¿+*.-_:,; y no se permite el uso de\nespacios, tildes o acentos.';
@@ -185,24 +187,30 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (connectivityResult == ConnectivityResult.none) {
                               print("Proceso offline");
                               //Proceso Offline
-                              final passwordEncrypted = processEncryption(userState.passwordController.text);
+                              final passwordEncrypted = processEncryption(
+                                  userState.passwordController.text);
                               if (passwordEncrypted == null) {
                                 return;
                               }
-                              final usuarioActual = usuarioProvider.validateUserOffline(
-                                  userState.emailController.text,
-                                  passwordEncrypted);
+                              final usuarioActual =
+                                  usuarioProvider.validateUserOffline(
+                                      userState.emailController.text,
+                                      passwordEncrypted);
                               if (usuarioActual != null) {
                                 print('Usuario ya existente');
                                 if (usuarioActual.archivado) {
-                                  snackbarKey.currentState?.showSnackBar(const SnackBar(
-                                    content: Text("El usuario se encuentra archivado, comuníquese con el Administrador."),
+                                  snackbarKey.currentState
+                                      ?.showSnackBar(const SnackBar(
+                                    content: Text(
+                                        "El usuario se encuentra archivado, comuníquese con el Administrador."),
                                   ));
                                   return;
                                 }
                                 if (usuarioActual.roles.toList().isEmpty) {
-                                  snackbarKey.currentState?.showSnackBar(const SnackBar(
-                                    content: Text("El Usuario no cuenta con los permisos necesarios para ingresar, favor de comunicarse con el Administrador."),
+                                  snackbarKey.currentState
+                                      ?.showSnackBar(const SnackBar(
+                                    content: Text(
+                                        "El Usuario no cuenta con los permisos necesarios para ingresar, favor de comunicarse con el Administrador."),
                                   ));
                                   return;
                                 }
@@ -243,13 +251,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ));
                               }
                             } else {
-                              print("Proceso online");                     
+                              print("Proceso online");
                               //Login a Emi Web
-                              final passwordEncrypted = processEncryption(userState.passwordController.text);
+                              final passwordEncrypted = processEncryption(
+                                  userState.passwordController.text);
                               if (passwordEncrypted == null) {
                                 return;
                               }
-                              final loginResponseEmiWeb = await AuthService.loginEmiWeb(
+                              final loginResponseEmiWeb =
+                                  await AuthService.loginEmiWeb(
                                 userState.emailController.text,
                                 passwordEncrypted,
                               );
@@ -259,20 +269,28 @@ class _LoginScreenState extends State<LoginScreen> {
                                 rolesEmiWebProvider.procesoCargando(true);
                                 rolesEmiWebProvider.procesoTerminado(false);
                                 rolesEmiWebProvider.procesoExitoso(false);
-                                Future<bool> booleanoEmiWeb = rolesEmiWebProvider.getRolesEmiWeb(
-                                  userState.emailController.text,
-                                  passwordEncrypted);
+                                Future<bool> booleanoEmiWeb =
+                                    rolesEmiWebProvider.getRolesEmiWeb(
+                                        userState.emailController.text,
+                                        passwordEncrypted);
                                 if (await booleanoEmiWeb) {
                                   //Se descargan los roles desde Pocketbase
-                                  print("Se ha realizado con éxito el proceso de Roles Emi Web");
+                                  print(
+                                      "Se ha realizado con éxito el proceso de Roles Emi Web");
                                   rolesPocketbaseProvider.exitoso = true;
                                   rolesPocketbaseProvider.procesoCargando(true);
-                                  rolesPocketbaseProvider.procesoTerminado(false);
+                                  rolesPocketbaseProvider
+                                      .procesoTerminado(false);
                                   rolesPocketbaseProvider.procesoExitoso(false);
-                                  Future<bool> booleanoPocketbase = rolesPocketbaseProvider.getRolesPocketbase();
+                                  Future<bool> booleanoPocketbase =
+                                      rolesPocketbaseProvider
+                                          .getRolesPocketbase();
                                   if (await booleanoPocketbase) {
-                                    print("Se ha realizado con éxito el proceso de getRolesPocketbase");
-                                    var stringValidateUsuario =  AuthService.validateUsuarioInPocketbase(userState.emailController.text);
+                                    print(
+                                        "Se ha realizado con éxito el proceso de getRolesPocketbase");
+                                    var stringValidateUsuario =
+                                        AuthService.validateUsuarioInPocketbase(
+                                            userState.emailController.text);
                                     if (await stringValidateUsuario == "Null") {
                                       print("Es null");
                                       snackbarKey.currentState
@@ -281,14 +299,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                             "Falló al validar Usuario en Servidor."),
                                       ));
                                     } else {
-                                      if (await stringValidateUsuario == "NoUserExist") {
+                                      if (await stringValidateUsuario ==
+                                          "NoUserExist") {
                                         print("Es NoUserExist");
                                         //Se postea el Usuario en Pocketbase
-                                        if (!await AuthService.postUsuarioPocketbase(
-                                          loginResponseEmiWeb, 
-                                          userState.emailController.text,
-                                          passwordEncrypted)
-                                        ) {
+                                        if (!await AuthService
+                                            .postUsuarioPocketbase(
+                                                loginResponseEmiWeb,
+                                                userState.emailController.text,
+                                                passwordEncrypted)) {
                                           snackbarKey.currentState
                                               ?.showSnackBar(const SnackBar(
                                             content: Text(
@@ -297,14 +316,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                           return;
                                         }
                                       } else {
-                                        //Se actualiza Usuario en Pocketbase                        
-                                        if (!await AuthService.updateUsuarioPocketbase(
+                                        //Se actualiza Usuario en Pocketbase
+                                        if (!await AuthService
+                                            .updateUsuarioPocketbase(
                                           loginResponseEmiWeb,
                                           passwordEncrypted,
                                           userState.emailController.text,
                                           await stringValidateUsuario,
-                                          )
-                                        ) {
+                                        )) {
                                           snackbarKey.currentState
                                               ?.showSnackBar(const SnackBar(
                                             content: Text(
@@ -314,27 +333,36 @@ class _LoginScreenState extends State<LoginScreen> {
                                         }
                                       }
                                       //Login a Pocketbase Nuevamente
-                                      final loginResponsePocketbase = await AuthService.loginPocketbase(
+                                      final loginResponsePocketbase =
+                                          await AuthService.loginPocketbase(
                                         userState.emailController.text,
                                         passwordEncrypted,
                                       );
                                       if (loginResponsePocketbase != null) {
-                                        await userState.setTokenPocketbase(loginResponsePocketbase.token);
-                                        final userId = loginResponsePocketbase.user.email;
+                                        await userState.setTokenPocketbase(
+                                            loginResponsePocketbase.token);
+                                        final userId =
+                                            loginResponsePocketbase.user.email;
                                         //Se guarda el ID DEL USUARIO (correo)
                                         prefs.setString("userId", userId);
                                         //Se guarda el Password encriptado
                                         prefs.setString(
                                             "passEncrypted", passwordEncrypted);
                                         //User Query
-                                        final emiUser = await ApiService.getEmiUserPocketbase(
-                                            loginResponsePocketbase.user.id);
+                                        final emiUser = await ApiService
+                                            .getEmiUserPocketbase(
+                                                loginResponsePocketbase
+                                                    .user.id);
 
-                                        final idDBR = await AuthService.userEMIByID(
-                                            loginResponsePocketbase.user.id);
-                                        
-                                        final imageUser = await AuthService.imagenUsuarioByID(
-                                            emiUser?.items?[0].idImagenFk ?? "empty");
+                                        final idDBR =
+                                            await AuthService.userEMIByID(
+                                                loginResponsePocketbase
+                                                    .user.id);
+
+                                        final imageUser =
+                                            await AuthService.imagenUsuarioByID(
+                                                emiUser?.items?[0].idImagenFk ??
+                                                    "empty");
 
                                         print("Hola miro el IdDBR $idDBR");
                                         if (emiUser == null) {
@@ -342,7 +370,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                           return;
                                         }
                                         print("Hola miro el IdDBR post $idDBR");
-                                        if (usuarioProvider.validateUsuario(userId)) {
+                                        if (usuarioProvider
+                                            .validateUsuario(userId)) {
                                           print('Usuario ya existente');
                                           usuarioProvider.getUser(userId);
                                           usuarioProvider.update(
@@ -356,16 +385,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                             imageUser,
                                             emiUser.items?[0].idRolesFk ?? [],
                                             emiUser.items![0].archivado,
-                                            );
-                                          if (emiUser.items![0].idRolesFk!.isEmpty) {
-                                            snackbarKey.currentState?.showSnackBar(const SnackBar(
-                                              content: Text("El Usuario no cuenta con los permisos necesarios para iniciar sesión, favor de comunicarse con el Administrador."),
+                                          );
+                                          if (emiUser
+                                              .items![0].idRolesFk!.isEmpty) {
+                                            snackbarKey.currentState
+                                                ?.showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "El Usuario no cuenta con los permisos necesarios para iniciar sesión, favor de comunicarse con el Administrador."),
                                             ));
                                             return;
                                           }
                                           if (emiUser.items![0].archivado) {
-                                            snackbarKey.currentState?.showSnackBar(const SnackBar(
-                                              content: Text("El usuario se encuentra archivado, comuníquese con el Administrador."),
+                                            snackbarKey.currentState
+                                                ?.showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "El usuario se encuentra archivado, comuníquese con el Administrador."),
                                             ));
                                             return;
                                           }
@@ -384,8 +418,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                             emiUser.items![0].idEmiWeb,
                                             emiUser.items![0].archivado,
                                           );
-                                          usuarioProvider
-                                              .getUser(loginResponsePocketbase.user.email);
+                                          usuarioProvider.getUser(
+                                              loginResponsePocketbase
+                                                  .user.email);
                                         }
                                         if (userState.recuerdame == true) {
                                           await userState.setEmail();
@@ -393,7 +428,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                           await userState.setPassword();
                                         } else {
                                           userState.emailController.text = '';
-                                          userState.passwordController.text = '';
+                                          userState.passwordController.text =
+                                              '';
                                           await prefs.remove('email');
                                           await prefs.remove('password');
                                         }
@@ -421,7 +457,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           "Falló al descargar roles de Pocketbase."),
                                     ));
                                   }
-                                } else{
+                                } else {
                                   snackbarKey.currentState
                                       ?.showSnackBar(const SnackBar(
                                     content: Text(

@@ -34,7 +34,7 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
   TextEditingController? contrasenaConfirmarController;
   late bool contrasenaConfirmarVisibility;
 
-   @override
+  @override
   void initState() {
     super.initState();
     contrasenaActualController = TextEditingController();
@@ -196,38 +196,31 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                           const EdgeInsetsDirectional.fromSTEB(0, 35, 0, 50),
                       child: Text(
                         'Cambiar Contraseña',
-                        style: AppTheme.of(context)
-                            .bodyText1
-                            .override(
-                              fontFamily: AppTheme.of(context)
-                                  .bodyText1Family,
+                        style: AppTheme.of(context).bodyText1.override(
+                              fontFamily: AppTheme.of(context).bodyText1Family,
                               fontSize: 20,
-                              useGoogleFonts: GoogleFonts.asMap()
-                                  .containsKey(
-                                      AppTheme.of(context)
-                                          .bodyText1Family),
+                              useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                  AppTheme.of(context).bodyText1Family),
                             ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          35, 20, 35, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(35, 20, 35, 0),
                       child: TextFormField(
                         initialValue: widget.usuario.correo,
                         readOnly: true,
                         enabled: false,
                         textCapitalization: TextCapitalization.words,
-                        autovalidateMode:
-                            AutovalidateMode.onUserInteraction,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         decoration: InputDecoration(
                           labelText: "Correo electrónico",
-                          labelStyle:
-                              AppTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Poppins',
-                                    color: const Color(0xFF221573),
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.normal,
-                                  ),
+                          labelStyle: AppTheme.of(context).bodyText1.override(
+                                fontFamily: 'Poppins',
+                                color: const Color(0xFF221573),
+                                fontSize: 15,
+                                fontWeight: FontWeight.normal,
+                              ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
                               color: Color(0xFF221573),
@@ -258,370 +251,355 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 35, 20, 35, 0),
                             child: TextFormField(
-                              autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                              controller: contrasenaActualController,
-                              onChanged: (_) => EasyDebounce.debounce(
-                                'contrasenaActualController',
-                                const Duration(milliseconds: 2000),
-                                () => setState(() {}),
-                              ),
-                              obscureText: !contrasenaActualVisibility,
-                              decoration: InputDecoration(
-                                labelText: 'Contraseña Actual',
-                                labelStyle: AppTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: AppTheme.of(context)
-                                          .bodyText1Family,
-                                      color: AppTheme.of(context)
-                                          .secondaryText,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                      useGoogleFonts: GoogleFonts.asMap()
-                                          .containsKey(
-                                              AppTheme.of(context)
-                                                  .bodyText1Family),
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                controller: contrasenaActualController,
+                                onChanged: (_) => EasyDebounce.debounce(
+                                      'contrasenaActualController',
+                                      const Duration(milliseconds: 2000),
+                                      () => setState(() {}),
                                     ),
-                                hintText: 'Contraseña actual...',
-                                hintStyle: AppTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: AppTheme.of(context)
-                                          .bodyText1Family,
-                                      color: AppTheme.of(context)
-                                          .secondaryText,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                      useGoogleFonts: GoogleFonts.asMap()
-                                          .containsKey(
-                                              AppTheme.of(context)
-                                                  .bodyText1Family),
-                                    ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppTheme.of(context)
-                                        .primaryText,
-                                    width: 1.5,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppTheme.of(context)
-                                        .primaryText,
-                                    width: 1.5,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1.5,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1.5,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                filled: true,
-                                fillColor: Colors.white,
-                                suffixIcon: InkWell(
-                                  onTap: () => setState(
-                                    () => contrasenaActualVisibility =
-                                        !contrasenaActualVisibility,
-                                  ),
-                                  focusNode: FocusNode(skipTraversal: true),
-                                  child: Icon(
-                                    contrasenaActualVisibility
-                                        ? Icons.visibility_outlined
-                                        : Icons.visibility_off_outlined,
-                                    color: const Color(0xFF006AFF),
-                                    size: 22,
-                                  ),
-                                ),
-                              ),
-                              style: AppTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: AppTheme.of(context)
-                                        .bodyText1Family,
-                                    color: AppTheme.of(context)
-                                        .primaryText,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.normal,
-                                    useGoogleFonts: GoogleFonts.asMap()
-                                        .containsKey(
-                                            AppTheme.of(context)
+                                obscureText: !contrasenaActualVisibility,
+                                decoration: InputDecoration(
+                                  labelText: 'Contraseña Actual',
+                                  labelStyle: AppTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: AppTheme.of(context)
+                                            .bodyText1Family,
+                                        color:
+                                            AppTheme.of(context).secondaryText,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal,
+                                        useGoogleFonts: GoogleFonts.asMap()
+                                            .containsKey(AppTheme.of(context)
                                                 .bodyText1Family),
+                                      ),
+                                  hintText: 'Contraseña actual...',
+                                  hintStyle: AppTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: AppTheme.of(context)
+                                            .bodyText1Family,
+                                        color:
+                                            AppTheme.of(context).secondaryText,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal,
+                                        useGoogleFonts: GoogleFonts.asMap()
+                                            .containsKey(AppTheme.of(context)
+                                                .bodyText1Family),
+                                      ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: AppTheme.of(context).primaryText,
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
-                              validator: (value) {
-                                if (value != null) {
-                                  if (value == "") {
-                                    return "Ingrese la contraseña actual, por favor.";
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: AppTheme.of(context).primaryText,
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  suffixIcon: InkWell(
+                                    onTap: () => setState(
+                                      () => contrasenaActualVisibility =
+                                          !contrasenaActualVisibility,
+                                    ),
+                                    focusNode: FocusNode(skipTraversal: true),
+                                    child: Icon(
+                                      contrasenaActualVisibility
+                                          ? Icons.visibility_outlined
+                                          : Icons.visibility_off_outlined,
+                                      color: const Color(0xFF006AFF),
+                                      size: 22,
+                                    ),
+                                  ),
+                                ),
+                                style: AppTheme.of(context).bodyText1.override(
+                                      fontFamily:
+                                          AppTheme.of(context).bodyText1Family,
+                                      color: AppTheme.of(context).primaryText,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey(AppTheme.of(context)
+                                              .bodyText1Family),
+                                    ),
+                                validator: (value) {
+                                  if (value != null) {
+                                    if (value == "") {
+                                      return "Ingrese la contraseña actual, por favor.";
+                                    }
                                   }
-                                } 
-                                return null;
-                              }
-                            ),
+                                  return null;
+                                }),
                           ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 35, 20, 35, 0),
                             child: TextFormField(
-                              autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                              controller: contrasenaNuevaController,
-                              onChanged: (_) => EasyDebounce.debounce(
-                                'contrasenaNuevaController',
-                                const Duration(milliseconds: 2000),
-                                () => setState(() {}),
-                              ),
-                              obscureText: !contrasenaNuevaVisibility,
-                              decoration: InputDecoration(
-                                labelText: 'Contraseña Nueva',
-                                labelStyle: AppTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: AppTheme.of(context)
-                                          .bodyText1Family,
-                                      color: AppTheme.of(context)
-                                          .secondaryText,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                      useGoogleFonts: GoogleFonts.asMap()
-                                          .containsKey(
-                                              AppTheme.of(context)
-                                                  .bodyText1Family),
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                controller: contrasenaNuevaController,
+                                onChanged: (_) => EasyDebounce.debounce(
+                                      'contrasenaNuevaController',
+                                      const Duration(milliseconds: 2000),
+                                      () => setState(() {}),
                                     ),
-                                hintText: 'Contraseña Nueva...',
-                                hintStyle: AppTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: AppTheme.of(context)
-                                          .bodyText1Family,
-                                      color: AppTheme.of(context)
-                                          .secondaryText,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                      useGoogleFonts: GoogleFonts.asMap()
-                                          .containsKey(
-                                              AppTheme.of(context)
-                                                  .bodyText1Family),
-                                    ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppTheme.of(context)
-                                        .primaryText,
-                                    width: 1.5,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppTheme.of(context)
-                                        .primaryText,
-                                    width: 1.5,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1.5,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1.5,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                filled: true,
-                                fillColor: Colors.white,
-                                suffixIcon: InkWell(
-                                  onTap: () => setState(
-                                    () => contrasenaNuevaVisibility =
-                                        !contrasenaNuevaVisibility,
-                                  ),
-                                  focusNode: FocusNode(skipTraversal: true),
-                                  child: Icon(
-                                    contrasenaNuevaVisibility
-                                        ? Icons.visibility_outlined
-                                        : Icons.visibility_off_outlined,
-                                    color: const Color(0xFF006AFF),
-                                    size: 22,
-                                  ),
-                                ),
-                              ),
-                              style: AppTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: AppTheme.of(context)
-                                        .bodyText1Family,
-                                    color: AppTheme.of(context)
-                                        .primaryText,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.normal,
-                                    useGoogleFonts: GoogleFonts.asMap()
-                                        .containsKey(
-                                            AppTheme.of(context)
+                                obscureText: !contrasenaNuevaVisibility,
+                                decoration: InputDecoration(
+                                  labelText: 'Contraseña Nueva',
+                                  labelStyle: AppTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: AppTheme.of(context)
+                                            .bodyText1Family,
+                                        color:
+                                            AppTheme.of(context).secondaryText,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal,
+                                        useGoogleFonts: GoogleFonts.asMap()
+                                            .containsKey(AppTheme.of(context)
                                                 .bodyText1Family),
+                                      ),
+                                  hintText: 'Contraseña Nueva...',
+                                  hintStyle: AppTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: AppTheme.of(context)
+                                            .bodyText1Family,
+                                        color:
+                                            AppTheme.of(context).secondaryText,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal,
+                                        useGoogleFonts: GoogleFonts.asMap()
+                                            .containsKey(AppTheme.of(context)
+                                                .bodyText1Family),
+                                      ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: AppTheme.of(context).primaryText,
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
-                              validator: (value) {
-                                final RegExp regex = RegExp(
-                                    r"^(?=.*[A-Z])(?=.*\d)(?=.*\d)[A-Za-z\d!#\$%&/\(\)=?¡¿+\*\.-_:,;]{8,50}$");
-                                if (value == null || value.isEmpty) {
-                                  return 'La contraseña es requerida';
-                                } else if (!regex.hasMatch(value)) {
-                                  return 'La contraseña debe tener al menos 8 caracteres, una letra \nmayúscula y dos números. Los caracteres especiales válidos \nson: !#\$%&/()=?¡¿+*.-_:,; y no se permite el uso de\nespacios, tildes o acentos.';
-                                }
-                                return null;
-                              }
-                            ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: AppTheme.of(context).primaryText,
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  suffixIcon: InkWell(
+                                    onTap: () => setState(
+                                      () => contrasenaNuevaVisibility =
+                                          !contrasenaNuevaVisibility,
+                                    ),
+                                    focusNode: FocusNode(skipTraversal: true),
+                                    child: Icon(
+                                      contrasenaNuevaVisibility
+                                          ? Icons.visibility_outlined
+                                          : Icons.visibility_off_outlined,
+                                      color: const Color(0xFF006AFF),
+                                      size: 22,
+                                    ),
+                                  ),
+                                ),
+                                style: AppTheme.of(context).bodyText1.override(
+                                      fontFamily:
+                                          AppTheme.of(context).bodyText1Family,
+                                      color: AppTheme.of(context).primaryText,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey(AppTheme.of(context)
+                                              .bodyText1Family),
+                                    ),
+                                validator: (value) {
+                                  final RegExp regex = RegExp(
+                                      r"^(?=.*[A-Z])(?=.*\d)(?=.*\d)[A-Za-z\d!#\$%&/\(\)=?¡¿+\*\.\-_:,;]{8,50}$");
+                                  if (value == null || value.isEmpty) {
+                                    return 'La contraseña es requerida';
+                                  } else if (!regex.hasMatch(value)) {
+                                    return 'La contraseña debe tener al menos 8 caracteres, una letra \nmayúscula y dos números. Los caracteres especiales válidos \nson: !#\$%&/()=?¡¿+*.-_:,; y no se permite el uso de\nespacios, tildes o acentos.';
+                                  }
+                                  return null;
+                                }),
                           ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 35, 20, 35, 0),
                             child: TextFormField(
-                              autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                              controller: contrasenaConfirmarController,
-                              onChanged: (_) => EasyDebounce.debounce(
-                                'contrasenaConfirmarController',
-                                const Duration(milliseconds: 2000),
-                                () => setState(() {}),
-                              ),
-                              obscureText: !contrasenaConfirmarVisibility,
-                              decoration: InputDecoration(
-                                labelText: 'Confirmar Contraseña',
-                                labelStyle: AppTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: AppTheme.of(context)
-                                          .bodyText1Family,
-                                      color: AppTheme.of(context)
-                                          .secondaryText,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                      useGoogleFonts: GoogleFonts.asMap()
-                                          .containsKey(
-                                              AppTheme.of(context)
-                                                  .bodyText1Family),
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                controller: contrasenaConfirmarController,
+                                onChanged: (_) => EasyDebounce.debounce(
+                                      'contrasenaConfirmarController',
+                                      const Duration(milliseconds: 2000),
+                                      () => setState(() {}),
                                     ),
-                                hintText: 'Confirma Contraseña...',
-                                hintStyle: AppTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: AppTheme.of(context)
-                                          .bodyText1Family,
-                                      color: AppTheme.of(context)
-                                          .secondaryText,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                      useGoogleFonts: GoogleFonts.asMap()
-                                          .containsKey(
-                                              AppTheme.of(context)
-                                                  .bodyText1Family),
-                                    ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppTheme.of(context)
-                                        .primaryText,
-                                    width: 1.5,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppTheme.of(context)
-                                        .primaryText,
-                                    width: 1.5,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1.5,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1.5,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                filled: true,
-                                fillColor: Colors.white,
-                                suffixIcon: InkWell(
-                                  onTap: () => setState(
-                                    () => contrasenaConfirmarVisibility =
-                                        !contrasenaConfirmarVisibility,
-                                  ),
-                                  focusNode: FocusNode(skipTraversal: true),
-                                  child: Icon(
-                                    contrasenaConfirmarVisibility
-                                        ? Icons.visibility_outlined
-                                        : Icons.visibility_off_outlined,
-                                    color: const Color(0xFF006AFF),
-                                    size: 22,
-                                  ),
-                                ),
-                              ),
-                              style: AppTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: AppTheme.of(context)
-                                        .bodyText1Family,
-                                    color: AppTheme.of(context)
-                                        .primaryText,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.normal,
-                                    useGoogleFonts: GoogleFonts.asMap()
-                                        .containsKey(
-                                            AppTheme.of(context)
+                                obscureText: !contrasenaConfirmarVisibility,
+                                decoration: InputDecoration(
+                                  labelText: 'Confirmar Contraseña',
+                                  labelStyle: AppTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: AppTheme.of(context)
+                                            .bodyText1Family,
+                                        color:
+                                            AppTheme.of(context).secondaryText,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal,
+                                        useGoogleFonts: GoogleFonts.asMap()
+                                            .containsKey(AppTheme.of(context)
                                                 .bodyText1Family),
+                                      ),
+                                  hintText: 'Confirma Contraseña...',
+                                  hintStyle: AppTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: AppTheme.of(context)
+                                            .bodyText1Family,
+                                        color:
+                                            AppTheme.of(context).secondaryText,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal,
+                                        useGoogleFonts: GoogleFonts.asMap()
+                                            .containsKey(AppTheme.of(context)
+                                                .bodyText1Family),
+                                      ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: AppTheme.of(context).primaryText,
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
-                              validator: (value) {
-                                if (value != null) {
-                                  if (value != contrasenaNuevaController!.text) {
-                                    return "La confirmación no coincide con la contraseña nueva.";
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: AppTheme.of(context).primaryText,
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  suffixIcon: InkWell(
+                                    onTap: () => setState(
+                                      () => contrasenaConfirmarVisibility =
+                                          !contrasenaConfirmarVisibility,
+                                    ),
+                                    focusNode: FocusNode(skipTraversal: true),
+                                    child: Icon(
+                                      contrasenaConfirmarVisibility
+                                          ? Icons.visibility_outlined
+                                          : Icons.visibility_off_outlined,
+                                      color: const Color(0xFF006AFF),
+                                      size: 22,
+                                    ),
+                                  ),
+                                ),
+                                style: AppTheme.of(context).bodyText1.override(
+                                      fontFamily:
+                                          AppTheme.of(context).bodyText1Family,
+                                      color: AppTheme.of(context).primaryText,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey(AppTheme.of(context)
+                                              .bodyText1Family),
+                                    ),
+                                validator: (value) {
+                                  if (value != null) {
+                                    if (value !=
+                                        contrasenaNuevaController!.text) {
+                                      return "La confirmación no coincide con la contraseña nueva.";
+                                    }
                                   }
-                                } 
-                                return null;
-                              }
-                            ),
+                                  return null;
+                                }),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 15, 0, 0),
                             child: FFButtonWidget(
                               onPressed: () async {
                                 if (userStateProvider.validateForm(formKey)) {
-                                  final actualPasswordEncrypted = processEncryption(contrasenaActualController!.text);
+                                  final actualPasswordEncrypted =
+                                      processEncryption(
+                                          contrasenaActualController!.text);
                                   if (actualPasswordEncrypted == null) {
-                                    snackbarKey.currentState?.showSnackBar(const SnackBar(
-                                      content: Text("Falló al encriptar la Contraseña Actual."),
+                                    snackbarKey.currentState
+                                        ?.showSnackBar(const SnackBar(
+                                      content: Text(
+                                          "Falló al encriptar la Contraseña Actual."),
                                     ));
                                     return;
                                   }
-                                  final newPasswordEncrypted = processEncryption(contrasenaNuevaController!.text);
+                                  final newPasswordEncrypted =
+                                      processEncryption(
+                                          contrasenaNuevaController!.text);
                                   if (newPasswordEncrypted == null) {
-                                    snackbarKey.currentState?.showSnackBar(const SnackBar(
-                                      content: Text("Falló al encriptar la Contraseña Nueva."),
+                                    snackbarKey.currentState
+                                        ?.showSnackBar(const SnackBar(
+                                      content: Text(
+                                          "Falló al encriptar la Contraseña Nueva."),
                                     ));
                                     return;
                                   }
-                                  if (await userStateProvider.updatePassword(widget.usuario, actualPasswordEncrypted, newPasswordEncrypted)) {
+                                  if (await userStateProvider.updatePassword(
+                                      widget.usuario,
+                                      actualPasswordEncrypted,
+                                      newPasswordEncrypted)) {
                                     await Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -633,25 +611,25 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                                     return;
                                   }
                                 } else {
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: const Text('Campos incorrectos'),
-                                      content: const Text(
-                                          'Para continuar, debe llenar los campos solicitados correctamente.'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: const Text('Bien'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                                return;
-                              }
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        title: const Text('Campos incorrectos'),
+                                        content: const Text(
+                                            'Para continuar, debe llenar los campos solicitados correctamente.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: const Text('Bien'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  return;
+                                }
                               },
                               text: 'Cambiar contraseña',
                               icon: const Icon(
@@ -661,20 +639,17 @@ class _CambiarPasswordScreenState extends State<CambiarPasswordScreen> {
                               options: FFButtonOptions(
                                 width: 200,
                                 height: 50,
-                                color:
-                                    AppTheme.of(context).secondaryText,
-                                textStyle: AppTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily: 'Montserrat',
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500,
-                                      useGoogleFonts: GoogleFonts.asMap()
-                                          .containsKey(
-                                              AppTheme.of(context)
+                                color: AppTheme.of(context).secondaryText,
+                                textStyle:
+                                    AppTheme.of(context).subtitle2.override(
+                                          fontFamily: 'Montserrat',
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500,
+                                          useGoogleFonts: GoogleFonts.asMap()
+                                              .containsKey(AppTheme.of(context)
                                                   .subtitle2Family),
-                                    ),
+                                        ),
                                 elevation: 0,
                                 borderSide: const BorderSide(
                                   color: Colors.transparent,
