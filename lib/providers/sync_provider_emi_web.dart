@@ -5319,6 +5319,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
     print("Estoy en El syncUpdateImagenUsuario() en Emi Web");
     try {
       print("ID IMAGEN: ${imagen.idEmiWeb}");
+      print("NOMBRE IMAGEN: ${imagen.nombre}");
       // Primero creamos el API para realizar la actualización
       final actualizarImagenUsuarioUri =
         Uri.parse('$baseUrlEmiWebServices/documentos/actualizar?id=${imagen.idEmiWeb}');
