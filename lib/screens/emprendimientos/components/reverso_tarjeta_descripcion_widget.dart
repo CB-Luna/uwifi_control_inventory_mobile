@@ -7,8 +7,6 @@ import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
-
 class ReversoTarjetaDescripcionWidget extends StatefulWidget {
   final Emprendimientos emprendimiento;
   const ReversoTarjetaDescripcionWidget({
@@ -25,19 +23,16 @@ DataRow _getDataRow(ProdSolicitado prodSolicitado) {
   double size = 10.0;
   return DataRow(
     cells: <DataCell>[
-      DataCell(Text(
-        maybeHandleOverflow(prodSolicitado.producto,8,"..."),
-        style: GoogleFonts.roboto(
+      DataCell(Text(maybeHandleOverflow(prodSolicitado.producto, 8, "..."),
+          style: GoogleFonts.roboto(
               fontSize: size,
               fontWeight: FontWeight.w400,
-              color: Colors.white)
-      )),
+              color: Colors.white))),
       DataCell(Text(prodSolicitado.proveedorSugerido ?? '',
           style: GoogleFonts.roboto(
               fontSize: size,
               fontWeight: FontWeight.w400,
               color: Colors.white))),
-      
       DataCell(Text(prodSolicitado.marcaSugerida ?? '',
           style: GoogleFonts.roboto(
               fontSize: size,
@@ -53,10 +48,11 @@ DataRow _getDataRow(ProdSolicitado prodSolicitado) {
               fontSize: size,
               fontWeight: FontWeight.w400,
               color: Colors.white))),
-      DataCell(Text(prodSolicitado.costoEstimado != null
-          ? currencyFormat
-              .format(prodSolicitado.costoEstimado!.toStringAsFixed(2))
-          : "-",
+      DataCell(Text(
+          prodSolicitado.costoEstimado != null
+              ? currencyFormat
+                  .format(prodSolicitado.costoEstimado!.toStringAsFixed(2))
+              : "-",
           style: GoogleFonts.roboto(
               fontSize: size,
               fontWeight: FontWeight.w400,
@@ -112,7 +108,7 @@ class _ReversoTarjetaDescripcionWidgetState
           borderRadius: BorderRadius.circular(8),
         ),
         child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(0,5,0,0),
+          padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -136,7 +132,8 @@ class _ReversoTarjetaDescripcionWidgetState
                         child: Text('Proveedor\nSugerido',
                             textAlign: TextAlign.center,
                             style: AppTheme.of(context).bodyText1.override(
-                                fontFamily: AppTheme.of(context).bodyText1Family,
+                                fontFamily:
+                                    AppTheme.of(context).bodyText1Family,
                                 fontSize: size,
                                 useGoogleFonts: GoogleFonts.asMap().containsKey(
                                     AppTheme.of(context).bodyText1Family),
@@ -156,14 +153,17 @@ class _ReversoTarjetaDescripcionWidgetState
                   ))),
                   DataColumn(
                       label: Expanded(
-                          child: Text(maybeHandleOverflow('Unidad\n de medida',10,"..."),
+                          child: Text(
+                              maybeHandleOverflow(
+                                  'Unidad\n de medida', 10, "..."),
                               textAlign: TextAlign.center,
                               style: AppTheme.of(context).bodyText1.override(
                                   fontFamily:
                                       AppTheme.of(context).bodyText1Family,
                                   fontSize: size,
-                                  useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                      AppTheme.of(context).bodyText1Family),
+                                  useGoogleFonts: GoogleFonts.asMap()
+                                      .containsKey(
+                                          AppTheme.of(context).bodyText1Family),
                                   color: Colors.white)))),
                   DataColumn(
                       label: Expanded(
@@ -193,18 +193,16 @@ class _ReversoTarjetaDescripcionWidgetState
                     (index) => _getDataRow(listProdSolicitados[index])),
               ),
               Text(
-                "Monto Total:${inversionJornada3 != null ?
-                currencyFormat.format(inversionJornada3!.totalInversion.toStringAsFixed(2) ): "-"}", 
-                textAlign: TextAlign.end,
-                style:
-                AppTheme.of(context).bodyText1.override(
-                  fontFamily: AppTheme.of(context).bodyText1Family,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  useGoogleFonts: GoogleFonts.asMap().containsKey(AppTheme.of(context).bodyText1Family),
-                  color: Colors.white,
-                )
-              ),
+                  "Monto Total:${inversionJornada3 != null ? currencyFormat.format(inversionJornada3!.totalInversion.toStringAsFixed(2)) : "-"}",
+                  textAlign: TextAlign.end,
+                  style: AppTheme.of(context).bodyText1.override(
+                        fontFamily: AppTheme.of(context).bodyText1Family,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        useGoogleFonts: GoogleFonts.asMap()
+                            .containsKey(AppTheme.of(context).bodyText1Family),
+                        color: Colors.white,
+                      )),
             ],
           ),
         ),
