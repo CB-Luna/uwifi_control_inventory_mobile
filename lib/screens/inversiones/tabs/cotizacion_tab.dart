@@ -358,6 +358,7 @@ class _CotizacionTabState extends State<CotizacionTab>
                                                   emprendimiento:
                                                       widget.emprendimiento,
                                                   inversion: widget.inversion,
+                                                  productCot: widget.inversionesXprodCotizados,
                                                 ),
                                               ),
                                             );
@@ -409,6 +410,7 @@ class _CotizacionTabState extends State<CotizacionTab>
                                                 emprendimiento:
                                                     widget.emprendimiento,
                                                 inversion: widget.inversion,
+                                                productCot: widget.inversionesXprodCotizados,
                                               ),
                                             ),
                                           );
