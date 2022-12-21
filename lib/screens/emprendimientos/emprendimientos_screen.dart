@@ -581,12 +581,12 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                               return true;
                             });
                           }
-                          return SlidableAutoCloseBehavior(
-                            closeWhenOpened: true,
+                          return SingleChildScrollView(
                             child: ListView.builder(
                               reverse: true,
                               padding: const EdgeInsets.fromLTRB(0, 0, 0, 100),
                               shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
                               scrollDirection: Axis.vertical,
                               itemCount: emprendimientos.length,
                               itemBuilder: (context, resultadoIndex) {
@@ -685,7 +685,10 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
                                                                         .height *
                                                                     0.45,
                                                                 child:
-                                                                    const BottomSheetArchivarWidget(isVisible: true,),
+                                                                    const BottomSheetArchivarWidget(
+                                                                  isVisible:
+                                                                      true,
+                                                                ),
                                                               ),
                                                             );
                                                           },
