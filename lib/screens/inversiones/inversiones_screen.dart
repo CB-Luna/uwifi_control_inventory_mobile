@@ -427,6 +427,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                     });
                                   }
                                   return ListView.builder(
+                                    reverse: true,
                                     padding: EdgeInsets.zero,
                                     shrinkWrap: true,
                                     scrollDirection: Axis.vertical,
@@ -434,6 +435,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                     itemBuilder: (context, resultadoIndex) {
                                       final inversion =
                                           inversiones[resultadoIndex];
+
                                       return InkWell(
                                         onTap: () async {
                                           await Navigator.push(
@@ -489,7 +491,9 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                               width: 120,
                                                               child: getWidgetCoverImage(
                                                                   actualEmprendimiento!
-                                                                      .imagen.target?.path),
+                                                                      .imagen
+                                                                      .target
+                                                                      ?.path),
                                                             ),
                                                           ),
                                                           Text(
@@ -586,7 +590,8 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                 Text(
                                                                   dateTimeFormat(
                                                                       "dd/MMM/yyyy",
-                                                                      inversion.fechaRegistro),
+                                                                      inversion
+                                                                          .fechaRegistro),
                                                                   style: AppTheme.of(
                                                                           context)
                                                                       .bodyText1,
@@ -617,11 +622,12 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                           0),
                                                                   child: Text(
                                                                     inversion.estadoInversion.target?.estado == "Entregada Al Emprendedor" ||
-                                                                    inversion.estadoInversion.target?.estado == "Entregada Al Promotor" ||
-                                                                    inversion.estadoInversion.target?.estado == "Pagado" ?
-                                                                    'Total Inversión'
-                                                                    :
-                                                                    'Total Cotización:',
+                                                                            inversion.estadoInversion.target?.estado ==
+                                                                                "Entregada Al Promotor" ||
+                                                                            inversion.estadoInversion.target?.estado ==
+                                                                                "Pagado"
+                                                                        ? 'Total Inversión'
+                                                                        : 'Total Cotización:',
                                                                     style: AppTheme.of(
                                                                             context)
                                                                         .bodyText1,
