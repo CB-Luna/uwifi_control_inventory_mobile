@@ -12,10 +12,11 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 class CotizacionesEmiWebScreen extends StatefulWidget {
   final Emprendimientos emprendimiento;
   final Inversiones inversion;
+  final InversionesXProdCotizados productCot;
   const CotizacionesEmiWebScreen({
     Key? key, 
     required this.emprendimiento, 
-    required this.inversion, 
+    required this.inversion, required this.productCot, 
     }) : super(key: key);
 
   @override
@@ -43,6 +44,7 @@ class _CotizacionesEmiWebScreenState extends State<CotizacionesEmiWebScreen> {
                     CotizacionesPocketbaseScreen(
                       emprendimiento: widget.emprendimiento, 
                       inversion: widget.inversion,
+                      prodcot:widget.productCot,
                     ),
               ),
             );
@@ -98,7 +100,7 @@ class _CotizacionesEmiWebScreenState extends State<CotizacionesEmiWebScreen> {
                                       fontFamily:
                                           AppTheme.of(context).bodyText1Family,
                                       color: AppTheme.of(context).primaryText,
-                                      fontSize: 30,
+                                      fontSize: 28,
                                     ),
                               ),
                             ),
@@ -106,7 +108,7 @@ class _CotizacionesEmiWebScreenState extends State<CotizacionesEmiWebScreen> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 10, 0, 0),
                               child: Text(
-                                'Conctando a información\nde cotizaciones, por favor, no apague\nla conexión Wi-Fi o datos móviles hasta \nque se complete el proceso.',
+                                'Conectando a información\nde cotizaciones, por favor, no apague\nla conexión Wi-Fi o datos móviles hasta \nque se complete el proceso.',
                                 textAlign: TextAlign.center,
                                 maxLines: 5,
                                 style: AppTheme.of(context).bodyText1.override(

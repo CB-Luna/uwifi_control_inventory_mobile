@@ -439,6 +439,7 @@ with TickerProviderStateMixin {
                                                     builder: (context) => CotizacionesEmiWebScreen(
                                                           emprendimiento: widget.emprendimiento, 
                                                           inversion: widget.inversion,
+                                                          productCot: widget.inversionesXprodCotizados,
                                                     ),
                                                   ),
                                                 );
@@ -485,6 +486,7 @@ with TickerProviderStateMixin {
                                                   builder: (context) => CotizacionesEmiWebScreen(
                                                         emprendimiento: widget.emprendimiento, 
                                                         inversion: widget.inversion,
+                                                        productCot: widget.inversionesXprodCotizados,
                                                   ),
                                                 ),
                                               );
