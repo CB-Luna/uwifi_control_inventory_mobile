@@ -1,3 +1,4 @@
+import 'package:bizpro_app/screens/inversiones/main_tab_opciones.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bizpro_app/helpers/constants.dart';
@@ -9,16 +10,17 @@ import 'package:lottie/lottie.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 import '../inversiones/tabs/cotizacion_tab.dart';
+import '../inversiones/tabs/inversion_tab.dart';
 
 class CotizacionesPocketbaseScreen extends StatefulWidget {
   final Emprendimientos emprendimiento;
   final Inversiones inversion;
-  final InversionesXProdCotizados prodcot;
+  
 
   const CotizacionesPocketbaseScreen({
     Key? key, 
     required this.emprendimiento, 
-    required this.inversion, required this.prodcot, 
+    required this.inversion, 
     }) : super(key: key);
 
   @override
@@ -163,10 +165,12 @@ class _CotizacionesPocketbaseScreenState extends State<CotizacionesPocketbaseScr
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            CotizacionTab(
+                                            MainTabOpcionesScreen(
                                             emprendimiento: widget.emprendimiento,
-                                            inversion:widget.inversion,
-                                            inversionesXprodCotizados:widget.prodcot),
+                                            idInversion:widget.inversion.id,
+                                            
+                                            ),
+                                            
                                       ),
                                     );
                                     syncProviderPocketbase.procesoTerminado(false);
