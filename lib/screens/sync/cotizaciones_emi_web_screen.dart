@@ -44,7 +44,7 @@ class _CotizacionesEmiWebScreenState extends State<CotizacionesEmiWebScreen> {
                     CotizacionesPocketbaseScreen(
                       emprendimiento: widget.emprendimiento, 
                       inversion: widget.inversion,
-                      prodcot:widget.productCot,
+                      
                     ),
               ),
             );
