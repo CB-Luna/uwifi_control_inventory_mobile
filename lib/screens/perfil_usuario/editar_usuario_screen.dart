@@ -458,7 +458,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                             }
                                           }
                                           if (imagenTemp != widget.usuario.imagen.target?.path) {
-                                            if (widget.usuario.imagen.target?.path != "") {
+                                            if (widget.usuario.imagen.target?.path != null) {
                                               print("Se va a actualizar la imagen del Usuario");
                                               usuarioProvider.updateImagenUsuario(
                                                 widget.usuario.imagen.target!.id,

@@ -1,3 +1,4 @@
+import 'package:bizpro_app/helpers/sync_instruction.dart';
 import 'package:bizpro_app/modelsPocketbase/get_inversion.dart';
 import 'package:bizpro_app/modelsPocketbase/get_inversion_x_prod_cotizados.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/instruccion_no_sincronizada.dart';
@@ -43,17 +44,17 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncAddImagenUsuario Pocketbase");
           final imagenToSync = getFirstImagen(dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
           if(imagenToSync != null){
-            final boolSyncAddImagenUsuario = await syncAddImagenUsuario(imagenToSync, instruccionesBitacora[i]);
-            if (boolSyncAddImagenUsuario) {
-              banderasExistoSync.add(boolSyncAddImagenUsuario);
+            final responseSyncAddImagenUsuario = await syncAddImagenUsuario(imagenToSync, instruccionesBitacora[i]);
+            if (responseSyncAddImagenUsuario.exitoso) {
+              banderasExistoSync.add(responseSyncAddImagenUsuario.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncAddImagenUsuario);
+              banderasExistoSync.add(responseSyncAddImagenUsuario.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
-                instruccion: "Agregar Imagen de Perfil Usuario Servidor", 
+                instruccion: responseSyncAddImagenUsuario.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -61,9 +62,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             //Recuperamos la instrucción que no se ejecutó
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
-              instruccion: "Agregar Imagen de Perfil Usuario Servidor", 
+              instruccion: "La instrucción para agregar Imagen de Perfil del Usuario en servidor local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -609,18 +610,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncUpdateImagenUsuario Pocketbase");
           final imagenToSync = getFirstImagen(dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
           if(imagenToSync != null){
-            final boolSyncUpdateImagenUsuario = await syncUpdateImagenUsuario(imagenToSync, instruccionesBitacora[i]);
-            if (boolSyncUpdateImagenUsuario) {
-              print("La respuesta es: $boolSyncUpdateImagenUsuario");
-              banderasExistoSync.add(boolSyncUpdateImagenUsuario);
+            final responseSyncUpdateImagenUsuario = await syncUpdateImagenUsuario(imagenToSync, instruccionesBitacora[i]);
+            if (responseSyncUpdateImagenUsuario.exitoso) {
+              print("La respuesta es: $responseSyncUpdateImagenUsuario");
+              banderasExistoSync.add(responseSyncUpdateImagenUsuario.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncUpdateImagenUsuario);
+              banderasExistoSync.add(responseSyncUpdateImagenUsuario.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
-                instruccion: "Actualización Imagen de Perfil Usuario Servidor", 
+                instruccion: responseSyncUpdateImagenUsuario.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }     
@@ -628,9 +629,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             //Recuperamos la instrucción que no se ejecutó
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
-              instruccion: "Actualización Imagen de Perfil Usuario Servidor", 
+              instruccion: "La instrucción para actualizar Imagen de Perfil del Usuario en servidor local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -3578,7 +3579,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
   }
 }
 
-  Future<bool> syncAddImagenUsuario(Imagenes imagen, Bitacora bitacora) async {
+  Future<SyncInstruction> syncAddImagenUsuario(Imagenes imagen, Bitacora bitacora) async {
     print("Estoy en syncAddImagenUsuario");
     try {
       if (bitacora.executeEmiWeb) {
@@ -3599,28 +3600,28 @@ class SyncProviderPocketbase extends ChangeNotifier {
               //Se elimina la instrucción de la bitacora
               dataBase.bitacoraBox.remove(bitacora.id);
             } 
-            return true;
+            return SyncInstruction(exitoso: true, descripcion: "");
           } else {
-            return false;
+            return SyncInstruction(exitoso: false, descripcion: "Falló al recuperar Imagen del Usuario creada desde Servidor Local");
           }  
         } else {
           if (bitacora.executeEmiWeb) {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           } 
-          return true;
+          return SyncInstruction(exitoso: true, descripcion: "");
         }
       } else {
         // No se ha agregado imagen del usuario en Emi Web
-        return false;
+        return SyncInstruction(exitoso: false, descripcion: "No se ha agregado imagen del Usuario en Emi Web");
       }
     } catch (e) {
       print('ERROR - function syncAddImagenUsuario(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar alta de Imagen del Usuario: $e");
     }
 }
 
-  Future<bool> syncUpdateImagenUsuario(Imagenes imagen, Bitacora bitacora) async {
+  Future<SyncInstruction> syncUpdateImagenUsuario(Imagenes imagen, Bitacora bitacora) async {
     print("Estoy en El syncUpdateImagenUsuario en Pocketbase");
     try {
       if (bitacora.executeEmiWeb) {
@@ -3637,25 +3638,25 @@ class SyncProviderPocketbase extends ChangeNotifier {
               //Se elimina la instrucción de la bitacora
               dataBase.bitacoraBox.remove(bitacora.id);
             }
-            return true;
+            return SyncInstruction(exitoso: true, descripcion: "");
           }
           else{
-            return false;
+            return SyncInstruction(exitoso: false, descripcion: "Falló al recuperar Imagen del Usuario actualizada desde Servidor Local");
           }
         } else {
           if (bitacora.executeEmiWeb) {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           }
-          return true;
+          return SyncInstruction(exitoso: true, descripcion: "");
         }
       } else {
         // No se ha actualizado imagen del usuario en Emi Web
-        return false;
+        return SyncInstruction(exitoso: false, descripcion: "No se ha actualizado imagen del Usuario en Emi Web");
       }
     } catch (e) {
       print('ERROR - function syncUpdateImagenUsuario(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar aactualización de Imagen del Usuario: $e");
     }
   } 
 
