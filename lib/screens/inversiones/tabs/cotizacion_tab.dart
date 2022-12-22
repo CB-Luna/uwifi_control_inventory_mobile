@@ -1,5 +1,8 @@
 import 'dart:io';
 import 'package:bizpro_app/providers/sync_provider_emi_web.dart';
+import 'package:bizpro_app/screens/inversiones/detalle_cotizacion.dart';
+import 'package:bizpro_app/screens/inversiones/editar_producto_inversion.dart';
+import 'package:bizpro_app/screens/productos/productos_emprendedor_screen.dart';
 import 'package:bizpro_app/screens/sync/cotizaciones_emi_web_screen.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -358,7 +361,8 @@ class _CotizacionTabState extends State<CotizacionTab>
                                                   emprendimiento:
                                                       widget.emprendimiento,
                                                   inversion: widget.inversion,
-                                                  productCot: widget.inversionesXprodCotizados,
+                                                  productCot: widget
+                                                      .inversionesXprodCotizados,
                                                 ),
                                               ),
                                             );
@@ -410,7 +414,8 @@ class _CotizacionTabState extends State<CotizacionTab>
                                                 emprendimiento:
                                                     widget.emprendimiento,
                                                 inversion: widget.inversion,
-                                                productCot: widget.inversionesXprodCotizados,
+                                                productCot: widget
+                                                    .inversionesXprodCotizados,
                                               ),
                                             ),
                                           );
@@ -472,119 +477,86 @@ class _CotizacionTabState extends State<CotizacionTab>
                           itemCount: productosCot.length,
                           itemBuilder: (context, index) {
                             final productoCot = productosCot[index];
-                            return Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 0, 0, 24),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 8),
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.92,
-                                      decoration: BoxDecoration(
-                                        color: const Color(0x374672FF),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(15, 0, 0, 0),
-                                            child: Container(
-                                              width: 35,
-                                              height: 35,
-                                              decoration: BoxDecoration(
-                                                color: AppTheme.of(context)
-                                                    .secondaryBackground,
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    (index + 1).toString(),
-                                                    style: AppTheme.of(context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily: AppTheme
-                                                                  .of(context)
-                                                              .bodyText1Family,
-                                                          fontSize: 20,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Padding(
+                            return InkWell(
+                              onTap: () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => DetalleCotizacion(
+                                        detalleCot: productoCot),
+                                  ),
+                                );
+                              },
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 0, 0, 24),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 0, 8),
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.92,
+                                        decoration: BoxDecoration(
+                                          color: const Color(0x374672FF),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Padding(
                                               padding:
                                                   const EdgeInsetsDirectional
-                                                      .all(8),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        productoCot
-                                                            .productosProv
-                                                            .target!
-                                                            .nombre,
-                                                        style:
-                                                            AppTheme.of(context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily: AppTheme.of(
-                                                                          context)
-                                                                      .bodyText1Family,
-                                                                  color: AppTheme.of(
-                                                                          context)
-                                                                      .secondaryText,
-                                                                ),
-                                                      ),
-                                                      Text(
-                                                        dateTimeFormat(
-                                                            'dd/MM/yyyy',
-                                                            productoCot
-                                                                .fechaRegistro),
-                                                        textAlign:
-                                                            TextAlign.end,
-                                                        style:
-                                                            AppTheme.of(context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily: AppTheme.of(
-                                                                          context)
-                                                                      .bodyText1Family,
-                                                                  color: AppTheme.of(
-                                                                          context)
-                                                                      .secondaryText,
-                                                                  fontSize: 12,
-                                                                ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(vertical: 5),
-                                                    child: Row(
+                                                      .fromSTEB(15, 0, 0, 0),
+                                              child: Container(
+                                                width: 35,
+                                                height: 35,
+                                                decoration: BoxDecoration(
+                                                  color: AppTheme.of(context)
+                                                      .secondaryBackground,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      (index + 1).toString(),
+                                                      style:
+                                                          AppTheme.of(context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily: AppTheme.of(
+                                                                        context)
+                                                                    .bodyText1Family,
+                                                                fontSize: 20,
+                                                              ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .all(8),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
                                                       mainAxisSize:
                                                           MainAxisSize.max,
                                                       mainAxisAlignment:
@@ -592,112 +564,166 @@ class _CotizacionTabState extends State<CotizacionTab>
                                                               .spaceBetween,
                                                       children: [
                                                         Text(
-                                                          'Cantidad: ${productoCot.cantidad}',
-                                                          style: AppTheme.of(
-                                                                  context)
-                                                              .subtitle1
-                                                              .override(
-                                                                fontFamily: AppTheme.of(
-                                                                        context)
-                                                                    .subtitle1Family,
-                                                                color: AppTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                              ),
-                                                        ),
-                                                        Text(
-                                                          currencyFormat.format(
-                                                              (productoCot
-                                                                      .costoTotal)
-                                                                  .toStringAsFixed(
-                                                                      2)),
-                                                          textAlign:
-                                                              TextAlign.end,
+                                                          productoCot
+                                                              .productosProv
+                                                              .target!
+                                                              .nombre,
                                                           style:
                                                               AppTheme.of(
                                                                       context)
-                                                                  .subtitle2
+                                                                  .bodyText1
                                                                   .override(
                                                                     fontFamily:
                                                                         AppTheme.of(context)
-                                                                            .subtitle2Family,
+                                                                            .bodyText1Family,
                                                                     color: AppTheme.of(
                                                                             context)
-                                                                        .primaryText,
+                                                                        .secondaryText,
                                                                   ),
+                                                        ),
+                                                        Text(
+                                                          dateTimeFormat(
+                                                              'dd/MM/yyyy',
+                                                              productoCot
+                                                                  .fechaRegistro),
+                                                          textAlign:
+                                                              TextAlign.end,
+                                                          style: AppTheme.of(
+                                                                  context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily: AppTheme.of(
+                                                                        context)
+                                                                    .bodyText1Family,
+                                                                color: AppTheme.of(
+                                                                        context)
+                                                                    .secondaryText,
+                                                                fontSize: 12,
+                                                              ),
                                                         ),
                                                       ],
                                                     ),
-                                                  ),
-                                                  Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        maybeHandleOverflow(
-                                                            productoCot
-                                                                .productosProv
-                                                                .target!
-                                                                .descripcion,
-                                                            14,
-                                                            "..."),
-                                                        style:
-                                                            AppTheme.of(context)
-                                                                .bodyText1
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          vertical: 5),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            'Cantidad: ${productoCot.cantidad}',
+                                                            style: AppTheme.of(
+                                                                    context)
+                                                                .subtitle1
                                                                 .override(
                                                                   fontFamily: AppTheme.of(
                                                                           context)
-                                                                      .bodyText1Family,
+                                                                      .subtitle1Family,
                                                                   color: AppTheme.of(
                                                                           context)
-                                                                      .secondaryText,
+                                                                      .primaryText,
+                                                                  fontSize: 15,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
                                                                 ),
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
+                                                          ),
+                                                          Text(
+                                                            currencyFormat.format(
+                                                                (productoCot
+                                                                        .costoTotal)
+                                                                    .toStringAsFixed(
+                                                                        2)),
+                                                            textAlign:
+                                                                TextAlign.end,
+                                                            style:
+                                                                AppTheme.of(
+                                                                        context)
+                                                                    .subtitle2
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          AppTheme.of(context)
+                                                                              .subtitle2Family,
+                                                                      color: AppTheme.of(
+                                                                              context)
+                                                                          .primaryText,
+                                                                    ),
+                                                          ),
+                                                        ],
                                                       ),
-                                                      Text(
-                                                        maybeHandleOverflow(
-                                                            productoCot
-                                                                    .productosProv
-                                                                    .target
-                                                                    ?.familiaProducto
-                                                                    .target
-                                                                    ?.nombre ??
-                                                                "SIN FAMILIA",
-                                                            13,
-                                                            "..."),
-                                                        style:
-                                                            AppTheme.of(context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily: AppTheme.of(
-                                                                          context)
-                                                                      .bodyText1Family,
-                                                                  color: AppTheme.of(
-                                                                          context)
-                                                                      .secondaryText,
-                                                                ),
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
+                                                    ),
+                                                    Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          maybeHandleOverflow(
+                                                              productoCot
+                                                                  .productosProv
+                                                                  .target!
+                                                                  .descripcion,
+                                                              14,
+                                                              "..."),
+                                                          style:
+                                                              AppTheme.of(
+                                                                      context)
+                                                                  .bodyText1
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        AppTheme.of(context)
+                                                                            .bodyText1Family,
+                                                                    color: AppTheme.of(
+                                                                            context)
+                                                                        .secondaryText,
+                                                                  ),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                        Text(
+                                                          maybeHandleOverflow(
+                                                              productoCot
+                                                                      .productosProv
+                                                                      .target
+                                                                      ?.familiaProducto
+                                                                      .target
+                                                                      ?.nombre ??
+                                                                  "SIN FAMILIA",
+                                                              13,
+                                                              "..."),
+                                                          style:
+                                                              AppTheme.of(
+                                                                      context)
+                                                                  .bodyText1
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        AppTheme.of(context)
+                                                                            .bodyText1Family,
+                                                                    color: AppTheme.of(
+                                                                            context)
+                                                                        .secondaryText,
+                                                                  ),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             );
                           },

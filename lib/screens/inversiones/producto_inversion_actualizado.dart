@@ -9,10 +9,12 @@ class ProductoInversionActualizado extends StatefulWidget {
   const ProductoInversionActualizado({Key? key}) : super(key: key);
 
   @override
-  State<ProductoInversionActualizado> createState() => _ProductoInversionActualizadoState();
+  State<ProductoInversionActualizado> createState() =>
+      _ProductoInversionActualizadoState();
 }
 
-class _ProductoInversionActualizadoState extends State<ProductoInversionActualizado> {
+class _ProductoInversionActualizadoState
+    extends State<ProductoInversionActualizado> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override

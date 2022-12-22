@@ -88,14 +88,14 @@ class _InversionTabState extends State<InversionTab>
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: widget.emprendimiento.imagen.target != null ?
-                          Image.file(
-                            File(widget.emprendimiento.imagen.target!.path!),
-                          ).image
-                          :
-                          Image.asset(
-                            "assets/images/default_image.png",
-                          ).image,
+                          image: widget.emprendimiento.imagen.target != null
+                              ? Image.file(
+                                  File(widget
+                                      .emprendimiento.imagen.target!.path!),
+                                ).image
+                              : Image.asset(
+                                  "assets/images/default_image.png",
+                                ).image,
                         ),
                         boxShadow: const [
                           BoxShadow(
@@ -137,7 +137,10 @@ class _InversionTabState extends State<InversionTab>
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Text(
-                                          maybeHandleOverflow(widget.emprendimiento.nombre, 30, "..."),
+                                          maybeHandleOverflow(
+                                              widget.emprendimiento.nombre,
+                                              30,
+                                              "..."),
                                           style: AppTheme.of(context)
                                               .bodyText1
                                               .override(
@@ -391,6 +394,7 @@ class _InversionTabState extends State<InversionTab>
                             final productoSolicitado = prodSolicitado[index];
                             return InkWell(
                               onTap: () async {
+                                print("object");
                                 if (widget.emprendimiento.usuario.target!.rol
                                             .target!.rol !=
                                         "Amigo del Cambio" &&
@@ -500,8 +504,11 @@ class _InversionTabState extends State<InversionTab>
                                                               .spaceBetween,
                                                       children: [
                                                         Text(
-                                                          maybeHandleOverflow(productoSolicitado
-                                                              .producto,15,"..."),
+                                                          maybeHandleOverflow(
+                                                              productoSolicitado
+                                                                  .producto,
+                                                              15,
+                                                              "..."),
                                                           style:
                                                               AppTheme.of(
                                                                       context)
@@ -600,8 +607,11 @@ class _InversionTabState extends State<InversionTab>
                                                               .spaceBetween,
                                                       children: [
                                                         Text(
-                                                          maybeHandleOverflow(productoSolicitado
-                                                              .descripcion,13,"..."),
+                                                          maybeHandleOverflow(
+                                                              productoSolicitado
+                                                                  .descripcion,
+                                                              13,
+                                                              "..."),
                                                           style:
                                                               AppTheme.of(
                                                                       context)
@@ -618,10 +628,13 @@ class _InversionTabState extends State<InversionTab>
                                                               .ellipsis,
                                                         ),
                                                         Text(
-                                                          maybeHandleOverflow(productoSolicitado
-                                                              .familiaProducto
-                                                              .target!
-                                                              .nombre,13,"..."),
+                                                          maybeHandleOverflow(
+                                                              productoSolicitado
+                                                                  .familiaProducto
+                                                                  .target!
+                                                                  .nombre,
+                                                              13,
+                                                              "..."),
                                                           style:
                                                               AppTheme.of(
                                                                       context)
