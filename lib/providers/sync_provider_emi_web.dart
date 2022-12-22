@@ -70,9 +70,9 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         headers: headers,
         body: bodyMsg
       );
-
+      print("Response body");
       print(response.body);
-
+      //Se actualiza la información del usuario de forma autómatica, cada vez que se hace una sincronización
       final updateUsuario = dataBase.usuariosBox.query(Usuarios_.correo.equals(prefs.getString("userId")!)).build().findUnique();
       if (updateUsuario != null) {
         switch (response.statusCode) {
@@ -80,7 +80,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             final responseTokenEmiWeb = getTokenEmiWebFromMap(
             response.body);
             tokenGlobal = responseTokenEmiWeb.accessToken;
-            var urlgetRolesUsuario = Uri.parse("$baseUrlEmiWebServices/catalogos/roles");
+            var urlgetRolesUsuario = Uri.parse("$baseUrlEmiWebServices/usuarios/${updateUsuario.idEmiWeb}/roles");
             final headers = ({
                 "Content-Type": "application/json",
                 'Authorization': 'Bearer $tokenGlobal',
