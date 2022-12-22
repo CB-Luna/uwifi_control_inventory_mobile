@@ -21,12 +21,12 @@ const String baseUrlEmiWebNonSecure =
     "http://20.186.180.168:9023/ememi-nonsecure-services/api";
 
 //UAT
-// const String baseUrl = 'https://emi-uat.cbluna-dev.com';
+//const String baseUrl = 'https://emi-uat.cbluna-dev.com';
 
 //UAT
-// const String baseUrlEmiWebServices = "http://20.186.180.168:29021/ememi-secure-services/api";
-// const String baseUrlEmiWebSecurity = "http://20.186.180.168:29021/ememi-secure-security/api";
-// const String baseUrlEmiWebNonSecure = "http://20.186.180.168:29023/ememi-nonsecure-services/api";
+//const String baseUrlEmiWebServices = "http://20.186.180.168:29021/ememi-secure-services/api";
+//const String baseUrlEmiWebSecurity = "http://20.186.180.168:29021/ememi-secure-security/api";
+//const String baseUrlEmiWebNonSecure = "http://20.186.180.168:29023/ememi-nonsecure-services/api";
 
 final client = PocketBase(baseUrl);
 //^[a-zA-Z\sñÑà-úÀ-Ú]*$

@@ -426,231 +426,84 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                       return true;
                                     });
                                   }
-                                  return ListView.builder(
-                                    reverse: true,
-                                    padding: EdgeInsets.zero,
-                                    shrinkWrap: true,
+                                  return SingleChildScrollView(
                                     scrollDirection: Axis.vertical,
-                                    itemCount: inversiones.length,
-                                    itemBuilder: (context, resultadoIndex) {
-                                      final inversion =
-                                          inversiones[resultadoIndex];
-
-                                      return InkWell(
-                                        onTap: () async {
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  MainTabOpcionesScreen(
-                                                emprendimiento:
-                                                    actualEmprendimiento!,
-                                                idInversion: inversion.id,
+                                    child: ListView.builder(
+                                      reverse: true,
+                                      padding: EdgeInsets.zero,
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: inversiones.length,
+                                      itemBuilder: (context, resultadoIndex) {
+                                        final inversion =
+                                            inversiones[resultadoIndex];
+                                        return InkWell(
+                                          onTap: () async {
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    MainTabOpcionesScreen(
+                                                  emprendimiento:
+                                                      actualEmprendimiento!,
+                                                  idInversion: inversion.id,
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(20, 10, 20, 20),
-                                          child: Container(
-                                            width: double.infinity,
-                                            height: 180,
-                                            decoration: BoxDecoration(
-                                              color: const Color(0x374672FF),
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                              10, 0, 0, 0),
-                                                      child: Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        12),
-                                                            child: SizedBox(
-                                                              height: 80,
-                                                              width: 120,
-                                                              child: getWidgetCoverImage(
-                                                                  actualEmprendimiento!
-                                                                      .imagen
-                                                                      .target
-                                                                      ?.path),
+                                            );
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(20, 10, 20, 20),
+                                            child: Container(
+                                              width: double.infinity,
+                                              height: 180,
+                                              decoration: BoxDecoration(
+                                                color: const Color(0x374672FF),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                10, 0, 0, 0),
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          12),
+                                                              child: SizedBox(
+                                                                height: 80,
+                                                                width: 120,
+                                                                child: getWidgetCoverImage(
+                                                                    actualEmprendimiento!
+                                                                        .imagen
+                                                                        .target
+                                                                        ?.path),
+                                                              ),
                                                             ),
-                                                          ),
-                                                          Text(
-                                                            maybeHandleOverflow(
-                                                                actualEmprendimiento!
-                                                                    .nombre,
-                                                                12,
-                                                                "..."),
-                                                            style: AppTheme.of(
-                                                                    context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily: AppTheme.of(
-                                                                          context)
-                                                                      .bodyText1Family,
-                                                                  fontSize: 16,
-                                                                  color: AppTheme.of(
-                                                                          context)
-                                                                      .secondaryText,
-                                                                ),
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      child: Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                    5, 0, 5, 0),
-                                                            child: Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceAround,
-                                                              children: [
-                                                                Padding(
-                                                                  padding:
-                                                                      const EdgeInsetsDirectional
-                                                                              .fromSTEB(
-                                                                          5,
-                                                                          0,
-                                                                          0,
-                                                                          0),
-                                                                  child: Text(
-                                                                    maybeHandleOverflow(
-                                                                        emprendedor,
-                                                                        22,
-                                                                        "..."),
-                                                                    style: AppTheme.of(
-                                                                            context)
-                                                                        .bodyText1
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              AppTheme.of(context).bodyText1Family,
-                                                                          fontSize:
-                                                                              14,
-                                                                          color:
-                                                                              AppTheme.of(context).secondaryText,
-                                                                        ),
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .ellipsis,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                    5, 0, 5, 0),
-                                                            child: Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceEvenly,
-                                                              children: [
-                                                                Text(
-                                                                  dateTimeFormat(
-                                                                      "dd/MMM/yyyy",
-                                                                      inversion
-                                                                          .fechaRegistro),
-                                                                  style: AppTheme.of(
-                                                                          context)
-                                                                      .bodyText1,
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                    5, 0, 5, 0),
-                                                            child: Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceEvenly,
-                                                              children: [
-                                                                Padding(
-                                                                  padding:
-                                                                      const EdgeInsetsDirectional
-                                                                              .fromSTEB(
-                                                                          5,
-                                                                          0,
-                                                                          0,
-                                                                          0),
-                                                                  child: Text(
-                                                                    inversion.estadoInversion.target?.estado == "Entregada Al Emprendedor" ||
-                                                                            inversion.estadoInversion.target?.estado ==
-                                                                                "Entregada Al Promotor" ||
-                                                                            inversion.estadoInversion.target?.estado ==
-                                                                                "Pagado"
-                                                                        ? 'Total Inversión'
-                                                                        : 'Total Cotización:',
-                                                                    style: AppTheme.of(
-                                                                            context)
-                                                                        .bodyText1,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                    10,
-                                                                    0,
-                                                                    0,
-                                                                    0),
-                                                            child: Text(
+                                                            Text(
                                                               maybeHandleOverflow(
-                                                                  currencyFormat.format(inversion
-                                                                      .totalInversion
-                                                                      .toStringAsFixed(
-                                                                          2)),
-                                                                  15,
+                                                                  actualEmprendimiento!
+                                                                      .nombre,
+                                                                  12,
                                                                   "..."),
                                                               style: AppTheme.of(
                                                                       context)
@@ -660,87 +513,253 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                         AppTheme.of(context)
                                                                             .bodyText1Family,
                                                                     fontSize:
-                                                                        12,
-                                                                  ),
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                    5, 0, 5, 0),
-                                                            child: Text(
-                                                              "Estado: ${inversion.estadoInversion.target?.estado ?? ''}",
-                                                              style: AppTheme.of(
-                                                                      context)
-                                                                  .bodyText1
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        AppTheme.of(context)
-                                                                            .bodyText1Family,
-                                                                    fontSize:
-                                                                        14,
+                                                                        16,
                                                                     color: AppTheme.of(
                                                                             context)
                                                                         .secondaryText,
                                                                   ),
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
                                                             ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                    5, 0, 5, 0),
-                                                            child: Text(
-                                                              maybeHandleOverflow(
-                                                                  "Tipo de proyecto: ${actualEmprendimiento!.catalogoProyecto.target!.nombre}",
-                                                                  30,
-                                                                  "..."),
-                                                              style: AppTheme.of(
-                                                                      context)
-                                                                  .bodyText1
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        AppTheme.of(context)
-                                                                            .bodyText1Family,
-                                                                    fontSize:
-                                                                        12,
-                                                                  ),
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                    5, 0, 5, 0),
-                                                            child: Text(
-                                                              maybeHandleOverflow(
-                                                                  "ID Emi Web: ${inversion.idEmiWeb ?? 'Sin ID'}",
-                                                                  30,
-                                                                  "..."),
-                                                              style: AppTheme.of(
-                                                                      context)
-                                                                  .bodyText1
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        AppTheme.of(context)
-                                                                            .bodyText1Family,
-                                                                    fontSize:
-                                                                        12,
-                                                                  ),
-                                                            ),
-                                                          ),
-                                                        ],
+                                                          ],
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
+                                                      Expanded(
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                      5,
+                                                                      0,
+                                                                      5,
+                                                                      0),
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceAround,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional.fromSTEB(
+                                                                            5,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                    child: Text(
+                                                                      maybeHandleOverflow(
+                                                                          emprendedor,
+                                                                          22,
+                                                                          "..."),
+                                                                      style: AppTheme.of(
+                                                                              context)
+                                                                          .bodyText1
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                AppTheme.of(context).bodyText1Family,
+                                                                            fontSize:
+                                                                                14,
+                                                                            color:
+                                                                                AppTheme.of(context).secondaryText,
+                                                                          ),
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .ellipsis,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                      5,
+                                                                      0,
+                                                                      5,
+                                                                      0),
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceEvenly,
+                                                                children: [
+                                                                  Text(
+                                                                    dateTimeFormat(
+                                                                        "dd/MMM/yyyy",
+                                                                        inversion
+                                                                            .fechaRegistro),
+                                                                    style: AppTheme.of(
+                                                                            context)
+                                                                        .bodyText1,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                      5,
+                                                                      0,
+                                                                      5,
+                                                                      0),
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceEvenly,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional.fromSTEB(
+                                                                            5,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                    child: Text(
+                                                                      inversion.estadoInversion.target?.estado == "Entregada Al Emprendedor" ||
+                                                                              inversion.estadoInversion.target?.estado == "Entregada Al Promotor" ||
+                                                                              inversion.estadoInversion.target?.estado == "Pagado"
+                                                                          ? 'Total Inversión'
+                                                                          : 'Total Cotización:',
+                                                                      style: AppTheme.of(
+                                                                              context)
+                                                                          .bodyText1,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                      10,
+                                                                      0,
+                                                                      0,
+                                                                      0),
+                                                              child: Text(
+                                                                maybeHandleOverflow(
+                                                                    currencyFormat.format(inversion
+                                                                        .totalInversion
+                                                                        .toStringAsFixed(
+                                                                            2)),
+                                                                    15,
+                                                                    "..."),
+                                                                style: AppTheme.of(
+                                                                        context)
+                                                                    .bodyText1
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          AppTheme.of(context)
+                                                                              .bodyText1Family,
+                                                                      fontSize:
+                                                                          12,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                      5,
+                                                                      0,
+                                                                      5,
+                                                                      0),
+                                                              child: Text(
+                                                                "Estado: ${inversion.estadoInversion.target?.estado ?? ''}",
+                                                                style: AppTheme.of(
+                                                                        context)
+                                                                    .bodyText1
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          AppTheme.of(context)
+                                                                              .bodyText1Family,
+                                                                      fontSize:
+                                                                          14,
+                                                                      color: AppTheme.of(
+                                                                              context)
+                                                                          .secondaryText,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                      5,
+                                                                      0,
+                                                                      5,
+                                                                      0),
+                                                              child: Text(
+                                                                maybeHandleOverflow(
+                                                                    "Tipo de proyecto: ${actualEmprendimiento!.catalogoProyecto.target!.nombre}",
+                                                                    30,
+                                                                    "..."),
+                                                                style: AppTheme.of(
+                                                                        context)
+                                                                    .bodyText1
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          AppTheme.of(context)
+                                                                              .bodyText1Family,
+                                                                      fontSize:
+                                                                          12,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                      5,
+                                                                      0,
+                                                                      5,
+                                                                      0),
+                                                              child: Text(
+                                                                maybeHandleOverflow(
+                                                                    "ID Emi Web: ${inversion.idEmiWeb ?? 'Sin ID'}",
+                                                                    30,
+                                                                    "..."),
+                                                                style: AppTheme.of(
+                                                                        context)
+                                                                    .bodyText1
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          AppTheme.of(context)
+                                                                              .bodyText1Family,
+                                                                      fontSize:
+                                                                          12,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      );
-                                    },
+                                        );
+                                      },
+                                    ),
                                   );
                                 },
                               ),
