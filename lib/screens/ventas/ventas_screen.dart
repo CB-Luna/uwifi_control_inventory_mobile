@@ -577,12 +577,23 @@ class _VentasScreenState extends State<VentasScreen> {
                                                                   Padding(
                                                                       padding:
                                                                           const EdgeInsets.all(
-                                                                              8.0),
+                                                                              5.0),
                                                                       child: Text(dateTimeFormat(
                                                                           "dd/MMM/yyyy",
                                                                           venta
                                                                               .fechaInicio)))
                                                                               ,
+                                                                  Padding(
+                                                                        padding:
+                                                                        const EdgeInsets.all(
+                                                                            5.0),
+                                                                        child:Text(
+                                                                          maybeHandleOverflow(
+                                                                              dateTimeFormat("dd/MMM/yyyy", venta.fechaTermino),
+                                                                              19,
+                                                                              "..."),
+                                                                        ),
+                                                                      ),
                                                                   
                                                           ])),
                                                             Padding(
@@ -597,17 +608,24 @@ class _VentasScreenState extends State<VentasScreen> {
                                                                     MainAxisAlignment
                                                                         .spaceAround,
                                                                 children: [
-                                                                      Padding(
-                                                                        padding:
-                                                                        const EdgeInsets.all(
-                                                                            8.0),
-                                                                        child:Text(
-                                                                          maybeHandleOverflow(
-                                                                              dateTimeFormat("dd/MMM/yyyy", venta.fechaTermino),
-                                                                              19,
-                                                                              "..."),
-                                                                        ),
-                                                                      ),
+                                                                  Padding(
+                                                                    padding:
+                                                                    const EdgeInsets.all(
+                                                                        5.0),
+                                                                    child:Text(
+                                                                      "ID Local: ${venta.id}",
+                                                                      style: AppTheme.of(context).bodyText1,
+                                                                    ),
+                                                                  ),
+                                                                  Padding(
+                                                                    padding:
+                                                                    const EdgeInsets.all(
+                                                                        5.0),
+                                                                    child:Text(
+                                                                      "ID Emi Web: ${venta.idEmiWeb ?? 'Sin ID'}",
+                                                                      style: AppTheme.of(context).bodyText1,
+                                                                    ),
+                                                                  ),
                                                           ]),
                                                                   ),
                                                                   Padding(
@@ -623,7 +641,7 @@ class _VentasScreenState extends State<VentasScreen> {
                                                                               .max,
                                                                       mainAxisAlignment:
                                                                           MainAxisAlignment
-                                                                              .start,
+                                                                              .spaceAround,
                                                                       children: [
                                                                         Row(
                                                                           mainAxisSize:

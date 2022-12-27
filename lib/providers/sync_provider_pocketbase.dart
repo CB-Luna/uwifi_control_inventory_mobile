@@ -62,7 +62,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
             //Recuperamos la instrucción que no se ejecutó
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
-              instruccion: "La instrucción para agregar Imagen de Perfil del Usuario en servidor local no pudo ejecutarse.", 
+              instruccion: "La instrucción para agregar Imagen de Perfil del Usuario en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
             instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
@@ -72,18 +72,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncAddEmprendedor Pocketbase");
           final emprendedorToSync = getFirstEmprendedor(dataBase.emprendedoresBox.getAll(), instruccionesBitacora[i].id);
           if(emprendedorToSync != null){
-            final boolSyncAddEmprendedor = await syncAddEmprendedor(emprendedorToSync, instruccionesBitacora[i]);
-            if (boolSyncAddEmprendedor) {
-              banderasExistoSync.add(boolSyncAddEmprendedor);
+            final responseSyncAddEmprendedor = await syncAddEmprendedor(emprendedorToSync, instruccionesBitacora[i]);
+            if (responseSyncAddEmprendedor.exitoso) {
+              banderasExistoSync.add(responseSyncAddEmprendedor.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncAddEmprendedor);
+              banderasExistoSync.add(responseSyncAddEmprendedor.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: emprendedorToSync.emprendimiento.target!.nombre,
-                instruccion: "Agregar Emprendedor al Servidor", 
+                instruccion: responseSyncAddEmprendedor.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -92,9 +92,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Agregar Emprendedor al Servidor", 
+              instruccion: "La instrucción para agregar el Emprendedor en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -102,18 +102,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncAddEmprendimiento Pocketbase");
           final emprendimientoToSync = getFirstEmprendimiento(dataBase.emprendimientosBox.getAll(), instruccionesBitacora[i].id);
           if(emprendimientoToSync != null){
-            final boolSyncAddEmprendimiento = syncAddEmprendimiento(instruccionesBitacora[i]);
-            if (boolSyncAddEmprendimiento) {
-              banderasExistoSync.add(boolSyncAddEmprendimiento);
+            final responseSyncAddEmprendimiento = syncAddEmprendimiento(instruccionesBitacora[i]);
+            if (responseSyncAddEmprendimiento.exitoso) {
+              banderasExistoSync.add(responseSyncAddEmprendimiento.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncAddEmprendimiento);
+              banderasExistoSync.add(responseSyncAddEmprendimiento.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: emprendimientoToSync.nombre,
-                instruccion: "Agregar Emprendimiento Servidor", 
+                instruccion: responseSyncAddEmprendimiento.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -122,9 +122,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Agregar Emprendimiento Servidor", 
+              instruccion: "La instrucción para agregar el Emprendimiento en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -132,18 +132,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncAddJornada1 Pocketbase");
           final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
           if(jornadaToSync != null){
-            final boolSyncAddJornada1 = await syncAddJornada1(jornadaToSync, instruccionesBitacora[i]);
-            if (boolSyncAddJornada1) {
-              banderasExistoSync.add(boolSyncAddJornada1);
+            final responseSyncAddJornada1 = await syncAddJornada1(jornadaToSync, instruccionesBitacora[i]);
+            if (responseSyncAddJornada1.exitoso) {
+              banderasExistoSync.add(responseSyncAddJornada1.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncAddJornada1);
+              banderasExistoSync.add(responseSyncAddJornada1.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: jornadaToSync.emprendimiento.target!.nombre,
-                instruccion: "Agregar Jornada 1 Servidor", 
+                instruccion: responseSyncAddJornada1.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -152,9 +152,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Agregar Jornada 1 Servidor", 
+              instruccion: "La instrucción para agregar la Jornada 1 en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -162,18 +162,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncAddJornada2 Pocketbase");
           final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
           if(jornadaToSync != null){
-            final boolSyncAddJornada2 = await syncAddJornada2(jornadaToSync, instruccionesBitacora[i]);
-            if (boolSyncAddJornada2) {
-              banderasExistoSync.add(boolSyncAddJornada2);
+            final responseSyncAddJornada2 = await syncAddJornada2(jornadaToSync, instruccionesBitacora[i]);
+            if (responseSyncAddJornada2.exitoso) {
+              banderasExistoSync.add(responseSyncAddJornada2.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncAddJornada2);
+              banderasExistoSync.add(responseSyncAddJornada2.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: jornadaToSync.emprendimiento.target!.nombre,
-                instruccion: "Agregar Jornada 2 Servidor", 
+                instruccion: responseSyncAddJornada2.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -182,9 +182,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Agregar Jornada 2 Servidor", 
+              instruccion: "La instrucción para agregar la Jornada 2 en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -192,18 +192,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncAddImagenJornada2 Pocketbase");
           final imagenToSync = getFirstImagen(dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
           if(imagenToSync != null){
-            final boolSyncAddImagenJornada2 = await syncAddImagenJornada2(imagenToSync, instruccionesBitacora[i]);
-            if (boolSyncAddImagenJornada2) {
-              banderasExistoSync.add(boolSyncAddImagenJornada2);
+            final responseSyncAddImagenJornada2 = await syncAddImagenJornada2(imagenToSync, instruccionesBitacora[i]);
+            if (responseSyncAddImagenJornada2.exitoso) {
+              banderasExistoSync.add(responseSyncAddImagenJornada2.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncAddImagenJornada2);
+              banderasExistoSync.add(responseSyncAddImagenJornada2.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: imagenToSync.tarea.target!.jornada.target!.emprendimiento.target!.nombre,
-                instruccion: "Agregar Imagen Jornada 2 Servidor", 
+                instruccion: responseSyncAddImagenJornada2.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -212,9 +212,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Agregar Imagen Jornada 2 Servidor", 
+              instruccion: "La instrucción para agregar una Imagen de la Jornada 2 en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -222,18 +222,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncAddJornada3 Pocketbase");
           final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
           if(jornadaToSync != null){
-            final boolSyncAddJornada3 = await syncAddJornada3(jornadaToSync, instruccionesBitacora[i]);
-            if (boolSyncAddJornada3) {
-              banderasExistoSync.add(boolSyncAddJornada3);
+            final responseSyncAddJornada3 = await syncAddJornada3(jornadaToSync, instruccionesBitacora[i]);
+            if (responseSyncAddJornada3.exitoso) {
+              banderasExistoSync.add(responseSyncAddJornada3.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncAddJornada3);
+              banderasExistoSync.add(responseSyncAddJornada3.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: jornadaToSync.emprendimiento.target!.nombre,
-                instruccion: "Agregar Jornada 3 Servidor", 
+                instruccion: responseSyncAddJornada3.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -242,9 +242,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Agregar Jornada 3 Servidor", 
+              instruccion: "La instrucción para agregar la Jornada 3 en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -252,18 +252,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncAddImagenJornada3 Pocketbase");
           final imagenToSync = getFirstImagen(dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
           if(imagenToSync != null){
-            final boolSyncAddImagenJornada3 = await syncAddImagenJornada3(imagenToSync, instruccionesBitacora[i]);
-            if (boolSyncAddImagenJornada3) {
-              banderasExistoSync.add(boolSyncAddImagenJornada3);
+            final responseSyncAddImagenJornada3 = await syncAddImagenJornada3(imagenToSync, instruccionesBitacora[i]);
+            if (responseSyncAddImagenJornada3.exitoso) {
+              banderasExistoSync.add(responseSyncAddImagenJornada3.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncAddImagenJornada3);
+              banderasExistoSync.add(responseSyncAddImagenJornada3.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: imagenToSync.tarea.target!.jornada.target!.emprendimiento.target!.nombre,
-                instruccion: "Agregar Imagen Jornada 3 Servidor", 
+                instruccion: responseSyncAddImagenJornada3.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -272,9 +272,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Agregar Imagen Jornada 3 Servidor", 
+              instruccion: "La instrucción para agregar una Imagen de la Jornada 3 en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -282,18 +282,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncAddProductoInversionJ3 Pocketbase");
           final prodSolicitadoToSync = getFirstProdSolicitado(dataBase.productosSolicitadosBox.getAll(), instruccionesBitacora[i].id);
           if(prodSolicitadoToSync != null){
-            final boolSyncAddProductoInversionJ3 = await syncAddProductoInversionJ3(prodSolicitadoToSync, instruccionesBitacora[i]);
-            if (boolSyncAddProductoInversionJ3) {
-              banderasExistoSync.add(boolSyncAddProductoInversionJ3);
+            final responseSyncAddProductoInversionJ3 = await syncAddProductoInversionJ3(prodSolicitadoToSync, instruccionesBitacora[i]);
+            if (responseSyncAddProductoInversionJ3.exitoso) {
+              banderasExistoSync.add(responseSyncAddProductoInversionJ3.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncAddProductoInversionJ3);
+              banderasExistoSync.add(responseSyncAddProductoInversionJ3.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: prodSolicitadoToSync.inversion.target!.emprendimiento.target!.nombre,
-                instruccion: "Agregar Producto Inversión Jornada 3 Servidor", 
+                instruccion: responseSyncAddProductoInversionJ3.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -302,9 +302,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Agregar Producto Inversión Jornada 3 Servidor", 
+              instruccion: "La instrucción para agregar un Producto Solicitado en la Jornada 3 en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -312,18 +312,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncAddJornada4 Pocketbase");
           final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
           if(jornadaToSync != null){
-            final boolSyncAddJornada4 = await syncAddJornada4(jornadaToSync, instruccionesBitacora[i]);
-            if (boolSyncAddJornada4) {
-              banderasExistoSync.add(boolSyncAddJornada4);
+            final responseSyncAddJornada4 = await syncAddJornada4(jornadaToSync, instruccionesBitacora[i]);
+            if (responseSyncAddJornada4.exitoso) {
+              banderasExistoSync.add(responseSyncAddJornada4.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncAddJornada4);
+              banderasExistoSync.add(responseSyncAddJornada4.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: jornadaToSync.emprendimiento.target!.nombre,
-                instruccion: "Agregar Jornada 4 Servidor", 
+                instruccion: responseSyncAddJornada4.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -332,9 +332,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Agregar Jornada 4 Servidor", 
+              instruccion: "La instrucción para agregar la Jornada 4 en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -342,18 +342,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncAddImagenJornada4 Pocketbase");
           final imagenToSync = getFirstImagen(dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
           if(imagenToSync != null){
-            final boolSyncAddImagenJornada4 = await syncAddImagenJornada4(imagenToSync, instruccionesBitacora[i]);
-            if (boolSyncAddImagenJornada4) {
-              banderasExistoSync.add(boolSyncAddImagenJornada4);
+            final responseSyncAddImagenJornada4 = await syncAddImagenJornada4(imagenToSync, instruccionesBitacora[i]);
+            if (responseSyncAddImagenJornada4.exitoso) {
+              banderasExistoSync.add(responseSyncAddImagenJornada4.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncAddImagenJornada4);
+              banderasExistoSync.add(responseSyncAddImagenJornada4.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: imagenToSync.tarea.target!.jornada.target!.emprendimiento.target!.nombre,
-                instruccion: "Agregar Imagen Jornada 4 Servidor", 
+                instruccion: responseSyncAddImagenJornada4.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -362,9 +362,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Agregar Imagen Jornada 4 Servidor", 
+              instruccion: "La instrucción para agregar una Imagen de la Jornada 4 en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -372,18 +372,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncAddConsultoria Pocketbase");
           final consultoriaToSync = getFirstConsultoria(dataBase.consultoriasBox.getAll(), instruccionesBitacora[i].id);
           if(consultoriaToSync != null){
-            final boolSyncAddConsultoria = await syncAddConsultoria(consultoriaToSync, instruccionesBitacora[i]);
-            if (boolSyncAddConsultoria) {
-              banderasExistoSync.add(boolSyncAddConsultoria);
+            final responseSyncAddConsultoria = await syncAddConsultoria(consultoriaToSync, instruccionesBitacora[i]);
+            if (responseSyncAddConsultoria.exitoso) {
+              banderasExistoSync.add(responseSyncAddConsultoria.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncAddConsultoria);
+              banderasExistoSync.add(responseSyncAddConsultoria.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: consultoriaToSync.emprendimiento.target!.nombre,
-                instruccion: "Agregar Consultoría Servidor", 
+                instruccion: responseSyncAddConsultoria.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -392,9 +392,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Agregar Consultoría Servidor", 
+              instruccion: "La instrucción para agregar una Consultoría en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -402,18 +402,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncAddProductoEmprendedor Pocketbase");
           final productoEmpToSync = getFirstProductoEmprendedor(dataBase.productosEmpBox.getAll(), instruccionesBitacora[i].id);
           if(productoEmpToSync != null){
-            final boolSyncAddProductoEmp = await syncAddProductoEmprendedor(productoEmpToSync, instruccionesBitacora[i]);
-            if (boolSyncAddProductoEmp) {
-              banderasExistoSync.add(boolSyncAddProductoEmp);
+            final responseSyncAddProductoEmp = await syncAddProductoEmprendedor(productoEmpToSync, instruccionesBitacora[i]);
+            if (responseSyncAddProductoEmp.exitoso) {
+              banderasExistoSync.add(responseSyncAddProductoEmp.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncAddProductoEmp);
+              banderasExistoSync.add(responseSyncAddProductoEmp.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: productoEmpToSync.emprendimientos.target!.nombre,
-                instruccion: "Agregar Producto Emprendedor Servidor", 
+                instruccion: responseSyncAddProductoEmp.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -422,9 +422,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Agregar Producto Emprendedor Servidor", 
+              instruccion: "La instrucción para agregar un Producto del Emprendedor en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -432,17 +432,17 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncAddImagenProductoEmprendedor Pocketbase");
           final imagenToSync = getFirstImagen(dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
           if(imagenToSync != null){
-            final boolSyncAddImagenProductoEmprendedor = await syncAddImagenProductoEmprendedor(imagenToSync, instruccionesBitacora[i]);
-            if (boolSyncAddImagenProductoEmprendedor) {
-              banderasExistoSync.add(boolSyncAddImagenProductoEmprendedor);
+            final responseSyncAddImagenProductoEmprendedor = await syncAddImagenProductoEmprendedor(imagenToSync, instruccionesBitacora[i]);
+            if (responseSyncAddImagenProductoEmprendedor.exitoso) {
+              banderasExistoSync.add(responseSyncAddImagenProductoEmprendedor.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncAddImagenProductoEmprendedor);
+              banderasExistoSync.add(responseSyncAddImagenProductoEmprendedor.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
-                instruccion: "Agregar Imagen del Producto Emprendedor Servidor", 
+                instruccion: responseSyncAddImagenProductoEmprendedor.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -450,9 +450,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             //Recuperamos la instrucción que no se ejecutó
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
-              instruccion: "Agregar Imagen del Producto Emprendedor Servidor", 
+              instruccion: "La instrucción para agregar una Imagen del Producto del Emprendedor en el Servidor Local no pudo ejecutarse.",  
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -460,18 +460,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncAddVenta Pocketbase");
           final ventaToSync = getFirstVenta(dataBase.ventasBox.getAll(), instruccionesBitacora[i].id);
           if(ventaToSync != null){
-            final boolSyncAddVenta = await syncAddVenta(ventaToSync, instruccionesBitacora[i]);
-            if (boolSyncAddVenta) {
-              banderasExistoSync.add(boolSyncAddVenta);
+            final responseSyncAddVenta = await syncAddVenta(ventaToSync, instruccionesBitacora[i]);
+            if (responseSyncAddVenta.exitoso) {
+              banderasExistoSync.add(responseSyncAddVenta.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncAddVenta);
+              banderasExistoSync.add(responseSyncAddVenta.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: ventaToSync.emprendimiento.target!.nombre,
-                instruccion: "Agregar Venta Servidor", 
+                instruccion: responseSyncAddVenta.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -480,9 +480,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Agregar Venta Servidor", 
+              instruccion: "La instrucción para agregar una Venta en el Servidor Local no pudo ejecutarse.",  
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -490,18 +490,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncAddProductoVendido Pocketbase");
           final prodVendidoToSync = getFirstProductoVendido(dataBase.productosVendidosBox.getAll(), instruccionesBitacora[i].id);
           if(prodVendidoToSync != null){
-            final boolSyncAddProductoVendido = await syncAddProductoVendido(prodVendidoToSync, instruccionesBitacora[i]);
-            if (boolSyncAddProductoVendido) {
-              banderasExistoSync.add(boolSyncAddProductoVendido);
+            final responseSyncAddProductoVendido = await syncAddProductoVendido(prodVendidoToSync, instruccionesBitacora[i]);
+            if (responseSyncAddProductoVendido.exitoso) {
+              banderasExistoSync.add(responseSyncAddProductoVendido.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncAddProductoVendido);
+              banderasExistoSync.add(responseSyncAddProductoVendido.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: prodVendidoToSync.venta.target!.emprendimiento.target!.nombre,
-                instruccion: "Agregar Producto Vendido Servidor", 
+                instruccion: responseSyncAddProductoVendido.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -510,9 +510,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Agregar Producto Vendido Servidor", 
+              instruccion: "La instrucción para agregar un Producto Vendido en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -520,18 +520,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncAddSingleProductoVendido Pocketbase");
           final prodVendidoToSync = getFirstProductoVendido(dataBase.productosVendidosBox.getAll(), instruccionesBitacora[i].id);
           if(prodVendidoToSync != null){
-            final boolSyncAddSingleProductoVendido = await syncAddSingleProductoVendido(prodVendidoToSync, instruccionesBitacora[i]);
-            if (boolSyncAddSingleProductoVendido) {
-              banderasExistoSync.add(boolSyncAddSingleProductoVendido);
+            final responseSyncAddSingleProductoVendido = await syncAddSingleProductoVendido(prodVendidoToSync, instruccionesBitacora[i]);
+            if (responseSyncAddSingleProductoVendido.exitoso) {
+              banderasExistoSync.add(responseSyncAddSingleProductoVendido.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncAddSingleProductoVendido);
+              banderasExistoSync.add(responseSyncAddSingleProductoVendido.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: prodVendidoToSync.venta.target?.emprendimiento.target?.nombre ?? "SIN EMPRENDIMIENTO",
-                instruccion: "Agregar un Producto Vendido en Servidor", 
+                instruccion: responseSyncAddSingleProductoVendido.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -540,9 +540,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Agregar un Producto Vendido en Servidor", 
+              instruccion: "La instrucción para agregar un Producto Vendido en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -550,18 +550,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncAddInversion Pocketbase");
           final inversionToSync = getFirstInversion(dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
           if(inversionToSync != null){
-            final boolSyncAddInversion = await syncAddInversion(inversionToSync, instruccionesBitacora[i]);
-            if (boolSyncAddInversion) {
-              banderasExistoSync.add(boolSyncAddInversion);
+            final responseSyncAddInversion = await syncAddInversion(inversionToSync, instruccionesBitacora[i]);
+            if (responseSyncAddInversion.exitoso) {
+              banderasExistoSync.add(responseSyncAddInversion.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncAddInversion);
+              banderasExistoSync.add(responseSyncAddInversion.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: inversionToSync.emprendimiento.target!.nombre,
-                instruccion: "Agregar Inversión Servidor", 
+                instruccion: responseSyncAddInversion.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -570,9 +570,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Agregar Inversión Servidor", 
+              instruccion: "La instrucción para agregar una Inversión en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -580,18 +580,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncUpdateFaseEmprendimiento Pocketbase");
           final emprendimientoToSync = getFirstEmprendimiento(dataBase.emprendimientosBox.getAll(), instruccionesBitacora[i].id);
           if(emprendimientoToSync != null){
-            final boolSyncUpdateFaseEmprendimiento = await syncUpdateFaseEmprendimiento(emprendimientoToSync, instruccionesBitacora[i]);
-            if (boolSyncUpdateFaseEmprendimiento) {
-              banderasExistoSync.add(boolSyncUpdateFaseEmprendimiento);
+            final responseSyncUpdateFaseEmprendimiento = await syncUpdateFaseEmprendimiento(emprendimientoToSync, instruccionesBitacora[i]);
+            if (responseSyncUpdateFaseEmprendimiento.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateFaseEmprendimiento.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncUpdateFaseEmprendimiento);
+              banderasExistoSync.add(responseSyncUpdateFaseEmprendimiento.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: emprendimientoToSync.nombre,
-                instruccion: "Actualización Fase Emprendimiento a ${instruccionesBitacora[i].instruccionAdicional} Servidor", 
+                instruccion: responseSyncUpdateFaseEmprendimiento.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -600,9 +600,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Actualización Fase Emprendimiento a ${instruccionesBitacora[i].instruccionAdicional} Servidor", 
+              instruccion: "La instrucción para actualizar la Fase del Emprendimiento a ${instruccionesBitacora[i].instruccionAdicional} en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -629,7 +629,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
             //Recuperamos la instrucción que no se ejecutó
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
-              instruccion: "La instrucción para actualizar Imagen de Perfil del Usuario en servidor local no pudo ejecutarse.", 
+              instruccion: "La instrucción para actualizar Imagen de Perfil del Usuario en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
             instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
@@ -651,16 +651,16 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncUpdateEmprendedor Pocketbase");
           final emprendedorToSync = getFirstEmprendedor(dataBase.emprendedoresBox.getAll(), instruccionesBitacora[i].id);
           if(emprendedorToSync != null){
-            final boolSyncUpdateEmprendedor = await syncUpdateEmprendedor(emprendedorToSync, instruccionesBitacora[i]);
-            if (boolSyncUpdateEmprendedor) {
-              banderasExistoSync.add(boolSyncUpdateEmprendedor);
+            final responseSyncUpdateEmprendedor = await syncUpdateEmprendedor(emprendedorToSync, instruccionesBitacora[i]);
+            if (responseSyncUpdateEmprendedor.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateEmprendedor.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncUpdateEmprendedor);
+              banderasExistoSync.add(responseSyncUpdateEmprendedor.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: emprendedorToSync.nombre,
-                instruccion: "Actualización Emprendedor Servidor", 
+                instruccion: responseSyncUpdateEmprendedor.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
@@ -671,7 +671,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Actualización Emprendedor Servidor", 
+              instruccion: "La instrucción para actualizar Emprendedor en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
@@ -681,18 +681,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncUpdateEmprendimiento Pocketbase");
           final emprendedorToSync = getFirstEmprendimiento(dataBase.emprendimientosBox.getAll(), instruccionesBitacora[i].id);
           if(emprendedorToSync != null){
-            final boolSyncUpdateEmprendimiento = await syncUpdateEmprendimiento(emprendedorToSync, instruccionesBitacora[i]);
-            if (boolSyncUpdateEmprendimiento) {
-              banderasExistoSync.add(boolSyncUpdateEmprendimiento);
+            final responseSyncUpdateEmprendimiento = await syncUpdateEmprendimiento(emprendedorToSync, instruccionesBitacora[i]);
+            if (responseSyncUpdateEmprendimiento.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateEmprendimiento.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncUpdateEmprendimiento);
+              banderasExistoSync.add(responseSyncUpdateEmprendimiento.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: emprendedorToSync.nombre,
-                instruccion: "Actualización Emprendimiento Servidor", 
+                instruccion: responseSyncUpdateEmprendimiento.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -701,9 +701,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Actualización Emprendimiento Servidor", 
+              instruccion: "La instrucción para actualizar Emprendimiento en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -711,18 +711,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
         print("Entro al caso de syncUpdateJornada1 Pocketbase");
          final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
           if(jornadaToSync != null){
-            final boolSyncUpdateJornada1 = await syncUpdateJornada1(jornadaToSync, instruccionesBitacora[i]);
-            if (boolSyncUpdateJornada1) {
-              banderasExistoSync.add(boolSyncUpdateJornada1);
+            final responseSyncUpdateJornada1 = await syncUpdateJornada1(jornadaToSync, instruccionesBitacora[i]);
+            if (responseSyncUpdateJornada1.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateJornada1.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncUpdateJornada1);
+              banderasExistoSync.add(responseSyncUpdateJornada1.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: jornadaToSync.emprendimiento.target!.nombre,
-                instruccion: "Actualización Jornada 1 Servidor", 
+                instruccion: responseSyncUpdateJornada1.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -731,9 +731,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Actualización Jornada 1 Servidor", 
+              instruccion: "La instrucción para actualizar la Jornada 1 en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -741,18 +741,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncUpdateJornada2 Pocketbase");
           final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
           if(jornadaToSync != null){
-            final boolSyncUpdateJornada2 = await syncUpdateJornada2(jornadaToSync, instruccionesBitacora[i]);
-            if (boolSyncUpdateJornada2) {
-              banderasExistoSync.add(boolSyncUpdateJornada2);
+            final responseSyncUpdateJornada2 = await syncUpdateJornada2(jornadaToSync, instruccionesBitacora[i]);
+            if (responseSyncUpdateJornada2.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateJornada2.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncUpdateJornada2);
+              banderasExistoSync.add(responseSyncUpdateJornada2.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: jornadaToSync.emprendimiento.target!.nombre,
-                instruccion: "Actualización Jornada 2 Servidor", 
+                instruccion: responseSyncUpdateJornada2.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -761,9 +761,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Actualización Jornada 2 Servidor", 
+               instruccion: "La instrucción para actualizar la Jornada 2 en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -771,18 +771,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncUpdateImagenJornada2 Pocketbase");
           final imagenToSync = getFirstImagen(dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
           if(imagenToSync != null){
-            final boolSyncUpdateImagenJornada2 = await syncUpdateImagenJornada2(imagenToSync, instruccionesBitacora[i]);
-            if (boolSyncUpdateImagenJornada2) {
-              banderasExistoSync.add(boolSyncUpdateImagenJornada2);
+            final responseSyncUpdateImagenJornada2 = await syncUpdateImagenJornada2(imagenToSync, instruccionesBitacora[i]);
+            if (responseSyncUpdateImagenJornada2.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateImagenJornada2.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncUpdateImagenJornada2);
+              banderasExistoSync.add(responseSyncUpdateImagenJornada2.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: imagenToSync.emprendimiento.target!.nombre,
-                instruccion: "Actualización Imagen Jornada 2 Servidor", 
+                instruccion: responseSyncUpdateImagenJornada2.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -791,9 +791,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Actualización Imagen Jornada 2 Servidor", 
+              instruccion: "La instrucción para actualizar la Imagen en Jornada 2 en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -801,18 +801,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncUpdateJornada3 Pocketbase");
           final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
           if(jornadaToSync != null){
-            final boolSyncUpdateJornada3 = await syncUpdateJornada3(jornadaToSync, instruccionesBitacora[i]);
-            if (boolSyncUpdateJornada3) {
-              banderasExistoSync.add(boolSyncUpdateJornada3);
+            final responseSyncUpdateJornada3 = await syncUpdateJornada3(jornadaToSync, instruccionesBitacora[i]);
+            if (responseSyncUpdateJornada3.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateJornada3.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncUpdateJornada3);
+              banderasExistoSync.add(responseSyncUpdateJornada3.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: jornadaToSync.emprendimiento.target!.nombre,
-                instruccion: "Actualización Jornada 3 Servidor", 
+                instruccion: responseSyncUpdateJornada3.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -821,9 +821,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Actualización Jornada 3 Servidor", 
+              instruccion: "La instrucción para actualizar la Jornada 3 en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -831,18 +831,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncUpdateImagenJornada3 Pocketbase");
           final imagenToSync = getFirstImagen(dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
           if(imagenToSync != null){
-            final boolSyncUpdateImagenJornada3 = await syncUpdateImagenJornada3(imagenToSync, instruccionesBitacora[i]);
-            if (boolSyncUpdateImagenJornada3) {
-              banderasExistoSync.add(boolSyncUpdateImagenJornada3);
+            final responseSyncUpdateImagenJornada3 = await syncUpdateImagenJornada3(imagenToSync, instruccionesBitacora[i]);
+            if (responseSyncUpdateImagenJornada3.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateImagenJornada3.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncUpdateImagenJornada3);
+              banderasExistoSync.add(responseSyncUpdateImagenJornada3.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: imagenToSync.emprendimiento.target!.nombre,
-                instruccion: "Actualización Imagen Jornada 3 Servidor", 
+                instruccion: responseSyncUpdateImagenJornada3.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -851,9 +851,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Actualización Imagen Jornada 3 Servidor", 
+              instruccion: "La instrucción para actualizar la Imagen en Jornada 3 en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -861,18 +861,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncUpdateProductoInversionJ3 Pocketbase");
           final prodSolicitadoToSync = getFirstProdSolicitado(dataBase.productosSolicitadosBox.getAll(), instruccionesBitacora[i].id);
           if(prodSolicitadoToSync != null){
-            final boolSyncUpdateProductoInversionJ3 = await syncUpdateProductoInversionJ3(prodSolicitadoToSync, instruccionesBitacora[i]);
-            if (boolSyncUpdateProductoInversionJ3) {
-              banderasExistoSync.add(boolSyncUpdateProductoInversionJ3);
+            final responseSyncUpdateProductoInversionJ3 = await syncUpdateProductoInversionJ3(prodSolicitadoToSync, instruccionesBitacora[i]);
+            if (responseSyncUpdateProductoInversionJ3.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateProductoInversionJ3.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncUpdateProductoInversionJ3);
+              banderasExistoSync.add(responseSyncUpdateProductoInversionJ3.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: prodSolicitadoToSync.inversion.target!.emprendimiento.target!.nombre,
-                instruccion: "Actualización Producto Inversión Jornada 3 Servidor", 
+                instruccion: responseSyncUpdateProductoInversionJ3.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -881,9 +881,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Actualización Producto Inversión Jornada 3 Servidor", 
+              instruccion: "La instrucción para actualizar Producto Solicitado en Inversión de la Jornada 3 en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -891,18 +891,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncUpdateJornada4 Pocketbase");
           final jornadaToSync = getFirstJornada(dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
           if(jornadaToSync != null){
-            final boolSyncUpdateJornada4 = await syncUpdateJornada4(jornadaToSync, instruccionesBitacora[i]);
-            if (boolSyncUpdateJornada4) {
-              banderasExistoSync.add(boolSyncUpdateJornada4);
+            final responseSyncUpdateJornada4 = await syncUpdateJornada4(jornadaToSync, instruccionesBitacora[i]);
+            if (responseSyncUpdateJornada4.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateJornada4.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncUpdateJornada4);
+              banderasExistoSync.add(responseSyncUpdateJornada4.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: jornadaToSync.emprendimiento.target!.nombre,
-                instruccion: "Actualización Jornada 4 Servidor", 
+                instruccion: responseSyncUpdateJornada4.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -911,9 +911,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Actualización Jornada 4 Servidor", 
+              instruccion: "La instrucción para actualizar la Imagen en Jornada 4 en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -921,18 +921,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncUpdateImagenJornada4 Pocketbase");
           final imagenToSync = getFirstImagen(dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
           if(imagenToSync != null){
-            final boolSyncUpdateImagenJornada4 = await syncUpdateImagenJornada4(imagenToSync, instruccionesBitacora[i]);
-            if (boolSyncUpdateImagenJornada4) {
-              banderasExistoSync.add(boolSyncUpdateImagenJornada4);
+            final responseSyncUpdateImagenJornada4 = await syncUpdateImagenJornada4(imagenToSync, instruccionesBitacora[i]);
+            if (responseSyncUpdateImagenJornada4.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateImagenJornada4.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncUpdateImagenJornada4);
+              banderasExistoSync.add(responseSyncUpdateImagenJornada4.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: imagenToSync.emprendimiento.target!.nombre,
-                instruccion: "Actualización Imagen Jornada 4 Servidor", 
+                instruccion: responseSyncUpdateImagenJornada4.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -941,43 +941,43 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Actualización Imagen Jornada 4 Servidor", 
+              instruccion: "La instrucción para actualizar Producto Solicitado en Inversión de la Jornada 4 en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncDeleteImagenJornada":
           print("Entro al caso de syncDeleteImagenJornada Pocketbase");
-          final boolSyncDeleteImagenJornada = await syncDeleteImagenJornada(instruccionesBitacora[i]);
-          if (boolSyncDeleteImagenJornada) {
-            banderasExistoSync.add(boolSyncDeleteImagenJornada);
+          final responseSyncDeleteImagenJornada = await syncDeleteImagenJornada(instruccionesBitacora[i]);
+          if (responseSyncDeleteImagenJornada.exitoso) {
+            banderasExistoSync.add(responseSyncDeleteImagenJornada.exitoso);
             continue;
           } else {
             //Recuperamos la instrucción que no se ejecutó
-            banderasExistoSync.add(boolSyncDeleteImagenJornada);
+            banderasExistoSync.add(responseSyncDeleteImagenJornada.exitoso);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: instruccionesBitacora[i].emprendimiento,
-              instruccion: "Eliminar ${instruccionesBitacora[i].instruccionAdicional} Servidor", 
+              instruccion: responseSyncDeleteImagenJornada.descripcion, 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncDeleteProductoInversionJ3":
           print("Entro al caso de syncDeleteProductoInversionJ3 Pocketbase");
-          final boolSyncDeleteProductoInversionJ3 = await syncDeleteProductoInversionJ3(instruccionesBitacora[i]);
-          if (boolSyncDeleteProductoInversionJ3) {
-            banderasExistoSync.add(boolSyncDeleteProductoInversionJ3);
+          final responseSyncDeleteProductoInversionJ3 = await syncDeleteProductoInversionJ3(instruccionesBitacora[i]);
+          if (responseSyncDeleteProductoInversionJ3.exitoso) {
+            banderasExistoSync.add(responseSyncDeleteProductoInversionJ3.exitoso);
             continue;
           } else {
             //Recuperamos la instrucción que no se ejecutó
-            banderasExistoSync.add(boolSyncDeleteProductoInversionJ3);
+            banderasExistoSync.add(responseSyncDeleteProductoInversionJ3.exitoso);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: instruccionesBitacora[i].emprendimiento,
-              instruccion: "Eliminar Producto Inversión J3 Servidor", 
+              instruccion: responseSyncDeleteProductoInversionJ3.descripcion, 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -985,18 +985,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncUpdateTareaConsultoria Pocketbase");
           final tareaToSync = getFirstTarea(dataBase.tareasBox.getAll(), instruccionesBitacora[i].id);
           if(tareaToSync != null){
-            final boolSyncUpdateTareaConsultoria = await syncUpdateTareaConsultoria(tareaToSync, instruccionesBitacora[i]);
-            if (boolSyncUpdateTareaConsultoria) {
-              banderasExistoSync.add(boolSyncUpdateTareaConsultoria);
+            final responseSyncUpdateTareaConsultoria = await syncUpdateTareaConsultoria(tareaToSync, instruccionesBitacora[i]);
+            if (responseSyncUpdateTareaConsultoria.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateTareaConsultoria.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncUpdateTareaConsultoria);
+              banderasExistoSync.add(responseSyncUpdateTareaConsultoria.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: tareaToSync.consultoria.target!.emprendimiento.target!.nombre,
-                instruccion: "Actualización Tarea Consultoría Servidor", 
+                instruccion: responseSyncUpdateTareaConsultoria.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -1005,40 +1005,27 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Actualización Tarea Consultoría Servidor", 
+              instruccion: "La instrucción para actualizar Tarea en Consultoría en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
-        case "syncUpdateEstadoConsultoria":
-          final consultoriaToSync = getFirstConsultoria(dataBase.consultoriasBox.getAll(), instruccionesBitacora[i].id);
-          if(consultoriaToSync != null){
-              print("Entro aqui en el else");
-              if (consultoriaToSync.idDBR != null) {
-                print("Ya ha sido enviado al backend");
-                syncUpdateEstadoConsultoria(consultoriaToSync);
-              } else {
-                print("No ha sido enviado al backend");
-              }
-          }  
-          continue;
         case "syncUpdateUsuario":
           print("Entro al caso de syncUpdateUsuario Pocketbase");
           final usuarioToSync = getFirstUsuario(dataBase.usuariosBox.getAll(), instruccionesBitacora[i].id);
           if(usuarioToSync != null){
-            final boolSyncUpdateUsuario = await syncUpdateUsuario(usuarioToSync, instruccionesBitacora[i]);
-            if (boolSyncUpdateUsuario) {
-              print("La respuesta es: $boolSyncUpdateUsuario");
-              banderasExistoSync.add(boolSyncUpdateUsuario);
+            final responseSyncUpdateUsuario = await syncUpdateUsuario(usuarioToSync, instruccionesBitacora[i]);
+            if (responseSyncUpdateUsuario.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateUsuario.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncUpdateUsuario);
+              banderasExistoSync.add(responseSyncUpdateUsuario.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
-                instruccion: "Actualización Datos Usuario Servidor", 
+                instruccion: responseSyncUpdateUsuario.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -1046,9 +1033,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             //Recuperamos la instrucción que no se ejecutó
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
-              instruccion: "Actualización Datos Usuario Servidor", 
+              instruccion: "La instrucción para actualizar información de Usuario en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -1056,18 +1043,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncUpdateEstadoInversion Pocketbase");
           final inversionToSync = getFirstInversion(dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
           if(inversionToSync != null){
-            final boolSyncUpdateEstadoInversion = await syncUpdateEstadoInversion(inversionToSync, instruccionesBitacora[i]);
-            if (boolSyncUpdateEstadoInversion) {
-              banderasExistoSync.add(boolSyncUpdateEstadoInversion);
+            final responseSyncUpdateEstadoInversion = await syncUpdateEstadoInversion(inversionToSync, instruccionesBitacora[i]);
+            if (responseSyncUpdateEstadoInversion.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateEstadoInversion.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncUpdateEstadoInversion);
+              banderasExistoSync.add(responseSyncUpdateEstadoInversion.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: inversionToSync.emprendimiento.target!.nombre,
-                instruccion: "Actualizar Estado Inversión Servidor", 
+                instruccion: responseSyncUpdateEstadoInversion.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -1076,9 +1063,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Actualizar Estado Inversión Servidor", 
+              instruccion: "La instrucción para actualizar el Estado de la Inversión en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -1086,18 +1073,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncUpdateProductoEmprendedor Pocketbase");
           final productoEmprendedorToSync = getFirstProductoEmprendedor(dataBase.productosEmpBox.getAll(), instruccionesBitacora[i].id);
           if(productoEmprendedorToSync != null){
-            final boolSyncUpdateProductoEmprendedor = await syncUpdateProductoEmprendedor(productoEmprendedorToSync, instruccionesBitacora[i]);
-            if (boolSyncUpdateProductoEmprendedor) {
-              banderasExistoSync.add(boolSyncUpdateProductoEmprendedor);
+            final responseSyncUpdateProductoEmprendedor = await syncUpdateProductoEmprendedor(productoEmprendedorToSync, instruccionesBitacora[i]);
+            if (responseSyncUpdateProductoEmprendedor.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateProductoEmprendedor.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncUpdateProductoEmprendedor);
+              banderasExistoSync.add(responseSyncUpdateProductoEmprendedor.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: productoEmprendedorToSync.nombre,
-                instruccion: "Actualización Producto Emprendedor Servidor", 
+                instruccion: responseSyncUpdateProductoEmprendedor.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -1106,9 +1093,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Actualización Producto Emprendedor Servidor", 
+              instruccion: "La instrucción para actualizar el Producto del Emprendedor en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -1116,18 +1103,17 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncUpdateImagenProductoEmprendedor Pocketbase");
           final imagenToSync = getFirstImagen(dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
           if(imagenToSync != null){
-            final boolSyncUpdateImagenProdEmprendedor = await syncUpdateImagenProductoEmprendedor(imagenToSync, instruccionesBitacora[i]);
-            if (boolSyncUpdateImagenProdEmprendedor) {
-              print("La respuesta es: $boolSyncUpdateImagenProdEmprendedor");
-              banderasExistoSync.add(boolSyncUpdateImagenProdEmprendedor);
+            final responseSyncUpdateImagenProdEmprendedor = await syncUpdateImagenProductoEmprendedor(imagenToSync, instruccionesBitacora[i]);
+            if (responseSyncUpdateImagenProdEmprendedor.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateImagenProdEmprendedor.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncUpdateImagenProdEmprendedor);
+              banderasExistoSync.add(responseSyncUpdateImagenProdEmprendedor.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
-                instruccion: "Actualización Imagen del Producto Emprendedor Servidor", 
+                instruccion: responseSyncUpdateImagenProdEmprendedor.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }     
@@ -1135,9 +1121,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             //Recuperamos la instrucción que no se ejecutó
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
-              instruccion: "Actualización Imagen del Producto Emprendedor Servidor", 
+              instruccion: "La instrucción para actualizar la Imagen del Producto del Emprendedor en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -1145,18 +1131,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncUpdateProductoVendido Pocketbase");
           final prodVendidoToSync = getFirstProductoVendido(dataBase.productosVendidosBox.getAll(), instruccionesBitacora[i].id);
           if(prodVendidoToSync != null){
-            final boolSyncUpdateProductoVendido = await syncUpdateProductoVendido(prodVendidoToSync, instruccionesBitacora[i]);
-            if (boolSyncUpdateProductoVendido) {
-              banderasExistoSync.add(boolSyncUpdateProductoVendido);
+            final responseSyncUpdateProductoVendido = await syncUpdateProductoVendido(prodVendidoToSync, instruccionesBitacora[i]);
+            if (responseSyncUpdateProductoVendido.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateProductoVendido.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncUpdateProductoVendido);
+              banderasExistoSync.add(responseSyncUpdateProductoVendido.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: prodVendidoToSync.venta.target!.emprendimiento.target!.nombre,
-                instruccion: "Actualización Producto Vendido Servidor", 
+                instruccion: responseSyncUpdateProductoVendido.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -1165,9 +1151,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Actualización Producto Vendido Servidor", 
+              instruccion: "La instrucción para actualizar el Producto Vendido en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -1175,18 +1161,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncUpdateVenta Pocketbase");
           final ventaToSync = getFirstVenta(dataBase.ventasBox.getAll(), instruccionesBitacora[i].id);
           if(ventaToSync != null){
-            final boolSyncUpdateVenta = await syncUpdateVenta(ventaToSync, instruccionesBitacora[i]);
-            if (boolSyncUpdateVenta) {
-              banderasExistoSync.add(boolSyncUpdateVenta);
+            final responseSyncUpdateVenta = await syncUpdateVenta(ventaToSync, instruccionesBitacora[i]);
+            if (responseSyncUpdateVenta.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateVenta.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncUpdateVenta);
+              banderasExistoSync.add(responseSyncUpdateVenta.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: ventaToSync.emprendimiento.target!.nombre,
-                instruccion: "Actualización Venta Servidor", 
+                instruccion: responseSyncUpdateVenta.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -1195,9 +1181,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Actualización Venta Servidor", 
+              instruccion: "La instrucción para actualizar información de Venta en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -1205,18 +1191,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncUpdateProductosVendidosVenta Pocketbase");
           final ventaToSync = getFirstVenta(dataBase.ventasBox.getAll(), instruccionesBitacora[i].id);
           if(ventaToSync != null){
-            final boolSyncUpdateProductosVendidosVenta = await syncUpdateProductosVendidosVenta(ventaToSync, instruccionesBitacora[i]);
-            if (boolSyncUpdateProductosVendidosVenta) {
-              banderasExistoSync.add(boolSyncUpdateProductosVendidosVenta);
+            final responseSyncUpdateProductosVendidosVenta = await syncUpdateProductosVendidosVenta(ventaToSync, instruccionesBitacora[i]);
+            if (responseSyncUpdateProductosVendidosVenta.exitoso) {
+              banderasExistoSync.add(responseSyncUpdateProductosVendidosVenta.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncUpdateProductosVendidosVenta);
+              banderasExistoSync.add(responseSyncUpdateProductosVendidosVenta.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: ventaToSync.emprendimiento.target!.nombre,
-                instruccion: "Actualización Productos Vendidos Venta Servidor", 
+                instruccion: responseSyncUpdateProductosVendidosVenta.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -1225,9 +1211,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Actualización Productos Vendidos Venta Servidor", 
+              instruccion: "La instrucción para actualizar Total de Venta en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -1235,18 +1221,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncArchivarEmprendimiento Pocketbase");
           final emprendedorToSync = getFirstEmprendimiento(dataBase.emprendimientosBox.getAll(), instruccionesBitacora[i].id);
           if(emprendedorToSync != null){
-            final boolSyncArchivarEmprendimiento = await syncArchivarEmprendimiento(emprendedorToSync, instruccionesBitacora[i]);
-            if (boolSyncArchivarEmprendimiento) {
-              banderasExistoSync.add(boolSyncArchivarEmprendimiento);
+            final responseSyncArchivarEmprendimiento = await syncArchivarEmprendimiento(emprendedorToSync, instruccionesBitacora[i]);
+            if (responseSyncArchivarEmprendimiento.exitoso) {
+              banderasExistoSync.add(responseSyncArchivarEmprendimiento.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncArchivarEmprendimiento);
+              banderasExistoSync.add(responseSyncArchivarEmprendimiento.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: emprendedorToSync.nombre,
-                instruccion: "Archivar Emprendimiento Servidor", 
+                instruccion: responseSyncArchivarEmprendimiento.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -1255,9 +1241,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Archivar Emprendimiento Servidor", 
+              instruccion: "La instrucción para archivar Emprendimiento en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -1265,18 +1251,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncDesarchivarEmprendimiento Pocketbase");
           final emprendedorToSync = getFirstEmprendimiento(dataBase.emprendimientosBox.getAll(), instruccionesBitacora[i].id);
           if(emprendedorToSync != null){
-            final boolSyncDesarchivarEmprendimiento = await syncDesarchivarEmprendimiento(emprendedorToSync, instruccionesBitacora[i]);
-            if (boolSyncDesarchivarEmprendimiento) {
-              banderasExistoSync.add(boolSyncDesarchivarEmprendimiento);
+            final responseSyncDesarchivarEmprendimiento = await syncDesarchivarEmprendimiento(emprendedorToSync, instruccionesBitacora[i]);
+            if (responseSyncDesarchivarEmprendimiento.exitoso) {
+              banderasExistoSync.add(responseSyncDesarchivarEmprendimiento.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncDesarchivarEmprendimiento);
+              banderasExistoSync.add(responseSyncDesarchivarEmprendimiento.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: emprendedorToSync.nombre,
-                instruccion: "Desarchivar Emprendimiento Servidor", 
+                instruccion: responseSyncDesarchivarEmprendimiento.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -1285,9 +1271,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Desarchivar Emprendimiento Servidor", 
+              instruccion: "La instrucción para desarchivar el Emprendimiento en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -1295,18 +1281,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncArchivarConsultoria Pocketbase");
           final consultoriaToSync = getFirstConsultoria(dataBase.consultoriasBox.getAll(), instruccionesBitacora[i].id);
           if(consultoriaToSync != null){
-            final boolSyncArchivarConsultoria = await syncArchivarConsultoria(consultoriaToSync, instruccionesBitacora[i]);
-            if (boolSyncArchivarConsultoria) {
-              banderasExistoSync.add(boolSyncArchivarConsultoria);
+            final responseSyncArchivarConsultoria = await syncArchivarConsultoria(consultoriaToSync, instruccionesBitacora[i]);
+            if (responseSyncArchivarConsultoria.exitoso) {
+              banderasExistoSync.add(responseSyncArchivarConsultoria.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncArchivarConsultoria);
+              banderasExistoSync.add(responseSyncArchivarConsultoria.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: consultoriaToSync.emprendimiento.target!.nombre,
-                instruccion: "Archivar Consultoria Servidor", 
+                instruccion: responseSyncArchivarConsultoria.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -1315,9 +1301,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Archivar Consultoria Servidor", 
+              instruccion: "La instrucción para archivar la Consultoría en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -1325,18 +1311,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncDesarchivarConsultoria Pocketbase");
           final consultoriaToSync = getFirstConsultoria(dataBase.consultoriasBox.getAll(), instruccionesBitacora[i].id);
           if(consultoriaToSync != null){
-            final boolSyncDesarchivarConsultoria = await syncDesarchivarConsultoria(consultoriaToSync, instruccionesBitacora[i]);
-            if (boolSyncDesarchivarConsultoria) {
-              banderasExistoSync.add(boolSyncDesarchivarConsultoria);
+            final responseSyncDesarchivarConsultoria = await syncDesarchivarConsultoria(consultoriaToSync, instruccionesBitacora[i]);
+            if (responseSyncDesarchivarConsultoria.exitoso) {
+              banderasExistoSync.add(responseSyncDesarchivarConsultoria.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncDesarchivarConsultoria);
+              banderasExistoSync.add(responseSyncDesarchivarConsultoria.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: consultoriaToSync.emprendimiento.target!.nombre,
-                instruccion: "Desarchivar Consultoria Servidor", 
+                instruccion: responseSyncDesarchivarConsultoria.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -1345,9 +1331,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Desarchivar Consultoria Servidor", 
+              instruccion: "La instrucción para desarchivar la Consultoría en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -1355,18 +1341,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncAcceptInversionXProdCotizado Pocketbase");
           final inversionXproductoCotizadoToSync = getFirstInversionXProductosCotizados(dataBase.inversionesXprodCotizadosBox.getAll(), instruccionesBitacora[i].id);
           if(inversionXproductoCotizadoToSync != null){
-            final boolSyncAcceptInversionXProductoCotizado = await syncAcceptInversionesXProductosCotizados(inversionXproductoCotizadoToSync, instruccionesBitacora[i]);
-            if (boolSyncAcceptInversionXProductoCotizado) {
-              banderasExistoSync.add(boolSyncAcceptInversionXProductoCotizado);
+            final responseSyncAcceptInversionXProductoCotizado = await syncAcceptInversionesXProductosCotizados(inversionXproductoCotizadoToSync, instruccionesBitacora[i]);
+            if (responseSyncAcceptInversionXProductoCotizado.exitoso) {
+              banderasExistoSync.add(responseSyncAcceptInversionXProductoCotizado.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncAcceptInversionXProductoCotizado);
+              banderasExistoSync.add(responseSyncAcceptInversionXProductoCotizado.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: inversionXproductoCotizadoToSync.inversion.target!.emprendimiento.target!.nombre,
-                instruccion: "Aceptar Inversion por Productos Cotizados Servidor", 
+                instruccion: responseSyncAcceptInversionXProductoCotizado.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -1375,9 +1361,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Aceptar Inversion por Productos Cotizados Servidor", 
+              instruccion: "La instrucción para aceptar la Cotización de la Inversión en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -1385,18 +1371,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncAcceptProdCotizado Pocketbase");
           final productoCotizadoToSync = getFirstProductoCotizado(dataBase.productosCotBox.getAll(), instruccionesBitacora[i].id);
           if(productoCotizadoToSync != null){
-            final boolSyncAcceptProductoCotizado = await syncAcceptProdCotizado(productoCotizadoToSync, instruccionesBitacora[i]);
-            if (boolSyncAcceptProductoCotizado) {
-              banderasExistoSync.add(boolSyncAcceptProductoCotizado);
+            final responseSyncAcceptProductoCotizado = await syncAcceptProdCotizado(productoCotizadoToSync, instruccionesBitacora[i]);
+            if (responseSyncAcceptProductoCotizado.exitoso) {
+              banderasExistoSync.add(responseSyncAcceptProductoCotizado.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncAcceptProductoCotizado);
+              banderasExistoSync.add(responseSyncAcceptProductoCotizado.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: productoCotizadoToSync.inversionXprodCotizados.target!.inversion.target!.emprendimiento.target!.nombre,
-                instruccion: "Aceptar Producto Cotizado Servidor", 
+                instruccion: responseSyncAcceptProductoCotizado.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -1405,26 +1391,26 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Aceptar Producto Cotizado Servidor", 
+              instruccion: "La instrucción para aceptar Producto Cotizado en el Servidor Local no pudo ejecutarse.",  
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncDeleteProductoVendido":
           print("Entro al caso de syncDeleteProductoVendido Pocketbase");
-          final boolSyncDeleteProductoVendido = await syncDeleteProductoVendido(instruccionesBitacora[i]);
-          if (boolSyncDeleteProductoVendido) {
-            banderasExistoSync.add(boolSyncDeleteProductoVendido);
+          final responseSyncDeleteProductoVendido = await syncDeleteProductoVendido(instruccionesBitacora[i]);
+          if (responseSyncDeleteProductoVendido.exitoso) {
+            banderasExistoSync.add(responseSyncDeleteProductoVendido.exitoso);
             continue;
           } else {
             //Recuperamos la instrucción que no se ejecutó
-            banderasExistoSync.add(boolSyncDeleteProductoVendido);
+            banderasExistoSync.add(responseSyncDeleteProductoVendido.exitoso);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: instruccionesBitacora[i].emprendimiento,
-              instruccion: "Eliminar Producto Vendido Servidor", 
+              instruccion: responseSyncDeleteProductoVendido.descripcion, 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -1442,18 +1428,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncAddPagoInversion Pocketbase");
           final pagoToSync = getFirstPago(dataBase.pagosBox.getAll(), instruccionesBitacora[i].id);
           if(pagoToSync != null){
-            final boolSyncAddPago = await syncAddPagoInversion(pagoToSync, instruccionesBitacora[i]);
-            if (boolSyncAddPago) {
-              banderasExistoSync.add(boolSyncAddPago);
+            final responseSyncAddPago = await syncAddPagoInversion(pagoToSync, instruccionesBitacora[i]);
+            if (responseSyncAddPago.exitoso) {
+              banderasExistoSync.add(responseSyncAddPago.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncAddPago);
+              banderasExistoSync.add(responseSyncAddPago.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: pagoToSync.inversion.target!.emprendimiento.target!.nombre,
-                instruccion: "Agregar Pago Inversión Servidor", 
+                instruccion: responseSyncAddPago.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
-              // instruccionesFallidas.add(instruccionNoSincronizada);
+              instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
               continue;
             }      
@@ -1462,9 +1448,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Agregar Pago Inversión Servidor", 
+              instruccion: "La instrucción para agregar Pago a la Inversión en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
-            // instruccionesFallidas.add(instruccionNoSincronizada);
+            instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
             continue;
           }
@@ -1472,16 +1458,16 @@ class SyncProviderPocketbase extends ChangeNotifier {
           print("Entro al caso de syncAddImagenesEntregaInversion Pocketbase");
           final inversionToSync = getFirstInversion(dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
           if(inversionToSync != null){
-            final boolSyncAddImagenesEntregaInversion = await syncAddImagenesEntregaInversion(inversionToSync, instruccionesBitacora[i]);
-            if (boolSyncAddImagenesEntregaInversion) {
-              banderasExistoSync.add(boolSyncAddImagenesEntregaInversion);
+            final responseSyncAddImagenesEntregaInversion = await syncAddImagenesEntregaInversion(inversionToSync, instruccionesBitacora[i]);
+            if (responseSyncAddImagenesEntregaInversion.exitoso) {
+              banderasExistoSync.add(responseSyncAddImagenesEntregaInversion.exitoso);
               continue;
             } else {
               //Recuperamos la instrucción que no se ejecutó
-              banderasExistoSync.add(boolSyncAddImagenesEntregaInversion);
+              banderasExistoSync.add(responseSyncAddImagenesEntregaInversion.exitoso);
               final instruccionNoSincronizada = InstruccionNoSincronizada(
                 emprendimiento: inversionToSync.emprendimiento.target!.nombre,
-                instruccion: "Agregar Imágenes Entrega Inversión Servidor", 
+                instruccion: responseSyncAddImagenesEntregaInversion.descripcion, 
                 fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
               print(instruccionNoSincronizada.instruccion);
@@ -1492,7 +1478,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
             banderasExistoSync.add(false);
             final instruccionNoSincronizada = InstruccionNoSincronizada(
               emprendimiento: "No encontrado",
-              instruccion: "Agregar Imágenes Entrega Inversión Servidor", 
+              instruccion: "La instrucción para agregar Imágenes de Firma de Recibido y Producto Entregado a la Inversión en el Servidor Local no pudo ejecutarse.", 
               fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
@@ -1755,7 +1741,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
     }
 
 
-  Future<bool> syncAddEmprendedor(Emprendedores emprendedor, Bitacora bitacora) async {
+  Future<SyncInstruction> syncAddEmprendedor(Emprendedores emprendedor, Bitacora bitacora) async {
     print("Estoy en El syncAddEmprendedor de Pocketbase");
     try {
       if (!bitacora.executePocketbase) {
@@ -1809,15 +1795,15 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     //Se elimina la instrucción de la bitacora
                     dataBase.bitacoraBox.remove(bitacora.id);
                   } 
-                  return true;
+                  return SyncInstruction(exitoso: true, descripcion: "");
                 } else {
-                  return false;
+                  return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Emprendedor '${emprendedor.nombre} ${emprendedor.apellidos}', emprendimiento asociado no encontrado en el dispositivo para asignarle id del Servidor Local.");
                 }
               } else {
-                return false;
+                return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Emprendedor '${emprendedor.nombre} ${emprendedor.apellidos}', no se pudo recuperar id desde Servidor Local para el emprendimiento asociado al emprendedor creado.");
               }
             } else {
-              return false;
+              return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Emprendedor '${emprendedor.nombre} ${emprendedor.apellidos}', no se pudo recuperar id desde Servidor Local para el emprendedor creado.");
             }  
           } else {
             if (emprendimientoToSync.idDBR == null) {
@@ -1849,38 +1835,38 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     //Se elimina la instrucción de la bitacora
                     dataBase.bitacoraBox.remove(bitacora.id);
                   } 
-                  return true;
+                  return SyncInstruction(exitoso: true, descripcion: "");
                 } else {
-                  return false;
+                  return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Emprendedor '${emprendedor.nombre} ${emprendedor.apellidos}', emprendimiento asociado no encontrado en el dispositivo para asignarle id del Servidor Local.");
                 }
               } else {
-                return false;
+                return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Emprendedor '${emprendedor.nombre} ${emprendedor.apellidos}', no se pudo recuperar id desde Servidor Local para el emprendedor creado.");
               }
             } else {
               if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
                 //Se elimina la instrucción de la bitacora
                 dataBase.bitacoraBox.remove(bitacora.id);
               } 
-              return true;
+              return SyncInstruction(exitoso: true, descripcion: "");
             }
           }
         } else {
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Emprendedor '${emprendedor.nombre} ${emprendedor.apellidos}', emprendimiento y fase correspondiente no encontrados en el dispositivo.");
         } 
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         } 
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
   } catch (e) {
     print('ERROR - function syncAddEmprendedor(): $e');
-    return false;
+    return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar alta de Emprendedor '${emprendedor.nombre} ${emprendedor.apellidos}' en el Servidor Local, detalles: $e");
   }
 }
 
- bool syncAddEmprendimiento(Bitacora bitacora) {
+ SyncInstruction syncAddEmprendimiento(Bitacora bitacora) {
     print("Estoy en El syncAddEmprendimiento de Emi Web");
     try {
       //Se marca como realizada en Pocketbase la instrucción en Bitacora
@@ -1890,14 +1876,14 @@ class SyncProviderPocketbase extends ChangeNotifier {
         //Se elimina la instrucción de la bitacora
         dataBase.bitacoraBox.remove(bitacora.id);
       } 
-      return true;
+      return SyncInstruction(exitoso: true, descripcion: "");
     } catch (e) {
       print('ERROR - function syncAddEmprendimiento(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar alta de Emprendimiento en el Servidor Local, detalles: $e");
     }
   }
 
-  Future<bool> syncAddJornada1(Jornadas jornada, Bitacora bitacora) async {
+  Future<SyncInstruction> syncAddJornada1(Jornadas jornada, Bitacora bitacora) async {
     print("Estoy en syncAddJornada1");
     try {
       if (!bitacora.executePocketbase) {
@@ -1939,12 +1925,12 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   //Se elimina la instrucción de la bitacora
                   dataBase.bitacoraBox.remove(bitacora.id);
                 } 
-                return true;
+                return SyncInstruction(exitoso: true, descripcion: "");
               } else {
-                return false;
+                return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 1, no se pudo recuperar id desde Servidor Local para la jornada creada.");
               }
             } else {
-              return false;
+              return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 1, no se pudo recuperar id desde Servidor Local para la tarea asociada a la jornada creada.");
             }
           } else {
             if (jornada.idDBR == null) {
@@ -1970,35 +1956,35 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   //Se elimina la instrucción de la bitacora
                   dataBase.bitacoraBox.remove(bitacora.id);
                 } 
-                return true;
+                return SyncInstruction(exitoso: true, descripcion: "");
               } else {
-                return false;
+                return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 1, no se pudo recuperar id desde Servidor Local para la jornada creada.");
               }
             } else {
               if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
                 //Se elimina la instrucción de la bitacora
                 dataBase.bitacoraBox.remove(bitacora.id);
               } 
-              return true;
+              return SyncInstruction(exitoso: true, descripcion: "");
             }
           }
           } else {
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 1, tarea asociada no encontrada en el dispositivo para asignarle id del Servidor Local.");
         }
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         } 
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncAddJornada1(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar alta de Jornada 1 en el Servidor Local, detalles: $e");
     }
 }
 
-  Future<bool> syncAddJornada2(Jornadas jornada, Bitacora bitacora) async {
+  Future<SyncInstruction> syncAddJornada2(Jornadas jornada, Bitacora bitacora) async {
     print("Estoy en syncAddJornada2");
     final List<String> idsDBRImagenes = [];
     try {
@@ -2056,12 +2042,12 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   //Se elimina la instrucción de la bitacora
                   dataBase.bitacoraBox.remove(bitacora.id);
                 } 
-                return true;
+                return SyncInstruction(exitoso: true, descripcion: "");
               } else {
-                return false;
+                return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 2, no se pudo recuperar id desde Servidor Local para la jornada creada.");
               }
             } else {
-              return false;
+              return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 2, no se pudo recuperar id desde Servidor Local para la tarea asociada a la jornada creada.");
             }
           } else {
             if (jornada.idDBR == null) {
@@ -2087,35 +2073,35 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   //Se elimina la instrucción de la bitacora
                   dataBase.bitacoraBox.remove(bitacora.id);
                 } 
-                return true;
+                return SyncInstruction(exitoso: true, descripcion: "");
               } else {
-                return false;
+                return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 2, no se pudo recuperar id desde Servidor Local para la jornada creada.");
               }
             } else {
               if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
                 //Se elimina la instrucción de la bitacora
                 dataBase.bitacoraBox.remove(bitacora.id);
               } 
-              return true;
+              return SyncInstruction(exitoso: true, descripcion: "");
             }
           }
           } else {
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 2, tarea asociada no encontrada en el dispositivo para asignarle id del Servidor Local.");
         }
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         } 
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncAddJornada2(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar alta de Jornada 2 en el Servidor Local, detalles: $e");
     }
 }
 
-  Future<bool> syncAddImagenJornada2(Imagenes imagen, Bitacora bitacora) async {
+  Future<SyncInstruction> syncAddImagenJornada2(Imagenes imagen, Bitacora bitacora) async {
     print("Estoy en syncAddImagenJornada2");
     final List<String> idsDBRImagenes = [];
     try {
@@ -2145,13 +2131,13 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 //Se elimina la instrucción de la bitacora
                 dataBase.bitacoraBox.remove(bitacora.id);
               } 
-              return true;
+              return SyncInstruction(exitoso: true, descripcion: "");
             } else {
               //No se pudo hacer la acutalización de la tarea
-              return false;
+              return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Imagen en Jornada 2, no se pudo recuperar id desde Servidor Local para la tarea asociada a la imagen de la jornada creada.");
             }
           } else {
-            return false;
+            return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Imagen en Jornada 2, no se pudo recuperar id desde Servidor Local para la imagen de la jornada creada.");
           }       
         } else {
           //Ya se posteo la imagen en Emi Web
@@ -2169,10 +2155,10 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 //Se elimina la instrucción de la bitacora
                 dataBase.bitacoraBox.remove(bitacora.id);
               } 
-              return true;
+              return SyncInstruction(exitoso: true, descripcion: "");
             } else {
               //No se pudo hacer la acutalización de la tarea
-              return false;
+              return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Imagen en Jornada 2, no se pudo recuperar id desde Servidor Local para la tarea asociada a la imagen de la jornada creada.");
             }
         }
       } else {
@@ -2180,15 +2166,15 @@ class SyncProviderPocketbase extends ChangeNotifier {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         } 
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncAddImagenJornada2(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar alta de Imagen en Jornada 2 en el Servidor Local, detalles: $e");
     }
 }
 
-  Future<bool> syncAddJornada3(Jornadas jornada, Bitacora bitacora) async {
+  Future<SyncInstruction> syncAddJornada3(Jornadas jornada, Bitacora bitacora) async {
     print("Estoy en syncAddJornada3");
     final List<String> idsDBRImagenes = [];
     try {
@@ -2257,7 +2243,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                           dataBase.productosSolicitadosBox.put(inversionJornada3.prodSolicitados.toList()[i]);
                         } else {
                           //No se pudo postear el producto Solicitado a Pocketbase
-                          return false;
+                          return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 3, no se pudo recuperar id del producto solicitado '${inversionJornada3.prodSolicitados.toList()[i].producto}' en la inversión de la jornada creada");
                         }
                       } else {
                         // El prod Solicitado no está asociado a una imagen
@@ -2280,7 +2266,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                           dataBase.productosSolicitadosBox.put(inversionJornada3.prodSolicitados.toList()[i]);
                         } else {
                           //No se pudo postear el producto Solicitado a Pocketbase
-                          return false;
+                          return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 3, no se pudo recuperar id del producto solicitado '${inversionJornada3.prodSolicitados.toList()[i].producto}' en la inversión de la jornada creada");
                         }
                       }   
                     }
@@ -2328,26 +2314,26 @@ class SyncProviderPocketbase extends ChangeNotifier {
                             //Se elimina la instrucción de la bitacora
                             dataBase.bitacoraBox.remove(bitacora.id);
                           } 
-                          return true;
+                          return SyncInstruction(exitoso: true, descripcion: "");
                         } else {
                           // No se pudo postear la jornada
-                          return false;
+                          return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 3, no se pudo recuperar id desde Servidor Local para la jornada creada.");
                         } 
                       } else {
                         //No se pudo actualizar el catálogo proyecto del emprendimiento
-                        return false;
+                        return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 3, no se pudo validar cambio desde Servidor Local para la actualización de Tipo de Proyecto en el emprendimiento.");
                       }
                     } else {
                       //No se pudo recuperar el emprendimiento
-                      return false;
+                      return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 3, emprendimiento asociado no encontrado en el dispositivo para asignarle el nuevo Tipo de Proyecto en el Servidor Local.");
                     }
                   } else {
                     // No se pudo postear la tarea
-                    return false;
+                    return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 3, no se pudo recuperar id desde Servidor Local para la tarea asociada a la jornada creada.");
                   }
                 } else {
                   //No se pudo postear la inversión en Pocketbase
-                  return false;
+                  return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 3, no se pudo recuperar id desde Servidor Local para la inversión asociada a la jornada creada.");
                 } 
               } else {
                 // Creamos y enviamos las imágenes de los prod Solicitados
@@ -2374,7 +2360,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                         dataBase.productosSolicitadosBox.put(inversionJornada3.prodSolicitados.toList()[i]);
                       } else {
                         //No se pudo postear el producto Solicitado a Pocketbase
-                        return false;
+                        return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 3, no se pudo recuperar id del producto solicitado '${inversionJornada3.prodSolicitados.toList()[i].producto}' en la inversión de la jornada creada");
                       }
                     } else {
                       // El prod Solicitado no está asociado a una imagen
@@ -2397,7 +2383,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                         dataBase.productosSolicitadosBox.put(inversionJornada3.prodSolicitados.toList()[i]);
                       } else {
                         //No se pudo postear el producto Solicitado a Pocketbase
-                        return false;
+                        return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 3, no se pudo recuperar id del producto solicitado '${inversionJornada3.prodSolicitados.toList()[i].producto}' en la inversión de la jornada creada");
                       }
                     }   
                   }
@@ -2445,27 +2431,27 @@ class SyncProviderPocketbase extends ChangeNotifier {
                           //Se elimina la instrucción de la bitacora
                           dataBase.bitacoraBox.remove(bitacora.id);
                         } 
-                        return true;
+                        return SyncInstruction(exitoso: true, descripcion: "");
                       } else {
                         // No se pudo postear la jornada
-                        return false;
+                        return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 3, no se pudo recuperar id desde Servidor Local para la jornada creada.");
                       } 
                     } else {
                       //No se pudo actualizar el catálogo proyecto del emprendimiento
-                      return false;
+                      return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 3, no se pudo validar cambio desde Servidor Local para la actualización de Tipo de Proyecto en el emprendimiento.");
                     }
                   } else {
                     //No se pudo recuperar el emprendimiento
-                    return false;
+                    return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 3, emprendimiento asociado no encontrado en el dispositivo para asignarle el nuevo Tipo de Proyecto en el Servidor Local.");
                   }
                 } else {
                   // No se pudo postear la tarea
-                  return false;
+                  return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 3, no se pudo recuperar id desde Servidor Local para la tarea asociada a la jornada creada.");
                 }
               }
             } else {
               // No se pudo recuperar la inversión asociada a la jornada 3
-              return false;
+              return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 3, inversión asociada no encontrada en el dispositivo para asignarle id del Servidor Local.");
             }
           } else {
             if (jornada.idDBR == null) {
@@ -2498,45 +2484,45 @@ class SyncProviderPocketbase extends ChangeNotifier {
                       //Se elimina la instrucción de la bitacora
                       dataBase.bitacoraBox.remove(bitacora.id);
                     } 
-                    return true;
+                    return SyncInstruction(exitoso: true, descripcion: "");
                   } else {
                     // No se pudo postear la jornada
-                    return false;
+                    return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 3, no se pudo recuperar id desde Servidor Local para la jornada creada.");
                   } 
                 } else {
                   //No se pudo actualizar el catálogo proyecto del emprendimiento
-                  return false;
+                  return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 3, no se pudo validar cambio desde Servidor Local para la actualización de Tipo de Proyecto en el emprendimiento.");
                 }
               } else {
                 //No se pudo recuperar el emprendimiento
-                return false;
+                return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 3, emprendimiento asociado no encontrado en el dispositivo para asignarle el nuevo Tipo de Proyecto en el Servidor Local.");
               }
             } else {
               if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
                 //Se elimina la instrucción de la bitacora
                 dataBase.bitacoraBox.remove(bitacora.id);
               } 
-              return true;
+              return SyncInstruction(exitoso: true, descripcion: "");
             }
           } 
         } else {
           // No hay ninguna tarea asociada a la jornada
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 3, tarea asociada no encontrada en el dispositivo para asignarle id del Servidor Local.");
         }
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         } 
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncAddJornada3(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar alta de Jornada 3 en el Servidor Local, detalles: $e");
     }
 }
 
-  Future<bool> syncAddImagenJornada3(Imagenes imagen, Bitacora bitacora) async {
+  Future<SyncInstruction> syncAddImagenJornada3(Imagenes imagen, Bitacora bitacora) async {
     print("Estoy en syncAddImagenJornada3");
     final List<String> idsDBRImagenes = [];
     try {
@@ -2566,13 +2552,13 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 //Se elimina la instrucción de la bitacora
                 dataBase.bitacoraBox.remove(bitacora.id);
               } 
-              return true;
+              return SyncInstruction(exitoso: true, descripcion: "");
             } else {
               //No se pudo hacer la acutalización de la tarea
-              return false;
+              return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Imagen en Jornada 3, no se pudo recuperar id desde Servidor Local para la tarea asociada a la imagen de la jornada creada.");
             }
           } else {
-            return false;
+            return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Imagen en Jornada 3, no se pudo recuperar id desde Servidor Local para la imagen de la jornada creada.");
           }       
         } else {
           //Ya se posteo la imagen en Emi Web
@@ -2590,10 +2576,10 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 //Se elimina la instrucción de la bitacora
                 dataBase.bitacoraBox.remove(bitacora.id);
               } 
-              return true;
+              return SyncInstruction(exitoso: true, descripcion: "");
             } else {
               //No se pudo hacer la acutalización de la tarea
-              return false;
+              return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Imagen en Jornada 3, no se pudo recuperar id desde Servidor Local para la tarea asociada a la imagen de la jornada creada.");
             }
         }
       } else {
@@ -2601,15 +2587,15 @@ class SyncProviderPocketbase extends ChangeNotifier {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         } 
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncAddImagenJornada3(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar alta de Imagen en Jornada 3 en el Servidor Local, detalles: $e");
     }
 }
 
-  Future<bool> syncAddProductoInversionJ3(ProdSolicitado prodSolicitado, Bitacora bitacora) async {
+  Future<SyncInstruction> syncAddProductoInversionJ3(ProdSolicitado prodSolicitado, Bitacora bitacora) async {
     print("Estoy en syncAddProductoInversionJ3");
     try {
       if (!bitacora.executePocketbase) {
@@ -2639,10 +2625,10 @@ class SyncProviderPocketbase extends ChangeNotifier {
               //Se elimina la instrucción de la bitacora
               dataBase.bitacoraBox.remove(bitacora.id);
             } 
-            return true;
+            return SyncInstruction(exitoso: true, descripcion: "");
           } else {
             //No se pudo postear el producto Solicitado a Pocketbase
-            return false;
+            return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Producto Solicitado '${prodSolicitado.producto}' en Jornada 3, no se pudo recuperar id del producto solicitado '${prodSolicitado.producto}' en la inversión de la jornada 3.");
           }   
         } else {
           //Se marca como realizada en Pocketbase la instrucción en Bitacora
@@ -2652,22 +2638,22 @@ class SyncProviderPocketbase extends ChangeNotifier {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           } 
-          return true;
+          return SyncInstruction(exitoso: true, descripcion: "");
         }
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         } 
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncAddProductoInversionJ3(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar alta de Producto Solicitado '${prodSolicitado.producto}' en Jornada 3 en el Servidor Local, detalles: $e");
     }
 }
 
-  Future<bool> syncUpdateProductoInversionJ3(ProdSolicitado prodSolicitado, Bitacora bitacora) async {
+  Future<SyncInstruction> syncUpdateProductoInversionJ3(ProdSolicitado prodSolicitado, Bitacora bitacora) async {
     print("Estoy en syncUpdateProductoInversionJ3");
     try {
       if (!bitacora.executePocketbase) {
@@ -2690,25 +2676,25 @@ class SyncProviderPocketbase extends ChangeNotifier {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           } 
-          return true;
+          return SyncInstruction(exitoso: true, descripcion: "");
         } else {
           //No se pudo actualizar el producto Solicitado a Pocketbase
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Producto Solicitado '${prodSolicitado.producto}' en Jornada 3, no se pudo actualizar información del producto solicitado '${prodSolicitado.producto}' en la inversión de la jornada 3.");
         }   
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         } 
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncUpdateProductoInversionJ3(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar actualización de Producto Solicitado '${prodSolicitado.producto}' en Jornada 3 en el Servidor Local, detalles: $e");
     }
 }
 
-  Future<bool> syncAddJornada4(Jornadas jornada, Bitacora bitacora) async {
+  Future<SyncInstruction> syncAddJornada4(Jornadas jornada, Bitacora bitacora) async {
     print("Estoy en syncAddJornada4");
     final List<String> idsDBRImagenes = [];
     final listJornadas = jornada.emprendimiento.target!.jornadas.toList();
@@ -2729,7 +2715,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 }
                 else{
                   //No se pudo actualizar jornada en Pocketbase
-                  return false;
+                  return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 4, no se pudo recuperar id desde Servidor Local para finalizar la jornada '${listJornadas[i].numJornada}'");
                 } 
               }
             }
@@ -2784,12 +2770,12 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   //Se elimina la instrucción de la bitacora
                   dataBase.bitacoraBox.remove(bitacora.id);
                 } 
-                return true;
+                return SyncInstruction(exitoso: true, descripcion: "");
               } else {
-                return false;
+                return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 4, no se pudo recuperar id desde Servidor Local para la jornada creada.");
               }
             } else {
-              return false;
+              return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 4, no se pudo recuperar id desde Servidor Local para la tarea asociada a la jornada creada.");
             }
           } else {
             if (jornada.idDBR == null) {
@@ -2815,35 +2801,35 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   //Se elimina la instrucción de la bitacora
                   dataBase.bitacoraBox.remove(bitacora.id);
                 } 
-                return true;
+                return SyncInstruction(exitoso: true, descripcion: "");
               } else {
-                return false;
+                return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 4, no se pudo recuperar id desde Servidor Local para la jornada creada.");
               }
             } else {
               if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
                 //Se elimina la instrucción de la bitacora
                 dataBase.bitacoraBox.remove(bitacora.id);
               } 
-              return true;
+              return SyncInstruction(exitoso: true, descripcion: "");
             }
           }
           } else {
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 4, tarea asociada no encontrada en el dispositivo para asignarle id del Servidor Local.");
         }
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         } 
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncAddJornada4(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar alta de Jornada 4 en el Servidor Local, detalles: $e");
     }
   }
 
-  Future<bool> syncAddImagenJornada4(Imagenes imagen, Bitacora bitacora) async {
+  Future<SyncInstruction> syncAddImagenJornada4(Imagenes imagen, Bitacora bitacora) async {
     print("Estoy en syncAddImagenJornada4");
     final List<String> idsDBRImagenes = [];
     try {
@@ -2873,13 +2859,13 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 //Se elimina la instrucción de la bitacora
                 dataBase.bitacoraBox.remove(bitacora.id);
               } 
-              return true;
+              return SyncInstruction(exitoso: true, descripcion: "");
             } else {
               //No se pudo hacer la acutalización de la tarea
-              return false;
+              return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Imagen en Jornada 4, no se pudo recuperar id desde Servidor Local para la tarea asociada a la imagen de la jornada creada.");
             }
           } else {
-            return false;
+            return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Imagen en Jornada 4, no se pudo recuperar id desde Servidor Local para la imagen de la jornada creada.");
           }       
         } else {
           //Ya se posteo la imagen en Emi Web
@@ -2897,10 +2883,10 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 //Se elimina la instrucción de la bitacora
                 dataBase.bitacoraBox.remove(bitacora.id);
               } 
-              return true;
+              return SyncInstruction(exitoso: true, descripcion: "");
             } else {
               //No se pudo hacer la acutalización de la tarea
-              return false;
+              return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Imagen en Jornada 4, no se pudo recuperar id desde Servidor Local para la tarea asociada a la imagen de la jornada creada.");
             }
         }
       } else {
@@ -2908,15 +2894,15 @@ class SyncProviderPocketbase extends ChangeNotifier {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         } 
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncAddImagenJornada4(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar alta de Imagen en Jornada 4 en el Servidor Local, detalles: $e");
     }
-}
+  }
 
-  Future<bool> syncAddConsultoria(Consultorias consultoria, Bitacora bitacora) async {
+  Future<SyncInstruction> syncAddConsultoria(Consultorias consultoria, Bitacora bitacora) async {
     print("Estoy en syncAddConsultoria");
     try {
       if (!bitacora.executePocketbase) {
@@ -2958,14 +2944,14 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   //Se elimina la instrucción de la bitacora
                   dataBase.bitacoraBox.remove(bitacora.id);
                 } 
-                return true;
+                return SyncInstruction(exitoso: true, descripcion: "");
               } else {
                 // No se postea con éxito la consultoría
-                return false;
+                return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Consultoría con última tarea '${consultoria.tareas.last.tarea}', no se pudo recuperar id desde Servidor Local para la consultoría creada.");
               }
             } else {
               // No se postea con éxito la tarea
-              return false;
+              return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Consultoría, no se pudo recuperar id desde Servidor Local para la tarea '${tareaToSync.tarea}' asociada a la consultoría creada.");
             }
           } else {
             if (consultoria.idDBR == null) {
@@ -2990,37 +2976,37 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   //Se elimina la instrucción de la bitacora
                   dataBase.bitacoraBox.remove(bitacora.id);
                 } 
-                return true;
+                return SyncInstruction(exitoso: true, descripcion: "");
               } else {
                 // No se postea con éxito la consultoría
-                return false;
+                return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Consultoría con última tarea '${consultoria.tareas.last.tarea}', no se pudo recuperar id desde Servidor Local para la consultoría creada.");
               }
             } else {
               if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
                 //Se elimina la instrucción de la bitacora
                 dataBase.bitacoraBox.remove(bitacora.id);
               } 
-              return true;
+              return SyncInstruction(exitoso: true, descripcion: "");
             }
           }
         } else {
           // No se encontró una tarea asociada a la consultoría
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Consultoría, tarea asociada no encontrada en el dispositivo para asignarle id del Servidor Local.");
         }
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         } 
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncAddConsultoria(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar alta de Consultoría con última tarea '${consultoria.tareas.last.tarea}' en el Servidor Local, detalles: $e");
     }
   }
 
-  Future<bool> syncAddProductoEmprendedor(ProductosEmp productoEmp, Bitacora bitacora) async {
+  Future<SyncInstruction> syncAddProductoEmprendedor(ProductosEmp productoEmp, Bitacora bitacora) async {
     print("Estoy en El syncAddProductoEmp");
     try {
       if (!bitacora.executePocketbase) {
@@ -3059,15 +3045,15 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   //Se elimina la instrucción de la bitacora
                   dataBase.bitacoraBox.remove(bitacora.id);
                 } 
-                return true;
+                return SyncInstruction(exitoso: true, descripcion: "");
               }
               else{
                 // No se pudo postear el producto Emp
-                return false;
+                return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Producto del Emprendedor '${productoEmp.nombre}', no se pudo recuperar id desde Servidor Local para el producto del emprendedor creado.");
               }    
             } else {
               // No se pudo postear la imagen asociada al producto Emp
-              return false;
+              return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Producto del Emprendedor '${productoEmp.nombre}', no se pudo recuperar id desde Servidor Local para la imagen del producto del emprendedor creado.");
             }
           } else {
             if (productoEmp.idDBR == null) {
@@ -3092,18 +3078,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   //Se elimina la instrucción de la bitacora
                   dataBase.bitacoraBox.remove(bitacora.id);
                 } 
-                return true;
+                return SyncInstruction(exitoso: true, descripcion: "");
               }
               else{
                 // No se pudo postear el producto Emp
-                return false;
+                return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Producto del Emprendedor '${productoEmp.nombre}', no se pudo recuperar id desde Servidor Local para el producto del emprendedor creado.");
               }
             } else {
               if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
                 //Se elimina la instrucción de la bitacora
                 dataBase.bitacoraBox.remove(bitacora.id);
               } 
-              return true;
+              return SyncInstruction(exitoso: true, descripcion: "");
             }
           }
         } else {
@@ -3138,18 +3124,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 //Se elimina la instrucción de la bitacora
                 dataBase.bitacoraBox.remove(bitacora.id);
               } 
-              return true;
+              return SyncInstruction(exitoso: true, descripcion: "");
             }
             else{
               // No se pudo postear el producto Emp
-              return false;
+              return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Producto del Emprendedor '${productoEmp.nombre}', no se pudo recuperar id desde Servidor Local para el producto del emprendedor creado.");
             }
           } else {
             if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
               //Se elimina la instrucción de la bitacora
               dataBase.bitacoraBox.remove(bitacora.id);
             } 
-            return true;
+            return SyncInstruction(exitoso: true, descripcion: "");
           }
         }
       } else {
@@ -3157,17 +3143,17 @@ class SyncProviderPocketbase extends ChangeNotifier {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         } 
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print("Orale es CATCH");
       print('ERROR - function syncAddProductoEmp(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar alta de Producto del Emprendedor '${productoEmp.nombre}' en el Servidor Local, detalles: $e");
     }
   }
 
 
-  Future<bool> syncAddImagenProductoEmprendedor(Imagenes imagen, Bitacora bitacora) async {
+  Future<SyncInstruction> syncAddImagenProductoEmprendedor(Imagenes imagen, Bitacora bitacora) async {
     print("Estoy en syncAddImagenProductoEmprendedor");
     try {
       if (!bitacora.executePocketbase) {
@@ -3187,24 +3173,24 @@ class SyncProviderPocketbase extends ChangeNotifier {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           } 
-          return true;
+          return SyncInstruction(exitoso: true, descripcion: "");
         } else {
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Imagen del Producto del Emprendedor '${imagen.productosEmp.target?.nombre}', no se pudo recuperar id desde Servidor Local para la imagen del producto del emprendedor creado.");
         }  
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         } 
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncAddImagenProductoEmprendedor(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar alta Imagen del Producto del Emprendedor '${imagen.productosEmp.target?.nombre}' en el Servidor Local, detalles: $e");
     }
 }
 
-  Future<bool> syncAddVenta(Ventas venta, Bitacora bitacora) async {
+  Future<SyncInstruction> syncAddVenta(Ventas venta, Bitacora bitacora) async {
     print("Estoy en El syncAddVenta");
     try {
       if (!bitacora.executePocketbase) {
@@ -3229,10 +3215,10 @@ class SyncProviderPocketbase extends ChangeNotifier {
               //Se elimina la instrucción de la bitacora
               dataBase.bitacoraBox.remove(bitacora.id);
             } 
-            return true;
+            return SyncInstruction(exitoso: true, descripcion: "");
           } else {
             // Falló al postear la venta en Pocketbase
-            return false;
+            return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Venta con ID Local '${venta.id}', no se pudo recuperar id desde Servidor Local para el producto del emprendedor creado.");
           }
         } else {
           //Se marca como realizada en Pocketbase la instrucción en Bitacora
@@ -3242,22 +3228,22 @@ class SyncProviderPocketbase extends ChangeNotifier {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           } 
-          return true;
+          return SyncInstruction(exitoso: true, descripcion: "");
         }
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         } 
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncAddVenta(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar alta Venta con ID Local '${venta.id}' en el Servidor Local, detalles: $e");
     }
   }
 
-  Future<bool> syncAddProductoVendido(ProdVendidos productoVendido, Bitacora bitacora) async {
+  Future<SyncInstruction> syncAddProductoVendido(ProdVendidos productoVendido, Bitacora bitacora) async {
     print("Estoy en El syncAddProductoVendido");
       try {
         if (!bitacora.executePocketbase) {
@@ -3286,10 +3272,10 @@ class SyncProviderPocketbase extends ChangeNotifier {
               //Se elimina la instrucción de la bitacora
               dataBase.bitacoraBox.remove(bitacora.id);
             } 
-            return true;
+            return SyncInstruction(exitoso: true, descripcion: "");
           } else {
             // Falló al postear el producto Vendido en Pocketbase
-            return false;
+            return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Producto Vendido '${productoVendido.nombreProd}', no se pudo recuperar id desde Servidor Local para el producto vendido creado.");
           }
         } else {
           //Se marca como realizada en Pocketbase la instrucción en Bitacora
@@ -3299,22 +3285,22 @@ class SyncProviderPocketbase extends ChangeNotifier {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           } 
-          return true;
+          return SyncInstruction(exitoso: true, descripcion: "");
         }
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         } 
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncAddProductoVendido(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar alta Producto Vendido '${productoVendido.nombreProd}' en el Servidor Local, detalles: $e");
     }
   }
 
-  Future<bool> syncAddSingleProductoVendido(ProdVendidos productoVendido, Bitacora bitacora) async {
+  Future<SyncInstruction> syncAddSingleProductoVendido(ProdVendidos productoVendido, Bitacora bitacora) async {
     print("Estoy en El syncAddSingleProductoVendido");
       try {
         if (!bitacora.executePocketbase) {
@@ -3343,10 +3329,10 @@ class SyncProviderPocketbase extends ChangeNotifier {
               //Se elimina la instrucción de la bitacora
               dataBase.bitacoraBox.remove(bitacora.id);
             } 
-            return true;
+            return SyncInstruction(exitoso: true, descripcion: "");
           } else {
             // Falló al postear el producto Vendido en Pocketbase
-            return false;
+            return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Producto Vendido '${productoVendido.nombreProd}', no se pudo recuperar id desde Servidor Local para el producto vendido creado.");
           }
         } else {
           //Se marca como realizada en Pocketbase la instrucción en Bitacora
@@ -3356,22 +3342,22 @@ class SyncProviderPocketbase extends ChangeNotifier {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           } 
-          return true;
+          return SyncInstruction(exitoso: true, descripcion: "");
         }
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         } 
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncAddSingleProductoVendido(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar alta Producto Vendido '${productoVendido.nombreProd}' en el Servidor Local, detalles: $e");
     }
   }
 
-  Future<bool> syncAddInversion(Inversiones inversion, Bitacora bitacora) async {
+  Future<SyncInstruction> syncAddInversion(Inversiones inversion, Bitacora bitacora) async {
     try {
       print("Estoy en syncAddInversion");
       if (!bitacora.executePocketbase) {
@@ -3434,11 +3420,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                       dataBase.productosSolicitadosBox.put(prodSolicitadosToSync[i]);
                     } else {
                       //No se pudo postear el producto Solicitado a Pocketbase
-                      return false;
+                      return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Producto Solicitado '${prodSolicitadosToSync[i].producto}' en Inversión con ID Local ${inversion.id}, no se pudo recuperar id desde Servidor Local para el producto solicitado creado.");
                     }
                   } else {
                     // No se pudo postear la imagen del prod Solicitado a Pocketbase
-                    return false;
+                    return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Imagen del Producto Solicitado '${prodSolicitadosToSync[i].producto}' en Inversión con ID Local ${inversion.id}, no se pudo recuperar id desde Servidor Local para la imagen del producto solicitado creado.");
                   }
                   } else {
                   // El prod Solicitado no está asociado a una imagen
@@ -3460,7 +3446,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     dataBase.productosSolicitadosBox.put(prodSolicitadosToSync[i]);
                   } else {
                     //No se pudo postear el producto Solicitado a Pocketbase
-                    return false;
+                    return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Producto Solicitado '${prodSolicitadosToSync[i].producto}' en Inversión con Id Local ${inversion.id}, no se pudo recuperar id del producto solicitado '${prodSolicitadosToSync[i].producto}' en la inversión creada.");
                   }
                   }
                 }
@@ -3472,18 +3458,18 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 //Se elimina la instrucción de la bitacora
                 dataBase.bitacoraBox.remove(bitacora.id);
               } 
-              return true;
+              return SyncInstruction(exitoso: true, descripcion: "");
             } else {
               //No se encontraron productos Solicitados asociados a la inversión
-              return false;
+              return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Inversión con Id Local '${inversion.id}', no se encontraron los productos solicitados asociados en el dispositivo.");
             }
           } else {
             //No se pudo postear la inversión en Pocketbase
-            return false;
+            return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Inversión con Id Local '${inversion.id}', no se pudo recuperar id desde Servidor Local para la inversión creada.");
           }
         } else {
           //No se pudo encontrar el estado de la inversión
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Inversión con Id Local '${inversion.id}', no se pudo encontrar el registro para estado de Inversión 'Solicitada' en el dispositivo.");
         }
       } else {
         //Segundo creamos los productos solicitados asociados a la inversion
@@ -3522,11 +3508,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     dataBase.productosSolicitadosBox.put(prodSolicitadosToSync[i]);
                   } else {
                     //No se pudo postear el producto Solicitado a Pocketbase
-                    return false;
+                   return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Producto Solicitado '${prodSolicitadosToSync[i].producto}' en Inversión con Id Local ${inversion.id}, no se pudo recuperar id del producto solicitado '${prodSolicitadosToSync[i].producto}' en la inversión creada.");
                   }
                 } else {
                   // No se pudo postear la imagen del prod Solicitado a Pocketbase
-                  return false;
+                  return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Imagen del Producto Solicitado '${prodSolicitadosToSync[i].producto}' en Inversión con ID Local ${inversion.id}, no se pudo recuperar id desde Servidor Local para la imagen del producto solicitado creado.");
                 }
               } else {
                 // El prod Solicitado no está asociado a una imagen
@@ -3548,7 +3534,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   dataBase.productosSolicitadosBox.put(prodSolicitadosToSync[i]);
                 } else {
                   //No se pudo postear el producto Solicitado a Pocketbase
-                  return false;
+                 return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Producto Solicitado '${prodSolicitadosToSync[i].producto}' en en Inversión con Id Local ${inversion.id}, no se pudo recuperar id del producto solicitado '${prodSolicitadosToSync[i].producto}' en la inversión creada.");
                 }
               }
             }
@@ -3560,10 +3546,10 @@ class SyncProviderPocketbase extends ChangeNotifier {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           } 
-          return true;
+          return SyncInstruction(exitoso: true, descripcion: "");
         } else {
           //No se encontraron productos Solicitados asociados a la inversión
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Inversión con Id Local '${inversion.id}' productos solicitados asociados no encontrados en el dispositivo.");
         }
       }
     } else {
@@ -3571,11 +3557,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
         //Se elimina la instrucción de la bitacora
         dataBase.bitacoraBox.remove(bitacora.id);
       } 
-      return true;
+      return SyncInstruction(exitoso: true, descripcion: "");
     }
   } catch (e) {
     print('ERROR - function syncAddInversion(): $e');
-    return false;
+    return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar alta Inversión con Id Local '${inversion.id}' en el Servidor Local, detalles: $e");
   }
 }
 
@@ -3602,7 +3588,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
             } 
             return SyncInstruction(exitoso: true, descripcion: "");
           } else {
-            return SyncInstruction(exitoso: false, descripcion: "Falló al recuperar Imagen del Usuario creada desde Servidor Local");
+            return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Imagen de Perfil del Usuario, no se pudo recuperar id desde Servidor Local para la imagen creada.");
           }  
         } else {
           if (bitacora.executeEmiWeb) {
@@ -3613,11 +3599,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
         }
       } else {
         // No se ha agregado imagen del usuario en Emi Web
-        return SyncInstruction(exitoso: false, descripcion: "No se ha agregado imagen del Usuario en Emi Web");
+        return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Imagen de Perfil del Usuario, no se ha recuperado el id de la imagen de Perfil del Usuario desde Emi Web para poder agregarla en Servidor Local.");
       }
     } catch (e) {
       print('ERROR - function syncAddImagenUsuario(): $e');
-      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar alta de Imagen del Usuario: $e");
+      return SyncInstruction(exitoso: false, descripcion: "Falló en el proceso de sincronizar alta de Imagen de Perfil del Usuario en el Servidor Local, detalles: $e");
     }
 }
 
@@ -3641,7 +3627,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
             return SyncInstruction(exitoso: true, descripcion: "");
           }
           else{
-            return SyncInstruction(exitoso: false, descripcion: "Falló al recuperar Imagen del Usuario actualizada desde Servidor Local");
+            return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Imagen de Perfil del Usuario, no se pudo recuperar id desde Servidor Local para la imagen actualizada.");
           }
         } else {
           if (bitacora.executeEmiWeb) {
@@ -3652,15 +3638,15 @@ class SyncProviderPocketbase extends ChangeNotifier {
         }
       } else {
         // No se ha actualizado imagen del usuario en Emi Web
-        return SyncInstruction(exitoso: false, descripcion: "No se ha actualizado imagen del Usuario en Emi Web");
+        return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Imagen de Perfil del Usuario, no se ha actualizado imagen del Usuario en Emi Web para poder actualizar en Servidor Local.");
       }
     } catch (e) {
       print('ERROR - function syncUpdateImagenUsuario(): $e');
-      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar aactualización de Imagen del Usuario: $e");
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar actualización de Imagen de Perfil del Usuario en el Servidor Local, detalles: $e");
     }
   } 
 
-  Future<bool> syncUpdateFaseEmprendimiento(Emprendimientos emprendimiento, Bitacora bitacora) async {
+  Future<SyncInstruction> syncUpdateFaseEmprendimiento(Emprendimientos emprendimiento, Bitacora bitacora) async {
     print("Estoy en El syncUpdateFaseEmprendimiento en Pocketbase");
     try {
       if (!bitacora.executePocketbase) {
@@ -3681,28 +3667,28 @@ class SyncProviderPocketbase extends ChangeNotifier {
               //Se elimina la instrucción de la bitacora
               dataBase.bitacoraBox.remove(bitacora.id);
             }
-            return true;
+            return SyncInstruction(exitoso: true, descripcion: "");
           }
           else{
-            return false;
+            return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Fase del Emprendimiento, no se pudo actualizar a la Fase '${faseActual.fase}' en Servidor Local.");
           }
         } else {
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Fase del Emprendimiento, no se pudo encontrar el registro de la Fase '${bitacora.instruccionAdicional}' en el dispositivo.");
         }
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         }
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncUpdateFaseEmprendimiento(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar actualización de Fase '${bitacora.instruccionAdicional}' del Emprendimiento en el Servidor Local, detalles: $e");
     }
-  } 
+  }  
 
-  Future<bool> syncUpdateEstadoInversion(Inversiones inversion, Bitacora bitacora) async {
+  Future<SyncInstruction> syncUpdateEstadoInversion(Inversiones inversion, Bitacora bitacora) async {
     print("Estoy en El syncUpdateEstadoInversion en Pocketbase");
     try {
       if (!bitacora.executePocketbase) {
@@ -3721,30 +3707,30 @@ class SyncProviderPocketbase extends ChangeNotifier {
               //Se elimina la instrucción de la bitacora
               dataBase.bitacoraBox.remove(bitacora.id);
             }
-            return true;
+            return SyncInstruction(exitoso: true, descripcion: "");
           }
           else {
             // No se pudo hacer la actualización del estado de la inversión en Pocketbase
-            return false;
+            return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Estado de Inversión con id Emi Web ${inversion.idEmiWeb}, no se pudo actualizar a estado '${estadoActual.estado}' a Inversión en Servidor Local.");
           }
         } else {
           // No se encontro el estado actual de la inversión
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Estado de Inversión con id Emi Web ${inversion.idEmiWeb}, no se pudo encontrar el Estado Actual de la Inversión en el dispositivo.");
         } 
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         }
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncUpdateEstadoInversion(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar actualización Estado de Inversión con id Emi Web ${inversion.idEmiWeb} en el Servidor Local, detalles: $e");
     }
   } 
 
-  Future<bool> syncUpdateEmprendimiento(Emprendimientos emprendimiento, Bitacora bitacora) async {
+  Future<SyncInstruction> syncUpdateEmprendimiento(Emprendimientos emprendimiento, Bitacora bitacora) async {
     print("Estoy en El syncUpdateEmprendimiento");
     try {
       if (!bitacora.executePocketbase) {
@@ -3761,22 +3747,22 @@ class SyncProviderPocketbase extends ChangeNotifier {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           }
-          return true;
+          return SyncInstruction(exitoso: true, descripcion: "");
         }
         else{
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Emprendimiento, no se pudo actualizar la información del Emprendimiento ${emprendimiento.nombre} en Servidor Local.");
         }
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         }
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
 
     } catch (e) {
       print('ERROR - function syncUpdateEmprendedimiento(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar actualización del Emprendimiento '${emprendimiento.nombre}' en el Servidor Local, detalles: $e");
     }
   } 
 
@@ -3808,7 +3794,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   } 
 
-  Future<bool> syncUpdateEmprendedor(Emprendedores emprendedor, Bitacora bitacora) async {
+  Future<SyncInstruction> syncUpdateEmprendedor(Emprendedores emprendedor, Bitacora bitacora) async {
     print("Estoy en El syncUpdateEmprendedor");
     try {
       if (!bitacora.executePocketbase) {
@@ -3831,25 +3817,25 @@ class SyncProviderPocketbase extends ChangeNotifier {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           }
-          return true;
+          return SyncInstruction(exitoso: true, descripcion: "");
         }
         else{
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Emprendedor, no se pudo actualizar la información del Emprendedor '${emprendedor.nombre} ${emprendedor.apellidos}'en Servidor Local.");
         }
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         }
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncUpdateEmprendedor(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar actualización del Emprendedor en el Servidor Local, detalles: $e");
     }
   } 
 
-  Future<bool> syncUpdateJornada1(Jornadas jornada, Bitacora bitacora) async {
+  Future<SyncInstruction> syncUpdateJornada1(Jornadas jornada, Bitacora bitacora) async {
     print("Estoy en El syncUpdateJornada1");
     try {
       if (!bitacora.executePocketbase) {
@@ -3874,30 +3860,30 @@ class SyncProviderPocketbase extends ChangeNotifier {
               //Se elimina la instrucción de la bitacora
               dataBase.bitacoraBox.remove(bitacora.id);
             }
-            return true;
+            return SyncInstruction(exitoso: true, descripcion: "");
           }
           else{
             //No se pudo actualizar jornada en Pocketbase
-            return false;
+            return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Jornada 1, no se pudo actualizar la información de la Jornada 1 del Emprendimiento ${jornada.emprendimiento.target?.nombre} en Servidor Local.");
           }
         } else {
           //No se pudo actualizar tarea en Pocketbase
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Jornada 1, no se pudo actualizar la información de la tarea '${jornada.tarea.target!.tarea}' asociada a la Jornada 1 del Emprendimiento ${jornada.emprendimiento.target?.nombre} en Servidor Local.");
         }   
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         }
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncUpdateJornada1(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar actualización de la Jornada 1 en el Servidor Local, detalles: $e");
     }
   } 
 
-  Future<bool> syncUpdateJornada2(Jornadas jornada, Bitacora bitacora) async {
+  Future<SyncInstruction> syncUpdateJornada2(Jornadas jornada, Bitacora bitacora) async {
     print("Estoy en El syncUpdateJornada2");
     try {
       if (!bitacora.executePocketbase) {
@@ -3923,30 +3909,30 @@ class SyncProviderPocketbase extends ChangeNotifier {
               //Se elimina la instrucción de la bitacora
               dataBase.bitacoraBox.remove(bitacora.id);
             }
-            return true;
+            return SyncInstruction(exitoso: true, descripcion: "");
           }
           else{
             //No se pudo actualizar jornada en Pocketbase
-            return false;
+            return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Jornada 2, no se pudo actualizar la información de la Jornada 2 del Emprendimiento ${jornada.emprendimiento.target?.nombre} en Servidor Local.");
           }
         } else {
           //No se pudo actualizar tarea en Pocketbase
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Jornada 2, no se pudo actualizar la información de la tarea '${jornada.tarea.target!.tarea}' asociada a la Jornada 2 del Emprendimiento ${jornada.emprendimiento.target?.nombre} en Servidor Local.");
         }   
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         }
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncUpdateJornada2(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar actualización de la Jornada 2 en el Servidor Local, detalles: $e");
     }
   } 
 
-  Future<bool> syncUpdateImagenJornada2(Imagenes imagen, Bitacora bitacora) async {
+  Future<SyncInstruction> syncUpdateImagenJornada2(Imagenes imagen, Bitacora bitacora) async {
     print("Estoy en El syncUpdateImagenJornada2 en Pocketbase");
     try {
       if (!bitacora.executePocketbase) {
@@ -3962,25 +3948,25 @@ class SyncProviderPocketbase extends ChangeNotifier {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           }
-          return true;
+          return SyncInstruction(exitoso: true, descripcion: "");
         }
         else{
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Imagen en Jornada 2, no se pudo actualizar la información de la Jornada 2 en Servidor Local.");
         }
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         }
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncUpdateImagenJornada2(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar actualización de Imagen en Jornada 2 en el Servidor Local, detalles: $e");
     }
   } 
 
-  Future<bool> syncUpdateJornada3(Jornadas jornada, Bitacora bitacora) async {
+  Future<SyncInstruction> syncUpdateJornada3(Jornadas jornada, Bitacora bitacora) async {
     print("Estoy en El syncUpdateJornada3");
     try {
       if (!bitacora.executePocketbase) {
@@ -4007,30 +3993,30 @@ class SyncProviderPocketbase extends ChangeNotifier {
               //Se elimina la instrucción de la bitacora
               dataBase.bitacoraBox.remove(bitacora.id);
             }
-            return true;
+            return SyncInstruction(exitoso: true, descripcion: "");
           }
           else{
             //No se pudo actualizar jornada en Pocketbase
-            return false;
+            return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Jornada 3, no se pudo actualizar la información de la Jornada 3 del Emprendimiento ${jornada.emprendimiento.target?.nombre} en Servidor Local.");
           }
         } else {
           //No se pudo actualizar tarea en Pocketbase
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Jornada 3, no se pudo actualizar la información de la tarea '${jornada.tarea.target!.tarea}' asociada a la Jornada 3 del Emprendimiento ${jornada.emprendimiento.target?.nombre} en Servidor Local.");
         }   
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         }
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncUpdateJornada3(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar actualización de la Jornada 3 en el Servidor Local, detalles: $e");
     }
   } 
 
-  Future<bool> syncUpdateImagenJornada3(Imagenes imagen, Bitacora bitacora) async {
+  Future<SyncInstruction> syncUpdateImagenJornada3(Imagenes imagen, Bitacora bitacora) async {
     print("Estoy en El syncUpdateImagenJornada3 en Pocketbase");
     try {
       if (!bitacora.executePocketbase) {
@@ -4046,25 +4032,25 @@ class SyncProviderPocketbase extends ChangeNotifier {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           }
-          return true;
+          return SyncInstruction(exitoso: true, descripcion: "");
         }
         else{
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Imagen en Jornada 3, no se pudo actualizar la información de la Jornada 3 en Servidor Local.");
         }
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         }
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncUpdateImagenJornada3(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar actualización de Imagen en Jornada 3 en el Servidor Local, detalles: $e");
     }
   } 
 
-  Future<bool> syncUpdateJornada4(Jornadas jornada, Bitacora bitacora) async {
+  Future<SyncInstruction> syncUpdateJornada4(Jornadas jornada, Bitacora bitacora) async {
     print("Estoy en El syncUpdateJornada4");
     try {
       if (!bitacora.executePocketbase) {
@@ -4090,30 +4076,30 @@ class SyncProviderPocketbase extends ChangeNotifier {
               //Se elimina la instrucción de la bitacora
               dataBase.bitacoraBox.remove(bitacora.id);
             }
-            return true;
+            return SyncInstruction(exitoso: true, descripcion: "");
           }
           else{
             //No se pudo actualizar jornada en Pocketbase
-            return false;
+            return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Jornada 4, no se pudo actualizar la información de la Jornada 4 del Emprendimiento ${jornada.emprendimiento.target?.nombre} en Servidor Local.");
           }
         } else {
           //No se pudo actualizar tarea en Pocketbase
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Jornada 4, no se pudo actualizar la información de la tarea '${jornada.tarea.target!.tarea}' asociada a la Jornada 4 del Emprendimiento ${jornada.emprendimiento.target?.nombre} en Servidor Local.");
         }   
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         }
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncUpdateJornada4(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar actualización de la Jornada 4 en el Servidor Local, detalles: $e");
     }
   } 
 
-  Future<bool> syncUpdateImagenJornada4(Imagenes imagen, Bitacora bitacora) async {
+  Future<SyncInstruction> syncUpdateImagenJornada4(Imagenes imagen, Bitacora bitacora) async {
     print("Estoy en El syncUpdateImagenJornada4 en Pocketbase");
     try {
       if (!bitacora.executePocketbase) {
@@ -4129,55 +4115,25 @@ class SyncProviderPocketbase extends ChangeNotifier {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           }
-          return true;
+          return SyncInstruction(exitoso: true, descripcion: "");
         }
         else{
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Imagen en Jornada 4, no se pudo actualizar la información de la Jornada 4 en Servidor Local.");
         }
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         }
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncUpdateImagenJornada4(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar actualización de Imagen en Jornada 4 en el Servidor Local, detalles: $e");
     }
   } 
 
-
-  Future<bool?> syncUpdateEstadoConsultoria(Consultorias consultoria) async {
-    print("Estoy en El syncUpdateEstadoConsultoria");
-    try {
-      final record = await client.records.update('consultorias', consultoria.idDBR! ,
-      body: {
-          "id_ambito_fk": consultoria.ambitoConsultoria.target!.idDBR,
-          "id_area_circulo_fk": consultoria.areaCirculo.target!.idDBR,
-          "archivado": consultoria.archivado,
-      });
-      if (record.id.isNotEmpty) {
-        var updateConsultoria = dataBase.consultoriasBox.get(consultoria.id);
-        if (record.id.isNotEmpty && updateConsultoria != null) {
-          return true;
-        }
-        else {
-          return false;
-        }
-      }
-      else{
-        return false;
-      }
-
-    } catch (e) {
-      print('ERROR - function syncUpdateEstadoConsultoria(): $e');
-      return false;
-    }
-
-  } 
-
-  Future<bool> syncUpdateTareaConsultoria(Tareas tarea, Bitacora bitacora) async {
+  Future<SyncInstruction> syncUpdateTareaConsultoria(Tareas tarea, Bitacora bitacora) async {
     print("Estoy en El syncUpdateTareaConsultoria");
     List<String> tareasConsultoria = [];
     try {
@@ -4233,22 +4189,22 @@ class SyncProviderPocketbase extends ChangeNotifier {
                       //Se elimina la instrucción de la bitacora
                       dataBase.bitacoraBox.remove(bitacora.id);
                     }
-                    return true;
+                    return SyncInstruction(exitoso: true, descripcion: "");
                   } else {
                     //No se pudo actualizar la consultoría con la nueva tarea
-                    return false;
+                    return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Consultoría con tarea '${tarea.tarea}, no se pudo actualizar la información de la Consultoría en Servidor Local.");
                   }
                 } else {
                   //No se encontró la consultoría en ObjectBox
-                  return false;
+                  return SyncInstruction(exitoso: false, descripcion: "Falló al agregar tarea '${tarea.tarea}' en Consultoría, tarea asociada no encontrada en el dispositivo para asignarle id del Servidor Local.");
                 }
               } else {
                 //No se pudo postear la tarea nueva
-                return false;
+                return SyncInstruction(exitoso: false, descripcion: "Falló al agregar '${tarea.tarea}' en Consultoría, no se pudo recuperar id desde Servidor Local para la tarea asociada a la consultoría creada.");
               }   
             } else {
               // No se pudo postear la imagen asociada al producto Emp
-              return false;
+              return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Imagen del la Consultoría con tarea '${tarea.tarea}', no se pudo recuperar id desde Servidor Local para la imagen de la tarea de la consultoría creada.");
             }
           } else {
             if (tarea.idDBR == null) {
@@ -4290,25 +4246,25 @@ class SyncProviderPocketbase extends ChangeNotifier {
                       //Se elimina la instrucción de la bitacora
                       dataBase.bitacoraBox.remove(bitacora.id);
                     }
-                    return true;
+                    return SyncInstruction(exitoso: true, descripcion: "");
                   } else {
                     //No se pudo actualizar la consultoría con la nueva tarea
-                    return false;
+                    return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Consultoría con tarea '${tarea.tarea}, no se pudo actualizar la información de la Consultoría en Servidor Local.");
                   }
                 } else {
                   //No se encontró la consultoría en ObjectBox
-                  return false;
+                  return SyncInstruction(exitoso: false, descripcion: "Falló al agregar tarea '${tarea.tarea}' en Consultoría, tarea asociada no encontrada en el dispositivo para asignarle id del Servidor Local.");
                 }
               } else {
                 //No se pudo postear la tarea nueva
-                return false;
+                return SyncInstruction(exitoso: false, descripcion: "Falló al agregar '${tarea.tarea}' en Consultoría, no se pudo recuperar id desde Servidor Local para la tarea asociada a la consultoría creada.");
               }   
             } else {
               if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
                 //Se elimina la instrucción de la bitacora
                 dataBase.bitacoraBox.remove(bitacora.id);
               } 
-              return true;
+              return SyncInstruction(exitoso: true, descripcion: "");
             }
           }
         } else {
@@ -4352,25 +4308,25 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     //Se elimina la instrucción de la bitacora
                     dataBase.bitacoraBox.remove(bitacora.id);
                   }
-                  return true;
+                  return SyncInstruction(exitoso: true, descripcion: "");
                 } else {
                   //No se pudo actualizar la consultoría con la nueva tarea
-                  return false;
+                  return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Consultoría con tarea '${tarea.tarea}, no se pudo actualizar la información de la Consultoría en Servidor Local.");
                 }
               } else {
                 //No se encontró la consultoría en ObjectBox
-                return false;
+                return SyncInstruction(exitoso: false, descripcion: "Falló al agregar tarea '${tarea.tarea}' en Consultoría, tarea asociada no encontrada en el dispositivo para asignarle id del Servidor Local.");
               }
             } else {
               //No se pudo postear la tarea nueva
-              return false;
+              return SyncInstruction(exitoso: false, descripcion: "Falló al agregar '${tarea.tarea}' en Consultoría, no se pudo recuperar id desde Servidor Local para la tarea asociada a la consultoría creada.");
             }   
           } else {
             if (bitacora.executeEmiWeb) {
               //Se elimina la instrucción de la bitacora
               dataBase.bitacoraBox.remove(bitacora.id);
             } 
-            return true;
+            return SyncInstruction(exitoso: true, descripcion: "");
           }
         }
       } else {
@@ -4378,15 +4334,15 @@ class SyncProviderPocketbase extends ChangeNotifier {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         } 
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncUpdateTareaConsultoria(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar actualización de tarea '${tarea.tarea}'en Consultoría en el Servidor Local, detalles: $e");
     }
   } 
 
-  Future<bool> syncUpdateUsuario(Usuarios usuario, Bitacora bitacora) async {
+  Future<SyncInstruction> syncUpdateUsuario(Usuarios usuario, Bitacora bitacora) async {
     print("Estoy en El syncUpdateUsuario");
     try {
       if (bitacora.executeEmiWeb) {
@@ -4408,25 +4364,25 @@ class SyncProviderPocketbase extends ChangeNotifier {
               //Se elimina la instrucción de la bitacora
               dataBase.bitacoraBox.remove(bitacora.id);
             }
-            return true;
+            return SyncInstruction(exitoso: true, descripcion: "");
           }
           else{
-            return false;
+            return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Usuario '${usuario.nombre} ${usuario.apellidoM} ${usuario.apellidoP}', no se pudo actualizar la información del Usuario en Servidor Local.");
           }
         } else {
           if (bitacora.executeEmiWeb) {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           }
-          return true;
+          return SyncInstruction(exitoso: true, descripcion: "");
       }
       } else {
         // No se ha actualizado datos del usuario en Emi Web
-        return false;
+        return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar actualización de Usuario '${usuario.nombre} ${usuario.apellidoM} ${usuario.apellidoP}' en el Servidor Local, la información en Emi Web aún no ha sido actualizada.");
       }
     } catch (e) {
       print('ERROR - function syncUpdateUsuario(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar actualización de Usuario '${usuario.nombre} ${usuario.apellidoM} ${usuario.apellidoP}' en el Servidor Local, detalles: $e");
     }
 
   } 
@@ -4436,10 +4392,10 @@ void deleteBitacora() {
   notifyListeners();
 }
 
-  Future<bool> syncUpdateProductoEmprendedor(ProductosEmp prodEmprendedor, Bitacora bitacora) async {
+  Future<SyncInstruction> syncUpdateProductoEmprendedor(ProductosEmp prodEmprendedor, Bitacora bitacora) async {
     print("Estoy en El syncUpdateProductoEmprendedor");
     try {
-      if (!bitacora.executePocketbase) {
+      if (!bitacora.executePocketbase) { 
         final record = await client.records.update('productos_emp', prodEmprendedor.idDBR.toString(), body: {
             "nombre_prod_emp": prodEmprendedor.nombre,
             "descripcion": prodEmprendedor.descripcion,
@@ -4457,25 +4413,25 @@ void deleteBitacora() {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           }
-          return true;
+          return SyncInstruction(exitoso: true, descripcion: "");
         }
         else{
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Producto de Emprendedor '${prodEmprendedor.nombre}', no se pudo actualizar la información del Producto de Emprendedor en Servidor Local.");
         }
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         }
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncUpdateProductoEmprendedor(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar actualización del Producto de Emprendedor '${prodEmprendedor.nombre}' en el Servidor Local, detalles: $e");
     }
   } 
 
-  Future<bool> syncUpdateImagenProductoEmprendedor(Imagenes imagen, Bitacora bitacora) async {
+  Future<SyncInstruction> syncUpdateImagenProductoEmprendedor(Imagenes imagen, Bitacora bitacora) async {
     print("Estoy en El syncUpdateImagenProductoEmprendedor en Pocketbase");
     try {
       if (!bitacora.executePocketbase) {
@@ -4484,39 +4440,32 @@ void deleteBitacora() {
             "base64": imagen.base64,
         }); 
         if (recordImagen.id.isNotEmpty) {
-          final recordProductoEmp = await client.records.update('productos_emp', imagen.productosEmp.target!.idDBR.toString(), body: {
-            "id_imagen_fk": recordImagen.id,
-        }); 
-          if (recordProductoEmp.id.isNotEmpty) {
-            //Se marca como realizada en Pocketbase la instrucción en Bitacora
-            bitacora.executePocketbase = true;
-            dataBase.bitacoraBox.put(bitacora);
-            if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
-              //Se elimina la instrucción de la bitacora
-              dataBase.bitacoraBox.remove(bitacora.id);
-            }
-            return true;
-          } else {
-            return false;
+          //Se marca como realizada en Pocketbase la instrucción en Bitacora
+          bitacora.executePocketbase = true;
+          dataBase.bitacoraBox.put(bitacora);
+          if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+            //Se elimina la instrucción de la bitacora
+            dataBase.bitacoraBox.remove(bitacora.id);
           }
+          return SyncInstruction(exitoso: true, descripcion: "");
         }
         else{
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Imagen del Producto de Emprendedor '${imagen.productosEmp.target?.nombre}', no se pudo actualizar la Imagen del Producto de Emprendedor en Servidor Local.");
         }
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         }
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncUpdateImagenProductoEmprendedor(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar actualización de Imagen del Producto de Emprendedor '${imagen.productosEmp.target?.nombre}' en el Servidor Local, detalles: $e");
     }
   } 
 
-  Future<bool> syncUpdateVenta(Ventas venta, Bitacora bitacora) async {
+  Future<SyncInstruction> syncUpdateVenta(Ventas venta, Bitacora bitacora) async {
     print("Estoy en El syncUpdateVenta");
     try {
       if (!bitacora.executePocketbase) {
@@ -4533,25 +4482,25 @@ void deleteBitacora() {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           } 
-          return true;
+          return SyncInstruction(exitoso: true, descripcion: "");
         } else {
           // Falló al actualizar la venta en Pocketbase
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Información de Venta con id Local '${venta.id}', no se pudo actualizar la Venta en Servidor Local.");
         }
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         } 
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncUpdateVenta(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar actualización del Información de Venta con id Local '${venta.id}' en el Servidor Local, detalles: $e");
     }
   }
 
-  Future<bool> syncUpdateProductosVendidosVenta(Ventas venta, Bitacora bitacora) async {
+  Future<SyncInstruction> syncUpdateProductosVendidosVenta(Ventas venta, Bitacora bitacora) async {
     print("Estoy en El syncUpdateProductosVendidosVenta");
     try {
       if (!bitacora.executePocketbase) {
@@ -4566,25 +4515,25 @@ void deleteBitacora() {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           } 
-          return true;
+          return SyncInstruction(exitoso: true, descripcion: "");
         } else {
           // Falló al actualizar la venta en Pocketbase
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Total en Venta con id Local '${venta.id}', no se pudo actualizar la Venta en Servidor Local.");
         }
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         } 
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncUpdateProductosVendidosVenta(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar actualización del Total en Venta con id Local '${venta.id}' en el Servidor Local, detalles: $e");
     }
   }
 
-  Future<bool> syncAcceptInversionesXProductosCotizados(InversionesXProdCotizados inversionXprodCotizados, Bitacora bitacora) async {
+  Future<SyncInstruction> syncAcceptInversionesXProductosCotizados(InversionesXProdCotizados inversionXprodCotizados, Bitacora bitacora) async {
     print("Estoy en syncAcceptInversionesXProductosCotizados");
     try {
       if (!bitacora.executePocketbase) {
@@ -4607,28 +4556,28 @@ void deleteBitacora() {
               //Se elimina la instrucción de la bitacora
               dataBase.bitacoraBox.remove(bitacora.id);
             } 
-            return true;
+            return SyncInstruction(exitoso: true, descripcion: "");
           } else {
-            return false;
+            return SyncInstruction(exitoso: false, descripcion: "Falló al aceptar Cotización para la Inversión con ID Emi Web '${inversionXprodCotizados.inversion.target?.idEmiWeb}', no se pudo actualizar infomación de la Inversión en Servidor Local.");
           }
         } else {
           //No se pudo aceptar la inversion x prod cotizados a Pocketbase
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al aceptar Cotización para la Inversión con ID Emi Web '${inversionXprodCotizados.inversion.target?.idEmiWeb}', no se pudo aceptar la Cotización en Servidor Local.");
         }   
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         } 
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncAcceptInversionesXProductosCotizados(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar aceptación de la Cotización para la Inversión con ID Emi Web '${inversionXprodCotizados.inversion.target?.idEmiWeb}' en el Servidor Local, detalles: $e");
     }
   }
 
-    Future<bool> syncAcceptProdCotizado(ProdCotizados prodCotizado, Bitacora bitacora) async {
+    Future<SyncInstruction> syncAcceptProdCotizado(ProdCotizados prodCotizado, Bitacora bitacora) async {
     print("Estoy en syncAcceptProductoCotizado");
     try {
       if (!bitacora.executePocketbase) {
@@ -4645,25 +4594,25 @@ void deleteBitacora() {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           } 
-          return true;
+          return SyncInstruction(exitoso: true, descripcion: "");
         } else {
           //No se pudo aceptar el prod cotizado a Pocketbase
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al aceptar Producto Cotizado '${prodCotizado.productosProv.target?.nombre}', no se pudo aceptar Producto Cotizado en Servidor Local.");
         }   
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         } 
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncAcceptProductoCotizado(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar aceptación del Producto Cotizado '${prodCotizado.productosProv.target?.nombre}' en el Servidor Local, detalles: $e");
     }
   }
 
-  Future<bool> syncAddPagoInversion(Pagos pago, Bitacora bitacora) async {
+  Future<SyncInstruction> syncAddPagoInversion(Pagos pago, Bitacora bitacora) async {
     print("Estoy en syncAddPagoInversion");
     try {
       if (!bitacora.executePocketbase) {
@@ -4694,12 +4643,12 @@ void deleteBitacora() {
                 //Se elimina la instrucción de la bitacora
                 dataBase.bitacoraBox.remove(bitacora.id);
               } 
-              return true;
+              return SyncInstruction(exitoso: true, descripcion: "");
             } else {
-              return false;
+              return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Pago de la Inversión con ID Emi Web '${pago.inversion.target?.idEmiWeb}', no se pudo actualizar Total de la Inversión en Servidor Local.");
             }
           } else {
-            return false;
+            return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Pago de la Inversión con ID Emi Web '${pago.inversion.target?.idEmiWeb}', no se pudo agregar Pago de la Inversión en Servidor Local.");
           }
         } else {
           //Segundo actualizamos la inversión   
@@ -4716,9 +4665,9 @@ void deleteBitacora() {
               //Se elimina la instrucción de la bitacora
               dataBase.bitacoraBox.remove(bitacora.id);
             } 
-            return true;
+            return SyncInstruction(exitoso: true, descripcion: "");
           } else {
-            return false;
+            return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Pago de la Inversión con ID Emi Web '${pago.inversion.target?.idEmiWeb}', no se pudo actualizar Total de la Inversión en Servidor Local.");
           }
         }
       } else {
@@ -4726,24 +4675,18 @@ void deleteBitacora() {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         } 
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncAddPagoInversion(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar alta de Pago de la Inversión con ID Emi Web '${pago.inversion.target?.idEmiWeb}' en el Servidor Local, detalles: $e");
     }
 }
 
-  Future<bool> syncUpdateProductoVendido(ProdVendidos productoVendido, Bitacora bitacora) async {
+  Future<SyncInstruction> syncUpdateProductoVendido(ProdVendidos productoVendido, Bitacora bitacora) async {
     print("Estoy en syncUpdateProductoVendido");
     try {
       if (!bitacora.executePocketbase) {
-        print("${productoVendido.cantVendida}");
-        print("${productoVendido.subtotal}");
-        print("${productoVendido.precioVenta}");
-        print("${productoVendido.idEmiWeb}");
-        print("Falla ?");
-        print("Falla ? ${productoVendido.idDBR!}");
         final record = await client.records.update('prod_vendidos', productoVendido.idDBR!,
         body: {
             "cantidad_vendida": productoVendido.cantVendida,
@@ -4759,25 +4702,25 @@ void deleteBitacora() {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           } 
-          return true;
+          return SyncInstruction(exitoso: true, descripcion: "");
         } else {
           //No se pudo actualizar el producto Solicitado a Pocketbase
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Producto Vendido '${productoVendido.nombreProd}', no se pudo actualizar la información del Producto Vendido en Servidor Local.");
         }   
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         } 
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncUpdateProductoVendido(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar actualización del Producto Vendido '${productoVendido.nombreProd}' en el Servidor Local, detalles: $e");
     }
   }
 
-  Future<bool> syncArchivarEmprendimiento(Emprendimientos emprendimiento, Bitacora bitacora) async {
+  Future<SyncInstruction> syncArchivarEmprendimiento(Emprendimientos emprendimiento, Bitacora bitacora) async {
     print("Estoy en El syncArchivarEmprendimiento");
     try {
       if (!bitacora.executePocketbase) {
@@ -4793,26 +4736,26 @@ void deleteBitacora() {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           }
-          return true;
+          return SyncInstruction(exitoso: true, descripcion: "");
         }
         else{
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al archivar Emprendimiento '${emprendimiento.nombre}', no se pudo archivar el Emprendimiento en Servidor Local.");
         }
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         }
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
 
     } catch (e) {
       print('ERROR - function syncArchivarEmprendimiento(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar archivado del Emprendimiento '${emprendimiento.nombre}' en el Servidor Local, detalles: $e");
     }
   } 
 
-  Future<bool> syncDesarchivarEmprendimiento(Emprendimientos emprendimiento, Bitacora bitacora) async {
+  Future<SyncInstruction> syncDesarchivarEmprendimiento(Emprendimientos emprendimiento, Bitacora bitacora) async {
     print("Estoy en El syncDesarchivarEmprendimiento");
     try {
       if (!bitacora.executePocketbase) {
@@ -4828,26 +4771,26 @@ void deleteBitacora() {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           }
-          return true;
+          return SyncInstruction(exitoso: true, descripcion: "");
         }
         else{
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al desarchivar Emprendimiento '${emprendimiento.nombre}', no se pudo desarchivar el Emprendimiento en Servidor Local.");
         }
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         }
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
 
     } catch (e) {
       print('ERROR - function syncDesarchivarEmprendimiento(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar desarchivado del Emprendimiento '${emprendimiento.nombre}' en el Servidor Local, detalles: $e");
     }
   } 
 
-  Future<bool> syncArchivarConsultoria(Consultorias consultoria, Bitacora bitacora) async {
+  Future<SyncInstruction> syncArchivarConsultoria(Consultorias consultoria, Bitacora bitacora) async {
     print("Estoy en El syncArchivarConsultoria");
     try {
       if (!bitacora.executePocketbase) {
@@ -4863,26 +4806,26 @@ void deleteBitacora() {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           }
-          return true;
+          return SyncInstruction(exitoso: true, descripcion: "");
         }
         else{
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al archivar Consultoría con tarea '${consultoria.tareas.last.tarea}', no se pudo archivar la Consultoría en Servidor Local.");
         }
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         }
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
 
     } catch (e) {
       print('ERROR - function syncArchivarConsultoria(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar archivado de la Consultoría con tarea '${consultoria.tareas.last.tarea}' en el Servidor Local, detalles: $e");
     }
   } 
 
-  Future<bool> syncDesarchivarConsultoria(Consultorias consultoria, Bitacora bitacora) async {
+  Future<SyncInstruction> syncDesarchivarConsultoria(Consultorias consultoria, Bitacora bitacora) async {
     print("Estoy en El syncDesarchivarConsultoria");
     try {
       if (!bitacora.executePocketbase) {
@@ -4898,56 +4841,26 @@ void deleteBitacora() {
             //Se elimina la instrucción de la bitacora
             dataBase.bitacoraBox.remove(bitacora.id);
           }
-          return true;
+          return SyncInstruction(exitoso: true, descripcion: "");
         }
         else{
-          return false;
+          return SyncInstruction(exitoso: false, descripcion: "Falló al desarchivar Consultoría con tarea '${consultoria.tareas.last.tarea}', no se pudo desarchivar la Consultoría en Servidor Local.");
         }
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         }
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
 
     } catch (e) {
       print('ERROR - function syncDesarchivarConsultoria(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar desarchivado de la Consultoría con tarea '${consultoria.tareas.last.tarea}' en el Servidor Local, detalles: $e");
     }
   } 
 
-//   Future<bool> syncUpdateInversion(Inversiones inversion, Bitacora bitacora) async {
-//     try {
-//       print("Estoy en syncUpdateInversion"); 
-//       //Se busca el estado de inversión 'Solicitada'
-//       final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Solicitada")).build().findFirst();
-//       if (newEstadoInversion != null) {
-//         print("Datos inversion");
-//         print(inversion.estadoInversion);
-//         print(inversion.porcentajePago);
-//         print(inversion.montoPagar);
-//         final record = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
-//           "id_estado_inversion_fk": newEstadoInversion.idDBR,
-//         }); 
-//         if (record.id.isNotEmpty) {
-//           bitacora.executePocketbase = true;
-//           dataBase.bitacoraBox.put(bitacora);
-//           print("Se marca como realizada en Pocketbase la instrucción en Bitacora");
-//           return true;
-//         } else {
-//           return false;
-//         }
-//       } else {
-//         return false;
-//       }
-//       } catch (e) {
-//         print('ERROR - function syncUpdateInversion(): $e');
-//         return false;
-//       }
-// }
-
-  Future<bool> syncDeleteImagenJornada(Bitacora bitacora) async {
+  Future<SyncInstruction> syncDeleteImagenJornada(Bitacora bitacora) async {
     print("Estoy en El syncDelteImagenJornada en Pocketbase");
     try {
       if (!bitacora.executePocketbase) {
@@ -4959,21 +4872,21 @@ void deleteBitacora() {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         }
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         }
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncDelteImagenJornada(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar baja Imagen '${bitacora.instruccionAdicional}' en el Servidor Local, detalles: $e");
     }
   } 
 
-  Future<bool> syncDeleteProductoInversionJ3(Bitacora bitacora) async {
+  Future<SyncInstruction> syncDeleteProductoInversionJ3(Bitacora bitacora) async {
     print("Estoy en El syncDelteProdusyncDeleteProductoInversionJ3 en Pocketbase");
     try {
       if (!bitacora.executePocketbase) {
@@ -4985,21 +4898,21 @@ void deleteBitacora() {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         }
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         }
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncDeleteProductoInversionJ3(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar baja Producto '${bitacora.instruccionAdicional}' en Inversión Jornada 3 en el Servidor Local, detalles: $e");
     }
   } 
 
- Future<bool> syncDeleteProductoVendido(Bitacora bitacora) async {
+ Future<SyncInstruction> syncDeleteProductoVendido(Bitacora bitacora) async {
     print("Estoy en El syncDelteOroductoVendido en Pocketbase");
     try {
       if (!bitacora.executePocketbase) {
@@ -5011,39 +4924,21 @@ void deleteBitacora() {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         }
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         }
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncDeleteProductoVendido(): $e');
-      return false;
+      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar baja Producto '${bitacora.instruccionAdicional}' en el Servidor Local, detalles: $e");
     }
   } 
 
-  Future<bool?> syncDeleteProductoSolicitado(String idDBRProductoSolicitado) async {
-    try {
-      print("Estoy en syncDeleteProductoSolicitado"); 
-      //Validamos que el elemento exista en el backend
-      final record = await client.records.getOne('productos_solicitados', idDBRProductoSolicitado); 
-      if (record.id.isNotEmpty) {
-        //Se puede eliminar el producto solicitado en el backend
-        await client.records.delete('productos_solicitados', idDBRProductoSolicitado); 
-        print("Producto Solicitado deleted succesfully");
-        return true;
-        }
-      } catch (e) {
-        print('ERROR - function syncDeleteProductoSolicitado(): $e');
-        return false;
-      }
-    return null;
-}
-
-  Future<bool> syncAddImagenesEntregaInversion(Inversiones inversion, Bitacora bitacora) async {
+  Future<SyncInstruction> syncAddImagenesEntregaInversion(Inversiones inversion, Bitacora bitacora) async {
     print("Estoy en syncAddImagenesEntregaInversion");
     try {
       if (!bitacora.executePocketbase) {
@@ -5083,15 +4978,15 @@ void deleteBitacora() {
                   //Se elimina la instrucción de la bitacora
                   dataBase.bitacoraBox.remove(bitacora.id);
                 } 
-                return true;
+                return SyncInstruction(exitoso: true, descripcion: "");
               } else {
-                return false;
+                return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Imágenes Firma de Recibido y Producto Entregado en la inversión con Id Emi Web '${inversion.idEmiWeb}' en el Servidor Local, no se pudieron asociar las Imágenes a la Inversión.");
               }
             } else {
-              return false;
+              return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Imágenes Firma de Recibido y Producto Entregado en la inversión con Id Emi Web '${inversion.idEmiWeb}' en el Servidor Local, no se pudo recuperar Id del Sevidor Local para la Imagen de Producto Entregado.");
             }
           } else {
-            return false;
+            return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Imágenes Firma de Recibido y Producto Entregado en la inversión con Id Emi Web '${inversion.idEmiWeb}' en el Servidor Local, no se pudo recuperar Id del Sevidor Local para la Imagen de Firma de Recibido.");
           }
         } else {
           if (inversion.imagenProductoEntregado.target!.idDBR == null) {
@@ -5113,16 +5008,16 @@ void deleteBitacora() {
                 //Se elimina la instrucción de la bitacora
                 dataBase.bitacoraBox.remove(bitacora.id);
               } 
-              return true;
+              return SyncInstruction(exitoso: true, descripcion: "");
             } else {
-              return false;
+              return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Imágenes Firma de Recibido y Producto Entregado en la inversión con Id Emi Web '${inversion.idEmiWeb}' en el Servidor Local, no se pudo recuperar Id del Sevidor Local para la Imagen de Producto Entregado.");
             }
           } else {
             if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
               //Se elimina la instrucción de la bitacora
               dataBase.bitacoraBox.remove(bitacora.id);
             } 
-            return true;
+            return SyncInstruction(exitoso: true, descripcion: "");
           }
         }
       } else {
@@ -5130,11 +5025,11 @@ void deleteBitacora() {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
         } 
-        return true;
+        return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncAddImagenesEntregaInversion(): $e');
-      return false;
+     return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar alta de Imágenes Firma de Recibido y Producto Entregado en la inversión con Id Emi Web '${inversion.idEmiWeb}' en el Servidor Local, detalles: $e");
     }
 }
 
