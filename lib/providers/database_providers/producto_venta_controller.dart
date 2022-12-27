@@ -151,6 +151,7 @@ void add(int idEmprendimiento, int idVenta) {
             print("Se elimina producto Vendido");
             final nuevaInstruccion = Bitacora(
               instruccion: 'syncDeleteProductoVendido', 
+              instruccionAdicional: deleteProductoVendido.nombreProd,
               usuario: prefs.getString("userId")!,
               idDBR: deleteProductoVendido.idDBR,
               idEmiWeb: deleteProductoVendido.idEmiWeb,
@@ -199,14 +200,6 @@ void update(int id, int idProductoEmp, double newPrecioVenta, int newCantidad, d
   //   print("Tamaño productos después de remover: ${dataBase.productosEmpBox.getAll().length}");
   //   notifyListeners(); 
   // }
-  void remove(ProdVendidos productoVendido) {
-    print("Tamaño productos vendidos antes de remover: ${dataBase.productosVendidosBox.getAll().length}");
-    final nuevaInstruccion = Bitacora(instruccion: 'syncDeleteProductoVendido', usuario: prefs.getString("userId")!, idDBR: productoVendido.idDBR); //Se crea la nueva instruccion a realizar en bitacora
-    productoVendido.bitacora.add(nuevaInstruccion);
-    dataBase.productosVendidosBox.remove(productoVendido.id); //Se elimina de bitacora la instruccion creada anteriormente?
-    print("Tamaño productos después de remover: ${dataBase.productosVendidosBox.getAll().length}");
-    notifyListeners(); 
-  }
 
   // getAll() {
   //   emprendimientos = dataBase.emprendimientosBox.getAll();
