@@ -32,13 +32,13 @@ class Payload {
   Payload({
     required this.idCatTipoDocumento,
     required this.nombreArchivo,
-    required this.archivo,
+     required this.archivo,
     required this.idUsuario,
   });
 
   final int idCatTipoDocumento;
   final String nombreArchivo;
-  final String archivo;
+  late final String archivo;
   final int idUsuario;
 
   factory Payload.fromMap(Map<String, dynamic> json) => Payload(
