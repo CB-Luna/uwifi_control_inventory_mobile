@@ -1,9 +1,8 @@
-
-import 'package:bizpro_app/modelsPocketbase/temporals/get_emp_externo_pocketbase_temp.dart';
+import 'package:bizpro_app/modelsEmiWeb/temporals/get_emp_externo_emi_web_temp.dart';
 
 class UsuarioProyectosTemporal {
-    final UsuarioTemp usuarioTemp;
-    List<EmprendimientoTemp> emprendimientosTemp;
+    final PromotorTemp usuarioTemp;
+    List<Payload> emprendimientosTemp;
 
     UsuarioProyectosTemporal({
       required this.usuarioTemp,

@@ -27,17 +27,17 @@ class _DescargaProyectosExternosPocketbaseScreenState extends State<DescargaProy
     // TODO: implement initState
     super.initState();
       setState(() {
-        context.read<EmpExternosPocketbaseProvider>().exitoso = true;
-        context.read<EmpExternosPocketbaseProvider>().procesoCargando(true);
-        context.read<EmpExternosPocketbaseProvider>().procesoTerminado(false);
-        context.read<EmpExternosPocketbaseProvider>().procesoExitoso(false);
-        context.read<EmpExternosPocketbaseProvider>().getProyectosExternos(widget.listIdEmprendimientos, widget.usuario);
+        context.read<EmpExternosEmiWebProvider>().exitoso = true;
+        context.read<EmpExternosEmiWebProvider>().procesoCargando(true);
+        context.read<EmpExternosEmiWebProvider>().procesoTerminado(false);
+        context.read<EmpExternosEmiWebProvider>().procesoExitoso(false);
+        context.read<EmpExternosEmiWebProvider>().getProyectosExternos(widget.listIdEmprendimientos, widget.usuario);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final empExternosPocketbaseProvider = Provider.of<EmpExternosPocketbaseProvider>(context);
+    final empExternosPocketbaseProvider = Provider.of<EmpExternosEmiWebProvider>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(

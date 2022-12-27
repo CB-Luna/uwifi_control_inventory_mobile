@@ -2,7 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bizpro_app/database/entitys.dart';
+import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_token_emi_web.dart';
+import 'package:bizpro_app/modelsEmiWeb/temporals/get_emp_externo_emi_web_temp.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_consultoria_pocketbase.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_emprendimeinto_pocketbase.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_imagen_pocketbase.dart';
@@ -24,10 +27,11 @@ import 'package:bizpro_app/helpers/constants.dart';
 import 'package:http/http.dart';
 import 'package:path_provider/path_provider.dart';
 
-class EmpExternosPocketbaseProvider extends ChangeNotifier {
+class EmpExternosEmiWebProvider extends ChangeNotifier {
   bool procesocargando = false;
   bool procesoterminado = false;
   bool procesoexitoso = false;
+  String tokenGlobal = "";
   List<bool> banderasExitoSync = [];
   bool exitoso = true;
   bool usuarioExit = false;
@@ -46,6 +50,47 @@ class EmpExternosPocketbaseProvider extends ChangeNotifier {
     procesoexitoso = boleano;
     // notifyListeners();
   }
+
+//Función inicial para recuperar el Token para el llamado de proyectos
+  Future<bool> getTokenOAuth() async {
+    try {
+      var url = Uri.parse("$baseUrlEmiWebSecurity/oauth/token");
+      final headers = ({
+        "Authorization": "Basic Yml6cHJvOmFkbWlu",
+      });
+      final bodyMsg = ({
+        "grant_type": "password",
+        "scope": "webclient",
+        "username": prefs.getString("userId"),
+        "password": prefs.getString("passEncrypted"),
+      });
+
+      var response = await post(url, headers: headers, body: bodyMsg);
+
+      print(response.body);
+
+      switch (response.statusCode) {
+        case 200:
+          final responseTokenEmiWeb = getTokenEmiWebFromMap(response.body);
+          tokenGlobal = responseTokenEmiWeb.accessToken;
+          return true;
+        case 400:
+          usuarioExit = true;
+          return false;
+        case 401:
+          //Se actualiza Usuario archivado en Pocketbase y objectBox
+          return false;
+        default:
+          snackbarKey.currentState?.showSnackBar(const SnackBar(
+            content: Text("Falló al conectarse con el servidor Emi Web."),
+          ));
+          return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
 
   Future<bool> getProyectosExternos(List<String> idEmprendimientos, Usuarios usuario) async {
     try {
@@ -490,44 +535,6 @@ class EmpExternosPocketbaseProvider extends ChangeNotifier {
                 if (estadoInversion != null) {
                   nuevaInversion.estadoInversion.target = estadoInversion;
                 }
-                // if (elementInversion.expand.idImagenFirmaRecibidoFk?.created != null) {
-                //   // Se agrega nueva imagen de Firma Recibido
-                //   final uInt8ListImagen = base64Decode(elementInversion.expand.idImagenFirmaRecibidoFk!.base64);
-                //   final tempDir = await getTemporaryDirectory();
-                //   File file = await File('${tempDir.path}/${elementInversion.expand.idImagenFirmaRecibidoFk!.nombre}').create();
-                //   file.writeAsBytesSync(uInt8ListImagen);
-                //   final nuevaImagenFirmaRecibido = Imagenes(
-                //     imagenes: file.path,
-                //     nombre: elementInversion.expand.idImagenFirmaRecibidoFk!.nombre,
-                //     path: file.path,
-                //     base64: elementInversion.expand.idImagenFirmaRecibidoFk!.base64,
-                //     idDBR: elementInversion.expand.idImagenFirmaRecibidoFk!.id,
-                //     idEmiWeb: elementInversion.expand.idImagenFirmaRecibidoFk!.idEmiWeb,
-                //     ); //Se crea el objeto imagenes para la firma recibido
-                //   nuevaImagenFirmaRecibido.inversion.target = nuevaInversion;
-                //   dataBase.imagenesBox.put(nuevaImagenFirmaRecibido);
-                //   nuevaInversion.imagenFirmaRecibido.target = nuevaImagenFirmaRecibido;
-                //   dataBase.inversionesBox.put(nuevaInversion);
-                // }
-                // if (elementInversion.expand.idImagenProductoEntregadoFk?.created != null) {
-                //   // Se agrega nueva imagen de Producto Entregado
-                //   final uInt8ListImagen = base64Decode(elementInversion.expand.idImagenProductoEntregadoFk!.base64);
-                //   final tempDir = await getTemporaryDirectory();
-                //   File file = await File('${tempDir.path}/${elementInversion.expand.idImagenProductoEntregadoFk!.nombre}').create();
-                //   file.writeAsBytesSync(uInt8ListImagen);
-                //   final nuevaImagenProductoEntregado = Imagenes(
-                //     imagenes: file.path,
-                //     nombre: elementInversion.expand.idImagenProductoEntregadoFk!.nombre,
-                //     path: file.path,
-                //     base64: elementInversion.expand.idImagenProductoEntregadoFk!.base64,
-                //     idDBR: elementInversion.expand.idImagenProductoEntregadoFk!.id,
-                //     idEmiWeb: elementInversion.expand.idImagenProductoEntregadoFk!.idEmiWeb,
-                //     ); //Se crea el objeto imagenes para la Producto Entregado
-                //   nuevaImagenProductoEntregado.inversion.target = nuevaInversion;
-                //   dataBase.imagenesBox.put(nuevaImagenProductoEntregado);
-                //   nuevaInversion.imagenProductoEntregado.target = nuevaImagenProductoEntregado;
-                //   dataBase.inversionesBox.put(nuevaInversion);
-                // }
 
                 if (elementInversion.jornada3) {
                   nuevaInversion.emprendimiento.target = nuevoEmprendimiento;
@@ -790,41 +797,54 @@ class EmpExternosPocketbaseProvider extends ChangeNotifier {
     }
   }
 
-//Función para recuperar los emprendimientos externos de Pocketbase
-  Future<List<UsuarioProyectosTemporal>?> getUsuariosProyectosPocketbase() async {
-    final GetEmpExternoPocketbaseTemp listEmpExternosPocketbaseTemp;
+//Función para recuperar los emprendimientos externos de EmiWeb
+  Future<List<UsuarioProyectosTemporal>?> getUsuariosProyectosEmiWeb() async {
+    final GetEmpExternoEmiWebTemp listEmpExternosEmiWebTemp;
     List<UsuarioProyectosTemporal> listUsuariosProyectosTemp = [];
     try {
-      //Se recupera toda la colección de usuarios en Pocketbase
-      var url = Uri.parse("$baseUrl/api/collections/emprendimientos/records?perPage=200&expand=id_emprendedor_fk,id_promotor_fk");
-      final headers = ({
-          "Content-Type": "application/json",
-        });
-      var response = await get(
-        url,
-        headers: headers
-      );
-      listEmpExternosPocketbaseTemp = getEmpExternoPocketbaseTempFromMap(response.body);
+      if (await getTokenOAuth()) {
+        //Se recupera toda la colección de usuarios en EmiWeb
+        var url = Uri.parse("$baseUrlEmiWebServices/proyectos/emprendedor/promotor");
+        final headers = ({
+            "Content-Type": "application/json",
+            'Authorization': 'Bearer $tokenGlobal',
+          });
+        var response = await get(
+          url,
+          headers: headers
+        ); 
 
-      if (response.statusCode == 200) {
-        for (var elementEmprendimientoEmp in listEmpExternosPocketbaseTemp.items.toList()) {
-          var indexItemUpdated = listUsuariosProyectosTemp.indexWhere((elementUsuario) => elementUsuario.usuarioTemp.id == elementEmprendimientoEmp.expand.idPromotorFk.id);
-          if (indexItemUpdated != -1) {
-            listUsuariosProyectosTemp[indexItemUpdated].emprendimientosTemp.add(elementEmprendimientoEmp);
-          } else {
-            final newUsuarioProyectoTemporal = 
-            UsuarioProyectosTemporal(
-              usuarioTemp: elementEmprendimientoEmp.expand.idPromotorFk, 
-              emprendimientosTemp: [elementEmprendimientoEmp]
-            );
-            listUsuariosProyectosTemp.add(newUsuarioProyectoTemporal);
+        if (response.statusCode == 200) {
+          listEmpExternosEmiWebTemp = getEmpExternoEmiWebTempFromMap(
+            const Utf8Decoder().convert(response.bodyBytes)
+          );
+
+          for (var elementEmprendimientoEmp in listEmpExternosEmiWebTemp.payload!.toList()) {
+            var indexItemUpdated = listUsuariosProyectosTemp.indexWhere((elementUsuario) => elementUsuario.usuarioTemp.idUsuario == elementEmprendimientoEmp.promotor.idUsuario);
+            if (indexItemUpdated != -1) {
+              listUsuariosProyectosTemp[indexItemUpdated].emprendimientosTemp.add(elementEmprendimientoEmp);
+            } else {
+              final newUsuarioProyectoTemporal = 
+              UsuarioProyectosTemporal(
+                usuarioTemp: elementEmprendimientoEmp.promotor, 
+                emprendimientosTemp: [elementEmprendimientoEmp]
+              );
+              listUsuariosProyectosTemp.add(newUsuarioProyectoTemporal);
+            }
           }
+          return listUsuariosProyectosTemp;
+        } else {
+          print("Error en llamado al API");
+          print(response.statusCode);
+          return null;
         }
-        return listUsuariosProyectosTemp;
       } else {
+        print("Falló en Recuperar Token");
         return null;
       }
     } catch (e) {
+      print("Catch en Recuperación de Usuarios");
+      print(e);
       return null;
     }
   }

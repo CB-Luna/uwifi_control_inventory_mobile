@@ -103,8 +103,8 @@ void main() async {
           create: (context) => RecepcionYEntregaController(),
           lazy: false,
         ),
-        ChangeNotifierProvider<EmpExternosPocketbaseProvider>(
-          create: (context) => EmpExternosPocketbaseProvider(),
+        ChangeNotifierProvider<EmpExternosEmiWebProvider>(
+          create: (context) => EmpExternosEmiWebProvider(),
           lazy: false,
         ),
         ChangeNotifierProvider<SyncProviderPocketbase>(

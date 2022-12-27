@@ -204,9 +204,9 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                           child: Center(
                                             child: Text(
                                               "${widget.usuarioProyectosTemporal.usuarioTemp
-                                              .nombreUsuario.substring(0, 1)} ${widget
+                                              .nombre.substring(0, 1)} ${widget
                                               .usuarioProyectosTemporal.usuarioTemp
-                                              .apellidoP.substring(0, 1)}",
+                                              .apellidoPaterno.substring(0, 1)}",
                                               style:
                                                 AppTheme.of(context).bodyText1.override(
                                                   fontFamily: AppTheme.of(context)
@@ -243,7 +243,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         0, 0, 5, 0),
                                     child: Text(
-                                      widget.usuarioProyectosTemporal.usuarioTemp.nombreUsuario,
+                                      widget.usuarioProyectosTemporal.usuarioTemp.nombre,
                                       style: AppTheme.of(context)
                                           .title1
                                           .override(
@@ -256,9 +256,9 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                   ),
                                   Text(
                                     "${widget.usuarioProyectosTemporal.
-                                      usuarioTemp.apellidoP} ${widget
+                                      usuarioTemp.apellidoPaterno} ${widget
                                       .usuarioProyectosTemporal
-                                      .usuarioTemp.apellidoM}",
+                                      .usuarioTemp.apellidoMaterno}",
                                     style: AppTheme.of(context)
                                         .title1
                                         .override(
@@ -348,7 +348,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Text(
-                              'Usuario Archivado:',
+                              'Fecha Nacimiento:',
                               style: AppTheme.of(context)
                                   .bodyText1
                                   .override(
@@ -362,7 +362,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                               padding:
                                   const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                               child: Text(
-                                widget.usuarioProyectosTemporal.usuarioTemp.archivado == true ? "Sí" : "No",
+                                widget.usuarioProyectosTemporal.usuarioTemp.fechaNacimiento != null ? dateTimeFormat("dd-MM-yyyy", widget.usuarioProyectosTemporal.usuarioTemp.fechaNacimiento!) : "",
                                 style: AppTheme.of(context)
                                     .bodyText1
                                     .override(
@@ -388,7 +388,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Emprendimientos de ${widget.usuarioProyectosTemporal.usuarioTemp.nombreUsuario}',
+                    'Emprendimientos de ${widget.usuarioProyectosTemporal.usuarioTemp.nombre}',
                     style: AppTheme.of(context).bodyText1.override(
                           fontFamily: 'Poppins',
                           color: const Color(0xFF4672FF),
@@ -483,10 +483,10 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                             setState(() {
                               emprendimientoTemp.selected = !emprendimientoTemp.selected;
                               if (emprendimientoTemp.selected) {
-                                listEmprendimientosSelected.add(emprendimientoTemp.id);
+                                listEmprendimientosSelected.add(emprendimientoTemp.idEmprendedor.toString());
                               } else {
-                                if (listEmprendimientosSelected.contains(emprendimientoTemp.id)) {
-                                  listEmprendimientosSelected.remove(emprendimientoTemp.id);
+                                if (listEmprendimientosSelected.contains(emprendimientoTemp.idEmprendedor.toString())) {
+                                  listEmprendimientosSelected.remove(emprendimientoTemp.idEmprendedor.toString());
                                 }
                               }
                             });
@@ -556,7 +556,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              maybeHandleOverflow(emprendimientoTemp.nombreEmprendimiento, 25, "..."),
+                                              maybeHandleOverflow(emprendimientoTemp.proyectos?.last.emprendimiento ?? "", 25, "..."),
                                               style: AppTheme.of(context)
                                                   .title2
                                                   .override(
@@ -571,8 +571,8 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                                   0, 4, 0, 4),
                                               child: Text(
                                                 maybeHandleOverflow("${emprendimientoTemp
-                                                .expand.idEmprendedorFk.nombreEmprendedor} ${emprendimientoTemp
-                                                .expand.idEmprendedorFk.apellidosEmp}", 40, "..."),
+                                                .nombre} ${emprendimientoTemp
+                                                .apellidos}", 40, "..."),
                                                 style: AppTheme.of(context)
                                                     .bodyText1
                                                     .override(
@@ -587,7 +587,8 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                               padding: const EdgeInsetsDirectional.fromSTEB(
                                                   0, 4, 0, 4),
                                               child: Text(
-                                                maybeHandleOverflow(emprendimientoTemp.descripcion, 120, "..."),
+                                                maybeHandleOverflow("${emprendimientoTemp
+                                                .comentarios}", 40, "..."),
                                                 style: AppTheme.of(context)
                                                     .bodyText1
                                                     .override(

@@ -21,68 +21,6 @@ class UsuariosExternosScreen extends StatefulWidget {
 
 class _UsuariosExternosScreenState extends State<UsuariosExternosScreen>
     with TickerProviderStateMixin {
-  // final animationsMap = {
-  //   'listViewOnPageLoadAnimation': AnimationInfo(
-  //     trigger: AnimationTrigger.onPageLoad,
-  //     effects: [
-  //       MoveEffect(
-  //         curve: Curves.easeInOut,
-  //         delay: 0.ms,
-  //         duration: 600.ms,
-  //         begin: Offset(0, 1000),
-  //         end: Offset(0, 0),
-  //       ),
-  //     ],
-  //   ),
-  //   'containerOnPageLoadAnimation2': AnimationInfo(
-  //     trigger: AnimationTrigger.onPageLoad,
-  //     effects: [
-  //       ScaleEffect(
-  //         curve: Curves.easeInOut,
-  //         delay: 0.ms,
-  //         duration: 700.ms,
-  //         begin: Offset(0, 1.5),
-  //         end: Offset(0, 1),
-  //       ),
-  //     ],
-  //   ),
-  //   'textOnPageLoadAnimation1': AnimationInfo(
-  //     trigger: AnimationTrigger.onPageLoad,
-  //     effects: [
-  //       FadeEffect(
-  //         curve: Curves.easeInOut,
-  //         delay: 0.ms,
-  //         duration: 700.ms,
-  //         begin: 0,
-  //         end: 1,
-  //       ),
-  //     ],
-  //   ),
-  //   'textOnPageLoadAnimation2': AnimationInfo(
-  //     trigger: AnimationTrigger.onPageLoad,
-  //     effects: [
-  //       FadeEffect(
-  //         curve: Curves.easeInOut,
-  //         delay: 0.ms,
-  //         duration: 700.ms,
-  //         begin: 0,
-  //         end: 1,
-  //       ),
-  //     ],
-  //   ),
-  //   'cardOnPageLoadAnimation': AnimationInfo(
-  //     trigger: AnimationTrigger.onPageLoad,
-  //     effects: [
-  //       ScaleEffect(
-  //         curve: Curves.easeInOut,
-  //         delay: 0.ms,
-  //         duration: 700.ms,
-  //         begin: Offset(0, 0),
-  //         end: Offset(0, 1),
-  //       ),
-  //     ],
-  //   ),
-  // };
 
   TextEditingController? textController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -255,9 +193,9 @@ class _UsuariosExternosScreenState extends State<UsuariosExternosScreen>
                                             height: 60,
                                             child: Center(
                                               child: Text(
-                                                "${usuarioProyectoTemp.usuarioTemp.nombreUsuario
+                                                "${usuarioProyectoTemp.usuarioTemp.nombre
                                                 .substring(0, 1)} ${usuarioProyectoTemp
-                                                .usuarioTemp.apellidoP.substring(0, 1)}",
+                                                .usuarioTemp.apellidoPaterno.substring(0, 1)}",
                                                 style:
                                                   AppTheme.of(context).bodyText1.override(
                                                         fontFamily: AppTheme.of(context)
@@ -285,11 +223,11 @@ class _UsuariosExternosScreenState extends State<UsuariosExternosScreen>
                                                   12, 0, 0, 0),
                                           child: Text(
                                             "${usuarioProyectoTemp
-                                              .usuarioTemp.nombreUsuario} ${
+                                              .usuarioTemp.nombre} ${
                                               usuarioProyectoTemp
-                                              .usuarioTemp.apellidoP} ${
+                                              .usuarioTemp.apellidoPaterno} ${
                                               usuarioProyectoTemp
-                                              .usuarioTemp.apellidoM}",
+                                              .usuarioTemp.apellidoMaterno}",
                                             style: AppTheme.of(context)
                                                 .subtitle1
                                                 .override(
