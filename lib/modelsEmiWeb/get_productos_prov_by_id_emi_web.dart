@@ -36,6 +36,7 @@ class Payload {
         required this.tiempoEntrega,
         required this.idUnidadMedida,
         required this.archivado,
+        this.idDocumento,
     });
 
     final int idProductosProveedor;
@@ -48,6 +49,7 @@ class Payload {
     final int tiempoEntrega;
     final int idUnidadMedida;
     final bool archivado;
+    final int? idDocumento;
 
     factory Payload.fromMap(Map<String, dynamic> json) => Payload(
         idProductosProveedor: json["idProductosProveedor"],
@@ -60,6 +62,7 @@ class Payload {
         tiempoEntrega: json["tiempoEntrega"],
         idUnidadMedida: json["idUnidadMedida"],
         archivado: json["archivado"],
+        idDocumento: json["idDocumento"],
     );
 
     Map<String, dynamic> toMap() => {
@@ -73,5 +76,6 @@ class Payload {
         "tiempoEntrega": tiempoEntrega,
         "idUnidadMedida": idUnidadMedida,
         "archivado": archivado,
+        "idDocumento": idDocumento,
     };
 }
