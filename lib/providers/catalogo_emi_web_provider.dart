@@ -10,6 +10,7 @@ import 'package:bizpro_app/modelsEmiWeb/get_condiciones_pago_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_estado_inversiones_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_familia_producto_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_fase_emprendimiento_emi_web.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_imagen_producto_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_imagen_usuario_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_porcentaje_avance_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_prod_proyecto_emi_web.dart';
@@ -1838,108 +1839,346 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                 final responseProductoProveedor =
                     getProductosProvByIdEmiWebFromMap(
                         const Utf8Decoder().convert(response.bodyBytes));
-                //Verificamos que el nuevo producto proveedor no exista en Pocketbase
+                
                 final recordProductoProveedor = await client.records.getFullList(
                     'productos_prov',
                     batch: 200,
                     filter:
                         "id_emi_web='${responseProductoProveedor.payload!.idProductosProveedor}'");
+                //Verificamos que el nuevo producto proveedor no exista en Pocketbase
                 if (recordProductoProveedor.isEmpty) {
-                  //Se recupera el id del proveedor, familia producto y unidad de medida en Pocketbase y se acocia con el nuevo Producto Proveedor
-                  final recordProveedor = await client.records.getFullList(
-                      'proveedores',
-                      batch: 200,
-                      filter:
-                          "id_emi_web='${responseProductoProveedor.payload!.idProveedor}'");
-                  final recordFamiliaProd = await client.records.getFullList(
-                      'familia_prod',
-                      batch: 200,
-                      filter:
-                          "id_emi_web='${responseProductoProveedor.payload!.idCatTipoProducto}'");
-                  final recordUnidadMedida = await client.records.getFullList(
-                      'und_medida',
-                      batch: 200,
-                      filter:
-                          "id_emi_web='${responseProductoProveedor.payload!.idUnidadMedida}'");
-                  if (recordProveedor.isNotEmpty &&
-                      recordFamiliaProd.isNotEmpty &&
-                      recordUnidadMedida.isNotEmpty) {
-                    //Se agrega el producto proveedor como nuevo en la colección de Pocketbase
-                    final recordProductoProveedor =
-                        await client.records.create('productos_prov', body: {
-                      "nombre_prod_prov":
-                          responseProductoProveedor.payload!.producto,
-                      "descripcion_prod_prov":
-                          responseProductoProveedor.payload!.descripcion,
-                      "marca": responseProductoProveedor.payload!.marca,
-                      "id_und_medida_fk": recordUnidadMedida.first.id,
-                      "costo_prod_prov":
-                          responseProductoProveedor.payload!.costoUnidadMedida,
-                      "id_proveedor_fk": recordProveedor.first.id,
-                      "id_familia_prod_fk": recordFamiliaProd.first.id,
-                      "tiempo_entrega":
-                          responseProductoProveedor.payload!.tiempoEntrega,
-                      "archivado": responseProductoProveedor.payload!.archivado,
-                      "id_emi_web": responseProductoProveedor
-                          .payload!.idProductosProveedor
-                          .toString(),
-                      //"id_imagen_fk":
+                  //Se verifica que el Producto Proveedor a agregar tenga una imagen asociada
+                  if (responseProductoProveedor.payload!.idDocumento != null) {
+                    //Se recupera la información de la Imagen 
+                    var url = Uri.parse(
+                      "$baseUrlEmiWebServices/documentos?id=${responseProductoProveedor.payload!.idDocumento}");
+                    final headers = ({
+                      "Content-Type": "application/json",
+                      'Authorization': 'Bearer $tokenGlobal',
                     });
-                    if (recordProductoProveedor.id.isNotEmpty) {
-                      print(
-                          'Producto Proveedor Emi Web agregado éxitosamente a Pocketbase');
+                    var response = await get(url, headers: headers);
+                    switch (response.statusCode) {
+                      case 200:
+                        final responseImagenProductoProveedor =
+                          getImagenProductoEmiWebFromMap(const Utf8Decoder()
+                              .convert(response.bodyBytes));
+                        final recordImagenProductoProveedor = await client.records.create('imagenes', body: {
+                          "nombre": responseImagenProductoProveedor.payload!.nombreArchivo,
+                          "base64": responseImagenProductoProveedor.payload!.archivo,
+                          "id_emi_web": responseProductoProveedor.payload!.idDocumento,
+                        });
+                        if (recordImagenProductoProveedor.id.isNotEmpty) {
+                          //Se agrega Imagen de forma exitosa en Pocketbase
+                          //Se recupera el id del proveedor, familia producto y unidad de medida en Pocketbase y se acocia con el nuevo Producto Proveedor
+                          final recordProveedor = await client.records.getFullList(
+                              'proveedores',
+                              batch: 200,
+                              filter:
+                                  "id_emi_web='${responseProductoProveedor.payload!.idProveedor}'");
+                          final recordFamiliaProd = await client.records.getFullList(
+                              'familia_prod',
+                              batch: 200,
+                              filter:
+                                  "id_emi_web='${responseProductoProveedor.payload!.idCatTipoProducto}'");
+                          final recordUnidadMedida = await client.records.getFullList(
+                              'und_medida',
+                              batch: 200,
+                              filter:
+                                  "id_emi_web='${responseProductoProveedor.payload!.idUnidadMedida}'");
+                          if (recordProveedor.isNotEmpty &&
+                              recordFamiliaProd.isNotEmpty &&
+                              recordUnidadMedida.isNotEmpty) {
+                            //Se agrega el producto proveedor como nuevo en la colección de Pocketbase
+                            final recordProductoProveedor =
+                                await client.records.create('productos_prov', body: {
+                              "nombre_prod_prov":
+                                  responseProductoProveedor.payload!.producto,
+                              "descripcion_prod_prov":
+                                  responseProductoProveedor.payload!.descripcion,
+                              "marca": responseProductoProveedor.payload!.marca,
+                              "id_und_medida_fk": recordUnidadMedida.first.id,
+                              "costo_prod_prov":
+                                  responseProductoProveedor.payload!.costoUnidadMedida,
+                              "id_proveedor_fk": recordProveedor.first.id,
+                              "id_familia_prod_fk": recordFamiliaProd.first.id,
+                              "tiempo_entrega":
+                                  responseProductoProveedor.payload!.tiempoEntrega,
+                              "archivado": responseProductoProveedor.payload!.archivado,
+                              "id_emi_web": responseProductoProveedor
+                                  .payload!.idProductosProveedor
+                                  .toString(),
+                              "id_imagen_fk": recordImagenProductoProveedor.id,
+                            });
+                            if (recordProductoProveedor.id.isNotEmpty) {
+                              print('Producto Proveedor Emi Web agregado éxitosamente a Pocketbase');
+                              //TODO: Sí es break o continue?
+                              continue;
+                            } else {
+                              return false;
+                            }
+                          } else {
+                            return false;
+                          }
+                        } else {
+                          //Error al agregar imagen en Pocketbase
+                          return false;
+                        }
+                        
+                      default:
+                        return false;
+                    }
+                  } else {
+                    //Se recupera el id del proveedor, familia producto y unidad de medida en Pocketbase y se acocia con el nuevo Producto Proveedor
+                    final recordProveedor = await client.records.getFullList(
+                        'proveedores',
+                        batch: 200,
+                        filter:
+                            "id_emi_web='${responseProductoProveedor.payload!.idProveedor}'");
+                    final recordFamiliaProd = await client.records.getFullList(
+                        'familia_prod',
+                        batch: 200,
+                        filter:
+                            "id_emi_web='${responseProductoProveedor.payload!.idCatTipoProducto}'");
+                    final recordUnidadMedida = await client.records.getFullList(
+                        'und_medida',
+                        batch: 200,
+                        filter:
+                            "id_emi_web='${responseProductoProveedor.payload!.idUnidadMedida}'");
+                    if (recordProveedor.isNotEmpty &&
+                        recordFamiliaProd.isNotEmpty &&
+                        recordUnidadMedida.isNotEmpty) {
+                      //Se agrega el producto proveedor como nuevo en la colección de Pocketbase
+                      final recordProductoProveedor =
+                          await client.records.create('productos_prov', body: {
+                        "nombre_prod_prov":
+                            responseProductoProveedor.payload!.producto,
+                        "descripcion_prod_prov":
+                            responseProductoProveedor.payload!.descripcion,
+                        "marca": responseProductoProveedor.payload!.marca,
+                        "id_und_medida_fk": recordUnidadMedida.first.id,
+                        "costo_prod_prov":
+                            responseProductoProveedor.payload!.costoUnidadMedida,
+                        "id_proveedor_fk": recordProveedor.first.id,
+                        "id_familia_prod_fk": recordFamiliaProd.first.id,
+                        "tiempo_entrega":
+                            responseProductoProveedor.payload!.tiempoEntrega,
+                        "archivado": responseProductoProveedor.payload!.archivado,
+                        "id_emi_web": responseProductoProveedor
+                            .payload!.idProductosProveedor
+                            .toString(),
+                      });
+                      if (recordProductoProveedor.id.isNotEmpty) {
+                        print(
+                            'Producto Proveedor Emi Web agregado éxitosamente a Pocketbase');
+                      } else {
+                        return false;
+                      }
                     } else {
                       return false;
                     }
-                  } else {
-                    return false;
                   }
                 } else {
-                  //Se actualiza el producto proveedor en la colección de Pocketbase
+                  // El Producto Proveedor ya existe en Pocketbase
+                  // Se Aplica el Parseo para evaluar sus campos
                   final recordProductoProveedorParse = getProductosProvFromMap(
                       recordProductoProveedor.first.toString());
-                  //Verificamos que los campos de este registro sean diferentes para actualizarlo
-                  if (recordProductoProveedorParse.nombreProdProv !=
-                          responseProductoProveedor.payload!.producto ||
-                      recordProductoProveedorParse.descripcionProdProv !=
-                          responseProductoProveedor.payload!.descripcion ||
-                      recordProductoProveedorParse.marca !=
-                          responseProductoProveedor.payload!.marca ||
-                      recordProductoProveedorParse.costoProdProv !=
-                          responseProductoProveedor
-                              .payload!.costoUnidadMedida ||
-                      recordProductoProveedorParse.tiempoEntrega !=
-                          responseProductoProveedor.payload!.tiempoEntrega ||
-                      recordProductoProveedorParse.archivado !=
-                          responseProductoProveedor.payload!.archivado) {
-                    final updateRecordProductoProveedor = await client.records
-                        .update(
-                            'productos_prov', recordProductoProveedorParse.id,
-                            body: {
-                          "nombre_prod_prov":
-                              responseProductoProveedor.payload!.producto,
-                          "descripcion_prod_prov":
-                              responseProductoProveedor.payload!.descripcion,
-                          "marca": responseProductoProveedor.payload!.marca,
-                          "costo_prod_prov": responseProductoProveedor
-                              .payload!.costoUnidadMedida,
-                          "tiempo_entrega":
-                              responseProductoProveedor.payload!.tiempoEntrega,
-                          "archivado":
-                              responseProductoProveedor.payload!.archivado,
-                          "id_emi_web": responseProductoProveedor
-                              .payload!.idProductosProveedor
-                              .toString(),
-                        });
-                    if (updateRecordProductoProveedor.id.isNotEmpty) {
-                      print(
-                          'Producto Proveedor Emi Web actualizado éxitosamente en Pocketbase');
+                  //Se verifica que el Producto Proveedor a agregar tenga una imagen asociada
+                  if (responseProductoProveedor.payload!.idDocumento != null) {
+                    //Se verifica si el Producto Proveedor existente ya tiene una imagen asociada o se debe crear
+                    if (recordProductoProveedorParse.idImagenfk != "") {
+                      //Se recupera la información de la Imagen y se actualiza en Pocketbase
+                      var url = Uri.parse(
+                        "$baseUrlEmiWebServices/documentos?id=${responseProductoProveedor.payload!.idDocumento}");
+                      final headers = ({
+                        "Content-Type": "application/json",
+                        'Authorization': 'Bearer $tokenGlobal',
+                      });
+                      var response = await get(url, headers: headers);
+                      switch (response.statusCode) {
+                        case 200:
+                          final responseImagenProductoProveedor =
+                            getImagenProductoEmiWebFromMap(const Utf8Decoder()
+                                .convert(response.bodyBytes));
+                          final recordImagenProductoProveedor = await client.records.update('imagenes', recordProductoProveedorParse.idImagenfk, body: {
+                            "nombre": responseImagenProductoProveedor.payload!.nombreArchivo,
+                            "base64": responseImagenProductoProveedor.payload!.archivo,
+                          }); 
+                          if (recordImagenProductoProveedor.id.isNotEmpty) {
+                            //Se actualiza Imagen de forma exitosa en Pocketbase
+                            //Verificamos que los campos de este registro sean diferentes para actualizarlo
+                            if (recordProductoProveedorParse.nombreProdProv !=
+                                    responseProductoProveedor.payload!.producto ||
+                                recordProductoProveedorParse.descripcionProdProv !=
+                                    responseProductoProveedor.payload!.descripcion ||
+                                recordProductoProveedorParse.marca !=
+                                    responseProductoProveedor.payload!.marca ||
+                                recordProductoProveedorParse.costoProdProv !=
+                                    responseProductoProveedor
+                                        .payload!.costoUnidadMedida ||
+                                recordProductoProveedorParse.tiempoEntrega !=
+                                    responseProductoProveedor.payload!.tiempoEntrega ||
+                                recordProductoProveedorParse.archivado !=
+                                    responseProductoProveedor.payload!.archivado) {
+                              //Se actualiza el producto proveedor en la colección de Pocketbase
+                              final updateRecordProductoProveedor = await client.records
+                                  .update(
+                                      'productos_prov', recordProductoProveedorParse.id,
+                                      body: {
+                                    "nombre_prod_prov":
+                                        responseProductoProveedor.payload!.producto,
+                                    "descripcion_prod_prov":
+                                        responseProductoProveedor.payload!.descripcion,
+                                    "marca": responseProductoProveedor.payload!.marca,
+                                    "costo_prod_prov": responseProductoProveedor
+                                        .payload!.costoUnidadMedida,
+                                    "tiempo_entrega":
+                                        responseProductoProveedor.payload!.tiempoEntrega,
+                                    "archivado":
+                                        responseProductoProveedor.payload!.archivado,
+                                    "id_emi_web": responseProductoProveedor
+                                        .payload!.idProductosProveedor
+                                        .toString(),
+                                  });
+                              if (updateRecordProductoProveedor.id.isNotEmpty) {
+                                print(
+                                    'Producto Proveedor Emi Web actualizado éxitosamente en Pocketbase');
+                              } else {
+                                return false;
+                              }
+                            }
+                          } else {
+                            //Error al agregar imagen en Pocketbase
+                            return false;
+                          }
+                          //TODO: Sí es break o continue?
+                          continue;
+                        default:
+                          return false;
+                      }
                     } else {
-                      return false;
+                      //Se recupera la información de la Imagen y se crea en Pocketbase
+                      var url = Uri.parse(
+                        "$baseUrlEmiWebServices/documentos?id=${responseProductoProveedor.payload!.idDocumento}");
+                      final headers = ({
+                        "Content-Type": "application/json",
+                        'Authorization': 'Bearer $tokenGlobal',
+                      });
+                      var response = await get(url, headers: headers);
+                      switch (response.statusCode) {
+                        case 200:
+                          final responseImagenProductoProveedor =
+                            getImagenProductoEmiWebFromMap(const Utf8Decoder()
+                                .convert(response.bodyBytes));
+                          final recordImagenProductoProveedor = await client.records.create('imagenes', body: {
+                            "nombre": responseImagenProductoProveedor.payload!.nombreArchivo,
+                            "base64": responseImagenProductoProveedor.payload!.archivo,
+                            "id_emi_web": responseProductoProveedor.payload!.idDocumento,
+                          });
+                          if (recordImagenProductoProveedor.id.isNotEmpty) {
+                            //Se agrega Imagen de forma exitosa en Pocketbase
+                            //Verificamos que los campos de este registro sean diferentes para actualizarlo
+                            if (recordProductoProveedorParse.nombreProdProv !=
+                                    responseProductoProveedor.payload!.producto ||
+                                recordProductoProveedorParse.descripcionProdProv !=
+                                    responseProductoProveedor.payload!.descripcion ||
+                                recordProductoProveedorParse.marca !=
+                                    responseProductoProveedor.payload!.marca ||
+                                recordProductoProveedorParse.costoProdProv !=
+                                    responseProductoProveedor
+                                        .payload!.costoUnidadMedida ||
+                                recordProductoProveedorParse.tiempoEntrega !=
+                                    responseProductoProveedor.payload!.tiempoEntrega ||
+                                recordProductoProveedorParse.archivado !=
+                                    responseProductoProveedor.payload!.archivado ||
+                                recordProductoProveedorParse.idImagenfk != 
+                                recordImagenProductoProveedor.id ) {
+                              //Se actualiza el producto proveedor en la colección de Pocketbase
+                              final updateRecordProductoProveedor = await client.records
+                                  .update(
+                                      'productos_prov', recordProductoProveedorParse.id,
+                                      body: {
+                                    "nombre_prod_prov":
+                                        responseProductoProveedor.payload!.producto,
+                                    "descripcion_prod_prov":
+                                        responseProductoProveedor.payload!.descripcion,
+                                    "marca": responseProductoProveedor.payload!.marca,
+                                    "costo_prod_prov": responseProductoProveedor
+                                        .payload!.costoUnidadMedida,
+                                    "tiempo_entrega":
+                                        responseProductoProveedor.payload!.tiempoEntrega,
+                                    "archivado":
+                                        responseProductoProveedor.payload!.archivado,
+                                    "id_emi_web": responseProductoProveedor
+                                        .payload!.idProductosProveedor
+                                        .toString(),
+                                    "id_imagen_fk": recordImagenProductoProveedor.id,
+                                  });
+                              if (updateRecordProductoProveedor.id.isNotEmpty) {
+                                print(
+                                    'Producto Proveedor Emi Web actualizado éxitosamente en Pocketbase');
+                              } else {
+                                return false;
+                              }
+                            }
+                          } else {
+                            //Error al agregar imagen en Pocketbase
+                            return false;
+                          }
+                          //TODO: Sí es break o continue?
+                          continue;
+                        default:
+                          return false;
+                      }
+                    }
+                  } else {
+                    //No tiene Imagen asociada
+                    //Verificamos que los campos de este registro sean diferentes para actualizarlo
+                    if (recordProductoProveedorParse.nombreProdProv !=
+                            responseProductoProveedor.payload!.producto ||
+                        recordProductoProveedorParse.descripcionProdProv !=
+                            responseProductoProveedor.payload!.descripcion ||
+                        recordProductoProveedorParse.marca !=
+                            responseProductoProveedor.payload!.marca ||
+                        recordProductoProveedorParse.costoProdProv !=
+                            responseProductoProveedor
+                                .payload!.costoUnidadMedida ||
+                        recordProductoProveedorParse.tiempoEntrega !=
+                            responseProductoProveedor.payload!.tiempoEntrega ||
+                        recordProductoProveedorParse.archivado !=
+                            responseProductoProveedor.payload!.archivado ||
+                        recordProductoProveedorParse.idImagenfk != "") {
+                      //Se actualiza el producto proveedor en la colección de Pocketbase
+                      final updateRecordProductoProveedor = await client.records
+                          .update(
+                              'productos_prov', recordProductoProveedorParse.id,
+                              body: {
+                            "nombre_prod_prov":
+                                responseProductoProveedor.payload!.producto,
+                            "descripcion_prod_prov":
+                                responseProductoProveedor.payload!.descripcion,
+                            "marca": responseProductoProveedor.payload!.marca,
+                            "costo_prod_prov": responseProductoProveedor
+                                .payload!.costoUnidadMedida,
+                            "tiempo_entrega":
+                                responseProductoProveedor.payload!.tiempoEntrega,
+                            "archivado":
+                                responseProductoProveedor.payload!.archivado,
+                            "id_emi_web": responseProductoProveedor
+                                .payload!.idProductosProveedor
+                                .toString(),
+                            "id_imagen_fk": "",
+                          });
+                      if (updateRecordProductoProveedor.id.isNotEmpty) {
+                        print(
+                            'Producto Proveedor Emi Web actualizado éxitosamente en Pocketbase');
+                      } else {
+                        return false;
+                      }
                     }
                   }
                 }
-                break;
+                //TODO: Sí es break o continue?
+                continue;
               case 401: //Error de Token incorrecto
                 if (await getTokenOAuth()) {
                   getProductosProv();
