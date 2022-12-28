@@ -1898,6 +1898,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                   //Se actualiza el producto proveedor en la colección de Pocketbase
                   final recordProductoProveedorParse = getProductosProvFromMap(
                       recordProductoProveedor.first.toString());
+
                   //Verificamos que los campos de este registro sean diferentes para actualizarlo
                   if (recordProductoProveedorParse.nombreProdProv !=
                           responseProductoProveedor.payload!.producto ||
