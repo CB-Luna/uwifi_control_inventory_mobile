@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-GetimagenProductoEmiWeb getimagenProductoEmiWebFromMap(String str) =>
-    GetimagenProductoEmiWeb.fromMap(json.decode(str));
+GetImagenProductoEmiWeb getImagenProductoEmiWebFromMap(String str) =>
+    GetImagenProductoEmiWeb.fromMap(json.decode(str));
 
-String getimagenProductoEmiWebToMap(GetimagenProductoEmiWeb data) =>
+String getImagenProductoEmiWebToMap(GetImagenProductoEmiWeb data) =>
     json.encode(data.toMap());
 
-class GetimagenProductoEmiWeb {
-  GetimagenProductoEmiWeb({
+class GetImagenProductoEmiWeb {
+  GetImagenProductoEmiWeb({
     required this.status,
     required this.payload,
   });
@@ -15,8 +15,8 @@ class GetimagenProductoEmiWeb {
   final String status;
   final Payload? payload;
 
-  factory GetimagenProductoEmiWeb.fromMap(Map<String, dynamic> json) =>
-      GetimagenProductoEmiWeb(
+  factory GetImagenProductoEmiWeb.fromMap(Map<String, dynamic> json) =>
+      GetImagenProductoEmiWeb(
         status: json["status"],
         payload:
             json["payload"] == null ? null : Payload.fromMap(json["payload"]),

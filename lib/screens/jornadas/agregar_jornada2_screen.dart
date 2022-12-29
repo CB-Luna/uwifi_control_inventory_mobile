@@ -76,7 +76,8 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                       height: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: FileImage(libraryIO.File(widget.emprendimiento.imagen.target!.path!)),
+                          image: FileImage(libraryIO.File(
+                              widget.emprendimiento.imagen.target!.path!)),
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
                         ),
@@ -569,22 +570,27 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                                                   child: FlutterFlowCarousel(
                                                       width: 180,
                                                       height: 100,
-                                                      listaImagenes: jornadaProvider.imagenes
-                                                      )
-                                                    ),
+                                                      listaImagenes:
+                                                          jornadaProvider
+                                                              .imagenes)),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 10, 0, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 10, 0, 0),
                                               child: Text(
                                                 "Total imágenes: ${jornadaProvider.imagenes.length}",
-                                                style: AppTheme.of(context).title3.override(
-                                                fontFamily: 'Poppins',
-                                                color:
-                                                    AppTheme.of(context).secondaryText,
-                                                fontSize: 12.5,
-                                                fontWeight: FontWeight.normal,
-                                                ),
+                                                style: AppTheme.of(context)
+                                                    .title3
+                                                    .override(
+                                                      fontFamily: 'Poppins',
+                                                      color:
+                                                          AppTheme.of(context)
+                                                              .secondaryText,
+                                                      fontSize: 12.5,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                    ),
                                               ),
                                             ),
                                           ],
@@ -606,8 +612,11 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                                           XFile? pickedFile;
                                           List<XFile>? pickedFiles;
                                           if (option == 'camera') {
-                                            if (jornadaProvider.imagenes.length < 3) {
-                                              pickedFile = await picker.pickImage(
+                                            if (jornadaProvider
+                                                    .imagenes.length <
+                                                3) {
+                                              pickedFile =
+                                                  await picker.pickImage(
                                                 source: ImageSource.camera,
                                                 imageQuality: 100,
                                               );
@@ -615,68 +624,90 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                                                 imagenesTemp.add(pickedFile);
                                               }
                                             } else {
-                                                bool? booleano = await showModalBottomSheet(
+                                              bool? booleano =
+                                                  await showModalBottomSheet(
                                                 isScrollControlled: true,
-                                                backgroundColor: Colors.transparent,
+                                                backgroundColor:
+                                                    Colors.transparent,
                                                 context: context,
                                                 builder: (context) {
                                                   return Padding(
-                                                    padding: MediaQuery.of(context).viewInsets,
+                                                    padding:
+                                                        MediaQuery.of(context)
+                                                            .viewInsets,
                                                     child: SizedBox(
                                                       height:
-                                                          MediaQuery.of(context).size.height * 0.45,
-                                                      child: const BottomSheetImagenesCompletas(),
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.45,
+                                                      child:
+                                                          const BottomSheetImagenesCompletas(),
                                                     ),
                                                   );
                                                 },
-                                              );  
-                                              if (booleano != null && booleano == true) {
-                                                pickedFile = await picker.pickImage(
-                                                source: ImageSource.camera,
-                                                imageQuality: 100,
+                                              );
+                                              if (booleano != null &&
+                                                  booleano == true) {
+                                                pickedFile =
+                                                    await picker.pickImage(
+                                                  source: ImageSource.camera,
+                                                  imageQuality: 100,
                                                 );
                                                 if (pickedFile != null) {
                                                   setState(() {
-                                                    jornadaProvider.imagenes.removeLast();
-                                                    jornadaProvider.imagenes.add(pickedFile!.path);
+                                                    jornadaProvider.imagenes
+                                                        .removeLast();
+                                                    jornadaProvider.imagenes
+                                                        .add(pickedFile!.path);
                                                   });
                                                 }
                                                 return;
-                                              }        
+                                              }
                                             }
-                                          } else { //Se selecciona galería
-                                            if (jornadaProvider.imagenes.length < 3) {
-                                              pickedFiles = await picker.pickMultiImage(
-                                              imageQuality: 100,
+                                          } else {
+                                            //Se selecciona galería
+                                            if (jornadaProvider
+                                                    .imagenes.length <
+                                                3) {
+                                              pickedFiles =
+                                                  await picker.pickMultiImage(
+                                                imageQuality: 100,
                                               );
                                               if (pickedFiles == null) {
                                                 return;
                                               }
                                               if (pickedFiles.length > 3) {
                                                 snackbarKey.currentState
-                                                  ?.showSnackBar(const SnackBar(
+                                                    ?.showSnackBar(
+                                                        const SnackBar(
                                                   content: Text(
                                                       "No se permite cargar más de 3 imágenes."),
                                                 ));
                                                 return;
                                               }
-                                              switch (jornadaProvider.imagenes.length) {
+                                              switch (jornadaProvider
+                                                  .imagenes.length) {
                                                 case 0:
-                                                  for(int i = 0; i < pickedFiles.length; i++)
-                                                  {
-                                                    imagenesTemp.add(pickedFiles[i]);
+                                                  for (int i = 0;
+                                                      i < pickedFiles.length;
+                                                      i++) {
+                                                    imagenesTemp
+                                                        .add(pickedFiles[i]);
                                                   }
                                                   break;
                                                 case 1:
-                                                  if(pickedFiles.length <= 2){
-                                                    for(int i = 0; i < pickedFiles.length; i++)
-                                                    {
-                                                      imagenesTemp.add(pickedFiles[i]);
+                                                  if (pickedFiles.length <= 2) {
+                                                    for (int i = 0;
+                                                        i < pickedFiles.length;
+                                                        i++) {
+                                                      imagenesTemp
+                                                          .add(pickedFiles[i]);
                                                     }
-                                                  }
-                                                  else{
+                                                  } else {
                                                     snackbarKey.currentState
-                                                    ?.showSnackBar(const SnackBar(
+                                                        ?.showSnackBar(
+                                                            const SnackBar(
                                                       content: Text(
                                                           "No se permite cargar más de 3 imágenes."),
                                                     ));
@@ -684,15 +715,17 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                                                   }
                                                   break;
                                                 case 2:
-                                                  if(pickedFiles.length <= 1){
-                                                    for(int i = 0; i < pickedFiles.length; i++)
-                                                    {
-                                                      imagenesTemp.add(pickedFiles[i]);
+                                                  if (pickedFiles.length <= 1) {
+                                                    for (int i = 0;
+                                                        i < pickedFiles.length;
+                                                        i++) {
+                                                      imagenesTemp
+                                                          .add(pickedFiles[i]);
                                                     }
-                                                  }
-                                                  else{
+                                                  } else {
                                                     snackbarKey.currentState
-                                                    ?.showSnackBar(const SnackBar(
+                                                        ?.showSnackBar(
+                                                            const SnackBar(
                                                       content: Text(
                                                           "No se permite cargar más de 3 imágenes."),
                                                     ));
@@ -703,47 +736,70 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                                                   break;
                                               }
                                             } else {
-                                              bool? booleano = await showModalBottomSheet(
+                                              bool? booleano =
+                                                  await showModalBottomSheet(
                                                 isScrollControlled: true,
-                                                backgroundColor: Colors.transparent,
+                                                backgroundColor:
+                                                    Colors.transparent,
                                                 context: context,
                                                 builder: (context) {
                                                   return Padding(
-                                                    padding: MediaQuery.of(context).viewInsets,
+                                                    padding:
+                                                        MediaQuery.of(context)
+                                                            .viewInsets,
                                                     child: SizedBox(
                                                       height:
-                                                          MediaQuery.of(context).size.height * 0.45,
-                                                      child: const BottomSheetImagenesCompletas(),
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.45,
+                                                      child:
+                                                          const BottomSheetImagenesCompletas(),
                                                     ),
                                                   );
                                                 },
                                               );
-                                              if (booleano != null && booleano == true) {
-                                                pickedFile = await picker.pickImage(
-                                                source: ImageSource.gallery,
-                                                imageQuality: 100,
+                                              if (booleano != null &&
+                                                  booleano == true) {
+                                                pickedFile =
+                                                    await picker.pickImage(
+                                                  source: ImageSource.gallery,
+                                                  imageQuality: 100,
                                                 );
                                                 if (pickedFile != null) {
                                                   setState(() {
-                                                    jornadaProvider.imagenes.removeLast();
-                                                    jornadaProvider.imagenes.add(pickedFile!.path);
+                                                    jornadaProvider.imagenes
+                                                        .removeLast();
+                                                    jornadaProvider.imagenes
+                                                        .add(pickedFile!.path);
                                                   });
                                                 }
                                                 return;
-                                              }     
+                                              }
                                             }
                                           }
                                           setState(() {
-                                            for (var i = 0; i < imagenesTemp.length; i++) {
-                                              libraryIO.File file = libraryIO.File(imagenesTemp[i].path);
-                                              List<int> fileInByte = file.readAsBytesSync();
-                                              String base64 = base64Encode(fileInByte);
-                                              var newImagenLocal = SaveImagenesLocal(
-                                                nombre: imagenesTemp[i].name, 
-                                                path: imagenesTemp[i].path, 
-                                                base64: base64);
-                                              jornadaProvider.imagenesLocal.add(newImagenLocal);  
-                                              jornadaProvider.imagenes.add(imagenesTemp[i].path);
+                                            for (var i = 0;
+                                                i < imagenesTemp.length;
+                                                i++) {
+                                              libraryIO.File file =
+                                                  libraryIO.File(
+                                                      imagenesTemp[i].path);
+                                              List<int> fileInByte =
+                                                  file.readAsBytesSync();
+                                              String base64 =
+                                                  base64Encode(fileInByte);
+                                              var newImagenLocal =
+                                                  SaveImagenesLocal(
+                                                      nombre:
+                                                          imagenesTemp[i].name,
+                                                      path:
+                                                          imagenesTemp[i].path,
+                                                      base64: base64);
+                                              jornadaProvider.imagenesLocal
+                                                  .add(newImagenLocal);
+                                              jornadaProvider.imagenes
+                                                  .add(imagenesTemp[i].path);
                                             }
                                           });
                                         },
@@ -802,7 +858,9 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>  JornadaCreada(idEmprendimiento:widget.emprendimiento.id),
+                                    builder: (context) => JornadaCreada(
+                                        idEmprendimiento:
+                                            widget.emprendimiento.id),
                                   ),
                                 );
                               } else {
