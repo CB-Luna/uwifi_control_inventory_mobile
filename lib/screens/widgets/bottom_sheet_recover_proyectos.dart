@@ -1,4 +1,4 @@
-import 'package:bizpro_app/providers/sync_emprendimientos_externos_provider.dart';
+import 'package:bizpro_app/providers/sync_emprendimientos_externos_emi_web_provider.dart';
 import 'package:bizpro_app/screens/emprendimientos_externos/usuarios_externos_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -20,7 +20,7 @@ class _BottomSheetRecoverProyectosWidgetState
     extends State<BottomSheetRecoverProyectosWidget> {
   @override
   Widget build(BuildContext context) {
-    final empExternosProvider = Provider.of<EmpExternosEmiWebProvider>(context);
+    final empExternosProvider = Provider.of<SyncEmpExternosEmiWebProvider>(context);
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 350,
@@ -62,7 +62,7 @@ class _BottomSheetRecoverProyectosWidgetState
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 4, 0, 0),
                               child: Text(
-                                '¿Seguro que quieres recuperar los Proyectos?',
+                                '¿Seguro que quieres recuperar el Proyecto?',
                                 textAlign: TextAlign.center,
                                 style: AppTheme.of(context).title2.override(
                                       fontFamily:

@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:bizpro_app/modelsPocketbase/temporals/usuario_proyectos_temporal.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/emprendimientos_externos/usuarios_externos_screen.dart';
-import 'package:bizpro_app/screens/sync/descarga_proyectos_externos_pocketbase_screen.dart';
+import 'package:bizpro_app/screens/sync/descarga_proyectos_externos_emi_web.screen.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:bizpro_app/screens/widgets/toggle_icon.dart';
 import 'package:bizpro_app/theme/theme.dart';
@@ -27,49 +27,11 @@ class PerfilUsuarioExternoScreen extends StatefulWidget {
 
 class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
     with TickerProviderStateMixin {
-  // final animationsMap = {
-  //   'containerOnPageLoadAnimation1': AnimationInfo(
-  //     trigger: AnimationTrigger.onPageLoad,
-  //     effects: [
-  //       ScaleEffect(
-  //         curve: Curves.easeInOut,
-  //         delay: 0.ms,
-  //         duration: 700.ms,
-  //         begin: const Offset(0, 0),
-  //         end: const Offset(1,1),
-  //       ),
-  //     ],
-  //   ),
-  //   'rowOnPageLoadAnimation': AnimationInfo(
-  //     trigger: AnimationTrigger.onPageLoad,
-  //     effects: [
-  //       FadeEffect(
-  //         curve: Curves.easeInOut,
-  //         delay: 0.ms,
-  //         duration: 800.ms,
-  //         begin: 0,
-  //         end: 1,
-  //       ),
-  //     ],
-  //   ),
-  //   'textOnPageLoadAnimation1': AnimationInfo(
-  //     trigger: AnimationTrigger.onPageLoad,
-  //     effects: [
-  //       FadeEffect(
-  //         curve: Curves.easeInOut,
-  //         delay: 0.ms,
-  //         duration: 800.ms,
-  //         begin: 0,
-  //         end: 1,
-  //       ),
-  //     ],
-  //   ),
-  // };
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  List<String> listEmprendimientosSelected = [];
+  String emprendimientoSelected = "";
   @override
   void initState() {
-    listEmprendimientosSelected = [];
+    emprendimientoSelected = "";
     super.initState();
   }
 
@@ -403,13 +365,14 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                   10, 5, 10, 10),
               child: FFButtonWidget(
                 onPressed: () async {
-                  if (listEmprendimientosSelected.isNotEmpty) {
+                  if (emprendimientoSelected != "") {
+                    print("Emprendimiento: $emprendimientoSelected");
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                          DescargaProyectosExternosPocketbaseScreen(
-                            listIdEmprendimientos: listEmprendimientosSelected,
+                          DescargaProyectosExternosEmiWebScreen(
+                            idEmprendimiento: emprendimientoSelected,
                             usuario: usuarioProvider.usuarioCurrent!,
                           ),
                       ),
@@ -422,7 +385,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                           title:
                               const Text('Campos vacíos'),
                           content: const Text(
-                              'Para continuar, debes seleccionar al menos un emprendimientos de la lista.'),
+                              'Para continuar, debes seleccionar un emprendimiento de la lista.'),
                           actions: [
                             TextButton(
                               onPressed: () =>
@@ -437,7 +400,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                     return;
                   }
                 },
-                text: 'Descargar Proyectos',
+                text: 'Descargar Proyecto',
                 icon: const Icon(
                   Icons.check_rounded,
                   size: 20,
@@ -465,154 +428,163 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.5,
-              child: ListView.builder(
-                padding: const EdgeInsetsDirectional
-                    .fromSTEB(10, 0, 10, 10),
-                controller: ScrollController(),
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                itemCount: widget.usuarioProyectosTemporal.emprendimientosTemp.length,
-                itemBuilder: (context, index) {
-                  final emprendimientoTemp = widget.usuarioProyectosTemporal.emprendimientosTemp[index];
-                  return Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
-                    child: Row(
-                      children: [
-                        ToggleIcon(
-                          onPressed: () {
-                            setState(() {
-                              emprendimientoTemp.selected = !emprendimientoTemp.selected;
-                              if (emprendimientoTemp.selected) {
-                                listEmprendimientosSelected.add(emprendimientoTemp.idEmprendedor.toString());
-                              } else {
-                                if (listEmprendimientosSelected.contains(emprendimientoTemp.idEmprendedor.toString())) {
-                                  listEmprendimientosSelected.remove(emprendimientoTemp.idEmprendedor.toString());
+              child: SingleChildScrollView(
+                child: ListView.builder(
+                  padding: const EdgeInsetsDirectional
+                      .fromSTEB(10, 0, 10, 10),
+                  shrinkWrap: true,
+                  reverse: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  itemCount: widget.usuarioProyectosTemporal.emprendimientosTemp.length,
+                  itemBuilder: (context, index) {
+                    final emprendimientoTemp = widget.usuarioProyectosTemporal.emprendimientosTemp[index];
+                    return Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                      child: Row(
+                        children: [
+                          ToggleIcon(
+                            onPressed: () {
+                              setState(() {
+                                emprendimientoTemp.selected = !emprendimientoTemp.selected;
+                                if (emprendimientoTemp.selected) {
+                                  //Borrar los otros selected de los items
+                                for (var element in widget.usuarioProyectosTemporal.emprendimientosTemp) {
+                                  if (element != emprendimientoTemp) {
+                                    element.selected = false;
+                                  }
                                 }
-                              }
-                            });
-                          },
-                          value: emprendimientoTemp.selected,
-                          onIcon: Icon(
-                            Icons.check_box,
-                            color: AppTheme.of(
-                                    context)
-                                .primaryText,
-                            size: 40,
-                          ),
-                          offIcon: Icon(
-                            Icons
-                                .check_box_outline_blank,
-                            color: AppTheme.of(
-                                    context)
-                                .primaryText,
-                            size: 40,
-                          ),
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          height: 165,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: Image.asset(
-                                'assets/images/mesgbluegradient.jpeg',
-                              ).image,
+                                  emprendimientoSelected = emprendimientoTemp.proyectos!.last.idProyecto.toString();
+                                } else {
+                                  if (emprendimientoSelected == emprendimientoTemp.proyectos!.last.idProyecto.toString()) {
+                                    emprendimientoSelected = "";
+                                  }
+                                }
+                              });
+                            },
+                            value: emprendimientoTemp.selected,
+                            onIcon: Icon(
+                              Icons.check_box,
+                              color: AppTheme.of(
+                                      context)
+                                  .primaryText,
+                              size: 40,
                             ),
-                            boxShadow: const [
-                              BoxShadow(
-                                blurRadius: 5,
-                                color: Color(0x2B202529),
-                                offset: Offset(0, 3),
-                              )
-                            ],
-                            borderRadius: BorderRadius.circular(16),
+                            offIcon: Icon(
+                              Icons
+                                  .check_box_outline_blank,
+                              color: AppTheme.of(
+                                      context)
+                                  .primaryText,
+                              size: 40,
+                            ),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                ClipRRect(
-                                  child: BackdropFilter(
-                                    filter: ImageFilter.blur(
-                                      sigmaX: 10,
-                                      sigmaY: 5,
-                                    ),
-                                    child: Container(
-                                      width: 350,
-                                      height: 130,
-                                      decoration: BoxDecoration(
-                                        color: const Color(0x6CFFFFFF),
-                                        borderRadius: BorderRadius.circular(12),
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            height: 165,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: Image.asset(
+                                  'assets/images/mesgbluegradient.jpeg',
+                                ).image,
+                              ),
+                              boxShadow: const [
+                                BoxShadow(
+                                  blurRadius: 5,
+                                  color: Color(0x2B202529),
+                                  offset: Offset(0, 3),
+                                )
+                              ],
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  ClipRRect(
+                                    child: BackdropFilter(
+                                      filter: ImageFilter.blur(
+                                        sigmaX: 10,
+                                        sigmaY: 5,
                                       ),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            10, 10, 10, 10),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              maybeHandleOverflow(emprendimientoTemp.proyectos?.last.emprendimiento ?? "", 25, "..."),
-                                              style: AppTheme.of(context)
-                                                  .title2
-                                                  .override(
-                                                    fontFamily: 'Outfit',
-                                                    color: Colors.white,
-                                                    fontSize: 22,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                                  0, 4, 0, 4),
-                                              child: Text(
-                                                maybeHandleOverflow("${emprendimientoTemp
-                                                .nombre} ${emprendimientoTemp
-                                                .apellidos}", 40, "..."),
+                                      child: Container(
+                                        width: 350,
+                                        height: 130,
+                                        decoration: BoxDecoration(
+                                          color: const Color(0x6CFFFFFF),
+                                          borderRadius: BorderRadius.circular(12),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsetsDirectional.fromSTEB(
+                                              10, 10, 10, 10),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                maybeHandleOverflow(emprendimientoTemp.proyectos?.last.emprendimiento ?? "", 25, "..."),
                                                 style: AppTheme.of(context)
-                                                    .bodyText1
+                                                    .title2
                                                     .override(
                                                       fontFamily: 'Outfit',
                                                       color: Colors.white,
-                                                      fontSize: 16,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 22,
+                                                      fontWeight: FontWeight.w600,
                                                     ),
                                               ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                                  0, 4, 0, 4),
-                                              child: Text(
-                                                maybeHandleOverflow("${emprendimientoTemp
-                                                .comentarios}", 40, "..."),
-                                                style: AppTheme.of(context)
-                                                    .bodyText1
-                                                    .override(
-                                                      fontFamily: 'Outfit',
-                                                      color: Colors.white,
-                                                      fontSize: 15,
-                                                      fontWeight: FontWeight.normal,
-                                                    ),
+                                              Padding(
+                                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                                    0, 4, 0, 4),
+                                                child: Text(
+                                                  maybeHandleOverflow("${emprendimientoTemp
+                                                  .nombre} ${emprendimientoTemp
+                                                  .apellidos}", 40, "..."),
+                                                  style: AppTheme.of(context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Outfit',
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                        fontWeight: FontWeight.bold,
+                                                      ),
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                              Padding(
+                                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                                    0, 4, 0, 4),
+                                                child: Text(
+                                                  maybeHandleOverflow("${emprendimientoTemp
+                                                  .comentarios}", 40, "..."),
+                                                  style: AppTheme.of(context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Outfit',
+                                                        color: Colors.white,
+                                                        fontSize: 15,
+                                                        fontWeight: FontWeight.normal,
+                                                      ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ),
             ),            
           ],

@@ -2,10 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/modelsEmiWeb/get_token_emi_web.dart';
-import 'package:bizpro_app/modelsEmiWeb/temporals/get_emp_externo_emi_web_temp.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_consultoria_pocketbase.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_emprendimeinto_pocketbase.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_imagen_pocketbase.dart';
@@ -19,15 +16,13 @@ import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_producto_vendido
 import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_productos_cotizados_pocketbase.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_productos_proyecto_pocketbase.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_venta_pocketbase.dart';
-import 'package:bizpro_app/modelsPocketbase/temporals/get_emp_externo_pocketbase_temp.dart';
-import 'package:bizpro_app/modelsPocketbase/temporals/usuario_proyectos_temporal.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:http/http.dart';
 import 'package:path_provider/path_provider.dart';
 
-class EmpExternosEmiWebProvider extends ChangeNotifier {
+class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
   bool procesocargando = false;
   bool procesoterminado = false;
   bool procesoexitoso = false;
@@ -51,52 +46,12 @@ class EmpExternosEmiWebProvider extends ChangeNotifier {
     // notifyListeners();
   }
 
-//Función inicial para recuperar el Token para el llamado de proyectos
-  Future<bool> getTokenOAuth() async {
+
+  Future<bool> getProyectosExternosPocketbase(String idEmprendimiento, Usuarios usuario) async {
     try {
-      var url = Uri.parse("$baseUrlEmiWebSecurity/oauth/token");
-      final headers = ({
-        "Authorization": "Basic Yml6cHJvOmFkbWlu",
-      });
-      final bodyMsg = ({
-        "grant_type": "password",
-        "scope": "webclient",
-        "username": prefs.getString("userId"),
-        "password": prefs.getString("passEncrypted"),
-      });
-
-      var response = await post(url, headers: headers, body: bodyMsg);
-
-      print(response.body);
-
-      switch (response.statusCode) {
-        case 200:
-          final responseTokenEmiWeb = getTokenEmiWebFromMap(response.body);
-          tokenGlobal = responseTokenEmiWeb.accessToken;
-          return true;
-        case 400:
-          usuarioExit = true;
-          return false;
-        case 401:
-          //Se actualiza Usuario archivado en Pocketbase y objectBox
-          return false;
-        default:
-          snackbarKey.currentState?.showSnackBar(const SnackBar(
-            content: Text("Falló al conectarse con el servidor Emi Web."),
-          ));
-          return false;
-      }
-    } catch (e) {
-      return false;
-    }
-  }
-
-
-  Future<bool> getProyectosExternos(List<String> idEmprendimientos, Usuarios usuario) async {
-    try {
-        for (var elementEmpId in idEmprendimientos) {
+      print("ID Emprendimiento en Descarga Proyectos Pocketbase: $idEmprendimiento");
         //Se recupera toda la colección de datos emprendimientos en Pocketbase
-        var url = Uri.parse("$baseUrl/api/collections/emprendimientos/records?filter=(id='$elementEmpId')&expand=id_emprendedor_fk.id_comunidad_fk,id_fase_emp_fk,id_nombre_proyecto_fk");
+        var url = Uri.parse("$baseUrl/api/collections/emprendimientos/records?filter=(id='$idEmprendimiento')&expand=id_emprendedor_fk.id_comunidad_fk,id_fase_emp_fk,id_nombre_proyecto_fk");
         final headers = ({
             "Content-Type": "application/json",
           });
@@ -112,6 +67,7 @@ class EmpExternosEmiWebProvider extends ChangeNotifier {
           final comunidad = dataBase.comunidadesBox.query(Comunidades_.nombre.equals(basicEmprendimiento.items[0].expand.idEmprendedorFk.expand.idComunidadFk.nombreComunidad)).build().findFirst();
           final catalogoProyecto = dataBase.catalogoProyectoBox.query(CatalogoProyecto_.nombre.equals(basicEmprendimiento.items[0].expand.idNombreProyectoFk?.nombreProyecto ?? "")).build().findFirst();
           if (faseEmp != null && comunidad != null) {
+            print("Sí se ecnontró la fase y comunidad en el dispositivo para Pockectbase");
             final nuevoEmprendimiento = Emprendimientos(
               faseActual: faseEmp.fase, 
               faseAnterior: faseEmp.fase, 
@@ -148,7 +104,7 @@ class EmpExternosEmiWebProvider extends ChangeNotifier {
             usuario.emprendimientos.add(nuevoEmprendimiento);
             dataBase.usuariosBox.put(usuario);
             //Se recupera colección de datos jornadas en Pocketbase
-            var urlJornadas = Uri.parse("$baseUrl/api/collections/jornadas/records?filter=(id_emprendimiento_fk='$elementEmpId')&expand=id_tarea_fk.id_imagenes_fk");
+            var urlJornadas = Uri.parse("$baseUrl/api/collections/jornadas/records?filter=(id_emprendimiento_fk='$idEmprendimiento')&expand=id_tarea_fk.id_imagenes_fk");
             final headers = ({
                 "Content-Type": "application/json",
               });
@@ -321,10 +277,9 @@ class EmpExternosEmiWebProvider extends ChangeNotifier {
             } else {
               print("No éxito en recuperar jornadas");
               banderasExitoSync.add(false);
-              continue;
             }
             //Se recupera colección de datos consultorías en Pocketbase
-            var urlConsultorias = Uri.parse("$baseUrl/api/collections/consultorias/records?filter=(id_emprendimiento_fk='$elementEmpId')&expand=id_ambito_fk,id_area_circulo_fk,id_tarea_fk.id_porcentaje_fk");
+            var urlConsultorias = Uri.parse("$baseUrl/api/collections/consultorias/records?filter=(id_emprendimiento_fk='$idEmprendimiento')&expand=id_ambito_fk,id_area_circulo_fk,id_tarea_fk.id_porcentaje_fk");
 
             var responseConsultoria = await get(
               urlConsultorias,
@@ -393,10 +348,9 @@ class EmpExternosEmiWebProvider extends ChangeNotifier {
               print(responseConsultoria.statusCode);
               print("No éxito en recuperar consultorías");
               banderasExitoSync.add(false);
-              continue;
             }
             //Se recupera colección de datos productos emp en Pocketbase
-            var urlProductosEmp = Uri.parse("$baseUrl/api/collections/productos_emp/records?filter=(id_emprendimiento_fk='$elementEmpId')&expand=id_imagen_fk,id_und_medida_fk");
+            var urlProductosEmp = Uri.parse("$baseUrl/api/collections/productos_emp/records?filter=(id_emprendimiento_fk='$idEmprendimiento')&expand=id_imagen_fk,id_und_medida_fk");
 
             var responseProductosEmp = await get(
               urlProductosEmp,
@@ -444,10 +398,10 @@ class EmpExternosEmiWebProvider extends ChangeNotifier {
               print(responseProductosEmp.statusCode);
               print("No éxito en recuperar productos emp");
               banderasExitoSync.add(false);
-              continue;
+  
             }
             //Se recupera colección de datos ventas en Pocketbase
-            var urlVentas = Uri.parse("$baseUrl/api/collections/ventas/records?filter=(id_emprendimiento_fk='$elementEmpId')");
+            var urlVentas = Uri.parse("$baseUrl/api/collections/ventas/records?filter=(id_emprendimiento_fk='$idEmprendimiento')");
 
             var responseVentas = await get(
               urlVentas,
@@ -509,10 +463,9 @@ class EmpExternosEmiWebProvider extends ChangeNotifier {
               print(responseVentas.statusCode);
               print("No éxito en recuperar ventas");
               banderasExitoSync.add(false);
-              continue;
             }
             //Se recupera colección de datos inveriones en Pocketbase
-            var urlInversiones = Uri.parse("$baseUrl/api/collections/inversiones/records?filter=(id_emprendimiento_fk='$elementEmpId')&expand=id_estado_inversion_fk,id_imagen_firma_recibido_fk,id_imagen_producto_entregado_fk");
+            var urlInversiones = Uri.parse("$baseUrl/api/collections/inversiones/records?filter=(id_emprendimiento_fk='$idEmprendimiento')&expand=id_estado_inversion_fk,id_imagen_firma_recibido_fk,id_imagen_producto_entregado_fk");
 
             var responseInverisones = await get(
               urlInversiones,
@@ -755,17 +708,14 @@ class EmpExternosEmiWebProvider extends ChangeNotifier {
               print(responseInverisones.statusCode);
               print("No éxito en recuperar inversiones");
               banderasExitoSync.add(false);
-              continue;
             }
           } else {
+            print("No se encontro la fase y comunidad en Pocketbase en el dispositivo");
             banderasExitoSync.add(false);
-            continue;
           }
         } else {
           banderasExitoSync.add(false);
-          continue;
         }
-      }
       for (var element in banderasExitoSync) {
       //Aplicamos una operación and para validar que no haya habido un catálogo con False
         exitoso = exitoso && element;
@@ -787,7 +737,7 @@ class EmpExternosEmiWebProvider extends ChangeNotifier {
         return exitoso;
       }
     } catch (e) {
-      print("Catch de Descarga Productos Externos: $e");
+      print("Catch de Descarga Productos Externos Pocketbase: $e");
       procesocargando = false;
       procesoterminado = true;
       procesoexitoso = false;
@@ -797,55 +747,4 @@ class EmpExternosEmiWebProvider extends ChangeNotifier {
     }
   }
 
-//Función para recuperar los emprendimientos externos de EmiWeb
-  Future<List<UsuarioProyectosTemporal>?> getUsuariosProyectosEmiWeb() async {
-    final GetEmpExternoEmiWebTemp listEmpExternosEmiWebTemp;
-    List<UsuarioProyectosTemporal> listUsuariosProyectosTemp = [];
-    try {
-      if (await getTokenOAuth()) {
-        //Se recupera toda la colección de usuarios en EmiWeb
-        var url = Uri.parse("$baseUrlEmiWebServices/proyectos/emprendedor/promotor");
-        final headers = ({
-            "Content-Type": "application/json",
-            'Authorization': 'Bearer $tokenGlobal',
-          });
-        var response = await get(
-          url,
-          headers: headers
-        ); 
-
-        if (response.statusCode == 200) {
-          listEmpExternosEmiWebTemp = getEmpExternoEmiWebTempFromMap(
-            const Utf8Decoder().convert(response.bodyBytes)
-          );
-
-          for (var elementEmprendimientoEmp in listEmpExternosEmiWebTemp.payload!.toList()) {
-            var indexItemUpdated = listUsuariosProyectosTemp.indexWhere((elementUsuario) => elementUsuario.usuarioTemp.idUsuario == elementEmprendimientoEmp.promotor.idUsuario);
-            if (indexItemUpdated != -1) {
-              listUsuariosProyectosTemp[indexItemUpdated].emprendimientosTemp.add(elementEmprendimientoEmp);
-            } else {
-              final newUsuarioProyectoTemporal = 
-              UsuarioProyectosTemporal(
-                usuarioTemp: elementEmprendimientoEmp.promotor, 
-                emprendimientosTemp: [elementEmprendimientoEmp]
-              );
-              listUsuariosProyectosTemp.add(newUsuarioProyectoTemporal);
-            }
-          }
-          return listUsuariosProyectosTemp;
-        } else {
-          print("Error en llamado al API");
-          print(response.statusCode);
-          return null;
-        }
-      } else {
-        print("Falló en Recuperar Token");
-        return null;
-      }
-    } catch (e) {
-      print("Catch en Recuperación de Usuarios");
-      print(e);
-      return null;
-    }
-  }
 }

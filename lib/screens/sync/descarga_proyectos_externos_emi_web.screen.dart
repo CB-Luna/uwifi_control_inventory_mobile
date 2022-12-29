@@ -1,43 +1,63 @@
 import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/providers/sync_emprendimientos_externos_pocketbase_provider.dart';
+import 'package:bizpro_app/helpers/globals.dart';
+import 'package:bizpro_app/providers/providers.dart';
+import 'package:bizpro_app/providers/sync_emprendimientos_externos_emi_web_provider.dart';
+import 'package:bizpro_app/screens/sync/descarga_proyectos_externos_pocketbase_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/theme/theme.dart';
-import 'package:lottie/lottie.dart';
-import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
+import 'package:bizpro_app/helpers/constants.dart';
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 
-class DescargaProyectosExternosPocketbaseScreen extends StatefulWidget {
+class DescargaProyectosExternosEmiWebScreen extends StatefulWidget {
   final Usuarios usuario;
   final String idEmprendimiento;
-  const DescargaProyectosExternosPocketbaseScreen({
+  const DescargaProyectosExternosEmiWebScreen({
     Key? key, 
-    required this.idEmprendimiento, 
-    required this.usuario,
+    required this.usuario, 
+    required this.idEmprendimiento,
     }) : super(key: key);
 
   @override
-  State<DescargaProyectosExternosPocketbaseScreen> createState() => _DescargaProyectosExternosPocketbaseScreenState();
+  State<DescargaProyectosExternosEmiWebScreen> createState() => _DescargaProyectosExternosEmiWebScreenState();
 }
 
-class _DescargaProyectosExternosPocketbaseScreenState extends State<DescargaProyectosExternosPocketbaseScreen> {
+class _DescargaProyectosExternosEmiWebScreenState extends State<DescargaProyectosExternosEmiWebScreen> {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
       setState(() {
-        context.read<SyncEmpExternosPocketbaseProvider>().exitoso = true;
-        context.read<SyncEmpExternosPocketbaseProvider>().procesoCargando(true);
-        context.read<SyncEmpExternosPocketbaseProvider>().procesoTerminado(false);
-        context.read<SyncEmpExternosPocketbaseProvider>().procesoExitoso(false);
-        context.read<SyncEmpExternosPocketbaseProvider>().getProyectosExternosPocketbase(widget.idEmprendimiento, widget.usuario);
+        context.read<SyncEmpExternosEmiWebProvider>().exitoso = true;
+        context.read<SyncEmpExternosEmiWebProvider>().idEmprendimientoPocketbase = "";
+        context.read<SyncEmpExternosEmiWebProvider>().usuarioExit = false;
+        context.read<SyncEmpExternosEmiWebProvider>().procesoCargando(true);
+        context.read<SyncEmpExternosEmiWebProvider>().procesoTerminado(false);
+        context.read<SyncEmpExternosEmiWebProvider>().procesoExitoso(false);
+        Future<bool> booleano = context.read<SyncEmpExternosEmiWebProvider>().getProyectosExternosEmiWeb(widget.idEmprendimiento, widget.usuario);
+        Future(() async {
+          if (await booleano) {
+            print("Se ha realizado con éxito el proceso de Descarga del Proyecto de Emi Web");
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    DescargaProyectosExternosPocketbaseScreen(
+                      idEmprendimiento: context.read<SyncEmpExternosEmiWebProvider>().idEmprendimientoPocketbase,
+                      usuario: widget.usuario,
+                    ),
+              ),
+            );
+          }
+        });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final empExternosPocketbaseProvider = Provider.of<SyncEmpExternosPocketbaseProvider>(context);
+    final syncEmpExternosEmiWebProvider = Provider.of<SyncEmpExternosEmiWebProvider>(context);
+    final UserState userState = Provider.of<UserState>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -76,13 +96,13 @@ class _DescargaProyectosExternosPocketbaseScreenState extends State<DescargaProy
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 40, 0, 0),
                               child: Text(
-                                '¡Descargando proyectos!',
+                                '¡Conectando a\nproyectos de EMI Web!',
                                 textAlign: TextAlign.center,
                                 style: AppTheme.of(context).bodyText1.override(
                                       fontFamily:
                                           AppTheme.of(context).bodyText1Family,
                                       color: AppTheme.of(context).primaryText,
-                                      fontSize: 26,
+                                      fontSize: 30,
                                     ),
                               ),
                             ),
@@ -90,7 +110,7 @@ class _DescargaProyectosExternosPocketbaseScreenState extends State<DescargaProy
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 10, 0, 0),
                               child: Text(
-                                'Descargando proyectos\nde la nube, por favor, no apague\nla conexión Wi-Fi o datos móviles hasta \nque se complete el proceso.\nEl proceso puede tardar algunos minutos.',
+                                'Se está realizando la conexión\na EMI Web, por favor, no apague\nla conexión Wi-Fi o datos móviles hasta \nque se complete el proceso.\nEl proceso puede tardar algunos minutos.',
                                 textAlign: TextAlign.center,
                                 maxLines: 5,
                                 style: AppTheme.of(context).bodyText1.override(
@@ -102,38 +122,31 @@ class _DescargaProyectosExternosPocketbaseScreenState extends State<DescargaProy
                                     ),
                               ),
                             ),
-                            empExternosPocketbaseProvider.procesocargando
+                            syncEmpExternosEmiWebProvider.procesocargando
                                 ? Visibility(
-                                  visible: empExternosPocketbaseProvider.procesocargando,
+                                  visible: syncEmpExternosEmiWebProvider.procesocargando,
                                   child: Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0, 70, 0, 0),
-                                      child: getDownloadIndicatorAnimated(
-                                          "Descargando..."),
+                                      child: getProgressIndicatorAnimated(
+                                          "Conectando..."),
                                     ),
                                 )
                                 : 
-                                empExternosPocketbaseProvider.procesoexitoso
+                                syncEmpExternosEmiWebProvider.procesoexitoso
                                 ? Visibility(
-                                  visible: !empExternosPocketbaseProvider.procesocargando,
-                                  child: Padding(
+                                  visible: !syncEmpExternosEmiWebProvider.procesocargando,
+                                  child: const Padding(
                                       padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
+                                          EdgeInsetsDirectional.fromSTEB(
                                               0, 70, 0, 0),
-                                      child: Lottie.asset(
-                                        'assets/lottie_animations/elemento-creado.json',
-                                        width: 250,
-                                        height: 180,
-                                        fit: BoxFit.cover,
-                                        repeat: false,
-                                        animate: true,
-                                      ),
+                                      child: SizedBox(),
                                     ),
-                                )
+                                  )
                                   :
                                   Visibility(
-                                    visible: !empExternosPocketbaseProvider.procesocargando,
+                                    visible: !syncEmpExternosEmiWebProvider.procesocargando,
                                     child: const Padding(
                                       padding:
                                           EdgeInsetsDirectional.fromSTEB(
@@ -146,49 +159,14 @@ class _DescargaProyectosExternosPocketbaseScreenState extends State<DescargaProy
                                     ),
                                   ),
                             Visibility(
-                              visible: empExternosPocketbaseProvider.procesoterminado && empExternosPocketbaseProvider.procesoexitoso,
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 100, 0, 0),
-                                child: FFButtonWidget(
-                                  onPressed: () async {
-                                        await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const EmprendimientosScreen(),
-                                        ),
-                                      );
-                                  },
-                                  text: 'Listo',
-                                  options: FFButtonOptions(
-                                    width: 130,
-                                    height: 45,
-                                    color: AppTheme.of(context).secondaryText,
-                                    textStyle:
-                                        AppTheme.of(context).subtitle2.override(
-                                              fontFamily: AppTheme.of(context)
-                                                  .subtitle2Family,
-                                              color: Colors.white,
-                                            ),
-                                    borderSide: const BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Visibility(
-                              visible: empExternosPocketbaseProvider.procesoterminado && (empExternosPocketbaseProvider.procesoexitoso == false),
+                              visible: syncEmpExternosEmiWebProvider.procesoterminado && (syncEmpExternosEmiWebProvider.procesoexitoso == false),
                               child: Column(
                                 children: [
                                   Padding(
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         0, 50, 0, 0),
                                     child: Text(
-                                      'La descarga no se hizo con éxito.\nVuelva a probar más tarde.',
+                                      '\nLa conexión con EMI Web no se hizo con éxito.\nVuelva a probar más tarde.',
                                       textAlign: TextAlign.center,
                                       maxLines: 4,
                                       style: AppTheme.of(context).bodyText1.override(
@@ -205,13 +183,20 @@ class _DescargaProyectosExternosPocketbaseScreenState extends State<DescargaProy
                                         0, 30, 0, 0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
-                                        await Navigator.push(
+                                        if (syncEmpExternosEmiWebProvider.usuarioExit) {
+                                          snackbarKey.currentState?.showSnackBar(const SnackBar(
+                                            content: Text("El Usuario no cuenta con los permisos necesarios para estar en sesión, favor de comunicarse con el Administrador."),
+                                          ));
+                                          await userState.logout();
+                                        } else {
+                                            await Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   const EmprendimientosScreen(),
                                             ),
                                           );
+                                        }
                                       },
                                       text: 'Cerrar',
                                       options: FFButtonOptions(
