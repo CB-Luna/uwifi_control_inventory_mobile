@@ -98,7 +98,6 @@ class Jornada2 {
         required this.tareaCompletada,
         required this.idProyecto,
         required this.documentos,
-        required this.descripcion,
     });
 
     final int idJornada2;
@@ -109,7 +108,6 @@ class Jornada2 {
     final bool tareaCompletada;
     final int idProyecto;
     final List<Documento> documentos;
-    final String descripcion;
 
     factory Jornada2.fromMap(Map<String, dynamic> json) => Jornada2(
         idJornada2: json["idJornada2"],
@@ -120,7 +118,6 @@ class Jornada2 {
         tareaCompletada: json["tareaCompletada"],
         idProyecto: json["idProyecto"],
         documentos: List<Documento>.from(json["documentos"].map((x) => Documento.fromMap(x))),
-        descripcion: json["descripcion"],
     );
 
     Map<String, dynamic> toMap() => {
@@ -131,8 +128,7 @@ class Jornada2 {
         "comentarios": comentarios,
         "tareaCompletada": tareaCompletada,
         "idProyecto": idProyecto,
-        "documentos": documentos == null ? null : List<dynamic>.from(documentos.map((x) => x.toMap())),
-        "descripcion": descripcion,
+        "documentos": List<dynamic>.from(documentos.map((x) => x.toMap())),
     };
 }
 
