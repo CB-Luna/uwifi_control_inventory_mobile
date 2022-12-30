@@ -95,7 +95,7 @@ class _DetalleEmprendimientoScreenState
                                         ? FileImage(File(emprendimientoActual!
                                             .imagen.target!.path!))
                                         : Image.asset(
-                                            "assets/images/animation_500_l3ur8tqa.gif",
+                                            "assets/images/default_image_placeholder.jpeg",
                                           ).image,
                                 fit: BoxFit.cover,
                                 filterQuality: FilterQuality.high,

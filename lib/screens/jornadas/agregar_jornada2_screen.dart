@@ -18,6 +18,7 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
 
 class AgregarJornada2Screen extends StatefulWidget {
   final Emprendimientos emprendimiento;
@@ -40,6 +41,7 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   List<XFile> imagenesTemp = [];
+  Emprendimientos? emprendimientoActual;
 
   @override
   void initState() {
@@ -76,8 +78,13 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                       height: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: FileImage(libraryIO.File(
-                              widget.emprendimiento.imagen.target!.path!)),
+                          image: widget.emprendimiento.imagen.target?.path !=
+                                  null
+                              ? FileImage(libraryIO.File(
+                                  widget.emprendimiento.imagen.target!.path!))
+                              : Image.asset(
+                                  "assets/images/default_image_placeholder.jpeg",
+                                ).image,
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
                         ),
@@ -785,10 +792,18 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                                               libraryIO.File file =
                                                   libraryIO.File(
                                                       imagenesTemp[i].path);
+                                              print("-------------------");
+                                              print(file.toString());
                                               List<int> fileInByte =
                                                   file.readAsBytesSync();
+                                              print("-------------------");
+
+                                              print(fileInByte.toString());
+
                                               String base64 =
                                                   base64Encode(fileInByte);
+                                              print("-------------------");
+                                              print(base64.toString());
                                               var newImagenLocal =
                                                   SaveImagenesLocal(
                                                       nombre:

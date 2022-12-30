@@ -32,8 +32,8 @@ class EditarConsultoriaScreen extends StatefulWidget {
   const EditarConsultoriaScreen({
     Key? key,
     required this.consultoria,
-    required this.numConsultoria, 
-    required this.tarea, 
+    required this.numConsultoria,
+    required this.tarea,
     required this.emprendimientoEditar,
   }) : super(key: key);
 
@@ -88,14 +88,14 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                       height: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: widget.consultoria.emprendimiento.target?.imagen.target != null ?
-                            FileImage(
-                              File(
-                                widget.consultoria.emprendimiento.target!.imagen.target!.path!))
-                            :
-                            Image.asset(
-                              "assets/images/default_image.png",
-                            ).image,
+                          image: widget.consultoria.emprendimiento.target
+                                      ?.imagen.target !=
+                                  null
+                              ? FileImage(File(widget.consultoria.emprendimiento
+                                  .target!.imagen.target!.path!))
+                              : Image.asset(
+                                  "assets/images/default_image_placeholder.jpeg",
+                                ).image,
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
                         ),
@@ -155,7 +155,8 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                       ),
                                       child: InkWell(
                                         onTap: () async {
-                                          consultoriaProvider.clearInformation();
+                                          consultoriaProvider
+                                              .clearInformation();
                                           Navigator.pop(context);
                                         },
                                         child: Row(
@@ -496,8 +497,8 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                       ),
                                   maxLines: 2,
                                   validator: (value) {
-                                    return capitalizadoCharacters
-                                            .hasMatch(consultoriaProvider.avanceObservado)
+                                    return capitalizadoCharacters.hasMatch(
+                                            consultoriaProvider.avanceObservado)
                                         ? null
                                         : 'Para continuar, ingrese el avance observado empezando por mayúscula';
                                   },
@@ -640,7 +641,8 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.normal,
                                               ),
-                                      hintText: 'Ingresa fecha de próxima revisión...',
+                                      hintText:
+                                          'Ingresa fecha de próxima revisión...',
                                       hintStyle:
                                           AppTheme.of(context).title3.override(
                                                 fontFamily: 'Poppins',
@@ -678,133 +680,145 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                           fontWeight: FontWeight.normal,
                                         ),
                                     validator: (value) {
-                                      if (fechaRevision.text == "" || fechaRevision.text.isEmpty) {
+                                      if (fechaRevision.text == "" ||
+                                          fechaRevision.text.isEmpty) {
                                         return 'Para continuar, ingrese la fecha de revisión';
                                       }
                                       return null;
                                     }),
                               ),
-                              FormField(builder: (state){
-                                return Padding(
-                                  padding:
-                                      const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: AppTheme.of(context)
-                                              .primaryText,
-                                          borderRadius: BorderRadius.circular(8),
-                                          border: Border.all(
-                                            width: 1.5,
+                              FormField(
+                                builder: (state) {
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            5, 0, 5, 0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: AppTheme.of(context)
+                                                .primaryText,
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            border: Border.all(
+                                              width: 1.5,
+                                            ),
                                           ),
-                                        ),
-                                        child: InkWell(
-                                          onTap: () async {
-                                            await Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                type: PageTransitionType.fade,
-                                                child:
-                                                    FlutterFlowExpandedImageView(
-                                                  image: getWidgetContainImage(fotoAvance?.path),
-                                                  allowRotation: false,
-                                                  tag: "imagen1",
-                                                  useHeroAnimation: true,
+                                          child: InkWell(
+                                            onTap: () async {
+                                              await Navigator.push(
+                                                context,
+                                                PageTransition(
+                                                  type: PageTransitionType.fade,
+                                                  child:
+                                                      FlutterFlowExpandedImageView(
+                                                    image:
+                                                        getWidgetContainImage(
+                                                            fotoAvance?.path),
+                                                    allowRotation: false,
+                                                    tag: "imagen1",
+                                                    useHeroAnimation: true,
+                                                  ),
                                                 ),
+                                              );
+                                            },
+                                            child: Hero(
+                                              tag: "imagen2",
+                                              transitionOnUserGestures: true,
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                child: getWidgetContainerImage(
+                                                    fotoAvance?.path, 120, 170),
                                               ),
-                                            );
-                                          },
-                                          child: Hero(
-                                            tag: "imagen2",
-                                            transitionOnUserGestures: true,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              child: getWidgetContainerImage(
-                                                  fotoAvance?.path, 
-                                                  120, 
-                                                  170
-                                                ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      FFButtonWidget(
-                                        onPressed: () async {
-                                          String? option = await showModalBottomSheet(
+                                        FFButtonWidget(
+                                          onPressed: () async {
+                                            String? option =
+                                                await showModalBottomSheet(
                                               context: context,
-                                              builder: (_) => const CustomBottomSheet(),
+                                              builder: (_) =>
+                                                  const CustomBottomSheet(),
                                             );
-                                
+
                                             if (option == null) return;
-                                
+
                                             final picker = ImagePicker();
-                                
+
                                             late final XFile? pickedFile;
-                                
+
                                             if (option == 'camera') {
-                                              pickedFile = await picker.pickImage(
+                                              pickedFile =
+                                                  await picker.pickImage(
                                                 source: ImageSource.camera,
                                                 imageQuality: 100,
                                               );
                                             } else {
-                                              pickedFile = await picker.pickImage(
+                                              pickedFile =
+                                                  await picker.pickImage(
                                                 source: ImageSource.gallery,
                                                 imageQuality: 100,
                                               );
                                             }
-                                
+
                                             if (pickedFile == null) {
                                               return;
                                             }
-                                
+
                                             setState(() {
                                               fotoAvance = pickedFile;
-                                              File file = File(fotoAvance!.path);
-                                              List<int> fileInByte = file.readAsBytesSync();
-                                              String base64 = base64Encode(fileInByte);
+                                              File file =
+                                                  File(fotoAvance!.path);
+                                              List<int> fileInByte =
+                                                  file.readAsBytesSync();
+                                              String base64 =
+                                                  base64Encode(fileInByte);
                                               var newImagen = Imagenes(
-                                                imagenes: fotoAvance!.path,
-                                                nombre: fotoAvance!.name, 
-                                                path: fotoAvance!.path, 
-                                                base64: base64);
-                                              consultoriaProvider.imagenLocal = newImagen;
+                                                  imagenes: fotoAvance!.path,
+                                                  nombre: fotoAvance!.name,
+                                                  path: fotoAvance!.path,
+                                                  base64: base64);
+                                              consultoriaProvider.imagenLocal =
+                                                  newImagen;
                                             });
-                                        },
-                                        text: 'Foto Avance',
-                                        icon: const Icon(
-                                          Icons.add_a_photo,
-                                          size: 15,
-                                        ),
-                                        options: FFButtonOptions(
-                                          width: 140,
-                                          height: 40,
-                                          color: AppTheme.of(context)
-                                              .secondaryText,
-                                          textStyle: AppTheme.of(context)
-                                              .subtitle2
-                                              .override(
-                                                fontFamily:
-                                                    AppTheme.of(context)
-                                                        .subtitle2Family,
-                                                color: Colors.white,
-                                                fontSize: 15,
-                                              ),
-                                          borderSide: const BorderSide(
-                                            color: Colors.transparent,
-                                            width: 1,
+                                          },
+                                          text: 'Foto Avance',
+                                          icon: const Icon(
+                                            Icons.add_a_photo,
+                                            size: 15,
                                           ),
-                                          borderRadius: BorderRadius.circular(8),
+                                          options: FFButtonOptions(
+                                            width: 140,
+                                            height: 40,
+                                            color: AppTheme.of(context)
+                                                .secondaryText,
+                                            textStyle: AppTheme.of(context)
+                                                .subtitle2
+                                                .override(
+                                                  fontFamily:
+                                                      AppTheme.of(context)
+                                                          .subtitle2Family,
+                                                  color: Colors.white,
+                                                  fontSize: 15,
+                                                ),
+                                            borderSide: const BorderSide(
+                                              color: Colors.transparent,
+                                              width: 1,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
+                                      ],
+                                    ),
+                                  );
+                                },
                               ),
                             ],
                           ),
@@ -815,15 +829,15 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                           child: FFButtonWidget(
                             onPressed: () async {
                               if (consultoriaProvider.validateForm(formKey)) {
-                                  final idPorcentajeAvance = dataBase.porcentajeAvanceBox
-                                    .query(PorcentajeAvance_
-                                    .porcentajeAvance.
-                                    equals(consultoriaProvider.porcentaje))
+                                final idPorcentajeAvance = dataBase
+                                    .porcentajeAvanceBox
+                                    .query(PorcentajeAvance_.porcentajeAvance
+                                        .equals(consultoriaProvider.porcentaje))
                                     .build()
                                     .findFirst()
                                     ?.id;
-                                  if (idPorcentajeAvance != null) {
-                                    consultoriaProvider.updateTareaConsultoria(
+                                if (idPorcentajeAvance != null) {
+                                  consultoriaProvider.updateTareaConsultoria(
                                     widget.consultoria.id,
                                     widget.tarea,
                                     idPorcentajeAvance,
@@ -832,10 +846,12 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                           ConsultoriaActualizada(idEmp: widget.emprendimientoEditar.id),
+                                          ConsultoriaActualizada(
+                                              idEmp: widget
+                                                  .emprendimientoEditar.id),
                                     ),
                                   );
-                                  }
+                                }
                               } else {
                                 await showDialog(
                                   context: context,

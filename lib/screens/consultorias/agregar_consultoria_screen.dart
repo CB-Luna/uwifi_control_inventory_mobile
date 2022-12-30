@@ -58,12 +58,14 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
     dataBase.ambitoConsultoriaBox.getAll().forEach((element) {
       listAmbitos.add(element.nombreAmbito);
     });
-    listAmbitos.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+    listAmbitos
+        .sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     List<String> listAreaCirculo = [];
     dataBase.areaCirculoBox.getAll().forEach((element) {
       listAreaCirculo.add(element.nombreArea);
     });
-    listAreaCirculo.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+    listAreaCirculo
+        .sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     if (widget.emprendimiento.emprendedor.target != null) {
       emprendedor =
           "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
@@ -86,14 +88,12 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                       height: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: widget.emprendimiento.imagen.target != null ?
-                            FileImage(
-                              File(
-                                widget.emprendimiento.imagen.target!.path!))
-                            :
-                            Image.asset(
-                              "assets/images/default_image.png",
-                            ).image,
+                          image: widget.emprendimiento.imagen.target != null
+                              ? FileImage(File(
+                                  widget.emprendimiento.imagen.target!.path!))
+                              : Image.asset(
+                                  "assets/images/default_image_placeholder.jpeg",
+                                ).image,
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
                         ),
@@ -550,7 +550,8 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                     .findFirst()
                                     ?.id;
                                 if (idAmbito != null && idAreaCirculo != null) {
-                                  if (ambito == "Capacidad" && areaCirculo == "Venta") {
+                                  if (ambito == "Capacidad" &&
+                                      areaCirculo == "Venta") {
                                     await showDialog(
                                       context: context,
                                       builder: (alertDialogContext) {
@@ -561,23 +562,29 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                           actions: [
                                             TextButton(
                                               onPressed: () async {
-                                                Navigator.pop(alertDialogContext);
-                                                if (widget.emprendimiento.productosEmp.isNotEmpty) {
+                                                Navigator.pop(
+                                                    alertDialogContext);
+                                                if (widget.emprendimiento
+                                                    .productosEmp.isNotEmpty) {
                                                   consultoriaProvider.add(
-                                                  widget.emprendimiento.id,
-                                                  widget.numConsultoria,
-                                                  idAmbito,
-                                                  idAreaCirculo);
+                                                      widget.emprendimiento.id,
+                                                      widget.numConsultoria,
+                                                      idAmbito,
+                                                      idAreaCirculo);
                                                   await Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) =>
-                                                          AgregarVentaScreen(idEmprendimiento: widget.emprendimiento.id,),
+                                                          AgregarVentaScreen(
+                                                        idEmprendimiento: widget
+                                                            .emprendimiento.id,
+                                                      ),
                                                     ),
                                                   );
                                                 } else {
                                                   snackbarKey.currentState
-                                                      ?.showSnackBar(const SnackBar(
+                                                      ?.showSnackBar(
+                                                          const SnackBar(
                                                     content: Text(
                                                         "Para poder registrar una Venta es necesario que primero registres los productos del Emprendedor dentro del módulo 'Productos'"),
                                                   ));
@@ -587,17 +594,21 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                             ),
                                             TextButton(
                                               onPressed: () async {
-                                                Navigator.pop(alertDialogContext);
+                                                Navigator.pop(
+                                                    alertDialogContext);
                                                 consultoriaProvider.add(
-                                                  widget.emprendimiento.id,
-                                                  widget.numConsultoria,
-                                                  idAmbito,
-                                                  idAreaCirculo);
+                                                    widget.emprendimiento.id,
+                                                    widget.numConsultoria,
+                                                    idAmbito,
+                                                    idAreaCirculo);
                                                 await Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                         ConsultoriaCreada(empConsultoria: widget.emprendimiento,),
+                                                        ConsultoriaCreada(
+                                                      empConsultoria:
+                                                          widget.emprendimiento,
+                                                    ),
                                                   ),
                                                 );
                                               },
@@ -607,8 +618,9 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                         );
                                       },
                                     );
-                                  } 
-                                  if (ambito == "Capacidad" && areaCirculo == "Tecnología") {
+                                  }
+                                  if (ambito == "Capacidad" &&
+                                      areaCirculo == "Tecnología") {
                                     await showDialog(
                                       context: context,
                                       builder: (alertDialogContext) {
@@ -619,35 +631,43 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                           actions: [
                                             TextButton(
                                               onPressed: () async {
-                                                Navigator.pop(alertDialogContext);
-                                                  consultoriaProvider.add(
-                                                  widget.emprendimiento.id,
-                                                  widget.numConsultoria,
-                                                  idAmbito,
-                                                  idAreaCirculo);
-                                                  await Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          AgregarPrimerProductoInversionScreen(idEmprendimiento: widget.emprendimiento.id,),
+                                                Navigator.pop(
+                                                    alertDialogContext);
+                                                consultoriaProvider.add(
+                                                    widget.emprendimiento.id,
+                                                    widget.numConsultoria,
+                                                    idAmbito,
+                                                    idAreaCirculo);
+                                                await Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        AgregarPrimerProductoInversionScreen(
+                                                      idEmprendimiento: widget
+                                                          .emprendimiento.id,
                                                     ),
-                                                  );
+                                                  ),
+                                                );
                                               },
                                               child: const Text('Sí'),
                                             ),
                                             TextButton(
                                               onPressed: () async {
-                                                Navigator.pop(alertDialogContext);
+                                                Navigator.pop(
+                                                    alertDialogContext);
                                                 consultoriaProvider.add(
-                                                  widget.emprendimiento.id,
-                                                  widget.numConsultoria,
-                                                  idAmbito,
-                                                  idAreaCirculo);
+                                                    widget.emprendimiento.id,
+                                                    widget.numConsultoria,
+                                                    idAmbito,
+                                                    idAreaCirculo);
                                                 await Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                         ConsultoriaCreada(empConsultoria: widget.emprendimiento,),
+                                                        ConsultoriaCreada(
+                                                      empConsultoria:
+                                                          widget.emprendimiento,
+                                                    ),
                                                   ),
                                                 );
                                               },
@@ -657,22 +677,25 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                         );
                                       },
                                     );
-                                  } 
-                                  if (!(ambito == "Capacidad" && areaCirculo == "Venta") && 
-                                      !(ambito == "Capacidad" && areaCirculo == "Tecnología")) {
-                                       consultoriaProvider.add(
+                                  }
+                                  if (!(ambito == "Capacidad" &&
+                                          areaCirculo == "Venta") &&
+                                      !(ambito == "Capacidad" &&
+                                          areaCirculo == "Tecnología")) {
+                                    consultoriaProvider.add(
                                         widget.emprendimiento.id,
                                         widget.numConsultoria,
                                         idAmbito,
                                         idAreaCirculo);
-                                        // ignore: use_build_context_synchronously
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                 ConsultoriaCreada(empConsultoria: widget.emprendimiento,),
-                                          ),
-                                        );
+                                    // ignore: use_build_context_synchronously
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ConsultoriaCreada(
+                                          empConsultoria: widget.emprendimiento,
+                                        ),
+                                      ),
+                                    );
                                   }
                                 }
                               } else {

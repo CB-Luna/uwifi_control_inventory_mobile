@@ -20,7 +20,7 @@ class InversionJornadaTemporalScreen extends StatefulWidget {
 
   const InversionJornadaTemporalScreen({
     Key? key,
-    required this.emprendimiento, 
+    required this.emprendimiento,
     required this.numJornada,
   }) : super(key: key);
 
@@ -30,7 +30,8 @@ class InversionJornadaTemporalScreen extends StatefulWidget {
 }
 
 class _InversionJornadaTemporalScreenState
-    extends State<InversionJornadaTemporalScreen> with TickerProviderStateMixin {
+    extends State<InversionJornadaTemporalScreen>
+    with TickerProviderStateMixin {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -86,8 +87,8 @@ class _InversionJornadaTemporalScreenState
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(20, 40, 20, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              20, 40, 20, 0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -102,14 +103,14 @@ class _InversionJornadaTemporalScreenState
                                 child: InkWell(
                                   onTap: () async {
                                     await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                    builder: (context) =>
-                                        AgregarJornada3Screen(
-                                          emprendimiento: widget.emprendimiento, 
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            AgregarJornada3Screen(
+                                          emprendimiento: widget.emprendimiento,
                                           numJornada: widget.numJornada,
-                                          ),
                                         ),
+                                      ),
                                     );
                                   },
                                   child: Row(
@@ -142,8 +143,8 @@ class _InversionJornadaTemporalScreenState
                           ),
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              10, 0, 10, 0),
                           child: Container(
                             width: MediaQuery.of(context).size.width,
                             decoration: const BoxDecoration(
@@ -155,8 +156,9 @@ class _InversionJornadaTemporalScreenState
                                 topRight: Radius.circular(16),
                               ),
                             ),
-                          ).animated(
-                              [animationsMap['containerOnPageLoadAnimation1']!]),
+                          ).animated([
+                            animationsMap['containerOnPageLoadAnimation1']!
+                          ]),
                         ),
                         Align(
                           alignment: const AlignmentDirectional(0, 0),
@@ -172,12 +174,13 @@ class _InversionJornadaTemporalScreenState
                                   children: [
                                     Text(
                                       'Inversión Sugerida',
-                                      style:
-                                          AppTheme.of(context).bodyText1.override(
-                                                fontFamily: AppTheme.of(context)
-                                                    .bodyText1Family,
-                                                fontSize: 20,
-                                              ),
+                                      style: AppTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: AppTheme.of(context)
+                                                .bodyText1Family,
+                                            fontSize: 20,
+                                          ),
                                     ),
                                   ],
                                 ),
@@ -196,16 +199,25 @@ class _InversionJornadaTemporalScreenState
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                       child: Container(
-                                        width: MediaQuery.of(context).size.width *
-                                            0.92,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.92,
                                         height: 200,
                                         decoration: BoxDecoration(
                                           image: DecorationImage(
                                             fit: BoxFit.cover,
-                                            image: Image.file(
-                                              File(widget.emprendimiento.imagen.target!.path!),
-                                              fit: BoxFit.contain,
-                                            ).image,
+                                            image: widget.emprendimiento.imagen
+                                                        .target !=
+                                                    null
+                                                ? FileImage(File(widget
+                                                    .emprendimiento
+                                                    .imagen
+                                                    .target!
+                                                    .path!))
+                                                : Image.asset(
+                                                    "assets/images/default_image_placeholder.jpeg",
+                                                    fit: BoxFit.contain,
+                                                  ).image,
                                           ),
                                           boxShadow: const [
                                             BoxShadow(
@@ -220,29 +232,33 @@ class _InversionJornadaTemporalScreenState
                                               Color(0xFFF2A384)
                                             ],
                                             stops: [0, 1],
-                                            begin: AlignmentDirectional(0.94, -1),
+                                            begin:
+                                                AlignmentDirectional(0.94, -1),
                                             end: AlignmentDirectional(-0.94, 1),
                                           ),
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(10, 20, 10, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(10, 20, 10, 0),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
                                                   Container(
-                                                    width: MediaQuery.of(context)
-                                                            .size
-                                                            .width *
-                                                        0.87,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.87,
                                                     height: 40,
                                                     decoration: BoxDecoration(
-                                                      color:
-                                                          const Color(0x9C000000),
+                                                      color: const Color(
+                                                          0x9C000000),
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               8),
@@ -257,7 +273,12 @@ class _InversionJornadaTemporalScreenState
                                                             MainAxisSize.max,
                                                         children: [
                                                           Text(
-                                                            maybeHandleOverflow(widget.emprendimiento.nombre, 30, "..."),
+                                                            maybeHandleOverflow(
+                                                                widget
+                                                                    .emprendimiento
+                                                                    .nombre,
+                                                                30,
+                                                                "..."),
                                                             style: AppTheme.of(
                                                                     context)
                                                                 .bodyText1
@@ -278,8 +299,9 @@ class _InversionJornadaTemporalScreenState
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(10, 5, 10, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(10, 5, 10, 0),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -287,14 +309,15 @@ class _InversionJornadaTemporalScreenState
                                                         .spaceBetween,
                                                 children: [
                                                   Container(
-                                                    width: MediaQuery.of(context)
-                                                            .size
-                                                            .width *
-                                                        0.45,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.45,
                                                     height: 60,
                                                     decoration: BoxDecoration(
-                                                      color:
-                                                          const Color(0x9C000000),
+                                                      color: const Color(
+                                                          0x9C000000),
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               8),
@@ -310,7 +333,8 @@ class _InversionJornadaTemporalScreenState
                                                         children: [
                                                           Column(
                                                             mainAxisSize:
-                                                                MainAxisSize.max,
+                                                                MainAxisSize
+                                                                    .max,
                                                             children: [
                                                               Padding(
                                                                 padding:
@@ -327,8 +351,7 @@ class _InversionJornadaTemporalScreenState
                                                                       .bodyText1
                                                                       .override(
                                                                         fontFamily:
-                                                                            AppTheme.of(context)
-                                                                                .bodyText1Family,
+                                                                            AppTheme.of(context).bodyText1Family,
                                                                         color: Colors
                                                                             .white,
                                                                         fontSize:
@@ -337,7 +360,10 @@ class _InversionJornadaTemporalScreenState
                                                                 ),
                                                               ),
                                                               Text(
-                                                                currencyFormat.format(totalProyecto.toStringAsFixed(2)),
+                                                                currencyFormat.format(
+                                                                    totalProyecto
+                                                                        .toStringAsFixed(
+                                                                            2)),
                                                                 style: AppTheme.of(
                                                                         context)
                                                                     .bodyText1
@@ -358,14 +384,15 @@ class _InversionJornadaTemporalScreenState
                                                     ),
                                                   ),
                                                   Container(
-                                                    width: MediaQuery.of(context)
-                                                            .size
-                                                            .width *
-                                                        0.3,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.3,
                                                     height: 60,
                                                     decoration: BoxDecoration(
-                                                      color:
-                                                          const Color(0x9C000000),
+                                                      color: const Color(
+                                                          0x9C000000),
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               8),
@@ -388,7 +415,10 @@ class _InversionJornadaTemporalScreenState
                                                               padding:
                                                                   const EdgeInsetsDirectional
                                                                           .fromSTEB(
-                                                                      0, 5, 0, 0),
+                                                                      0,
+                                                                      5,
+                                                                      0,
+                                                                      0),
                                                               child: Text(
                                                                 'Cantidad Partidas',
                                                                 style: AppTheme.of(
@@ -413,12 +443,13 @@ class _InversionJornadaTemporalScreenState
                                                                       context)
                                                                   .bodyText1
                                                                   .override(
-                                                                    fontFamily: AppTheme.of(
-                                                                            context)
-                                                                        .bodyText1Family,
+                                                                    fontFamily:
+                                                                        AppTheme.of(context)
+                                                                            .bodyText1Family,
                                                                     color: Colors
                                                                         .white,
-                                                                    fontSize: 25,
+                                                                    fontSize:
+                                                                        25,
                                                                   ),
                                                             ),
                                                           ],
@@ -434,8 +465,9 @@ class _InversionJornadaTemporalScreenState
                                       ),
                                     ),
                                   ],
-                                ).animated(
-                                    [animationsMap['rowOnPageLoadAnimation1']!]),
+                                ).animated([
+                                  animationsMap['rowOnPageLoadAnimation1']!
+                                ]),
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
@@ -455,9 +487,8 @@ class _InversionJornadaTemporalScreenState
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Padding(
-                                        padding:
-                                            const EdgeInsetsDirectional.fromSTEB(
-                                                10, 12, 5, 12),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(10, 12, 5, 12),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment:
@@ -476,15 +507,17 @@ class _InversionJornadaTemporalScreenState
                                             ),
                                             FFButtonWidget(
                                               onPressed: () async {
-                                                if (productoInversionJornadaController.productosSolicitados.isNotEmpty) {
+                                                if (productoInversionJornadaController
+                                                    .productosSolicitados
+                                                    .isNotEmpty) {
                                                   await Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) =>
                                                           AgregarProductoInversionJornadaTemporal(
-                                                            emprendimiento: 
-                                                            widget.emprendimiento,
-                                                            ),
+                                                        emprendimiento: widget
+                                                            .emprendimiento,
+                                                      ),
                                                     ),
                                                   );
                                                 } else {
@@ -493,9 +526,9 @@ class _InversionJornadaTemporalScreenState
                                                     MaterialPageRoute(
                                                       builder: (context) =>
                                                           AgregarPrimerProductoInversionJornadaTemporal(
-                                                            emprendimiento: 
-                                                            widget.emprendimiento,
-                                                            ),
+                                                        emprendimiento: widget
+                                                            .emprendimiento,
+                                                      ),
                                                     ),
                                                   );
                                                 }
@@ -548,19 +581,21 @@ class _InversionJornadaTemporalScreenState
                                                     MaterialPageRoute(
                                                       builder: (context) =>
                                                           EditarProductoInversionJornadaTemporal(
-                                                              productoSol:
-                                                                  prodSolicitado,
-                                                              emprendimiento: 
-                                                                  widget.emprendimiento, 
-                                                              numJornada: 
-                                                                  widget.numJornada,),
+                                                        productoSol:
+                                                            prodSolicitado,
+                                                        emprendimiento: widget
+                                                            .emprendimiento,
+                                                        numJornada:
+                                                            widget.numJornada,
+                                                      ),
                                                     ),
                                                   );
                                                 },
                                                 child: Padding(
                                                   padding:
                                                       const EdgeInsetsDirectional
-                                                          .fromSTEB(0, 0, 0, 24),
+                                                              .fromSTEB(
+                                                          0, 0, 0, 24),
                                                   child: Column(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -582,11 +617,13 @@ class _InversionJornadaTemporalScreenState
                                                                 0x374672FF),
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(8),
+                                                                    .circular(
+                                                                        8),
                                                           ),
                                                           child: Row(
                                                             mainAxisSize:
-                                                                MainAxisSize.max,
+                                                                MainAxisSize
+                                                                    .max,
                                                             children: [
                                                               Padding(
                                                                 padding:
@@ -596,7 +633,8 @@ class _InversionJornadaTemporalScreenState
                                                                         0,
                                                                         0,
                                                                         0),
-                                                                child: Container(
+                                                                child:
+                                                                    Container(
                                                                   width: 35,
                                                                   height: 35,
                                                                   decoration:
@@ -619,14 +657,11 @@ class _InversionJornadaTemporalScreenState
                                                                         (index +
                                                                                 1)
                                                                             .toString(),
-                                                                        style: AppTheme.of(
-                                                                                context)
+                                                                        style: AppTheme.of(context)
                                                                             .bodyText1
                                                                             .override(
-                                                                              fontFamily:
-                                                                                  AppTheme.of(context).bodyText1Family,
-                                                                              fontSize:
-                                                                                  20,
+                                                                              fontFamily: AppTheme.of(context).bodyText1Family,
+                                                                              fontSize: 20,
                                                                             ),
                                                                       ),
                                                                     ],
@@ -651,26 +686,26 @@ class _InversionJornadaTemporalScreenState
                                                                     children: [
                                                                       Row(
                                                                         mainAxisSize:
-                                                                            MainAxisSize
-                                                                                .max,
+                                                                            MainAxisSize.max,
                                                                         mainAxisAlignment:
-                                                                            MainAxisAlignment
-                                                                                .spaceBetween,
+                                                                            MainAxisAlignment.spaceBetween,
                                                                         children: [
                                                                           Text(
-                                                                            maybeHandleOverflow(prodSolicitado.producto, 12, "..."),
-                                                                            style: AppTheme.of(context)
-                                                                                .subtitle1
-                                                                                .override(
+                                                                            maybeHandleOverflow(
+                                                                                prodSolicitado.producto,
+                                                                                12,
+                                                                                "..."),
+                                                                            style: AppTheme.of(context).subtitle1.override(
                                                                                   fontFamily: AppTheme.of(context).subtitle1Family,
                                                                                   color: AppTheme.of(context).primaryText,
                                                                                 ),
                                                                           ),
                                                                           Text(
-                                                                            maybeHandleOverflow(prodSolicitado.tipoEmpaques ?? "",8,"..."),
-                                                                            style: AppTheme.of(context)
-                                                                                .subtitle1
-                                                                                .override(
+                                                                            maybeHandleOverflow(
+                                                                                prodSolicitado.tipoEmpaques ?? "",
+                                                                                8,
+                                                                                "..."),
+                                                                            style: AppTheme.of(context).subtitle1.override(
                                                                                   fontFamily: AppTheme.of(context).subtitle1Family,
                                                                                   color: AppTheme.of(context).primaryText,
                                                                                   fontSize: 18,
@@ -681,9 +716,7 @@ class _InversionJornadaTemporalScreenState
                                                                             "${prodSolicitado.costoEstimado == null ? 0 : currencyFormat.format((prodSolicitado.costoEstimado! * prodSolicitado.cantidad).toStringAsFixed(2))}",
                                                                             textAlign:
                                                                                 TextAlign.end,
-                                                                            style: AppTheme.of(context)
-                                                                                .subtitle2
-                                                                                .override(
+                                                                            style: AppTheme.of(context).subtitle2.override(
                                                                                   fontFamily: AppTheme.of(context).subtitle2Family,
                                                                                   color: AppTheme.of(context).primaryText,
                                                                                 ),
@@ -691,10 +724,8 @@ class _InversionJornadaTemporalScreenState
                                                                         ],
                                                                       ),
                                                                       Padding(
-                                                                        padding: const EdgeInsets
-                                                                                .symmetric(
-                                                                            vertical:
-                                                                                5),
+                                                                        padding:
+                                                                            const EdgeInsets.symmetric(vertical: 5),
                                                                         child:
                                                                             Row(
                                                                           mainAxisSize:
@@ -710,10 +741,8 @@ class _InversionJornadaTemporalScreenState
                                                                                   ),
                                                                             ),
                                                                             Text(
-                                                                              dateTimeFormat('dd/MM/yyyy',
-                                                                                  prodSolicitado.fechaRegistro),
-                                                                              textAlign:
-                                                                                  TextAlign.end,
+                                                                              dateTimeFormat('dd/MM/yyyy', prodSolicitado.fechaRegistro),
+                                                                              textAlign: TextAlign.end,
                                                                               style: AppTheme.of(context).bodyText1.override(
                                                                                     fontFamily: AppTheme.of(context).bodyText1Family,
                                                                                     color: AppTheme.of(context).secondaryText,
@@ -725,18 +754,13 @@ class _InversionJornadaTemporalScreenState
                                                                       ),
                                                                       Row(
                                                                         mainAxisSize:
-                                                                            MainAxisSize
-                                                                                .max,
+                                                                            MainAxisSize.max,
                                                                         mainAxisAlignment:
-                                                                            MainAxisAlignment
-                                                                                .spaceBetween,
+                                                                            MainAxisAlignment.spaceBetween,
                                                                         children: [
                                                                           Text(
-                                                                            prodSolicitado
-                                                                                .descripcion,
-                                                                            style: AppTheme.of(context)
-                                                                                .bodyText1
-                                                                                .override(
+                                                                            prodSolicitado.descripcion,
+                                                                            style: AppTheme.of(context).bodyText1.override(
                                                                                   fontFamily: AppTheme.of(context).bodyText1Family,
                                                                                   color: AppTheme.of(context).secondaryText,
                                                                                 ),
@@ -744,9 +768,7 @@ class _InversionJornadaTemporalScreenState
                                                                           Text(
                                                                             prodSolicitado.proveedorSugerido ??
                                                                                 "",
-                                                                            style: AppTheme.of(context)
-                                                                                .bodyText1
-                                                                                .override(
+                                                                            style: AppTheme.of(context).bodyText1.override(
                                                                                   fontFamily: AppTheme.of(context).bodyText1Family,
                                                                                   color: AppTheme.of(context).secondaryText,
                                                                                 ),
@@ -772,7 +794,8 @@ class _InversionJornadaTemporalScreenState
                                     ],
                                   ),
                                 ).animated([
-                                  animationsMap['containerOnPageLoadAnimation2']!
+                                  animationsMap[
+                                      'containerOnPageLoadAnimation2']!
                                 ]),
                               ),
                             ],

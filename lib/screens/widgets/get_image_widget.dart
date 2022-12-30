@@ -6,7 +6,7 @@ Widget? getImageEmprendimiento(String? image, {double height = 180}) {
     return Image(
       height: height,
       width: double.infinity,
-      image: const AssetImage("assets/images/animation_500_l3ur8tqa.gif"),
+      image: const AssetImage("assets/images/default_image_placeholder.jpeg"),
       fit: BoxFit.cover,
     );
   } else if (image.startsWith('http') || image.startsWith('https')) {
@@ -54,6 +54,7 @@ Widget? getImage(String? image, {double height = 180}) {
 Widget? getImageTareaConsultoria(String? image,
     {double height = 180, double width = 180}) {
   if (image == null || image == '') {
+    //Aqui va un return null.
     return null;
   } else if (image.startsWith('http') || image.startsWith('https')) {
     return FadeInImage(
@@ -151,7 +152,7 @@ Widget getWidgetCoverImage(String? image) {
     return Container(
       color: Colors.grey,
       child: const Image(
-        image: AssetImage("assets/images/animation_500_l3ur8tqa.gif"),
+        image: AssetImage("assets/images/default_image_placeholder.jpeg"),
         fit: BoxFit.cover,
       ),
     );
@@ -174,7 +175,7 @@ Widget getWidgetContainImage(String? image) {
     return Container(
       color: Colors.transparent,
       child: const Image(
-        image: AssetImage("assets/images/animation_500_l3ur8tqa.gif"),
+        image: AssetImage("assets/images/default_image_placeholder.jpeg"),
         fit: BoxFit.contain,
       ),
     );
@@ -199,7 +200,7 @@ Widget? getWidgetContainerImage(String? image, double height, double width) {
       width: width,
       color: Colors.grey,
       child: const Image(
-        image: AssetImage("assets/images/animation_500_l3ur8tqa.gif"),
+        image: AssetImage("assets/images/default_image_placeholder.jpeg"),
         fit: BoxFit.cover,
       ),
     );

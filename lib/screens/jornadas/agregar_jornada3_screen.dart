@@ -63,29 +63,35 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
   void initState() {
     super.initState();
     imagenesTemp = [];
-    fechaRevision = TextEditingController(text: 
-          context.read<JornadaController>().fechaRevision != null ? 
-          dateTimeFormat('yMMMd', context.read<JornadaController>().fechaRevision!)
-          : "");
-    tareaController = TextEditingController(text: context.read<JornadaController>().tarea);
+    fechaRevision = TextEditingController(
+        text: context.read<JornadaController>().fechaRevision != null
+            ? dateTimeFormat(
+                'yMMMd', context.read<JornadaController>().fechaRevision!)
+            : "");
+    tareaController =
+        TextEditingController(text: context.read<JornadaController>().tarea);
     fechaRegistro = TextEditingController();
-    comentariosController = TextEditingController(text: context.read<JornadaController>().comentarios);
+    comentariosController = TextEditingController(
+        text: context.read<JornadaController>().comentarios);
     fechaRegistro.text = dateTimeFormat('yMMMd', DateTime.now());
     tipoProyecto = context.read<JornadaController>().tipoProyecto;
     proyecto = context.read<JornadaController>().proyecto;
-    descripcionController = TextEditingController(text: context.read<JornadaController>().descripcion);
+    descripcionController = TextEditingController(
+        text: context.read<JornadaController>().descripcion);
     listProyectos = [];
     listTipoProyecto = [];
     dataBase.tipoProyectoBox.getAll().forEach((element) {
       listTipoProyecto.add(element.tipoProyecto);
     });
-    listTipoProyecto.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+    listTipoProyecto
+        .sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     dataBase.catalogoProyectoBox.getAll().forEach((element) {
       if (element.tipoProyecto.target?.tipoProyecto == tipoProyecto) {
         listProyectos.add(element.nombre);
       }
     });
-    listProyectos.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+    listProyectos
+        .sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     emprendedor = "";
     if (widget.emprendimiento.emprendedor.target != null) {
       emprendedor =
@@ -100,8 +106,9 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
         Provider.of<InversionJornadaController>(context);
     final productoInversionJornadaController =
         Provider.of<ProductoInversionJornadaController>(context);
-    String totalProductos =
-        productoInversionJornadaController.productosSolicitados.length.toString();
+    String totalProductos = productoInversionJornadaController
+        .productosSolicitados.length
+        .toString();
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -120,7 +127,12 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                       height: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: FileImage(libraryIO.File(widget.emprendimiento.imagen.target!.path!)),
+                          image: widget.emprendimiento.imagen.target != null
+                              ? FileImage(libraryIO.File(
+                                  widget.emprendimiento.imagen.target!.path!))
+                              : Image.asset(
+                                  "assets/images/default_image_placeholder.jpeg",
+                                ).image,
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
                         ),
@@ -184,16 +196,16 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                               .clearInformation();
                                           productoInversionJornadaController
                                               .clearInformation();
-                                          jornadaProvider
-                                              .clearInformation();
+                                          jornadaProvider.clearInformation();
                                           await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                          builder: (context) =>
-                                              DetalleEmprendimientoScreen(
-                                                idEmprendimiento: widget.emprendimiento.id,
-                                                ),
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DetalleEmprendimientoScreen(
+                                                idEmprendimiento:
+                                                    widget.emprendimiento.id,
                                               ),
+                                            ),
                                           );
                                         },
                                         child: Row(
@@ -491,22 +503,27 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                                   child: FlutterFlowCarousel(
                                                       width: 180,
                                                       height: 100,
-                                                      listaImagenes: jornadaProvider.imagenes
-                                                      )
-                                                    ),
+                                                      listaImagenes:
+                                                          jornadaProvider
+                                                              .imagenes)),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 5, 0, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 5, 0, 0),
                                               child: Text(
                                                 "Total imágenes: ${jornadaProvider.imagenes.length}",
-                                                style: AppTheme.of(context).title3.override(
-                                                fontFamily: 'Poppins',
-                                                color:
-                                                    AppTheme.of(context).secondaryText,
-                                                fontSize: 12.5,
-                                                fontWeight: FontWeight.normal,
-                                                ),
+                                                style: AppTheme.of(context)
+                                                    .title3
+                                                    .override(
+                                                      fontFamily: 'Poppins',
+                                                      color:
+                                                          AppTheme.of(context)
+                                                              .secondaryText,
+                                                      fontSize: 12.5,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                    ),
                                               ),
                                             ),
                                           ],
@@ -528,8 +545,11 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                           XFile? pickedFile;
                                           List<XFile>? pickedFiles;
                                           if (option == 'camera') {
-                                            if (jornadaProvider.imagenes.length < 3) {
-                                              pickedFile = await picker.pickImage(
+                                            if (jornadaProvider
+                                                    .imagenes.length <
+                                                3) {
+                                              pickedFile =
+                                                  await picker.pickImage(
                                                 source: ImageSource.camera,
                                                 imageQuality: 100,
                                               );
@@ -537,68 +557,90 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                                 imagenesTemp.add(pickedFile);
                                               }
                                             } else {
-                                                bool? booleano = await showModalBottomSheet(
+                                              bool? booleano =
+                                                  await showModalBottomSheet(
                                                 isScrollControlled: true,
-                                                backgroundColor: Colors.transparent,
+                                                backgroundColor:
+                                                    Colors.transparent,
                                                 context: context,
                                                 builder: (context) {
                                                   return Padding(
-                                                    padding: MediaQuery.of(context).viewInsets,
+                                                    padding:
+                                                        MediaQuery.of(context)
+                                                            .viewInsets,
                                                     child: SizedBox(
                                                       height:
-                                                          MediaQuery.of(context).size.height * 0.45,
-                                                      child: const BottomSheetImagenesCompletas(),
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.45,
+                                                      child:
+                                                          const BottomSheetImagenesCompletas(),
                                                     ),
                                                   );
                                                 },
-                                              );  
-                                              if (booleano != null && booleano == true) {
-                                                pickedFile = await picker.pickImage(
-                                                source: ImageSource.camera,
-                                                imageQuality: 100,
+                                              );
+                                              if (booleano != null &&
+                                                  booleano == true) {
+                                                pickedFile =
+                                                    await picker.pickImage(
+                                                  source: ImageSource.camera,
+                                                  imageQuality: 100,
                                                 );
                                                 if (pickedFile != null) {
                                                   setState(() {
-                                                    jornadaProvider.imagenes.removeLast();
-                                                    jornadaProvider.imagenes.add(pickedFile!.path);
+                                                    jornadaProvider.imagenes
+                                                        .removeLast();
+                                                    jornadaProvider.imagenes
+                                                        .add(pickedFile!.path);
                                                   });
                                                 }
                                                 return;
-                                              }        
+                                              }
                                             }
-                                          } else { //Se selecciona galería
-                                            if (jornadaProvider.imagenes.length < 3) {
-                                              pickedFiles = await picker.pickMultiImage(
-                                              imageQuality: 100,
+                                          } else {
+                                            //Se selecciona galería
+                                            if (jornadaProvider
+                                                    .imagenes.length <
+                                                3) {
+                                              pickedFiles =
+                                                  await picker.pickMultiImage(
+                                                imageQuality: 100,
                                               );
                                               if (pickedFiles == null) {
                                                 return;
                                               }
                                               if (pickedFiles.length > 3) {
                                                 snackbarKey.currentState
-                                                  ?.showSnackBar(const SnackBar(
+                                                    ?.showSnackBar(
+                                                        const SnackBar(
                                                   content: Text(
                                                       "No se permite cargar más de 3 imágenes."),
                                                 ));
                                                 return;
                                               }
-                                              switch (jornadaProvider.imagenes.length) {
+                                              switch (jornadaProvider
+                                                  .imagenes.length) {
                                                 case 0:
-                                                  for(int i = 0; i < pickedFiles.length; i++)
-                                                  {
-                                                    imagenesTemp.add(pickedFiles[i]);
+                                                  for (int i = 0;
+                                                      i < pickedFiles.length;
+                                                      i++) {
+                                                    imagenesTemp
+                                                        .add(pickedFiles[i]);
                                                   }
                                                   break;
                                                 case 1:
-                                                  if(pickedFiles.length <= 2){
-                                                    for(int i = 0; i < pickedFiles.length; i++)
-                                                    {
-                                                      imagenesTemp.add(pickedFiles[i]);
+                                                  if (pickedFiles.length <= 2) {
+                                                    for (int i = 0;
+                                                        i < pickedFiles.length;
+                                                        i++) {
+                                                      imagenesTemp
+                                                          .add(pickedFiles[i]);
                                                     }
-                                                  }
-                                                  else{
+                                                  } else {
                                                     snackbarKey.currentState
-                                                    ?.showSnackBar(const SnackBar(
+                                                        ?.showSnackBar(
+                                                            const SnackBar(
                                                       content: Text(
                                                           "No se permite cargar más de 3 imágenes."),
                                                     ));
@@ -606,15 +648,17 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                                   }
                                                   break;
                                                 case 2:
-                                                  if(pickedFiles.length <= 1){
-                                                    for(int i = 0; i < pickedFiles.length; i++)
-                                                    {
-                                                      imagenesTemp.add(pickedFiles[i]);
+                                                  if (pickedFiles.length <= 1) {
+                                                    for (int i = 0;
+                                                        i < pickedFiles.length;
+                                                        i++) {
+                                                      imagenesTemp
+                                                          .add(pickedFiles[i]);
                                                     }
-                                                  }
-                                                  else{
+                                                  } else {
                                                     snackbarKey.currentState
-                                                    ?.showSnackBar(const SnackBar(
+                                                        ?.showSnackBar(
+                                                            const SnackBar(
                                                       content: Text(
                                                           "No se permite cargar más de 3 imágenes."),
                                                     ));
@@ -625,47 +669,70 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                                   break;
                                               }
                                             } else {
-                                              bool? booleano = await showModalBottomSheet(
+                                              bool? booleano =
+                                                  await showModalBottomSheet(
                                                 isScrollControlled: true,
-                                                backgroundColor: Colors.transparent,
+                                                backgroundColor:
+                                                    Colors.transparent,
                                                 context: context,
                                                 builder: (context) {
                                                   return Padding(
-                                                    padding: MediaQuery.of(context).viewInsets,
+                                                    padding:
+                                                        MediaQuery.of(context)
+                                                            .viewInsets,
                                                     child: SizedBox(
                                                       height:
-                                                          MediaQuery.of(context).size.height * 0.45,
-                                                      child: const BottomSheetImagenesCompletas(),
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.45,
+                                                      child:
+                                                          const BottomSheetImagenesCompletas(),
                                                     ),
                                                   );
                                                 },
                                               );
-                                              if (booleano != null && booleano == true) {
-                                                pickedFile = await picker.pickImage(
-                                                source: ImageSource.gallery,
-                                                imageQuality: 100,
+                                              if (booleano != null &&
+                                                  booleano == true) {
+                                                pickedFile =
+                                                    await picker.pickImage(
+                                                  source: ImageSource.gallery,
+                                                  imageQuality: 100,
                                                 );
                                                 if (pickedFile != null) {
                                                   setState(() {
-                                                    jornadaProvider.imagenes.removeLast();
-                                                    jornadaProvider.imagenes.add(pickedFile!.path);
+                                                    jornadaProvider.imagenes
+                                                        .removeLast();
+                                                    jornadaProvider.imagenes
+                                                        .add(pickedFile!.path);
                                                   });
                                                 }
                                                 return;
-                                              }     
+                                              }
                                             }
                                           }
                                           setState(() {
-                                            for (var i = 0; i < imagenesTemp.length; i++) {
-                                              libraryIO.File file = libraryIO.File(imagenesTemp[i].path);
-                                              List<int> fileInByte = file.readAsBytesSync();
-                                              String base64 = base64Encode(fileInByte);
-                                              var newImagenLocal = SaveImagenesLocal(
-                                                nombre: imagenesTemp[i].name, 
-                                                path: imagenesTemp[i].path, 
-                                                base64: base64);
-                                              jornadaProvider.imagenesLocal.add(newImagenLocal);  
-                                              jornadaProvider.imagenes.add(imagenesTemp[i].path);
+                                            for (var i = 0;
+                                                i < imagenesTemp.length;
+                                                i++) {
+                                              libraryIO.File file =
+                                                  libraryIO.File(
+                                                      imagenesTemp[i].path);
+                                              List<int> fileInByte =
+                                                  file.readAsBytesSync();
+                                              String base64 =
+                                                  base64Encode(fileInByte);
+                                              var newImagenLocal =
+                                                  SaveImagenesLocal(
+                                                      nombre:
+                                                          imagenesTemp[i].name,
+                                                      path:
+                                                          imagenesTemp[i].path,
+                                                      base64: base64);
+                                              jornadaProvider.imagenesLocal
+                                                  .add(newImagenLocal);
+                                              jornadaProvider.imagenes
+                                                  .add(imagenesTemp[i].path);
                                             }
                                           });
                                         },
@@ -872,7 +939,9 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                               listProyectos.add(element.nombre);
                                             }
                                           });
-                                          listProyectos.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+                                          listProyectos.sort((a, b) =>
+                                              removeDiacritics(a).compareTo(
+                                                  removeDiacritics(b)));
                                           print("Entro a tipo proyecto");
                                         }
                                       }),
@@ -1054,125 +1123,184 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                       elevation: 4,
                                       child: FFButtonWidget(
                                         onPressed: () async {
-                                          if (productoInversionJornadaController.productosSolicitados.isEmpty) {
-                                            if (proyecto != "" && tipoProyecto != "") {
-                                            final actualProyecto = dataBase.catalogoProyectoBox
-                                            .query(CatalogoProyecto_.nombre
-                                                .equals(proyecto))
-                                            .build()
-                                            .findFirst();
-                                            if (actualProyecto != null && actualProyecto.prodProyecto.isNotEmpty) {
+                                          if (productoInversionJornadaController
+                                              .productosSolicitados.isEmpty) {
+                                            if (proyecto != "" &&
+                                                tipoProyecto != "") {
+                                              final actualProyecto = dataBase
+                                                  .catalogoProyectoBox
+                                                  .query(CatalogoProyecto_
+                                                      .nombre
+                                                      .equals(proyecto))
+                                                  .build()
+                                                  .findFirst();
+                                              if (actualProyecto != null &&
+                                                  actualProyecto.prodProyecto
+                                                      .isNotEmpty) {
+                                                await showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (alertDialogContext) {
+                                                    return AlertDialog(
+                                                      title: const Text(
+                                                          'Productos precargados'),
+                                                      content: const Text(
+                                                          '¿Deseas agregar productos precargados?'),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () async {
+                                                            List<ProdProyecto>
+                                                                listProdProyecto =
+                                                                actualProyecto
+                                                                    .prodProyecto
+                                                                    .toList();
+                                                            inversionJornadaProvider
+                                                                    .porcentajePago =
+                                                                "50";
+                                                            inversionJornadaProvider
+                                                                .addTemporal(widget
+                                                                    .emprendimiento
+                                                                    .id);
+                                                            for (var element
+                                                                in listProdProyecto) {
+                                                              var nuevoProdSolicitadoTemporal = ProductosSolicitadosTemporal(
+                                                                  id: element
+                                                                      .idDBR!,
+                                                                  producto: element
+                                                                      .producto,
+                                                                  marcaSugerida:
+                                                                      element
+                                                                          .marcaSugerida,
+                                                                  descripcion: element
+                                                                      .descripcion,
+                                                                  proveedorSugerido:
+                                                                      element
+                                                                          .proveedorSugerido,
+                                                                  costoEstimado:
+                                                                      element.costoEstimado ??
+                                                                          0.0,
+                                                                  cantidad: element
+                                                                      .cantidad,
+                                                                  idFamiliaProd: element
+                                                                      .familiaProducto
+                                                                      .target!
+                                                                      .id,
+                                                                  familiaProd: element
+                                                                      .familiaProducto
+                                                                      .target!
+                                                                      .nombre,
+                                                                  idTipoEmpaques: element
+                                                                      .tipoEmpaque
+                                                                      .target!
+                                                                      .id,
+                                                                  tipoEmpaques:
+                                                                      element
+                                                                          .tipoEmpaque
+                                                                          .target!
+                                                                          .tipo,
+                                                                  fechaRegistro:
+                                                                      DateTime
+                                                                          .now());
+                                                              productoInversionJornadaController
+                                                                  .productosSolicitados
+                                                                  .add(
+                                                                      nuevoProdSolicitadoTemporal);
+                                                            }
+                                                            Navigator.pop(
+                                                                alertDialogContext);
+                                                            await Navigator
+                                                                .push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        InversionJornadaTemporalScreen(
+                                                                  emprendimiento:
+                                                                      widget
+                                                                          .emprendimiento,
+                                                                  numJornada: widget
+                                                                      .numJornada,
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                          child:
+                                                              const Text('Sí'),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed: () async {
+                                                            Navigator.pop(
+                                                                alertDialogContext);
+                                                            await Navigator
+                                                                .push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        InversionJornadaTemporalScreen(
+                                                                  emprendimiento:
+                                                                      widget
+                                                                          .emprendimiento,
+                                                                  numJornada: widget
+                                                                      .numJornada,
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                          child:
+                                                              const Text('No'),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              } else {
+                                                await Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        InversionJornadaTemporalScreen(
+                                                      emprendimiento:
+                                                          widget.emprendimiento,
+                                                      numJornada:
+                                                          widget.numJornada,
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                            } else {
                                               await showDialog(
                                                 context: context,
                                                 builder: (alertDialogContext) {
                                                   return AlertDialog(
-                                                    title: const Text('Productos precargados'),
+                                                    title: const Text(
+                                                        'Campos vacíos'),
                                                     content: const Text(
-                                                        '¿Deseas agregar productos precargados?'),
+                                                        "Para agregar registros, es necesario que selecciones Tipo de Proyecto y un Proyecto"),
                                                     actions: [
                                                       TextButton(
-                                                        onPressed: () async {
-                                                          List<ProdProyecto> listProdProyecto = actualProyecto.prodProyecto.toList();
-                                                          inversionJornadaProvider.porcentajePago = "50";
-                                                          inversionJornadaProvider
-                                                                .addTemporal(
-                                                          widget.emprendimiento.id);
-                                                          for (var element in listProdProyecto) {
-                                                            var nuevoProdSolicitadoTemporal = ProductosSolicitadosTemporal(
-                                                              id: element.idDBR!, 
-                                                              producto: element.producto, 
-                                                              marcaSugerida: element.marcaSugerida,
-                                                              descripcion: element.descripcion, 
-                                                              proveedorSugerido: element.proveedorSugerido,
-                                                              costoEstimado: element.costoEstimado ?? 0.0,
-                                                              cantidad: element.cantidad, 
-                                                              idFamiliaProd: element.familiaProducto.target!.id, 
-                                                              familiaProd: element.familiaProducto.target!.nombre, 
-                                                              idTipoEmpaques: element.tipoEmpaque.target!.id, 
-                                                              tipoEmpaques: element.tipoEmpaque.target!.tipo, 
-                                                              fechaRegistro: DateTime.now()
-                                                              );
-                                                            productoInversionJornadaController.productosSolicitados.add(nuevoProdSolicitadoTemporal);
-                                                          }
-                                                          Navigator.pop(alertDialogContext);
-                                                          await Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  InversionJornadaTemporalScreen(
-                                                                      emprendimiento: widget
-                                                                          .emprendimiento, 
-                                                                          numJornada: 
-                                                                          widget.numJornada,),
-                                                            ),
-                                                          );
-                                                        },
-                                                        child: const Text('Sí'),
-                                                      ),
-                                                      TextButton(
-                                                        onPressed: () async {
-                                                          Navigator.pop(alertDialogContext);
-                                                          await Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  InversionJornadaTemporalScreen(
-                                                                      emprendimiento: widget
-                                                                          .emprendimiento, 
-                                                                          numJornada: 
-                                                                          widget.numJornada,),
-                                                            ),
-                                                          );
-                                                        },
-                                                        child: const Text('No'),
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                alertDialogContext),
+                                                        child:
+                                                            const Text('Bien'),
                                                       ),
                                                     ],
                                                   );
                                                 },
                                               );
-                                            } else {
-                                              await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      InversionJornadaTemporalScreen(
-                                                          emprendimiento: widget
-                                                              .emprendimiento, 
-                                                              numJornada: 
-                                                              widget.numJornada,),
-                                                ),
-                                              );
+                                              return;
                                             }
-                                          } else {
-                                            await showDialog(
-                                              context: context,
-                                              builder: (alertDialogContext) {
-                                                return AlertDialog(
-                                                  title: const Text('Campos vacíos'),
-                                                  content: const Text(
-                                                      "Para agregar registros, es necesario que selecciones Tipo de Proyecto y un Proyecto"),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () =>
-                                                          Navigator.pop(alertDialogContext),
-                                                      child: const Text('Bien'),
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                            );
-                                            return;
-                                          }
                                           } else {
                                             await Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     InversionJornadaTemporalScreen(
-                                                        emprendimiento: widget
-                                                            .emprendimiento, 
-                                                            numJornada: 
-                                                            widget.numJornada,),
+                                                  emprendimiento:
+                                                      widget.emprendimiento,
+                                                  numJornada: widget.numJornada,
+                                                ),
                                               ),
                                             );
                                           }
@@ -1230,8 +1358,10 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                           JornadaCreada(idEmprendimiento: widget.emprendimiento.id,),
+                                      builder: (context) => JornadaCreada(
+                                        idEmprendimiento:
+                                            widget.emprendimiento.id,
+                                      ),
                                     ),
                                   );
                                 }

@@ -2423,7 +2423,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
       Imagenes imagen, Bitacora bitacora) async {
     print("Estoy en syncAddImagenJornada2");
     print(imagen.idEmiWeb);
-    print(imagen.base64);
     final List<String> idsDBRImagenes = [];
 
     try {
