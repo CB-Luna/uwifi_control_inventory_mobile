@@ -1102,7 +1102,7 @@ class Imagenes {
   String? idEmiWeb;
   final tarea = ToOne<Tareas>();
   final prodSolicitados = ToMany<ProdSolicitado>();
-  final productosProv = ToMany<ProductosProv>();
+  final productosProv = ToOne<ProductosProv>();
   final prodProyecto = ToMany<ProdProyecto>();
   final inversion = ToOne<Inversiones>();
   final productosEmp = ToOne<ProductosEmp>();
