@@ -7,6 +7,7 @@ import 'package:bizpro_app/modelsEmiWeb/get_token_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/temporals/get_basic_emprendimiento_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/temporals/get_basic_jornadas_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/temporals/get_emp_externo_emi_web_temp.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/get_single_jornada_pocketbase.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/usuario_proyectos_temporal.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
@@ -137,7 +138,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                   //Segundo creamos el emprendimiento
                   final recordEmprendimiento = await client.records.create('emprendimientos', body: {
                     "nombre_emprendimiento": basicProyecto.payload.emprendimiento,
-                    "descripcion": basicProyecto.payload.emprendedor.comentarios,
+                    "descripcion": basicProyecto.payload.emprendedor.comentarios == "" ? "Sin Descripción" : basicProyecto.payload.emprendedor.comentarios,
                     "activo": basicProyecto.payload.activo,
                     "archivado": basicProyecto.payload.archivado,
                     "id_promotor_fk": usuario.idDBR,
@@ -167,7 +168,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                 //Segundo creamos el emprendimiento
                 final recordEmprendimiento = await client.records.create('emprendimientos', body: {
                   "nombre_emprendimiento": basicProyecto.payload.emprendimiento,
-                  "descripcion": basicProyecto.payload.emprendedor.comentarios,
+                  "descripcion": basicProyecto.payload.emprendedor.comentarios == "" ? "Sin Descripción" : basicProyecto.payload.emprendedor.comentarios,
                   "activo": basicProyecto.payload.activo,
                   "archivado": basicProyecto.payload.archivado,
                   "id_promotor_fk": usuario.idDBR,
@@ -216,7 +217,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                   //Segundo actualizamos el emprendimiento
                   final recordEmprendimiento = await client.records.update('emprendimientos', recordValidateEmprendimiento.first.id, body: {
                     "nombre_emprendimiento": basicProyecto.payload.emprendimiento,
-                    "descripcion": basicProyecto.payload.emprendedor.comentarios,
+                    "descripcion": basicProyecto.payload.emprendedor.comentarios == "" ? "Sin Descripción" : basicProyecto.payload.emprendedor.comentarios,
                     "activo": basicProyecto.payload.activo,
                     "archivado": basicProyecto.payload.archivado,
                     "id_promotor_fk": usuario.idDBR,
@@ -245,55 +246,539 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
             }
           }
           print("LLAMADO DE API 3");
-          //API 3 Se recupera la información básica de las Jornadas
-          // var url = Uri.parse("$baseUrlEmiWebServices/jornadas/emprendimiento?idProyecto=$idEmprendimiento");
-          // final headers = ({
-          //     "Content-Type": "application/json",
-          //     'Authorization': 'Bearer $tokenGlobal',
-          //   });
-          // var responseAPI3 = await get(
-          //   url,
-          //   headers: headers
-          // ); 
-          // switch (responseAPI3.statusCode) {
-          //   case 200:
-          //     print("Respuesta 200 en API 3");
-          //     var basicJornadas = getBasicJornadasEmiWebFromMap(
-          //       const Utf8Decoder().convert(responseAPI3.bodyBytes)
-          //     );
-          //     // if (basicJornadas.payload!.jornada1 != null) {
-          //     //     final nuevaJornada1 = Jornadas(
-          //     //       numJornada: elementJornada.numJornada.toString(),
-          //     //       fechaRevision: elementJornada.proximaVisita!,
-          //     //       fechaRegistro: elementJornada.created,
-          //     //       completada: elementJornada.completada,
-          //     //       idDBR: elementJornada.id,
-          //     //       idEmiWeb: elementJornada.idEmiWeb,
-          //     //     );
-          //     //     final nuevaTarea1 = Tareas(
-          //     //       tarea: elementJornada.expand.idTareaFk.tarea,
-          //     //       descripcion: "Creación Jornada 1",
-          //     //       fechaRevision: elementJornada.expand.idTareaFk.fechaRevision!,
-          //     //       fechaRegistro: elementJornada.expand.idTareaFk.created,
-          //     //       idDBR: elementJornada.expand.idTareaFk.id,
-          //     //       idEmiWeb: elementJornada.expand.idTareaFk.idEmiWeb,
-          //     //     );
-          //     //     nuevaJornada1.tarea.target = nuevaTarea1;
-          //     //     nuevaJornada1.emprendimiento.target = nuevoEmprendimiento;
-          //     //     nuevaTarea1.jornada.target = nuevaJornada1;
-          //     //     nuevoEmprendimiento.jornadas.add(nuevaJornada1);
-          //     //     dataBase.jornadasBox.put(nuevaJornada1);
-          //     //     dataBase.tareasBox.put(nuevaTarea1);
-          //     //     dataBase.emprendimientosBox.put(nuevoEmprendimiento);
-          //     //   }
-          //     break;
-          //   case 404:
-          //     break;
-          //   default:
-          //   print("Error en llamado al API 3");
-          //   print(responseAPI2.statusCode);
-          //   banderasExitoSync.add(false);
-          // }
+          // API 3 Se recupera la información básica de las Jornadas
+          var url = Uri.parse("$baseUrlEmiWebServices/jornadas/emprendimiento?idProyecto=$idEmprendimiento");
+          final headers = ({
+              "Content-Type": "application/json",
+              'Authorization': 'Bearer $tokenGlobal',
+            });
+          var responseAPI3 = await get(
+            url,
+            headers: headers
+          ); 
+          switch (responseAPI3.statusCode) {
+            case 200:
+              print("Respuesta 200 en API 3");
+              var basicJornadas = getBasicJornadasEmiWebFromMap(
+                const Utf8Decoder().convert(responseAPI3.bodyBytes)
+              );
+              if (basicJornadas.payload!.jornada1 != null) {
+                // Se valida que la jornada exista en Pocketbase
+                final recordValidateJornada = await client.records.getFullList(
+                  'jornadas',
+                  batch: 200,
+                  filter:
+                    "id_emi_web='${basicJornadas.payload!.jornada1!.idJornada1}'&&num_jornada~1");
+                if (recordValidateJornada.isEmpty) {
+                  print("La jornada 1 no existe en Pocketbase");
+                  //Primero creamos la tarea asociada a la jornada
+                  final recordTarea = await client.records.create('tareas', body: {
+                  "tarea": basicJornadas.payload!.jornada1!.registrarTarea,
+                  "descripcion": "Creación Jornada 1",
+                  "fecha_revision": basicJornadas.payload!.jornada1!.fechaRevision.toUtc().toString(),
+                  "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                  "id_emi_web": basicJornadas.payload!.jornada1!.idJornada1.toString(),
+                  });
+                  if (recordTarea.id.isNotEmpty) {
+                    //Segundo creamos la jornada  
+                    final recordJornada = await client.records.create('jornadas', body: {
+                      "num_jornada": 1,
+                      "id_tarea_fk": recordTarea.id,
+                      "proxima_visita": basicJornadas.payload!.jornada1!.fechaRevision.toUtc().toString(),
+                      "id_emprendimiento_fk": idEmprendimientoPocketbase,
+                      "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                      "completada": basicJornadas.payload!.jornada1!.tareaCompletada,
+                      "id_emi_web": basicJornadas.payload!.jornada1!.idJornada1.toString(),
+                    });
+
+                    if (recordJornada.id.isNotEmpty) {
+                      //Se hizo con éxito la actualización
+                    } else {
+                      //No se pudo postear la Jornada en Pocketbase
+                      banderasExitoSync.add(false);
+                    }
+                  } else {
+                    //No se pudo postear la Tarea asociada a la Jornada 1 en Pocketbase
+                    banderasExitoSync.add(false);
+                  }
+                } else {
+                  print("La jornada 1 ya existe en Pocketbase");
+                  //Se actualiza la Jornada 1 y su Tarea asociada
+                  //Primero actualizamos la Jornada 1
+                  final recordJ1 = await client.records.update('jornadas', recordValidateJornada.first.id, body: {
+                    "proxima_visita": basicJornadas.payload!.jornada1!.fechaRevision.toUtc().toString(),
+                    "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                    "completada": basicJornadas.payload!.jornada1!.tareaCompletada,
+                  });
+
+                  if (recordJ1.id.isNotEmpty) {
+                    print("Se actualiza la Tarea de la J1");
+                    print(recordJ1.toString());
+                    //Se recupere el id de la tarea asociada a la J1
+                    var singleJornada1 = getSingleJornadaPocketbaseFromMap(recordJ1.toString());
+                    //Segundo actualizamos la tarea asociada a la J1
+                    final recordTareaJ1 = await client.records.update('tareas', singleJornada1.idTareaFk, body: {
+                      "tarea": basicJornadas.payload!.jornada1!.registrarTarea,
+                      "descripcion": "Creación Jornada 1",
+                      "fecha_revision": basicJornadas.payload!.jornada1!.fechaRevision.toUtc().toString(),
+                      "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                    });
+                    if (recordTareaJ1.id.isNotEmpty) {
+                      // Se hizo con éxito la actualización
+                    } else {
+                      // No se pudo actualizar la Tarea de la J1 en Pocketbase
+                      banderasExitoSync.add(false);
+                    }
+                  } else {
+                    // No se pudo actualizar la J1 en Pocketbase
+                    banderasExitoSync.add(false);
+                  }  
+                }
+              }
+              if (basicJornadas.payload!.jornada2 != null) {
+                // Se valida que la jornada exista en Pocketbase
+                final recordValidateJornada = await client.records.getFullList(
+                  'jornadas',
+                  batch: 200,
+                  filter:
+                    "id_emi_web='${basicJornadas.payload!.jornada2!.idJornada2}'&&num_jornada~2");
+                if (recordValidateJornada.isEmpty) {
+                  print("La jornada 2 no existe en Pocketbase");
+                  // Creamos las imágenes de la jornada
+                  List<String> idsDBRImagenes = [];
+                  for (var i = 0; i < basicJornadas.payload!.jornada2!.documentos.toList().length; i++) {
+                    // Se valida que la imagen no exista en Pocketbase
+                    final recordValidateImagen = await client.records.getFullList(
+                      'imagenes',
+                      batch: 200,
+                      filter:
+                        "id_emi_web='${basicJornadas.payload!.jornada2!.documentos.toList()[i].idDocumento}'");
+                    if (recordValidateImagen.isEmpty) {
+                      // La imagen no existe y se tiene que crear
+                      final recordImagen = await client.records.create('imagenes', body: {
+                        "nombre": basicJornadas.payload!.jornada2!.documentos.toList()[i].nombreArchivo,
+                        "id_emi_web": basicJornadas.payload!.jornada2!.documentos.toList()[i].idDocumento,
+                        "base64": basicJornadas.payload!.jornada2!.documentos.toList()[i].archivo,
+                      });
+                      if (recordImagen.id.isNotEmpty) {
+                        idsDBRImagenes.add(recordImagen.id);
+                      } else {
+                        // No se pudo agregar una Imagen de la J2 en Pocketbase
+                        banderasExitoSync.add(false);
+                      }
+                    } else {
+                      // La imagen existe y se tiene que actualizar
+                      final recordImagen = await client.records.update('imagenes', recordValidateImagen.first.id,body: {
+                        "nombre": basicJornadas.payload!.jornada2!.documentos.toList()[i].nombreArchivo,
+                        "base64": basicJornadas.payload!.jornada2!.documentos.toList()[i].archivo,
+                      });
+                      if (recordImagen.id.isNotEmpty) {
+                        idsDBRImagenes.add(recordImagen.id);
+                      } else {
+                        // No se pudo actualizar una Imagen de la J2 en Pocketbase
+                        banderasExitoSync.add(false);
+                      }
+                    }
+                  }
+                  //Primero creamos la tarea asociada a la jornada
+                  final recordTarea = await client.records.create('tareas', body: {
+                  "tarea": basicJornadas.payload!.jornada2!.registrarTarea,
+                  "descripcion": "Creación Jornada 2",
+                  "comentarios": basicJornadas.payload!.jornada2!.comentarios,
+                  "fecha_revision": basicJornadas.payload!.jornada2!.fechaRevision.toUtc().toString(),
+                  "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                  "id_emi_web": basicJornadas.payload!.jornada2!.idJornada2.toString(),
+                  "id_imagenes_fk": idsDBRImagenes,
+                  });
+                  if (recordTarea.id.isNotEmpty) {
+                    //Segundo creamos la jornada  
+                    final recordJornada = await client.records.create('jornadas', body: {
+                      "num_jornada": 2,
+                      "id_tarea_fk": recordTarea.id,
+                      "proxima_visita": basicJornadas.payload!.jornada2!.fechaRevision.toUtc().toString(),
+                      "id_emprendimiento_fk": idEmprendimientoPocketbase,
+                      "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                      "completada": basicJornadas.payload!.jornada2!.tareaCompletada,
+                      "id_emi_web": basicJornadas.payload!.jornada2!.idJornada2.toString(),
+                    });
+
+                    if (recordJornada.id.isNotEmpty) {
+                      //Se hizo con éxito la actualización
+                    } else {
+                      //No se pudo postear la Jornada en Pocketbase
+                      banderasExitoSync.add(false);
+                    }
+                  } else {
+                    //No se pudo postear la Tarea asociada a la Jornada 2 en Pocketbase
+                    banderasExitoSync.add(false);
+                  }
+                } else {
+                  print("La jornada 2 ya existe en Pocketbase");
+                  // ACtualizamos las imágenes de la jornada
+                  List<String> idsDBRImagenes = [];
+                  for (var i = 0; i < basicJornadas.payload!.jornada2!.documentos.toList().length; i++) {
+                    // Se valida que la imagen no exista en Pocketbase
+                    final recordValidateImagen = await client.records.getFullList(
+                      'imagenes',
+                      batch: 200,
+                      filter:
+                        "id_emi_web='${basicJornadas.payload!.jornada2!.documentos.toList()[i].idDocumento}'");
+                    if (recordValidateImagen.isEmpty) {
+                      // La imagen no existe y se tiene que crear
+                      final recordImagen = await client.records.create('imagenes', body: {
+                        "nombre": basicJornadas.payload!.jornada2!.documentos.toList()[i].nombreArchivo,
+                        "id_emi_web": basicJornadas.payload!.jornada2!.documentos.toList()[i].idDocumento,
+                        "base64": basicJornadas.payload!.jornada2!.documentos.toList()[i].archivo,
+                      });
+                      if (recordImagen.id.isNotEmpty) {
+                        idsDBRImagenes.add(recordImagen.id);
+                      } else {
+                        // No se pudo agregar una Imagen de la J2 en Pocketbase
+                        banderasExitoSync.add(false);
+                      }
+                    } else {
+                      // La imagen existe y se tiene que actualizar
+                      final recordImagen = await client.records.update('imagenes', recordValidateImagen.first.id,body: {
+                        "nombre": basicJornadas.payload!.jornada2!.documentos.toList()[i].nombreArchivo,
+                        "base64": basicJornadas.payload!.jornada2!.documentos.toList()[i].archivo,
+                      });
+                      if (recordImagen.id.isNotEmpty) {
+                        idsDBRImagenes.add(recordImagen.id);
+                      } else {
+                        // No se pudo actualizar una Imagen de la J2 en Pocketbase
+                        banderasExitoSync.add(false);
+                      }
+                    }
+                  }
+                  //Se actualiza la Jornada 2 y su Tarea asociada
+                  //Primero actualizamos la Jornada 2
+                  final recordJ2 = await client.records.update('jornadas', recordValidateJornada.first.id, body: {
+                    "proxima_visita": basicJornadas.payload!.jornada2!.fechaRevision.toUtc().toString(),
+                    "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                    "completada": basicJornadas.payload!.jornada2!.tareaCompletada,
+                  });
+
+                  if (recordJ2.id.isNotEmpty) {
+                    //Se recupere el id de la tarea asociada a la J2
+                    var singleJornada2 = getSingleJornadaPocketbaseFromMap(recordJ2.toString());
+                    //Segundo actualizamos la tarea asociada a la J2
+                    final recordTareaJ2 = await client.records.update('tareas', singleJornada2.idTareaFk, body: {
+                      "tarea": basicJornadas.payload!.jornada2!.registrarTarea,
+                      "descripcion": "Creación Jornada 2",
+                      "comentarios": basicJornadas.payload!.jornada2!.comentarios,
+                      "fecha_revision": basicJornadas.payload!.jornada2!.fechaRevision.toUtc().toString(),
+                      "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                    });
+                    if (recordTareaJ2.id.isNotEmpty) {
+                      // Se hizo con éxito la actualización
+                    } else {
+                      // No se pudo actualizar la Tarea de la J2 en Pocketbase
+                      banderasExitoSync.add(false);
+                    }
+                  } else {
+                    // No se pudo actualizar la J2 en Pocketbase
+                    banderasExitoSync.add(false);
+                  }  
+                }
+              }
+              if (basicJornadas.payload!.jornada3 != null) {
+                // Se valida que la jornada exista en Pocketbase
+                final recordValidateJornada = await client.records.getFullList(
+                  'jornadas',
+                  batch: 200,
+                  filter:
+                    "id_emi_web='${basicJornadas.payload!.jornada3!.idJornada3}'&&num_jornada~3");
+                if (recordValidateJornada.isEmpty) {
+                  print("La jornada 3 no existe en Pocketbase");
+                  // Creamos las imágenes de la jornada
+                  List<String> idsDBRImagenes = [];
+                  for (var i = 0; i < basicJornadas.payload!.jornada3!.documentos.toList().length; i++) {
+                    // Se valida que la imagen no exista en Pocketbase
+                    final recordValidateImagen = await client.records.getFullList(
+                      'imagenes',
+                      batch: 200,
+                      filter:
+                        "id_emi_web='${basicJornadas.payload!.jornada3!.documentos.toList()[i].idDocumento}'");
+                    if (recordValidateImagen.isEmpty) {
+                      // La imagen no existe y se tiene que crear
+                      final recordImagen = await client.records.create('imagenes', body: {
+                        "nombre": basicJornadas.payload!.jornada3!.documentos.toList()[i].nombreArchivo,
+                        "id_emi_web": basicJornadas.payload!.jornada3!.documentos.toList()[i].idDocumento,
+                        "base64": basicJornadas.payload!.jornada3!.documentos.toList()[i].archivo,
+                      });
+                      if (recordImagen.id.isNotEmpty) {
+                        idsDBRImagenes.add(recordImagen.id);
+                      } else {
+                        // No se pudo agregar una Imagen de la J3 en Pocketbase
+                        banderasExitoSync.add(false);
+                      }
+                    } else {
+                      // La imagen existe y se tiene que actualizar
+                      final recordImagen = await client.records.update('imagenes', recordValidateImagen.first.id,body: {
+                        "nombre": basicJornadas.payload!.jornada3!.documentos.toList()[i].nombreArchivo,
+                        "base64": basicJornadas.payload!.jornada3!.documentos.toList()[i].archivo,
+                      });
+                      if (recordImagen.id.isNotEmpty) {
+                        idsDBRImagenes.add(recordImagen.id);
+                      } else {
+                        // No se pudo actualizar una Imagen de la J3 en Pocketbase
+                        banderasExitoSync.add(false);
+                      }
+                    }
+                  }
+                  //Primero creamos la tarea asociada a la jornada
+                  final recordTarea = await client.records.create('tareas', body: {
+                  "tarea": basicJornadas.payload!.jornada3!.registrarTarea,
+                  "descripcion": basicJornadas.payload!.jornada3!.descripcion,
+                  "comentarios": basicJornadas.payload!.jornada3!.comentarios,
+                  "fecha_revision": basicJornadas.payload!.jornada3!.fechaRevision.toUtc().toString(),
+                  "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                  "id_emi_web": basicJornadas.payload!.jornada3!.idJornada3.toString(),
+                  "id_imagenes_fk": idsDBRImagenes,
+                  });
+                  if (recordTarea.id.isNotEmpty) {
+                    //Segundo creamos la jornada  
+                    final recordJornada = await client.records.create('jornadas', body: {
+                      "num_jornada": 3,
+                      "id_tarea_fk": recordTarea.id,
+                      "proxima_visita": basicJornadas.payload!.jornada3!.fechaRevision.toUtc().toString(),
+                      "id_emprendimiento_fk": idEmprendimientoPocketbase,
+                      "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                      "completada": basicJornadas.payload!.jornada3!.tareaCompletada,
+                      "id_emi_web": basicJornadas.payload!.jornada3!.idJornada3.toString(),
+                    });
+
+                    if (recordJornada.id.isNotEmpty) {
+                      //Se hizo con éxito la actualización
+                    } else {
+                      //No se pudo postear la Jornada en Pocketbase
+                      banderasExitoSync.add(false);
+                    }
+                  } else {
+                    //No se pudo postear la Tarea asociada a la Jornada 3 en Pocketbase
+                    banderasExitoSync.add(false);
+                  }
+                } else {
+                  print("La jornada 3 ya existe en Pocketbase");
+                  // ACtualizamos las imágenes de la jornada
+                  List<String> idsDBRImagenes = [];
+                  for (var i = 0; i < basicJornadas.payload!.jornada3!.documentos.toList().length; i++) {
+                    // Se valida que la imagen no exista en Pocketbase
+                    final recordValidateImagen = await client.records.getFullList(
+                      'imagenes',
+                      batch: 200,
+                      filter:
+                        "id_emi_web='${basicJornadas.payload!.jornada3!.documentos.toList()[i].idDocumento}'");
+                    if (recordValidateImagen.isEmpty) {
+                      // La imagen no existe y se tiene que crear
+                      final recordImagen = await client.records.create('imagenes', body: {
+                        "nombre": basicJornadas.payload!.jornada3!.documentos.toList()[i].nombreArchivo,
+                        "id_emi_web": basicJornadas.payload!.jornada3!.documentos.toList()[i].idDocumento,
+                        "base64": basicJornadas.payload!.jornada3!.documentos.toList()[i].archivo,
+                      });
+                      if (recordImagen.id.isNotEmpty) {
+                        idsDBRImagenes.add(recordImagen.id);
+                      } else {
+                        // No se pudo agregar una Imagen de la J3 en Pocketbase
+                        banderasExitoSync.add(false);
+                      }
+                    } else {
+                      // La imagen existe y se tiene que actualizar
+                      final recordImagen = await client.records.update('imagenes', recordValidateImagen.first.id,body: {
+                        "nombre": basicJornadas.payload!.jornada3!.documentos.toList()[i].nombreArchivo,
+                        "base64": basicJornadas.payload!.jornada3!.documentos.toList()[i].archivo,
+                      });
+                      if (recordImagen.id.isNotEmpty) {
+                        idsDBRImagenes.add(recordImagen.id);
+                      } else {
+                        // No se pudo actualizar una Imagen de la J3 en Pocketbase
+                        banderasExitoSync.add(false);
+                      }
+                    }
+                  }
+                  //Se actualiza la Jornada 3 y su Tarea asociada
+                  //Primero actualizamos la Jornada 3
+                  final recordJ3 = await client.records.update('jornadas', recordValidateJornada.first.id, body: {
+                    "proxima_visita": basicJornadas.payload!.jornada3!.fechaRevision.toUtc().toString(),
+                    "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                    "completada": basicJornadas.payload!.jornada3!.tareaCompletada,
+                  });
+
+                  if (recordJ3.id.isNotEmpty) {
+                    //Se recupere el id de la tarea asociada a la J3
+                    var singleJornada3 = getSingleJornadaPocketbaseFromMap(recordJ3.toString());
+                    //Segundo actualizamos la tarea asociada a la J3
+                    final recordTareaJ3 = await client.records.update('tareas', singleJornada3.idTareaFk, body: {
+                      "tarea": basicJornadas.payload!.jornada3!.registrarTarea,
+                      "descripcion": basicJornadas.payload!.jornada3!.descripcion,
+                      "comentarios": basicJornadas.payload!.jornada3!.comentarios,
+                      "fecha_revision": basicJornadas.payload!.jornada3!.fechaRevision.toUtc().toString(),
+                      "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                    });
+                    if (recordTareaJ3.id.isNotEmpty) {
+                      // Se hizo con éxito la actualización
+                    } else {
+                      // No se pudo actualizar la Tarea de la J3 en Pocketbase
+                      banderasExitoSync.add(false);
+                    }
+                  } else {
+                    // No se pudo actualizar la J3 en Pocketbase
+                    banderasExitoSync.add(false);
+                  }  
+                }
+              }
+              if (basicJornadas.payload!.jornada4 != null) {
+                // Se valida que la jornada exista en Pocketbase
+                final recordValidateJornada = await client.records.getFullList(
+                  'jornadas',
+                  batch: 200,
+                  filter:
+                    "id_emi_web='${basicJornadas.payload!.jornada4!.idJornada4}'&&num_jornada~4");
+                if (recordValidateJornada.isEmpty) {
+                  print("La jornada 4 no existe en Pocketbase");
+                  // Creamos las imágenes de la jornada
+                  List<String> idsDBRImagenes = [];
+                  for (var i = 0; i < basicJornadas.payload!.jornada4!.documentos.toList().length; i++) {
+                    // Se valida que la imagen no exista en Pocketbase
+                    final recordValidateImagen = await client.records.getFullList(
+                      'imagenes',
+                      batch: 200,
+                      filter:
+                        "id_emi_web='${basicJornadas.payload!.jornada4!.documentos.toList()[i].idDocumento}'");
+                    if (recordValidateImagen.isEmpty) {
+                      // La imagen no existe y se tiene que crear
+                      final recordImagen = await client.records.create('imagenes', body: {
+                        "nombre": basicJornadas.payload!.jornada4!.documentos.toList()[i].nombreArchivo,
+                        "id_emi_web": basicJornadas.payload!.jornada4!.documentos.toList()[i].idDocumento,
+                        "base64": basicJornadas.payload!.jornada4!.documentos.toList()[i].archivo,
+                      });
+                      if (recordImagen.id.isNotEmpty) {
+                        idsDBRImagenes.add(recordImagen.id);
+                      } else {
+                        // No se pudo agregar una Imagen de la J4 en Pocketbase
+                        banderasExitoSync.add(false);
+                      }
+                    } else {
+                      // La imagen existe y se tiene que actualizar
+                      final recordImagen = await client.records.update('imagenes', recordValidateImagen.first.id,body: {
+                        "nombre": basicJornadas.payload!.jornada4!.documentos.toList()[i].nombreArchivo,
+                        "base64": basicJornadas.payload!.jornada4!.documentos.toList()[i].archivo,
+                      });
+                      if (recordImagen.id.isNotEmpty) {
+                        idsDBRImagenes.add(recordImagen.id);
+                      } else {
+                        // No se pudo actualizar una Imagen de la J4 en Pocketbase
+                        banderasExitoSync.add(false);
+                      }
+                    }
+                  }
+                  //Primero creamos la tarea asociada a la jornada
+                  final recordTarea = await client.records.create('tareas', body: {
+                  "tarea": "Creación Jornada 4",
+                  "descripcion": "Creación Jornada 4",
+                  "comentarios": basicJornadas.payload!.jornada4!.comentarios,
+                  "fecha_revision": basicJornadas.payload!.jornada4!.fechaRevision.toUtc().toString(),
+                  "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                  "id_emi_web": basicJornadas.payload!.jornada4!.idJornada4.toString(),
+                  "id_imagenes_fk": idsDBRImagenes,
+                  });
+                  if (recordTarea.id.isNotEmpty) {
+                    //Segundo creamos la jornada  
+                    final recordJornada = await client.records.create('jornadas', body: {
+                      "num_jornada": 4,
+                      "id_tarea_fk": recordTarea.id,
+                      "proxima_visita": basicJornadas.payload!.jornada4!.fechaRevision.toUtc().toString(),
+                      "id_emprendimiento_fk": idEmprendimientoPocketbase,
+                      "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                      "completada": true,
+                      "id_emi_web": basicJornadas.payload!.jornada4!.idJornada4.toString(),
+                    });
+
+                    if (recordJornada.id.isNotEmpty) {
+                      //Se hizo con éxito la actualización
+                    } else {
+                      //No se pudo postear la Jornada en Pocketbase
+                      banderasExitoSync.add(false);
+                    }
+                  } else {
+                    //No se pudo postear la Tarea asociada a la Jornada 2 en Pocketbase
+                    banderasExitoSync.add(false);
+                  }
+                } else {
+                  print("La jornada 4 ya existe en Pocketbase");
+                  // Actualizamos las imágenes de la jornada
+                  List<String> idsDBRImagenes = [];
+                  for (var i = 0; i < basicJornadas.payload!.jornada4!.documentos.toList().length; i++) {
+                    // Se valida que la imagen no exista en Pocketbase
+                    final recordValidateImagen = await client.records.getFullList(
+                      'imagenes',
+                      batch: 200,
+                      filter:
+                        "id_emi_web='${basicJornadas.payload!.jornada4!.documentos.toList()[i].idDocumento}'");
+                    if (recordValidateImagen.isEmpty) {
+                      // La imagen no existe y se tiene que crear
+                      final recordImagen = await client.records.create('imagenes', body: {
+                        "nombre": basicJornadas.payload!.jornada4!.documentos.toList()[i].nombreArchivo,
+                        "id_emi_web": basicJornadas.payload!.jornada4!.documentos.toList()[i].idDocumento,
+                        "base64": basicJornadas.payload!.jornada4!.documentos.toList()[i].archivo,
+                      });
+                      if (recordImagen.id.isNotEmpty) {
+                        idsDBRImagenes.add(recordImagen.id);
+                      } else {
+                        // No se pudo agregar una Imagen de la J4 en Pocketbase
+                        banderasExitoSync.add(false);
+                      }
+                    } else {
+                      // La imagen existe y se tiene que actualizar
+                      final recordImagen = await client.records.update('imagenes', recordValidateImagen.first.id,body: {
+                        "nombre": basicJornadas.payload!.jornada4!.documentos.toList()[i].nombreArchivo,
+                        "base64": basicJornadas.payload!.jornada4!.documentos.toList()[i].archivo,
+                      });
+                      if (recordImagen.id.isNotEmpty) {
+                        idsDBRImagenes.add(recordImagen.id);
+                      } else {
+                        // No se pudo actualizar una Imagen de la J4 en Pocketbase
+                        banderasExitoSync.add(false);
+                      }
+                    }
+                  }
+                  //Se actualiza la Jornada 4 y su Tarea asociada
+                  //Primero actualizamos la Jornada 4
+                  final recordJ4 = await client.records.update('jornadas', recordValidateJornada.first.id, body: {
+                    "proxima_visita": basicJornadas.payload!.jornada4!.fechaRevision.toUtc().toString(),
+                    "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                    "completada": true,
+                  });
+
+                  if (recordJ4.id.isNotEmpty) {
+                    //Se recupera el id de la tarea asociada a la J4
+                    var singleJornada4 = getSingleJornadaPocketbaseFromMap(recordJ4.toString());
+                    //Segundo actualizamos la tarea asociada a la J4
+                    final recordTareaJ4 = await client.records.update('tareas', singleJornada4.idTareaFk, body: {
+                      "comentarios": basicJornadas.payload!.jornada4!.comentarios,
+                      "fecha_revision": basicJornadas.payload!.jornada4!.fechaRevision.toUtc().toString(),
+                      "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                    });
+                    if (recordTareaJ4.id.isNotEmpty) {
+                      // Se hizo con éxito la actualización
+                    } else {
+                      // No se pudo actualizar la Tarea de la J2 en Pocketbase
+                      banderasExitoSync.add(false);
+                    }
+                  } else {
+                    // No se pudo actualizar la J2 en Pocketbase
+                    banderasExitoSync.add(false);
+                  }  
+                }
+              }
+              break;
+            case 404:
+              break;
+            default:
+            print("Error en llamado al API 3");
+            print(responseAPI2.statusCode);
+            banderasExitoSync.add(false);
+          }
         } else {
           print("Error en llamado al API 2");
           print(responseAPI2.statusCode);
