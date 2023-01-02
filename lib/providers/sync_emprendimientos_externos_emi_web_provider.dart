@@ -7,6 +7,7 @@ import 'package:bizpro_app/modelsEmiWeb/get_token_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/temporals/get_basic_consultorias_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/temporals/get_basic_emprendimiento_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/temporals/get_basic_jornadas_emi_web.dart';
+import 'package:bizpro_app/modelsEmiWeb/temporals/get_basic_productos_emprendedor_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/temporals/get_emp_externo_emi_web_temp.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/get_single_consultorias_pocketbase.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/get_single_jornada_pocketbase.dart';
@@ -1162,6 +1163,214 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                         banderasExitoSync.add(false);
                       }
                     }
+                  }
+                  print("LLAMADO DE API 5");
+                  // API 5 Se recupera la información básica de las Consultorías
+                  var url = Uri.parse("$baseUrlEmiWebServices/productosEmprendedor/emprendimiento?idEmprendimiento=$idEmprendimiento");
+                  final headers = ({
+                      "Content-Type": "application/json",
+                      'Authorization': 'Bearer $tokenGlobal',
+                    });
+                  var responseAPI5 = await get(
+                    url,
+                    headers: headers
+                  ); 
+                  switch(responseAPI5.statusCode)
+                  {
+                    case 200:
+                      print("Respuesta 200 en API 5");
+                      var basicProductosEmprendedor = getBasicProductosEmprendedorEmiWebFromMap(
+                        const Utf8Decoder().convert(responseAPI5.bodyBytes)
+                      );
+                      for(var productoEmprendedor in basicProductosEmprendedor.payload)
+                      {
+                        // Se valida que el producto del emprendedor exista en Pocketbase
+                        final recordValidateProductoEmp = await client.records.getFullList(
+                          'productos_emp',
+                          batch: 200,
+                          filter:
+                            "id_emi_web='${productoEmprendedor.idProductoEmprendedor}'");
+                        if (recordValidateProductoEmp.isEmpty) {
+                          print("El Producto del Emprendedor con id Emi Web ${productoEmprendedor.idProductoEmprendedor} no existe en Pocketbase");
+                          //Se verifica que el producto del emprendedor tenga imagen 
+                          if (productoEmprendedor.documento != null) {
+                            //El Producto del Emprendedor tiene imagen asociada
+                            //Se crea la imagen del Producto del Emprendedor
+                            final recordImagen = await client.records.create('imagenes', body: {
+                              "nombre": productoEmprendedor.documento!.nombreArchivo,
+                              "id_emi_web": productoEmprendedor.documento!.idDocumento,
+                              "base64": productoEmprendedor.documento!.archivo,
+                            });
+                            if (recordImagen.id.isNotEmpty) {
+                              final unidadMedida = dataBase.unidadesMedidaBox.query(UnidadMedida_.idEmiWeb.equals(productoEmprendedor.idUnidadMedida.toString())).build().findUnique();
+                              if (unidadMedida != null) {
+                                //Se crea el producto del Emprendedor
+                                final recordProductoEmp = await client.records.create('tareas', body: {
+                                  "nombre_prod_emp": productoEmprendedor.producto,
+                                  "descripcion": productoEmprendedor.descripcion,
+                                  "id_und_medida_fk": unidadMedida.idDBR,
+                                  "costo_prod_emp": productoEmprendedor.costoUnidadMedida,
+                                  "id_emprendimiento_fk": idEmprendimientoPocketbase,
+                                  "archivado": productoEmprendedor.archivado,
+                                  "id_emi_web": productoEmprendedor.idProductoEmprendedor.toString(),
+                                  "id_imagen_fk": recordImagen.id,
+                                });
+                                if (recordProductoEmp.id.isNotEmpty) {
+                                  //Se hizo con éxito el posteo del producto del emprendedor
+                                } else {
+                                  // No se pudo agregar un Producto del Emprendedor en Pocketbase
+                                  banderasExitoSync.add(false);
+                                }
+                              } else {
+                                //No se pudo recuperar información del producto del emprendedor para postearlo
+                                banderasExitoSync.add(false);
+                              }
+                            } else {
+                              // No se pudo agregar la Imagen del producto del emprendedor en Pocketbase
+                              banderasExitoSync.add(false);
+                            }
+                          } else {
+                            //El producto del emprendedor no tiene imagen asociada
+                            final unidadMedida = dataBase.unidadesMedidaBox.query(UnidadMedida_.idEmiWeb.equals(productoEmprendedor.idUnidadMedida.toString())).build().findUnique();
+                            if (unidadMedida != null) {
+                              //Se crea el producto del Emprendedor
+                              final recordProductoEmp = await client.records.create('tareas', body: {
+                                "nombre_prod_emp": productoEmprendedor.producto,
+                                "descripcion": productoEmprendedor.descripcion,
+                                "id_und_medida_fk": unidadMedida.idDBR,
+                                "costo_prod_emp": productoEmprendedor.costoUnidadMedida,
+                                "id_emprendimiento_fk": idEmprendimientoPocketbase,
+                                "archivado": productoEmprendedor.archivado,
+                                "id_emi_web": productoEmprendedor.idProductoEmprendedor.toString(),
+                              });
+                              if (recordProductoEmp.id.isNotEmpty) {
+                                //Se hizo con éxito el posteo del producto del emprendedor
+                              } else {
+                                // No se pudo agregar un Producto del Emprendedor en Pocketbase
+                                banderasExitoSync.add(false);
+                              }
+                            } else {
+                              //No se pudo recuperar información del producto del emprendedor para postearlo
+                              banderasExitoSync.add(false);
+                            }
+                          }
+                        } else {
+                          print("El Producto del Emprendedor con id Emi Web ${productoEmprendedor.idProductoEmprendedor} ya existe en Pocketbase");
+                          //Se verifica que el producto del emprendedor tenga imagen 
+                          if (productoEmprendedor.documento != null) {
+                            //El Producto del Emprendedor tiene imagen asociada
+                            // Se valida que la imagen no exista en Pocketbase
+                            final recordValidateImagen = await client.records.getFullList(
+                              'imagenes',
+                              batch: 200,
+                              filter:
+                                "id_emi_web='${productoEmprendedor.documento!.idDocumento}'");
+                            if (recordValidateImagen.isEmpty) {
+                              //La imagen del producto del emprendedor no existe en Pocketbase y se tiene que crear
+                              //Se crea la imagen del Producto del Emprendedor
+                              final recordImagen = await client.records.create('imagenes', body: {
+                                "nombre": productoEmprendedor.documento!.nombreArchivo,
+                                "id_emi_web": productoEmprendedor.documento!.idDocumento,
+                                "base64": productoEmprendedor.documento!.archivo,
+                              });
+                              if (recordImagen.id.isNotEmpty) {
+                                final unidadMedida = dataBase.unidadesMedidaBox.query(UnidadMedida_.idEmiWeb.equals(productoEmprendedor.idUnidadMedida.toString())).build().findUnique();
+                                if (unidadMedida != null) {
+                                  //Se actualiza el producto del Emprendedor
+                                  final recordProductoEmp = await client.records.update('productos_emp', recordValidateProductoEmp.first.id, body: {
+                                    "nombre_prod_emp": productoEmprendedor.producto,
+                                    "descripcion": productoEmprendedor.descripcion,
+                                    "id_und_medida_fk": unidadMedida.idDBR,
+                                    "costo_prod_emp": productoEmprendedor.costoUnidadMedida,
+                                    "id_emprendimiento_fk": idEmprendimientoPocketbase,
+                                    "archivado": productoEmprendedor.archivado,
+                                    "id_emi_web": productoEmprendedor.idProductoEmprendedor.toString(),
+                                    "id_imagen_fk": recordImagen.id,
+                                  });
+                                  if (recordProductoEmp.id.isNotEmpty) {
+                                    //Se hizo con éxito el posteo del producto del emprendedor
+                                  } else {
+                                    // No se pudo agregar un Producto del Emprendedor en Pocketbase
+                                    banderasExitoSync.add(false);
+                                  }
+                                } else {
+                                  //No se pudo recuperar información del producto del emprendedor para postearlo
+                                  banderasExitoSync.add(false);
+                                }
+                              } else {
+                                // No se pudo agregar la Imagen del producto del emprendedor en Pocketbase
+                                banderasExitoSync.add(false);
+                              }
+                            } else {
+                              //La imagen del producto del emprendedor existe en Pocketbase y se tiene que actualizar
+                              //Se actualiza la imagen del Producto del Emprendedor
+                              final recordImagen = await client.records.update('imagenes', recordValidateImagen.first.id, body: {
+                                "nombre": productoEmprendedor.documento!.nombreArchivo,
+                                "base64": productoEmprendedor.documento!.archivo,
+                              });
+                              if (recordImagen.id.isNotEmpty) {
+                                final unidadMedida = dataBase.unidadesMedidaBox.query(UnidadMedida_.idEmiWeb.equals(productoEmprendedor.idUnidadMedida.toString())).build().findUnique();
+                                if (unidadMedida != null) {
+                                  //Se actualiza el producto del Emprendedor
+                                  final recordProductoEmp = await client.records.update('productos_emp', recordValidateProductoEmp.first.id, body: {
+                                    "nombre_prod_emp": productoEmprendedor.producto,
+                                    "descripcion": productoEmprendedor.descripcion,
+                                    "id_und_medida_fk": unidadMedida.idDBR,
+                                    "costo_prod_emp": productoEmprendedor.costoUnidadMedida,
+                                    "id_emprendimiento_fk": idEmprendimientoPocketbase,
+                                    "archivado": productoEmprendedor.archivado,
+                                    "id_emi_web": productoEmprendedor.idProductoEmprendedor.toString(),
+                                    "id_imagen_fk": recordImagen.id,
+                                  });
+                                  if (recordProductoEmp.id.isNotEmpty) {
+                                    //Se hizo con éxito el posteo del producto del emprendedor
+                                  } else {
+                                    // No se pudo agregar un Producto del Emprendedor en Pocketbase
+                                    banderasExitoSync.add(false);
+                                  }
+                                } else {
+                                  //No se pudo recuperar información del producto del emprendedor para postearlo
+                                  banderasExitoSync.add(false);
+                                }
+                              } else {
+                                // No se pudo agregar la Imagen del producto del emprendedor en Pocketbase
+                                banderasExitoSync.add(false);
+                              }
+                            }      
+                          } else {
+                            //El producto del emprendedor no tiene imagen asociada
+                            final unidadMedida = dataBase.unidadesMedidaBox.query(UnidadMedida_.idEmiWeb.equals(productoEmprendedor.idUnidadMedida.toString())).build().findUnique();
+                            if (unidadMedida != null) {
+                              //Se actualiza el producto del Emprendedor
+                              final recordProductoEmp = await client.records.update('productos_emp', recordValidateProductoEmp.first.id, body: {
+                                "nombre_prod_emp": productoEmprendedor.producto,
+                                "descripcion": productoEmprendedor.descripcion,
+                                "id_und_medida_fk": unidadMedida.idDBR,
+                                "costo_prod_emp": productoEmprendedor.costoUnidadMedida,
+                                "id_emprendimiento_fk": idEmprendimientoPocketbase,
+                                "archivado": productoEmprendedor.archivado,
+                                "id_emi_web": productoEmprendedor.idProductoEmprendedor.toString(),
+                              });
+                              if (recordProductoEmp.id.isNotEmpty) {
+                                //Se hizo con éxito la actualización del producto del emprendedor
+                              } else {
+                                // No se pudo actualizar un Producto del Emprendedor en Pocketbase
+                                banderasExitoSync.add(false);
+                              }
+                            } else {
+                              //No se pudo recuperar información del producto del emprendedor para actualizarlo
+                              banderasExitoSync.add(false);
+                            }
+                          }
+                        }
+                      }
+                      break;
+                    case 404:
+                      break;
+                    default:
+                      print("Error en llamado al API 5");
+                      print(responseAPI5.statusCode);
+                      banderasExitoSync.add(false);
                   }
                   break;
                 case 404:
