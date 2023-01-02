@@ -48,7 +48,7 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
     final jornadaProvider = Provider.of<JornadaController>(context);
     final emprendimientoProvider =
         Provider.of<EmprendimientoController>(context);
-    
+
     String emprendedor = "";
     if (widget.emprendimiento.emprendedor.target != null) {
       emprendedor =
@@ -72,7 +72,12 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                       height: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: FileImage(File(widget.emprendimiento.imagen.target!.path!)),
+                          image: widget.emprendimiento.imagen.target != null
+                              ? FileImage(File(
+                                  widget.emprendimiento.imagen.target!.path!))
+                              : Image.asset(
+                                  "assets/images/default_image_placeholder.jpeg",
+                                ).image,
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
                         ),
@@ -306,16 +311,11 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                                         fontWeight: FontWeight.normal,
                                       ),
                                   validator: (value) {
-                                    if(palabras
-                                            .hasMatch(value ?? '')){
-                                              return null;
-                                              
+                                    if (palabras.hasMatch(value ?? '')) {
+                                      return null;
+                                    } else {
+                                      return 'Evita usar números y caracteres especiales como diéresis';
                                     }
-                                    else{
-                                              return 'Evita usar números y caracteres especiales como diéresis';
-                                    }
-                                         
-                                         
                                   },
                                 ),
                               ),
@@ -566,7 +566,9 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>  JornadaCreada(idEmprendimiento: widget.emprendimiento.id),
+                                    builder: (context) => JornadaCreada(
+                                        idEmprendimiento:
+                                            widget.emprendimiento.id),
                                   ),
                                 );
                               } else {

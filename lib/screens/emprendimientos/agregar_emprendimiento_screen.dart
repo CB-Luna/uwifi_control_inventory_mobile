@@ -248,7 +248,14 @@ class _AgregarEmprendimientoScreenState
                         }, validator: (val) {
                           if (image?.path == null || image?.path == "") {
                             print("Espera");
-                            return 'Para continuar, cargue una imagen';
+                            Container(
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                image: Image.asset(
+                                  "assets/images/default_image_placeholder.jpeg",
+                                ).image,
+                              )),
+                            );
                           }
                           return null;
                         }),

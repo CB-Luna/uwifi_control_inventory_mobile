@@ -28,7 +28,8 @@ class EditarJornada2Screen extends StatefulWidget {
   final Emprendimientos emprendimiento;
   const EditarJornada2Screen({
     Key? key,
-    required this.jornada, required this.emprendimiento,
+    required this.jornada,
+    required this.emprendimiento,
   }) : super(key: key);
 
   @override
@@ -53,18 +54,17 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
   List<XFile> imagenesTemp = [];
   Jornadas? jornada1;
 
-
   @override
   void initState() {
     super.initState();
     jornada1 = null;
-    imagenesTemp =[];
+    imagenesTemp = [];
     newCirculoEmpresa = [];
     for (var element in widget.jornada.tarea.target!.imagenes.toList()) {
       var newSaveImagenLocal = SaveImagenesLocal(
         id: element.id,
-        nombre: element.nombre!, 
-        path: element.path!, 
+        nombre: element.nombre!,
+        path: element.path!,
         base64: element.base64!,
       );
       newCirculoEmpresa.add(newSaveImagenLocal);
@@ -110,8 +110,14 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                       height: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: FileImage(File(
-                              widget.jornada.emprendimiento.target!.imagen.target!.path!)),
+                          image: (widget.jornada.emprendimiento.target?.imagen
+                                      .target?.path !=
+                                  null)
+                              ? FileImage(File(widget.jornada.emprendimiento
+                                  .target!.imagen.target!.path!))
+                              : Image.asset(
+                                  "assets/images/default_image_placeholder.jpeg",
+                                ).image,
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
                         ),
@@ -542,9 +548,7 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                             }
                                           }
                                           if (jornada1 != null) {
-                                            if (jornada1!
-                                                    .completada ==
-                                                true) {
+                                            if (jornada1!.completada == true) {
                                               activoController = val;
                                             } else {
                                               snackbarKey.currentState
@@ -654,85 +658,130 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                                     BorderRadius.circular(5),
                                               ),
                                               child: SizedBox(
-                                                  width: 180,
-                                                  height: 100,
-                                                  child: CarouselSlider(
-                                                    options: CarouselOptions(height: 400.0),
-                                                    items: imagenesCarrousel.map((i) {
-                                                      return Builder(
-                                                        builder: (BuildContext context) {
-                                                          return InkWell(
-                                                            onTap: () async {
-                                                              String? option =
+                                                width: 180,
+                                                height: 100,
+                                                child: CarouselSlider(
+                                                  options: CarouselOptions(
+                                                      height: 400.0),
+                                                  items: imagenesCarrousel
+                                                      .map((i) {
+                                                    return Builder(
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return InkWell(
+                                                          onTap: () async {
+                                                            String? option =
+                                                                await showModalBottomSheet(
+                                                              context: context,
+                                                              builder: (_) =>
+                                                                  const CustomBottomEliminarImagen(),
+                                                            );
+                                                            if (option ==
+                                                                'eliminar') {
+                                                              var booleano =
                                                                   await showModalBottomSheet(
-                                                                context: context,
-                                                                builder: (_) =>
-                                                                    const CustomBottomEliminarImagen(),
-                                                              );
-                                                              if (option == 'eliminar') {
-                                                                var booleano = await showModalBottomSheet(
-                                                                  isScrollControlled: true,
-                                                                  backgroundColor: Colors.transparent,
-                                                                  context: context,
-                                                                  builder: (context) {
-                                                                    return Padding(
-                                                                      padding: MediaQuery.of(context).viewInsets,
-                                                                      child: SizedBox(
-                                                                        height:
-                                                                            MediaQuery.of(context).size.height * 0.45,
-                                                                        child: BottomSheetValidacionEliminarImagen(imagen: i,),
+                                                                isScrollControlled:
+                                                                    true,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) {
+                                                                  return Padding(
+                                                                    padding: MediaQuery.of(
+                                                                            context)
+                                                                        .viewInsets,
+                                                                    child:
+                                                                        SizedBox(
+                                                                      height: MediaQuery.of(context)
+                                                                              .size
+                                                                              .height *
+                                                                          0.45,
+                                                                      child:
+                                                                          BottomSheetValidacionEliminarImagen(
+                                                                        imagen:
+                                                                            i,
                                                                       ),
+                                                                    ),
+                                                                  );
+                                                                },
+                                                              );
+                                                              if (booleano) {
+                                                                for (var element
+                                                                    in newCirculoEmpresa) {
+                                                                  if (element
+                                                                          .path ==
+                                                                      i) {
+                                                                    var newInstruccionImagen =
+                                                                        SaveInstruccionImagenTemporal(
+                                                                      instruccion:
+                                                                          "syncDeleteImagenJornada",
+                                                                      instruccionAdicional:
+                                                                          "Imagen Jornada 2",
+                                                                      imagenLocal:
+                                                                          element,
                                                                     );
-                                                                  },
-                                                                );
-                                                                if (booleano) {
-                                                                  for (var element in newCirculoEmpresa) {
-                                                                    if (element.path == i) {
-                                                                      var newInstruccionImagen = SaveInstruccionImagenTemporal(
-                                                                        instruccion: "syncDeleteImagenJornada",
-                                                                        instruccionAdicional: "Imagen Jornada 2",
-                                                                        imagenLocal: element,
-                                                                        );
-                                                                      newCirculoEmpresa.remove(element);
-                                                                      listInstruccionesImagenesTemp.add(newInstruccionImagen);
-                                                                      imagenesCarrousel.remove(element.path);
-                                                                      break;
-                                                                    }
+                                                                    newCirculoEmpresa
+                                                                        .remove(
+                                                                            element);
+                                                                    listInstruccionesImagenesTemp
+                                                                        .add(
+                                                                            newInstruccionImagen);
+                                                                    imagenesCarrousel
+                                                                        .remove(
+                                                                            element.path);
+                                                                    break;
                                                                   }
                                                                 }
-                                                              } else { //Se aborta la opción
-                                                                return;
                                                               }
-                                                              setState(() {
-                                                              });
-                                                            },
-                                                            child: Container(
-                                                                width: MediaQuery.of(context).size.width,
-                                                                margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                                                                child: Image.file(
-                                                                    File(i),
-                                                                    fit: BoxFit.cover,
-                                                                  ),
+                                                            } else {
+                                                              //Se aborta la opción
+                                                              return;
+                                                            }
+                                                            setState(() {});
+                                                          },
+                                                          child: Container(
+                                                            width:
+                                                                MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width,
+                                                            margin:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        5.0),
+                                                            child: Image.file(
+                                                              File(i),
+                                                              fit: BoxFit.cover,
                                                             ),
-                                                          );
-                                                        },
-                                                      );
-                                                      }).toList(),
-                                                    ),
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  }).toList(),
                                                 ),
+                                              ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 10, 0, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 10, 0, 0),
                                               child: Text(
                                                 "Total imágenes: ${imagenesCarrousel.length}",
-                                                style: AppTheme.of(context).title3.override(
-                                                fontFamily: 'Poppins',
-                                                color:
-                                                    AppTheme.of(context).secondaryText,
-                                                fontSize: 12.5,
-                                                fontWeight: FontWeight.normal,
-                                                ),
+                                                style: AppTheme.of(context)
+                                                    .title3
+                                                    .override(
+                                                      fontFamily: 'Poppins',
+                                                      color:
+                                                          AppTheme.of(context)
+                                                              .secondaryText,
+                                                      fontSize: 12.5,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                    ),
                                               ),
                                             ),
                                           ],
@@ -755,7 +804,8 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                           List<XFile>? pickedFiles;
                                           if (option == 'camera') {
                                             if (imagenesCarrousel.length < 3) {
-                                              pickedFile = await picker.pickImage(
+                                              pickedFile =
+                                                  await picker.pickImage(
                                                 source: ImageSource.camera,
                                                 imageQuality: 100,
                                               );
@@ -763,106 +813,160 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                                 imagenesTemp.add(pickedFile);
                                               }
                                             } else {
-                                                bool? booleano = await showModalBottomSheet(
+                                              bool? booleano =
+                                                  await showModalBottomSheet(
                                                 isScrollControlled: true,
-                                                backgroundColor: Colors.transparent,
+                                                backgroundColor:
+                                                    Colors.transparent,
                                                 context: context,
                                                 builder: (context) {
                                                   return Padding(
-                                                    padding: MediaQuery.of(context).viewInsets,
+                                                    padding:
+                                                        MediaQuery.of(context)
+                                                            .viewInsets,
                                                     child: SizedBox(
                                                       height:
-                                                          MediaQuery.of(context).size.height * 0.45,
-                                                      child: const BottomSheetImagenesCompletas(),
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.45,
+                                                      child:
+                                                          const BottomSheetImagenesCompletas(),
                                                     ),
                                                   );
                                                 },
-                                              );  
-                                              if (booleano != null && booleano == true) {
-                                                pickedFile = await picker.pickImage(
-                                                source: ImageSource.camera,
-                                                imageQuality: 100,
+                                              );
+                                              if (booleano != null &&
+                                                  booleano == true) {
+                                                pickedFile =
+                                                    await picker.pickImage(
+                                                  source: ImageSource.camera,
+                                                  imageQuality: 100,
                                                 );
                                                 if (pickedFile != null) {
                                                   setState(() {
-                                                    File file = File(pickedFile!.path);
-                                                    List<int> fileInByte = file.readAsBytesSync();
-                                                    String base64 = base64Encode(fileInByte);
-                                                    var updateImagenLocal = SaveImagenesLocal(
-                                                      nombre: pickedFile.name, 
-                                                      path: pickedFile.path, 
+                                                    File file =
+                                                        File(pickedFile!.path);
+
+                                                    List<int> fileInByte =
+                                                        file.readAsBytesSync();
+                                                    String base64 =
+                                                        base64Encode(
+                                                            fileInByte);
+
+                                                    var updateImagenLocal =
+                                                        SaveImagenesLocal(
+                                                      nombre: pickedFile.name,
+                                                      path: pickedFile.path,
                                                       base64: base64,
                                                     );
-                                                    imagenesCarrousel.removeLast();
-                                                    imagenesCarrousel.add(pickedFile.path);
-                                                    newCirculoEmpresa.removeLast();
-                                                    newCirculoEmpresa.add(updateImagenLocal);
+                                                    imagenesCarrousel
+                                                        .removeLast();
+                                                    imagenesCarrousel
+                                                        .add(pickedFile.path);
+                                                    newCirculoEmpresa
+                                                        .removeLast();
+                                                    newCirculoEmpresa
+                                                        .add(updateImagenLocal);
                                                   });
                                                 }
                                                 return;
-                                              }        
+                                              }
                                             }
-                                          } else { //Se selecciona galería
+                                          } else {
+                                            //Se selecciona galería
                                             if (imagenesCarrousel.length < 3) {
-                                              pickedFiles = await picker.pickMultiImage(
-                                              imageQuality: 100,
+                                              pickedFiles =
+                                                  await picker.pickMultiImage(
+                                                imageQuality: 100,
                                               );
                                               if (pickedFiles == null) {
                                                 return;
                                               }
                                               if (pickedFiles.length > 3) {
                                                 snackbarKey.currentState
-                                                  ?.showSnackBar(const SnackBar(
+                                                    ?.showSnackBar(
+                                                        const SnackBar(
                                                   content: Text(
                                                       "No se permite cargar más de 3 imágenes."),
                                                 ));
                                                 return;
                                               }
-                                              switch (imagenesCarrousel.length) {
+                                              switch (
+                                                  imagenesCarrousel.length) {
                                                 case 0:
-                                                  for(int i = 0; i < pickedFiles.length; i++)
-                                                  {
-                                                    imagenesTemp.add(pickedFiles[i]);
-                                                    File file = File(pickedFiles[i].path);
-                                                    List<int> fileInByte = file.readAsBytesSync();
-                                                    String base64 = base64Encode(fileInByte);
-                                                    var newImagenLocal = SaveImagenesLocal(
-                                                      nombre: pickedFiles[i].name, 
-                                                      path: pickedFiles[i].path, 
+                                                  for (int i = 0;
+                                                      i < pickedFiles.length;
+                                                      i++) {
+                                                    imagenesTemp
+                                                        .add(pickedFiles[i]);
+                                                    File file = File(
+                                                        pickedFiles[i].path);
+                                                    List<int> fileInByte =
+                                                        file.readAsBytesSync();
+                                                    String base64 =
+                                                        base64Encode(
+                                                            fileInByte);
+                                                    var newImagenLocal =
+                                                        SaveImagenesLocal(
+                                                      nombre:
+                                                          pickedFiles[i].name,
+                                                      path: pickedFiles[i].path,
                                                       base64: base64,
-                                                      );
-                                                    var newInstruccionImagen = SaveInstruccionImagenTemporal(
-                                                      instruccion: "syncAddImagenJornada2",
-                                                      imagenLocal: newImagenLocal,
-                                                      );
-                                                    newCirculoEmpresa.add(newImagenLocal);
-                                                    listInstruccionesImagenesTemp.add(newInstruccionImagen);
+                                                    );
+                                                    var newInstruccionImagen =
+                                                        SaveInstruccionImagenTemporal(
+                                                      instruccion:
+                                                          "syncAddImagenJornada2",
+                                                      imagenLocal:
+                                                          newImagenLocal,
+                                                    );
+                                                    newCirculoEmpresa
+                                                        .add(newImagenLocal);
+                                                    listInstruccionesImagenesTemp
+                                                        .add(
+                                                            newInstruccionImagen);
                                                   }
                                                   break;
                                                 case 1:
-                                                  if(pickedFiles.length <= 2){
-                                                    for(int i = 0; i < pickedFiles.length; i++)
-                                                    {
-                                                      imagenesTemp.add(pickedFiles[i]);
-                                                      File file = File(pickedFiles[i].path);
-                                                      List<int> fileInByte = file.readAsBytesSync();
-                                                      String base64 = base64Encode(fileInByte);
-                                                      var newImagenLocal = SaveImagenesLocal(
-                                                        nombre: pickedFiles[i].name, 
-                                                        path: pickedFiles[i].path, 
+                                                  if (pickedFiles.length <= 2) {
+                                                    for (int i = 0;
+                                                        i < pickedFiles.length;
+                                                        i++) {
+                                                      imagenesTemp
+                                                          .add(pickedFiles[i]);
+                                                      File file = File(
+                                                          pickedFiles[i].path);
+                                                      List<int> fileInByte =
+                                                          file.readAsBytesSync();
+                                                      String base64 =
+                                                          base64Encode(
+                                                              fileInByte);
+                                                      var newImagenLocal =
+                                                          SaveImagenesLocal(
+                                                        nombre:
+                                                            pickedFiles[i].name,
+                                                        path:
+                                                            pickedFiles[i].path,
                                                         base64: base64,
-                                                        );
-                                                      var newInstruccionImagen = SaveInstruccionImagenTemporal(
-                                                        instruccion: "syncAddImagenJornada2",
-                                                        imagenLocal: newImagenLocal,
-                                                        );
-                                                      newCirculoEmpresa.add(newImagenLocal);
-                                                      listInstruccionesImagenesTemp.add(newInstruccionImagen);
+                                                      );
+                                                      var newInstruccionImagen =
+                                                          SaveInstruccionImagenTemporal(
+                                                        instruccion:
+                                                            "syncAddImagenJornada2",
+                                                        imagenLocal:
+                                                            newImagenLocal,
+                                                      );
+                                                      newCirculoEmpresa
+                                                          .add(newImagenLocal);
+                                                      listInstruccionesImagenesTemp
+                                                          .add(
+                                                              newInstruccionImagen);
                                                     }
-                                                  }
-                                                  else{
+                                                  } else {
                                                     snackbarKey.currentState
-                                                    ?.showSnackBar(const SnackBar(
+                                                        ?.showSnackBar(
+                                                            const SnackBar(
                                                       content: Text(
                                                           "No se permite cargar más de 3 imágenes."),
                                                     ));
@@ -870,29 +974,44 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                                   }
                                                   break;
                                                 case 2:
-                                                  if(pickedFiles.length <= 1){
-                                                    for(int i = 0; i < pickedFiles.length; i++)
-                                                    {
-                                                      imagenesTemp.add(pickedFiles[i]);
-                                                      File file = File(pickedFiles[i].path);
-                                                      List<int> fileInByte = file.readAsBytesSync();
-                                                      String base64 = base64Encode(fileInByte);
-                                                      var newImagenLocal = SaveImagenesLocal(
-                                                        nombre: pickedFiles[i].name, 
-                                                        path: pickedFiles[i].path, 
+                                                  if (pickedFiles.length <= 1) {
+                                                    for (int i = 0;
+                                                        i < pickedFiles.length;
+                                                        i++) {
+                                                      imagenesTemp
+                                                          .add(pickedFiles[i]);
+                                                      File file = File(
+                                                          pickedFiles[i].path);
+                                                      List<int> fileInByte =
+                                                          file.readAsBytesSync();
+                                                      String base64 =
+                                                          base64Encode(
+                                                              fileInByte);
+                                                      var newImagenLocal =
+                                                          SaveImagenesLocal(
+                                                        nombre:
+                                                            pickedFiles[i].name,
+                                                        path:
+                                                            pickedFiles[i].path,
                                                         base64: base64,
-                                                        );
-                                                      var newInstruccionImagen = SaveInstruccionImagenTemporal(
-                                                        instruccion: "syncAddImagenJornada2",
-                                                        imagenLocal: newImagenLocal,
-                                                        );
-                                                      newCirculoEmpresa.add(newImagenLocal);
-                                                      listInstruccionesImagenesTemp.add(newInstruccionImagen);
+                                                      );
+                                                      var newInstruccionImagen =
+                                                          SaveInstruccionImagenTemporal(
+                                                        instruccion:
+                                                            "syncAddImagenJornada2",
+                                                        imagenLocal:
+                                                            newImagenLocal,
+                                                      );
+                                                      newCirculoEmpresa
+                                                          .add(newImagenLocal);
+                                                      listInstruccionesImagenesTemp
+                                                          .add(
+                                                              newInstruccionImagen);
                                                     }
-                                                  }
-                                                  else{
+                                                  } else {
                                                     snackbarKey.currentState
-                                                    ?.showSnackBar(const SnackBar(
+                                                        ?.showSnackBar(
+                                                            const SnackBar(
                                                       content: Text(
                                                           "No se permite cargar más de 3 imágenes."),
                                                     ));
@@ -903,73 +1022,117 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                                   break;
                                               }
                                             } else {
-                                              bool? booleano = await showModalBottomSheet(
+                                              bool? booleano =
+                                                  await showModalBottomSheet(
                                                 isScrollControlled: true,
-                                                backgroundColor: Colors.transparent,
+                                                backgroundColor:
+                                                    Colors.transparent,
                                                 context: context,
                                                 builder: (context) {
                                                   return Padding(
-                                                    padding: MediaQuery.of(context).viewInsets,
+                                                    padding:
+                                                        MediaQuery.of(context)
+                                                            .viewInsets,
                                                     child: SizedBox(
                                                       height:
-                                                          MediaQuery.of(context).size.height * 0.45,
-                                                      child: const BottomSheetImagenesCompletas(),
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.45,
+                                                      child:
+                                                          const BottomSheetImagenesCompletas(),
                                                     ),
                                                   );
                                                 },
                                               );
-                                              if (booleano != null && booleano == true) {
-                                                pickedFile = await picker.pickImage(
-                                                source: ImageSource.gallery,
-                                                imageQuality: 100,
+                                              if (booleano != null &&
+                                                  booleano == true) {
+                                                pickedFile =
+                                                    await picker.pickImage(
+                                                  source: ImageSource.gallery,
+                                                  imageQuality: 100,
                                                 );
                                                 if (pickedFile != null) {
                                                   setState(() {
-                                                    if (newCirculoEmpresa[imagenesCarrousel.length - 1].id != null) {
+                                                    if (newCirculoEmpresa[
+                                                                imagenesCarrousel
+                                                                        .length -
+                                                                    1]
+                                                            .id !=
+                                                        null) {
                                                       // La imagen anterior ya ha sido registrada
-                                                      File file = File(pickedFile!.path);
-                                                      List<int> fileInByte = file.readAsBytesSync();
-                                                      String base64 = base64Encode(fileInByte);
-                                                      var updateImagenLocal = SaveImagenesLocal(
-                                                        id: newCirculoEmpresa[imagenesCarrousel.length - 1].id,
-                                                        nombre: pickedFile.name, 
-                                                        path: pickedFile.path, 
-                                                        base64: base64,
-                                                        );
-                                                      var newInstruccionImagen = SaveInstruccionImagenTemporal(
-                                                        instruccion: "syncUpdateImagenJornada2",
-                                                        imagenLocal: updateImagenLocal,
-                                                        );
-                                                      newCirculoEmpresa.removeLast();
-                                                      newCirculoEmpresa.add(updateImagenLocal);
-                                                      imagenesCarrousel.removeLast();
-                                                      imagenesCarrousel.add(pickedFile.path);
-                                                      listInstruccionesImagenesTemp.add(newInstruccionImagen);
-                                                    } else {
-                                                      // La imagen no ha sido registrada
-                                                      File file = File(pickedFile!.path);
-                                                      List<int> fileInByte = file.readAsBytesSync();
-                                                      String base64 = base64Encode(fileInByte);
-                                                      var updateImagenLocal = SaveImagenesLocal(
-                                                        nombre: pickedFile.name, 
-                                                        path: pickedFile.path, 
+                                                      File file = File(
+                                                          pickedFile!.path);
+                                                      List<int> fileInByte =
+                                                          file.readAsBytesSync();
+                                                      String base64 =
+                                                          base64Encode(
+                                                              fileInByte);
+                                                      var updateImagenLocal =
+                                                          SaveImagenesLocal(
+                                                        id: newCirculoEmpresa[
+                                                                imagenesCarrousel
+                                                                        .length -
+                                                                    1]
+                                                            .id,
+                                                        nombre: pickedFile.name,
+                                                        path: pickedFile.path,
                                                         base64: base64,
                                                       );
-                                                      newCirculoEmpresa.removeLast();
-                                                      newCirculoEmpresa.add(updateImagenLocal);
-                                                      imagenesCarrousel.removeLast();
-                                                      imagenesCarrousel.add(pickedFile.path);
+                                                      var newInstruccionImagen =
+                                                          SaveInstruccionImagenTemporal(
+                                                        instruccion:
+                                                            "syncUpdateImagenJornada2",
+                                                        imagenLocal:
+                                                            updateImagenLocal,
+                                                      );
+                                                      newCirculoEmpresa
+                                                          .removeLast();
+                                                      newCirculoEmpresa.add(
+                                                          updateImagenLocal);
+                                                      imagenesCarrousel
+                                                          .removeLast();
+                                                      imagenesCarrousel
+                                                          .add(pickedFile.path);
+                                                      listInstruccionesImagenesTemp
+                                                          .add(
+                                                              newInstruccionImagen);
+                                                    } else {
+                                                      // La imagen no ha sido registrada
+                                                      File file = File(
+                                                          pickedFile!.path);
+                                                      List<int> fileInByte =
+                                                          file.readAsBytesSync();
+                                                      String base64 =
+                                                          base64Encode(
+                                                              fileInByte);
+                                                      var updateImagenLocal =
+                                                          SaveImagenesLocal(
+                                                        nombre: pickedFile.name,
+                                                        path: pickedFile.path,
+                                                        base64: base64,
+                                                      );
+                                                      newCirculoEmpresa
+                                                          .removeLast();
+                                                      newCirculoEmpresa.add(
+                                                          updateImagenLocal);
+                                                      imagenesCarrousel
+                                                          .removeLast();
+                                                      imagenesCarrousel
+                                                          .add(pickedFile.path);
                                                     }
-                                                  }
-                                                  );
+                                                  });
                                                 }
                                                 return;
-                                              }     
+                                              }
                                             }
                                           }
                                           setState(() {
-                                            for (var i = 0; i < imagenesTemp.length; i++) {
-                                              imagenesCarrousel.add(imagenesTemp[i].path);
+                                            for (var i = 0;
+                                                i < imagenesTemp.length;
+                                                i++) {
+                                              imagenesCarrousel
+                                                  .add(imagenesTemp[i].path);
                                             }
                                           });
                                         },
@@ -1026,17 +1189,15 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                         widget.jornada.tarea.target!.tarea ||
                                     comentariosController.text !=
                                         widget.jornada.tarea.target!
-                                            .comentarios||
+                                            .comentarios ||
                                     activoController !=
                                         !widget.jornada.completada) {
-
-                                  if (newCirculoEmpresa !=
-                                        oldCirculoEmpresa) {
+                                  if (newCirculoEmpresa != oldCirculoEmpresa) {
                                     jornadaProvider.updateImagenesJornada(
-                                      widget.jornada.tarea.target!, 
+                                      widget.jornada.tarea.target!,
                                       listInstruccionesImagenesTemp,
-                                      );
-                                  } 
+                                    );
+                                  }
                                   jornadaProvider.updateJornada2(
                                       widget.jornada.id,
                                       fechaRegistro,
@@ -1048,23 +1209,26 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                           JornadaActualizada(emprendimientoId: widget.emprendimiento.id,),
+                                      builder: (context) => JornadaActualizada(
+                                        emprendimientoId:
+                                            widget.emprendimiento.id,
+                                      ),
                                     ),
                                   );
                                 } else {
-                                  if (newCirculoEmpresa !=
-                                        oldCirculoEmpresa) {
+                                  if (newCirculoEmpresa != oldCirculoEmpresa) {
                                     jornadaProvider.updateImagenesJornada(
-                                      widget.jornada.tarea.target!, 
+                                      widget.jornada.tarea.target!,
                                       listInstruccionesImagenesTemp,
-                                      );
-                                  } 
+                                    );
+                                  }
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                           JornadaActualizada(emprendimientoId: widget.emprendimiento.id,),
+                                      builder: (context) => JornadaActualizada(
+                                        emprendimientoId:
+                                            widget.emprendimiento.id,
+                                      ),
                                     ),
                                   );
                                 }

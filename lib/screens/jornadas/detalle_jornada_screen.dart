@@ -20,7 +20,8 @@ class DetalleJornadaScreen extends StatefulWidget {
   final Emprendimientos empActual;
   const DetalleJornadaScreen({
     Key? key,
-    required this.jornada, required this.empActual,
+    required this.jornada,
+    required this.empActual,
   }) : super(key: key);
 
   @override
@@ -83,20 +84,21 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
               children: [
                 Stack(
                   children: [
-                    widget.jornada.emprendimiento.target?.imagen.target?.path != null ?
-                    Image.file(
-                      File(widget.jornada.emprendimiento.target!.imagen.target!.path!),
-                      width: double.infinity,
-                      height: 200,
-                      fit: BoxFit.cover,
-                    )
-                    :
-                    Image.asset(
-                      "assets/images/default_image.png",
-                      width: double.infinity,
-                      height: 200,
-                      fit: BoxFit.cover,
-                    ),
+                    widget.jornada.emprendimiento.target?.imagen.target?.path !=
+                            null
+                        ? Image.file(
+                            File(widget.jornada.emprendimiento.target!.imagen
+                                .target!.path!),
+                            width: double.infinity,
+                            height: 200,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            "assets/images/default_image_placeholder.jpeg",
+                            width: double.infinity,
+                            height: 200,
+                            fit: BoxFit.cover,
+                          ),
                     Container(
                       width: double.infinity,
                       height: 200,
@@ -146,14 +148,17 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                       child: InkWell(
                                         onTap: () async {
                                           await Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    DetalleEmprendimientoScreen(
-                                                        idEmprendimiento:
-                                                            widget.jornada.emprendimiento.target!.id),
-                                              ),
-                                            );
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DetalleEmprendimientoScreen(
+                                                      idEmprendimiento: widget
+                                                          .jornada
+                                                          .emprendimiento
+                                                          .target!
+                                                          .id),
+                                            ),
+                                          );
                                         },
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
@@ -197,25 +202,46 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                       ),
                                       child: InkWell(
                                         onTap: () async {
-                                          if (widget.jornada.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
-                                              widget.jornada.emprendimiento.target!.usuario.target!.rol.target!.rol == "Emprendedor") {
+                                          if (widget
+                                                      .jornada
+                                                      .emprendimiento
+                                                      .target!
+                                                      .usuario
+                                                      .target!
+                                                      .rol
+                                                      .target!
+                                                      .rol ==
+                                                  "Amigo del Cambio" ||
+                                              widget
+                                                      .jornada
+                                                      .emprendimiento
+                                                      .target!
+                                                      .usuario
+                                                      .target!
+                                                      .rol
+                                                      .target!
+                                                      .rol ==
+                                                  "Emprendedor") {
                                             snackbarKey.currentState
                                                 ?.showSnackBar(const SnackBar(
                                               content: Text(
                                                   "Este usuario no tiene permisos para esta acción."),
                                             ));
                                           } else {
-                                            if (widget
-                                                .jornada.completada == false) {
-                                              switch (widget.jornada.numJornada) {
+                                            if (widget.jornada.completada ==
+                                                false) {
+                                              switch (
+                                                  widget.jornada.numJornada) {
                                                 case "1":
                                                   await Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) =>
                                                           EditarJornada1Screen(
-                                                              jornada:
-                                                                  widget.jornada,emprendimiento: widget.empActual,),
+                                                        jornada: widget.jornada,
+                                                        emprendimiento:
+                                                            widget.empActual,
+                                                      ),
                                                     ),
                                                   );
                                                   break;
@@ -225,8 +251,11 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                                     MaterialPageRoute(
                                                       builder: (context) =>
                                                           EditarJornada2Screen(
-                                                              jornada:
-                                                                  widget.jornada,emprendimiento: widget.empActual),
+                                                              jornada: widget
+                                                                  .jornada,
+                                                              emprendimiento:
+                                                                  widget
+                                                                      .empActual),
                                                     ),
                                                   );
                                                   break;
@@ -236,23 +265,30 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                                     MaterialPageRoute(
                                                       builder: (context) =>
                                                           EditarJornada3Screen(
-                                                              jornada:
-                                                                  widget.jornada,emprendimiento: widget.empActual),
+                                                              jornada: widget
+                                                                  .jornada,
+                                                              emprendimiento:
+                                                                  widget
+                                                                      .empActual),
                                                     ),
                                                   );
                                                   break;
                                                 case "4":
-                                                  if (widget.jornada.fechaRegistro
+                                                  if (widget
+                                                      .jornada.fechaRegistro
                                                       .add(const Duration(
                                                           hours: 24))
-                                                      .isBefore(DateTime.now())) {
+                                                      .isBefore(
+                                                          DateTime.now())) {
                                                     snackbarKey.currentState
                                                         ?.showSnackBar(
                                                             const SnackBar(
                                                       content: Text(
                                                           "La jornada ya ha sido registrada, ya no se puede editar."),
                                                     ));
-                                                    if (widget.jornada.completada == false) {
+                                                    if (widget.jornada
+                                                            .completada ==
+                                                        false) {
                                                       print(
                                                           "Entro a actualizar activo de tarea en J4");
                                                       jornadaProvider
@@ -266,8 +302,11 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                                                   .target!
                                                                   .comentarios,
                                                               true,
-                                                              widget.jornada.tarea
-                                                                  .target!.id);
+                                                              widget
+                                                                  .jornada
+                                                                  .tarea
+                                                                  .target!
+                                                                  .id);
                                                     }
                                                   } else {
                                                     await Navigator.push(
@@ -276,7 +315,10 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                                         builder: (context) =>
                                                             EditarJornada4Screen(
                                                                 jornada: widget
-                                                                    .jornada,emprendimiento: widget.empActual),
+                                                                    .jornada,
+                                                                emprendimiento:
+                                                                    widget
+                                                                        .empActual),
                                                       ),
                                                     );
                                                   }
@@ -525,7 +567,8 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(0, 10, 0, 0),
                                             child: AutoSizeText(
-                                              widget.jornada.tarea.target!.tarea,
+                                              widget
+                                                  .jornada.tarea.target!.tarea,
                                               maxLines: 2,
                                               style: AppTheme.of(context)
                                                   .subtitle1
@@ -563,9 +606,8 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                                 child: FlutterFlowCarousel(
                                                     width: 180,
                                                     height: 100,
-                                                    listaImagenes: 
-                                                      listImagenes
-                                                    )),
+                                                    listaImagenes:
+                                                        listImagenes)),
                                           ),
                                         )
                                       : Container(),

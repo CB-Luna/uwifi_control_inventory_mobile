@@ -19,7 +19,8 @@ class EditarJornada1Screen extends StatefulWidget {
   final Emprendimientos emprendimiento;
   const EditarJornada1Screen({
     Key? key,
-    required this.jornada, required this.emprendimiento,
+    required this.jornada,
+    required this.emprendimiento,
   }) : super(key: key);
 
   @override
@@ -81,17 +82,17 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
                       height: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: widget.jornada.emprendimiento.target?.imagen.target != null ?
-                            FileImage(
-                              File(
-                                widget.jornada.emprendimiento.target!.imagen.target!.path!))
-                            :
-                            Image.asset(
-                              "assets/images/default_image.png",
-                            ).image,
+                          image: (widget.jornada.emprendimiento.target?.imagen
+                                      .target?.path !=
+                                  null)
+                              ? FileImage(File(widget.jornada.emprendimiento
+                                  .target!.imagen.target!.path!))
+                              : Image.asset(
+                                  "assets/images/default_image_placeholder.jpeg",
+                                ).image,
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
-                          ),
+                        ),
                       ),
                       child: Container(
                         decoration: BoxDecoration(
@@ -323,15 +324,11 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
                                         fontWeight: FontWeight.normal,
                                       ),
                                   validator: (value) {
-                                    if(palabras
-                                            .hasMatch(value ?? '')){                                                                                         
-                                                return null;                                              
+                                    if (palabras.hasMatch(value ?? '')) {
+                                      return null;
+                                    } else {
+                                      return 'Evita usar números y caracteres especiales como diéresis';
                                     }
-                                    else{
-                                              return 'Evita usar números y caracteres especiales como diéresis';
-                                    }
-                                         
-                                         
                                   },
                                 ),
                               ),
@@ -623,8 +620,10 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                           JornadaActualizada(emprendimientoId: widget.emprendimiento.id,),
+                                      builder: (context) => JornadaActualizada(
+                                        emprendimientoId:
+                                            widget.emprendimiento.id,
+                                      ),
                                     ),
                                   );
                                 }

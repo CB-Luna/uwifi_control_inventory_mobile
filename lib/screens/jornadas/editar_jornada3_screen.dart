@@ -35,7 +35,8 @@ class EditarJornada3Screen extends StatefulWidget {
   final Emprendimientos emprendimiento;
   const EditarJornada3Screen({
     Key? key,
-    required this.jornada, required this.emprendimiento,
+    required this.jornada,
+    required this.emprendimiento,
   }) : super(key: key);
 
   @override
@@ -73,13 +74,13 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
     super.initState();
     jornada1 = null;
     jornada2 = null;
-    imagenesTemp =[];
+    imagenesTemp = [];
     newAnalisisFinanciero = [];
     for (var element in widget.jornada.tarea.target!.imagenes.toList()) {
       var newSaveImagenLocal = SaveImagenesLocal(
         id: element.id,
-        nombre: element.nombre!, 
-        path: element.path!, 
+        nombre: element.nombre!,
+        path: element.path!,
         base64: element.base64!,
       );
       newAnalisisFinanciero.add(newSaveImagenLocal);
@@ -108,22 +109,25 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
     dataBase.tipoProyectoBox.getAll().forEach((element) {
       listTipoProyecto.add(element.tipoProyecto);
     });
-    listTipoProyecto.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
-    
+    listTipoProyecto
+        .sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+
     dataBase.catalogoProyectoBox.getAll().forEach((element) {
       if (element.tipoProyecto.target?.tipoProyecto == tipoProyecto) {
         listProyectos.add(element.nombre);
       }
     });
-    listProyectos.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+    listProyectos
+        .sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     inversion = dataBase.inversionesBox
-          .get(widget.jornada.emprendimiento.target?.idInversionJornada ?? -1);
+        .get(widget.jornada.emprendimiento.target?.idInversionJornada ?? -1);
   }
 
   @override
   Widget build(BuildContext context) {
     final jornadaProvider = Provider.of<JornadaController>(context);
-    final productoInversionJornadaProvider = Provider.of<ProductoInversionJornadaController>(context);
+    final productoInversionJornadaProvider =
+        Provider.of<ProductoInversionJornadaController>(context);
     String emprendedor = "";
     if (widget.jornada.emprendimiento.target!.emprendedor.target != null) {
       emprendedor =
@@ -147,8 +151,14 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                       height: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: FileImage(File(
-                              widget.jornada.emprendimiento.target!.imagen.target!.path!)),
+                          image: (widget.jornada.emprendimiento.target?.imagen
+                                      .target?.path !=
+                                  null)
+                              ? FileImage(File(widget.jornada.emprendimiento
+                                  .target!.imagen.target!.path!))
+                              : Image.asset(
+                                  "assets/images/default_image_placeholder.jpeg",
+                                ).image,
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
                         ),
@@ -213,8 +223,10 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   DetalleJornadaScreen(
-                                                      jornada:
-                                                          widget.jornada,empActual:widget.emprendimiento,),
+                                                jornada: widget.jornada,
+                                                empActual:
+                                                    widget.emprendimiento,
+                                              ),
                                             ),
                                           );
                                         },
@@ -512,12 +524,8 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                           }
                                           if (jornada1 != null &&
                                               jornada2 != null) {
-                                            if (jornada1!
-                                                        .completada ==
-                                                    true &&
-                                                jornada2!
-                                                        .completada ==
-                                                    true) {
+                                            if (jornada1!.completada == true &&
+                                                jornada2!.completada == true) {
                                               activoController = val;
                                             } else {
                                               snackbarKey.currentState
@@ -571,86 +579,132 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                                     BorderRadius.circular(5),
                                               ),
                                               child: SizedBox(
-                                                  width: 180,
-                                                  height: 100,
-                                                  child: CarouselSlider(
-                                                    options: CarouselOptions(height: 400.0),
-                                                    items: imagenesCarrousel.map((i) {
-                                                      return Builder(
-                                                        builder: (BuildContext context) {
-                                                          return InkWell(
-                                                            onTap: () async {
-                                                              String? option =
+                                                width: 180,
+                                                height: 100,
+                                                child: CarouselSlider(
+                                                  options: CarouselOptions(
+                                                      height: 400.0),
+                                                  items: imagenesCarrousel
+                                                      .map((i) {
+                                                    return Builder(
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return InkWell(
+                                                          onTap: () async {
+                                                            String? option =
+                                                                await showModalBottomSheet(
+                                                              context: context,
+                                                              builder: (_) =>
+                                                                  const CustomBottomEliminarImagen(),
+                                                            );
+                                                            if (option ==
+                                                                'eliminar') {
+                                                              var booleano =
                                                                   await showModalBottomSheet(
-                                                                context: context,
-                                                                builder: (_) =>
-                                                                    const CustomBottomEliminarImagen(),
-                                                              );
-                                                              if (option == 'eliminar') {
-                                                                var booleano = await showModalBottomSheet(
-                                                                  isScrollControlled: true,
-                                                                  backgroundColor: Colors.transparent,
-                                                                  context: context,
-                                                                  builder: (context) {
-                                                                    return Padding(
-                                                                      padding: MediaQuery.of(context).viewInsets,
-                                                                      child: SizedBox(
-                                                                        height:
-                                                                            MediaQuery.of(context).size.height * 0.45,
-                                                                        child: BottomSheetValidacionEliminarImagen(imagen: i,),
+                                                                isScrollControlled:
+                                                                    true,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) {
+                                                                  return Padding(
+                                                                    padding: MediaQuery.of(
+                                                                            context)
+                                                                        .viewInsets,
+                                                                    child:
+                                                                        SizedBox(
+                                                                      height: MediaQuery.of(context)
+                                                                              .size
+                                                                              .height *
+                                                                          0.45,
+                                                                      child:
+                                                                          BottomSheetValidacionEliminarImagen(
+                                                                        imagen:
+                                                                            i,
                                                                       ),
+                                                                    ),
+                                                                  );
+                                                                },
+                                                              );
+                                                              if (booleano) {
+                                                                print(
+                                                                    "Se elimina IMAGEN");
+                                                                for (var element
+                                                                    in newAnalisisFinanciero) {
+                                                                  if (element
+                                                                          .path ==
+                                                                      i) {
+                                                                    var newInstruccionImagen =
+                                                                        SaveInstruccionImagenTemporal(
+                                                                      instruccion:
+                                                                          "syncDeleteImagenJornada",
+                                                                      instruccionAdicional:
+                                                                          "Imagen Jornada 3",
+                                                                      imagenLocal:
+                                                                          element,
                                                                     );
-                                                                  },
-                                                                );
-                                                                if (booleano) {
-                                                                  print("Se elimina IMAGEN");
-                                                                  for (var element in newAnalisisFinanciero) {
-                                                                    if (element.path == i) {
-                                                                      var newInstruccionImagen = SaveInstruccionImagenTemporal(
-                                                                        instruccion: "syncDeleteImagenJornada",
-                                                                        instruccionAdicional: "Imagen Jornada 3",
-                                                                        imagenLocal: element,
-                                                                        );
-                                                                      newAnalisisFinanciero.remove(element);
-                                                                      listInstruccionesImagenesTemp.add(newInstruccionImagen);
-                                                                      imagenesCarrousel.remove(element.path);
-                                                                      break;
-                                                                    }
+                                                                    newAnalisisFinanciero
+                                                                        .remove(
+                                                                            element);
+                                                                    listInstruccionesImagenesTemp
+                                                                        .add(
+                                                                            newInstruccionImagen);
+                                                                    imagenesCarrousel
+                                                                        .remove(
+                                                                            element.path);
+                                                                    break;
                                                                   }
                                                                 }
-                                                              } else { //Se aborta la opción
-                                                                return;
                                                               }
-                                                              setState(() {
-                                                              });
-                                                            },
-                                                            child: Container(
-                                                                width: MediaQuery.of(context).size.width,
-                                                                margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                                                                child: Image.file(
-                                                                    File(i),
-                                                                    fit: BoxFit.cover,
-                                                                  ),
+                                                            } else {
+                                                              //Se aborta la opción
+                                                              return;
+                                                            }
+                                                            setState(() {});
+                                                          },
+                                                          child: Container(
+                                                            width:
+                                                                MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width,
+                                                            margin:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        5.0),
+                                                            child: Image.file(
+                                                              File(i),
+                                                              fit: BoxFit.cover,
                                                             ),
-                                                          );
-                                                        },
-                                                      );
-                                                      }).toList(),
-                                                    ),
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  }).toList(),
                                                 ),
+                                              ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 10, 0, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 10, 0, 0),
                                               child: Text(
                                                 "Total imágenes: ${imagenesCarrousel.length}",
-                                                style: AppTheme.of(context).title3.override(
-                                                fontFamily: 'Poppins',
-                                                color:
-                                                    AppTheme.of(context).secondaryText,
-                                                fontSize: 12.5,
-                                                fontWeight: FontWeight.normal,
-                                                ),
+                                                style: AppTheme.of(context)
+                                                    .title3
+                                                    .override(
+                                                      fontFamily: 'Poppins',
+                                                      color:
+                                                          AppTheme.of(context)
+                                                              .secondaryText,
+                                                      fontSize: 12.5,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                    ),
                                               ),
                                             ),
                                           ],
@@ -673,7 +727,8 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                           List<XFile>? pickedFiles;
                                           if (option == 'camera') {
                                             if (imagenesCarrousel.length < 3) {
-                                              pickedFile = await picker.pickImage(
+                                              pickedFile =
+                                                  await picker.pickImage(
                                                 source: ImageSource.camera,
                                                 imageQuality: 100,
                                               );
@@ -681,106 +736,158 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                                 imagenesTemp.add(pickedFile);
                                               }
                                             } else {
-                                                bool? booleano = await showModalBottomSheet(
+                                              bool? booleano =
+                                                  await showModalBottomSheet(
                                                 isScrollControlled: true,
-                                                backgroundColor: Colors.transparent,
+                                                backgroundColor:
+                                                    Colors.transparent,
                                                 context: context,
                                                 builder: (context) {
                                                   return Padding(
-                                                    padding: MediaQuery.of(context).viewInsets,
+                                                    padding:
+                                                        MediaQuery.of(context)
+                                                            .viewInsets,
                                                     child: SizedBox(
                                                       height:
-                                                          MediaQuery.of(context).size.height * 0.45,
-                                                      child: const BottomSheetImagenesCompletas(),
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.45,
+                                                      child:
+                                                          const BottomSheetImagenesCompletas(),
                                                     ),
                                                   );
                                                 },
-                                              );  
-                                              if (booleano != null && booleano == true) {
-                                                pickedFile = await picker.pickImage(
-                                                source: ImageSource.camera,
-                                                imageQuality: 100,
+                                              );
+                                              if (booleano != null &&
+                                                  booleano == true) {
+                                                pickedFile =
+                                                    await picker.pickImage(
+                                                  source: ImageSource.camera,
+                                                  imageQuality: 100,
                                                 );
                                                 if (pickedFile != null) {
                                                   setState(() {
-                                                    File file = File(pickedFile!.path);
-                                                    List<int> fileInByte = file.readAsBytesSync();
-                                                    String base64 = base64Encode(fileInByte);
-                                                    var updateImagenLocal = SaveImagenesLocal(
-                                                      nombre: pickedFile.name, 
-                                                      path: pickedFile.path, 
+                                                    File file =
+                                                        File(pickedFile!.path);
+                                                    List<int> fileInByte =
+                                                        file.readAsBytesSync();
+                                                    String base64 =
+                                                        base64Encode(
+                                                            fileInByte);
+                                                    var updateImagenLocal =
+                                                        SaveImagenesLocal(
+                                                      nombre: pickedFile.name,
+                                                      path: pickedFile.path,
                                                       base64: base64,
                                                     );
-                                                    imagenesCarrousel.removeLast();
-                                                    imagenesCarrousel.add(pickedFile.path);
-                                                    newAnalisisFinanciero.removeLast();
-                                                    newAnalisisFinanciero.add(updateImagenLocal);
+                                                    imagenesCarrousel
+                                                        .removeLast();
+                                                    imagenesCarrousel
+                                                        .add(pickedFile.path);
+                                                    newAnalisisFinanciero
+                                                        .removeLast();
+                                                    newAnalisisFinanciero
+                                                        .add(updateImagenLocal);
                                                   });
                                                 }
                                                 return;
-                                              }        
+                                              }
                                             }
-                                          } else { //Se selecciona galería
+                                          } else {
+                                            //Se selecciona galería
                                             if (imagenesCarrousel.length < 3) {
-                                              pickedFiles = await picker.pickMultiImage(
-                                              imageQuality: 100,
+                                              pickedFiles =
+                                                  await picker.pickMultiImage(
+                                                imageQuality: 100,
                                               );
                                               if (pickedFiles == null) {
                                                 return;
                                               }
                                               if (pickedFiles.length > 3) {
                                                 snackbarKey.currentState
-                                                  ?.showSnackBar(const SnackBar(
+                                                    ?.showSnackBar(
+                                                        const SnackBar(
                                                   content: Text(
                                                       "No se permite cargar más de 3 imágenes."),
                                                 ));
                                                 return;
                                               }
-                                              switch (imagenesCarrousel.length) {
+                                              switch (
+                                                  imagenesCarrousel.length) {
                                                 case 0:
-                                                  for(int i = 0; i < pickedFiles.length; i++)
-                                                  {
-                                                    imagenesTemp.add(pickedFiles[i]);
-                                                    File file = File(pickedFiles[i].path);
-                                                    List<int> fileInByte = file.readAsBytesSync();
-                                                    String base64 = base64Encode(fileInByte);
-                                                    var newImagenLocal = SaveImagenesLocal(
-                                                      nombre: pickedFiles[i].name, 
-                                                      path: pickedFiles[i].path, 
+                                                  for (int i = 0;
+                                                      i < pickedFiles.length;
+                                                      i++) {
+                                                    imagenesTemp
+                                                        .add(pickedFiles[i]);
+                                                    File file = File(
+                                                        pickedFiles[i].path);
+                                                    List<int> fileInByte =
+                                                        file.readAsBytesSync();
+                                                    String base64 =
+                                                        base64Encode(
+                                                            fileInByte);
+                                                    var newImagenLocal =
+                                                        SaveImagenesLocal(
+                                                      nombre:
+                                                          pickedFiles[i].name,
+                                                      path: pickedFiles[i].path,
                                                       base64: base64,
-                                                      );
-                                                    var newInstruccionImagen = SaveInstruccionImagenTemporal(
-                                                      instruccion: "syncAddImagenJornada3",
-                                                      imagenLocal: newImagenLocal,
-                                                      );
-                                                    newAnalisisFinanciero.add(newImagenLocal);
-                                                    listInstruccionesImagenesTemp.add(newInstruccionImagen);
+                                                    );
+                                                    var newInstruccionImagen =
+                                                        SaveInstruccionImagenTemporal(
+                                                      instruccion:
+                                                          "syncAddImagenJornada3",
+                                                      imagenLocal:
+                                                          newImagenLocal,
+                                                    );
+                                                    newAnalisisFinanciero
+                                                        .add(newImagenLocal);
+                                                    listInstruccionesImagenesTemp
+                                                        .add(
+                                                            newInstruccionImagen);
                                                   }
                                                   break;
                                                 case 1:
-                                                  if(pickedFiles.length <= 2){
-                                                    for(int i = 0; i < pickedFiles.length; i++)
-                                                    {
-                                                      imagenesTemp.add(pickedFiles[i]);
-                                                      File file = File(pickedFiles[i].path);
-                                                      List<int> fileInByte = file.readAsBytesSync();
-                                                      String base64 = base64Encode(fileInByte);
-                                                      var newImagenLocal = SaveImagenesLocal(
-                                                        nombre: pickedFiles[i].name, 
-                                                        path: pickedFiles[i].path, 
+                                                  if (pickedFiles.length <= 2) {
+                                                    for (int i = 0;
+                                                        i < pickedFiles.length;
+                                                        i++) {
+                                                      imagenesTemp
+                                                          .add(pickedFiles[i]);
+                                                      File file = File(
+                                                          pickedFiles[i].path);
+                                                      List<int> fileInByte =
+                                                          file.readAsBytesSync();
+                                                      String base64 =
+                                                          base64Encode(
+                                                              fileInByte);
+                                                      var newImagenLocal =
+                                                          SaveImagenesLocal(
+                                                        nombre:
+                                                            pickedFiles[i].name,
+                                                        path:
+                                                            pickedFiles[i].path,
                                                         base64: base64,
-                                                        );
-                                                      var newInstruccionImagen = SaveInstruccionImagenTemporal(
-                                                        instruccion: "syncAddImagenJornada3",
-                                                        imagenLocal: newImagenLocal,
-                                                        );
-                                                      newAnalisisFinanciero.add(newImagenLocal);
-                                                      listInstruccionesImagenesTemp.add(newInstruccionImagen);
+                                                      );
+                                                      var newInstruccionImagen =
+                                                          SaveInstruccionImagenTemporal(
+                                                        instruccion:
+                                                            "syncAddImagenJornada3",
+                                                        imagenLocal:
+                                                            newImagenLocal,
+                                                      );
+                                                      newAnalisisFinanciero
+                                                          .add(newImagenLocal);
+                                                      listInstruccionesImagenesTemp
+                                                          .add(
+                                                              newInstruccionImagen);
                                                     }
-                                                  }
-                                                  else{
+                                                  } else {
                                                     snackbarKey.currentState
-                                                    ?.showSnackBar(const SnackBar(
+                                                        ?.showSnackBar(
+                                                            const SnackBar(
                                                       content: Text(
                                                           "No se permite cargar más de 3 imágenes."),
                                                     ));
@@ -788,29 +895,44 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                                   }
                                                   break;
                                                 case 2:
-                                                  if(pickedFiles.length <= 1){
-                                                    for(int i = 0; i < pickedFiles.length; i++)
-                                                    {
-                                                      imagenesTemp.add(pickedFiles[i]);
-                                                      File file = File(pickedFiles[i].path);
-                                                      List<int> fileInByte = file.readAsBytesSync();
-                                                      String base64 = base64Encode(fileInByte);
-                                                      var newImagenLocal = SaveImagenesLocal(
-                                                        nombre: pickedFiles[i].name, 
-                                                        path: pickedFiles[i].path, 
+                                                  if (pickedFiles.length <= 1) {
+                                                    for (int i = 0;
+                                                        i < pickedFiles.length;
+                                                        i++) {
+                                                      imagenesTemp
+                                                          .add(pickedFiles[i]);
+                                                      File file = File(
+                                                          pickedFiles[i].path);
+                                                      List<int> fileInByte =
+                                                          file.readAsBytesSync();
+                                                      String base64 =
+                                                          base64Encode(
+                                                              fileInByte);
+                                                      var newImagenLocal =
+                                                          SaveImagenesLocal(
+                                                        nombre:
+                                                            pickedFiles[i].name,
+                                                        path:
+                                                            pickedFiles[i].path,
                                                         base64: base64,
-                                                        );
-                                                      var newInstruccionImagen = SaveInstruccionImagenTemporal(
-                                                        instruccion: "syncAddImagenJornada3",
-                                                        imagenLocal: newImagenLocal,
-                                                        );
-                                                      newAnalisisFinanciero.add(newImagenLocal);
-                                                      listInstruccionesImagenesTemp.add(newInstruccionImagen);
+                                                      );
+                                                      var newInstruccionImagen =
+                                                          SaveInstruccionImagenTemporal(
+                                                        instruccion:
+                                                            "syncAddImagenJornada3",
+                                                        imagenLocal:
+                                                            newImagenLocal,
+                                                      );
+                                                      newAnalisisFinanciero
+                                                          .add(newImagenLocal);
+                                                      listInstruccionesImagenesTemp
+                                                          .add(
+                                                              newInstruccionImagen);
                                                     }
-                                                  }
-                                                  else{
+                                                  } else {
                                                     snackbarKey.currentState
-                                                    ?.showSnackBar(const SnackBar(
+                                                        ?.showSnackBar(
+                                                            const SnackBar(
                                                       content: Text(
                                                           "No se permite cargar más de 3 imágenes."),
                                                     ));
@@ -821,73 +943,117 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                                   break;
                                               }
                                             } else {
-                                              bool? booleano = await showModalBottomSheet(
+                                              bool? booleano =
+                                                  await showModalBottomSheet(
                                                 isScrollControlled: true,
-                                                backgroundColor: Colors.transparent,
+                                                backgroundColor:
+                                                    Colors.transparent,
                                                 context: context,
                                                 builder: (context) {
                                                   return Padding(
-                                                    padding: MediaQuery.of(context).viewInsets,
+                                                    padding:
+                                                        MediaQuery.of(context)
+                                                            .viewInsets,
                                                     child: SizedBox(
                                                       height:
-                                                          MediaQuery.of(context).size.height * 0.45,
-                                                      child: const BottomSheetImagenesCompletas(),
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.45,
+                                                      child:
+                                                          const BottomSheetImagenesCompletas(),
                                                     ),
                                                   );
                                                 },
                                               );
-                                              if (booleano != null && booleano == true) {
-                                                pickedFile = await picker.pickImage(
-                                                source: ImageSource.gallery,
-                                                imageQuality: 100,
+                                              if (booleano != null &&
+                                                  booleano == true) {
+                                                pickedFile =
+                                                    await picker.pickImage(
+                                                  source: ImageSource.gallery,
+                                                  imageQuality: 100,
                                                 );
                                                 if (pickedFile != null) {
                                                   setState(() {
-                                                    if (newAnalisisFinanciero[imagenesCarrousel.length - 1].id != null) {
+                                                    if (newAnalisisFinanciero[
+                                                                imagenesCarrousel
+                                                                        .length -
+                                                                    1]
+                                                            .id !=
+                                                        null) {
                                                       // La imagen anterior ya ha sido registrada
-                                                      File file = File(pickedFile!.path);
-                                                      List<int> fileInByte = file.readAsBytesSync();
-                                                      String base64 = base64Encode(fileInByte);
-                                                      var updateImagenLocal = SaveImagenesLocal(
-                                                        id: newAnalisisFinanciero[imagenesCarrousel.length - 1].id,
-                                                        nombre: pickedFile.name, 
-                                                        path: pickedFile.path, 
-                                                        base64: base64,
-                                                        );
-                                                      var newInstruccionImagen = SaveInstruccionImagenTemporal(
-                                                        instruccion: "syncUpdateImagenJornada3",
-                                                        imagenLocal: updateImagenLocal,
-                                                        );
-                                                      newAnalisisFinanciero.removeLast();
-                                                      newAnalisisFinanciero.add(updateImagenLocal);
-                                                      imagenesCarrousel.removeLast();
-                                                      imagenesCarrousel.add(pickedFile.path);
-                                                      listInstruccionesImagenesTemp.add(newInstruccionImagen);
-                                                    } else {
-                                                      // La imagen no ha sido registrada
-                                                      File file = File(pickedFile!.path);
-                                                      List<int> fileInByte = file.readAsBytesSync();
-                                                      String base64 = base64Encode(fileInByte);
-                                                      var updateImagenLocal = SaveImagenesLocal(
-                                                        nombre: pickedFile.name, 
-                                                        path: pickedFile.path, 
+                                                      File file = File(
+                                                          pickedFile!.path);
+                                                      List<int> fileInByte =
+                                                          file.readAsBytesSync();
+                                                      String base64 =
+                                                          base64Encode(
+                                                              fileInByte);
+                                                      var updateImagenLocal =
+                                                          SaveImagenesLocal(
+                                                        id: newAnalisisFinanciero[
+                                                                imagenesCarrousel
+                                                                        .length -
+                                                                    1]
+                                                            .id,
+                                                        nombre: pickedFile.name,
+                                                        path: pickedFile.path,
                                                         base64: base64,
                                                       );
-                                                      newAnalisisFinanciero.removeLast();
-                                                      newAnalisisFinanciero.add(updateImagenLocal);
-                                                      imagenesCarrousel.removeLast();
-                                                      imagenesCarrousel.add(pickedFile.path);
+                                                      var newInstruccionImagen =
+                                                          SaveInstruccionImagenTemporal(
+                                                        instruccion:
+                                                            "syncUpdateImagenJornada3",
+                                                        imagenLocal:
+                                                            updateImagenLocal,
+                                                      );
+                                                      newAnalisisFinanciero
+                                                          .removeLast();
+                                                      newAnalisisFinanciero.add(
+                                                          updateImagenLocal);
+                                                      imagenesCarrousel
+                                                          .removeLast();
+                                                      imagenesCarrousel
+                                                          .add(pickedFile.path);
+                                                      listInstruccionesImagenesTemp
+                                                          .add(
+                                                              newInstruccionImagen);
+                                                    } else {
+                                                      // La imagen no ha sido registrada
+                                                      File file = File(
+                                                          pickedFile!.path);
+                                                      List<int> fileInByte =
+                                                          file.readAsBytesSync();
+                                                      String base64 =
+                                                          base64Encode(
+                                                              fileInByte);
+                                                      var updateImagenLocal =
+                                                          SaveImagenesLocal(
+                                                        nombre: pickedFile.name,
+                                                        path: pickedFile.path,
+                                                        base64: base64,
+                                                      );
+                                                      newAnalisisFinanciero
+                                                          .removeLast();
+                                                      newAnalisisFinanciero.add(
+                                                          updateImagenLocal);
+                                                      imagenesCarrousel
+                                                          .removeLast();
+                                                      imagenesCarrousel
+                                                          .add(pickedFile.path);
                                                     }
-                                                  }
-                                                  );
+                                                  });
                                                 }
                                                 return;
-                                              }     
+                                              }
                                             }
                                           }
                                           setState(() {
-                                            for (var i = 0; i < imagenesTemp.length; i++) {
-                                              imagenesCarrousel.add(imagenesTemp[i].path);
+                                            for (var i = 0;
+                                                i < imagenesTemp.length;
+                                                i++) {
+                                              imagenesCarrousel
+                                                  .add(imagenesTemp[i].path);
                                             }
                                           });
                                         },
@@ -1089,7 +1255,9 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                               listProyectos.add(element.nombre);
                                             }
                                           });
-                                          listProyectos.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+                                          listProyectos.sort((a, b) =>
+                                              removeDiacritics(a).compareTo(
+                                                  removeDiacritics(b)));
                                           print("Entro a tipo proyecto");
                                         }
                                         print("Tipo Proyecto: $tipoProyecto");
@@ -1263,11 +1431,12 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                     child: Badge(
                                       badgeContent: Text(
                                           inversion != null
-                                              ? inversion!.prodSolicitados.length
+                                              ? inversion!
+                                                  .prodSolicitados.length
                                                   .toString()
                                               : "0",
-                                          style:
-                                              const TextStyle(color: Colors.white)),
+                                          style: const TextStyle(
+                                              color: Colors.white)),
                                       showBadge: true,
                                       badgeColor: const Color(0xFFD20030),
                                       position: BadgePosition.topEnd(),
@@ -1275,19 +1444,23 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                       child: FFButtonWidget(
                                         onPressed: () async {
                                           productoInversionJornadaProvider
-                                            .listProdSolicitadosActual = inversion!.prodSolicitados.toList();
+                                                  .listProdSolicitadosActual =
+                                              inversion!.prodSolicitados
+                                                  .toList();
                                           if (inversion != null) {
                                             await Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     EditarInversionJornadaScreen(
-                                                        prodSolicitados: productoInversionJornadaProvider
-                                                            .listProdSolicitadosActual, 
-                                                        jornada: widget.jornada,
-                                                        emprendimiento: widget.emprendimiento,
-                                                        inversion: inversion!,
-                                                        ),
+                                                  prodSolicitados:
+                                                      productoInversionJornadaProvider
+                                                          .listProdSolicitadosActual,
+                                                  jornada: widget.jornada,
+                                                  emprendimiento:
+                                                      widget.emprendimiento,
+                                                  inversion: inversion!,
+                                                ),
                                               ),
                                             );
                                           }
@@ -1363,8 +1536,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                   if (idTipoProyecto != null) {
                                     final idProyecto = dataBase
                                         .catalogoProyectoBox
-                                        .query(CatalogoProyecto_
-                                            .tipoProyecto
+                                        .query(CatalogoProyecto_.tipoProyecto
                                             .equals(idTipoProyecto)
                                             .and(CatalogoProyecto_.nombre
                                                 .equals(proyecto)))
@@ -1373,12 +1545,12 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                         ?.id;
                                     if (idProyecto != null) {
                                       if (newAnalisisFinanciero !=
-                                            oldAnalisisFinanciero) {
+                                          oldAnalisisFinanciero) {
                                         jornadaProvider.updateImagenesJornada(
-                                          widget.jornada.tarea.target!, 
+                                          widget.jornada.tarea.target!,
                                           listInstruccionesImagenesTemp,
-                                          );
-                                      } 
+                                        );
+                                      }
                                       jornadaProvider.updateJornada3(
                                           widget.jornada.id,
                                           widget.jornada.emprendimiento.target!
@@ -1395,24 +1567,29 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                               JornadaActualizada(emprendimientoId: widget.emprendimiento.id,),
+                                              JornadaActualizada(
+                                            emprendimientoId:
+                                                widget.emprendimiento.id,
+                                          ),
                                         ),
                                       );
                                     }
                                   }
                                 } else {
                                   if (newAnalisisFinanciero !=
-                                        oldAnalisisFinanciero) {
+                                      oldAnalisisFinanciero) {
                                     jornadaProvider.updateImagenesJornada(
-                                      widget.jornada.tarea.target!, 
+                                      widget.jornada.tarea.target!,
                                       listInstruccionesImagenesTemp,
-                                      );
-                                  } 
+                                    );
+                                  }
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                           JornadaActualizada(emprendimientoId: widget.emprendimiento.id,),
+                                      builder: (context) => JornadaActualizada(
+                                        emprendimientoId:
+                                            widget.emprendimiento.id,
+                                      ),
                                     ),
                                   );
                                 }

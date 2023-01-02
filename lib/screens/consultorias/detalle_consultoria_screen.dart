@@ -20,7 +20,8 @@ class DetalleConsultoriaScreen extends StatefulWidget {
   const DetalleConsultoriaScreen({
     Key? key,
     required this.consultoria,
-    required this.numConsultoria, required this.emprendimientoActual,
+    required this.numConsultoria,
+    required this.emprendimientoActual,
   }) : super(key: key);
 
   @override
@@ -77,20 +78,22 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
               children: [
                 Stack(
                   children: [
-                    widget.consultoria.emprendimiento.target?.imagen.target?.path != null ?
-                    Image.file(
-                      File(widget.consultoria.emprendimiento.target!.imagen.target!.path!),
-                      width: double.infinity,
-                      height: 200,
-                      fit: BoxFit.cover,
-                    )
-                    :
-                    Image.asset(
-                      "assets/images/default_image.png",
-                      width: double.infinity,
-                      height: 200,
-                      fit: BoxFit.cover,
-                    ),
+                    widget.consultoria.emprendimiento.target?.imagen.target
+                                ?.path !=
+                            null
+                        ? Image.file(
+                            File(widget.consultoria.emprendimiento.target!
+                                .imagen.target!.path!),
+                            width: double.infinity,
+                            height: 200,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            "assets/images/default_image_placeholder.jpeg",
+                            width: double.infinity,
+                            height: 200,
+                            fit: BoxFit.cover,
+                          ),
                     Container(
                       width: double.infinity,
                       height: 200,
@@ -115,23 +118,26 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                           ),
                         ),
                         child: Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(16, 45, 16, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              16, 45, 16, 0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Row(
                                 mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 10),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 0, 10),
                                     child: Container(
                                       width: 80,
                                       height: 40,
                                       decoration: BoxDecoration(
-                                        color: AppTheme.of(context).secondaryText,
+                                        color:
+                                            AppTheme.of(context).secondaryText,
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: InkWell(
@@ -167,13 +173,33 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 10),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 0, 10),
                                     child: InkWell(
                                       onTap: () async {
-                                        print("Tareas totales de consultoria: ${widget.consultoria.tareas.toList().length}");
-                                        if (widget.consultoria.emprendimiento.target!.usuario.target!.rol.target!.rol == "Amigo del Cambio" ||
-                                            widget.consultoria.emprendimiento.target!.usuario.target!.rol.target!.rol == "Emprendedor") {
+                                        print(
+                                            "Tareas totales de consultoria: ${widget.consultoria.tareas.toList().length}");
+                                        if (widget
+                                                    .consultoria
+                                                    .emprendimiento
+                                                    .target!
+                                                    .usuario
+                                                    .target!
+                                                    .rol
+                                                    .target!
+                                                    .rol ==
+                                                "Amigo del Cambio" ||
+                                            widget
+                                                    .consultoria
+                                                    .emprendimiento
+                                                    .target!
+                                                    .usuario
+                                                    .target!
+                                                    .rol
+                                                    .target!
+                                                    .rol ==
+                                                "Emprendedor") {
                                           snackbarKey.currentState
                                               ?.showSnackBar(const SnackBar(
                                             content: Text(
@@ -187,9 +213,11 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                                   EditarConsultoriaScreen(
                                                 consultoria: widget.consultoria,
                                                 numConsultoria:
-                                                    widget.numConsultoria, 
-                                                    tarea: widget.consultoria.tareas.last, 
-                                                emprendimientoEditar: widget.emprendimientoActual,
+                                                    widget.numConsultoria,
+                                                tarea: widget
+                                                    .consultoria.tareas.last,
+                                                emprendimientoEditar:
+                                                    widget.emprendimientoActual,
                                               ),
                                             ),
                                           );
@@ -199,9 +227,10 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                         width: 45,
                                         height: 40,
                                         decoration: BoxDecoration(
-                                          color:
-                                              AppTheme.of(context).secondaryText,
-                                          borderRadius: BorderRadius.circular(10),
+                                          color: AppTheme.of(context)
+                                              .secondaryText,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                         ),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
@@ -231,11 +260,12 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                       "SIN EMPRENDIMIENTO",
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: AppTheme.of(context).subtitle2.override(
-                                        fontFamily: 'Poppins',
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                      ),
+                                  style:
+                                      AppTheme.of(context).subtitle2.override(
+                                            fontFamily: 'Poppins',
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                          ),
                                 ),
                               ),
                             ],
@@ -259,8 +289,8 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Padding(
-                            padding:
-                                const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                5, 0, 5, 0),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -339,7 +369,9 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 5, 0, 5),
                                   child: AutoSizeText(
-                                    widget.consultoria.tareas.last.porcentaje.target!.porcentajeAvance.toString(),
+                                    widget.consultoria.tareas.last.porcentaje
+                                        .target!.porcentajeAvance
+                                        .toString(),
                                     textAlign: TextAlign.start,
                                     maxLines: 1,
                                     style:
@@ -368,8 +400,10 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 5, 0, 5),
                                   child: AutoSizeText(
-                                    dateTimeFormat('dd/MM/yyyy',
-                                        widget.consultoria.tareas.last.fechaRevision),
+                                    dateTimeFormat(
+                                        'dd/MM/yyyy',
+                                        widget.consultoria.tareas.last
+                                            .fechaRevision),
                                     textAlign: TextAlign.start,
                                     maxLines: 1,
                                     style:
@@ -505,7 +539,7 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                 //                       color: const Color(0x554672FF),
                                 //                       borderRadius: BorderRadius.circular(8),
                                 //                       border: Border.all(
-                                //                         width: 1.5,           
+                                //                         width: 1.5,
                                 //                       ),
                                 //                     ),
                                 //                     child: InkWell(
@@ -534,10 +568,10 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                 //                         child: ClipRRect(
                                 //                           borderRadius:
                                 //                               BorderRadius.circular(8),
-                                //                           child: 
+                                //                           child:
                                 //                           getWidgetContainerImage(
-                                //                             tareas.first.imagenes.last.imagenes, 
-                                //                             170, 
+                                //                             tareas.first.imagenes.last.imagenes,
+                                //                             170,
                                 //                             120,
                                 //                             ),
                                 //                         ),
@@ -570,9 +604,8 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                   ),
                                 ),
                                 Padding(
-                                  padding:
-                                      const EdgeInsetsDirectional.fromSTEB(
-                                          16, 8, 16, 12),
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      16, 8, 16, 12),
                                   child: InkWell(
                                     onTap: () async {
                                       await Navigator.push(
@@ -598,8 +631,7 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                             offset: Offset(0, 2),
                                           )
                                         ],
-                                        borderRadius:
-                                            BorderRadius.circular(12),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
@@ -607,9 +639,8 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                             MainAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional
-                                                    .fromSTEB(8, 0, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(8, 0, 0, 0),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               crossAxisAlignment:
@@ -635,13 +666,9 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                                           padding:
                                                               const EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                  0,
-                                                                  10,
-                                                                  0,
-                                                                  0),
+                                                                  0, 10, 0, 0),
                                                           child: AutoSizeText(
-                                                            tareas.first
-                                                                .tarea,
+                                                            tareas.first.tarea,
                                                             maxLines: 2,
                                                             style: AppTheme.of(
                                                                     context)
@@ -652,8 +679,7 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                                                   color: AppTheme.of(
                                                                           context)
                                                                       .primaryText,
-                                                                  fontSize:
-                                                                      20,
+                                                                  fontSize: 20,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w500,
@@ -680,7 +706,7 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                                 //       color: const Color(0x554672FF),
                                                 //       borderRadius: BorderRadius.circular(8),
                                                 //       border: Border.all(
-                                                //         width: 1.5,           
+                                                //         width: 1.5,
                                                 //       ),
                                                 //     ),
                                                 //     child: InkWell(
@@ -709,10 +735,10 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                                 //         child: ClipRRect(
                                                 //           borderRadius:
                                                 //               BorderRadius.circular(8),
-                                                //           child: 
+                                                //           child:
                                                 //           getWidgetContainerImage(
-                                                //             tareas.first.imagenes.last.imagenes, 
-                                                //             170, 
+                                                //             tareas.first.imagenes.last.imagenes,
+                                                //             170,
                                                 //             120,
                                                 //             ),
                                                 //         ),
@@ -744,196 +770,241 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                             ),
                                   ),
                                 ),
-                                (tareas.length  - 1 ) == 0 ?
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 5, 0, 10),
-                                  child: Text(
-                                    "Sin SubTareas",
-                                    style:
-                                        AppTheme.of(context).bodyText1.override(
-                                              fontFamily: AppTheme.of(context)
-                                                  .bodyText1Family,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                  ),
-                                )
-                                :
-                                ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: tareas.length - 1,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              16, 8, 16, 12),
-                                      child: InkWell(
-                                        onTap: () async {
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetalleTareaConsultoriaScreen(
-                                                consultoria: widget.consultoria,
-                                                tarea: tareas[index + 1],
+                                (tareas.length - 1) == 0
+                                    ? Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 5, 0, 10),
+                                        child: Text(
+                                          "Sin SubTareas",
+                                          style: AppTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: AppTheme.of(context)
+                                                    .bodyText1Family,
+                                                fontWeight: FontWeight.w500,
                                               ),
-                                            ),
-                                          );
-                                        },
-                                        child: Container(
-                                          width: double.infinity,
-                                          height: 120,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                blurRadius: 4,
-                                                color: Color(0x2B202529),
-                                                offset: Offset(0, 2),
-                                              )
-                                            ],
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(8, 0, 0, 0),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.max,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                8, 0, 0, 4),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                      0,
-                                                                      10,
-                                                                      0,
-                                                                      0),
-                                                              child: AutoSizeText(
-                                                                tareas[index + 1]
-                                                                    .descripcion,
-                                                                maxLines: 2,
-                                                                style: AppTheme.of(
-                                                                        context)
-                                                                    .subtitle1
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Outfit',
-                                                                      color: AppTheme.of(
-                                                                              context)
-                                                                          .primaryText,
-                                                                      fontSize:
-                                                                          20,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                    ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
+                                        ),
+                                      )
+                                    : ListView.builder(
+                                        padding: EdgeInsets.zero,
+                                        primary: false,
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.vertical,
+                                        itemCount: tareas.length - 1,
+                                        itemBuilder: (context, index) {
+                                          return Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(16, 8, 16, 12),
+                                            child: InkWell(
+                                              onTap: () async {
+                                                await Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        DetalleTareaConsultoriaScreen(
+                                                      consultoria:
+                                                          widget.consultoria,
+                                                      tarea: tareas[index + 1],
                                                     ),
+                                                  ),
+                                                );
+                                              },
+                                              child: Container(
+                                                width: double.infinity,
+                                                height: 120,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  boxShadow: const [
+                                                    BoxShadow(
+                                                      blurRadius: 4,
+                                                      color: Color(0x2B202529),
+                                                      offset: Offset(0, 2),
+                                                    )
+                                                  ],
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                ),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
                                                     Padding(
                                                       padding:
                                                           const EdgeInsetsDirectional
                                                                   .fromSTEB(
-                                                              0, 10, 10, 0),
-                                                      child: Container(
-                                                        width:
-                                                            MediaQuery.of(context)
-                                                                    .size
-                                                                    .width *
-                                                                0.4,
-                                                        height: 100,
-                                                        decoration: BoxDecoration(
-                                                          color: const Color(0x554672FF),
-                                                          borderRadius: BorderRadius.circular(8),
-                                                          border: Border.all(
-                                                            width: 1.5,           
-                                                          ),
-                                                        ),
-                                                        child: InkWell(
-                                                          onTap: () async {
-                                                            if (tareas[index + 1].imagenes.isNotEmpty) {
-                                                              await Navigator.push(
-                                                              context,
-                                                              PageTransition(
-                                                                type: PageTransitionType.fade,
-                                                                child:
-                                                                    FlutterFlowExpandedImageView(
-                                                                  image: getWidgetContainImage(
-                                                                    tareas[index + 1].imagenes.last.imagenes
+                                                              8, 0, 0, 0),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Expanded(
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                      8,
+                                                                      0,
+                                                                      0,
+                                                                      4),
+                                                              child: Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional.fromSTEB(
+                                                                            0,
+                                                                            10,
+                                                                            0,
+                                                                            0),
+                                                                    child:
+                                                                        AutoSizeText(
+                                                                      tareas[index +
+                                                                              1]
+                                                                          .descripcion,
+                                                                      maxLines:
+                                                                          2,
+                                                                      style: AppTheme.of(
+                                                                              context)
+                                                                          .subtitle1
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Outfit',
+                                                                            color:
+                                                                                AppTheme.of(context).primaryText,
+                                                                            fontSize:
+                                                                                20,
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                          ),
+                                                                    ),
                                                                   ),
-                                                                  allowRotation: false,
-                                                                  tag: tareas[index + 1].imagenes.last.imagenes,
-                                                                  useHeroAnimation: true,
-                                                                ),
+                                                                ],
                                                               ),
-                                                            );
-                                                            }
-                                                          },
-                                                          child: Hero(
-                                                            tag: tareas[index + 1].imagenes.isNotEmpty ?
-                                                            tareas[index + 1].imagenes.last.imagenes :
-                                                             "No image",
-                                                            transitionOnUserGestures: true,
-                                                            child: ClipRRect(
-                                                              borderRadius:
-                                                                  BorderRadius.circular(8),
-                                                              child: 
-                                                              getWidgetContainerImage(
-                                                                tareas[index + 1].imagenes.isNotEmpty ?
-                                                                tareas[index + 1].imagenes.last.imagenes :
-                                                                null, 
-                                                                170, 
-                                                                120,
-                                                                ),
                                                             ),
                                                           ),
-                                                        ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                    0,
+                                                                    10,
+                                                                    10,
+                                                                    0),
+                                                            child: Container(
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.4,
+                                                              height: 100,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: const Color(
+                                                                    0x554672FF),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8),
+                                                                border:
+                                                                    Border.all(
+                                                                  width: 1.5,
+                                                                ),
+                                                              ),
+                                                              child: InkWell(
+                                                                onTap:
+                                                                    () async {
+                                                                  if (tareas[
+                                                                          index +
+                                                                              1]
+                                                                      .imagenes
+                                                                      .isNotEmpty) {
+                                                                    await Navigator
+                                                                        .push(
+                                                                      context,
+                                                                      PageTransition(
+                                                                        type: PageTransitionType
+                                                                            .fade,
+                                                                        child:
+                                                                            FlutterFlowExpandedImageView(
+                                                                          image: getWidgetContainImage(tareas[index + 1]
+                                                                              .imagenes
+                                                                              .last
+                                                                              .imagenes),
+                                                                          allowRotation:
+                                                                              false,
+                                                                          tag: tareas[index + 1]
+                                                                              .imagenes
+                                                                              .last
+                                                                              .imagenes,
+                                                                          useHeroAnimation:
+                                                                              true,
+                                                                        ),
+                                                                      ),
+                                                                    );
+                                                                  }
+                                                                },
+                                                                child: Hero(
+                                                                  tag: tareas[index +
+                                                                              1]
+                                                                          .imagenes
+                                                                          .isNotEmpty
+                                                                      ? tareas[index +
+                                                                              1]
+                                                                          .imagenes
+                                                                          .last
+                                                                          .imagenes
+                                                                      : "No image",
+                                                                  transitionOnUserGestures:
+                                                                      true,
+                                                                  child:
+                                                                      ClipRRect(
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .circular(8),
+                                                                    child:
+                                                                        getWidgetContainerImage(
+                                                                      tareas[index + 1]
+                                                                              .imagenes
+                                                                              .isNotEmpty
+                                                                          ? tareas[index + 1]
+                                                                              .imagenes
+                                                                              .last
+                                                                              .imagenes
+                                                                          : null,
+                                                                      170,
+                                                                      120,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
                                                     ),
                                                   ],
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                        ).animated([
-                                          animationsMap[
-                                              'containerOnPageLoadAnimation']!
-                                        ]),
+                                              ).animated([
+                                                animationsMap[
+                                                    'containerOnPageLoadAnimation']!
+                                              ]),
+                                            ),
+                                          );
+                                        },
                                       ),
-                                    );
-                                  },
-                                ),
                               ],
                             ),
                           ),
