@@ -128,6 +128,7 @@ class TareaBasic {
         required this.idStatusSyncFk,
         required this.tarea,
         required this.updated,
+        required this.jornada,
     });
 
     final String collectionId;
@@ -144,6 +145,7 @@ class TareaBasic {
     final String idStatusSyncFk;
     final String tarea;
     final DateTime? updated;
+    final bool jornada;
 
     factory TareaBasic.fromMap(Map<String, dynamic> json) => TareaBasic(
         collectionId: json["@collectionId"],
@@ -160,6 +162,7 @@ class TareaBasic {
         idStatusSyncFk: json["id_status_sync_fk"],
         tarea: json["tarea"],
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
+        jornada: json["jornada"],
     );
 
     Map<String, dynamic> toMap() => {
@@ -177,6 +180,7 @@ class TareaBasic {
         "id_status_sync_fk": idStatusSyncFk,
         "tarea": tarea,
         "updated": updated == null ? null : updated!.toIso8601String(),
+        "jornada": jornada,
     };
 }
 

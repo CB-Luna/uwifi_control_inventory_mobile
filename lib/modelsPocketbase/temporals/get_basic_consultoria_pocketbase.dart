@@ -264,6 +264,7 @@ class IdTareaFk {
         required this.idStatusSyncFk,
         required this.tarea,
         required this.updated,
+        required this.jornada,
     });
 
     final String collectionId;
@@ -280,6 +281,7 @@ class IdTareaFk {
     final String idStatusSyncFk;
     final String tarea;
     final DateTime? updated;
+    final bool jornada;
 
     factory IdTareaFk.fromMap(Map<String, dynamic> json) => IdTareaFk(
         collectionId: json["@collectionId"],
@@ -296,6 +298,7 @@ class IdTareaFk {
         idStatusSyncFk: json["id_status_sync_fk"],
         tarea: json["tarea"],
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
+        jornada: json["jornada"],
     );
 
     Map<String, dynamic> toMap() => {
@@ -313,6 +316,7 @@ class IdTareaFk {
         "id_status_sync_fk": idStatusSyncFk,
         "tarea": tarea,
         "updated": updated == null ? null : updated!.toIso8601String(),
+        "jornada": jornada,
     };
 }
 

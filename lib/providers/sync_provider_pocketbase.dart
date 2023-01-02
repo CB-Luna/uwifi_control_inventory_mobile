@@ -1898,6 +1898,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
             "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
             "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
             "id_emi_web": tareaToSync.idEmiWeb!.split("?")[0],
+            "jornada": true,
             });
             if (recordTarea.id.isNotEmpty) {
               //Se recupera el idDBR de la tarea
@@ -2016,6 +2017,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
             "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
             "id_emi_web": tareaToSync.idEmiWeb!.split("?")[0],
             "id_imagenes_fk": idsDBRImagenes,
+            "jornada": true,
             });
             if (recordTarea.id.isNotEmpty) {
               //Se recupera el idDBR de la tarea
@@ -2280,6 +2282,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                   "id_emi_web": tareaToSync.idEmiWeb!.split("?")[0],
                   "id_imagenes_fk": idsDBRImagenes,
+                  "jornada": true,
                   });
                   if (recordTarea.id.isNotEmpty) {
                     //Se recupera el idDBR de la tarea
@@ -2397,6 +2400,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                 "id_emi_web": tareaToSync.idEmiWeb!.split("?")[0],
                 "id_imagenes_fk": idsDBRImagenes,
+                "jornada": true,
                 });
                 if (recordTarea.id.isNotEmpty) {
                   //Se recupera el idDBR de la tarea
@@ -2743,6 +2747,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
             "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
             "id_emi_web": tareaToSync.idEmiWeb!.split("?")[0],
             "id_imagenes_fk": idsDBRImagenes,
+            "jornada": true,
             });
             if (recordTarea.id.isNotEmpty) {
               //Se recupera el idDBR de la tarea
@@ -2918,6 +2923,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
             "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
             "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
             "id_emi_web": tareaToSync.idEmiWeb,
+            "jornada": false,
           });
             if (recordTarea.id.isNotEmpty) {
               //Se recupera el idDBR de la tarea
@@ -4161,6 +4167,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                 "id_imagenes_fk": recordImagen.id,
                 "id_emi_web": tarea.idEmiWeb,
+                "jornada": false,
               });
               if (recordTarea.id.isNotEmpty) {
                 //Tercero actualizamos los idsDBR de la consultoria
@@ -4218,6 +4225,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                 "id_imagenes_fk": tarea.imagenes.first.idDBR,
                 "id_emi_web": tarea.idEmiWeb,
+                "jornada": false,
               });
               if (recordTarea.id.isNotEmpty) {
                 //Tercero actualizamos los idsDBR de la consultoria
@@ -4280,6 +4288,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
               "fecha_revision": tarea.fechaRevision.toUtc().toString(),
               "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
               "id_emi_web": tarea.idEmiWeb,
+              "jornada": false,
             });
             if (recordTarea.id.isNotEmpty) {
               //Tercero actualizamos los idsDBR de la consultoria

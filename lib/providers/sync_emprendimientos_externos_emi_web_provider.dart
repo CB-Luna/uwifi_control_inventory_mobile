@@ -4,9 +4,11 @@ import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/main.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_token_emi_web.dart';
+import 'package:bizpro_app/modelsEmiWeb/temporals/get_basic_consultorias_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/temporals/get_basic_emprendimiento_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/temporals/get_basic_jornadas_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/temporals/get_emp_externo_emi_web_temp.dart';
+import 'package:bizpro_app/modelsPocketbase/temporals/get_single_consultorias_pocketbase.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/get_single_jornada_pocketbase.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/usuario_proyectos_temporal.dart';
 import 'package:bizpro_app/objectbox.g.dart';
@@ -278,6 +280,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                   "fecha_revision": basicJornadas.payload!.jornada1!.fechaRevision.toUtc().toString(),
                   "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                   "id_emi_web": basicJornadas.payload!.jornada1!.idJornada1.toString(),
+                  "jornada": true,
                   });
                   if (recordTarea.id.isNotEmpty) {
                     //Segundo creamos la jornada  
@@ -389,6 +392,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                   "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                   "id_emi_web": basicJornadas.payload!.jornada2!.idJornada2.toString(),
                   "id_imagenes_fk": idsDBRImagenes,
+                  "jornada": true,
                   });
                   if (recordTarea.id.isNotEmpty) {
                     //Segundo creamos la jornada  
@@ -535,6 +539,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                   "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                   "id_emi_web": basicJornadas.payload!.jornada3!.idJornada3.toString(),
                   "id_imagenes_fk": idsDBRImagenes,
+                  "jornada": true,
                   });
                   if (recordTarea.id.isNotEmpty) {
                     //Segundo creamos la jornada  
@@ -681,6 +686,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                   "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                   "id_emi_web": basicJornadas.payload!.jornada4!.idJornada4.toString(),
                   "id_imagenes_fk": idsDBRImagenes,
+                  "jornada": true,
                   });
                   if (recordTarea.id.isNotEmpty) {
                     //Segundo creamos la jornada  
@@ -771,12 +777,406 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                   }  
                 }
               }
+              print("LLAMADO DE API 4");
+              // API 4 Se recupera la información básica de las Consultorías
+              var url = Uri.parse("$baseUrlEmiWebServices/consultorias/tareas?idProyecto=$idEmprendimiento");
+              final headers = ({
+                  "Content-Type": "application/json",
+                  'Authorization': 'Bearer $tokenGlobal',
+                });
+              var responseAPI4 = await get(
+                url,
+                headers: headers
+              ); 
+              switch (responseAPI4.statusCode) {
+                case 200:
+                  print("Respuesta 200 en API 4");
+                  var basicConsultorias = getBasicConsultoriasEmiWebFromMap(
+                    const Utf8Decoder().convert(responseAPI4.bodyBytes)
+                  );
+                  for(var consultoria in basicConsultorias.payload!) {
+                    // Se valida que la consultoría exista en Pocketbase
+                    final recordValidateConsultoria = await client.records.getFullList(
+                      'consultorias',
+                      batch: 200,
+                      filter:
+                        "id_emi_web='${consultoria.idConsultorias}'");
+                    if (recordValidateConsultoria.isEmpty) {
+                      print("La consultoría con id ${consultoria.idConsultorias} no existe en Pocketbase");
+                      List<String> idsDBRTareas = [];
+                      for (var i = 0; i < consultoria.tareas.toList().length; i++) {
+                      // Creamos las tareas de la consultoría
+                      //Se verifica que la tarea tenga imagen 
+                      if (consultoria.tareas.toList()[i].documento != null) {
+                        //La tarea tiene imagen asociada
+                        final recordImagen = await client.records.create('imagenes', body: {
+                          "nombre": consultoria.tareas.toList()[i].documento!.nombreArchivo,
+                          "id_emi_web": consultoria.tareas.toList()[i].documento!.idDocumento,
+                          "base64": consultoria.tareas.toList()[i].documento!.archivo,
+                        });
+                        if (recordImagen.id.isNotEmpty) {
+                          //Se crea la tarea de la Consultoría
+                          final recordTarea = await client.records.create('tareas', body: {
+                            "tarea": consultoria.tareas.toList()[i].siguientesPasos,
+                            "descripcion": consultoria.tareas.toList()[i].avanceObservado,
+                            "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
+                            "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                            "id_emi_web": consultoria.idConsultorias.toString(),
+                            "id_imagenes_fk": [recordImagen.id],
+                            "jornada": false,
+                          });
+                          if (recordTarea.id.isNotEmpty) {
+                            idsDBRTareas.add(recordTarea.id);
+                          } else {
+                            // No se pudo agregar una Tarea de la Consultoría en Pocketbase
+                            banderasExitoSync.add(false);
+                          }
+                        } else {
+                          // No se pudo agregar una Imagen de la tarea de consultoría en Pocketbase
+                          banderasExitoSync.add(false);
+                        }
+                      } else {
+                        //La tarea no tiene imagen asociada
+                        //Se crea la tarea de la Consultoría
+                          final recordTarea = await client.records.create('tareas', body: {
+                            "tarea": consultoria.tareas.toList()[i].siguientesPasos,
+                            "descripcion": consultoria.tareas.toList()[i].avanceObservado,
+                            "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
+                            "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                            "id_emi_web": consultoria.idConsultorias.toString(),
+                          });
+                          if (recordTarea.id.isNotEmpty) {
+                            idsDBRTareas.add(recordTarea.id);
+                          } else {
+                            // No se pudo agregar una Tarea de la Consultoría en Pocketbase
+                            banderasExitoSync.add(false);
+                          }
+                        }
+                      }
+                      final ambito = dataBase.ambitoConsultoriaBox.query(AmbitoConsultoria_.idEmiWeb.equals(consultoria.idCatAmbito.toString())).build().findUnique();
+                      final areaCirculo = dataBase.areaCirculoBox.query(AreaCirculo_.idEmiWeb.equals(consultoria.idCatAreaCirculo.toString())).build().findUnique();
+                      if (ambito != null && areaCirculo != null && idsDBRTareas != []) {
+                        //Segundo creamos la consultoría  
+                        final recordConsultoria = await client.records.create('consultorias', body: {
+                          "id_emprendimiento_fk": idEmprendimientoPocketbase,
+                          "id_tarea_fk": idsDBRTareas,
+                          "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                          "id_ambito_fk": ambito.idDBR,
+                          "id_area_circulo_fk": areaCirculo.idDBR,
+                          "id_emi_web": consultoria.idConsultorias.toString(),
+                        });
+                        if (recordConsultoria.id.isNotEmpty) {
+                          //Se hizo con éxito la alta de la consultoría
+                        } else {
+                          //No se pudo postear la Consultoría en Pocketbase
+                          banderasExitoSync.add(false);
+                        }
+                      } else {
+                        //No se pudo recuperar información de la Consultoría para postearla
+                        banderasExitoSync.add(false);
+                      }
+                    } else {
+                      print("La consultoría ya existe en Pocketbase");
+                      List<String> idsDBRTareas = [];
+                      for (var i = 0; i < (consultoria.tareas.toList().length + 1); i++) {
+                        // Actualizamos las tareas de la consultoría
+                        //Se recuperan las tareas de la consultoría
+                        final recordValidateTareasConsultoria = await client.records.getFullList(
+                          'tareas',
+                          batch: 200,
+                          filter:
+                            "id_emi_web='${consultoria.idConsultorias}'&&jornada=false");
+                        if (recordValidateTareasConsultoria.isNotEmpty) {
+                          //Lista de Consultorías en Pocketbase
+                          print(recordValidateTareasConsultoria.toString());
+                          var basicValidateConsultorias = getSingleConsultoriasPocketbaseFromMap(recordValidateTareasConsultoria.toString());
+                          //Se compara el tamaño de listas en ambos lados y se escoge el proceso a realizar
+                          if (basicValidateConsultorias.length >= (consultoria.tareas.toList().length + 1)) {
+                            if (i == 0) {
+                              //Se actualiza la primera tarea de la Consultoría, por ende hay que restar una posición en la reuperación de info en consultoria.tareas.toList()
+                              final recordTarea = await client.records.update('tareas', basicValidateConsultorias.toList()[i].id, body: {
+                                "tarea": consultoria.asignarTarea,
+                                "descripcion": "Creación de Consultoría",
+                                "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
+                                "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                                "id_emi_web": consultoria.idConsultorias.toString(),
+                                "id_imagenes_fk": [],
+                              });
+                              if (recordTarea.id.isNotEmpty) {
+                                idsDBRTareas.add(recordTarea.id);
+                              } else {
+                                // No se pudo actualizar la primera Tarea de la Consultoría en Pocketbase
+                                banderasExitoSync.add(false);
+                              }
+                            } else {
+                              //Se verifica que la tarea de Emi Web tenga imagen 
+                              if (consultoria.tareas.toList()[i - 1].documento != null) {
+                                //Se verifica que la tarea de Pocketbase tenga imagen 
+                                if (basicValidateConsultorias[i].idImagenesFk == []) {
+                                  //La tarea de Pocketbase no tiene Imagen, entonces se crea
+                                  final recordImagen = await client.records.create('imagenes', body: {
+                                    "nombre": consultoria.tareas.toList()[i - 1].documento!.nombreArchivo,
+                                    "id_emi_web": consultoria.tareas.toList()[i - 1].documento!.idDocumento,
+                                    "base64": consultoria.tareas.toList()[i - 1].documento!.archivo,
+                                  });
+                                  if (recordImagen.id.isNotEmpty) {
+                                    //Se actualiza la tarea de la Consultoría
+                                    final recordTarea = await client.records.update('tareas', basicValidateConsultorias.toList()[i].id, body: {
+                                      "tarea": consultoria.tareas.toList()[i - 1].siguientesPasos,
+                                      "descripcion": consultoria.tareas.toList()[i - 1].avanceObservado,
+                                      "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
+                                      "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                                      "id_emi_web": consultoria.idConsultorias.toString(),
+                                      "id_imagenes_fk": [recordImagen.id],
+                                    });
+                                    if (recordTarea.id.isNotEmpty) {
+                                      idsDBRTareas.add(recordTarea.id);
+                                    } else {
+                                      // No se pudo actualizar una Tarea de la Consultoría en Pocketbase
+                                      banderasExitoSync.add(false);
+                                    }
+                                  } else {
+                                    // No se pudo agregar una Imagen de la tarea de consultoría en Pocketbase
+                                    banderasExitoSync.add(false);
+                                  }
+                                } else {
+                                  //La tarea de Pocketbase tiene Imagen, entonces se actualiza
+                                  final recordImagen = await client.records.update('imagenes', basicValidateConsultorias.toList()[i].idImagenesFk!.first, body: {
+                                    "nombre": consultoria.tareas.toList()[i - 1].documento!.nombreArchivo,
+                                    "base64": consultoria.tareas.toList()[i - 1].documento!.archivo,
+                                  });
+                                  if (recordImagen.id.isNotEmpty) {
+                                    //Se actualiza la tarea de la Consultoría
+                                    final recordTarea = await client.records.update('tareas', basicValidateConsultorias.toList()[i].id, body: {
+                                      "tarea": consultoria.tareas.toList()[i - 1].siguientesPasos,
+                                      "descripcion": consultoria.tareas.toList()[i - 1].avanceObservado,
+                                      "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
+                                      "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                                      "id_emi_web": consultoria.idConsultorias.toString(),
+                                      "id_imagenes_fk": [recordImagen.id],
+                                    });
+                                    if (recordTarea.id.isNotEmpty) {
+                                      idsDBRTareas.add(recordTarea.id);
+                                    } else {
+                                      // No se pudo actualizar una Tarea de la Consultoría en Pocketbase
+                                      banderasExitoSync.add(false);
+                                    }
+                                  } else {
+                                    // No se pudo agregar una Imagen de la tarea de consultoría en Pocketbase
+                                    banderasExitoSync.add(false);
+                                  }
+                                }
+                              } else {
+                              //La tarea no tiene imagen asociada
+                              //Se actualiza la tarea de la Consultoría
+                                final recordTarea = await client.records.update('tareas', basicValidateConsultorias.toList()[i].id, body: {
+                                  "tarea": consultoria.tareas.toList()[i - 1].siguientesPasos,
+                                  "descripcion": consultoria.tareas.toList()[i - 1].avanceObservado,
+                                  "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
+                                  "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                                  "id_emi_web": consultoria.idConsultorias.toString(),
+                                  "id_imagenes_fk": [],
+                                });
+                                if (recordTarea.id.isNotEmpty) {
+                                  idsDBRTareas.add(recordTarea.id);
+                                } else {
+                                  // No se pudo actualizar una Tarea de la Consultoría en Pocketbase
+                                  banderasExitoSync.add(false);
+                                }
+                              } 
+                            }
+                          } else {
+                            try
+                            {
+                              //Actualizamos las tareas que ya existen en Pocketbase
+                              basicValidateConsultorias.toList().elementAt(i);
+                              if (i == 0) {
+                                //Se actualiza la primera tarea de la Consultoría, por ende hay que restar una posición en la reuperación de info en consultoria.tareas.toList()
+                                final recordTarea = await client.records.update('tareas', basicValidateConsultorias.toList()[i].id, body: {
+                                  "tarea": consultoria.asignarTarea,
+                                  "descripcion": "Creación de Consultoría",
+                                  "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
+                                  "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                                  "id_emi_web": consultoria.idConsultorias.toString(),
+                                  "id_imagenes_fk": [],
+                                });
+                                if (recordTarea.id.isNotEmpty) {
+                                  idsDBRTareas.add(recordTarea.id);
+                                } else {
+                                  // No se pudo actualizar la primera Tarea de la Consultoría en Pocketbase
+                                  banderasExitoSync.add(false);
+                                }
+                              } else {
+                                //Se verifica que la tarea de Emi Web tenga imagen 
+                                if (consultoria.tareas.toList()[i - 1].documento != null) {
+                                  //Se verifica que la tarea de Pocketbase tenga imagen 
+                                  if (basicValidateConsultorias.toList()[i].idImagenesFk == []) {
+                                    //La tarea de Pocketbase no tiene Imagen, entonces se crea
+                                    final recordImagen = await client.records.create('imagenes', body: {
+                                      "nombre": consultoria.tareas.toList()[i - 1].documento!.nombreArchivo,
+                                      "id_emi_web": consultoria.tareas.toList()[i - 1].documento!.idDocumento,
+                                      "base64": consultoria.tareas.toList()[i - 1].documento!.archivo,
+                                    });
+                                    if (recordImagen.id.isNotEmpty) {
+                                      //Se actualiza la tarea de la Consultoría
+                                      final recordTarea = await client.records.update('tareas', basicValidateConsultorias.toList()[i].id, body: {
+                                        "tarea": consultoria.tareas.toList()[i - 1].siguientesPasos,
+                                        "descripcion": consultoria.tareas.toList()[i - 1].avanceObservado,
+                                        "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
+                                        "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                                        "id_emi_web": consultoria.idConsultorias.toString(),
+                                        "id_imagenes_fk": [recordImagen.id],
+                                      });
+                                      if (recordTarea.id.isNotEmpty) {
+                                        idsDBRTareas.add(recordTarea.id);
+                                      } else {
+                                        // No se pudo actualizar una Tarea de la Consultoría en Pocketbase
+                                        banderasExitoSync.add(false);
+                                      }
+                                    } else {
+                                      // No se pudo agregar una Imagen de la tarea de consultoría en Pocketbase
+                                      banderasExitoSync.add(false);
+                                    }
+                                  } else {
+                                    //La tarea de Pocketbase tiene Imagen, entonces se actualiza
+                                    final recordImagen = await client.records.update('imagenes', basicValidateConsultorias.toList()[i].idImagenesFk!.first, body: {
+                                      "nombre": consultoria.tareas.toList()[i - 1].documento!.nombreArchivo,
+                                      "base64": consultoria.tareas.toList()[i - 1].documento!.archivo,
+                                    });
+                                    if (recordImagen.id.isNotEmpty) {
+                                      //Se actualiza la tarea de la Consultoría
+                                      final recordTarea = await client.records.update('tareas', basicValidateConsultorias.toList()[i].id, body: {
+                                        "tarea": consultoria.tareas.toList()[i - 1].siguientesPasos,
+                                        "descripcion": consultoria.tareas.toList()[i - 1].avanceObservado,
+                                        "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
+                                        "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                                        "id_emi_web": consultoria.idConsultorias.toString(),
+                                        "id_imagenes_fk": [recordImagen.id],
+                                      });
+                                      if (recordTarea.id.isNotEmpty) {
+                                        idsDBRTareas.add(recordTarea.id);
+                                      } else {
+                                        // No se pudo actualizar una Tarea de la Consultoría en Pocketbase
+                                        banderasExitoSync.add(false);
+                                      }
+                                    } else {
+                                      // No se pudo agregar una Imagen de la tarea de consultoría en Pocketbase
+                                      banderasExitoSync.add(false);
+                                    }
+                                  }
+                                } else {
+                                  //La tarea no tiene imagen asociada
+                                  //Se actualiza la tarea de la Consultoría
+                                  final recordTarea = await client.records.update('tareas', basicValidateConsultorias.toList()[i].id, body: {
+                                    "tarea": consultoria.tareas.toList()[i - 1].siguientesPasos,
+                                    "descripcion": consultoria.tareas.toList()[i - 1].avanceObservado,
+                                    "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
+                                    "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                                    "id_emi_web": consultoria.idConsultorias.toString(),
+                                    "id_imagenes_fk": [],
+                                  });
+                                  if (recordTarea.id.isNotEmpty) {
+                                    idsDBRTareas.add(recordTarea.id);
+                                  } else {
+                                    // No se pudo actualizar una Tarea de la Consultoría en Pocketbase
+                                    banderasExitoSync.add(false);
+                                  }
+                                } 
+                              } 
+                            }
+                            on RangeError { 
+                              //Luego se agregan las tareas que vienen de Emi Web
+                              //Se verifica que la tarea tenga imagen 
+                              if (consultoria.tareas.toList()[i - 1].documento != null) {
+                                //La tarea tiene imagen asociada
+                                final recordImagen = await client.records.create('imagenes', body: {
+                                  "nombre": consultoria.tareas.toList()[i - 1].documento!.nombreArchivo,
+                                  "id_emi_web": consultoria.tareas.toList()[i - 1].documento!.idDocumento,
+                                  "base64": consultoria.tareas.toList()[i - 1].documento!.archivo,
+                                });
+                                if (recordImagen.id.isNotEmpty) {
+                                  //Se crea la tarea de la Consultoría
+                                  final recordTarea = await client.records.create('tareas', body: {
+                                    "tarea": consultoria.tareas.toList()[i - 1].siguientesPasos,
+                                    "descripcion": consultoria.tareas.toList()[i - 1].avanceObservado,
+                                    "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
+                                    "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                                    "id_emi_web": consultoria.idConsultorias.toString(),
+                                    "id_imagenes_fk": [recordImagen.id],
+                                    "jornada": false,
+                                  });
+                                  if (recordTarea.id.isNotEmpty) {
+                                    idsDBRTareas.add(recordTarea.id);
+                                  } else {
+                                    // No se pudo agregar una Tarea de la Consultoría en Pocketbase
+                                    banderasExitoSync.add(false);
+                                  }
+                                } else {
+                                  // No se pudo agregar una Imagen de la tarea de consultoría en Pocketbase
+                                  banderasExitoSync.add(false);
+                                }
+                              } else {
+                                //La tarea no tiene imagen asociada
+                                //Se crea la tarea de la Consultoría
+                                final recordTarea = await client.records.create('tareas', body: {
+                                  "tarea": consultoria.tareas.toList()[i - 1].siguientesPasos,
+                                  "descripcion": consultoria.tareas.toList()[i - 1].avanceObservado,
+                                  "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
+                                  "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                                  "id_emi_web": consultoria.idConsultorias.toString(),
+                                });
+                                if (recordTarea.id.isNotEmpty) {
+                                  idsDBRTareas.add(recordTarea.id);
+                                } else {
+                                  // No se pudo agregar una Tarea de la Consultoría en Pocketbase
+                                  banderasExitoSync.add(false);
+                                }
+                              }
+                            }  
+                          }
+                        } else {
+                          //No se pudo recuperar información de las Tareas de Consultoría para actualizar
+                          banderasExitoSync.add(false);
+                        }
+                      }
+                      final ambito = dataBase.ambitoConsultoriaBox.query(AmbitoConsultoria_.idEmiWeb.equals(consultoria.idCatAmbito.toString())).build().findUnique();
+                      final areaCirculo = dataBase.areaCirculoBox.query(AreaCirculo_.idEmiWeb.equals(consultoria.idCatAreaCirculo.toString())).build().findUnique();
+                      if (ambito != null && areaCirculo != null && idsDBRTareas != []) {
+                        //Segundo actualizamos la consultoría  
+                        final recordConsultoria = await client.records.update('consultorias', recordValidateConsultoria.first.id, body: {
+                          "id_emprendimiento_fk": idEmprendimientoPocketbase,
+                          "id_tarea_fk": idsDBRTareas,
+                          "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                          "id_ambito_fk": ambito.idDBR,
+                          "id_area_circulo_fk": areaCirculo.idDBR,
+                          "id_emi_web": consultoria.idConsultorias.toString(),
+                        });
+                        if (recordConsultoria.id.isNotEmpty) {
+                          //Se hizo con éxito la actualización de la consultoría
+                        } else {
+                          //No se pudo actualizar la Consultoría en Pocketbase
+                          banderasExitoSync.add(false);
+                        }
+                      } else {
+                        //No se pudo recuperar información de la Consultoría para actualizarla
+                        banderasExitoSync.add(false);
+                      }
+                    }
+                  }
+                  break;
+                case 404:
+                  break;
+                default:
+                  print("Error en llamado al API 4");
+                  print(responseAPI4.statusCode);
+                  banderasExitoSync.add(false);
+              }
               break;
             case 404:
               break;
             default:
             print("Error en llamado al API 3");
-            print(responseAPI2.statusCode);
+            print(responseAPI3.statusCode);
             banderasExitoSync.add(false);
           }
         } else {
