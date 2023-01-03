@@ -11,7 +11,7 @@ class GetBasicProductosEmprendedorEmiWeb {
     });
 
     final String status;
-    final List<Payload> payload;
+    final List<Payload>? payload;
 
     factory GetBasicProductosEmprendedorEmiWeb.fromMap(Map<String, dynamic> json) => GetBasicProductosEmprendedorEmiWeb(
         status: json["status"],
@@ -20,7 +20,7 @@ class GetBasicProductosEmprendedorEmiWeb {
 
     Map<String, dynamic> toMap() => {
         "status": status,
-        "payload": List<dynamic>.from(payload.map((x) => x.toMap())),
+        "payload": payload == null ? null : List<dynamic>.from(payload!.map((x) => x.toMap())),
     };
 }
 

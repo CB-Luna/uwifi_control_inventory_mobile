@@ -304,13 +304,22 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                     idDBR: elementConsultoria.expand.idTareaFk[i].id,
                     idEmiWeb: elementConsultoria.expand.idTareaFk[i].idEmiWeb,
                   );
-                  final porcentajeAvance = dataBase.porcentajeAvanceBox.query(PorcentajeAvance_.idEmiWeb.equals(elementConsultoria.expand.idTareaFk[i].expand!.idPorcentajeFk.idEmiWeb)).build().findFirst();
-                  final ambito = dataBase.ambitoConsultoriaBox.query(AmbitoConsultoria_.idEmiWeb.equals(elementConsultoria.expand.idAmbitoFk.idEmiWeb)).build().findFirst();
-                  final areaCirculo = dataBase.areaCirculoBox.query(AreaCirculo_.idEmiWeb.equals(elementConsultoria.expand.idAreaCirculoFk.idEmiWeb)).build().findFirst();
-                  if (porcentajeAvance != null && ambito != null && areaCirculo != null) {
-                    nuevaTarea.porcentaje.target = porcentajeAvance;
-                    nuevaConsultoria.ambitoConsultoria.target = ambito;
-                    nuevaConsultoria.areaCirculo.target = areaCirculo;
+                  if (i == 0) {
+                    final ambito = dataBase.ambitoConsultoriaBox.query(AmbitoConsultoria_.idEmiWeb.equals(elementConsultoria.expand.idAmbitoFk.idEmiWeb)).build().findFirst();
+                    final areaCirculo = dataBase.areaCirculoBox.query(AreaCirculo_.idEmiWeb.equals(elementConsultoria.expand.idAreaCirculoFk.idEmiWeb)).build().findFirst();
+                    if (ambito != null && areaCirculo != null) {
+                      nuevaConsultoria.ambitoConsultoria.target = ambito;
+                      nuevaConsultoria.areaCirculo.target = areaCirculo;
+                    }
+                  } else {
+                    final porcentajeAvance = dataBase.porcentajeAvanceBox.query(PorcentajeAvance_.idEmiWeb.equals(elementConsultoria.expand.idTareaFk[i].expand!.idPorcentajeFk.idEmiWeb)).build().findFirst();
+                    final ambito = dataBase.ambitoConsultoriaBox.query(AmbitoConsultoria_.idEmiWeb.equals(elementConsultoria.expand.idAmbitoFk.idEmiWeb)).build().findFirst();
+                    final areaCirculo = dataBase.areaCirculoBox.query(AreaCirculo_.idEmiWeb.equals(elementConsultoria.expand.idAreaCirculoFk.idEmiWeb)).build().findFirst();
+                    if (porcentajeAvance != null && ambito != null && areaCirculo != null) {
+                      nuevaTarea.porcentaje.target = porcentajeAvance;
+                      nuevaConsultoria.ambitoConsultoria.target = ambito;
+                      nuevaConsultoria.areaCirculo.target = areaCirculo;
+                    }
                   }
                   if (elementConsultoria.expand.idTareaFk[i].idImagenesFk.isNotEmpty) {
                     final recordGetOneImagenConsultoria = await client.records.getOne('imagenes', elementConsultoria.expand.idTareaFk[i].idImagenesFk[0]);
