@@ -731,21 +731,42 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                       0,
                                                                       5,
                                                                       0),
-                                                              child: Text(
-                                                                maybeHandleOverflow(
-                                                                    "ID Emi Web: ${inversion.idEmiWeb ?? 'Sin ID'}",
-                                                                    30,
-                                                                    "..."),
-                                                                style: AppTheme.of(
-                                                                        context)
-                                                                    .bodyText1
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          AppTheme.of(context)
-                                                                              .bodyText1Family,
-                                                                      fontSize:
-                                                                          12,
-                                                                    ),
+                                                              child: Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                                children: [
+                                                                  Text(
+                                                                    maybeHandleOverflow(
+                                                                        "ID Local: ${inversion.id}",
+                                                                        30,
+                                                                        "..."),
+                                                                    style: AppTheme.of(
+                                                                            context)
+                                                                        .bodyText1
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              AppTheme.of(context)
+                                                                                  .bodyText1Family,
+                                                                          fontSize:
+                                                                              12,
+                                                                        ),
+                                                                  ),
+                                                                  Text(
+                                                                    maybeHandleOverflow(
+                                                                        "ID Emi Web: ${inversion.idEmiWeb ?? 'Sin ID'}",
+                                                                        30,
+                                                                        "..."),
+                                                                    style: AppTheme.of(
+                                                                            context)
+                                                                        .bodyText1
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              AppTheme.of(context)
+                                                                                  .bodyText1Family,
+                                                                          fontSize:
+                                                                              12,
+                                                                        ),
+                                                                  ),
+                                                                ],
                                                               ),
                                                             ),
                                                           ],
