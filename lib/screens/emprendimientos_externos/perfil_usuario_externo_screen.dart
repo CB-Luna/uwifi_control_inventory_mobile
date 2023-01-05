@@ -1,5 +1,8 @@
 import 'dart:ui';
+import 'package:bizpro_app/database/entitys.dart';
+import 'package:bizpro_app/modelsEmiWeb/temporals/get_emp_externo_emi_web_temp.dart';
 import 'package:bizpro_app/modelsPocketbase/temporals/usuario_proyectos_temporal.dart';
+import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
 import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
 import 'package:bizpro_app/screens/emprendimientos_externos/usuarios_externos_screen.dart';
 import 'package:bizpro_app/screens/sync/descarga_proyectos_externos_emi_web.screen.dart';
@@ -7,6 +10,7 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 import 'package:bizpro_app/screens/widgets/toggle_icon.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,16 +32,23 @@ class PerfilUsuarioExternoScreen extends StatefulWidget {
 class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
     with TickerProviderStateMixin {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  TextEditingController searchController = TextEditingController();
   String emprendimientoSelected = "";
+  List<Payload> listProyectoTemp = [];
   @override
   void initState() {
     emprendimientoSelected = "";
+    listProyectoTemp = widget.usuarioProyectosTemporal.emprendimientosTemp.toList();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final usuarioProvider = Provider.of<UsuarioController>(context);
+
+    listProyectoTemp = widget.usuarioProyectosTemporal.emprendimientosTemp.toList();
+    
+    
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
@@ -361,6 +372,66 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
               ),
             ),
             Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(4, 0, 4, 0),
+              child: TextFormField(
+                controller: searchController,
+                onChanged: (value) =>
+                  setState(() {}),
+                decoration: InputDecoration(
+                  labelText: 'Buscar...',
+                  labelStyle: AppTheme.of(context).bodyText2.override(
+                    fontFamily: 'Poppins',
+                    color: Colors.black,
+                    fontSize: 13,
+                    fontWeight:
+                    FontWeight.normal,
+                    ),
+                enabledBorder:OutlineInputBorder(
+                  borderSide:
+                    const BorderSide(
+                      color: Color(0x00000000),
+                      width: 2,
+                      ),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedBorder:OutlineInputBorder(
+                  borderSide:const BorderSide(
+                    color: Color(0x00000000),
+                    width: 2,
+                    ),
+                  borderRadius:BorderRadius.circular(8),
+                ),
+                errorBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Color(0x00000000),
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Color(0x00000000),
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    filled: true,
+                    fillColor: const Color(0xFFF1F4F8),
+                prefixIcon: const Icon(
+                  Icons.search_sharp,
+                  color: Colors.white,
+                  size: 15,
+                ),
+                ),
+              style: AppTheme.of(context).bodyText1.override(
+                fontFamily: 'Poppins',
+                color: Colors.black,
+                fontSize: 13,
+                fontWeight:FontWeight.normal,
+              ),
+            ),
+            ),
+            Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(
                   10, 5, 10, 10),
               child: FFButtonWidget(
@@ -425,166 +496,192 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                 ),
               ),
             ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.5,
-              child: SingleChildScrollView(
-                child: ListView.builder(
-                  padding: const EdgeInsetsDirectional
-                      .fromSTEB(10, 0, 10, 10),
-                  shrinkWrap: true,
-                  reverse: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  itemCount: widget.usuarioProyectosTemporal.emprendimientosTemp.length,
-                  itemBuilder: (context, index) {
-                    final emprendimientoTemp = widget.usuarioProyectosTemporal.emprendimientosTemp[index];
-                    return Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
-                      child: Row(
-                        children: [
-                          ToggleIcon(
-                            onPressed: () {
-                              setState(() {
-                                emprendimientoTemp.selected = !emprendimientoTemp.selected;
-                                if (emprendimientoTemp.selected) {
-                                  //Borrar los otros selected de los items
-                                for (var element in widget.usuarioProyectosTemporal.emprendimientosTemp) {
-                                  if (element != emprendimientoTemp) {
-                                    element.selected = false;
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Builder(
+                builder: (context) {
+                  if (searchController.text != '') {
+                            listProyectoTemp.removeWhere((element) {
+                              final nombreEmprendimiento =
+                                  removeDiacritics(element.proyectos!.last.emprendimiento)
+                                      .toLowerCase();
+                              final nombreEmprendedor = removeDiacritics(
+                                      '${element.nombre} ${element.apellidos}')
+                                  .toLowerCase();
+                              final tempBusqueda =
+                                  removeDiacritics(searchController.text)
+                                      .toLowerCase();
+                              if(nombreEmprendimiento.contains(tempBusqueda) ||
+                                  nombreEmprendedor.contains(tempBusqueda)){
+                                return false;
                                   }
-                                }
-                                  emprendimientoSelected = emprendimientoTemp.proyectos!.last.idProyecto.toString();
-                                } else {
-                                  if (emprendimientoSelected == emprendimientoTemp.proyectos!.last.idProyecto.toString()) {
-                                    emprendimientoSelected = "";
-                                  }
-                                }
-                              });
-                            },
-                            value: emprendimientoTemp.selected,
-                            onIcon: Icon(
-                              Icons.check_box,
-                              color: AppTheme.of(
-                                      context)
-                                  .primaryText,
-                              size: 40,
-                            ),
-                            offIcon: Icon(
-                              Icons
-                                  .check_box_outline_blank,
-                              color: AppTheme.of(
-                                      context)
-                                  .primaryText,
-                              size: 40,
-                            ),
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            height: 165,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: Image.asset(
-                                  'assets/images/mesgbluegradient.jpeg',
-                                ).image,
-                              ),
-                              boxShadow: const [
-                                BoxShadow(
-                                  blurRadius: 5,
-                                  color: Color(0x2B202529),
-                                  offset: Offset(0, 3),
-                                )
-                              ],
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  ClipRRect(
-                                    child: BackdropFilter(
-                                      filter: ImageFilter.blur(
-                                        sigmaX: 10,
-                                        sigmaY: 5,
-                                      ),
-                                      child: Container(
-                                        width: 350,
-                                        height: 130,
-                                        decoration: BoxDecoration(
-                                          color: const Color(0x6CFFFFFF),
-                                          borderRadius: BorderRadius.circular(12),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsetsDirectional.fromSTEB(
-                                              10, 10, 10, 10),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                maybeHandleOverflow(emprendimientoTemp.proyectos?.last.emprendimiento ?? "", 25, "..."),
-                                                style: AppTheme.of(context)
-                                                    .title2
-                                                    .override(
-                                                      fontFamily: 'Outfit',
-                                                      color: Colors.white,
-                                                      fontSize: 22,
-                                                      fontWeight: FontWeight.w600,
+                              return true;
+                            });
+                          }
+                  return SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.5,
+                    child: SingleChildScrollView(
+                      child: ListView.builder(
+                        padding: const EdgeInsetsDirectional
+                            .fromSTEB(10, 0, 10, 10),
+                        shrinkWrap: true,
+                        reverse: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        itemCount: listProyectoTemp.length,
+                        itemBuilder: (context, index) {
+                          final emprendimientoTemp = listProyectoTemp[index];
+                          return Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                            child: Row(
+                              children: [
+                                ToggleIcon(
+                                  onPressed: () {
+                                    setState(() {
+                                      emprendimientoTemp.selected = !emprendimientoTemp.selected;
+                                      if (emprendimientoTemp.selected) {
+                                        //Borrar los otros selected de los items
+                                      for (var element in widget.usuarioProyectosTemporal.emprendimientosTemp) {
+                                        if (element != emprendimientoTemp) {
+                                          element.selected = false;
+                                        }
+                                      }
+                                        emprendimientoSelected = emprendimientoTemp.proyectos!.last.idProyecto.toString();
+                                      } else {
+                                        if (emprendimientoSelected == emprendimientoTemp.proyectos!.last.idProyecto.toString()) {
+                                          emprendimientoSelected = "";
+                                        }
+                                      }
+                                    });
+                                  },
+                                  value: emprendimientoTemp.selected,
+                                  onIcon: Icon(
+                                    Icons.check_box,
+                                    color: AppTheme.of(
+                                            context)
+                                        .primaryText,
+                                    size: 40,
+                                  ),
+                                  offIcon: Icon(
+                                    Icons
+                                        .check_box_outline_blank,
+                                    color: AppTheme.of(
+                                            context)
+                                        .primaryText,
+                                    size: 40,
+                                  ),
+                                ),
+                                Container(
+                                  width: MediaQuery.of(context).size.width * 0.8,
+                                  height: 165,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: Image.asset(
+                                        'assets/images/mesgbluegradient.jpeg',
+                                      ).image,
+                                    ),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        blurRadius: 5,
+                                        color: Color(0x2B202529),
+                                        offset: Offset(0, 3),
+                                      )
+                                    ],
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        ClipRRect(
+                                          child: BackdropFilter(
+                                            filter: ImageFilter.blur(
+                                              sigmaX: 10,
+                                              sigmaY: 5,
+                                            ),
+                                            child: Container(
+                                              width: 350,
+                                              height: 130,
+                                              decoration: BoxDecoration(
+                                                color: const Color(0x6CFFFFFF),
+                                                borderRadius: BorderRadius.circular(12),
+                                              ),
+                                              child: Padding(
+                                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                                    10, 10, 10, 10),
+                                                child: Column(
+                                                  mainAxisSize: MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      maybeHandleOverflow(emprendimientoTemp.proyectos?.last.emprendimiento ?? "", 25, "..."),
+                                                      style: AppTheme.of(context)
+                                                          .title2
+                                                          .override(
+                                                            fontFamily: 'Outfit',
+                                                            color: Colors.white,
+                                                            fontSize: 22,
+                                                            fontWeight: FontWeight.w600,
+                                                          ),
                                                     ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                                    0, 4, 0, 4),
-                                                child: Text(
-                                                  maybeHandleOverflow("${emprendimientoTemp
-                                                  .nombre} ${emprendimientoTemp
-                                                  .apellidos}", 40, "..."),
-                                                  style: AppTheme.of(context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Outfit',
-                                                        color: Colors.white,
-                                                        fontSize: 16,
-                                                        fontWeight: FontWeight.bold,
+                                                    Padding(
+                                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                                          0, 4, 0, 4),
+                                                      child: Text(
+                                                        maybeHandleOverflow("${emprendimientoTemp
+                                                        .nombre} ${emprendimientoTemp
+                                                        .apellidos}", 40, "..."),
+                                                        style: AppTheme.of(context)
+                                                            .bodyText1
+                                                            .override(
+                                                              fontFamily: 'Outfit',
+                                                              color: Colors.white,
+                                                              fontSize: 16,
+                                                              fontWeight: FontWeight.bold,
+                                                            ),
                                                       ),
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                                          0, 4, 0, 4),
+                                                      child: Text(
+                                                        maybeHandleOverflow("${emprendimientoTemp
+                                                        .comentarios}", 40, "..."),
+                                                        style: AppTheme.of(context)
+                                                            .bodyText1
+                                                            .override(
+                                                              fontFamily: 'Outfit',
+                                                              color: Colors.white,
+                                                              fontSize: 15,
+                                                              fontWeight: FontWeight.normal,
+                                                            ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-                                              Padding(
-                                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                                    0, 4, 0, 4),
-                                                child: Text(
-                                                  maybeHandleOverflow("${emprendimientoTemp
-                                                  .comentarios}", 40, "..."),
-                                                  style: AppTheme.of(context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Outfit',
-                                                        color: Colors.white,
-                                                        fontSize: 15,
-                                                        fontWeight: FontWeight.normal,
-                                                      ),
-                                                ),
-                                              ),
-                                            ],
+                                            ),
                                           ),
                                         ),
-                                      ),
+                                      ],
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
+                          );
+                          
+                        },
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                }
               ),
             ),            
           ],
