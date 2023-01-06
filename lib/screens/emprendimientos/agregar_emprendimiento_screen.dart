@@ -7,6 +7,7 @@ import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/providers/database_providers/emprendedor_controller.dart';
 import 'package:bizpro_app/screens/emprendedores/agregar_emprendedor_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -181,12 +182,12 @@ class _AgregarEmprendimientoScreenState
                                     if (option == 'camera') {
                                       pickedFile = await picker.pickImage(
                                         source: ImageSource.camera,
-                                        imageQuality: 100,
+                                        imageQuality: 50,
                                       );
                                     } else {
                                       pickedFile = await picker.pickImage(
                                         source: ImageSource.gallery,
-                                        imageQuality: 100,
+                                        imageQuality: 50,
                                       );
                                     }
 
@@ -199,12 +200,21 @@ class _AgregarEmprendimientoScreenState
                                       File file = File(image!.path);
                                       List<int> fileInByte =
                                           file.readAsBytesSync();
+                                      // Uint8list de imagenes
+
+                                      var imagenUint8List =
+                                          Uint8List.fromList(fileInByte);
+
+                                      // Base64 de imagenes
                                       String base64 = base64Encode(fileInByte);
+
                                       var newImagenLocal = Imagenes(
-                                          imagenes: image!.path,
-                                          nombre: image!.name,
-                                          path: image!.path,
-                                          base64: base64);
+                                        imagenes: image!.path,
+                                        nombre: image!.name,
+                                        path: image!.path,
+                                        base64: base64,
+                                        //imagenPocketbase: imagenUint8List,
+                                      );
                                       emprendimientoProvider.imagenLocal =
                                           newImagenLocal;
                                     });

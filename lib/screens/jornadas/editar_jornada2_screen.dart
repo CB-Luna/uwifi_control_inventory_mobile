@@ -807,7 +807,7 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                               pickedFile =
                                                   await picker.pickImage(
                                                 source: ImageSource.camera,
-                                                imageQuality: 100,
+                                                imageQuality: 50,
                                               );
                                               if (pickedFile != null) {
                                                 imagenesTemp.add(pickedFile);
@@ -841,7 +841,7 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                                 pickedFile =
                                                     await picker.pickImage(
                                                   source: ImageSource.camera,
-                                                  imageQuality: 100,
+                                                  imageQuality: 50,
                                                 );
                                                 if (pickedFile != null) {
                                                   setState(() {
@@ -878,7 +878,7 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                             if (imagenesCarrousel.length < 3) {
                                               pickedFiles =
                                                   await picker.pickMultiImage(
-                                                imageQuality: 100,
+                                                imageQuality: 50,
                                               );
                                               if (pickedFiles == null) {
                                                 return;
@@ -1050,7 +1050,7 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                                 pickedFile =
                                                     await picker.pickImage(
                                                   source: ImageSource.gallery,
-                                                  imageQuality: 100,
+                                                  imageQuality: 50,
                                                 );
                                                 if (pickedFile != null) {
                                                   setState(() {

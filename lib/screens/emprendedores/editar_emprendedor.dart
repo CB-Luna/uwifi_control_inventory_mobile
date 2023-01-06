@@ -82,20 +82,22 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
     dataBase.estadosBox.getAll().forEach((element) {
       listEstados.add(element.nombre);
     });
-    listEstados.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+    listEstados
+        .sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     dataBase.municipiosBox.getAll().forEach((element) {
       if (element.estados.target?.nombre == nombreEstado) {
         listMunicipios.add(element.nombre);
       }
     });
-    listMunicipios.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+    listMunicipios
+        .sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     dataBase.comunidadesBox.getAll().forEach((element) {
       if (element.municipios.target?.nombre == nombreMunicipio) {
         listComunidades.add(element.nombre);
       }
     });
-    listComunidades.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
-
+    listComunidades
+        .sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
   }
 
   @override
@@ -152,8 +154,9 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               DetallesEmprendedorScreen(
-                                                idEmprendedor: widget.emprendedor.id
-                                                ,),
+                                            idEmprendedor:
+                                                widget.emprendedor.id,
+                                          ),
                                         ),
                                       );
                                     },
@@ -236,14 +239,18 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                             if (option == 'camera') {
                                               pickedFile =
                                                   await picker.pickImage(
+                                                maxHeight: 1080,
+                                                maxWidth: 1920,
                                                 source: ImageSource.camera,
-                                                imageQuality: 100,
+                                                imageQuality: 50,
                                               );
                                             } else {
                                               pickedFile =
                                                   await picker.pickImage(
+                                                maxHeight: 1080,
+                                                maxWidth: 1920,
                                                 source: ImageSource.gallery,
-                                                imageQuality: 100,
+                                                imageQuality: 50,
                                               );
                                             }
 
@@ -255,16 +262,27 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                               image = pickedFile;
                                               imagenTemp = image!.path;
                                               File file = File(image!.path);
-                                              List<int> fileInByte = file.readAsBytesSync();
-                                              String base64 = base64Encode(fileInByte);
-                                              newImagen = Imagenes(
-                                                imagenes: image!.path,
-                                                nombre: image!.name, 
-                                                path: image!.path, 
-                                                base64: base64);
-                                              emprendedorProvider.imagenLocal = newImagen;
-                                            });
+                                              List<int> fileInByte =
+                                                  file.readAsBytesSync();
+                                              // Conversion base 64
+                                              String base64 =
+                                                  base64Encode(fileInByte);
 
+                                              // uint8list de imagenes.
+                                              var imagenUint8List =
+                                                  Uint8List.fromList(
+                                                      fileInByte);
+                                              newImagen = Imagenes(
+                                                  imagenes: image!.path,
+                                                  nombre: image!.name,
+                                                  path: image!.path,
+                                                  base64: base64,
+                                                  //imagenPocketbase:
+                                                      //imagenUint8List
+                                                      );
+                                              emprendedorProvider.imagenLocal =
+                                                  newImagen;
+                                            });
                                           },
                                           child: Container(
                                             width: MediaQuery.of(context)
@@ -288,8 +306,7 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                                 width: 1.5,
                                               ),
                                             ),
-                                            child: getImage(
-                                              imagenTemp),
+                                            child: getImage(imagenTemp),
                                           ),
                                         ),
                                       ),
@@ -309,8 +326,9 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                               children: [
                                 FormBuilder(
                                   child: Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        5, 10, 5, 10),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            5, 10, 5, 10),
                                     child: TextFormField(
                                       readOnly: true,
                                       enabled: false,
@@ -319,37 +337,41 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         labelText: 'Emprendimiento',
-                                        labelStyle:
-                                            AppTheme.of(context).title3.override(
-                                                  fontFamily: 'Montserrat',
-                                                  color: AppTheme.of(context)
-                                                      .secondaryText,
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
+                                        labelStyle: AppTheme.of(context)
+                                            .title3
+                                            .override(
+                                              fontFamily: 'Montserrat',
+                                              color: AppTheme.of(context)
+                                                  .secondaryText,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                            ),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: const BorderSide(
                                             color: Colors.transparent,
                                             width: 1,
                                           ),
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: const BorderSide(
                                             color: Colors.transparent,
                                             width: 1,
                                           ),
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
                                         filled: true,
                                         fillColor: const Color(0x49FFFFFF),
                                       ),
-                                      style: AppTheme.of(context).title3.override(
-                                            fontFamily: 'Poppins',
-                                            color: Colors.black,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.normal,
-                                          ),
+                                      style:
+                                          AppTheme.of(context).title3.override(
+                                                fontFamily: 'Poppins',
+                                                color: Colors.black,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.normal,
+                                              ),
                                     ),
                                   ),
                                 ),
@@ -406,27 +428,25 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                           fontWeight: FontWeight.normal,
                                         ),
                                     validator: FormBuilderValidators.compose([
-                                        // (value){
-                                        //   return (capitalizadoCharacters.hasMatch(value ?? ''))
-                                        //   ? null
-                                        //   : 'Para continuar, ingrese el nombre empezando por mayúscula.';
-                                        // },
-                                        (value){
-                                          return (palabras.hasMatch(value ?? ''))
-                                          ? null
-                                          : 'Evite usar números o caracteres especiales como diéresis';
-                                        },
-                                        // (value){
-                                        //   if(value == "de" || value == "del" || value == "la" || value == "las" ){
-                                        //     return null;
-                                        //   }
-                                        //   else{
-                                        //     return "Nombres intermedios solo aceptables: de, del, la, las";
-                                        //   }
-                                        // }
+                                      // (value){
+                                      //   return (capitalizadoCharacters.hasMatch(value ?? ''))
+                                      //   ? null
+                                      //   : 'Para continuar, ingrese el nombre empezando por mayúscula.';
+                                      // },
+                                      (value) {
+                                        return (palabras.hasMatch(value ?? ''))
+                                            ? null
+                                            : 'Evite usar números o caracteres especiales como diéresis';
+                                      },
+                                      // (value){
+                                      //   if(value == "de" || value == "del" || value == "la" || value == "las" ){
+                                      //     return null;
+                                      //   }
+                                      //   else{
+                                      //     return "Nombres intermedios solo aceptables: de, del, la, las";
+                                      //   }
+                                      // }
                                     ]),
-                                     
-                                
                                   ),
                                 ),
                                 Padding(
@@ -482,17 +502,17 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                           fontWeight: FontWeight.normal,
                                         ),
                                     validator: FormBuilderValidators.compose([
-                                        // (value){
-                                        //   return (capitalizadoCharacters.hasMatch(value ?? ''))
-                                        //   ? null
-                                        //   : 'Para continuar, ingrese el nombre empezando por mayúscula.';
-                                        // },
-                                        (value){
-                                          return (palabras.hasMatch(value ?? ''))
-                                          ? null
-                                          : 'Evite usar números o caracteres especiales como diéresis';
-                                        }
-                                      ]),
+                                      // (value){
+                                      //   return (capitalizadoCharacters.hasMatch(value ?? ''))
+                                      //   ? null
+                                      //   : 'Para continuar, ingrese el nombre empezando por mayúscula.';
+                                      // },
+                                      (value) {
+                                        return (palabras.hasMatch(value ?? ''))
+                                            ? null
+                                            : 'Evite usar números o caracteres especiales como diéresis';
+                                      }
+                                    ]),
                                   ),
                                 ),
                                 Padding(
@@ -643,7 +663,9 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                                     .add(element.nombre);
                                               }
                                             });
-                                            listMunicipios.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+                                            listMunicipios.sort((a, b) =>
+                                                removeDiacritics(a).compareTo(
+                                                    removeDiacritics(b)));
                                             print("Entro a con estados");
                                           }
                                           print("Estado: $nombreEstado");
@@ -715,7 +737,9 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                                     .add(element.nombre);
                                               }
                                             });
-                                            listComunidades.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+                                            listComunidades.sort((a, b) =>
+                                                removeDiacritics(a).compareTo(
+                                                    removeDiacritics(b)));
                                             print("Entro a con municipios");
                                           }
                                           print("Municipio: $nombreMunicipio");
@@ -819,65 +843,70 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       5, 0, 5, 10),
                                   child: TextFormField(
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    obscureText: false,
-                                    controller: telefonoController,
-                                    decoration: InputDecoration(
-                                      labelText: 'Numero telefónico',
-                                      labelStyle:
-                                          AppTheme.of(context).title3.override(
-                                                fontFamily: 'Montserrat',
-                                                color: const Color(0xFF4672FF),
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                      hintText: 'Ingrese número telefónico...',
-                                      hintStyle:
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      obscureText: false,
+                                      controller: telefonoController,
+                                      decoration: InputDecoration(
+                                        labelText: 'Numero telefónico',
+                                        labelStyle: AppTheme.of(context)
+                                            .title3
+                                            .override(
+                                              fontFamily: 'Montserrat',
+                                              color: const Color(0xFF4672FF),
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                        hintText:
+                                            'Ingrese número telefónico...',
+                                        hintStyle: AppTheme.of(context)
+                                            .title3
+                                            .override(
+                                              fontFamily: 'Poppins',
+                                              color: const Color(0xFF4672FF),
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color(0xFF221573),
+                                            width: 1.5,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color(0xFF221573),
+                                            width: 1.5,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        filled: true,
+                                        fillColor: const Color(0x49FFFFFF),
+                                      ),
+                                      style:
                                           AppTheme.of(context).title3.override(
                                                 fontFamily: 'Poppins',
-                                                color: const Color(0xFF4672FF),
+                                                color: const Color(0xFF221573),
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.normal,
                                               ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFF221573),
-                                          width: 1.5,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFF221573),
-                                          width: 1.5,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      filled: true,
-                                      fillColor: const Color(0x49FFFFFF),
-                                    ),
-                                    style: AppTheme.of(context).title3.override(
-                                          fontFamily: 'Poppins',
-                                          color: const Color(0xFF221573),
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                    keyboardType: TextInputType.number,
-                                    inputFormatters: [
-                                      LengthLimitingTextInputFormatter(12),
-                                      telefonoFormat
-                                    ],
-                                    validator: (value){
-                                     if(value != "" && value != null){
-                                       return value.length < 12
-                                          ? 'Por favor ingrese un número telefónico válido'
-                                          : null;
-                                     }else{
-                                      return null;
-                                     }
-                                    }
-                                  ),
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: [
+                                        LengthLimitingTextInputFormatter(12),
+                                        telefonoFormat
+                                      ],
+                                      validator: (value) {
+                                        if (value != "" && value != null) {
+                                          return value.length < 12
+                                              ? 'Por favor ingrese un número telefónico válido'
+                                              : null;
+                                        } else {
+                                          return null;
+                                        }
+                                      }),
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
@@ -1024,17 +1053,29 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                                         ?.id;
                                                     if (idComunidad != null) {
                                                       if (newImagen !=
-                                                        widget.emprendedor.imagen.target) {
-                                                          if (widget.emprendedor.imagen.target == null) {
-                                                            emprendedorProvider.addImagen(
-                                                              widget.emprendedor
-                                                              .emprendimiento.target!.id
-                                                              );
-                                                          } else {
-                                                            emprendedorProvider.updateImagen(
-                                                              widget.emprendedor.imagen.target!.id, 
-                                                              newImagen!);
-                                                          }
+                                                          widget.emprendedor
+                                                              .imagen.target) {
+                                                        if (widget
+                                                                .emprendedor
+                                                                .imagen
+                                                                .target ==
+                                                            null) {
+                                                          emprendedorProvider
+                                                              .addImagen(widget
+                                                                  .emprendedor
+                                                                  .emprendimiento
+                                                                  .target!
+                                                                  .id);
+                                                        } else {
+                                                          emprendedorProvider
+                                                              .updateImagen(
+                                                                  widget
+                                                                      .emprendedor
+                                                                      .imagen
+                                                                      .target!
+                                                                      .id,
+                                                                  newImagen!);
+                                                        }
                                                       }
                                                       emprendedorProvider.update(
                                                           widget.emprendedor.id,
@@ -1054,8 +1095,11 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                                         MaterialPageRoute(
                                                           builder: (context) =>
                                                               EmprendedorActualizado(
-                                                                idEmprendedor: widget.emprendedor.id
-                                                                ,),
+                                                            idEmprendedor:
+                                                                widget
+                                                                    .emprendedor
+                                                                    .id,
+                                                          ),
                                                         ),
                                                       );
                                                     }
@@ -1087,27 +1131,38 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                               }
                                             } else {
                                               if (newImagen !=
-                                                    widget.emprendedor.imagen.target) {
+                                                  widget.emprendedor.imagen
+                                                      .target) {
                                                 if (emprendedorProvider
                                                     .validateForm(
                                                         emprendedorKey)) {
-                                                  if (widget.emprendedor.imagen.target == null) {
-                                                    emprendedorProvider.addImagen(
-                                                      widget.emprendedor
-                                                      .emprendimiento.target!.id
-                                                      );
+                                                  if (widget.emprendedor.imagen
+                                                          .target ==
+                                                      null) {
+                                                    emprendedorProvider
+                                                        .addImagen(widget
+                                                            .emprendedor
+                                                            .emprendimiento
+                                                            .target!
+                                                            .id);
                                                   } else {
-                                                    emprendedorProvider.updateImagen(
-                                                      widget.emprendedor.imagen.target!.id, 
-                                                      newImagen!);
+                                                    emprendedorProvider
+                                                        .updateImagen(
+                                                            widget
+                                                                .emprendedor
+                                                                .imagen
+                                                                .target!
+                                                                .id,
+                                                            newImagen!);
                                                   }
                                                   await Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) =>
                                                           EmprendedorActualizado(
-                                                            idEmprendedor: widget.emprendedor.id
-                                                            ,),
+                                                        idEmprendedor: widget
+                                                            .emprendedor.id,
+                                                      ),
                                                     ),
                                                   );
                                                 } else {

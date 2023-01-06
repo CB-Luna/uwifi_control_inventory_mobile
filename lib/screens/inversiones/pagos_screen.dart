@@ -1151,7 +1151,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                     ImageSource
                                                                         .camera,
                                                                 imageQuality:
-                                                                    100,
+                                                                    50,
                                                               );
                                                             } else {
                                                               pickedFile =
@@ -1161,7 +1161,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                     ImageSource
                                                                         .gallery,
                                                                 imageQuality:
-                                                                    100,
+                                                                    50,
                                                               );
                                                             }
 
@@ -1418,7 +1418,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                     ImageSource
                                                                         .camera,
                                                                 imageQuality:
-                                                                    100,
+                                                                    50,
                                                               );
                                                             } else {
                                                               pickedFile =
@@ -1428,7 +1428,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                     ImageSource
                                                                         .gallery,
                                                                 imageQuality:
-                                                                    100,
+                                                                    50,
                                                               );
                                                             }
 

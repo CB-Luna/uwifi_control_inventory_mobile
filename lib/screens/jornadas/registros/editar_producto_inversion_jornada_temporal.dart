@@ -299,12 +299,12 @@ class _EditarProductoInversionJornadaTemporalState
                                                   if (option == 'camera') {
                                                     pickedFile = await picker.pickImage(
                                                       source: ImageSource.camera,
-                                                      imageQuality: 100,
+                                                      imageQuality: 50,
                                                     );
                                                   } else {
                                                     pickedFile = await picker.pickImage(
                                                       source: ImageSource.gallery,
-                                                      imageQuality: 100,
+                                                      imageQuality: 50,
                                                     );
                                                   }
 
