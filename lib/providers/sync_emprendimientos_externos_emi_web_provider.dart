@@ -2110,36 +2110,44 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
           listEmpExternosEmiWebTemp = getEmpExternoEmiWebTempFromMap(
             const Utf8Decoder().convert(response.bodyBytes)
           );
-
+          //Se recorre toda la lista de emprendimientos para hacer el filtrado
           for (var elementEmprendimientoEmp in listEmpExternosEmiWebTemp.payload!.toList()) {
-            if (elementEmprendimientoEmp.proyecto.promotor != null) {
-              var indexItemUpdated = listUsuariosProyectosTemp.indexWhere((elementUsuario) => elementUsuario.usuarioTemp.idUsuario == elementEmprendimientoEmp.proyecto.promotor!.idUsuario);
-              if (indexItemUpdated != -1) {
-                listUsuariosProyectosTemp[indexItemUpdated].emprendimientosTemp.add(elementEmprendimientoEmp);
-              } else {
-                  if (elementEmprendimientoEmp.imagenPerfil != null) {
-                  final uInt8ListImagen = base64Decode(elementEmprendimientoEmp.imagenPerfil!.archivo);
-                  final tempDir = await getTemporaryDirectory();
-                  File file =
-                      await File('${tempDir.path}/${elementEmprendimientoEmp.imagenPerfil!.nombreArchivo}')
-                          .create();
-                  file.writeAsBytesSync(uInt8ListImagen);
-                  final newUsuarioProyectoTemporal = 
-                  UsuarioProyectosTemporal(
-                    usuarioTemp: elementEmprendimientoEmp.proyecto.promotor!, 
-                    emprendimientosTemp: [elementEmprendimientoEmp],
-                    pathImagenPerfil: file.path
-                  );
-                  listUsuariosProyectosTemp.add(newUsuarioProyectoTemporal);
+            //Se valida que el emprendimiento tenga promotor asociado y el switch móvil con la condición en False
+            if (elementEmprendimientoEmp.proyecto.promotor != null && elementEmprendimientoEmp.proyecto.switchMovil == false) {
+              final emprendimientoLocal = dataBase.emprendimientosBox.query(Emprendimientos_.idEmiWeb.equals(elementEmprendimientoEmp.proyecto.idProyecto.toString())).build().findUnique();
+              if (emprendimientoLocal == null) {
+                //Se puede recuperar emprendimiento externo
+                //Recopilamos que el usuario actual en el for no exista en nuestra Lista de Usuarios principal
+                var indexItemUpdated = listUsuariosProyectosTemp.indexWhere((elementUsuario) => elementUsuario.usuarioTemp.idUsuario == elementEmprendimientoEmp.proyecto.promotor!.idUsuario);
+                if (indexItemUpdated != -1) {
+                  //Si existe el usuario, se agrega su respectivo emprendimiento
+                  listUsuariosProyectosTemp[indexItemUpdated].emprendimientosTemp.add(elementEmprendimientoEmp);
                 } else {
-                  final newUsuarioProyectoTemporal = 
-                  UsuarioProyectosTemporal(
-                    usuarioTemp: elementEmprendimientoEmp.proyecto.promotor!, 
-                    emprendimientosTemp: [elementEmprendimientoEmp],
-                  );
-                  listUsuariosProyectosTemp.add(newUsuarioProyectoTemporal);
+                  //Si no existe el usuario, se crea en la Lista de Usuarios principal
+                    if (elementEmprendimientoEmp.imagenPerfil != null) {
+                    final uInt8ListImagen = base64Decode(elementEmprendimientoEmp.imagenPerfil!.archivo);
+                    final tempDir = await getTemporaryDirectory();
+                    File file =
+                        await File('${tempDir.path}/${elementEmprendimientoEmp.imagenPerfil!.nombreArchivo}')
+                            .create();
+                    file.writeAsBytesSync(uInt8ListImagen);
+                    final newUsuarioProyectoTemporal = 
+                    UsuarioProyectosTemporal(
+                      usuarioTemp: elementEmprendimientoEmp.proyecto.promotor!, 
+                      emprendimientosTemp: [elementEmprendimientoEmp],
+                      pathImagenPerfil: file.path
+                    );
+                    listUsuariosProyectosTemp.add(newUsuarioProyectoTemporal);
+                  } else {
+                    final newUsuarioProyectoTemporal = 
+                    UsuarioProyectosTemporal(
+                      usuarioTemp: elementEmprendimientoEmp.proyecto.promotor!, 
+                      emprendimientosTemp: [elementEmprendimientoEmp],
+                    );
+                    listUsuariosProyectosTemp.add(newUsuarioProyectoTemporal);
+                  }
                 }
-              }
+              } 
             }
           }
           return listUsuariosProyectosTemp;
