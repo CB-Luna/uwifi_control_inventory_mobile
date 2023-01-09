@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bizpro_app/modelsPocketbase/temporals/usuario_proyectos_temporal.dart';
 import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:bizpro_app/screens/emprendimientos_externos/perfil_usuario_externo_screen.dart';
@@ -182,7 +184,9 @@ class _UsuariosExternosScreenState extends State<UsuariosExternosScreen>
                                         color: Color(0xFF4672FF),
                                         shape: BoxShape.circle,
                                       ),
-                                      child: Padding(
+                                      child: 
+                                      usuarioProyectoTemp.pathImagenPerfil == null ?
+                                      Padding(
                                         padding: const EdgeInsetsDirectional.fromSTEB(
                                             3, 3, 3, 3),
                                         child: ClipRRect(
@@ -206,6 +210,23 @@ class _UsuariosExternosScreenState extends State<UsuariosExternosScreen>
                                                       ),
                                               ),
                                             ),
+                                          ),
+                                        ),
+                                      )
+                                      :
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            3, 3, 3, 3),
+                                        child: Container(
+                                          width: 60,
+                                          height: 60,
+                                          clipBehavior: Clip.antiAlias,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0x00EEEEEE),
+                                            image: DecorationImage(
+                                                fit: BoxFit.cover,
+                                                image: FileImage(File(usuarioProyectoTemp.pathImagenPerfil!))),
+                                            shape: BoxShape.circle,
                                           ),
                                         ),
                                       ),

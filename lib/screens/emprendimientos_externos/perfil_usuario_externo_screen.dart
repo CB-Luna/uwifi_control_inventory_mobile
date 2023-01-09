@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/modelsEmiWeb/temporals/get_emp_externo_emi_web_temp.dart';
@@ -154,7 +155,9 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                 ),
                                 Align(
                                   alignment: const AlignmentDirectional(0, 0),
-                                  child: Padding(
+                                  child: 
+                                  widget.usuarioProyectosTemporal.pathImagenPerfil == null ?
+                                  Padding(
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         0, 50, 0, 0),
                                     child: Container(
@@ -191,6 +194,23 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                             ),
                                           ),
                                         ),
+                                      ),
+                                    ),
+                                  )
+                                  :
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        0, 50, 0, 0),
+                                    child: Container(
+                                      width: 130,
+                                      height: 130,
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0x00EEEEEE),
+                                        image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: FileImage(File(widget.usuarioProyectosTemporal.pathImagenPerfil!))),
+                                        shape: BoxShape.circle,
                                       ),
                                     ),
                                   ),
@@ -267,7 +287,8 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                               padding:
                                   const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                               child: Text(
-                                widget.usuarioProyectosTemporal.usuarioTemp.telefono ?? "Sin teléfono",
+                                widget.usuarioProyectosTemporal.usuarioTemp.telefono == "Vacío" ? "Sin teléfono" :
+                                widget.usuarioProyectosTemporal.usuarioTemp.telefono,
                                 style: AppTheme.of(context)
                                     .bodyText1
                                     .override(
@@ -503,10 +524,11 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                   if (searchController.text != '') {
                             listProyectoTemp.removeWhere((element) {
                               final nombreEmprendimiento =
-                                  removeDiacritics(element.proyectos!.last.emprendimiento)
+                                  removeDiacritics(element.proyecto.emprendimiento)
                                       .toLowerCase();
                               final nombreEmprendedor = removeDiacritics(
-                                      '${element.nombre} ${element.apellidos}')
+                                      '${element.proyecto.emprendedor.nombre} ${element
+                                      .proyecto.emprendedor.apellidos}')
                                   .toLowerCase();
                               final tempBusqueda =
                                   removeDiacritics(searchController.text)
@@ -539,23 +561,24 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                 ToggleIcon(
                                   onPressed: () {
                                     setState(() {
-                                      emprendimientoTemp.selected = !emprendimientoTemp.selected;
-                                      if (emprendimientoTemp.selected) {
+                                      emprendimientoTemp.proyecto.selected = !emprendimientoTemp.proyecto.selected;
+                                      print("****Selected de ${emprendimientoTemp.proyecto.emprendimiento} es ${emprendimientoTemp.proyecto.selected}");
+                                      if (emprendimientoTemp.proyecto.selected) {
                                         //Borrar los otros selected de los items
-                                      for (var element in widget.usuarioProyectosTemporal.emprendimientosTemp) {
-                                        if (element != emprendimientoTemp) {
-                                          element.selected = false;
-                                        }
-                                      }
-                                        emprendimientoSelected = emprendimientoTemp.proyectos!.last.idProyecto.toString();
+                                      // for (var element in widget.usuarioProyectosTemporal.emprendimientosTemp) {
+                                      //   if (element.proyecto.idProyecto.toString() != emprendimientoTemp.proyecto.idProyecto.toString()) {
+                                      //     emprendimientoTemp.proyecto.selected = false;
+                                      //   }
+                                      // }
+                                        emprendimientoSelected = emprendimientoTemp.proyecto.idProyecto.toString();
                                       } else {
-                                        if (emprendimientoSelected == emprendimientoTemp.proyectos!.last.idProyecto.toString()) {
+                                        if (emprendimientoSelected == emprendimientoTemp.proyecto.idProyecto.toString()) {
                                           emprendimientoSelected = "";
                                         }
                                       }
                                     });
                                   },
-                                  value: emprendimientoTemp.selected,
+                                  value: emprendimientoTemp.proyecto.selected,
                                   onIcon: Icon(
                                     Icons.check_box,
                                     color: AppTheme.of(
@@ -620,7 +643,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      maybeHandleOverflow(emprendimientoTemp.proyectos?.last.emprendimiento ?? "", 25, "..."),
+                                                      maybeHandleOverflow(emprendimientoTemp.proyecto.emprendimiento, 25, "..."),
                                                       style: AppTheme.of(context)
                                                           .title2
                                                           .override(
@@ -635,8 +658,8 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                                           0, 4, 0, 4),
                                                       child: Text(
                                                         maybeHandleOverflow("${emprendimientoTemp
-                                                        .nombre} ${emprendimientoTemp
-                                                        .apellidos}", 40, "..."),
+                                                        .proyecto.emprendedor.nombre} ${emprendimientoTemp
+                                                        .proyecto.emprendedor.apellidos}", 40, "..."),
                                                         style: AppTheme.of(context)
                                                             .bodyText1
                                                             .override(
@@ -651,8 +674,9 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                                       padding: const EdgeInsetsDirectional.fromSTEB(
                                                           0, 4, 0, 4),
                                                       child: Text(
-                                                        maybeHandleOverflow("${emprendimientoTemp
-                                                        .comentarios}", 40, "..."),
+                                                        maybeHandleOverflow(emprendimientoTemp
+                                                        .proyecto.emprendedor.comentarios == "" ? "Sin Comentarios" : emprendimientoTemp
+                                                        .proyecto.emprendedor.comentarios!, 40, "..."),
                                                         style: AppTheme.of(context)
                                                             .bodyText1
                                                             .override(

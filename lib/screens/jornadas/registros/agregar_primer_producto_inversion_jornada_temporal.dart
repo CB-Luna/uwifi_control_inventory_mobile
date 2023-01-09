@@ -34,7 +34,7 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
     extends State<AgregarPrimerProductoInversionJornadaTemporal> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
-  TextEditingController porcentajeController = TextEditingController();
+  TextEditingController porcentajeController = TextEditingController(text: "50");
   List<String> listFamilias = [];
   List<String> listTipoEmpaque = [];
   String familia = "";
@@ -885,6 +885,7 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
+                                          readOnly: true,
                                           controller: porcentajeController,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,

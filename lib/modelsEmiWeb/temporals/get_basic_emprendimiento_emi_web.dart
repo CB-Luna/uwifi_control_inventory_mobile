@@ -33,6 +33,7 @@ class Payload {
         required this.idCatFase,
         required this.fecha,
         this.idCatTipoProyecto,
+        this.idCatProyecto,
         required this.emprendedor,
     });
 
@@ -43,6 +44,7 @@ class Payload {
     final int idCatFase;
     final DateTime fecha;
     final int? idCatTipoProyecto;
+    final int? idCatProyecto;
     final Emprendedor emprendedor;
 
     factory Payload.fromMap(Map<String, dynamic> json) => Payload(
@@ -53,6 +55,7 @@ class Payload {
         idCatFase: json["idCatFase"],
         fecha: DateTime.parse(json["fecha"]),
         idCatTipoProyecto: json["idCatTipoProyecto"],
+        idCatProyecto: json["idCatProyecto"],
         emprendedor: Emprendedor.fromMap(json["emprendedor"]),
     );
 
@@ -64,6 +67,7 @@ class Payload {
         "idCatFase": idCatFase,
         "fecha": fecha.toIso8601String(),
         "idCatTipoProyecto": idCatTipoProyecto,
+        "idCatProyecto": idCatProyecto,
         "emprendedor": emprendedor.toMap(),
     };
 }

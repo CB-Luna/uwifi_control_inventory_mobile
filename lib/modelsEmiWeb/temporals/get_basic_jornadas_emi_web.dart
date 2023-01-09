@@ -30,18 +30,21 @@ class Payload {
         this.jornada2,
         this.jornada3,
         this.jornada4,
+        this.productoDeProyecto,
     });
 
     final Jornada1? jornada1;
     final Jornada2? jornada2;
     final Jornada3? jornada3;
     final Jornada4? jornada4;
+    final List<ProductoDeProyecto?>? productoDeProyecto;
 
     factory Payload.fromMap(Map<String, dynamic> json) => Payload(
         jornada1: json["jornada1"] == null ? null : Jornada1.fromMap(json["jornada1"]),
         jornada2: json["jornada2"] == null ? null : Jornada2.fromMap(json["jornada2"]),
         jornada3: json["jornada3"] == null ? null : Jornada3.fromMap(json["jornada3"]),
         jornada4: json["jornada4"] == null ? null : Jornada4.fromMap(json["jornada4"]),
+        productoDeProyecto: json["productoDeProyecto"] == null ? [] : json["productoDeProyecto"] == null ? [] : List<ProductoDeProyecto?>.from(json["productoDeProyecto"]!.map((x) => ProductoDeProyecto.fromMap(x))),
     );
 
     Map<String, dynamic> toMap() => {
@@ -49,6 +52,7 @@ class Payload {
         "jornada2": jornada2 == null ? null : jornada2!.toMap(),
         "jornada3": jornada3 == null ? null : jornada3!.toMap(),
         "jornada4": jornada4 == null ? null : jornada4!.toMap(),
+        "productoDeProyecto": productoDeProyecto == null ? [] : productoDeProyecto == null ? [] : List<dynamic>.from(productoDeProyecto!.map((x) => x!.toMap())),
     };
 }
 
@@ -242,5 +246,53 @@ class Jornada4 {
         "comentarios": comentarios,
         "idProyecto": idProyecto,
         "documentos": List<dynamic>.from(documentos.map((x) => x.toMap())),
+    };
+}
+
+class ProductoDeProyecto {
+    ProductoDeProyecto({
+        required this.idProductoDeProyecto,
+        required this.producto,
+        required this.descripcion,
+        required this.marcaRecomendada,
+        required this.cantidad,
+        required this.costoEstimado,
+        required this.proveedorSugerido,
+        required this.idFamilia,
+        required this.unidadMedida,
+    });
+
+    final int idProductoDeProyecto;
+    final String producto;
+    final String descripcion;
+    final String? marcaRecomendada;
+    final int cantidad;
+    final double? costoEstimado;
+    final String? proveedorSugerido;
+    final int idFamilia;
+    final int unidadMedida;
+
+    factory ProductoDeProyecto.fromMap(Map<String, dynamic> json) => ProductoDeProyecto(
+        idProductoDeProyecto: json["idProductoDeProyecto"],
+        producto: json["producto"],
+        descripcion: json["descripcion"],
+        marcaRecomendada: json["marcaRecomendada"],
+        cantidad: json["cantidad"],
+        costoEstimado: json["costoEstimado"].toDouble(),
+        proveedorSugerido: json["proveedorSugerido"],
+        idFamilia: json["idFamilia"],
+        unidadMedida: json["unidadMedida"],
+    );
+
+    Map<String, dynamic> toMap() => {
+        "idProductoDeProyecto": idProductoDeProyecto,
+        "producto": producto,
+        "descripcion": descripcion,
+        "marcaRecomendada": marcaRecomendada,
+        "cantidad": cantidad,
+        "costoEstimado": costoEstimado,
+        "proveedorSugerido": proveedorSugerido,
+        "idFamilia": idFamilia,
+        "unidadMedida": unidadMedida,
     };
 }
