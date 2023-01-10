@@ -100,7 +100,7 @@ void add(int idEmprendimiento, int idVenta) {
           precioVenta: productosVendidos[i].precioVenta, 
         );
         total += productosVendidos[i].subTotal;
-        final nuevaInstruccion = Bitacora(instruccion: 'syncAddProductoVendido', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+        final nuevaInstruccion = Bitacora(instruccion: 'syncAddProductoVendido', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
         nuevoProdVendido.productoEmp.target = productoEmp;
         nuevoProdVendido.venta.target = venta;
         nuevoProdVendido.unidadMedida.target = productoEmp.unidadMedida.target;
@@ -117,12 +117,12 @@ void add(int idEmprendimiento, int idVenta) {
 }
 
 
-  void updateProductosVendidos(Ventas venta) {
+  void updateProductosVendidos(Ventas venta, int idEmprendimiento) {
     for (var i = 0; i < instruccionesProdVendido.length; i++) {
       switch (instruccionesProdVendido[i].instruccion) {
         case "syncAddSingleProductoVendido":
           venta.total += (instruccionesProdVendido[i].prodVendido.cantVendida * instruccionesProdVendido[i].prodVendido.precioVenta);
-          final nuevaInstruccion = Bitacora(instruccion: 'syncAddSingleProductoVendido', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+          final nuevaInstruccion = Bitacora(instruccion: 'syncAddSingleProductoVendido', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
           instruccionesProdVendido[i].prodVendido.bitacora.add(nuevaInstruccion);
           instruccionesProdVendido[i].prodVendido.venta.target = venta;
           dataBase.productosVendidosBox.put(instruccionesProdVendido[i].prodVendido);
@@ -131,7 +131,7 @@ void add(int idEmprendimiento, int idVenta) {
           dataBase.ventasBox.put(venta);
           continue;
         case "syncUpdateProductoVendido":
-          final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateProductoVendido', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+          final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateProductoVendido', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
           final updateProductoVendido = dataBase.productosVendidosBox.get(instruccionesProdVendido[i].prodVendido.id);
           if(updateProductoVendido != null) {
             venta.total -= (updateProductoVendido.cantVendida * updateProductoVendido.precioVenta);
@@ -155,7 +155,7 @@ void add(int idEmprendimiento, int idVenta) {
               usuario: prefs.getString("userId")!,
               idDBR: deleteProductoVendido.idDBR,
               idEmiWeb: deleteProductoVendido.idEmiWeb,
-              emprendimiento: venta.emprendimiento.target!.nombre,
+              emprendimiento: venta.emprendimiento.target!.nombre, idEmprendimiento: idEmprendimiento,
             ); //Se crea la nueva instruccion a realizar en bitacora
             deleteProductoVendido.bitacora.add(nuevaInstruccion);
             dataBase.productosVendidosBox.put(deleteProductoVendido);
@@ -176,11 +176,11 @@ void add(int idEmprendimiento, int idVenta) {
   }
 
 
-void update(int id, int idProductoEmp, double newPrecioVenta, int newCantidad, double newSubTotal) {
+void update(int id, int idProductoEmp, double newPrecioVenta, int newCantidad, double newSubTotal, int idEmprendimiento) {
     var updateProdVendido = dataBase.productosVendidosBox.get(id);
     final updateProductoEmp = dataBase.productosEmpBox.get(idProductoEmp);
     if (updateProdVendido != null && updateProductoEmp != null) {
-      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateProductoVendido', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateProductoVendido', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       updateProdVendido.productoEmp.target = updateProductoEmp;
       updateProdVendido.cantVendida = newCantidad;
       updateProdVendido.precioVenta =  newPrecioVenta;

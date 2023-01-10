@@ -776,7 +776,7 @@ class _EditarInversionJornadaScreenState
                                             if (productoInversionJornadaProvider
                                                 .instruccionesProdInversionJ3Temp.isNotEmpty) {
                                               productoInversionJornadaProvider
-                                              .updateProductosInversionJ3(widget.inversion);
+                                              .updateProductosInversionJ3(widget.inversion, widget.emprendimiento.id);
                                             await Navigator.push(
                                               context,
                                               MaterialPageRoute(

@@ -223,7 +223,8 @@ void updateRol(int id, int newIdRol) {
 void updateDatos(int id, String newNombre, String newApellidoP, String newApellidoM, String newTelefono) {
     var updateUsuario = dataBase.usuariosBox.get(id);
     if (updateUsuario != null) {
-      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateUsuario', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      //El id Emprendimiento es 0 porque la instrucción no se relaciona con ningún emprendimiento
+      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateUsuario', usuario: prefs.getString("userId")!, idEmprendimiento: 0); //Se crea la nueva instruccion a realizar en bitacora
       updateUsuario.nombre = newNombre;
       updateUsuario.apellidoP = newApellidoP;
       updateUsuario.apellidoM = newApellidoM;
@@ -237,7 +238,8 @@ void updateDatos(int id, String newNombre, String newApellidoP, String newApelli
 
 void updateImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPath, String newBase64) {
     var updateImagenUsuario = dataBase.imagenesBox.get(idImagenUsuario);
-    final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateImagenUsuario', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+    //El id Emprendimiento es 0 porque la instrucción no se relaciona con ningún emprendimiento
+    final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateImagenUsuario', usuario: prefs.getString("userId")!, idEmprendimiento: 0); //Se crea la nueva instruccion a realizar en bitacora
     if (updateImagenUsuario != null) {
       updateImagenUsuario.imagenes = newPath; //Se actualiza la imagen del usuario
       updateImagenUsuario.nombre = newNombreImagen;
@@ -253,7 +255,8 @@ void updateImagenUsuario(int idImagenUsuario, String newNombreImagen, String new
 
 void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPath, String newBase64) {
     var newImagenUsuario = dataBase.imagenesBox.get(idImagenUsuario);
-    final nuevaInstruccion = Bitacora(instruccion: 'syncAddImagenUsuario', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+    //El id Emprendimiento es 0 porque la instrucción no se relaciona con ningún emprendimiento
+    final nuevaInstruccion = Bitacora(instruccion: 'syncAddImagenUsuario', usuario: prefs.getString("userId")!, idEmprendimiento: 0); //Se crea la nueva instruccion a realizar en bitacora
     if (newImagenUsuario != null) {
       newImagenUsuario.imagenes = newPath; //Se actualiza la imagen del usuario
       newImagenUsuario.nombre = newNombreImagen;

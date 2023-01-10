@@ -1074,7 +1074,12 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                                                       .imagen
                                                                       .target!
                                                                       .id,
-                                                                  newImagen!);
+                                                                  newImagen!,
+                                                                  widget
+                                                                  .emprendedor
+                                                                  .emprendimiento
+                                                                  .target!
+                                                                  .id);
                                                         }
                                                       }
                                                       emprendedorProvider.update(
@@ -1089,7 +1094,9 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                                               .text,
                                                           comentariosController
                                                               .text,
-                                                          idComunidad);
+                                                          idComunidad,
+                                                          widget.emprendedor.emprendimiento.
+                                                          target!.id);
                                                       await Navigator.push(
                                                         context,
                                                         MaterialPageRoute(
@@ -1153,7 +1160,12 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                                                 .imagen
                                                                 .target!
                                                                 .id,
-                                                            newImagen!);
+                                                            newImagen!,
+                                                            widget
+                                                            .emprendedor
+                                                            .emprendimiento
+                                                            .target!
+                                                            .id);
                                                   }
                                                   await Navigator.push(
                                                     context,

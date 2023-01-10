@@ -306,6 +306,9 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                                                   .jornada
                                                                   .tarea
                                                                   .target!
+                                                                  .id,
+                                                              widget
+                                                                  .empActual
                                                                   .id);
                                                     }
                                                   } else {

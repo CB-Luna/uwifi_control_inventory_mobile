@@ -801,8 +801,8 @@ class _RegistroVentaScreenState
                                           onPressed: () async {
                                             if (productoVentaProvider.instruccionesProdVendido.isNotEmpty) {
                                               productoVentaProvider
-                                                .updateProductosVendidos(widget.venta);
-                                              final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateProductosVendidosVenta', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+                                                .updateProductosVendidos(widget.venta, widget.emprendimiento.id);
+                                              final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateProductosVendidosVenta', usuario: prefs.getString("userId")!, idEmprendimiento: widget.emprendimiento.id); //Se crea la nueva instruccion a realizar en bitacora
                                               widget.venta.bitacora.add(nuevaInstruccion);
                                               dataBase.ventasBox.put(widget.venta);
                                               await Navigator.push(

@@ -2089,6 +2089,50 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
     }
   }
 
+//Función para quitar instrucciones asociadas al Emprendimiento que se eliminará localmente
+
+void deleteEmprendimientoLocal(int idEmprendimiento) {
+  //Se recuperan y eliminan todas las instrucciones de la bitacora
+  final listIntruccionesEmp = dataBase.bitacoraBox.getAll().toList();
+  for (var element in listIntruccionesEmp) {
+    if (element.idEmprendimiento == idEmprendimiento) {
+      dataBase.bitacoraBox.remove(element.id);
+    }
+  }
+  //Se elimina el emprendimiento
+  dataBase.emprendimientosBox.remove(idEmprendimiento);
+  //Se elimina la imagen del emprendimiento
+  final idImagenEmprendimiento = dataBase.imagenesBox.query(Imagenes_.emprendimiento.equals(idEmprendimiento)).build().findUnique()?.id;
+  dataBase.imagenesBox.remove(idImagenEmprendimiento ?? -1);
+  //Se elimina el emprendedor
+  final idEmprendedor =  dataBase.emprendedoresBox.query(Emprendedores_.emprendimiento.equals(idEmprendimiento)).build().findUnique()?.id;
+  dataBase.emprendedoresBox.remove(idEmprendedor ?? -1);
+  //Se elimina la imagen del emprendedor
+  final idImagenEmprendedor = dataBase.imagenesBox.query(Imagenes_.emprendedor.equals(idEmprendedor ?? -1)).build().findUnique()?.id;
+  dataBase.imagenesBox.remove(idImagenEmprendedor ?? -1);
+  //Se elimina la jornada 1
+//   final idJornada1 = dataBase.jornadasBox.query(Jornadas_.emprendimiento.equals(idEmprendimiento)).build().findUnique()?.id;
+//   dataBase.jornadasBox.remove(idJornada1 ?? -1);
+//   //Se elimina la tarea jornada 1
+//   final idTarea1 = dataBase.tareasBox.query(Tareas_.jornada.equals(idJornada1 ?? -1)).build().findUnique()?.id;
+//   dataBase.tareasBox.remove(idTarea1 ?? -1);
+//   //Se eliminan la imágenes asociadas a la tarea J1
+//   dataBase.imagenesBox.query(Imagenes_.tarea).link(Tareas_());
+//   dataBase.imagenesBox.query().link(Tareas_.jornada, (Jornadas_.id, 1))
+//   QueryBuilder<Emprendimientos> builder = dataBase.emprendimientosBox
+//     .query(Emprendimientos_.id.equals(1));
+  
+//   builder.linkMany(Emprendimientos_.jornadas, Jornadas_.numJornada.equals('1'));
+
+//   dataBase.imagenesBox.query(Imagenes_.path.equals("e"));
+
+//   dataBase.tareasBox.query().link(Tareas_.jornada, Jornadas_.id.equals(1));
+//   personBox.query().apply {
+//     link(Person_.company).equal(Company_.id, 1)
+//     link(Person_.addresses).equal(Address_.street, "Sesame Street")
+// }.build().find()
+}
+
 //Función para recuperar los emprendimientos externos de EmiWeb
   Future<List<UsuarioProyectosTemporal>?> getUsuariosProyectosEmiWeb() async {
     final GetEmpExternoEmiWebTemp listEmpExternosEmiWebTemp;

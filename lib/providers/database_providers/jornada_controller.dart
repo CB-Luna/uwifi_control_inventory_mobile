@@ -64,8 +64,8 @@ class JornadaController extends ChangeNotifier {
     final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Jornada 1")).build().findFirst();
     if (emprendimiento != null && faseEmp != null) {
       print("Fase de Add1: ${faseEmp.fase}");
-      final nuevaInstruccionJornada = Bitacora(instruccion: 'syncAddJornada1', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-      final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Jornada 1", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionJornada = Bitacora(instruccion: 'syncAddJornada1', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Jornada 1", usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza la fase del Emprendimiento
       //TODO actualizar en el backend.
       emprendimiento.faseEmp.add(faseEmp);
@@ -87,10 +87,10 @@ class JornadaController extends ChangeNotifier {
     print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
   }
 
-  void updateJornada1(int id, DateTime newFechaRegistro, DateTime newFechaRevision, String newTarea, bool newCompletada, int idTarea) {
+  void updateJornada1(int id, DateTime newFechaRegistro, DateTime newFechaRevision, String newTarea, bool newCompletada, int idTarea, int idEmprendimiento) {
     var updateTarea  = dataBase.tareasBox.get(idTarea);
     if (updateTarea != null) {
-      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateJornada1', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateJornada1', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       updateTarea.fechaRegistro = newFechaRegistro;
       updateTarea.fechaRevision = newFechaRevision;
       updateTarea.tarea = newTarea;
@@ -139,8 +139,8 @@ class JornadaController extends ChangeNotifier {
     final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Jornada 2")).build().findFirst();
     if (emprendimiento != null && faseEmp != null) {
       print("Fase de Add2: ${faseEmp.fase}");
-      final nuevaInstruccionJornada = Bitacora(instruccion: 'syncAddJornada2', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-      final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Jornada 2", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionJornada = Bitacora(instruccion: 'syncAddJornada2', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Jornada 2", usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza la fase del Emprendimiento
       //TODO actualizar en el backend.
       emprendimiento.faseEmp.add(faseEmp);
@@ -162,10 +162,10 @@ class JornadaController extends ChangeNotifier {
     print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
   }
 
-  void updateJornada2(int id, DateTime newFechaRegistro, DateTime newFechaRevision, String newTarea, String newComentarios, bool newCompletada, int idTarea) {
+  void updateJornada2(int id, DateTime newFechaRegistro, DateTime newFechaRevision, String newTarea, String newComentarios, bool newCompletada, int idTarea, int idEmprendimiento) {
     var updateTarea  = dataBase.tareasBox.get(idTarea);
     if (updateTarea != null) {
-      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateJornada2', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateJornada2', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       updateTarea.fechaRegistro = newFechaRegistro;
       updateTarea.fechaRevision = newFechaRevision;
       updateTarea.tarea = newTarea;
@@ -185,11 +185,11 @@ class JornadaController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateImagenesJornada(Tareas tarea, List<SaveInstruccionImagenTemporal> listInstruccionesImagenesTemp) {
+  void updateImagenesJornada(Tareas tarea, List<SaveInstruccionImagenTemporal> listInstruccionesImagenesTemp, int idEmprendimiento) {
     for (var i = 0; i < listInstruccionesImagenesTemp.length; i++) {
       switch (listInstruccionesImagenesTemp[i].instruccion) {
         case "syncAddImagenJornada2":
-          final nuevaInstruccion = Bitacora(instruccion: 'syncAddImagenJornada2', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+          final nuevaInstruccion = Bitacora(instruccion: 'syncAddImagenJornada2', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
           final nuevaImagenTarea = Imagenes(
             imagenes: listInstruccionesImagenesTemp[i].imagenLocal.path,
             nombre: listInstruccionesImagenesTemp[i].imagenLocal.nombre,
@@ -203,7 +203,7 @@ class JornadaController extends ChangeNotifier {
           dataBase.tareasBox.put(tarea);
           continue;
         case "syncUpdateImagenJornada2":
-          final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateImagenJornada2', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+          final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateImagenJornada2', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
           final updateImagen = dataBase.imagenesBox.get(listInstruccionesImagenesTemp[i].imagenLocal.id!);
           if(updateImagen != null) {
             updateImagen.imagenes = listInstruccionesImagenesTemp[i].imagenLocal.path;
@@ -217,7 +217,7 @@ class JornadaController extends ChangeNotifier {
             continue;
           }
         case "syncAddImagenJornada3":
-          final nuevaInstruccion = Bitacora(instruccion: 'syncAddImagenJornada3', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+          final nuevaInstruccion = Bitacora(instruccion: 'syncAddImagenJornada3', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
           final nuevaImagenTarea = Imagenes(
             imagenes: listInstruccionesImagenesTemp[i].imagenLocal.path,
             nombre: listInstruccionesImagenesTemp[i].imagenLocal.nombre,
@@ -231,7 +231,7 @@ class JornadaController extends ChangeNotifier {
           dataBase.tareasBox.put(tarea);
           continue;
         case "syncUpdateImagenJornada3":
-          final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateImagenJornada3', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+          final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateImagenJornada3', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
           final updateImagen = dataBase.imagenesBox.get(listInstruccionesImagenesTemp[i].imagenLocal.id!);
           if(updateImagen != null) {
             updateImagen.imagenes = listInstruccionesImagenesTemp[i].imagenLocal.path;
@@ -245,7 +245,7 @@ class JornadaController extends ChangeNotifier {
             continue;
           }
         case "syncAddImagenJornada4":
-          final nuevaInstruccion = Bitacora(instruccion: 'syncAddImagenJornada4', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+          final nuevaInstruccion = Bitacora(instruccion: 'syncAddImagenJornada4', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
           final nuevaImagenTarea = Imagenes(
             imagenes: listInstruccionesImagenesTemp[i].imagenLocal.path,
             nombre: listInstruccionesImagenesTemp[i].imagenLocal.nombre,
@@ -259,7 +259,7 @@ class JornadaController extends ChangeNotifier {
           dataBase.tareasBox.put(tarea);
           continue;
         case "syncUpdateImagenJornada4":
-          final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateImagenJornada4', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+          final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateImagenJornada4', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
           final updateImagen = dataBase.imagenesBox.get(listInstruccionesImagenesTemp[i].imagenLocal.id!);
           if(updateImagen != null) {
             updateImagen.imagenes = listInstruccionesImagenesTemp[i].imagenLocal.path;
@@ -281,7 +281,7 @@ class JornadaController extends ChangeNotifier {
               usuario: prefs.getString("userId")!,
               idDBR: deleteImagen.idDBR,
               idEmiWeb: deleteImagen.idEmiWeb,
-              emprendimiento: deleteImagen.tarea.target!.jornada.target!.emprendimiento.target!.nombre,
+              emprendimiento: deleteImagen.tarea.target!.jornada.target!.emprendimiento.target!.nombre, idEmprendimiento: idEmprendimiento,
             ); //Se crea la nueva instruccion a realizar en bitacora
             deleteImagen.bitacora.add(nuevaInstruccion);
             // Se elimina imagen de ObjectBox
@@ -328,8 +328,8 @@ class JornadaController extends ChangeNotifier {
     final catalogoProyecto = dataBase.catalogoProyectoBox.get(idCatalogoProyecto);
     if (emprendimiento != null && catalogoProyecto != null && faseEmp != null) {
       print("Fase de Add3: ${faseEmp.fase}");
-      final nuevaInstruccionJornada = Bitacora(instruccion: 'syncAddJornada3', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-      final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Jornada 3", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionJornada = Bitacora(instruccion: 'syncAddJornada3', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Jornada 3", usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza la fase del Emprendimiento
       //TODO actualizar en el backend.
       emprendimiento.faseEmp.add(faseEmp);
@@ -358,7 +358,7 @@ class JornadaController extends ChangeNotifier {
     String newComentarios, int newIdProyecto, String newDescripcion, int idTarea) {
     var updateTarea  = dataBase.tareasBox.get(idTarea);
     if (updateTarea != null) {
-      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateJornada3', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateJornada3', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       updateTarea.fechaRegistro = newFechaRegistro;
       updateTarea.fechaRevision = newFechaRevision;
       updateTarea.tarea = newTarea;
@@ -428,8 +428,8 @@ class JornadaController extends ChangeNotifier {
         print('Jornada ${i + 1} actualizada exitosamente');
       }
       print("Entro aca");
-      final nuevaInstruccionJornada = Bitacora(instruccion: 'syncAddJornada4', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-      final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Jornada 4", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionJornada = Bitacora(instruccion: 'syncAddJornada4', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Jornada 4", usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza la fase del Emprendimiento
       //TODO actualizar en el backend.
       emprendimiento.faseEmp.add(faseEmp);
@@ -451,10 +451,10 @@ class JornadaController extends ChangeNotifier {
     print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
   }
 
-  void updateJornada4(int id, DateTime newFechaRegistro, String? newComentarios, bool newCompletada, int idTarea) {
+  void updateJornada4(int id, DateTime newFechaRegistro, String? newComentarios, bool newCompletada, int idTarea, int idEmprendimiento) {
     var updateTarea  = dataBase.tareasBox.get(idTarea);
     if (updateTarea != null) {
-      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateJornada4', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateJornada4', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       updateTarea.fechaRegistro = newFechaRegistro;
       updateTarea.comentarios = newComentarios;
       //Se actualiza la tarea con las nuevas imagenes

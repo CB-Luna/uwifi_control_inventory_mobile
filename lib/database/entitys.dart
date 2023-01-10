@@ -232,6 +232,7 @@ class Bitacora{
   String? idDBR;
   String? idEmiWeb;
   String? emprendimiento;
+  int idEmprendimiento;
   DateTime fechaRegistro;
   DateTime? fechaSync;
   @Backlink()
@@ -275,6 +276,7 @@ class Bitacora{
     this.idDBR,
     this.idEmiWeb,
     this.emprendimiento,
+    required this.idEmprendimiento,
     DateTime? fechaRegistro,
     this.fechaSync,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();

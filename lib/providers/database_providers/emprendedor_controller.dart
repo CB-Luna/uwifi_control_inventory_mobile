@@ -74,7 +74,7 @@ class EmprendedorController extends ChangeNotifier {
 
       final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
       if (emprendimiento != null) {
-        final nuevaInstruccion = Bitacora(instruccion: 'syncAddEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+        final nuevaInstruccion = Bitacora(instruccion: 'syncAddEmprendedor', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
         final comunidad = dataBase.comunidadesBox.get(emprendedor!.idComunidad);
         if (comunidad != null) {
           nuevoEmprendedor.comunidad.target = comunidad;
@@ -92,9 +92,9 @@ class EmprendedorController extends ChangeNotifier {
   }
 
   void update(int id, String newNombre, String newApellidos, String newCurp, 
-  String newIntegrantesFamilia, String newTelefono, String newComentarios, int idComunidad) {
+  String newIntegrantesFamilia, String newTelefono, String newComentarios, int idComunidad, int idEmprendimiento) {
     final updateEmprendedor = dataBase.emprendedoresBox.get(id);
-    final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+    final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateEmprendedor', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
     if (updateEmprendedor != null) {
       updateEmprendedor.nombre = newNombre;
       updateEmprendedor.apellidos = newApellidos;
@@ -114,7 +114,7 @@ class EmprendedorController extends ChangeNotifier {
   void addImagen(int idEmprendimiento) {
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     if (emprendimiento != null) {
-      final nuevaInstruccion = Bitacora(instruccion: 'syncAddImagenEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncAddImagenEmprendedor', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       imagenLocal!.bitacora.add(nuevaInstruccion);
       emprendimiento.emprendedor.target!.imagen.target = imagenLocal;
       dataBase.imagenesBox.put(imagenLocal!);
@@ -124,9 +124,9 @@ class EmprendedorController extends ChangeNotifier {
     } 
   }
 
-  void updateImagen(int id, Imagenes newImagen) {
+  void updateImagen(int id, Imagenes newImagen, int idEmprendimiento) {
     final updateImagen = dataBase.imagenesBox.get(id);
-    final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateImagenEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+    final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateImagenEmprendedor', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
     if (updateImagen != null) {
       updateImagen.nombre = newImagen.nombre;
       updateImagen.path = newImagen.path;

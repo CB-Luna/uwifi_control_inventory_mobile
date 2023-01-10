@@ -512,7 +512,8 @@ class _EditarVentaScreenState extends State<EditarVentaScreen> {
                                         widget.venta.id,
                                         fechaInicio,
                                         fechaTermino,
-                                        totalVenta
+                                        totalVenta,
+                                        widget.idEmp.id
                                       );
                                       await Navigator.push(
                                         context,

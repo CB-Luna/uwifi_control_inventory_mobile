@@ -51,7 +51,7 @@ class InversionController extends ChangeNotifier {
       if (emprendimiento != null && estadoInversion != null) {
         final nuevaInversionXprodCotizados = InversionesXProdCotizados(); //Se crea la instancia inversion x prod Cotizados
         nuevaInversionXprodCotizados.inversion.target = nuevaInversion;
-        final nuevaInstruccion = Bitacora(instruccion: 'syncAddInversion', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+        final nuevaInstruccion = Bitacora(instruccion: 'syncAddInversion', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
         nuevaInversion.inversionXprodCotizados.add(nuevaInversionXprodCotizados); //Se agrega la nueva instancia de inversion x prod Cotizados
         nuevaInversion.estadoInversion.target = estadoInversion;
         nuevaInversion.emprendimiento.target = emprendimiento;

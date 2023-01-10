@@ -169,7 +169,8 @@ class _MainTabOpcionesScreenState extends State<MainTabOpcionesScreen>
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) => PagosScreen(
-                                                    idInversion: actualInversion!.id,
+                                                    idInversion: actualInversion!.id, 
+                                                    idEmprendimiento: widget.emprendimiento.id,
                                                   ),
                                                 ),
                                               );
@@ -187,7 +188,8 @@ class _MainTabOpcionesScreenState extends State<MainTabOpcionesScreen>
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) => PagosScreen(
-                                                  idInversion: actualInversion!.id,
+                                                  idInversion: actualInversion!.id, 
+                                                  idEmprendimiento: widget.emprendimiento.id,
                                                 ),
                                               ),
                                             );
