@@ -264,7 +264,7 @@ class _DetalleCotizacionState extends State<DetalleCotizacion> {
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0, 5, 0, 0),
                                       child: Text(
-                                        'Proovedor',
+                                        'Proveedor',
                                         style: AppTheme.of(context)
                                             .bodyText1
                                             .override(
@@ -357,6 +357,34 @@ class _DetalleCotizacionState extends State<DetalleCotizacion> {
                                             ),
                                       ),
                                     ),
+                                     Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                              0, 5, 0, 0,
+                                              ),
+                                      child: Text('Cantidad',
+                                        style: AppTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              fontFamily: AppTheme.of(context)
+                                                  .bodyText1Family,
+                                              fontSize: 15,
+                                            ),
+                                    ),        
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(0,5,0,0),
+                                      child: Text(
+                                        widget.detalleCot.cantidad.toString(),
+                                        style: AppTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              fontFamily: AppTheme.of(context)
+                                                  .bodyText1Family,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                      ),
+                                    ),
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
@@ -390,28 +418,35 @@ class _DetalleCotizacionState extends State<DetalleCotizacion> {
                                             ),
                                       ),
                                     ),
-                                    /*
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0, 0, 0, 5),
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            child: getImage(
-                                              widget.detalleCot.productosProv
-                                                  .target!.imagen.target?.path,
-                                              height: 200,
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                              0, 5, 0, 0,
+                                              ),
+                                      child: Text('Costo Total',
+                                        style: AppTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              fontFamily: AppTheme.of(context)
+                                                  .bodyText1Family,
+                                              fontSize: 15,
                                             ),
-                                          ),
-                                        ),
-                                      ],
+                                    ),        
                                     ),
-                                    */
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(0,5,0,0),
+                                      child: Text(
+                                        widget.detalleCot.costoTotal.toString(),
+                                        style: AppTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              fontFamily: AppTheme.of(context)
+                                                  .bodyText1Family,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                      ),
+                                    ),
+                                    
                                   ],
                                 ),
                               ),
