@@ -213,6 +213,7 @@ class _AgregarEmprendimientoScreenState
                                         nombre: image!.name,
                                         path: image!.path,
                                         base64: base64,
+                                        idEmprendimiento: 0
                                         //imagenPocketbase: imagenUint8List,
                                       );
                                       emprendimientoProvider.imagenLocal =

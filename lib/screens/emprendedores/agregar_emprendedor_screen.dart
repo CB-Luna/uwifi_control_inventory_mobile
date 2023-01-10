@@ -216,7 +216,9 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                                 imagenes: image!.path,
                                                 nombre: image!.name, 
                                                 path: image!.path, 
-                                                base64: base64);
+                                                base64: base64,
+                                                idEmprendimiento: 0
+                                                );
                                               emprendedorProvider.imagenLocal = newImagenLocal;
                                             });
                                           },

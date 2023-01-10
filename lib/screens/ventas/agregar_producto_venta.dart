@@ -590,7 +590,8 @@ class _AgregarProductoVentaState
                                               costo: double.parse(costoUnitario.text.replaceAll("\$", "").replaceAll(",","")),
                                               cantVendida: int.parse(cantidadVendida.text),
                                               subtotal: double.parse(subTotal.text.replaceAll("\$", "").replaceAll(",","")),
-                                              precioVenta: double.parse(precioVenta.text.replaceAll("\$", "").replaceAll(",","")),
+                                              precioVenta: double.parse(precioVenta.text.replaceAll("\$", "").replaceAll(",","")), 
+                                              idEmprendimiento: widget.emprendimiento.id,
                                             );
                                             newProductoVendido.productoEmp.target = newProductoEmp;
                                             newProductoVendido.unidadMedida.target = newUnidadMedida;

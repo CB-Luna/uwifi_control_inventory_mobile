@@ -214,7 +214,7 @@ class CotizacionController extends ChangeNotifier {
     }
   }
 
-  Future<bool> buscarOtraCotizacion(Inversiones inversion, int idInversionesXProdCotizados) async {
+  Future<bool> buscarOtraCotizacion(Inversiones inversion, int idInversionesXProdCotizados, int idEmprendimiento) async {
     try {
       if (await getTokenOAuth()) {
         final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Buscar Otra Cotización")).build().findFirst();
@@ -256,7 +256,7 @@ class CotizacionController extends ChangeNotifier {
                       dataBase.productosCotBox.put(listProdCotizados[i]);
                       print("Prod Cotizado updated succesfully");
                     }
-                    final nuevaInversionXprodCotizados = InversionesXProdCotizados(); //Se crea la instancia inversion x prod Cotizados
+                    final nuevaInversionXprodCotizados = InversionesXProdCotizados(idEmprendimiento: idEmprendimiento); //Se crea la instancia inversion x prod Cotizados
                     // final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateEstadoInversion', instruccionAdicional: "Solicitada", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
                     inversion.estadoInversion.target = newEstadoInversion;
                     nuevaInversionXprodCotizados.inversion.target = inversion;

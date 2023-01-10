@@ -53,13 +53,15 @@ class JornadaController extends ChangeNotifier {
       numJornada: numJornada.toString(),
       fechaRevision: fechaRevision ?? DateTime.now(),
       fechaRegistro: fechaRegistro,
-      completada: false,
+      completada: false, 
+      idEmprendimiento: idEmprendimiento,
       );
     final nuevaTarea = Tareas(
       tarea: tarea,
       descripcion: "Creación Jornada 1",
       fechaRevision: fechaRevision ?? DateTime.now(),
-      fechaRegistro: fechaRegistro);
+      fechaRegistro: fechaRegistro, 
+      idEmprendimiento: idEmprendimiento);
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Jornada 1")).build().findFirst();
     if (emprendimiento != null && faseEmp != null) {
@@ -115,14 +117,16 @@ class JornadaController extends ChangeNotifier {
       numJornada: numJornada.toString(),
       fechaRevision: fechaRevision ?? DateTime.now(),
       fechaRegistro: fechaRegistro,
-      completada: false,
+      completada: false, 
+      idEmprendimiento: idEmprendimiento,
       );
     final nuevaTarea = Tareas(
       tarea: tarea, 
       descripcion: "Creación Jornada 2", 
       comentarios: comentarios, 
       fechaRevision: fechaRevision ?? DateTime.now(),
-      fechaRegistro: fechaRegistro,
+      fechaRegistro: fechaRegistro, 
+      idEmprendimiento: idEmprendimiento,
       );
     //Se agregan las imagenes a la Tarea
     for (var i = 0; i < imagenes.length; i++) {
@@ -130,7 +134,8 @@ class JornadaController extends ChangeNotifier {
         imagenes: imagenes[i],
         nombre: imagenesLocal[i].nombre,
         path: imagenesLocal[i].path,
-        base64: imagenesLocal[i].base64,
+        base64: imagenesLocal[i].base64, 
+        idEmprendimiento: idEmprendimiento,
         ); //Se crea el objeto imagenes para la Tarea
       nuevaImagenTarea.tarea.target = nuevaTarea;
       nuevaTarea.imagenes.add(nuevaImagenTarea);
@@ -194,7 +199,8 @@ class JornadaController extends ChangeNotifier {
             imagenes: listInstruccionesImagenesTemp[i].imagenLocal.path,
             nombre: listInstruccionesImagenesTemp[i].imagenLocal.nombre,
             path: listInstruccionesImagenesTemp[i].imagenLocal.path,
-            base64: listInstruccionesImagenesTemp[i].imagenLocal.base64,
+            base64: listInstruccionesImagenesTemp[i].imagenLocal.base64, 
+            idEmprendimiento: idEmprendimiento,
             ); //Se crea el objeto imagenes para la Tarea
           nuevaImagenTarea.tarea.target = tarea;
           nuevaImagenTarea.bitacora.add(nuevaInstruccion);
@@ -222,7 +228,8 @@ class JornadaController extends ChangeNotifier {
             imagenes: listInstruccionesImagenesTemp[i].imagenLocal.path,
             nombre: listInstruccionesImagenesTemp[i].imagenLocal.nombre,
             path: listInstruccionesImagenesTemp[i].imagenLocal.path,
-            base64: listInstruccionesImagenesTemp[i].imagenLocal.base64,
+            base64: listInstruccionesImagenesTemp[i].imagenLocal.base64, 
+            idEmprendimiento: idEmprendimiento,
             ); //Se crea el objeto imagenes para la Tarea
           nuevaImagenTarea.tarea.target = tarea;
           nuevaImagenTarea.bitacora.add(nuevaInstruccion);
@@ -250,7 +257,8 @@ class JornadaController extends ChangeNotifier {
             imagenes: listInstruccionesImagenesTemp[i].imagenLocal.path,
             nombre: listInstruccionesImagenesTemp[i].imagenLocal.nombre,
             path: listInstruccionesImagenesTemp[i].imagenLocal.path,
-            base64: listInstruccionesImagenesTemp[i].imagenLocal.base64,
+            base64: listInstruccionesImagenesTemp[i].imagenLocal.base64, 
+            idEmprendimiento: idEmprendimiento,
             ); //Se crea el objeto imagenes para la Tarea
           nuevaImagenTarea.tarea.target = tarea;
           nuevaImagenTarea.bitacora.add(nuevaInstruccion);
@@ -302,14 +310,16 @@ class JornadaController extends ChangeNotifier {
       numJornada: numJornada.toString(),
       fechaRevision: fechaRevision ?? DateTime.now(),
       fechaRegistro: fechaRegistro,
-      completada: false,
+      completada: false, 
+      idEmprendimiento: idEmprendimiento,
       );
     final nuevaTarea = Tareas(
       tarea: tarea, 
       descripcion: descripcion, 
       comentarios: comentarios,
       fechaRevision: fechaRevision ?? DateTime.now(),
-      fechaRegistro: fechaRegistro,
+      fechaRegistro: fechaRegistro, 
+      idEmprendimiento: idEmprendimiento,
       );
     //Se agregan las imagenes a la Tarea
     for (var i = 0; i < imagenes.length; i++) {
@@ -317,7 +327,8 @@ class JornadaController extends ChangeNotifier {
         imagenes: imagenes[i],
         nombre: imagenesLocal[i].nombre,
         path: imagenesLocal[i].path,
-        base64: imagenesLocal[i].base64,
+        base64: imagenesLocal[i].base64, 
+        idEmprendimiento: idEmprendimiento,
         ); //Se crea el objeto imagenes para la Tarea
       nuevaImagenTarea.tarea.target = nuevaTarea;
       nuevaTarea.imagenes.add(nuevaImagenTarea);
@@ -395,14 +406,16 @@ class JornadaController extends ChangeNotifier {
       numJornada: numJornada.toString(),
       fechaRevision: fechaRevision ?? DateTime.now(),
       fechaRegistro: fechaRegistro,
-      completada: false,
+      completada: false, 
+      idEmprendimiento: idEmprendimiento,
       );
     final nuevaTarea = Tareas(
       tarea: "Creación Jornada 4",
       descripcion: "Creación Jornada 4",
       comentarios: comentarios,
       fechaRevision: fechaRevision ?? DateTime.now(),
-      fechaRegistro: fechaRegistro,
+      fechaRegistro: fechaRegistro, 
+      idEmprendimiento: idEmprendimiento,
       );
       print("Entro aca");
     //Se agregan las imagenes a la Tarea
@@ -411,7 +424,8 @@ class JornadaController extends ChangeNotifier {
         imagenes: imagenes[i],
         nombre: imagenesLocal[i].nombre,
         path: imagenesLocal[i].path,
-        base64: imagenesLocal[i].base64,
+        base64: imagenesLocal[i].base64, 
+        idEmprendimiento: idEmprendimiento,
         ); //Se crea el objeto imagenes para la Tarea
       nuevaImagenTarea.tarea.target = nuevaTarea;
       nuevaTarea.imagenes.add(nuevaImagenTarea);

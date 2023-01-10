@@ -1177,6 +1177,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                   base64: recordsImagenParse.base64,
                   idEmiWeb: recordsImagenParse.idEmiWeb,
                   idDBR: recordsImagenParse.id,
+                  idEmprendimiento: 0,
                 );
                 
                 print('info de imagen: ${nuevaImagenProductoProveedor}');
@@ -1317,6 +1318,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                   base64: recordsImagenParse.base64,
                   idEmiWeb: recordsImagenParse.idEmiWeb,
                   idDBR: recordsImagenParse.id,
+                  idEmprendimiento: 0,
                 );
                 
                 
@@ -1516,6 +1518,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                   base64: imagenUsuarioPocketbase.base64,
                   idEmiWeb: imagenUsuarioPocketbase.idEmiWeb,
                   idDBR: imagenUsuarioPocketbase.id,
+                  idEmprendimiento: 0,
                 );
                 nuevaImagenUsuario.usuario.target = updateUsuario;
                 dataBase.imagenesBox.put(nuevaImagenUsuario);

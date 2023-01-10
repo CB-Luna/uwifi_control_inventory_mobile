@@ -257,7 +257,8 @@ class _EditarEmprendimientoScreenState
                                     imagenes: image!.path,
                                     nombre: image!.name,
                                     path: image!.path,
-                                    base64: base64);
+                                    base64: base64, 
+                                    idEmprendimiento: widget.emprendimiento.id);
                                 emprendimientoProvider.imagenLocal = newImagen;
                               });
                             },

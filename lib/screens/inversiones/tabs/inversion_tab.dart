@@ -415,6 +415,7 @@ class _InversionTabState extends State<InversionTab>
                                             EditarProductoInversionScreen(
                                           inversion: widget.inversion,
                                           prodSolicitado: productoSolicitado,
+                                          idEmprendimiento: widget.emprendimiento.id,
                                         ),
                                       ),
                                     );

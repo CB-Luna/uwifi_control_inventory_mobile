@@ -1014,7 +1014,8 @@ class _AgregarProductoInversionJornadaScreenState
                                             descripcion: productoInversionJornadaController.descripcion, 
                                             proveedorSugerido: productoInversionJornadaController.proveedorSugerido,
                                             cantidad: int.parse(productoInversionJornadaController.cantidad),
-                                            costoEstimado: double.parse(productoInversionJornadaController.costoEstimado),
+                                            costoEstimado: double.parse(productoInversionJornadaController.costoEstimado), 
+                                            idEmprendimiento: widget.emprendimiento.id,
                                           );
                                           newProductoSolicitado.tipoEmpaques.target = actualTipoEmpaque;
                                           newProductoSolicitado.familiaProducto.target = actualFamiliaProd;

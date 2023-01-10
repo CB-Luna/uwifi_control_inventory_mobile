@@ -87,13 +87,15 @@ class UsuarioController extends ChangeNotifier {
       path: file.path,
       base64: imagen.base64,
       idEmiWeb: imagen.idEmiWeb,
-      idDBR: imagen.id
+      idDBR: imagen.id,
+      idEmprendimiento: 0,
       );   
       print("Se guarda exitosamente la imagen de perfil");
     } else{
       print("No hay imagen de perfil");
       nuevaImagenUsuario = Imagenes(
       imagenes: "",
+      idEmprendimiento: 0,
       );
     }
     //Se crea el objeto imagenes para el Usuario
@@ -166,6 +168,7 @@ class UsuarioController extends ChangeNotifier {
             base64: newImagen.base64,
             idEmiWeb: newImagen.idEmiWeb,
             idDBR: newImagen.id,
+            idEmprendimiento: 0,
           ); 
           nuevaImagenUsuario.usuario.target = updateUsuario;
           dataBase.imagenesBox.put(nuevaImagenUsuario);

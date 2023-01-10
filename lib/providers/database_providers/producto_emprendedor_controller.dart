@@ -43,7 +43,8 @@ class ProductoEmprendedorController extends ChangeNotifier {
     final nuevoProductoEmp = ProductosEmp(
       nombre: nombre,
       descripcion: descripcion,
-      costo: double.parse(costo),
+      costo: double.parse(costo), 
+      idEmprendimiento: idEmprendimiento,
       );
       //Se agrega las imagen al producto emprendedor
       if (imagen != null) {
@@ -51,7 +52,8 @@ class ProductoEmprendedorController extends ChangeNotifier {
           imagenes: imagen!.path,
           nombre: imagen!.nombre,
           path: imagen!.path,
-          base64: imagen!.base64,
+          base64: imagen!.base64, 
+          idEmprendimiento: idEmprendimiento,
           ); //Se crea el objeto imagenes para la ProductoEmp
         nuevaImagenProductoEmp.productosEmp.target = nuevoProductoEmp;
         nuevoProductoEmp.imagen.target = nuevaImagenProductoEmp;
@@ -113,7 +115,8 @@ void addImagenProductoEmp(ProductosEmp productoEmp, String newNombreImagen, Stri
         imagenes: newPath,
         nombre: newNombreImagen,
         base64: newBase64,
-        path: newPath,
+        path: newPath, 
+        idEmprendimiento: idEmprendimiento,
       );
       nuevaImagenProductoEmp.productosEmp.target = productoEmp;
       productoEmp.imagen.target = nuevaImagenProductoEmp;

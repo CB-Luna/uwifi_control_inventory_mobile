@@ -249,7 +249,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(11, 7673785883081583133),
       name: 'Ventas',
-      lastPropertyId: const IdUid(14, 5010841770389356201),
+      lastPropertyId: const IdUid(15, 6698964233104397495),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -300,7 +300,12 @@ final _entities = <ModelEntity>[
             name: 'idEmiWeb',
             type: 9,
             flags: 2080,
-            indexId: const IdUid(243, 1429204767736367358))
+            indexId: const IdUid(243, 1429204767736367358)),
+        ModelProperty(
+            id: const IdUid(15, 6698964233104397495),
+            name: 'idEmprendimiento',
+            type: 6,
+            flags: 0)
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -316,7 +321,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(12, 5075853906068129300),
       name: 'Consultorias',
-      lastPropertyId: const IdUid(16, 3843038384942165449),
+      lastPropertyId: const IdUid(17, 4902247676630630727),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -371,7 +376,12 @@ final _entities = <ModelEntity>[
             name: 'idEmiWeb',
             type: 9,
             flags: 2080,
-            indexId: const IdUid(240, 6874025484378531555))
+            indexId: const IdUid(240, 6874025484378531555)),
+        ModelProperty(
+            id: const IdUid(17, 4902247676630630727),
+            name: 'idEmprendimiento',
+            type: 6,
+            flags: 0)
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -387,7 +397,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(19, 2491530739310255510),
       name: 'Tareas',
-      lastPropertyId: const IdUid(22, 6170236630099654648),
+      lastPropertyId: const IdUid(23, 1609489238474676070),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -451,6 +461,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(22, 6170236630099654648),
             name: 'idEmiWeb',
             type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(23, 1609489238474676070),
+            name: 'idEmprendimiento',
+            type: 6,
             flags: 0)
       ],
       relations: <ModelRelation>[
@@ -704,7 +719,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(24, 6358146304075079104),
       name: 'Jornadas',
-      lastPropertyId: const IdUid(14, 6450285659452861803),
+      lastPropertyId: const IdUid(15, 744399421319379407),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -756,6 +771,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(14, 6450285659452861803),
             name: 'completada',
             type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(15, 744399421319379407),
+            name: 'idEmprendimiento',
+            type: 6,
             flags: 0)
       ],
       relations: <ModelRelation>[
@@ -1331,7 +1351,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(43, 8172937846526815489),
       name: 'ProductosEmp',
-      lastPropertyId: const IdUid(17, 5476718282839441262),
+      lastPropertyId: const IdUid(18, 5174371667876691074),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1396,7 +1416,12 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(245, 3873668621277198912),
-            relationTarget: 'Imagenes')
+            relationTarget: 'Imagenes'),
+        ModelProperty(
+            id: const IdUid(18, 5174371667876691074),
+            name: 'idEmprendimiento',
+            type: 6,
+            flags: 0)
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -1525,7 +1550,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(47, 4406411524870188538),
       name: 'Imagenes',
-      lastPropertyId: const IdUid(18, 2485071929341118535),
+      lastPropertyId: const IdUid(19, 5622714150718426006),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1617,7 +1642,12 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(272, 5363954372619465298),
-            relationTarget: 'ProductosProv')
+            relationTarget: 'ProductosProv'),
+        ModelProperty(
+            id: const IdUid(19, 5622714150718426006),
+            name: 'idEmprendimiento',
+            type: 6,
+            flags: 0)
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -1637,7 +1667,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(48, 5212286852224162052),
       name: 'Inversiones',
-      lastPropertyId: const IdUid(18, 2537752804515452942),
+      lastPropertyId: const IdUid(19, 6787102826169269276),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1723,7 +1753,12 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(268, 370237648053660087),
-            relationTarget: 'Imagenes')
+            relationTarget: 'Imagenes'),
+        ModelProperty(
+            id: const IdUid(19, 6787102826169269276),
+            name: 'idEmprendimiento',
+            type: 6,
+            flags: 0)
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -1747,7 +1782,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(49, 100215042722630549),
       name: 'ProdSolicitado',
-      lastPropertyId: const IdUid(18, 4420051813097480449),
+      lastPropertyId: const IdUid(19, 1346415551296560367),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1841,7 +1876,12 @@ final _entities = <ModelEntity>[
             name: 'idEmiWeb',
             type: 9,
             flags: 2080,
-            indexId: const IdUid(273, 713793477301725008))
+            indexId: const IdUid(273, 713793477301725008)),
+        ModelProperty(
+            id: const IdUid(19, 1346415551296560367),
+            name: 'idEmprendimiento',
+            type: 6,
+            flags: 0)
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -1911,7 +1951,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(51, 1596057038243167918),
       name: 'ProdVendidos',
-      lastPropertyId: const IdUid(18, 4465631852815783681),
+      lastPropertyId: const IdUid(19, 6295741357351637114),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1990,6 +2030,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(18, 4465631852815783681),
             name: 'postEmiWeb',
             type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(19, 6295741357351637114),
+            name: 'idEmprendimiento',
+            type: 6,
             flags: 0)
       ],
       relations: <ModelRelation>[
@@ -2093,7 +2138,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(54, 858406953056318390),
       name: 'ProdCotizados',
-      lastPropertyId: const IdUid(17, 1023970263587459046),
+      lastPropertyId: const IdUid(18, 8052147635774927584),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -2151,6 +2196,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(17, 1023970263587459046),
             name: 'costoUnitario',
             type: 8,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(18, 8052147635774927584),
+            name: 'idEmprendimiento',
+            type: 6,
             flags: 0)
       ],
       relations: <ModelRelation>[
@@ -2257,7 +2307,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(57, 2397636268740769237),
       name: 'InversionesXProdCotizados',
-      lastPropertyId: const IdUid(7, 6157324509682149666),
+      lastPropertyId: const IdUid(8, 1038874851836746200),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -2292,6 +2342,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(7, 6157324509682149666),
             name: 'idEmiWeb',
             type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 1038874851836746200),
+            name: 'idEmprendimiento',
+            type: 6,
             flags: 0)
       ],
       relations: <ModelRelation>[
@@ -2308,7 +2363,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(58, 6428801880818699617),
       name: 'Pagos',
-      lastPropertyId: const IdUid(9, 8582847983321332165),
+      lastPropertyId: const IdUid(10, 5801515247847733125),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -2356,7 +2411,12 @@ final _entities = <ModelEntity>[
             name: 'idEmiWeb',
             type: 9,
             flags: 2080,
-            indexId: const IdUid(271, 8536477397944553514))
+            indexId: const IdUid(271, 8536477397944553514)),
+        ModelProperty(
+            id: const IdUid(10, 5801515247847733125),
+            name: 'idEmprendimiento',
+            type: 6,
+            flags: 0)
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -3316,7 +3376,7 @@ ModelDefinition getObjectBoxModel() {
           final idEmiWebOffset = object.idEmiWeb == null
               ? null
               : fbb.writeString(object.idEmiWeb!);
-          fbb.startTable(15);
+          fbb.startTable(16);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.fechaInicio.millisecondsSinceEpoch);
           fbb.addInt64(2, object.fechaTermino.millisecondsSinceEpoch);
@@ -3326,6 +3386,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addBool(9, object.archivado);
           fbb.addInt64(12, object.emprendimiento.targetId);
           fbb.addOffset(13, idEmiWebOffset);
+          fbb.addInt64(14, object.idEmprendimiento);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -3348,7 +3409,9 @@ ModelDefinition getObjectBoxModel() {
               idDBR: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 20),
               idEmiWeb: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 30));
+                  .vTableGetNullable(buffer, rootOffset, 30),
+              idEmprendimiento:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 32, 0));
           object.emprendimiento.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0);
           object.emprendimiento.attach(store);
@@ -3384,7 +3447,7 @@ ModelDefinition getObjectBoxModel() {
           final idEmiWebOffset = object.idEmiWeb == null
               ? null
               : fbb.writeString(object.idEmiWeb!);
-          fbb.startTable(17);
+          fbb.startTable(18);
           fbb.addInt64(0, object.id);
           fbb.addOffset(2, documentosOffset);
           fbb.addInt64(3, object.fechaRegistro.millisecondsSinceEpoch);
@@ -3394,6 +3457,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(12, object.ambitoConsultoria.targetId);
           fbb.addBool(14, object.archivado);
           fbb.addOffset(15, idEmiWebOffset);
+          fbb.addInt64(16, object.idEmprendimiento);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -3414,7 +3478,9 @@ ModelDefinition getObjectBoxModel() {
               archivado: const fb.BoolReader()
                   .vTableGet(buffer, rootOffset, 32, false),
               idEmiWeb: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 34));
+                  .vTableGetNullable(buffer, rootOffset, 34),
+              idEmprendimiento:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 36, 0));
           object.emprendimiento.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
           object.emprendimiento.attach(store);
@@ -3459,7 +3525,7 @@ ModelDefinition getObjectBoxModel() {
           final idEmiWebOffset = object.idEmiWeb == null
               ? null
               : fbb.writeString(object.idEmiWeb!);
-          fbb.startTable(23);
+          fbb.startTable(24);
           fbb.addInt64(0, object.id);
           fbb.addOffset(2, descripcionOffset);
           fbb.addInt64(5, object.fechaRevision.millisecondsSinceEpoch);
@@ -3471,6 +3537,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(19, object.porcentaje.targetId);
           fbb.addOffset(20, comentariosOffset);
           fbb.addOffset(21, idEmiWebOffset);
+          fbb.addInt64(22, object.idEmprendimiento);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -3493,7 +3560,8 @@ ModelDefinition getObjectBoxModel() {
               idDBR: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 32),
               idEmiWeb:
-                  const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 46));
+                  const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 46),
+              idEmprendimiento: const fb.Int64Reader().vTableGet(buffer, rootOffset, 48, 0));
           object.jornada.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
           object.jornada.attach(store);
@@ -3770,7 +3838,7 @@ ModelDefinition getObjectBoxModel() {
           final idEmiWebOffset = object.idEmiWeb == null
               ? null
               : fbb.writeString(object.idEmiWeb!);
-          fbb.startTable(15);
+          fbb.startTable(16);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, numJornadaOffset);
           fbb.addInt64(3, object.fechaRegistro.millisecondsSinceEpoch);
@@ -3780,6 +3848,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(11, object.fechaRevision.millisecondsSinceEpoch);
           fbb.addOffset(12, idEmiWebOffset);
           fbb.addBool(13, object.completada);
+          fbb.addInt64(14, object.idEmprendimiento);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -3800,7 +3869,9 @@ ModelDefinition getObjectBoxModel() {
               idDBR: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 22),
               idEmiWeb: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 28));
+                  .vTableGetNullable(buffer, rootOffset, 28),
+              idEmprendimiento:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 32, 0));
           object.emprendimiento.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
           object.emprendimiento.attach(store);
@@ -4466,7 +4537,7 @@ ModelDefinition getObjectBoxModel() {
           final idEmiWebOffset = object.idEmiWeb == null
               ? null
               : fbb.writeString(object.idEmiWeb!);
-          fbb.startTable(18);
+          fbb.startTable(19);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nombreOffset);
           fbb.addOffset(2, descripcionOffset);
@@ -4478,6 +4549,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(12, object.unidadMedida.targetId);
           fbb.addOffset(15, idEmiWebOffset);
           fbb.addInt64(16, object.imagen.targetId);
+          fbb.addInt64(17, object.idEmprendimiento);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4500,7 +4572,9 @@ ModelDefinition getObjectBoxModel() {
               idDBR: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 20),
               idEmiWeb: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 34));
+                  .vTableGetNullable(buffer, rootOffset, 34),
+              idEmprendimiento:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 38, 0));
           object.emprendimientos.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
           object.emprendimientos.attach(store);
@@ -4683,7 +4757,7 @@ ModelDefinition getObjectBoxModel() {
               object.base64 == null ? null : fbb.writeString(object.base64!);
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          fbb.startTable(19);
+          fbb.startTable(20);
           fbb.addInt64(0, object.id);
           fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addOffset(3, imagenesOffset);
@@ -4699,6 +4773,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(14, object.productosEmp.targetId);
           fbb.addInt64(16, object.inversion.targetId);
           fbb.addInt64(17, object.productosProv.targetId);
+          fbb.addInt64(18, object.idEmprendimiento);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4721,7 +4796,8 @@ ModelDefinition getObjectBoxModel() {
               idDBR: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 20),
               idEmiWeb: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 12));
+                  .vTableGetNullable(buffer, rootOffset, 12),
+              idEmprendimiento: const fb.Int64Reader().vTableGet(buffer, rootOffset, 40, 0));
           object.usuario.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
           object.usuario.attach(store);
@@ -4777,7 +4853,7 @@ ModelDefinition getObjectBoxModel() {
           final idEmiWebOffset = object.idEmiWeb == null
               ? null
               : fbb.writeString(object.idEmiWeb!);
-          fbb.startTable(19);
+          fbb.startTable(20);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.fechaCompra?.millisecondsSinceEpoch);
           fbb.addInt64(2, object.porcentajePago);
@@ -4793,6 +4869,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(15, idEmiWebOffset);
           fbb.addInt64(16, object.imagenFirmaRecibido.targetId);
           fbb.addInt64(17, object.imagenProductoEntregado.targetId);
+          fbb.addInt64(18, object.idEmprendimiento);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4823,7 +4900,9 @@ ModelDefinition getObjectBoxModel() {
               idDBR: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 20),
               idEmiWeb: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 34));
+                  .vTableGetNullable(buffer, rootOffset, 34),
+              idEmprendimiento:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 40, 0));
           object.emprendimiento.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
           object.emprendimiento.attach(store);
@@ -4887,7 +4966,7 @@ ModelDefinition getObjectBoxModel() {
           final idEmiWebOffset = object.idEmiWeb == null
               ? null
               : fbb.writeString(object.idEmiWeb!);
-          fbb.startTable(19);
+          fbb.startTable(20);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.idInversion);
           fbb.addOffset(2, productoOffset);
@@ -4904,6 +4983,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(15, object.imagen.targetId);
           fbb.addInt64(16, object.inversion.targetId);
           fbb.addOffset(17, idEmiWebOffset);
+          fbb.addInt64(18, object.idEmprendimiento);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4930,7 +5010,8 @@ ModelDefinition getObjectBoxModel() {
               fechaRegistro:
                   DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 22),
-              idEmiWeb: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 38));
+              idEmiWeb: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 38),
+              idEmprendimiento: const fb.Int64Reader().vTableGet(buffer, rootOffset, 40, 0));
           object.familiaProducto.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0);
           object.familiaProducto.attach(store);
@@ -5038,7 +5119,7 @@ ModelDefinition getObjectBoxModel() {
               : fbb.writeString(object.idEmiWeb!);
           final nombreProdOffset = fbb.writeString(object.nombreProd);
           final descripcionOffset = fbb.writeString(object.descripcion);
-          fbb.startTable(19);
+          fbb.startTable(20);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.cantVendida);
           fbb.addFloat64(2, object.subtotal);
@@ -5053,6 +5134,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addFloat64(14, object.costo);
           fbb.addInt64(15, object.unidadMedida.targetId);
           fbb.addBool(17, object.postEmiWeb);
+          fbb.addInt64(18, object.idEmprendimiento);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -5080,7 +5162,8 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 38, false),
               idDBR: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 12),
-              idEmiWeb: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 26));
+              idEmiWeb: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 26),
+              idEmprendimiento: const fb.Int64Reader().vTableGet(buffer, rootOffset, 40, 0));
           object.productoEmp.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0);
           object.productoEmp.attach(store);
@@ -5213,7 +5296,7 @@ ModelDefinition getObjectBoxModel() {
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
           final idEmiWebOffset = fbb.writeString(object.idEmiWeb);
-          fbb.startTable(18);
+          fbb.startTable(19);
           fbb.addInt64(0, object.id);
           fbb.addInt64(2, object.cantidad);
           fbb.addInt64(5, object.fechaRegistro.millisecondsSinceEpoch);
@@ -5224,6 +5307,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addBool(14, object.aceptado);
           fbb.addOffset(15, idEmiWebOffset);
           fbb.addFloat64(16, object.costoUnitario);
+          fbb.addInt64(17, object.idEmprendimiento);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -5246,7 +5330,9 @@ ModelDefinition getObjectBoxModel() {
               idDBR: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 16),
               idEmiWeb: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 34, ''));
+                  .vTableGet(buffer, rootOffset, 34, ''),
+              idEmprendimiento:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 38, 0));
           object.productosProv.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0);
           object.productosProv.attach(store);
@@ -5362,13 +5448,14 @@ ModelDefinition getObjectBoxModel() {
           final idEmiWebOffset = object.idEmiWeb == null
               ? null
               : fbb.writeString(object.idEmiWeb!);
-          fbb.startTable(8);
+          fbb.startTable(9);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addOffset(2, idDBROffset);
           fbb.addInt64(4, object.inversion.targetId);
           fbb.addBool(5, object.aceptado);
           fbb.addOffset(6, idEmiWebOffset);
+          fbb.addInt64(7, object.idEmprendimiento);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -5385,7 +5472,9 @@ ModelDefinition getObjectBoxModel() {
               idDBR: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 8),
               idEmiWeb: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 16));
+                  .vTableGetNullable(buffer, rootOffset, 16),
+              idEmprendimiento:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0));
           object.inversion.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
           object.inversion.attach(store);
@@ -5416,7 +5505,7 @@ ModelDefinition getObjectBoxModel() {
           final idEmiWebOffset = object.idEmiWeb == null
               ? null
               : fbb.writeString(object.idEmiWeb!);
-          fbb.startTable(10);
+          fbb.startTable(11);
           fbb.addInt64(0, object.id);
           fbb.addFloat64(1, object.montoAbonado);
           fbb.addInt64(2, object.fechaMovimiento.millisecondsSinceEpoch);
@@ -5425,6 +5514,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(6, object.inversion.targetId);
           fbb.addInt64(7, object.usuario.targetId);
           fbb.addOffset(8, idEmiWebOffset);
+          fbb.addInt64(9, object.idEmprendimiento);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -5443,7 +5533,9 @@ ModelDefinition getObjectBoxModel() {
               idDBR: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 12),
               idEmiWeb: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 20));
+                  .vTableGetNullable(buffer, rootOffset, 20),
+              idEmprendimiento:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0));
           object.inversion.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
           object.inversion.attach(store);
@@ -5824,6 +5916,10 @@ class Ventas_ {
   static final idEmiWeb =
       QueryStringProperty<Ventas>(_entities[2].properties[8]);
 
+  /// see [Ventas.idEmprendimiento]
+  static final idEmprendimiento =
+      QueryIntegerProperty<Ventas>(_entities[2].properties[9]);
+
   /// see [Ventas.prodVendidos]
   static final prodVendidos =
       QueryRelationToMany<Ventas, ProdVendidos>(_entities[2].relations[0]);
@@ -5872,6 +5968,10 @@ class Consultorias_ {
   /// see [Consultorias.idEmiWeb]
   static final idEmiWeb =
       QueryStringProperty<Consultorias>(_entities[3].properties[8]);
+
+  /// see [Consultorias.idEmprendimiento]
+  static final idEmprendimiento =
+      QueryIntegerProperty<Consultorias>(_entities[3].properties[9]);
 
   /// see [Consultorias.bitacora]
   static final bitacora =
@@ -5924,6 +6024,10 @@ class Tareas_ {
   /// see [Tareas.idEmiWeb]
   static final idEmiWeb =
       QueryStringProperty<Tareas>(_entities[4].properties[10]);
+
+  /// see [Tareas.idEmprendimiento]
+  static final idEmprendimiento =
+      QueryIntegerProperty<Tareas>(_entities[4].properties[11]);
 
   /// see [Tareas.bitacora]
   static final bitacora =
@@ -6121,6 +6225,10 @@ class Jornadas_ {
   /// see [Jornadas.completada]
   static final completada =
       QueryBooleanProperty<Jornadas>(_entities[9].properties[8]);
+
+  /// see [Jornadas.idEmprendimiento]
+  static final idEmprendimiento =
+      QueryIntegerProperty<Jornadas>(_entities[9].properties[9]);
 
   /// see [Jornadas.bitacora]
   static final bitacora =
@@ -6522,6 +6630,10 @@ class ProductosEmp_ {
   static final imagen =
       QueryRelationToOne<ProductosEmp, Imagenes>(_entities[20].properties[10]);
 
+  /// see [ProductosEmp.idEmprendimiento]
+  static final idEmprendimiento =
+      QueryIntegerProperty<ProductosEmp>(_entities[20].properties[11]);
+
   /// see [ProductosEmp.bitacora]
   static final bitacora =
       QueryRelationToMany<ProductosEmp, Bitacora>(_entities[20].relations[0]);
@@ -6674,6 +6786,10 @@ class Imagenes_ {
   static final productosProv =
       QueryRelationToOne<Imagenes, ProductosProv>(_entities[23].properties[14]);
 
+  /// see [Imagenes.idEmprendimiento]
+  static final idEmprendimiento =
+      QueryIntegerProperty<Imagenes>(_entities[23].properties[15]);
+
   /// see [Imagenes.prodSolicitados]
   static final prodSolicitados =
       QueryRelationToMany<Imagenes, ProdSolicitado>(_entities[23].relations[0]);
@@ -6750,6 +6866,10 @@ class Inversiones_ {
   /// see [Inversiones.imagenProductoEntregado]
   static final imagenProductoEntregado =
       QueryRelationToOne<Inversiones, Imagenes>(_entities[24].properties[14]);
+
+  /// see [Inversiones.idEmprendimiento]
+  static final idEmprendimiento =
+      QueryIntegerProperty<Inversiones>(_entities[24].properties[15]);
 
   /// see [Inversiones.bitacora]
   static final bitacora =
@@ -6836,6 +6956,10 @@ class ProdSolicitado_ {
   /// see [ProdSolicitado.idEmiWeb]
   static final idEmiWeb =
       QueryStringProperty<ProdSolicitado>(_entities[25].properties[15]);
+
+  /// see [ProdSolicitado.idEmprendimiento]
+  static final idEmprendimiento =
+      QueryIntegerProperty<ProdSolicitado>(_entities[25].properties[16]);
 
   /// see [ProdSolicitado.bitacora]
   static final bitacora =
@@ -6943,6 +7067,10 @@ class ProdVendidos_ {
   /// see [ProdVendidos.postEmiWeb]
   static final postEmiWeb =
       QueryBooleanProperty<ProdVendidos>(_entities[27].properties[13]);
+
+  /// see [ProdVendidos.idEmprendimiento]
+  static final idEmprendimiento =
+      QueryIntegerProperty<ProdVendidos>(_entities[27].properties[14]);
 
   /// see [ProdVendidos.bitacora]
   static final bitacora =
@@ -7057,6 +7185,10 @@ class ProdCotizados_ {
   static final costoUnitario =
       QueryDoubleProperty<ProdCotizados>(_entities[30].properties[9]);
 
+  /// see [ProdCotizados.idEmprendimiento]
+  static final idEmprendimiento =
+      QueryIntegerProperty<ProdCotizados>(_entities[30].properties[10]);
+
   /// see [ProdCotizados.bitacora]
   static final bitacora =
       QueryRelationToMany<ProdCotizados, Bitacora>(_entities[30].relations[0]);
@@ -7153,6 +7285,11 @@ class InversionesXProdCotizados_ {
   static final idEmiWeb = QueryStringProperty<InversionesXProdCotizados>(
       _entities[32].properties[5]);
 
+  /// see [InversionesXProdCotizados.idEmprendimiento]
+  static final idEmprendimiento =
+      QueryIntegerProperty<InversionesXProdCotizados>(
+          _entities[32].properties[6]);
+
   /// see [InversionesXProdCotizados.prodCotizados]
   static final prodCotizados =
       QueryRelationToMany<InversionesXProdCotizados, ProdCotizados>(
@@ -7195,6 +7332,10 @@ class Pagos_ {
   /// see [Pagos.idEmiWeb]
   static final idEmiWeb =
       QueryStringProperty<Pagos>(_entities[33].properties[7]);
+
+  /// see [Pagos.idEmprendimiento]
+  static final idEmprendimiento =
+      QueryIntegerProperty<Pagos>(_entities[33].properties[8]);
 
   /// see [Pagos.bitacora]
   static final bitacora =
