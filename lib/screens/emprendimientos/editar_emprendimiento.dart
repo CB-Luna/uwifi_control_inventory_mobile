@@ -438,6 +438,7 @@ class _EditarEmprendimientoScreenState
                                             widget.emprendimiento.imagen.target!
                                                 .id,
                                             newImagen!,
+                                            widget.emprendimiento.id
                                           );
                                         }
                                         emprendimientoProvider.update(
@@ -482,6 +483,7 @@ class _EditarEmprendimientoScreenState
                                             widget.emprendimiento.imagen.target!
                                                 .id,
                                             newImagen!,
+                                            widget.emprendimiento.id
                                           );
 
                                           await Navigator.push(

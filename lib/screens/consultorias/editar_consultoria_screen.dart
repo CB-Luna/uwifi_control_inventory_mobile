@@ -841,6 +841,7 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                     widget.consultoria.id,
                                     widget.tarea,
                                     idPorcentajeAvance,
+                                    widget.emprendimientoEditar.id
                                   );
                                   await Navigator.push(
                                     context,

@@ -521,7 +521,7 @@ class _CuerpoDetalleEmprendimientoState extends State<CuerpoDetalleEmprendimient
                                           onPressed: (context) async {
                                             if (usuarioProvider.usuarioCurrent!.rol.target!.rol == "Administrador" ||
                                                 usuarioProvider.usuarioCurrent!.rol.target!.rol == "Promotor") {
-                                                consultoriaProvider.desarchivarConsultoria(consultoria.id);
+                                                consultoriaProvider.desarchivarConsultoria(consultoria.id, widget.emprendimiento.id);
                                                 await Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -592,7 +592,7 @@ class _CuerpoDetalleEmprendimientoState extends State<CuerpoDetalleEmprendimient
                                           onPressed: (context) async {
                                             if (usuarioProvider.usuarioCurrent!.rol.target!.rol == "Administrador" ||
                                                 usuarioProvider.usuarioCurrent!.rol.target!.rol == "Promotor") {
-                                                consultoriaProvider.archivarConsultoria(consultoria.id);
+                                                consultoriaProvider.archivarConsultoria(consultoria.id, widget.emprendimiento.id);
                                                 await Navigator.push(
                                                 context,
                                                 MaterialPageRoute(

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/globals.dart';
@@ -141,6 +142,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
 
                 if (recordEmprendedor.id.isNotEmpty) {
                   //Segundo creamos el emprendimiento
+                  final catProyecto = dataBase.catalogoProyectoBox.query(CatalogoProyecto_.idEmiWeb.equals(basicProyecto.payload.idCatProyecto.toString())).build().findUnique();
                   final recordEmprendimiento = await client.records.create('emprendimientos', body: {
                     "nombre_emprendimiento": basicProyecto.payload.emprendimiento,
                     "descripcion": basicProyecto.payload.emprendedor.comentarios == "" ? "Sin Descripción" : basicProyecto.payload.emprendedor.comentarios,
@@ -152,6 +154,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                     "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                     "id_emprendedor_fk": recordEmprendedor.id,
                     "id_emi_web": basicProyecto.payload.idProyecto,
+                    "id_nombre_proyecto_fk": catProyecto?.idDBR ?? "",
                   });
                   if (recordEmprendimiento.id.isNotEmpty) {
                     // Se hizo con éxito el posteo
@@ -171,6 +174,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
               //El emprendedor ya existe en Pocketbase
               if (comunidad != null && fase != null) {
                 //Segundo creamos el emprendimiento
+                final catProyecto = dataBase.catalogoProyectoBox.query(CatalogoProyecto_.idEmiWeb.equals(basicProyecto.payload.idCatProyecto.toString())).build().findUnique();
                 final recordEmprendimiento = await client.records.create('emprendimientos', body: {
                   "nombre_emprendimiento": basicProyecto.payload.emprendimiento,
                   "descripcion": basicProyecto.payload.emprendedor.comentarios == "" ? "Sin Descripción" : basicProyecto.payload.emprendedor.comentarios,
@@ -182,6 +186,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                   "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                   "id_emprendedor_fk": recordValidateEmprendedor.first.id,
                   "id_emi_web": basicProyecto.payload.idProyecto,
+                  "id_nombre_proyecto_fk": catProyecto?.idDBR ?? "",
                 });
                 if (recordEmprendimiento.id.isNotEmpty) {
                   // Se hizo con éxito el posteo
@@ -220,6 +225,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
 
                 if (recordEmprendedor.id.isNotEmpty) {
                   //Segundo actualizamos el emprendimiento
+                  final catProyecto = dataBase.catalogoProyectoBox.query(CatalogoProyecto_.idEmiWeb.equals(basicProyecto.payload.idCatProyecto.toString())).build().findUnique();
                   final recordEmprendimiento = await client.records.update('emprendimientos', recordValidateEmprendimiento.first.id, body: {
                     "nombre_emprendimiento": basicProyecto.payload.emprendimiento,
                     "descripcion": basicProyecto.payload.emprendedor.comentarios == "" ? "Sin Descripción" : basicProyecto.payload.emprendedor.comentarios,
@@ -229,6 +235,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                     "id_fase_emp_fk": fase.idDBR,
                     "id_emprendedor_fk": recordEmprendedor.id,
                     "id_emi_web": basicProyecto.payload.idProyecto,
+                    "id_nombre_proyecto_fk": catProyecto?.idDBR ?? "",
                   });
                   if (recordEmprendimiento.id.isNotEmpty) {
                     // Se hizo con éxito la actualización
@@ -557,7 +564,68 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                     });
 
                     if (recordJornada.id.isNotEmpty) {
-                      //Se hizo con éxito la actualización
+                      //Se hizo con éxito la alta
+                      // Creamos la inversión asociada a la J3
+                      var totalInversion = 0.0;
+                      for (var element in basicJornadas.payload!.productoDeProyecto!.toList()) {
+                        totalInversion = totalInversion + (element?.costoEstimado ?? 0.0);
+                      }
+                      final estadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Solicitada")).build().findFirst();
+                      if (estadoInversion != null) {
+                        final recordInversion =
+                          await client.records.create('inversiones', body: {
+                          "id_emprendimiento_fk": idEmprendimientoPocketbase,
+                          "id_estado_inversion_fk": estadoInversion.idDBR,
+                          "porcentaje_pago": 50,
+                          "monto_pagar": 0,
+                          "saldo": 0,
+                          "total_inversion": totalInversion,
+                          "inversion_recibida": true,
+                          "pago_recibido": false,
+                          "producto_entregado": false,
+                          "id_emi_web": "0",
+                          "jornada_3": true,
+                        });
+                        if (recordInversion.id.isNotEmpty) {
+                          // Creamos y enviamos los prod Solicitados
+                          for (var i = 0;
+                            i < basicJornadas.payload!.productoDeProyecto!.toList().length;
+                            i++) {
+                              final familiaProducto = dataBase.familiaProductosBox.query(FamiliaProd_.idEmiWeb.equals(basicJornadas.payload!.productoDeProyecto!.toList()[i]!.idFamilia.toString())).build().findFirst();
+                              final tipoEmpaque = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idEmiWeb.equals(basicJornadas.payload!.productoDeProyecto!.toList()[i]!.unidadMedida.toString())).build().findFirst();
+                              if (familiaProducto != null && tipoEmpaque != null) {
+                                final recordProdProyecto = await client.records
+                                  .create('productos_proyecto', body: {
+                                  "producto": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.producto,
+                                  "marca_sugerida": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.marcaRecomendada,
+                                  "descripcion": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.descripcion,
+                                  "proveedo_sugerido": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.proveedorSugerido,
+                                  "cantidad": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.cantidad,
+                                  "costo_estimado": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.costoEstimado,
+                                  "id_familia_prod_fk": familiaProducto.idDBR,
+                                  "id_tipo_empaque_fk": tipoEmpaque.idDBR,
+                                  "id_inversion_fk": recordInversion.id,
+                                  "id_emi_web": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.idProductoDeProyecto,
+                                });
+                                if (recordProdProyecto.id.isNotEmpty) {
+                                  //Se hizo con éxito la alta
+                                } else {
+                                  //No se pudo postear el Producto Proyecto de la inversión en la J3 en Pocketbase
+                                  banderasExitoSync.add(false);
+                                }
+                              } else {
+                                //No se pudo recuperar información del producto del proyecto en la Inversión de la J3
+                                banderasExitoSync.add(false);
+                              }
+                            }
+                        } else {
+                          //No se pudo postear la inversión en la J3 en Pocketbase
+                          banderasExitoSync.add(false);
+                        }
+                      } else {
+                        //No se pudo recuperar información de la Inversión asociada a la J3
+                        banderasExitoSync.add(false);
+                      }
                     } else {
                       //No se pudo postear la Jornada en Pocketbase
                       banderasExitoSync.add(false);
@@ -625,6 +693,181 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                     });
                     if (recordTareaJ3.id.isNotEmpty) {
                       // Se hizo con éxito la actualización
+                      //Se actualiza la inversión asociada a la J3
+                      final recordValidateInversionJ3 = await client.records.getFullList(
+                      'inversiones',
+                      batch: 200,
+                      filter:
+                        "id_emi_web='0'&&id_emprendimiento_fk='$idEmprendimientoPocketbase'");
+                      if (recordValidateInversionJ3.isEmpty) {
+                        //La inversión asociada a la J3 no existe en Pocketbase
+                        // Creamos la inversión asociada a la J3
+                        var totalInversion = 0.0;
+                        for (var element in basicJornadas.payload!.productoDeProyecto!.toList()) {
+                          totalInversion = totalInversion + (element?.costoEstimado ?? 0.0);
+                        }
+                        final estadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Solicitada")).build().findFirst();
+                        if (estadoInversion != null) {
+                          final recordInversion =
+                            await client.records.create('inversiones', body: {
+                            "id_emprendimiento_fk": idEmprendimientoPocketbase,
+                            "id_estado_inversion_fk": estadoInversion.idDBR,
+                            "porcentaje_pago": 50,
+                            "monto_pagar": 0,
+                            "saldo": 0,
+                            "total_inversion": totalInversion,
+                            "inversion_recibida": true,
+                            "pago_recibido": false,
+                            "producto_entregado": false,
+                            "id_emi_web": "0",
+                            "jornada_3": true,
+                          });
+                          if (recordInversion.id.isNotEmpty) {
+                            // Creamos y enviamos los productos proyecto
+                            for (var i = 0;
+                              i < basicJornadas.payload!.productoDeProyecto!.toList().length;
+                              i++) {
+                                final familiaProducto = dataBase.familiaProductosBox.query(FamiliaProd_.idEmiWeb.equals(basicJornadas.payload!.productoDeProyecto!.toList()[i]!.idFamilia.toString())).build().findFirst();
+                                final tipoEmpaque = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idEmiWeb.equals(basicJornadas.payload!.productoDeProyecto!.toList()[i]!.unidadMedida.toString())).build().findFirst();
+                                if (familiaProducto != null && tipoEmpaque != null) {
+                                  final recordProdProyecto = await client.records
+                                    .create('productos_proyecto', body: {
+                                    "producto": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.producto,
+                                    "marca_sugerida": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.marcaRecomendada,
+                                    "descripcion": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.descripcion,
+                                    "proveedo_sugerido": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.proveedorSugerido,
+                                    "cantidad": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.cantidad,
+                                    "costo_estimado": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.costoEstimado,
+                                    "id_familia_prod_fk": familiaProducto.idDBR,
+                                    "id_tipo_empaque_fk": tipoEmpaque.idDBR,
+                                    "id_inversion_fk": recordInversion.id,
+                                    "id_emi_web": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.idProductoDeProyecto,
+                                  });
+                                  if (recordProdProyecto.id.isNotEmpty) {
+                                    //Se hizo con éxito la alta
+                                  } else {
+                                    //No se pudo postear el Producto Proyecto de la inversión en la J3 en Pocketbase
+                                    banderasExitoSync.add(false);
+                                  }
+                                } else {
+                                  //No se pudo recuperar información del producto del proyecto en la Inversión de la J3
+                                  banderasExitoSync.add(false);
+                                }
+                              }
+                          } else {
+                            //No se pudo postear la inversión en la J3 en Pocketbase
+                            banderasExitoSync.add(false);
+                          }
+                        } else {
+                          //No se pudo recuperar información de la Inversión asociada a la J3
+                          banderasExitoSync.add(false);
+                        }
+                      } else {
+                        //La inversión asociada a la J3 ya existe en Pocketbase
+                        // Actualizamos la inversión asociada a la J3
+                        var totalInversion = 0.0;
+                        for (var element in basicJornadas.payload!.productoDeProyecto!.toList()) {
+                          totalInversion = totalInversion + (element?.costoEstimado ?? 0.0);
+                        }
+                        final recordInversion =
+                          await client.records.update('inversiones', recordValidateInversionJ3.first.id, body: {
+                          "id_emprendimiento_fk": idEmprendimientoPocketbase,
+                          "total_inversion": totalInversion,
+                          "inversion_recibida": true,
+                          "pago_recibido": false,
+                          "producto_entregado": false,
+                          "jornada_3": true,
+                        });
+                        if (recordInversion.id.isNotEmpty) {
+                          // Actualizamos los productos del Proyecto
+                          //Recuperamos todos los productos existentes en Emi Web
+                          final recordProductosProyecto = await client.records.getFullList(
+                          'productos_proyecto',
+                          batch: 200,
+                          filter:
+                            "id_inversion_fk='${recordInversion.id}'");
+                          final List<String> idsProductosProyectoEliminados = [];
+                          //Recuperamos los ids de los productos existentes en Emi Web
+                          for (var element in recordProductosProyecto) {
+                            idsProductosProyectoEliminados.add(element.id);
+                          }
+                          //Se recorre la lista de productos de proyecto de la respuesta desde Emi Web
+                          for (var i = 0;
+                            i < basicJornadas.payload!.productoDeProyecto!.toList().length;
+                            i++) {
+                              //Se valida que el producto Proyecto exista en Pocketbase
+                              final recordProductoProyecto = await client.records.getFullList(
+                                'productos_proyecto',
+                                batch: 200,
+                                filter:
+                                  "id_emi_web='${basicJornadas.payload!.productoDeProyecto!.toList()[i]!.idProductoDeProyecto}'");
+                              if (recordProductoProyecto.isEmpty) {
+                                //El producto proyecto no existe en Pocketbase
+                                final familiaProducto = dataBase.familiaProductosBox.query(FamiliaProd_.idEmiWeb.equals(basicJornadas.payload!.productoDeProyecto!.toList()[i]!.idFamilia.toString())).build().findFirst();
+                                final tipoEmpaque = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idEmiWeb.equals(basicJornadas.payload!.productoDeProyecto!.toList()[i]!.unidadMedida.toString())).build().findFirst();
+                                if (familiaProducto != null && tipoEmpaque != null) {
+                                  final recordProdProyecto = await client.records
+                                    .create('productos_proyecto', body: {
+                                    "producto": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.producto,
+                                    "marca_sugerida": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.marcaRecomendada,
+                                    "descripcion": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.descripcion,
+                                    "proveedo_sugerido": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.proveedorSugerido,
+                                    "cantidad": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.cantidad,
+                                    "costo_estimado": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.costoEstimado,
+                                    "id_familia_prod_fk": familiaProducto.idDBR,
+                                    "id_tipo_empaque_fk": tipoEmpaque.idDBR,
+                                    "id_inversion_fk": recordInversion.id,
+                                    "id_emi_web": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.idProductoDeProyecto,
+                                  });
+                                  if (recordProdProyecto.id.isNotEmpty) {
+                                    //Se hizo con éxito la alta del producto proyecto
+                                    idsProductosProyectoEliminados.remove(recordProdProyecto.id);
+                                  } else {
+                                    //No se pudo postear el Producto Proyecto de la inversión en la J3 en Pocketbase
+                                    banderasExitoSync.add(false);
+                                  }
+                                } else {
+                                  //No se pudo recuperar información del producto del proyecto en la Inversión de la J3
+                                  banderasExitoSync.add(false);
+                                }
+                              } else {
+                                //El producto proyecto ya existe en Pocketbase
+                                final familiaProducto = dataBase.familiaProductosBox.query(FamiliaProd_.idEmiWeb.equals(basicJornadas.payload!.productoDeProyecto!.toList()[i]!.idFamilia.toString())).build().findFirst();
+                                final tipoEmpaque = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idEmiWeb.equals(basicJornadas.payload!.productoDeProyecto!.toList()[i]!.unidadMedida.toString())).build().findFirst();
+                                if (familiaProducto != null && tipoEmpaque != null) {
+                                  final recordProdProyecto = await client.records
+                                    .update('productos_proyecto', recordProductoProyecto.first.id, body: {
+                                      "producto": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.producto,
+                                      "marca_sugerida": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.marcaRecomendada,
+                                      "descripcion": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.descripcion,
+                                      "proveedo_sugerido": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.proveedorSugerido,
+                                      "cantidad": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.cantidad,
+                                      "costo_estimado": basicJornadas.payload!.productoDeProyecto!.toList()[i]!.costoEstimado,
+                                      "id_familia_prod_fk": familiaProducto.idDBR,
+                                      "id_tipo_empaque_fk": tipoEmpaque.idDBR,
+                                  });
+                                  if (recordProdProyecto.id.isNotEmpty) {
+                                    //Se hizo con éxito la actualización del producto proyecto
+                                    idsProductosProyectoEliminados.remove(recordProdProyecto.id);
+                                  } else {
+                                    //No se pudo actualizar el Producto Proyecto de la inversión en la J3 en Pocketbase
+                                    banderasExitoSync.add(false);
+                                  }
+                                } else {
+                                  //No se pudo recuperar información del producto del proyecto en la Inversión de la J3
+                                  banderasExitoSync.add(false);
+                                }
+                              }
+                            }
+                            //Se eliminan los productos de proyecto sobrantes
+                            for (var element in idsProductosProyectoEliminados) {
+                              await client.records.delete('productos_proyecto', element);
+                            }
+                        } else {
+                          //No se pudo postear la inversión en la J3 en Pocketbase
+                          banderasExitoSync.add(false);
+                        }
+                      }
                     } else {
                       // No se pudo actualizar la Tarea de la J3 en Pocketbase
                       banderasExitoSync.add(false);
@@ -1066,6 +1309,18 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                             "archivado": venta.archivado,
                           });
                           if (recordVenta.id.isNotEmpty) {
+                            // Actualizamos los productos Vendidos
+                            //Recuperamos todos los productos vendidos existentes en Emi Web
+                            final recordProductosVendidos = await client.records.getFullList(
+                            'prod_vendidos',
+                            batch: 200,
+                            filter:
+                              "id_venta_fk='${recordVenta.id}'");
+                            final List<String> idsProductosVendidosEliminados = [];
+                            //Recuperamos los ids de los productos vendidos existentes en Emi Web
+                            for (var element in recordProductosVendidos) {
+                              idsProductosVendidosEliminados.add(element.id);
+                            }
                             for (var i = 0; i < venta.ventasXProductoEmprendedor.toList().length; i++) {
                               // Se valida que el producto Vendido no exista en Pocketbase
                               final recordValidateProductoVendido = await client.records.getFullList(
@@ -1099,6 +1354,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                   });
                                   if (recordProdVendido.id.isNotEmpty) {
                                     //Se hizo con éxito el posteo del producto vendido
+                                    idsProductosVendidosEliminados.remove(recordProdVendido.id);
                                   } else {
                                     // No se pudo postear un Producto Vendido en Pocketbase
                                     banderasExitoSync.add(false);
@@ -1132,6 +1388,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                   });
                                   if (recordProdVendido.id.isNotEmpty) {
                                     //Se hizo con éxito la actualización del producto vendido
+                                    idsProductosVendidosEliminados.remove(recordProdVendido.id);
                                   } else {
                                     // No se pudo actualizar un Producto Vendido en Pocketbase
                                     banderasExitoSync.add(false);
@@ -1141,6 +1398,10 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                   banderasExitoSync.add(false);
                                 }
                               }
+                            }
+                            //Se eliminan los productos vendidos sobrantes
+                            for (var element in idsProductosVendidosEliminados) {
+                              await client.records.delete('prod_vendidos', element);
                             }
                           } else {
                             // No se pudo actualizar una Venta en Pocketbase
@@ -1194,19 +1455,26 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                       for (var i = 0; i < (consultoria.tareas.toList().length + 1); i++) {
                         // Creamos las tareas de la consultoría
                         if (i == 0) {
-                          //Se crea la primera tarea de la Consultoría
-                          final recordTarea = await client.records.create('tareas', body: {
-                            "tarea": consultoria.asignarTarea,
-                            "descripcion": "Creación de Consultoría",
-                            "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
-                            "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
-                            "id_emi_web": consultoria.idConsultorias.toString(),
-                            "jornada": false,
-                          });
-                          if (recordTarea.id.isNotEmpty) {
-                            idsDBRTareas.add(recordTarea.id);
+                          final porcentajeAvance = dataBase.porcentajeAvanceBox.query(PorcentajeAvance_.porcentajeAvance.equals("1")).build().findUnique();
+                          if (porcentajeAvance != null) {
+                            //Se crea la primera tarea de la Consultoría
+                            final recordTarea = await client.records.create('tareas', body: {
+                              "tarea": consultoria.asignarTarea,
+                              "descripcion": "Creación de Consultoría",
+                              "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
+                              "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                              "id_porcentaje_fk": porcentajeAvance.idDBR,
+                              "id_emi_web": consultoria.idConsultorias.toString(),
+                              "jornada": false,
+                            });
+                            if (recordTarea.id.isNotEmpty) {
+                              idsDBRTareas.add(recordTarea.id);
+                            } else {
+                              // No se pudo agregar una Tarea de la Consultoría en Pocketbase
+                              banderasExitoSync.add(false);
+                            }
                           } else {
-                            // No se pudo agregar una Tarea de la Consultoría en Pocketbase
+                            //No se pudo recuperar información de la tarea para crearla
                             banderasExitoSync.add(false);
                           }
                         } else {
@@ -1313,18 +1581,25 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                           //Se compara el tamaño de listas en ambos lados y se escoge el proceso a realizar
                           if (basicValidateConsultorias.length >= (consultoria.tareas.toList().length + 1)) {
                             if (i == 0) {
-                              final recordTarea = await client.records.update('tareas', basicValidateConsultorias.toList()[i].id, body: {
-                                "tarea": consultoria.asignarTarea,
-                                "descripcion": "Creación de Consultoría",
-                                "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
-                                "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
-                                "id_emi_web": consultoria.idConsultorias.toString(),
-                                "id_imagenes_fk": [],
-                              });
-                              if (recordTarea.id.isNotEmpty) {
-                                idsDBRTareas.add(recordTarea.id);
+                              final porcentajeAvance = dataBase.porcentajeAvanceBox.query(PorcentajeAvance_.porcentajeAvance.equals("1")).build().findUnique();
+                              if (porcentajeAvance != null) {
+                                final recordTarea = await client.records.update('tareas', basicValidateConsultorias.toList()[i].id, body: {
+                                  "tarea": consultoria.asignarTarea,
+                                  "descripcion": "Creación de Consultoría",
+                                  "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
+                                  "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                                  "id_porcentaje_fk": porcentajeAvance.idDBR,
+                                  "id_emi_web": consultoria.idConsultorias.toString(),
+                                  "id_imagenes_fk": [],
+                                });
+                                if (recordTarea.id.isNotEmpty) {
+                                  idsDBRTareas.add(recordTarea.id);
+                                } else {
+                                  // No se pudo actualizar la primera Tarea de la Consultoría en Pocketbase
+                                  banderasExitoSync.add(false);
+                                }
                               } else {
-                                // No se pudo actualizar la primera Tarea de la Consultoría en Pocketbase
+                                //No se pudo recuperar información de la tarea para crearla
                                 banderasExitoSync.add(false);
                               }
                             } else {
@@ -1431,19 +1706,26 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                               //Actualizamos las tareas que ya existen en Pocketbase
                               basicValidateConsultorias.toList().elementAt(i);
                               if (i == 0) {
-                                //Se actualiza la primera tarea de la Consultoría, por ende hay que restar una posición en la reuperación de info en consultoria.tareas.toList()
-                                final recordTarea = await client.records.update('tareas', basicValidateConsultorias.toList()[i].id, body: {
-                                  "tarea": consultoria.asignarTarea,
-                                  "descripcion": "Creación de Consultoría",
-                                  "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
-                                  "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
-                                  "id_emi_web": consultoria.idConsultorias.toString(),
-                                  "id_imagenes_fk": [],
-                                });
-                                if (recordTarea.id.isNotEmpty) {
-                                  idsDBRTareas.add(recordTarea.id);
+                                final porcentajeAvance = dataBase.porcentajeAvanceBox.query(PorcentajeAvance_.porcentajeAvance.equals("1")).build().findUnique();
+                                if (porcentajeAvance != null) {
+                                  //Se actualiza la primera tarea de la Consultoría, por ende hay que restar una posición en la reuperación de info en consultoria.tareas.toList()
+                                  final recordTarea = await client.records.update('tareas', basicValidateConsultorias.toList()[i].id, body: {
+                                    "tarea": consultoria.asignarTarea,
+                                    "descripcion": "Creación de Consultoría",
+                                    "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
+                                    "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
+                                    "id_porcentaje_fk": porcentajeAvance.idDBR,
+                                    "id_emi_web": consultoria.idConsultorias.toString(),
+                                    "id_imagenes_fk": [],
+                                  });
+                                  if (recordTarea.id.isNotEmpty) {
+                                    idsDBRTareas.add(recordTarea.id);
+                                  } else {
+                                    // No se pudo actualizar la primera Tarea de la Consultoría en Pocketbase
+                                    banderasExitoSync.add(false);
+                                  }
                                 } else {
-                                  // No se pudo actualizar la primera Tarea de la Consultoría en Pocketbase
+                                  //No se pudo recuperar información de la tarea para crearla
                                   banderasExitoSync.add(false);
                                 }
                               } else {
@@ -1647,113 +1929,113 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                   print(responseAPI4.statusCode);
                   banderasExitoSync.add(false);
               }
-              print("LLAMADO DE API 7");
-              // API 6 Se recupera la información básica de las Inversiones
-              var urlAPI7 = Uri.parse("$baseUrlEmiWebServices/inversiones/emprendimiento?idEmprendimiento=$idEmprendimiento");
-              final headersAPI7 = ({
-                  "Content-Type": "application/json",
-                  'Authorization': 'Bearer $tokenGlobal',
-                });
-              var responseAPI7 = await get(
-                urlAPI7,
-                headers: headersAPI7
-              ); 
-              switch (responseAPI7.statusCode) {
-                case 200:
-                  print("Respuesta 200 en API 7");
-                  var basicInversiones = getBasicInversionesEmiWebFromMap(
-                    const Utf8Decoder().convert(responseAPI7.bodyBytes)
-                  );
-                  for(var inversion in basicInversiones.payload!)
-                  {
-                    // Se valida que la inversión exista en Pocketbase
-                    final recordValidateInversion = await client.records.getFullList(
-                      'inversiones',
-                      batch: 200,
-                      filter:
-                        "id_emi_web='${inversion.idInversiones}'");
-                    if (recordValidateInversion.isEmpty) {
-                      //La inversión no existe en Pocketbase y se tienen que crear
-                      //Primero creamos la inversion
-                      //Se busca el estado de la inversión
-                      final estadoInversion = dataBase.estadoInversionBox
-                          .query(EstadoInversion_.idEmiWeb.equals(inversion.idCatEstadoInversion.toString()))
-                          .build()
-                          .findFirst();
-                      if (estadoInversion != null) {
-                        final recordInversion =
-                            await client.records.create('inversiones', body: {
-                          "id_emprendimiento_fk": idEmprendimientoPocketbase,
-                          "id_estado_inversion_fk": estadoInversion.idDBR,
-                          "porcentaje_pago": int.parse(inversion.porcentajePago.toString()),
-                          "monto_pagar": inversion.montoPagar,
-                          "saldo": inversion.saldo,
-                          "total_inversion": inversion.totalInversion,
-                          "inversion_recibida": inversion.inversionRecibida,
-                          "pago_recibido": inversion.pagoRecibido != null ? true : false,
-                          "producto_entregado": inversion.productoEntregado != null ? true : false,
-                          "id_emi_web": inversion.idInversiones.toString(),
-                          "jornada_3": false,
-                        });
-                        if (recordInversion.id.isNotEmpty) {
-                          //Segundo creamos los productos solicitados asociados a la inversion
-                          for (var i = 0; i < inversion.productosSolicitados.toList().length; i++) {
-                            //Se verifica que el producto Solicitado esté asociado a una imagen
-                            if (inversion.productosSolicitados.toList()[i].productoSolicitado.idDocumento != null) {
-                              //El producto Solicitado está asociado a una imagen
-                            } else {
-                              //El producto Solicitado no está asociado a una imagen
-                              final tipoEmpaque = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idEmiWeb.equals(inversion.productosSolicitados.toList()[i].productoSolicitado.catTipoEmpaque.idCatTipoEmpaque.toString())).build().findUnique();
-                              if (tipoEmpaque != null) {
-                                final recordProdSolicitado = await client.records
-                                    .create('productos_solicitados', body: {
-                                  "producto": inversion.productosSolicitados.toList()[i].productoSolicitado.producto,
-                                  "marca_sugerida": inversion.productosSolicitados.toList()[i].productoSolicitado.marcaSugerida,
-                                  "descripcion": inversion.productosSolicitados.toList()[i].productoSolicitado.descripcion,
-                                  "proveedo_sugerido": inversion.productosSolicitados.toList()[i].productoSolicitado.proveedorSugerido,
-                                  "cantidad": inversion.productosSolicitados.toList()[i].productoSolicitado.cantidad,
-                                  "costo_estimado": inversion.productosSolicitados.toList()[i].productoSolicitado.costoEstimado,
-                                  "id_familia_prod_fk": "5BQwxKKFMPXRXIe",
-                                  "id_tipo_empaques_fk": tipoEmpaque.idDBR,
-                                  "id_inversion_fk": recordInversion.id,
-                                  "id_emi_web": inversion.productosSolicitados.toList()[i].productoSolicitado.idProductoSolicitado.toString(),
-                                });
-                                if (recordProdSolicitado.id.isNotEmpty) {
-                                  //Se creó con éxito el Prod Solicitado en Pocketbase
-                                } else {
-                                  //No se pudo crear un Prod Solicitado en Pocketbase
-                                  banderasExitoSync.add(false);
-                                }
-                              } else {
-                                //No se pudo recuperar información del Prod Solicitado para crearlo
-                                banderasExitoSync.add(false);
-                              }
-                            }
-                          }
-                          //Tercero creamos la inversión X prod Cotizados, si es que existe
-                          // if (inversion.) {
+              // print("LLAMADO DE API 7");
+              // // API 6 Se recupera la información básica de las Inversiones
+              // var urlAPI7 = Uri.parse("$baseUrlEmiWebServices/inversiones/emprendimiento?idEmprendimiento=$idEmprendimiento");
+              // final headersAPI7 = ({
+              //     "Content-Type": "application/json",
+              //     'Authorization': 'Bearer $tokenGlobal',
+              //   });
+              // var responseAPI7 = await get(
+              //   urlAPI7,
+              //   headers: headersAPI7
+              // ); 
+              // switch (responseAPI7.statusCode) {
+              //   case 200:
+              //     print("Respuesta 200 en API 7");
+              //     var basicInversiones = getBasicInversionesEmiWebFromMap(
+              //       const Utf8Decoder().convert(responseAPI7.bodyBytes)
+              //     );
+              //     for(var inversion in basicInversiones.payload!)
+              //     {
+              //       // Se valida que la inversión exista en Pocketbase
+              //       final recordValidateInversion = await client.records.getFullList(
+              //         'inversiones',
+              //         batch: 200,
+              //         filter:
+              //           "id_emi_web='${inversion.idInversiones}'");
+              //       if (recordValidateInversion.isEmpty) {
+              //         //La inversión no existe en Pocketbase y se tienen que crear
+              //         //Primero creamos la inversion
+              //         //Se busca el estado de la inversión
+              //         final estadoInversion = dataBase.estadoInversionBox
+              //             .query(EstadoInversion_.idEmiWeb.equals(inversion.idCatEstadoInversion.toString()))
+              //             .build()
+              //             .findFirst();
+              //         if (estadoInversion != null) {
+              //           final recordInversion =
+              //               await client.records.create('inversiones', body: {
+              //             "id_emprendimiento_fk": idEmprendimientoPocketbase,
+              //             "id_estado_inversion_fk": estadoInversion.idDBR,
+              //             "porcentaje_pago": int.parse(inversion.porcentajePago.toString()),
+              //             "monto_pagar": inversion.montoPagar,
+              //             "saldo": inversion.saldo,
+              //             "total_inversion": inversion.totalInversion,
+              //             "inversion_recibida": inversion.inversionRecibida,
+              //             "pago_recibido": inversion.pagoRecibido != null ? true : false,
+              //             "producto_entregado": inversion.productoEntregado != null ? true : false,
+              //             "id_emi_web": inversion.idInversiones.toString(),
+              //             "jornada_3": false,
+              //           });
+              //           if (recordInversion.id.isNotEmpty) {
+              //             //Segundo creamos los productos solicitados asociados a la inversion
+              //             for (var i = 0; i < inversion.productosSolicitados.toList().length; i++) {
+              //               //Se verifica que el producto Solicitado esté asociado a una imagen
+              //               if (inversion.productosSolicitados.toList()[i].productoSolicitado.idDocumento != null) {
+              //                 //El producto Solicitado está asociado a una imagen
+              //               } else {
+              //                 //El producto Solicitado no está asociado a una imagen
+              //                 final tipoEmpaque = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idEmiWeb.equals(inversion.productosSolicitados.toList()[i].productoSolicitado.catTipoEmpaque.idCatTipoEmpaque.toString())).build().findUnique();
+              //                 if (tipoEmpaque != null) {
+              //                   final recordProdSolicitado = await client.records
+              //                       .create('productos_solicitados', body: {
+              //                     "producto": inversion.productosSolicitados.toList()[i].productoSolicitado.producto,
+              //                     "marca_sugerida": inversion.productosSolicitados.toList()[i].productoSolicitado.marcaSugerida,
+              //                     "descripcion": inversion.productosSolicitados.toList()[i].productoSolicitado.descripcion,
+              //                     "proveedo_sugerido": inversion.productosSolicitados.toList()[i].productoSolicitado.proveedorSugerido,
+              //                     "cantidad": inversion.productosSolicitados.toList()[i].productoSolicitado.cantidad,
+              //                     "costo_estimado": inversion.productosSolicitados.toList()[i].productoSolicitado.costoEstimado,
+              //                     "id_familia_prod_fk": "5BQwxKKFMPXRXIe",
+              //                     "id_tipo_empaques_fk": tipoEmpaque.idDBR,
+              //                     "id_inversion_fk": recordInversion.id,
+              //                     "id_emi_web": inversion.productosSolicitados.toList()[i].productoSolicitado.idProductoSolicitado.toString(),
+              //                   });
+              //                   if (recordProdSolicitado.id.isNotEmpty) {
+              //                     //Se creó con éxito el Prod Solicitado en Pocketbase
+              //                   } else {
+              //                     //No se pudo crear un Prod Solicitado en Pocketbase
+              //                     banderasExitoSync.add(false);
+              //                   }
+              //                 } else {
+              //                   //No se pudo recuperar información del Prod Solicitado para crearlo
+              //                   banderasExitoSync.add(false);
+              //                 }
+              //               }
+              //             }
+              //             //Tercero creamos la inversión X prod Cotizados, si es que existe
+              //             // if (inversion.) {
                             
-                          // }
-                        } else {
-                          // No se pudo agregar una Inversión en Pocketbase
-                          banderasExitoSync.add(false);
-                        }
-                      } else{
-                        //No se pudo recuperar información de la Inversión para crearla
-                        banderasExitoSync.add(false);
-                      }
-                    } else {
-                      //La inversión ya existe en Pocketbase y se tienen que actualizar
-                    }
-                  }
-                  break;
-                case 404:
-                  break;
-                default:
-                  print("Error en llamado al API 7");
-                  print(responseAPI7.statusCode);
-                  banderasExitoSync.add(false);
-              }
+              //             // }
+              //           } else {
+              //             // No se pudo agregar una Inversión en Pocketbase
+              //             banderasExitoSync.add(false);
+              //           }
+              //         } else{
+              //           //No se pudo recuperar información de la Inversión para crearla
+              //           banderasExitoSync.add(false);
+              //         }
+              //       } else {
+              //         //La inversión ya existe en Pocketbase y se tienen que actualizar
+              //       }
+              //     }
+              //     break;
+              //   case 404:
+              //     break;
+              //   default:
+              //     print("Error en llamado al API 7");
+              //     print(responseAPI7.statusCode);
+              //     banderasExitoSync.add(false);
+              // }
               break;
             case 404:
               break;
@@ -1807,6 +2089,50 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
     }
   }
 
+//Función para quitar instrucciones asociadas al Emprendimiento que se eliminará localmente
+
+void deleteEmprendimientoLocal(int idEmprendimiento) {
+  //Se recuperan y eliminan todas las instrucciones de la bitacora
+  final listIntruccionesEmp = dataBase.bitacoraBox.getAll().toList();
+  for (var element in listIntruccionesEmp) {
+    if (element.idEmprendimiento == idEmprendimiento) {
+      dataBase.bitacoraBox.remove(element.id);
+    }
+  }
+  //Se elimina el emprendimiento
+  dataBase.emprendimientosBox.remove(idEmprendimiento);
+  //Se elimina la imagen del emprendimiento
+  final idImagenEmprendimiento = dataBase.imagenesBox.query(Imagenes_.emprendimiento.equals(idEmprendimiento)).build().findUnique()?.id;
+  dataBase.imagenesBox.remove(idImagenEmprendimiento ?? -1);
+  //Se elimina el emprendedor
+  final idEmprendedor =  dataBase.emprendedoresBox.query(Emprendedores_.emprendimiento.equals(idEmprendimiento)).build().findUnique()?.id;
+  dataBase.emprendedoresBox.remove(idEmprendedor ?? -1);
+  //Se elimina la imagen del emprendedor
+  final idImagenEmprendedor = dataBase.imagenesBox.query(Imagenes_.emprendedor.equals(idEmprendedor ?? -1)).build().findUnique()?.id;
+  dataBase.imagenesBox.remove(idImagenEmprendedor ?? -1);
+  //Se elimina la jornada 1
+//   final idJornada1 = dataBase.jornadasBox.query(Jornadas_.emprendimiento.equals(idEmprendimiento)).build().findUnique()?.id;
+//   dataBase.jornadasBox.remove(idJornada1 ?? -1);
+//   //Se elimina la tarea jornada 1
+//   final idTarea1 = dataBase.tareasBox.query(Tareas_.jornada.equals(idJornada1 ?? -1)).build().findUnique()?.id;
+//   dataBase.tareasBox.remove(idTarea1 ?? -1);
+//   //Se eliminan la imágenes asociadas a la tarea J1
+//   dataBase.imagenesBox.query(Imagenes_.tarea).link(Tareas_());
+//   dataBase.imagenesBox.query().link(Tareas_.jornada, (Jornadas_.id, 1))
+//   QueryBuilder<Emprendimientos> builder = dataBase.emprendimientosBox
+//     .query(Emprendimientos_.id.equals(1));
+  
+//   builder.linkMany(Emprendimientos_.jornadas, Jornadas_.numJornada.equals('1'));
+
+//   dataBase.imagenesBox.query(Imagenes_.path.equals("e"));
+
+//   dataBase.tareasBox.query().link(Tareas_.jornada, Jornadas_.id.equals(1));
+//   personBox.query().apply {
+//     link(Person_.company).equal(Company_.id, 1)
+//     link(Person_.addresses).equal(Address_.street, "Sesame Street")
+// }.build().find()
+}
+
 //Función para recuperar los emprendimientos externos de EmiWeb
   Future<List<UsuarioProyectosTemporal>?> getUsuariosProyectosEmiWeb() async {
     final GetEmpExternoEmiWebTemp listEmpExternosEmiWebTemp;
@@ -1814,7 +2140,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
     try {
       if (await getTokenOAuth()) {
         //Se recupera toda la colección de usuarios en EmiWeb
-        var url = Uri.parse("$baseUrlEmiWebServices/proyectos/emprendedor/promotor");
+        var url = Uri.parse("$baseUrlEmiWebServices/proyectos/promotor");
         final headers = ({
             "Content-Type": "application/json",
             'Authorization': 'Bearer $tokenGlobal',
@@ -1828,18 +2154,44 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
           listEmpExternosEmiWebTemp = getEmpExternoEmiWebTempFromMap(
             const Utf8Decoder().convert(response.bodyBytes)
           );
-
+          //Se recorre toda la lista de emprendimientos para hacer el filtrado
           for (var elementEmprendimientoEmp in listEmpExternosEmiWebTemp.payload!.toList()) {
-            var indexItemUpdated = listUsuariosProyectosTemp.indexWhere((elementUsuario) => elementUsuario.usuarioTemp.idUsuario == elementEmprendimientoEmp.promotor.idUsuario);
-            if (indexItemUpdated != -1) {
-              listUsuariosProyectosTemp[indexItemUpdated].emprendimientosTemp.add(elementEmprendimientoEmp);
-            } else {
-              final newUsuarioProyectoTemporal = 
-              UsuarioProyectosTemporal(
-                usuarioTemp: elementEmprendimientoEmp.promotor, 
-                emprendimientosTemp: [elementEmprendimientoEmp]
-              );
-              listUsuariosProyectosTemp.add(newUsuarioProyectoTemporal);
+            //Se valida que el emprendimiento tenga promotor asociado y el switch móvil con la condición en False
+            if (elementEmprendimientoEmp.proyecto.promotor != null && elementEmprendimientoEmp.proyecto.switchMovil == false) {
+              final emprendimientoLocal = dataBase.emprendimientosBox.query(Emprendimientos_.idEmiWeb.equals(elementEmprendimientoEmp.proyecto.idProyecto.toString())).build().findUnique();
+              if (emprendimientoLocal == null) {
+                //Se puede recuperar emprendimiento externo
+                //Recopilamos que el usuario actual en el for no exista en nuestra Lista de Usuarios principal
+                var indexItemUpdated = listUsuariosProyectosTemp.indexWhere((elementUsuario) => elementUsuario.usuarioTemp.idUsuario == elementEmprendimientoEmp.proyecto.promotor!.idUsuario);
+                if (indexItemUpdated != -1) {
+                  //Si existe el usuario, se agrega su respectivo emprendimiento
+                  listUsuariosProyectosTemp[indexItemUpdated].emprendimientosTemp.add(elementEmprendimientoEmp);
+                } else {
+                  //Si no existe el usuario, se crea en la Lista de Usuarios principal
+                    if (elementEmprendimientoEmp.imagenPerfil != null) {
+                    final uInt8ListImagen = base64Decode(elementEmprendimientoEmp.imagenPerfil!.archivo);
+                    final tempDir = await getTemporaryDirectory();
+                    File file =
+                        await File('${tempDir.path}/${elementEmprendimientoEmp.imagenPerfil!.nombreArchivo}')
+                            .create();
+                    file.writeAsBytesSync(uInt8ListImagen);
+                    final newUsuarioProyectoTemporal = 
+                    UsuarioProyectosTemporal(
+                      usuarioTemp: elementEmprendimientoEmp.proyecto.promotor!, 
+                      emprendimientosTemp: [elementEmprendimientoEmp],
+                      pathImagenPerfil: file.path
+                    );
+                    listUsuariosProyectosTemp.add(newUsuarioProyectoTemporal);
+                  } else {
+                    final newUsuarioProyectoTemporal = 
+                    UsuarioProyectosTemporal(
+                      usuarioTemp: elementEmprendimientoEmp.proyecto.promotor!, 
+                      emprendimientosTemp: [elementEmprendimientoEmp],
+                    );
+                    listUsuariosProyectosTemp.add(newUsuarioProyectoTemporal);
+                  }
+                }
+              } 
             }
           }
           return listUsuariosProyectosTemp;

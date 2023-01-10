@@ -616,7 +616,8 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
                                       fechaRevision,
                                       tareaController.text,
                                       !activoController,
-                                      widget.jornada.tarea.target!.id);
+                                      widget.jornada.tarea.target!.id,
+                                      widget.emprendimiento.id);
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(

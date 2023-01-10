@@ -91,7 +91,7 @@ class _EditarVentaScreenState extends State<EditarVentaScreen> {
                                 widget.venta.emprendimiento.target!.imagen.target!.path!))
                             :
                             Image.asset(
-                              "assets/images/default_image.png",
+                              "assets/images/default_image_placeholder.jpeg",
                             ).image,
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high,
@@ -512,7 +512,8 @@ class _EditarVentaScreenState extends State<EditarVentaScreen> {
                                         widget.venta.id,
                                         fechaInicio,
                                         fechaTermino,
-                                        totalVenta
+                                        totalVenta,
+                                        widget.idEmp.id
                                       );
                                       await Navigator.push(
                                         context,

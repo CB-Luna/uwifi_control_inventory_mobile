@@ -1549,6 +1549,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                         jornadaProvider.updateImagenesJornada(
                                           widget.jornada.tarea.target!,
                                           listInstruccionesImagenesTemp,
+                                          widget.emprendimiento.id
                                         );
                                       }
                                       jornadaProvider.updateJornada3(
@@ -1581,6 +1582,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                     jornadaProvider.updateImagenesJornada(
                                       widget.jornada.tarea.target!,
                                       listInstruccionesImagenesTemp,
+                                      widget.emprendimiento.id
                                     );
                                   }
                                   await Navigator.push(

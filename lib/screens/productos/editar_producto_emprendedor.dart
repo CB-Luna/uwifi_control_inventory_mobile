@@ -628,14 +628,18 @@ class _EditarProductoEmprendedorScreenState
                                                       widget.productoEmprendedor,
                                                       nombreImagen,
                                                       path,
-                                                      base64);
+                                                      base64,
+                                                      widget.emprendimiento.id
+                                                      );
                                                   } else {
                                                     print("SE ACTUALIZA IMAGEN NUEVA");
                                                     productoEmprendedorProvider.updateImagenProductoEmp(
                                                       widget.productoEmprendedor.imagen.target!.id,
                                                       nombreImagen,
                                                       path,
-                                                      base64);
+                                                      base64,
+                                                      widget.emprendimiento.id
+                                                      );
                                                   }
                                                 }
                                               productoEmprendedorProvider.update(
@@ -644,7 +648,8 @@ class _EditarProductoEmprendedorScreenState
                                                   descController.text,
                                                   newImagen,
                                                   costoController.text.replaceAll("\$", "").replaceAll(",", ""),
-                                                  idUnidadMedida);
+                                                  idUnidadMedida,
+                                                  widget.emprendimiento.id);
                                               await Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -684,13 +689,17 @@ class _EditarProductoEmprendedorScreenState
                                               widget.productoEmprendedor,
                                               nombreImagen,
                                               path,
-                                              base64);
+                                              base64,
+                                              widget.emprendimiento.id
+                                              );
                                           } else {
                                             productoEmprendedorProvider.updateImagenProductoEmp(
                                               widget.productoEmprendedor.imagen.target!.id,
                                               nombreImagen,
                                               path,
-                                              base64);
+                                              base64,
+                                              widget.emprendimiento.id
+                                              );
                                           }
                                           await Navigator.push(
                                             context,

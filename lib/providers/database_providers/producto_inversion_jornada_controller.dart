@@ -143,11 +143,11 @@ void add(int idEmprendimiento, int idInversion) {
   }
   }
 
-  void updateProductosInversionJ3(Inversiones inversion) {
+  void updateProductosInversionJ3(Inversiones inversion, int idEmprendimiento) {
     for (var i = 0; i < instruccionesProdInversionJ3Temp.length; i++) {
       switch (instruccionesProdInversionJ3Temp[i].instruccion) {
         case "syncAddProductoInversionJ3":
-          final nuevaInstruccion = Bitacora(instruccion: 'syncAddProductoInversionJ3', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+          final nuevaInstruccion = Bitacora(instruccion: 'syncAddProductoInversionJ3', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
           instruccionesProdInversionJ3Temp[i].prodSolicitado.bitacora.add(nuevaInstruccion);
           int idNuevoProductoInversionJ3 = dataBase.productosSolicitadosBox.put(instruccionesProdInversionJ3Temp[i].prodSolicitado);
           inversion.prodSolicitados.add(dataBase.productosSolicitadosBox.get(idNuevoProductoInversionJ3)!);
@@ -156,7 +156,7 @@ void add(int idEmprendimiento, int idInversion) {
           dataBase.inversionesBox.put(inversion);
           continue;
         case "syncUpdateProductoInversionJ3":
-          final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateProductoInversionJ3', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+          final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateProductoInversionJ3', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
           final updateProductoInversionJ3 = dataBase.productosSolicitadosBox.get(instruccionesProdInversionJ3Temp[i].prodSolicitado.id);
           if(updateProductoInversionJ3 != null) {
             inversion.totalInversion -= updateProductoInversionJ3.costoEstimado != null ? 
@@ -184,7 +184,7 @@ void add(int idEmprendimiento, int idInversion) {
               usuario: prefs.getString("userId")!,
               idDBR: deleteProductoInversionJ3.idDBR,
               idEmiWeb: deleteProductoInversionJ3.idEmiWeb,
-              emprendimiento: inversion.emprendimiento.target!.nombre,
+              emprendimiento: inversion.emprendimiento.target!.nombre, idEmprendimiento: idEmprendimiento,
             ); //Se crea la nueva instruccion a realizar en bitacora
             deleteProductoInversionJ3.bitacora.add(nuevaInstruccion);
             // Se elimina prodSolicitado de ObjectBox

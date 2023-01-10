@@ -199,11 +199,12 @@ class _EditarInversionJornadaScreenState
                                         decoration: BoxDecoration(
                                           image: DecorationImage(
                                             fit: BoxFit.cover,
-                                            image: Image.file(
-                                              File(widget.emprendimiento
-                                                  .imagen.target!.path!),
-                                              fit: BoxFit.contain,
-                                            ).image,
+                                            image: widget.emprendimiento.imagen.target != null
+                                            ? FileImage(File(
+                                                widget.emprendimiento.imagen.target!.path!))
+                                            : Image.asset(
+                                                "assets/images/default_image_placeholder.jpeg",
+                                              ).image,
                                           ),
                                           boxShadow: const [
                                             BoxShadow(
@@ -775,7 +776,7 @@ class _EditarInversionJornadaScreenState
                                             if (productoInversionJornadaProvider
                                                 .instruccionesProdInversionJ3Temp.isNotEmpty) {
                                               productoInversionJornadaProvider
-                                              .updateProductosInversionJ3(widget.inversion);
+                                              .updateProductosInversionJ3(widget.inversion, widget.emprendimiento.id);
                                             await Navigator.push(
                                               context,
                                               MaterialPageRoute(

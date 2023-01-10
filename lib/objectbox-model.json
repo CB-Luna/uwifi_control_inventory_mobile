@@ -786,7 +786,7 @@
     },
     {
       "id": "27:1774905738150923512",
-      "lastPropertyId": "18:4970528658792456347",
+      "lastPropertyId": "19:2787466043197643742",
       "name": "Bitacora",
       "properties": [
         {
@@ -844,6 +844,11 @@
           "id": "18:4970528658792456347",
           "name": "emprendimiento",
           "type": 9
+        },
+        {
+          "id": "19:2787466043197643742",
+          "name": "idEmprendimiento",
+          "type": 6
         }
       ],
       "relations": []

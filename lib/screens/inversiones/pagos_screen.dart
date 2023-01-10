@@ -27,10 +27,12 @@ import 'package:bizpro_app/screens/widgets/toggle_icon.dart';
 
 class PagosScreen extends StatefulWidget {
   final int idInversion;
+  final int idEmprendimiento;
 
   const PagosScreen({
     Key? key,
     required this.idInversion,
+    required this.idEmprendimiento,
   }) : super(key: key);
 
   @override
@@ -789,7 +791,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                       .prodCotizados
                                                                       .toList(),
                                                                   actualInversion!
-                                                                      .porcentajePago);
+                                                                      .porcentajePago,
+                                                                  widget.idEmprendimiento);
                                                               await Navigator
                                                                   .push(
                                                                 context,
@@ -1546,7 +1549,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                     imagenFirma!,
                                                                     imagenProducto!,
                                                                     actualInversion!
-                                                                        .id);
+                                                                        .id,
+                                                                    widget.idEmprendimiento);
                                                             await Navigator
                                                                 .push(
                                                               context,
@@ -2124,7 +2128,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                               ",",
                                                                               "")),
                                                                       actualInversion!
-                                                                          .id);
+                                                                          .id,
+                                                                      widget.idEmprendimiento);
                                                                   await Navigator
                                                                       .push(
                                                                     context,
@@ -2165,7 +2170,8 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                               ",",
                                                                               "")),
                                                                       actualInversion!
-                                                                          .id);
+                                                                          .id,
+                                                                      widget.idEmprendimiento);
                                                                   snackbarKey
                                                                       .currentState
                                                                       ?.showSnackBar(

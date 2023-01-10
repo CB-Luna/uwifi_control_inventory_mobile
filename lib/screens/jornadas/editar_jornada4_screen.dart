@@ -1010,6 +1010,7 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                     jornadaProvider.updateImagenesJornada(
                                       widget.jornada.tarea.target!,
                                       listInstruccionesImagenesTemp,
+                                      widget.emprendimiento.id
                                     );
                                   }
                                   jornadaProvider.updateJornada4(
@@ -1017,7 +1018,8 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                       fechaRegistro,
                                       comentariosController.text,
                                       !activoController,
-                                      widget.jornada.tarea.target!.id);
+                                      widget.jornada.tarea.target!.id,
+                                      widget.emprendimiento.id);
                                   await Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -1032,6 +1034,7 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                     jornadaProvider.updateImagenesJornada(
                                       widget.jornada.tarea.target!,
                                       listInstruccionesImagenesTemp,
+                                      widget.emprendimiento.id
                                     );
                                   }
                                   await Navigator.push(

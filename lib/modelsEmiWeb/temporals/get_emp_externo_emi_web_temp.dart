@@ -26,18 +26,122 @@ class GetEmpExternoEmiWebTemp {
 
 class Payload {
     Payload({
+        required this.proyecto,
+        this.imagenPerfil,
+    });
+
+    final Proyecto proyecto;
+    final ImagenPerfil? imagenPerfil;
+
+    factory Payload.fromMap(Map<String, dynamic> json) => Payload(
+        proyecto: Proyecto.fromMap(json["proyecto"]),
+        imagenPerfil: json["imagenPerfil"] == null ? null : ImagenPerfil.fromMap(json["imagenPerfil"]),
+    );
+
+    Map<String, dynamic> toMap() => {
+        "proyecto": proyecto.toMap(),
+        "imagenPerfil": imagenPerfil == null ? null : imagenPerfil!.toMap(),
+    };
+}
+
+class ImagenPerfil {
+    ImagenPerfil({
+        required this.idDocumento,
+        required this.nombreArchivo,
+        required this.fechaCarga,
+        required this.archivo,
+    });
+
+    final int idDocumento;
+    final String nombreArchivo;
+    final DateTime fechaCarga;
+    final String archivo;
+
+    factory ImagenPerfil.fromMap(Map<String, dynamic> json) => ImagenPerfil(
+        idDocumento: json["idDocumento"],
+        nombreArchivo: json["nombreArchivo"],
+        fechaCarga: DateTime.parse(json["fechaCarga"]),
+        archivo: json["archivo"],
+    );
+
+    Map<String, dynamic> toMap() => {
+        "idDocumento": idDocumento,
+        "nombreArchivo": nombreArchivo,
+        "fechaCarga": fechaCarga.toIso8601String(),
+        "archivo": archivo,
+    };
+}
+
+class Proyecto {
+    Proyecto({
+        required this.idProyecto,
+        required this.idCatFase,
+        required this.activo,
+        required this.emprendimiento,
+        required this.faseAnterior,
+        required this.emprendedor,
+        this.idCatTipoProyecto,
+        this.idCatProyecto,
+        required this.switchMovil,
+        this.promotor,
+        required this.selected,
+    });
+
+    final int idProyecto;
+    final int idCatFase;
+    final bool? activo;
+    final String emprendimiento;
+    final int faseAnterior;
+    final Emprendedor emprendedor;
+    final int? idCatTipoProyecto;
+    final int? idCatProyecto;
+    final bool? switchMovil;
+    final Promotor? promotor;
+    bool selected = false;
+
+    factory Proyecto.fromMap(Map<String, dynamic> json) => Proyecto(
+        idProyecto: json["idProyecto"],
+        idCatFase: json["idCatFase"],
+        activo: json["activo"],
+        emprendimiento: json["emprendimiento"],
+        faseAnterior: json["faseAnterior"],
+        emprendedor: Emprendedor.fromMap(json["emprendedor"]),
+        idCatTipoProyecto: json["idCatTipoProyecto"],
+        idCatProyecto: json["idCatProyecto"],
+        switchMovil: json["switchMovil"],
+        promotor: json["promotor"] == null ? null : Promotor.fromMap(json["promotor"]),
+        selected: false,
+    );
+
+    Map<String, dynamic> toMap() => {
+        "idProyecto": idProyecto,
+        "idCatFase": idCatFase,
+        "activo": activo,
+        "emprendimiento": emprendimiento,
+        "faseAnterior": faseAnterior,
+        "emprendedor": emprendedor.toMap(),
+        "idCatTipoProyecto": idCatTipoProyecto,
+        "idCatProyecto": idCatProyecto,
+        "switchMovil": switchMovil,
+        "promotor": promotor == null ? null : promotor!.toMap(),
+        "selected": false,
+    };
+}
+
+class Emprendedor {
+    Emprendedor({
         required this.idEmprendedor,
         required this.nombre,
         required this.apellidos,
         required this.curp,
         required this.integrantesFamilia,
         required this.comunidad,
-        required this.telefono,
+        this.telefono,
         this.comentarios,
+        required this.archivado,
+        required this.estado,
+        required this.municipio,
         required this.fechaRegistro,
-        required this.proyectos,
-        required this.promotor,
-        required this.selected,
     });
 
     final int idEmprendedor;
@@ -46,14 +150,14 @@ class Payload {
     final String curp;
     final int integrantesFamilia;
     final int comunidad;
-    final String telefono;
+    final String? telefono;
     final String? comentarios;
+    final bool? archivado;
+    final int estado;
+    final int municipio;
     final DateTime fechaRegistro;
-    final List<ProyectoTemp>? proyectos;
-    final PromotorTemp promotor;
-    bool selected = false;
 
-    factory Payload.fromMap(Map<String, dynamic> json) => Payload(
+    factory Emprendedor.fromMap(Map<String, dynamic> json) => Emprendedor(
         idEmprendedor: json["idEmprendedor"],
         nombre: json["nombre"],
         apellidos: json["apellidos"],
@@ -62,10 +166,10 @@ class Payload {
         comunidad: json["comunidad"],
         telefono: json["telefono"],
         comentarios: json["comentarios"],
+        archivado: json["archivado"],
+        estado: json["estado"],
+        municipio: json["municipio"],
         fechaRegistro: DateTime.parse(json["fechaRegistro"]),
-        proyectos: json["proyectos"] == null ? null : List<ProyectoTemp>.from(json["proyectos"].map((x) => ProyectoTemp.fromMap(x))),
-        promotor: PromotorTemp.fromMap(json["promotor"]),
-        selected: false,
     );
 
     Map<String, dynamic> toMap() => {
@@ -77,25 +181,24 @@ class Payload {
         "comunidad": comunidad,
         "telefono": telefono,
         "comentarios": comentarios,
+        "archivado": archivado,
+        "estado": estado,
+        "municipio": municipio,
         "fechaRegistro": fechaRegistro.toIso8601String(),
-        "proyectos": proyectos == null ? null : List<dynamic>.from(proyectos!.map((x) => x.toMap())),
-        "promotor": promotor.toMap(),
-        "selected": false,
     };
 }
 
-class PromotorTemp {
-    PromotorTemp({
+class Promotor {
+    Promotor({
         required this.idUsuario,
         required this.nombre,
         required this.apellidoPaterno,
         this.apellidoMaterno,
-        required this.fechaNacimiento,
+        this.fechaNacimiento,
         required this.correo,
-        this.telefono,
+        required this.telefono,
         this.celular,
-        required this.fechaRegistro,
-        this.documento,
+        // required this.fechaRegistro,
     });
 
     final int idUsuario;
@@ -104,22 +207,20 @@ class PromotorTemp {
     final String? apellidoMaterno;
     final DateTime? fechaNacimiento;
     final String correo;
-    final String? telefono;
+    final String telefono;
     final String? celular;
-    final DateTime fechaRegistro;
-    final Documento? documento;
+    // final DateTime fechaRegistro;
 
-    factory PromotorTemp.fromMap(Map<String, dynamic> json) => PromotorTemp(
+    factory Promotor.fromMap(Map<String, dynamic> json) => Promotor(
         idUsuario: json["idUsuario"],
         nombre: json["nombre"],
         apellidoPaterno: json["apellidoPaterno"],
         apellidoMaterno: json["apellidoMaterno"],
-        fechaNacimiento: DateTime.parse(json["fechaNacimiento"]),
+        fechaNacimiento: json["fechaNacimiento"] == null ? null : DateTime.parse(json["fechaNacimiento"]),
         correo: json["correo"],
         telefono: json["telefono"],
         celular: json["celular"],
-        fechaRegistro: DateTime.parse(json["fechaRegistro"]),
-        documento: json["documento"] == null ? null : Documento.fromMap(json["documento"]),
+        // fechaRegistro: json["fechaRegistro"],
     );
 
     Map<String, dynamic> toMap() => {
@@ -131,86 +232,7 @@ class PromotorTemp {
         "correo": correo,
         "telefono": telefono,
         "celular": celular,
-        "fechaRegistro": fechaRegistro.toIso8601String(),
-        "documento": documento == null ? null : documento!.toMap(),
-    };
-}
-
-
-class Documento {
-    Documento({
-        required this.idDocumento,
-        required this.nombreArchivo,
-        required this.archivo,
-    });
-
-    final int idDocumento;
-    final String nombreArchivo;
-    final String archivo;
-
-    factory Documento.fromMap(Map<String, dynamic> json) => Documento(
-        idDocumento: json["idDocumento"],
-        nombreArchivo: json["nombreArchivo"],
-        archivo: json["archivo"],
-    );
-
-    Map<String, dynamic> toMap() => {
-        "idDocumento": idDocumento,
-        "nombreArchivo": nombreArchivo,
-        "archivo": archivo,
-    };
-}
-
-
-class ProyectoTemp {
-    ProyectoTemp({
-        required this.idProyecto,
-        required this.idEmprendedor,
-        required this.idCatFase,
-        this.idCatTipoProyecto,
-        required this.activo,
-        required this.archivado,
-        required this.emprendimiento,
-        required this.faseAnterior,
-        this.idCatProyecto,
-        required this.archivadoJornadas,
-    });
-
-    final int idProyecto;
-    final int idEmprendedor;
-    final int idCatFase;
-    final int? idCatTipoProyecto;
-    final bool activo;
-    final bool archivado;
-    final String emprendimiento;
-    final int faseAnterior;
-    final int? idCatProyecto;
-    final bool archivadoJornadas;
-
-    factory ProyectoTemp.fromMap(Map<String, dynamic> json) => ProyectoTemp(
-        idProyecto: json["idProyecto"],
-        idEmprendedor: json["idEmprendedor"],
-        idCatFase: json["idCatFase"],
-        idCatTipoProyecto: json["idCatTipoProyecto"],
-        activo: json["activo"],
-        archivado: json["archivado"],
-        emprendimiento: json["emprendimiento"],
-        faseAnterior: json["faseAnterior"],
-        idCatProyecto: json["idCatProyecto"],
-        archivadoJornadas: json["archivadoJornadas"],
-    );
-
-    Map<String, dynamic> toMap() => {
-        "idProyecto": idProyecto,
-        "idEmprendedor": idEmprendedor,
-        "idCatFase": idCatFase,
-        "idCatTipoProyecto": idCatTipoProyecto,
-        "activo": activo,
-        "archivado": archivado,
-        "emprendimiento": emprendimiento,
-        "faseAnterior": faseAnterior,
-        "idCatProyecto": idCatProyecto,
-        "archivadoJornadas": archivadoJornadas,
+        // "fechaRegistro": fechaRegistro.toIso8601String(),
     };
 }
 

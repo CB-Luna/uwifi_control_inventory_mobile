@@ -768,7 +768,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(27, 1774905738150923512),
       name: 'Bitacora',
-      lastPropertyId: const IdUid(18, 4970528658792456347),
+      lastPropertyId: const IdUid(19, 2787466043197643742),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -825,6 +825,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(18, 4970528658792456347),
             name: 'emprendimiento',
             type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(19, 2787466043197643742),
+            name: 'idEmprendimiento',
+            type: 6,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -3853,7 +3858,7 @@ ModelDefinition getObjectBoxModel() {
           final emprendimientoOffset = object.emprendimiento == null
               ? null
               : fbb.writeString(object.emprendimiento!);
-          fbb.startTable(19);
+          fbb.startTable(20);
           fbb.addInt64(0, object.id);
           fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addInt64(3, object.fechaSync?.millisecondsSinceEpoch);
@@ -3865,6 +3870,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addBool(15, object.executeEmiWeb);
           fbb.addOffset(16, idEmiWebOffset);
           fbb.addOffset(17, emprendimientoOffset);
+          fbb.addInt64(18, object.idEmprendimiento);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -3891,6 +3897,7 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGetNullable(buffer, rootOffset, 36),
               emprendimiento:
                   const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 38),
+              idEmprendimiento: const fb.Int64Reader().vTableGet(buffer, rootOffset, 40, 0),
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
               fechaSync: fechaSyncValue == null ? null : DateTime.fromMillisecondsSinceEpoch(fechaSyncValue));
           InternalToManyAccess.setRelInfo(
@@ -6164,6 +6171,10 @@ class Bitacora_ {
   /// see [Bitacora.emprendimiento]
   static final emprendimiento =
       QueryStringProperty<Bitacora>(_entities[10].properties[10]);
+
+  /// see [Bitacora.idEmprendimiento]
+  static final idEmprendimiento =
+      QueryIntegerProperty<Bitacora>(_entities[10].properties[11]);
 }
 
 /// [AmbitoConsultoria] entity fields to define ObjectBox queries.

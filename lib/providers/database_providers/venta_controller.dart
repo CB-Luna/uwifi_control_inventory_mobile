@@ -38,7 +38,7 @@ class VentaController extends ChangeNotifier {
     );
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     if (emprendimiento != null) {
-      final nuevaInstruccion = Bitacora(instruccion: 'syncAddVenta', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncAddVenta', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       nuevaVenta.emprendimiento.target = emprendimiento;
       nuevaVenta.bitacora.add(nuevaInstruccion);
       idVenta = dataBase.ventasBox.put(nuevaVenta);
@@ -52,10 +52,10 @@ class VentaController extends ChangeNotifier {
   }
 
 
-void update(int id, DateTime newFechaInicio, DateTime newFechaTermino, double newTotal) {
+void update(int id, DateTime newFechaInicio, DateTime newFechaTermino, double newTotal, int idEmprendimiento) {
     var updateVenta = dataBase.ventasBox.get(id);
     if (updateVenta !=  null) {
-      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateVenta', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateVenta', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       updateVenta.fechaInicio = newFechaInicio;
       updateVenta.fechaTermino = newFechaTermino;
       updateVenta.total = newTotal;

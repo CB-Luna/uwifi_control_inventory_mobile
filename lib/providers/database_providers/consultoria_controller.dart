@@ -53,8 +53,8 @@ class ConsultoriaController extends ChangeNotifier {
     final ambito = dataBase.ambitoConsultoriaBox.get(idAmbito);
     final areaCirculo = dataBase.areaCirculoBox.get(idAreaCirculo);
     if (emprendimiento != null && ambito != null && areaCirculo != null && faseEmp != null) {
-      final nuevaInstruccionConsultoria = Bitacora(instruccion: 'syncAddConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-      final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Consultorías", usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionConsultoria = Bitacora(instruccion: 'syncAddConsultoria', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Consultorías", usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       //Se asigna un ambito y un area del circulo a la nuevaConsultoria
       nuevaConsultoria.ambitoConsultoria.target = ambito;
       nuevaConsultoria.areaCirculo.target = areaCirculo;
@@ -78,7 +78,7 @@ class ConsultoriaController extends ChangeNotifier {
     }
   }
 
-  void updateTareaConsultoria(int id, Tareas oldTarea, int idPorcentajeAvance) {
+  void updateTareaConsultoria(int id, Tareas oldTarea, int idPorcentajeAvance, int idEmprendimiento) {
     final nuevaTarea = Tareas(
     tarea: tarea == "" ? oldTarea.tarea : tarea,
     descripcion: avanceObservado,
@@ -99,7 +99,7 @@ class ConsultoriaController extends ChangeNotifier {
       //Se agrega la nueva tarea
       nuevaTarea.consultoria.target = updateConsultoria;
       updateConsultoria.tareas.add(nuevaTarea);
-      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateTareaConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateTareaConsultoria', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       dataBase.consultoriasBox.put(updateConsultoria);
       nuevaTarea.bitacora.add(nuevaInstruccion);
       dataBase.tareasBox.put(nuevaTarea);
@@ -109,10 +109,10 @@ class ConsultoriaController extends ChangeNotifier {
     }
   }
 
-    void archivarConsultoria(int idConsultoria) {
+    void archivarConsultoria(int idConsultoria, int idEmprendimiento) {
     final consultoria = dataBase.consultoriasBox.get(idConsultoria);
     if (consultoria != null) {
-      final nuevaInstruccion = Bitacora(instruccion: 'syncArchivarConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncArchivarConsultoria', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza el estado de la Consultoria
       consultoria.archivado = true;
       consultoria.bitacora.add(nuevaInstruccion);
@@ -121,10 +121,10 @@ class ConsultoriaController extends ChangeNotifier {
     }
   }
 
-  void desarchivarConsultoria(int idConsultoria) {
+  void desarchivarConsultoria(int idConsultoria, int idEmprendimiento) {
     final consultoria = dataBase.consultoriasBox.get(idConsultoria);
     if (consultoria != null) {
-      final nuevaInstruccion = Bitacora(instruccion: 'syncDesarchivarConsultoria', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncDesarchivarConsultoria', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza el estado de la Consultoria
       consultoria.archivado = false;
       consultoria.bitacora.add(nuevaInstruccion);

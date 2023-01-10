@@ -59,7 +59,7 @@ class ProductoEmprendedorController extends ChangeNotifier {
       final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
       final unidadMedidad = dataBase.unidadesMedidaBox.get(idUnidadMedida);
       if (emprendimiento != null && unidadMedidad != null) {
-        final nuevaInstruccion = Bitacora(instruccion: 'syncAddProductoEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+        final nuevaInstruccion = Bitacora(instruccion: 'syncAddProductoEmprendedor', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
         nuevoProductoEmp.emprendimientos.target = emprendimiento;
         nuevoProductoEmp.unidadMedida.target = unidadMedidad;
         nuevoProductoEmp.bitacora.add(nuevaInstruccion);
@@ -74,11 +74,11 @@ class ProductoEmprendedorController extends ChangeNotifier {
   }
 
   void update(int id, String newNombre, String newDescripcion, String newImagen,
-    String newCosto, int newIdUnidadMedida) {
+    String newCosto, int newIdUnidadMedida, int idEmprendimiento) {
     var updateProdEmprendedor = dataBase.productosEmpBox.get(id);
     final updateUnidadMedida = dataBase.unidadesMedidaBox.get(newIdUnidadMedida);
     if (updateProdEmprendedor !=  null && updateUnidadMedida != null) {
-      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateProductoEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+      final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateProductoEmprendedor', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       updateProdEmprendedor.nombre = newNombre;
       updateProdEmprendedor.descripcion = newDescripcion;
       // updateProdEmprendedor.imagen =  newImagen;
@@ -91,9 +91,9 @@ class ProductoEmprendedorController extends ChangeNotifier {
     notifyListeners();
 }
 
-void updateImagenProductoEmp(int idImagenProductoEmp, String newNombreImagen, String newPath, String newBase64) {
+void updateImagenProductoEmp(int idImagenProductoEmp, String newNombreImagen, String newPath, String newBase64, int idEmprendimiento) {
     var updateImagenProductoEmp = dataBase.imagenesBox.get(idImagenProductoEmp);
-    final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateImagenProductoEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+    final nuevaInstruccion = Bitacora(instruccion: 'syncUpdateImagenProductoEmprendedor', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
     if (updateImagenProductoEmp != null) {
       updateImagenProductoEmp.imagenes = newPath; //Se actualiza la imagen del producto emprendedor
       updateImagenProductoEmp.nombre = newNombreImagen;
@@ -106,9 +106,9 @@ void updateImagenProductoEmp(int idImagenProductoEmp, String newNombreImagen, St
     notifyListeners();
   }
 
-void addImagenProductoEmp(ProductosEmp productoEmp, String newNombreImagen, String newPath, String newBase64) {
-    final nuevaInstruccionImagen = Bitacora(instruccion: 'syncAddImagenProductoEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-    final nuevaInstruccionProductoEmp = Bitacora(instruccion: 'syncUpdateProductoEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+void addImagenProductoEmp(ProductosEmp productoEmp, String newNombreImagen, String newPath, String newBase64, int idEmprendimiento) {
+    final nuevaInstruccionImagen = Bitacora(instruccion: 'syncAddImagenProductoEmprendedor', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
+    final nuevaInstruccionProductoEmp = Bitacora(instruccion: 'syncUpdateProductoEmprendedor', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       final nuevaImagenProductoEmp = Imagenes(
         imagenes: newPath,
         nombre: newNombreImagen,
