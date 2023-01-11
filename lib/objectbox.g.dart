@@ -1875,8 +1875,7 @@ final _entities = <ModelEntity>[
             id: const IdUid(18, 4420051813097480449),
             name: 'idEmiWeb',
             type: 9,
-            flags: 2080,
-            indexId: const IdUid(273, 713793477301725008)),
+            flags: 0),
         ModelProperty(
             id: const IdUid(19, 1346415551296560367),
             name: 'idEmprendimiento',
@@ -2758,7 +2757,8 @@ ModelDefinition getObjectBoxModel() {
         6686263885413674781,
         8523822191732594212,
         69675433781937515,
-        8811611690106049466
+        8811611690106049466,
+        713793477301725008
       ],
       retiredPropertyUids: const [
         7079790605743243388,

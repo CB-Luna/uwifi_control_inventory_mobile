@@ -65,7 +65,6 @@ class ProdSolicitado {
   DateTime fechaRegistro;
   @Unique()
   String? idDBR;
-  @Unique()
   String? idEmiWeb;
   int idEmprendimiento;
   final familiaProducto = ToOne<FamiliaProd>();
