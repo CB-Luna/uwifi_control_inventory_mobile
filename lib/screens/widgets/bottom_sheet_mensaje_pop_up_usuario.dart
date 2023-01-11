@@ -94,11 +94,9 @@ class _BottomSheetMensajeWidgetState extends State<BottomSheetMensajeWidget> {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
-                              Icon(
-                                Icons.warning_amber_outlined,
-                                size: 80,
-                                color: Color.fromARGB(255, 232, 253, 2),
-                              ),
+                              Icon(Icons.warning_amber_outlined,
+                                  size: 80,
+                                  color: Color.fromARGB(255, 255, 176, 7)),
                             ],
                           ),
                         ),
