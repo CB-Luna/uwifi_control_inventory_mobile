@@ -94,10 +94,12 @@ class RecepcionYEntregaController extends ChangeNotifier {
       //Se agrega la imagen de la Firma
       final nuevaInstruccionImagenesEntregaInversion = Bitacora(instruccion: 'syncAddImagenesEntregaInversion', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       imagenFirma.inversion.target = updateInversion;
+      imagenFirma.idEmprendimiento = idEmprendimiento;
       updateInversion.imagenFirmaRecibido.target = imagenFirma;
       dataBase.imagenesBox.put(imagenFirma);
       //Se agrega la imagen del Producto Entregado
       imagenProductoEntregado.inversion.target = updateInversion;
+      imagenProductoEntregado.idEmprendimiento = idEmprendimiento;
       updateInversion.imagenProductoEntregado.target = imagenProductoEntregado;
       dataBase.imagenesBox.put(imagenProductoEntregado);
       //Se actualiza el estado de la inversión

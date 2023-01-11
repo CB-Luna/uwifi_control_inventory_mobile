@@ -1929,113 +1929,882 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                   print(responseAPI4.statusCode);
                   banderasExitoSync.add(false);
               }
-              // print("LLAMADO DE API 7");
-              // // API 6 Se recupera la información básica de las Inversiones
-              // var urlAPI7 = Uri.parse("$baseUrlEmiWebServices/inversiones/emprendimiento?idEmprendimiento=$idEmprendimiento");
-              // final headersAPI7 = ({
-              //     "Content-Type": "application/json",
-              //     'Authorization': 'Bearer $tokenGlobal',
-              //   });
-              // var responseAPI7 = await get(
-              //   urlAPI7,
-              //   headers: headersAPI7
-              // ); 
-              // switch (responseAPI7.statusCode) {
-              //   case 200:
-              //     print("Respuesta 200 en API 7");
-              //     var basicInversiones = getBasicInversionesEmiWebFromMap(
-              //       const Utf8Decoder().convert(responseAPI7.bodyBytes)
-              //     );
-              //     for(var inversion in basicInversiones.payload!)
-              //     {
-              //       // Se valida que la inversión exista en Pocketbase
-              //       final recordValidateInversion = await client.records.getFullList(
-              //         'inversiones',
-              //         batch: 200,
-              //         filter:
-              //           "id_emi_web='${inversion.idInversiones}'");
-              //       if (recordValidateInversion.isEmpty) {
-              //         //La inversión no existe en Pocketbase y se tienen que crear
-              //         //Primero creamos la inversion
-              //         //Se busca el estado de la inversión
-              //         final estadoInversion = dataBase.estadoInversionBox
-              //             .query(EstadoInversion_.idEmiWeb.equals(inversion.idCatEstadoInversion.toString()))
-              //             .build()
-              //             .findFirst();
-              //         if (estadoInversion != null) {
-              //           final recordInversion =
-              //               await client.records.create('inversiones', body: {
-              //             "id_emprendimiento_fk": idEmprendimientoPocketbase,
-              //             "id_estado_inversion_fk": estadoInversion.idDBR,
-              //             "porcentaje_pago": int.parse(inversion.porcentajePago.toString()),
-              //             "monto_pagar": inversion.montoPagar,
-              //             "saldo": inversion.saldo,
-              //             "total_inversion": inversion.totalInversion,
-              //             "inversion_recibida": inversion.inversionRecibida,
-              //             "pago_recibido": inversion.pagoRecibido != null ? true : false,
-              //             "producto_entregado": inversion.productoEntregado != null ? true : false,
-              //             "id_emi_web": inversion.idInversiones.toString(),
-              //             "jornada_3": false,
-              //           });
-              //           if (recordInversion.id.isNotEmpty) {
-              //             //Segundo creamos los productos solicitados asociados a la inversion
-              //             for (var i = 0; i < inversion.productosSolicitados.toList().length; i++) {
-              //               //Se verifica que el producto Solicitado esté asociado a una imagen
-              //               if (inversion.productosSolicitados.toList()[i].productoSolicitado.idDocumento != null) {
-              //                 //El producto Solicitado está asociado a una imagen
-              //               } else {
-              //                 //El producto Solicitado no está asociado a una imagen
-              //                 final tipoEmpaque = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idEmiWeb.equals(inversion.productosSolicitados.toList()[i].productoSolicitado.catTipoEmpaque.idCatTipoEmpaque.toString())).build().findUnique();
-              //                 if (tipoEmpaque != null) {
-              //                   final recordProdSolicitado = await client.records
-              //                       .create('productos_solicitados', body: {
-              //                     "producto": inversion.productosSolicitados.toList()[i].productoSolicitado.producto,
-              //                     "marca_sugerida": inversion.productosSolicitados.toList()[i].productoSolicitado.marcaSugerida,
-              //                     "descripcion": inversion.productosSolicitados.toList()[i].productoSolicitado.descripcion,
-              //                     "proveedo_sugerido": inversion.productosSolicitados.toList()[i].productoSolicitado.proveedorSugerido,
-              //                     "cantidad": inversion.productosSolicitados.toList()[i].productoSolicitado.cantidad,
-              //                     "costo_estimado": inversion.productosSolicitados.toList()[i].productoSolicitado.costoEstimado,
-              //                     "id_familia_prod_fk": "5BQwxKKFMPXRXIe",
-              //                     "id_tipo_empaques_fk": tipoEmpaque.idDBR,
-              //                     "id_inversion_fk": recordInversion.id,
-              //                     "id_emi_web": inversion.productosSolicitados.toList()[i].productoSolicitado.idProductoSolicitado.toString(),
-              //                   });
-              //                   if (recordProdSolicitado.id.isNotEmpty) {
-              //                     //Se creó con éxito el Prod Solicitado en Pocketbase
-              //                   } else {
-              //                     //No se pudo crear un Prod Solicitado en Pocketbase
-              //                     banderasExitoSync.add(false);
-              //                   }
-              //                 } else {
-              //                   //No se pudo recuperar información del Prod Solicitado para crearlo
-              //                   banderasExitoSync.add(false);
-              //                 }
-              //               }
-              //             }
-              //             //Tercero creamos la inversión X prod Cotizados, si es que existe
-              //             // if (inversion.) {
-                            
-              //             // }
-              //           } else {
-              //             // No se pudo agregar una Inversión en Pocketbase
-              //             banderasExitoSync.add(false);
-              //           }
-              //         } else{
-              //           //No se pudo recuperar información de la Inversión para crearla
-              //           banderasExitoSync.add(false);
-              //         }
-              //       } else {
-              //         //La inversión ya existe en Pocketbase y se tienen que actualizar
-              //       }
-              //     }
-              //     break;
-              //   case 404:
-              //     break;
-              //   default:
-              //     print("Error en llamado al API 7");
-              //     print(responseAPI7.statusCode);
-              //     banderasExitoSync.add(false);
-              // }
+              print("LLAMADO DE API 7");
+              // API 7 Se recupera la información básica de las Inversiones
+              var urlAPI7 = Uri.parse("$baseUrlEmiWebServices/inversiones/emprendimiento?idEmprendimiento=$idEmprendimiento");
+              final headersAPI7 = ({
+                  "Content-Type": "application/json",
+                  'Authorization': 'Bearer $tokenGlobal',
+                });
+              var responseAPI7 = await get(
+                urlAPI7,
+                headers: headersAPI7
+              ); 
+              switch (responseAPI7.statusCode) {
+                case 200:
+                  print("Respuesta 200 en API 7");        
+                  var basicInversiones = getBasicInversionesEmiWebFromMap(
+                    const Utf8Decoder().convert(responseAPI7.bodyBytes)
+                  );
+                  print("Parseo EXITOSO EN API 7");
+                  for(var inversion in basicInversiones!.payload!)
+                  {
+                    // Se valida que la inversión exista en Pocketbase
+                    final recordValidateInversion = await client.records.getFullList(
+                      'inversiones',
+                      batch: 200,
+                      filter:
+                        "id_emi_web='${inversion!.idInversiones}'");
+                    if (recordValidateInversion.isEmpty) {
+                      //La inversión no existe en Pocketbase y se tienen que crear
+                      //Primero creamos la inversion
+                      //Se busca el estado de la inversión
+                      final estadoInversion = dataBase.estadoInversionBox
+                          .query(EstadoInversion_.idEmiWeb.equals(inversion.idCatEstadoInversion.toString()))
+                          .build()
+                          .findFirst();
+                      if (estadoInversion != null) {
+                        final recordInversion =
+                            await client.records.create('inversiones', body: {
+                          "id_emprendimiento_fk": idEmprendimientoPocketbase,
+                          "id_estado_inversion_fk": estadoInversion.idDBR,
+                          "porcentaje_pago": int.parse(inversion.porcentajePago.round().toString()),
+                          "monto_pagar": inversion.montoPagar,
+                          "saldo": inversion.saldo,
+                          "total_inversion": inversion.totalInversion,
+                          "inversion_recibida": inversion.inversionRecibida,
+                          "pago_recibido": inversion.pagoRecibido != null ? true : false,
+                          "producto_entregado": inversion.productoEntregado != null ? true : false,
+                          "id_emi_web": inversion.idInversiones.toString(),
+                          "jornada_3": false,
+                        });
+                        if (recordInversion.id.isNotEmpty) {
+                          //Segundo creamos los productos solicitados asociados a la inversion
+                          for (var i = 0; i < inversion.productosSolicitados.toList().length; i++) {
+                            //Se verifica que el producto Solicitado esté asociado a una imagen
+                            if (inversion.productosSolicitados.toList()[i].productoSolicitado.idDocumento != null) {
+                              //El producto Solicitado está asociado a una imagen
+                              //La imagen del prod Solicitado se debe de crear
+                              final recordImagen = await client.records.create('imagenes', body: {
+                                "nombre": inversion.productosSolicitados.toList()[i].productoSolicitado.documento!.nombreArchivo,
+                                "id_emi_web": inversion.productosSolicitados.toList()[i].productoSolicitado.documento!.idDocumento,
+                                "base64": inversion.productosSolicitados.toList()[i].productoSolicitado.documento!.archivo,
+                              });
+                              if (recordImagen.id.isNotEmpty) {
+                                //Se crea el producto Solicitado
+                                final tipoEmpaque = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idEmiWeb.equals(inversion.productosSolicitados.toList()[i].productoSolicitado.catTipoEmpaque.idCatTipoEmpaque.toString())).build().findUnique();
+                                if (tipoEmpaque != null) {
+                                  final recordProdSolicitado = await client.records
+                                      .create('productos_solicitados', body: {
+                                    "producto": inversion.productosSolicitados.toList()[i].productoSolicitado.producto,
+                                    "marca_sugerida": inversion.productosSolicitados.toList()[i].productoSolicitado.marcaSugerida,
+                                    "descripcion": inversion.productosSolicitados.toList()[i].productoSolicitado.descripcion,
+                                    "proveedo_sugerido": inversion.productosSolicitados.toList()[i].productoSolicitado.proveedorSugerido,
+                                    "cantidad": inversion.productosSolicitados.toList()[i].productoSolicitado.cantidad,
+                                    "costo_estimado": inversion.productosSolicitados.toList()[i].productoSolicitado.costoEstimado,
+                                    "id_familia_prod_fk": "5BQwxKKFMPXRXIe",
+                                    "id_tipo_empaques_fk": tipoEmpaque.idDBR,
+                                    "id_inversion_fk": recordInversion.id,
+                                    "id_emi_web": inversion.productosSolicitados.toList()[i].productoSolicitado.idProductoSolicitado.toString(),
+                                    "id_imagen_fk": recordImagen.id,
+                                  });
+                                  if (recordProdSolicitado.id.isNotEmpty) {
+                                    //Se creó con éxito el Prod Solicitado en Pocketbase
+                                  } else {
+                                    //No se pudo crear un Prod Solicitado en Pocketbase
+                                    banderasExitoSync.add(false);
+                                  }
+                                } else {
+                                  //No se pudo recuperar información del Prod Solicitado para crearlo
+                                  banderasExitoSync.add(false);
+                                }
+                              } else {
+                                // No se pudo agregar una Imagen de los productos solicitados en Pocketbase
+                                banderasExitoSync.add(false);
+                              }
+                            } else {
+                              //El producto Solicitado no está asociado a una imagen
+                              final tipoEmpaque = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idEmiWeb.equals(inversion.productosSolicitados.toList()[i].productoSolicitado.catTipoEmpaque.idCatTipoEmpaque.toString())).build().findUnique();
+                              if (tipoEmpaque != null) {
+                                final recordProdSolicitado = await client.records
+                                    .create('productos_solicitados', body: {
+                                  "producto": inversion.productosSolicitados.toList()[i].productoSolicitado.producto,
+                                  "marca_sugerida": inversion.productosSolicitados.toList()[i].productoSolicitado.marcaSugerida,
+                                  "descripcion": inversion.productosSolicitados.toList()[i].productoSolicitado.descripcion,
+                                  "proveedo_sugerido": inversion.productosSolicitados.toList()[i].productoSolicitado.proveedorSugerido,
+                                  "cantidad": inversion.productosSolicitados.toList()[i].productoSolicitado.cantidad,
+                                  "costo_estimado": inversion.productosSolicitados.toList()[i].productoSolicitado.costoEstimado,
+                                  "id_familia_prod_fk": "5BQwxKKFMPXRXIe",
+                                  "id_tipo_empaques_fk": tipoEmpaque.idDBR,
+                                  "id_inversion_fk": recordInversion.id,
+                                  "id_emi_web": inversion.productosSolicitados.toList()[i].productoSolicitado.idProductoSolicitado.toString(),
+                                });
+                                if (recordProdSolicitado.id.isNotEmpty) {
+                                  //Se creó con éxito el Prod Solicitado en Pocketbase
+                                } else {
+                                  //No se pudo crear un Prod Solicitado en Pocketbase
+                                  banderasExitoSync.add(false);
+                                }
+                              } else {
+                                //No se pudo recuperar información del Prod Solicitado para crearlo
+                                banderasExitoSync.add(false);
+                              }
+                            }
+                          }
+                          //Tercero creamos la inversión X prod Cotizados, si es que existen en la respuesta desde EMI Web
+                          if (inversion.inversionesXProductosCotizados != null) {
+                            for(var inversionXProdCot in inversion.inversionesXProductosCotizados!)
+                            {
+                              //Se crea la inversion X prod cotizados en Pocketbase 
+                              final recordInversionXProdCotizados = await client.records.create('inversion_x_prod_cotizados', body: {
+                                "id_inversion_fk": recordInversion.id,
+                                "id_emi_web": inversionXProdCot.idListaCotizacion.toString(),
+                              });
+                              if (recordInversionXProdCotizados.id.isNotEmpty) {
+                                //Se crea con éxito la inversion X Prod Cotizados en Pocketbase
+                                //Ahora se crean los productos cotizados asociados a la inversion X Prod Cotizados
+                                for(var productoCotizado in inversionXProdCot.listaProductosCotizados)
+                                {
+                                  //Obtenemos el producto proveedor asociado al prod Cotizado en Pocketbase
+                                  final recordProdProveedor = await client.records.getFullList(
+                                      'productos_prov',
+                                      batch: 200,
+                                      filter:
+                                          "nombre_prod_prov='${productoCotizado
+                                          .nombreProducto}'&&descripcion_prod_prov='${productoCotizado
+                                          .descripcionProducto}'&&marca='${productoCotizado
+                                          .marcaProducto}'&&costo_prod_prov~'${productoCotizado.costoProducto}'");
+                                  if (recordProdProveedor.isNotEmpty) {
+                                    final recordProdCotizados = await client.records.create(
+                                    'productos_cotizados', body: {
+                                      "cantidad": productoCotizado.cantidad,
+                                      "costo_total": productoCotizado.costoTotal,
+                                      "id_producto_prov_fk": recordProdProveedor.first.id,
+                                      "id_inversion_x_prod_cotizados_fk": recordInversionXProdCotizados.id,
+                                      "id_emi_web": productoCotizado.idProductoCotizado.toString(),
+                                      "aceptado": productoCotizado.aceptado,
+                                    });
+                                    if (recordProdCotizados.id.isNotEmpty) {
+                                      //Se crea con éxito el Prod Cotizados en Pocketbase
+                                    } else {
+                                      //No se pudo crear un Prod Cotizado en Pocketbase
+                                      banderasExitoSync.add(false);
+                                    }
+                                  } else {
+                                    //No se pudo recuperar información del Prod Cotizado para crearlo
+                                    banderasExitoSync.add(false);
+                                  }
+                                }
+                              } else {
+                                //No se pudo crear una inversion X Prod Cotizados en Pocketbase
+                                banderasExitoSync.add(false);
+                              }
+                            }
+                          }
+                          //Cuarto creamos la Firma de Recibido y el Documento Producto Entregado, sí es que existen 
+                          if (inversion.firmaRecibidoDocumento != null) {
+                            final recordImagenFirmaRecibido =
+                            await client.records.create('imagenes', body: {
+                              "nombre": inversion.firmaRecibidoDocumento!.nombreArchivo,
+                              "base64": inversion.firmaRecibidoDocumento!.archivo,
+                              "id_emi_web": inversion.firmaRecibidoDocumento!.idDocumento.toString(),
+                            });
+                            if (recordImagenFirmaRecibido.id.isNotEmpty) {
+                              //Se crea con éxito la imagen Firma de Recibido en Pocketbase
+                              //Actualizamos la inversión en Pocketbase
+                              final recordInversionFirmaRecibido =
+                                await client.records.update('inversiones', recordInversion.id, body: {
+                                "id_imagen_firma_recibido_fk": recordImagenFirmaRecibido.id,
+                              });
+                              if (recordInversionFirmaRecibido.id.isNotEmpty) {
+                                //Se actualiza con éxito la inversión en Pocketbase
+                              } else {
+                                //No se actualiza con éxito la inversión en Pocketbase
+                                banderasExitoSync.add(false);
+                              }
+                            } else {
+                              //No se pudo crear la imagen Firma de Recibido en Pocketbase
+                              banderasExitoSync.add(false);
+                            }
+                          }
+                          if (inversion.productoEntregadoDocumento != null) {
+                            final recordImagenProductoEntregado =
+                            await client.records.create('imagenes', body: {
+                              "nombre": inversion.productoEntregadoDocumento!.nombreArchivo,
+                              "base64": inversion.productoEntregadoDocumento!.archivo,
+                              "id_emi_web": inversion.productoEntregadoDocumento!.idDocumento.toString(),
+                            });
+                            if (recordImagenProductoEntregado.id.isNotEmpty) {
+                              //Se crea con éxito la imagen Documento Producto Entregado en Pocketbase
+                              //Actualizamos la inversión en Pocketbase
+                              final recordInversionProductoEntregado =
+                                await client.records.update('inversiones', recordInversion.id, body: {
+                                "id_imagen_producto_entregado_fk": recordImagenProductoEntregado.id,
+                              });
+                              if (recordInversionProductoEntregado.id.isNotEmpty) {
+                                //Se actualiza con éxito la inversión en Pocketbase
+                              } else {
+                                //No se actualiza con éxito la inversión en Pocketbase
+                                banderasExitoSync.add(false);
+                              }
+                            } else {
+                              //No se pudo crear la imagen Documento Producto Entregado en Pocketbase
+                              banderasExitoSync.add(false);
+                            }
+                          }
+                          //Quinto recuperamos y creamos el historial de pagos sí es que existen
+                          if (inversion.pagos != null) {
+                            for (var pagoInversion in inversion.pagos!) {
+                              //Obtenemos el usuario asociado al pago en Pocketbase
+                              final recordUsuario = await client.records.getFullList(
+                                'emi_users',
+                                batch: 200,
+                                filter: "id_emi_web='${pagoInversion.idUsuario}'");
+                              if (recordUsuario.isNotEmpty) {
+                                final recordPagoInversion = await client.records.create('pagos', body: {
+                                  "monto_abonado": pagoInversion.montoAbonado,
+                                  "fecha_movimiento": pagoInversion.fechaMovimiento.toUtc().toString(),
+                                  "id_inversion_fk": recordInversion.id,
+                                  "id_usuario_fk": recordUsuario.first.id,
+                                  "id_emi_web": pagoInversion.idPago.toString(),
+                                });
+                                if (recordPagoInversion.id.isNotEmpty) {
+                                  //Se agrega con éxito el Pago de la Inversión en Pocketbase
+                                } else {
+                                  //No se agrega con éxito el Pago de la Inversión en Pocketbase
+                                  banderasExitoSync.add(false);
+                                }
+                              } else {
+                                //No se pudo recuperar información del Pago de la Inversión para crearlo
+                                banderasExitoSync.add(false);
+                              }
+                            }
+                          }
+                        } else {
+                          // No se pudo agregar una Inversión en Pocketbase
+                          banderasExitoSync.add(false);
+                        }
+                      } else{
+                        //No se pudo recuperar información de la Inversión para crearla
+                        banderasExitoSync.add(false);
+                      }
+                    } else {
+                      //La inversión ya existe en Pocketbase y se tienen que actualizar
+                      //Primero actualizamos la inversión
+                      //Se busca el estado de la inversión
+                      final estadoInversion = dataBase.estadoInversionBox
+                          .query(EstadoInversion_.idEmiWeb.equals(inversion.idCatEstadoInversion.toString()))
+                          .build()
+                          .findFirst();
+                      if (estadoInversion != null) {
+                        final recordInversion =
+                            await client.records.update('inversiones', recordValidateInversion.first.id, body: {
+                          "id_estado_inversion_fk": estadoInversion.idDBR,
+                          "porcentaje_pago": int.parse(inversion.porcentajePago.round().toString()),
+                          "monto_pagar": inversion.montoPagar,
+                          "saldo": inversion.saldo,
+                          "total_inversion": inversion.totalInversion,
+                          "inversion_recibida": inversion.inversionRecibida,
+                          "pago_recibido": inversion.pagoRecibido != null ? true : false,
+                          "producto_entregado": inversion.productoEntregado != null ? true : false,
+                        });
+                        if (recordInversion.id.isNotEmpty) {
+                          //Segundo actualizamos los productos solicitados asociados a la inversion
+                          //Recuperamos todos los productos solicitados existentes en Emi Web
+                          final recordProductosSolicitados = await client.records.getFullList(
+                          'productos_solicitados',
+                          batch: 200,
+                          filter:
+                            "id_inversion_fk='${recordInversion.id}'");
+                          final List<String> idsProductosSolicitadosEliminados = [];
+                          //Recuperamos los ids de los productos solicitados existentes en Emi Web
+                          for (var element in recordProductosSolicitados) {
+                            idsProductosSolicitadosEliminados.add(element.id);
+                          }
+                          for (var i = 0; i < inversion.productosSolicitados.toList().length; i++) {
+                            //Se valida que el producto solicitado exista en Pockebase
+                            final recordValidateProductoSolicitado = await client.records.getFullList(
+                            'productos_solicitados',
+                            batch: 200,
+                            filter:
+                              "id_emi_web='${inversion.productosSolicitados.toList()[i].productoSolicitado.idProductoSolicitado}'");
+                            if (recordValidateProductoSolicitado.isNotEmpty) {
+                              //El producto Solicitado ya existe en Pocketbase y se debe actualizar
+                              //Se verifica que el producto Solicitado esté asociado a una imagen
+                              if (inversion.productosSolicitados.toList()[i].productoSolicitado.idDocumento != null) {
+                                //El producto Solicitado está asociado a una imagen
+                                // Se valida que la imagen exista en Pocketbase
+                                final recordValidateImagenProdSolicitado = await client.records.getFullList(
+                                  'imagenes',
+                                  batch: 200,
+                                  filter:
+                                    "id_emi_web='${inversion.productosSolicitados.toList()[i].productoSolicitado.idDocumento}'");
+                                if (recordValidateImagenProdSolicitado.isEmpty) {
+                                  //La imagen del prod Solicitado no existe y se debe de crear
+                                  final recordImagen = await client.records.create('imagenes', body: {
+                                    "nombre": inversion.productosSolicitados.toList()[i].productoSolicitado.documento!.nombreArchivo,
+                                    "id_emi_web": inversion.productosSolicitados.toList()[i].productoSolicitado.documento!.idDocumento,
+                                    "base64": inversion.productosSolicitados.toList()[i].productoSolicitado.documento!.archivo,
+                                  });
+                                  if (recordImagen.id.isNotEmpty) {
+                                    //Se actualiza el producto Solicitado
+                                    final tipoEmpaque = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idEmiWeb.equals(inversion.productosSolicitados.toList()[i].productoSolicitado.catTipoEmpaque.idCatTipoEmpaque.toString())).build().findUnique();
+                                    if (tipoEmpaque != null) {
+                                      final recordProdSolicitado = await client.records
+                                          .update('productos_solicitados', recordValidateProductoSolicitado.first.id, body: {
+                                        "producto": inversion.productosSolicitados.toList()[i].productoSolicitado.producto,
+                                        "marca_sugerida": inversion.productosSolicitados.toList()[i].productoSolicitado.marcaSugerida,
+                                        "descripcion": inversion.productosSolicitados.toList()[i].productoSolicitado.descripcion,
+                                        "proveedo_sugerido": inversion.productosSolicitados.toList()[i].productoSolicitado.proveedorSugerido,
+                                        "cantidad": inversion.productosSolicitados.toList()[i].productoSolicitado.cantidad,
+                                        "costo_estimado": inversion.productosSolicitados.toList()[i].productoSolicitado.costoEstimado,
+                                        "id_tipo_empaques_fk": tipoEmpaque.idDBR,
+                                        "id_inversion_fk": recordInversion.id,
+                                        "id_imagen_fk": recordImagen.id,
+                                      });
+                                      if (recordProdSolicitado.id.isNotEmpty) {
+                                        //Se actualizó con éxito el Prod Solicitado en Pocketbase
+                                        idsProductosSolicitadosEliminados.remove(recordProdSolicitado.id);
+                                      } else {
+                                        //No se pudo actualizar un Prod Solicitado en Pocketbase
+                                        banderasExitoSync.add(false);
+                                      }
+                                    } else {
+                                      //No se pudo recuperar información del Prod Solicitado para actualizarlo
+                                      banderasExitoSync.add(false);
+                                    }
+                                  } else {
+                                    // No se pudo agregar una Imagen de los productos solicitados en Pocketbase
+                                    banderasExitoSync.add(false);
+                                  }
+                                } else {
+                                  //La imagen del prod Solicitado ya existe y se debe de actualizar
+                                  final recordImagen = await client.records.update('imagenes', recordValidateImagenProdSolicitado.first.id, body: {
+                                    "nombre": inversion.productosSolicitados.toList()[i].productoSolicitado.documento!.nombreArchivo,
+                                    "base64": inversion.productosSolicitados.toList()[i].productoSolicitado.documento!.archivo,
+                                  });
+                                  if (recordImagen.id.isNotEmpty) {
+                                    //Se actualiza el producto Solicitado
+                                    final tipoEmpaque = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idEmiWeb.equals(inversion.productosSolicitados.toList()[i].productoSolicitado.catTipoEmpaque.idCatTipoEmpaque.toString())).build().findUnique();
+                                    if (tipoEmpaque != null) {
+                                      final recordProdSolicitado = await client.records
+                                          .update('productos_solicitados', recordValidateProductoSolicitado.first.id, body: {
+                                        "producto": inversion.productosSolicitados.toList()[i].productoSolicitado.producto,
+                                        "marca_sugerida": inversion.productosSolicitados.toList()[i].productoSolicitado.marcaSugerida,
+                                        "descripcion": inversion.productosSolicitados.toList()[i].productoSolicitado.descripcion,
+                                        "proveedo_sugerido": inversion.productosSolicitados.toList()[i].productoSolicitado.proveedorSugerido,
+                                        "cantidad": inversion.productosSolicitados.toList()[i].productoSolicitado.cantidad,
+                                        "costo_estimado": inversion.productosSolicitados.toList()[i].productoSolicitado.costoEstimado,
+                                        "id_tipo_empaques_fk": tipoEmpaque.idDBR,
+                                        "id_inversion_fk": recordInversion.id,
+                                        "id_imagen_fk": recordImagen.id,
+                                      });
+                                      if (recordProdSolicitado.id.isNotEmpty) {
+                                        //Se actualizó con éxito el Prod Solicitado en Pocketbase
+                                        idsProductosSolicitadosEliminados.remove(recordProdSolicitado.id);
+                                      } else {
+                                        //No se pudo actualizar un Prod Solicitado en Pocketbase
+                                        banderasExitoSync.add(false);
+                                      }
+                                    } else {
+                                      //No se pudo recuperar información del Prod Solicitado para actualizarlo
+                                      banderasExitoSync.add(false);
+                                    }
+                                  } else {
+                                    // No se pudo actualizar una Imagen de los productos solicitados en Pocketbase
+                                    banderasExitoSync.add(false);
+                                  }
+                                }
+                              } else {
+                                //El producto Solicitado no está asociado a una imagen
+                                final tipoEmpaque = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idEmiWeb.equals(inversion.productosSolicitados.toList()[i].productoSolicitado.catTipoEmpaque.idCatTipoEmpaque.toString())).build().findUnique();
+                                if (tipoEmpaque != null) {
+                                  final recordProdSolicitado = await client.records
+                                      .update('productos_solicitados', recordValidateProductoSolicitado.first.id,body: {
+                                    "producto": inversion.productosSolicitados.toList()[i].productoSolicitado.producto,
+                                    "marca_sugerida": inversion.productosSolicitados.toList()[i].productoSolicitado.marcaSugerida,
+                                    "descripcion": inversion.productosSolicitados.toList()[i].productoSolicitado.descripcion,
+                                    "proveedo_sugerido": inversion.productosSolicitados.toList()[i].productoSolicitado.proveedorSugerido,
+                                    "cantidad": inversion.productosSolicitados.toList()[i].productoSolicitado.cantidad,
+                                    "costo_estimado": inversion.productosSolicitados.toList()[i].productoSolicitado.costoEstimado,
+                                    "id_tipo_empaques_fk": tipoEmpaque.idDBR,
+                                    "id_inversion_fk": recordInversion.id,
+                                    "id_imagen_fk": "",
+                                  });
+                                  if (recordProdSolicitado.id.isNotEmpty) {
+                                    //Se actualizó con éxito el Prod Solicitado en Pocketbase
+                                    idsProductosSolicitadosEliminados.remove(recordProdSolicitado.id);
+                                  } else {
+                                    //No se pudo actualizar un Prod Solicitado en Pocketbase
+                                    banderasExitoSync.add(false);
+                                  }
+                                } else {
+                                  //No se pudo recuperar información del Prod Solicitado para actualizarlo
+                                  banderasExitoSync.add(false);
+                                }
+                              }
+                            } else {
+                              //El producto Solicitado no existe en Pocketbase y se debe crear
+                              //Se verifica que el producto Solicitado esté asociado a una imagen
+                              if (inversion.productosSolicitados.toList()[i].productoSolicitado.idDocumento != null) {
+                                //El producto Solicitado está asociado a una imagen
+                                // Se valida que la imagen exista en Pocketbase
+                                final recordValidateImagenProdSolicitado = await client.records.getFullList(
+                                  'imagenes',
+                                  batch: 200,
+                                  filter:
+                                    "id_emi_web='${inversion.productosSolicitados.toList()[i].productoSolicitado.idDocumento}'");
+                                if (recordValidateImagenProdSolicitado.isEmpty) {
+                                  //La imagen del prod Solicitado no existe y se debe de crear
+                                  final recordImagen = await client.records.create('imagenes', body: {
+                                    "nombre": inversion.productosSolicitados.toList()[i].productoSolicitado.documento!.nombreArchivo,
+                                    "id_emi_web": inversion.productosSolicitados.toList()[i].productoSolicitado.documento!.idDocumento,
+                                    "base64": inversion.productosSolicitados.toList()[i].productoSolicitado.documento!.archivo,
+                                  });
+                                  if (recordImagen.id.isNotEmpty) {
+                                    //Se crea el producto Solicitado
+                                    final tipoEmpaque = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idEmiWeb.equals(inversion.productosSolicitados.toList()[i].productoSolicitado.catTipoEmpaque.idCatTipoEmpaque.toString())).build().findUnique();
+                                    if (tipoEmpaque != null) {
+                                      final recordProdSolicitado = await client.records
+                                          .create('productos_solicitados', body: {
+                                        "producto": inversion.productosSolicitados.toList()[i].productoSolicitado.producto,
+                                        "marca_sugerida": inversion.productosSolicitados.toList()[i].productoSolicitado.marcaSugerida,
+                                        "descripcion": inversion.productosSolicitados.toList()[i].productoSolicitado.descripcion,
+                                        "proveedo_sugerido": inversion.productosSolicitados.toList()[i].productoSolicitado.proveedorSugerido,
+                                        "cantidad": inversion.productosSolicitados.toList()[i].productoSolicitado.cantidad,
+                                        "costo_estimado": inversion.productosSolicitados.toList()[i].productoSolicitado.costoEstimado,
+                                        "id_familia_prod_fk": "5BQwxKKFMPXRXIe",
+                                        "id_tipo_empaques_fk": tipoEmpaque.idDBR,
+                                        "id_inversion_fk": recordInversion.id,
+                                        "id_emi_web": inversion.productosSolicitados.toList()[i].productoSolicitado.idProductoSolicitado.toString(),
+                                        "id_imagen_fk": recordImagen.id,
+                                      });
+                                      if (recordProdSolicitado.id.isNotEmpty) {
+                                        //Se creó con éxito el Prod Solicitado en Pocketbase
+                                        idsProductosSolicitadosEliminados.remove(recordProdSolicitado.id);
+                                      } else {
+                                        //No se pudo crear un Prod Solicitado en Pocketbase
+                                        banderasExitoSync.add(false);
+                                      }
+                                    } else {
+                                      //No se pudo recuperar información del Prod Solicitado para crearlo
+                                      banderasExitoSync.add(false);
+                                    }
+                                  } else {
+                                    // No se pudo agregar una Imagen de los productos solicitados en Pocketbase
+                                    banderasExitoSync.add(false);
+                                  }
+                                } else {
+                                  //La imagen del prod Solicitado ya existe y se debe de actualizar
+                                  final recordImagen = await client.records.update('imagenes', recordValidateImagenProdSolicitado.first.id, body: {
+                                    "nombre": inversion.productosSolicitados.toList()[i].productoSolicitado.documento!.nombreArchivo,
+                                    "base64": inversion.productosSolicitados.toList()[i].productoSolicitado.documento!.archivo,
+                                  });
+                                  if (recordImagen.id.isNotEmpty) {
+                                    //Se crea el producto Solicitado
+                                    final tipoEmpaque = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idEmiWeb.equals(inversion.productosSolicitados.toList()[i].productoSolicitado.catTipoEmpaque.idCatTipoEmpaque.toString())).build().findUnique();
+                                    if (tipoEmpaque != null) {
+                                      final recordProdSolicitado = await client.records
+                                          .create('productos_solicitados', body: {
+                                        "producto": inversion.productosSolicitados.toList()[i].productoSolicitado.producto,
+                                        "marca_sugerida": inversion.productosSolicitados.toList()[i].productoSolicitado.marcaSugerida,
+                                        "descripcion": inversion.productosSolicitados.toList()[i].productoSolicitado.descripcion,
+                                        "proveedo_sugerido": inversion.productosSolicitados.toList()[i].productoSolicitado.proveedorSugerido,
+                                        "cantidad": inversion.productosSolicitados.toList()[i].productoSolicitado.cantidad,
+                                        "costo_estimado": inversion.productosSolicitados.toList()[i].productoSolicitado.costoEstimado,
+                                        "id_familia_prod_fk": "5BQwxKKFMPXRXIe",
+                                        "id_tipo_empaques_fk": tipoEmpaque.idDBR,
+                                        "id_inversion_fk": recordInversion.id,
+                                        "id_emi_web": inversion.productosSolicitados.toList()[i].productoSolicitado.idProductoSolicitado.toString(),
+                                        "id_imagen_fk": recordImagen.id,
+                                      });
+                                      if (recordProdSolicitado.id.isNotEmpty) {
+                                        //Se creó con éxito el Prod Solicitado en Pocketbase
+                                        idsProductosSolicitadosEliminados.remove(recordProdSolicitado.id);
+                                      } else {
+                                        //No se pudo crear un Prod Solicitado en Pocketbase
+                                        banderasExitoSync.add(false);
+                                      }
+                                    } else {
+                                      //No se pudo recuperar información del Prod Solicitado para crearlo
+                                      banderasExitoSync.add(false);
+                                    }
+                                  } else {
+                                    // No se pudo actualizar una Imagen de los productos solicitados en Pocketbase
+                                    banderasExitoSync.add(false);
+                                  }
+                                }
+                              } else {
+                                //El producto Solicitado no está asociado a una imagen
+                                final tipoEmpaque = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idEmiWeb.equals(inversion.productosSolicitados.toList()[i].productoSolicitado.catTipoEmpaque.idCatTipoEmpaque.toString())).build().findUnique();
+                                if (tipoEmpaque != null) {
+                                  final recordProdSolicitado = await client.records
+                                      .create('productos_solicitados', body: {
+                                    "producto": inversion.productosSolicitados.toList()[i].productoSolicitado.producto,
+                                    "marca_sugerida": inversion.productosSolicitados.toList()[i].productoSolicitado.marcaSugerida,
+                                    "descripcion": inversion.productosSolicitados.toList()[i].productoSolicitado.descripcion,
+                                    "proveedo_sugerido": inversion.productosSolicitados.toList()[i].productoSolicitado.proveedorSugerido,
+                                    "cantidad": inversion.productosSolicitados.toList()[i].productoSolicitado.cantidad,
+                                    "costo_estimado": inversion.productosSolicitados.toList()[i].productoSolicitado.costoEstimado,
+                                    "id_familia_prod_fk": "5BQwxKKFMPXRXIe",
+                                    "id_tipo_empaques_fk": tipoEmpaque.idDBR,
+                                    "id_inversion_fk": recordInversion.id,
+                                    "id_emi_web": inversion.productosSolicitados.toList()[i].productoSolicitado.idProductoSolicitado.toString(),
+                                  });
+                                  if (recordProdSolicitado.id.isNotEmpty) {
+                                    //Se creó con éxito el Prod Solicitado en Pocketbase
+                                    idsProductosSolicitadosEliminados.remove(recordProdSolicitado.id);
+                                  } else {
+                                    //No se pudo crear un Prod Solicitado en Pocketbase
+                                    banderasExitoSync.add(false);
+                                  }
+                                } else {
+                                  //No se pudo recuperar información del Prod Solicitado para crearlo
+                                  banderasExitoSync.add(false);
+                                }
+                              }
+                            }
+                          }
+                          //Se eliminan los productos solicitados sobrantes
+                          for (var element in idsProductosSolicitadosEliminados) {
+                            await client.records.delete('productos_solicitados', element);
+                          }
+                          //Tercero actualizamos la inversión X prod Cotizados, si es que existen en la respuesta desde EMI Web
+                          if (inversion.inversionesXProductosCotizados != null) {
+                            for(var inversionXProdCot in inversion.inversionesXProductosCotizados!)
+                            {
+                              //Se valida que la inversion X prod cotizados exista en Pocketbase
+                              final recordValidateInversionXProdCotizados = await client.records.getFullList(
+                                'inversion_x_prod_cotizados',
+                                batch: 200,
+                                filter: "id_emi_web='${inversionXProdCot.idListaCotizacion}'&&id_inversion_fk='${recordInversion.id}'");
+                              if (recordValidateInversionXProdCotizados.isNotEmpty) {
+                                //La inversion X prod cotizados ya existe en Pocketbase y se actualiza
+                                //Se actualiza la inversion X prod cotizados en Pocketbase 
+                                final recordInversionXProdCotizados = await client.records.update('inversion_x_prod_cotizados', 
+                                recordValidateInversionXProdCotizados.first.id, body: {
+                                  "id_inversion_fk": recordInversion.id,
+                                });
+                                if (recordInversionXProdCotizados.id.isNotEmpty) {
+                                  //Se actualiza con éxito la inversion X Prod Cotizados en Pocketbase
+                                  //Ahora se actualizan los productos cotizados asociados a la inversion X Prod Cotizados
+                                  for(var productoCotizado in inversionXProdCot.listaProductosCotizados)
+                                  {
+                                    //Se valida que el prod cotizado exista en Pocketbase
+                                    final recordValidateProdCotizado = await client.records.getFullList(
+                                      'productos_cotizados',
+                                      batch: 200,
+                                      filter: "id_emi_web='${productoCotizado.idProductoCotizado}'");
+                                    if (recordValidateProdCotizado.isNotEmpty) {
+                                      //El producto Cotizado ya existe en Pocketbase y se actualiza
+                                      //Obtenemos el producto proveedor asociado al prod Cotizado en Pocketbase
+                                      final recordProdProveedor = await client.records.getFullList(
+                                          'productos_prov',
+                                          batch: 200,
+                                          filter:
+                                              "nombre_prod_prov='${productoCotizado
+                                              .nombreProducto}'&&descripcion_prod_prov='${productoCotizado
+                                              .descripcionProducto}'&&marca='${productoCotizado
+                                              .marcaProducto}'&&costo_prod_prov~'${productoCotizado.costoProducto}'");
+                                      if (recordProdProveedor.isNotEmpty) {
+                                        final recordProdCotizados = await client.records.update(
+                                        'productos_cotizados', recordValidateProdCotizado.first.id, body: {
+                                          "cantidad": productoCotizado.cantidad,
+                                          "costo_total": productoCotizado.costoTotal,
+                                          "id_producto_prov_fk": recordProdProveedor.first.id,
+                                          "id_inversion_x_prod_cotizados_fk": recordInversionXProdCotizados.id,
+                                          "aceptado": productoCotizado.aceptado,
+                                        });
+                                        if (recordProdCotizados.id.isNotEmpty) {
+                                          //Se actualiza con éxito el Prod Cotizados en Pocketbase
+                                        } else {
+                                          //No se pudo actualizar un Prod Cotizado en Pocketbase
+                                          banderasExitoSync.add(false);
+                                        }
+                                      } else {
+                                        //No se pudo recuperar información del Prod Cotizado para actualizarlo
+                                        banderasExitoSync.add(false);
+                                      }
+                                    } else {
+                                      //El producto Cotizado no existe en Pocketbase y se crea
+                                      //Obtenemos el producto proveedor asociado al prod Cotizado en Pocketbase
+                                      final recordProdProveedor = await client.records.getFullList(
+                                          'productos_prov',
+                                          batch: 200,
+                                          filter:
+                                              "nombre_prod_prov='${productoCotizado
+                                              .nombreProducto}'&&descripcion_prod_prov='${productoCotizado
+                                              .descripcionProducto}'&&marca='${productoCotizado
+                                              .marcaProducto}'&&costo_prod_prov~'${productoCotizado.costoProducto}'");
+                                      if (recordProdProveedor.isNotEmpty) {
+                                        final recordProdCotizados = await client.records.create(
+                                        'productos_cotizados', body: {
+                                          "cantidad": productoCotizado.cantidad,
+                                          "costo_total": productoCotizado.costoTotal,
+                                          "id_producto_prov_fk": recordProdProveedor.first.id,
+                                          "id_inversion_x_prod_cotizados_fk": recordInversionXProdCotizados.id,
+                                          "id_emi_web": productoCotizado.idProductoCotizado.toString(),
+                                          "aceptado": productoCotizado.aceptado,
+                                        });
+                                        if (recordProdCotizados.id.isNotEmpty) {
+                                          //Se crea con éxito el Prod Cotizados en Pocketbase
+                                        } else {
+                                          //No se pudo crear un Prod Cotizado en Pocketbase
+                                          banderasExitoSync.add(false);
+                                        }
+                                      } else {
+                                        //No se pudo recuperar información del Prod Cotizado para crearlo
+                                        banderasExitoSync.add(false);
+                                      }
+                                    }
+                                  }
+                                } else {
+                                  //No se pudo actualizar una inversion X Prod Cotizados en Pocketbase
+                                  banderasExitoSync.add(false);
+                                }
+                              } else {
+                                //La inversion X prod cotizados no existe en Pocketbase y se crea
+                                //Se crea la inversion X prod cotizados en Pocketbase 
+                                final recordInversionXProdCotizados = await client.records.create('inversion_x_prod_cotizados', body: {
+                                  "id_inversion_fk": recordInversion.id,
+                                  "id_emi_web": inversionXProdCot.idListaCotizacion.toString(),
+                                });
+                                if (recordInversionXProdCotizados.id.isNotEmpty) {
+                                  //Se crea con éxito la inversion X Prod Cotizados en Pocketbase
+                                  //Ahora se crean los productos cotizados asociados a la inversion X Prod Cotizados
+                                  for(var productoCotizado in inversionXProdCot.listaProductosCotizados)
+                                  {
+                                    //Obtenemos el producto proveedor asociado al prod Cotizado en Pocketbase
+                                    final recordProdProveedor = await client.records.getFullList(
+                                        'productos_prov',
+                                        batch: 200,
+                                        filter:
+                                            "nombre_prod_prov='${productoCotizado
+                                            .nombreProducto}'&&descripcion_prod_prov='${productoCotizado
+                                            .descripcionProducto}'&&marca='${productoCotizado
+                                            .marcaProducto}'&&costo_prod_prov~'${productoCotizado.costoProducto}'");
+                                    if (recordProdProveedor.isNotEmpty) {
+                                      final recordProdCotizados = await client.records.create(
+                                      'productos_cotizados', body: {
+                                        "cantidad": productoCotizado.cantidad,
+                                        "costo_total": productoCotizado.costoTotal,
+                                        "id_producto_prov_fk": recordProdProveedor.first.id,
+                                        "id_inversion_x_prod_cotizados_fk": recordInversionXProdCotizados.id,
+                                        "id_emi_web": productoCotizado.idProductoCotizado.toString(),
+                                        "aceptado": productoCotizado.aceptado,
+                                      });
+                                      if (recordProdCotizados.id.isNotEmpty) {
+                                        //Se crea con éxito el Prod Cotizados en Pocketbase
+                                      } else {
+                                        //No se pudo crear un Prod Cotizado en Pocketbase
+                                        banderasExitoSync.add(false);
+                                      }
+                                    } else {
+                                      //No se pudo recuperar información del Prod Cotizado para crearlo
+                                      banderasExitoSync.add(false);
+                                    }
+                                  }
+                                } else {
+                                  //No se pudo crear una inversion X Prod Cotizados en Pocketbase
+                                  banderasExitoSync.add(false);
+                                }
+                              }
+                            }
+                          }
+                          //Cuarto actualizamos la Firma de Recibido sí es que exist
+                          if (inversion.firmaRecibidoDocumento != null) {
+                            //Se valida que la firma de Recibido exista en Pocketbase
+                            final recordValidateImagenFirmaRecibido = await client.records.getFullList(
+                              'imagenes',
+                              batch: 200,
+                              filter: "id_emi_web='${inversion.firmaRecibidoDocumento!.idDocumento}'");
+                            if (recordValidateImagenFirmaRecibido.isNotEmpty) {
+                              //La firma de Recibido existe en pocketbase y se actualiza
+                              final recordImagenFirmaRecibido =
+                              await client.records.update('imagenes', recordValidateImagenFirmaRecibido.first.id, body: {
+                                "nombre": inversion.firmaRecibidoDocumento!.nombreArchivo,
+                                "base64": inversion.firmaRecibidoDocumento!.archivo,
+                              });
+                              if (recordImagenFirmaRecibido.id.isNotEmpty) {
+                                //Se actualiza con éxito la imagen Firma de Recibido en Pocketbase
+                                //Actualizamos la inversión en Pocketbase
+                                final recordInversionFirmaRecibido =
+                                  await client.records.update('inversiones', recordInversion.id, body: {
+                                  "id_imagen_firma_recibido_fk": recordImagenFirmaRecibido.id,
+                                });
+                                if (recordInversionFirmaRecibido.id.isNotEmpty) {
+                                  //Se actualiza con éxito la inversión en Pocketbase
+                                } else {
+                                  //No se actualiza con éxito la inversión en Pocketbase
+                                  banderasExitoSync.add(false);
+                                }
+                              } else {
+                                //No se pudo actualizar la imagen Firma de Recibido en Pocketbase
+                                banderasExitoSync.add(false);
+                              }
+                            } else {
+                              //La firma de Recibido no existe en pocketbase y se crea
+                              final recordImagenFirmaRecibido =
+                              await client.records.create('imagenes', body: {
+                                "nombre": inversion.firmaRecibidoDocumento!.nombreArchivo,
+                                "base64": inversion.firmaRecibidoDocumento!.archivo,
+                                "id_emi_web": inversion.firmaRecibidoDocumento!.idDocumento.toString(),
+                              });
+                              if (recordImagenFirmaRecibido.id.isNotEmpty) {
+                                //Se crea con éxito la imagen Firma de Recibido en Pocketbase
+                                //Actualizamos la inversión en Pocketbase
+                                final recordInversionFirmaRecibido =
+                                  await client.records.update('inversiones', recordInversion.id, body: {
+                                  "id_imagen_firma_recibido_fk": recordImagenFirmaRecibido.id,
+                                });
+                                if (recordInversionFirmaRecibido.id.isNotEmpty) {
+                                  //Se actualiza con éxito la inversión en Pocketbase
+                                } else {
+                                  //No se actualiza con éxito la inversión en Pocketbase
+                                  banderasExitoSync.add(false);
+                                }
+                              } else {
+                                //No se pudo crear la imagen Firma de Recibido en Pocketbase
+                                banderasExitoSync.add(false);
+                              }
+                            }
+                          }
+                          //Cuarto actualizamos el Documento Producto Entregado, sí es que existe
+                          if (inversion.productoEntregadoDocumento != null) {
+                            //Se valida que la firma de Recibido exista en Pocketbase
+                            final recordValidateImagenProductoEntregado = await client.records.getFullList(
+                              'imagenes',
+                              batch: 200,
+                              filter: "id_emi_web='${inversion.productoEntregadoDocumento!.idDocumento}'");
+                            if (recordValidateImagenProductoEntregado.isNotEmpty) {
+                              //El producto Entregado existe en pocketbase y se actualiza
+                              final recordImagenProductoEntregado =
+                              await client.records.update('imagenes', recordValidateImagenProductoEntregado.first.id, body: {
+                                "nombre": inversion.productoEntregadoDocumento!.nombreArchivo,
+                                "base64": inversion.productoEntregadoDocumento!.archivo,
+                              });
+                              if (recordImagenProductoEntregado.id.isNotEmpty) {
+                                //Se actualiza con éxito la imagen Documento Producto Entregado en Pocketbase
+                                //Actualizamos la inversión en Pocketbase
+                                final recordInversionProductoEntregado =
+                                  await client.records.update('inversiones', recordInversion.id, body: {
+                                  "id_imagen_producto_entregado_fk": recordImagenProductoEntregado.id,
+                                });
+                                if (recordInversionProductoEntregado.id.isNotEmpty) {
+                                  //Se actualiza con éxito la inversión en Pocketbase
+                                } else {
+                                  //No se actualiza con éxito la inversión en Pocketbase
+                                  banderasExitoSync.add(false);
+                                }
+                              } else {
+                                //No se pudo actualizar la imagen Documento Producto Entregado en Pocketbase
+                                banderasExitoSync.add(false);
+                              }
+                            } else {
+                              //El producto Entregado no existe en pocketbase y se crea
+                              final recordImagenProductoEntregado =
+                              await client.records.create('imagenes', body: {
+                                "nombre": inversion.productoEntregadoDocumento!.nombreArchivo,
+                                "base64": inversion.productoEntregadoDocumento!.archivo,
+                                "id_emi_web": inversion.productoEntregadoDocumento!.idDocumento.toString(),
+                              });
+                              if (recordImagenProductoEntregado.id.isNotEmpty) {
+                                //Se crea con éxito la imagen Documento Producto Entregado en Pocketbase
+                                //Actualizamos la inversión en Pocketbase
+                                final recordInversionProductoEntregado =
+                                  await client.records.update('inversiones', recordInversion.id, body: {
+                                  "id_imagen_producto_entregado_fk": recordImagenProductoEntregado.id,
+                                });
+                                if (recordInversionProductoEntregado.id.isNotEmpty) {
+                                  //Se actualiza con éxito la inversión en Pocketbase
+                                } else {
+                                  //No se actualiza con éxito la inversión en Pocketbase
+                                  banderasExitoSync.add(false);
+                                }
+                              } else {
+                                //No se pudo crear la imagen Documento Producto Entregado en Pocketbase
+                                banderasExitoSync.add(false);
+                              }
+                            }
+                          }
+                          //Quinto recuperamos y actualizamos el historial de pagos sí es que existen
+                          if (inversion.pagos != null) {
+                            for (var pagoInversion in inversion.pagos!) {
+                              //Se valida que el pago exista en Pocketbase
+                              final recordValidatePagoInversion = await client.records.getFullList(
+                                'pagos',
+                                batch: 200,
+                                filter: "id_emi_web='${pagoInversion.idPago}'");
+                              if (recordValidatePagoInversion.isNotEmpty) {
+                                //El pago de la Inversión existe en pocketbase y se actualiza
+                                //Obtenemos el usuario asociado al pago en Pocketbase
+                                final recordUsuario = await client.records.getFullList(
+                                  'emi_users',
+                                  batch: 200,
+                                  filter: "id_emi_web='${pagoInversion.idUsuario}'");
+                                if (recordUsuario.isNotEmpty) {
+                                  final recordPagoInversion = await client.records.update('pagos', recordValidatePagoInversion.first.id, body: {
+                                    "monto_abonado": pagoInversion.montoAbonado,
+                                    "fecha_movimiento": pagoInversion.fechaMovimiento.toUtc().toString(),
+                                    "id_inversion_fk": recordInversion.id,
+                                    "id_usuario_fk": recordUsuario.first.id,
+                                  });
+                                  if (recordPagoInversion.id.isNotEmpty) {
+                                    //Se actualiza con éxito el Pago de la Inversión en Pocketbase
+                                  } else {
+                                    //No se actualiza con éxito el Pago de la Inversión en Pocketbase
+                                    banderasExitoSync.add(false);
+                                  }
+                                } else {
+                                  //No se pudo recuperar información del Pago de la Inversión para actualizarlo
+                                  banderasExitoSync.add(false);
+                                }
+                              } else {
+                                //El pago de la Inversión no existe en pocketbase y se crea
+                                //Obtenemos el usuario asociado al pago en Pocketbase
+                                final recordUsuario = await client.records.getFullList(
+                                  'emi_users',
+                                  batch: 200,
+                                  filter: "id_emi_web='${pagoInversion.idUsuario}'");
+                                if (recordUsuario.isNotEmpty) {
+                                  final recordPagoInversion = await client.records.create('pagos', body: {
+                                    "monto_abonado": pagoInversion.montoAbonado,
+                                    "fecha_movimiento": pagoInversion.fechaMovimiento.toUtc().toString(),
+                                    "id_inversion_fk": recordInversion.id,
+                                    "id_usuario_fk": recordUsuario.first.id,
+                                    "id_emi_web": pagoInversion.idPago.toString(),
+                                  });
+                                  if (recordPagoInversion.id.isNotEmpty) {
+                                    //Se agrega con éxito el Pago de la Inversión en Pocketbase
+                                  } else {
+                                    //No se agrega con éxito el Pago de la Inversión en Pocketbase
+                                    banderasExitoSync.add(false);
+                                  }
+                                } else {
+                                  //No se pudo recuperar información del Pago de la Inversión para crearlo
+                                  banderasExitoSync.add(false);
+                                }
+                              }
+                            }
+                          }
+                        } else {
+                          // No se pudo agregar una Inversión en Pocketbase
+                          banderasExitoSync.add(false);
+                        }
+                      } else{
+                        //No se pudo recuperar información de la Inversión para actualizarla
+                        banderasExitoSync.add(false);
+                      }
+                    }
+                  }
+                  break;
+                case 404:
+                  break;
+                default:
+                  print("Error en llamado al API 7");
+                  print(responseAPI7.statusCode);
+                  banderasExitoSync.add(false);
+              }
               break;
             case 404:
               break;

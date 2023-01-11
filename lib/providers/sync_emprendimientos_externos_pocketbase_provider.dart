@@ -509,6 +509,46 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                   nuevaInversion.estadoInversion.target = estadoInversion;
                 }
 
+                if (elementInversion.expand.idImagenFirmaRecibidoFk != null) {
+                  //Se agrega la imagen de la Firma
+                  final uInt8ListImagen = base64Decode(elementInversion.expand.idImagenFirmaRecibidoFk!.base64);
+                  final tempDir = await getTemporaryDirectory();
+                  File file = await File('${tempDir.path}/${elementInversion.expand.idImagenFirmaRecibidoFk!.nombre}').create();
+                  file.writeAsBytesSync(uInt8ListImagen);
+                  final nuevaImagenFirma = Imagenes(
+                    imagenes: file.path,
+                    nombre: elementInversion.expand.idImagenFirmaRecibidoFk!.nombre,
+                    path: file.path,
+                    base64: elementInversion.expand.idImagenFirmaRecibidoFk!.base64,
+                    idDBR: elementInversion.expand.idImagenFirmaRecibidoFk!.id,
+                    idEmiWeb: elementInversion.expand.idImagenFirmaRecibidoFk!.idEmiWeb,
+                    idEmprendimiento: idEmprendimientoObjectBox!,
+                  );
+                  nuevaImagenFirma.inversion.target = nuevaInversion;
+                  nuevaInversion.imagenFirmaRecibido.target = nuevaImagenFirma;
+                  dataBase.imagenesBox.put(nuevaImagenFirma);
+                }
+
+                if (elementInversion.expand.idImagenProductoEntregadoFk != null) {
+                  //Se agrega la imagen del Producto Entregado
+                  final uInt8ListImagen = base64Decode(elementInversion.expand.idImagenProductoEntregadoFk!.base64);
+                  final tempDir = await getTemporaryDirectory();
+                  File file = await File('${tempDir.path}/${elementInversion.expand.idImagenProductoEntregadoFk!.nombre}').create();
+                  file.writeAsBytesSync(uInt8ListImagen);
+                  final nuevaImagenProdEntregado = Imagenes(
+                    imagenes: file.path,
+                    nombre: elementInversion.expand.idImagenProductoEntregadoFk!.nombre,
+                    path: file.path,
+                    base64: elementInversion.expand.idImagenProductoEntregadoFk!.base64,
+                    idDBR: elementInversion.expand.idImagenProductoEntregadoFk!.id,
+                    idEmiWeb: elementInversion.expand.idImagenProductoEntregadoFk!.idEmiWeb,
+                    idEmprendimiento: idEmprendimientoObjectBox!,
+                  );
+                  nuevaImagenProdEntregado.inversion.target = nuevaInversion;
+                  nuevaInversion.imagenProductoEntregado.target = nuevaImagenProdEntregado;
+                  dataBase.imagenesBox.put(nuevaImagenProdEntregado);
+                }
+
                 if (elementInversion.jornada3) {
                   nuevaInversion.emprendimiento.target = nuevoEmprendimiento;
                   nuevoEmprendimiento.inversiones.add(nuevaInversion);
@@ -758,6 +798,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
         procesocargando = false;
         procesoterminado = true;
         procesoexitoso = false;
+        await deleteEmprendimientoLocal(idEmprendimientoObjectBox!);
         banderasExitoSync.clear();
         notifyListeners();
         return exitoso;
@@ -767,10 +808,95 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
       procesocargando = false;
       procesoterminado = true;
       procesoexitoso = false;
+      await deleteEmprendimientoLocal(idEmprendimientoObjectBox ?? -1);
       banderasExitoSync.clear();
       notifyListeners();
       return false;
     }
   }
 
+}
+
+//Función para quitar instrucciones asociadas al Emprendimiento que se eliminará localmente
+
+Future<void> deleteEmprendimientoLocal(int idEmprendimiento) async {
+  if (idEmprendimiento != -1) {
+    //Se elimina la imagen del emprendimiento
+    final idImagenEmprendimiento = dataBase.imagenesBox.query(Imagenes_.emprendimiento.equals(idEmprendimiento)).build().findUnique()?.id;
+    if (idImagenEmprendimiento != null) {
+      dataBase.imagenesBox.remove(idImagenEmprendimiento);
+    }
+    //Se elimina la imagen del emprendedor
+    final idEmprendedor =  dataBase.emprendedoresBox.query(Emprendedores_.emprendimiento.equals(idEmprendimiento)).build().findUnique()?.id;
+    final idImagenEmprendedor = dataBase.imagenesBox.query(Imagenes_.emprendedor.equals(idEmprendedor ?? -1)).build().findUnique()?.id;
+    if (idImagenEmprendedor != null) {
+      dataBase.imagenesBox.remove(idImagenEmprendedor);
+    }
+    //Se elimina el emprendedor
+    if (idEmprendedor != null) {
+      dataBase.emprendedoresBox.remove(idEmprendedor);
+    }
+    //Se eliminan todas las imagenes 
+    List<int> imagenesDelete = dataBase.imagenesBox.query(Imagenes_.idEmprendimiento.equals(idEmprendimiento)).build().findIds();
+    for (var imagen in imagenesDelete) {
+      dataBase.imagenesBox.remove(imagen);
+    }
+    //Se eliminan todas las tareas
+    List<int> tareasDelete = dataBase.tareasBox.query(Tareas_.idEmprendimiento.equals(idEmprendimiento)).build().findIds();
+    for (var tarea in tareasDelete) {
+      dataBase.tareasBox.remove(tarea);
+    }
+    //Se eliminan todas las jornadas
+    List<int> jornadasDelete = dataBase.jornadasBox.query(Jornadas_.idEmprendimiento.equals(idEmprendimiento)).build().findIds();
+    for (var jornada in jornadasDelete) {
+      dataBase.jornadasBox.remove(jornada);
+    }
+    //Se eliminan todas las consultorías
+    List<int> consultoriasDelete = dataBase.consultoriasBox.query(Consultorias_.idEmprendimiento.equals(idEmprendimiento)).build().findIds();
+    for (var consultoria in consultoriasDelete) {
+      dataBase.consultoriasBox.remove(consultoria);
+    }
+    //Se eliminan todos los productos Emprendedor
+    List<int> productosEmpDelete = dataBase.productosEmpBox.query(ProductosEmp_.idEmprendimiento.equals(idEmprendimiento)).build().findIds();
+    for (var productoEmp in productosEmpDelete) {
+      dataBase.productosEmpBox.remove(productoEmp);
+    }
+    //Se eliminan todos los productos Vendidos
+    List<int> prodVendidosDelete = dataBase.productosVendidosBox.query(ProdVendidos_.idEmprendimiento.equals(idEmprendimiento)).build().findIds();
+    for (var prodVendido in prodVendidosDelete) {
+      dataBase.productosVendidosBox.remove(prodVendido);
+    }
+    //Se eliminan todas las Ventas
+    List<int> ventas = dataBase.ventasBox.query(Ventas_.idEmprendimiento.equals(idEmprendimiento)).build().findIds();
+    for (var venta in ventas) {
+      dataBase.ventasBox.remove(venta);
+    }
+    //Se eliminan todos los ProdCotizados
+    List<int> productosCotizados = dataBase.productosCotBox.query(ProdCotizados_.idEmprendimiento.equals(idEmprendimiento)).build().findIds();
+    for (var productoCotizado in productosCotizados) {
+      dataBase.productosCotBox.remove(productoCotizado);
+    }
+    //Se eliminan todas las Inversiones X ProdCotizados
+    List<int> inversionesXproductosCotizados = dataBase.inversionesXprodCotizadosBox.query(InversionesXProdCotizados_.idEmprendimiento.equals(idEmprendimiento)).build().findIds();
+    for (var inversionXproductoCotizado in inversionesXproductosCotizados) {
+      dataBase.inversionesXprodCotizadosBox.remove(inversionXproductoCotizado);
+    }
+    //Se eliminan todos los ProdSolicitado
+    List<int> productosSolicitados = dataBase.productosSolicitadosBox.query(ProdSolicitado_.idEmprendimiento.equals(idEmprendimiento)).build().findIds();
+    for (var productoSolicitado in productosSolicitados) {
+      dataBase.productosSolicitadosBox.remove(productoSolicitado);
+    }
+    //Se eliminan todas las Inversiones
+    List<int> inversiones = dataBase.inversionesBox.query(Inversiones_.idEmprendimiento.equals(idEmprendimiento)).build().findIds();
+    for (var inversion in inversiones) {
+      dataBase.inversionesBox.remove(inversion);
+    }
+    //Se eliminan todos los Pagos
+    List<int> pagos = dataBase.pagosBox.query(Pagos_.idEmprendimiento.equals(idEmprendimiento)).build().findIds();
+    for (var pago in pagos) {
+      dataBase.pagosBox.remove(pago);
+    }
+    //Se elimina el emprendimiento
+    dataBase.emprendimientosBox.remove(idEmprendimiento);
+  }
 }

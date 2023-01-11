@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-GetBasicInversionesEmiWeb getBasicInversionesEmiWebFromMap(String str) => GetBasicInversionesEmiWeb.fromMap(json.decode(str));
+GetBasicInversionesEmiWeb? getBasicInversionesEmiWebFromMap(String str) => GetBasicInversionesEmiWeb.fromMap(json.decode(str));
 
-String getBasicInversionesEmiWebToMap(GetBasicInversionesEmiWeb data) => json.encode(data.toMap());
+String getBasicInversionesEmiWebToMap(GetBasicInversionesEmiWeb? data) => json.encode(data!.toMap());
 
 class GetBasicInversionesEmiWeb {
     GetBasicInversionesEmiWeb({
@@ -10,17 +10,17 @@ class GetBasicInversionesEmiWeb {
         required this.payload,
     });
 
-    final String status;
-    final List<Payload>? payload;
+    final String? status;
+    final List<Payload?>? payload;
 
     factory GetBasicInversionesEmiWeb.fromMap(Map<String, dynamic> json) => GetBasicInversionesEmiWeb(
         status: json["status"],
-        payload: json["payload"] == null ? null : List<Payload>.from(json["payload"].map((x) => Payload.fromMap(x))),
+        payload: json["payload"] == null ? null : List<Payload?>.from(json["payload"]!.map((x) => Payload.fromMap(x))),
     );
 
     Map<String, dynamic> toMap() => {
         "status": status,
-        "payload": payload == null ? null : List<dynamic>.from(payload!.map((x) => x.toMap())),
+        "payload": payload == null ? null : List<dynamic>.from(payload!.map((x) => x!.toMap())),
     };
 }
 
@@ -41,9 +41,10 @@ class Payload {
         required this.porcentajePago,
         required this.saldo,
         required this.totalInversion,
-        required this.productosDeProyecto,
+        this.productosDeProyecto,
         required this.productosSolicitados,
-        this.productosCotizados,
+        this.inversionesXProductosCotizados,
+        this.pagos,
     });
 
     final CatEstadoInversion catEstadoInversion;
@@ -61,9 +62,10 @@ class Payload {
     final double porcentajePago;
     final double saldo;
     final double totalInversion;
-    final List<ProductosDeProyecto> productosDeProyecto;
+    final List<dynamic>? productosDeProyecto;
     final List<ProductosSolicitado> productosSolicitados;
-    final List<ProductosCotizado>? productosCotizados;
+    final List<InversionesXProductosCotizado>? inversionesXProductosCotizados;
+    final List<Pago>? pagos;
 
     factory Payload.fromMap(Map<String, dynamic> json) => Payload(
         catEstadoInversion: CatEstadoInversion.fromMap(json["catEstadoInversion"]),
@@ -81,9 +83,10 @@ class Payload {
         porcentajePago: json["porcentajePago"].toDouble(),
         saldo: json["saldo"].toDouble(),
         totalInversion: json["totalInversion"].toDouble(),
-        productosDeProyecto: List<ProductosDeProyecto>.from(json["productosDeProyecto"].map((x) => ProductosDeProyecto.fromMap(x))),
-        productosSolicitados: List<ProductosSolicitado>.from(json["productosSolicitados"].map((x) => ProductosSolicitado.fromMap(x))),
-        productosCotizados: json["productosCotizados"] == null ? null : List<ProductosCotizado>.from(json["productosCotizados"].map((x) => ProductosCotizado.fromMap(x))),
+        productosDeProyecto: json["productosDeProyecto"] == null ? null : List<dynamic>.from(json["productosDeProyecto"]!.map((x) => x)),
+        productosSolicitados: List<ProductosSolicitado>.from(json["productosSolicitados"]!.map((x) => ProductosSolicitado.fromMap(x))),
+        inversionesXProductosCotizados: json["inversionesXProductosCotizados"] == null ? null : List<InversionesXProductosCotizado>.from(json["inversionesXProductosCotizados"]!.map((x) => InversionesXProductosCotizado.fromMap(x))),
+        pagos: json["pagos"] == null ? null : List<Pago>.from(json["pagos"]!.map((x) => Pago.fromMap(x))),
     );
 
     Map<String, dynamic> toMap() => {
@@ -102,9 +105,10 @@ class Payload {
         "porcentajePago": porcentajePago,
         "saldo": saldo,
         "totalInversion": totalInversion,
-        "productosDeProyecto": List<dynamic>.from(productosDeProyecto.map((x) => x.toMap())),
+        "productosDeProyecto": productosDeProyecto == null ? null : List<dynamic>.from(productosDeProyecto!.map((x) => x)),
         "productosSolicitados": List<dynamic>.from(productosSolicitados.map((x) => x.toMap())),
-        "productosCotizados": productosCotizados == null ? null : List<dynamic>.from(productosCotizados!.map((x) => x.toMap())),
+        "inversionesXProductosCotizados": inversionesXProductosCotizados == null ? null : List<dynamic>.from(inversionesXProductosCotizados!.map((x) => x.toMap())),
+        "pagos": pagos == null ? null : List<dynamic>.from(pagos!.map((x) => x.toMap())),
     };
 }
 
@@ -156,51 +160,27 @@ class Documento {
     };
 }
 
-class ProductosCotizado {
-    ProductosCotizado({
-        required this.inversionesXProductosCotizadosId,
-        required this.aceptado,
-        required this.productoCotizado,
-    });
-
-    final InversionesXProductosCotizadosId inversionesXProductosCotizadosId;
-    final bool aceptado;
-    final ProductoCotizado productoCotizado;
-
-    factory ProductosCotizado.fromMap(Map<String, dynamic> json) => ProductosCotizado(
-        inversionesXProductosCotizadosId: InversionesXProductosCotizadosId.fromMap(json["inversionesXProductosCotizadosId"]),
-        aceptado: json["aceptado"],
-        productoCotizado: ProductoCotizado.fromMap(json["productoCotizado"]),
-    );
-
-    Map<String, dynamic> toMap() => {
-        "inversionesXProductosCotizadosId": inversionesXProductosCotizadosId.toMap(),
-        "aceptado": aceptado,
-        "productoCotizado": productoCotizado.toMap(),
-    };
-}
-
-class InversionesXProductosCotizadosId {
-    InversionesXProductosCotizadosId({
+class InversionesXProductosCotizado {
+    InversionesXProductosCotizado({
         required this.idListaCotizacion,
         required this.idInversion,
-        required this.idProductoCotizado,
+        required this.listaProductosCotizados,
     });
 
     final int idListaCotizacion;
     final int idInversion;
-    final int idProductoCotizado;
+    final List<ProductoCotizado> listaProductosCotizados;
 
-    factory InversionesXProductosCotizadosId.fromMap(Map<String, dynamic> json) => InversionesXProductosCotizadosId(
+    factory InversionesXProductosCotizado.fromMap(Map<String, dynamic> json) => InversionesXProductosCotizado(
         idListaCotizacion: json["idListaCotizacion"],
         idInversion: json["idInversion"],
-        idProductoCotizado: json["idProductoCotizado"],
+        listaProductosCotizados: List<ProductoCotizado>.from(json["listaProductosCotizados"]!.map((x) => ProductoCotizado.fromMap(x))),
     );
 
     Map<String, dynamic> toMap() => {
         "idListaCotizacion": idListaCotizacion,
         "idInversion": idInversion,
-        "idProductoCotizado": idProductoCotizado,
+        "listaProductosCotizados": List<dynamic>.from(listaProductosCotizados.map((x) => x.toMap())),
     };
 }
 
@@ -215,8 +195,8 @@ class ProductoCotizado {
         required this.descripcionProducto,
         required this.marcaProducto,
         required this.costoProducto,
-        required this.idDocumento,
-        required this.documento,
+        this.idDocumento,
+        this.documento,
     });
 
     final int idProductoCotizado;
@@ -226,10 +206,10 @@ class ProductoCotizado {
     final String nombreProveedor;
     final String nombreProducto;
     final String descripcionProducto;
-    final String marcaProducto;
+    final String? marcaProducto;
     final String costoProducto;
-    final int idDocumento;
-    final Documento documento;
+    final int? idDocumento;
+    final Documento? documento;
 
     factory ProductoCotizado.fromMap(Map<String, dynamic> json) => ProductoCotizado(
         idProductoCotizado: json["idProductoCotizado"],
@@ -242,7 +222,7 @@ class ProductoCotizado {
         marcaProducto: json["marcaProducto"],
         costoProducto: json["costoProducto"],
         idDocumento: json["idDocumento"],
-        documento: Documento.fromMap(json["documento"]),
+        documento: json["documento"] == null ? null : Documento.fromMap(json["documento"]),
     );
 
     Map<String, dynamic> toMap() => {
@@ -256,111 +236,39 @@ class ProductoCotizado {
         "marcaProducto": marcaProducto,
         "costoProducto": costoProducto,
         "idDocumento": idDocumento,
-        "documento": documento.toMap(),
+        "documento": documento == null ? null : documento!.toMap(),
     };
 }
 
-class ProductosDeProyecto {
-    ProductosDeProyecto({
-        required this.catFamiliaInversion,
-        required this.catUnidadMedidaProveedor,
-        required this.cantidad,
-        required this.costoEstimado,
-        required this.descripcion,
-        required this.idProductoDeProyecto,
-        required this.idFamilia,
-        required this.unidadMedida,
-        required this.marcaRecomendada,
-        required this.producto,
-        required this.proveedorSugerido,
+class Pago {
+    Pago({
+        required this.idPago,
+        required this.montoAbonado,
+        required this.fechaMovimiento,
+        required this.idInversion,
+        required this.idUsuario,
     });
 
-    final CatFamiliaInversion catFamiliaInversion;
-    final CatUnidadMedidaProveedor catUnidadMedidaProveedor;
-    final int cantidad;
-    final double costoEstimado;
-    final String descripcion;
-    final int idProductoDeProyecto;
-    final int idFamilia;
-    final int unidadMedida;
-    final String marcaRecomendada;
-    final String producto;
-    final String proveedorSugerido;
+    final int idPago;
+    final double montoAbonado;
+    final DateTime fechaMovimiento;
+    final int idInversion;
+    final int idUsuario;
 
-    factory ProductosDeProyecto.fromMap(Map<String, dynamic> json) => ProductosDeProyecto(
-        catFamiliaInversion: CatFamiliaInversion.fromMap(json["catFamiliaInversion"]),
-        catUnidadMedidaProveedor: CatUnidadMedidaProveedor.fromMap(json["catUnidadMedidaProveedor"]),
-        cantidad: json["cantidad"],
-        costoEstimado: json["costoEstimado"].toDouble(),
-        descripcion: json["descripcion"],
-        idProductoDeProyecto: json["idProductoDeProyecto"],
-        idFamilia: json["idFamilia"],
-        unidadMedida: json["unidadMedida"],
-        marcaRecomendada: json["marcaRecomendada"],
-        producto: json["producto"],
-        proveedorSugerido: json["proveedorSugerido"],
+    factory Pago.fromMap(Map<String, dynamic> json) => Pago(
+        idPago: json["idPago"],
+        montoAbonado: json["montoAbonado"].toDouble(),
+        fechaMovimiento: DateTime.parse(json["fechaMovimiento"]),
+        idInversion: json["idInversion"],
+        idUsuario: json["idUsuario"],
     );
 
     Map<String, dynamic> toMap() => {
-        "catFamiliaInversion": catFamiliaInversion.toMap(),
-        "catUnidadMedidaProveedor": catUnidadMedidaProveedor.toMap(),
-        "cantidad": cantidad,
-        "costoEstimado": costoEstimado,
-        "descripcion": descripcion,
-        "idProductoDeProyecto": idProductoDeProyecto,
-        "idFamilia": idFamilia,
-        "unidadMedida": unidadMedida,
-        "marcaRecomendada": marcaRecomendada,
-        "producto": producto,
-        "proveedorSugerido": proveedorSugerido,
-    };
-}
-
-class CatFamiliaInversion {
-    CatFamiliaInversion({
-        required this.idCatFamiliaInversion,
-        required this.familiaInversionNecesaria,
-        required this.activo,
-    });
-
-    final int idCatFamiliaInversion;
-    final String familiaInversionNecesaria;
-    final bool activo;
-
-    factory CatFamiliaInversion.fromMap(Map<String, dynamic> json) => CatFamiliaInversion(
-        idCatFamiliaInversion: json["idCatFamiliaInversion"],
-        familiaInversionNecesaria: json["familiaInversionNecesaria"],
-        activo: json["activo"],
-    );
-
-    Map<String, dynamic> toMap() => {
-        "idCatFamiliaInversion": idCatFamiliaInversion,
-        "familiaInversionNecesaria": familiaInversionNecesaria,
-        "activo": activo,
-    };
-}
-
-class CatUnidadMedidaProveedor {
-    CatUnidadMedidaProveedor({
-        required this.catUnidadMedidaProveedor,
-        required this.unidadMedida,
-        required this.activo,
-    });
-
-    final int catUnidadMedidaProveedor;
-    final String unidadMedida;
-    final bool activo;
-
-    factory CatUnidadMedidaProveedor.fromMap(Map<String, dynamic> json) => CatUnidadMedidaProveedor(
-        catUnidadMedidaProveedor: json["catUnidadMedidaProveedor"],
-        unidadMedida: json["unidadMedida"],
-        activo: json["activo"],
-    );
-
-    Map<String, dynamic> toMap() => {
-        "catUnidadMedidaProveedor": catUnidadMedidaProveedor,
-        "unidadMedida": unidadMedida,
-        "activo": activo,
+        "idPago": idPago,
+        "montoAbonado": montoAbonado,
+        "fechaMovimiento": fechaMovimiento.toIso8601String(),
+        "idInversion": idInversion,
+        "idUsuario": idUsuario,
     };
 }
 
@@ -400,6 +308,7 @@ class ProductoSolicitado {
         required this.cantidad,
         required this.costoEstimado,
         this.idDocumento,
+        this.documento,
     });
 
     final int idProductoSolicitado;
@@ -412,6 +321,7 @@ class ProductoSolicitado {
     final int cantidad;
     final double costoEstimado;
     final int? idDocumento;
+    final Documento? documento;
 
     factory ProductoSolicitado.fromMap(Map<String, dynamic> json) => ProductoSolicitado(
         idProductoSolicitado: json["idProductoSolicitado"],
@@ -424,6 +334,7 @@ class ProductoSolicitado {
         cantidad: json["cantidad"],
         costoEstimado: json["costoEstimado"].toDouble(),
         idDocumento: json["idDocumento"],
+        documento: json["documento"] == null ? null : Documento.fromMap(json["documento"]),
     );
 
     Map<String, dynamic> toMap() => {
@@ -437,6 +348,7 @@ class ProductoSolicitado {
         "cantidad": cantidad,
         "costoEstimado": costoEstimado,
         "idDocumento": idDocumento,
+        "documento": documento == null ? null : documento!.toMap(),
     };
 }
 
