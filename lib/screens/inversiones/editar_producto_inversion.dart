@@ -27,11 +27,13 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 class EditarProductoInversionScreen extends StatefulWidget {
   final Inversiones inversion;
   final ProdSolicitado prodSolicitado;
+  final int idEmprendimiento;
 
   const EditarProductoInversionScreen({
     Key? key, 
     required this.inversion, 
-    required this.prodSolicitado,
+    required this.prodSolicitado, 
+    required this.idEmprendimiento,
     })
       : super(key: key);
 
@@ -1083,7 +1085,8 @@ class _EditarProductoInversionScreenState
                                                   widget.prodSolicitado,
                                                   nombreImagen,
                                                   path,
-                                                  base64);
+                                                  base64,
+                                                  widget.idEmprendimiento);
                                               } else {
                                                 print("SE ACTUALIZA IMAGEN NUEVA");
                                                 inversionProvider.updateImagenProductoSolicitado(
@@ -1140,7 +1143,8 @@ class _EditarProductoInversionScreenState
                                               widget.prodSolicitado,
                                               nombreImagen,
                                               path,
-                                              base64);
+                                              base64,
+                                              widget.idEmprendimiento);
                                           } else {
                                           inversionProvider.updateImagenProductoSolicitado(
                                               widget.prodSolicitado,

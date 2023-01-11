@@ -116,11 +116,14 @@ void add(int idEmprendimiento, int idInversion) {
         proveedorSugerido: productosSolicitados[i].proveedorSugerido,
         costoEstimado: productosSolicitados[i].costoEstimado,
         cantidad: productosSolicitados[i].cantidad,
-        fechaRegistro: productosSolicitados[i].fechaRegistro,
+        fechaRegistro: productosSolicitados[i].fechaRegistro, 
+        idEmprendimiento: idEmprendimiento,
       );
       if (productosSolicitados[i].imagen != '' && productosSolicitados[i].imagen != null) {
         print("A ver contenido del producto $i: ${productosSolicitados[i].imagen}");
-        final nuevaImagenProdSolicitado = Imagenes(imagenes: productosSolicitados[i].imagen!); //Se crea el objeto imagenes para el Prod Solicitado
+        final nuevaImagenProdSolicitado = Imagenes(
+          imagenes: productosSolicitados[i].imagen!, 
+          idEmprendimiento: idEmprendimiento); //Se crea el objeto imagenes para el Prod Solicitado
         nuevoProdSolicitado.imagen.target = nuevaImagenProdSolicitado;
       }
       //Se recupera la familia y tipoEmpaque
@@ -203,40 +206,6 @@ void add(int idEmprendimiento, int idInversion) {
     clearInformation();
   }
 
-void update(int id, String newProducto, String? newMarcaSugerida, String newDescripcion, 
-    String? newProveedor, String? newCostoEstimado, String newCantidad, int newIdFamiliaProd, 
-    int newIdTipoEmpaque, String newImagen) {
-    var updateProdSolicitado = dataBase.productosSolicitadosBox.get(id);
-    final updateFamiliaProd = dataBase.familiaProductosBox.get(newIdFamiliaProd);
-    final updateTipoEmpaque = dataBase.tipoEmpaquesBox.get(newIdTipoEmpaque);
-    if (updateProdSolicitado !=  null && updateFamiliaProd != null && updateTipoEmpaque != null) {
-      // final nuevaInstruccion = Bitacora(instrucciones: 'syncUpdateProductoSolicitado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
-      if (newImagen != '') {
-        if (updateProdSolicitado.imagen.target != null) {
-          final updateImagen  = dataBase.imagenesBox.get(updateProdSolicitado.imagen.target!.id);
-          if (updateImagen != null) {
-            updateImagen.imagenes = newImagen;
-            dataBase.imagenesBox.put(updateImagen);
-          }
-        } else {
-          final nuevaImagenProdSolicitado = Imagenes(imagenes: imagen); //Se crea el objeto imagenes para el Prod Solicitado
-          updateProdSolicitado.imagen.target = nuevaImagenProdSolicitado;
-        }
-      }
-      updateProdSolicitado.producto = newProducto;
-      updateProdSolicitado.marcaSugerida = newMarcaSugerida;
-      updateProdSolicitado.proveedorSugerido =  newProveedor;
-      updateProdSolicitado.costoEstimado = newCostoEstimado == null ? null : double.parse(newCostoEstimado);
-      updateProdSolicitado.cantidad = int.parse(newCantidad);
-      updateProdSolicitado.familiaProducto.target = updateFamiliaProd;
-      updateProdSolicitado.tipoEmpaques.target = updateTipoEmpaque;
-      // updateProdSolicitado.bitacora.add(nuevaInstruccion);
-      dataBase.productosSolicitadosBox.put(updateProdSolicitado);
-    }
-    print('Registro actualizado exitosamente');
-    notifyListeners();
-}
-
 void updateImagenProductoSol(ProdSolicitado updateProdSol, int idImagenProductoSol, String newNombreImagen, String newPath, String newBase64) {
     var updateImagenProductoSol = dataBase.imagenesBox.get(idImagenProductoSol);
     if (updateImagenProductoSol != null) {
@@ -252,12 +221,13 @@ void updateImagenProductoSol(ProdSolicitado updateProdSol, int idImagenProductoS
     notifyListeners();
   }
 
-void addImagenProductoSol(ProdSolicitado productoSol, String newNombreImagen, String newPath, String newBase64) {
+void addImagenProductoSol(ProdSolicitado productoSol, String newNombreImagen, String newPath, String newBase64, int idEmprendimiento) {
       final nuevaImagenProductoSol = Imagenes(
         imagenes: newPath,
         nombre: newNombreImagen,
         base64: newBase64,
         path: newPath,
+        idEmprendimiento: idEmprendimiento,
       );
       productoSol.imagen.target = nuevaImagenProductoSol;
       dataBase.imagenesBox.put(nuevaImagenProductoSol);

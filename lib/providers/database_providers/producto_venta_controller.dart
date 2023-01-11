@@ -98,6 +98,7 @@ void add(int idEmprendimiento, int idVenta) {
           cantVendida: productosVendidos[i].cantidad,
           subtotal: productosVendidos[i].subTotal,
           precioVenta: productosVendidos[i].precioVenta, 
+          idEmprendimiento: idEmprendimiento, 
         );
         total += productosVendidos[i].subTotal;
         final nuevaInstruccion = Bitacora(instruccion: 'syncAddProductoVendido', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora

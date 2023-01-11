@@ -34,13 +34,13 @@ class ConsultoriaController extends ChangeNotifier {
   }
 
   void add(int idEmprendimiento, int numConsultoria, int idAmbito, int idAreaCirculo) {
-    final nuevaConsultoria = Consultorias();
+    final nuevaConsultoria = Consultorias(idEmprendimiento: idEmprendimiento);
     final nuevaTarea = Tareas(
     tarea: tarea,
     descripcion: "Creación de Consultoría",
-    fechaRevision: fechaRevision!);
+    fechaRevision: fechaRevision!, idEmprendimiento: idEmprendimiento);
     //Se agrega la imagen a la Tarea y el porcentaje de avance
-    final nuevaImagenTarea = Imagenes(imagenes: ""); //Se crea el objeto imagenes para la Tarea
+    final nuevaImagenTarea = Imagenes(imagenes: "", idEmprendimiento: idEmprendimiento); //Se crea el objeto imagenes para la Tarea
     nuevaTarea.imagenes.add(nuevaImagenTarea);
     //Se recupera el primer porcentaje de la Tarea
     final porcentajeAvance = dataBase.porcentajeAvanceBox.query(PorcentajeAvance_.porcentajeAvance.equals("1")).build().findFirst();
@@ -82,7 +82,7 @@ class ConsultoriaController extends ChangeNotifier {
     final nuevaTarea = Tareas(
     tarea: tarea == "" ? oldTarea.tarea : tarea,
     descripcion: avanceObservado,
-    fechaRevision: fechaRevision!);
+    fechaRevision: fechaRevision!, idEmprendimiento: idEmprendimiento);
 
     // Se agrega la imagen a la Tarea
     if (imagenLocal != null) {

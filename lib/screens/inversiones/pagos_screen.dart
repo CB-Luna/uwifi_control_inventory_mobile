@@ -1194,7 +1194,9 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                       pickedFile
                                                                           .path,
                                                                   base64:
-                                                                      base64);
+                                                                      base64, 
+                                                                  idEmprendimiento: 
+                                                                      widget.idEmprendimiento);
                                                             });
                                                           },
                                                           text: 'Agregar',
@@ -1461,7 +1463,10 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                       pickedFile
                                                                           .path,
                                                                   base64:
-                                                                      base64);
+                                                                      base64,
+                                                                  idEmprendimiento: 
+                                                                      widget.idEmprendimiento
+                                                                      );
                                                             });
                                                           },
                                                           text: 'Agregar',

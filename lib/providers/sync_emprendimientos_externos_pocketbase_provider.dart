@@ -27,6 +27,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
   bool procesoterminado = false;
   bool procesoexitoso = false;
   String tokenGlobal = "";
+  int? idEmprendimientoObjectBox;
   List<bool> banderasExitoSync = [];
   bool exitoso = true;
   bool usuarioExit = false;
@@ -93,14 +94,14 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
               idDBR: basicEmprendimiento.items[0].expand.idEmprendedorFk.id,
               idEmiWeb: basicEmprendimiento.items[0].expand.idEmprendedorFk.idEmiWeb,
             );
-            final nuevaImagen = Imagenes(imagenes: "");
+            final nuevaImagen = Imagenes(imagenes: "", idEmprendimiento: 0);
             nuevaImagen.emprendedor.target = nuevoEmprendedor;
             nuevoEmprendedor.comunidad.target = comunidad;
             nuevoEmprendedor.imagen.target = nuevaImagen;
             nuevoEmprendedor.emprendimiento.target = nuevoEmprendimiento;
             nuevoEmprendimiento.emprendedor.target = nuevoEmprendedor;
             nuevoEmprendimiento.usuario.target = usuario;
-            dataBase.emprendimientosBox.put(nuevoEmprendimiento);
+            idEmprendimientoObjectBox = dataBase.emprendimientosBox.put(nuevoEmprendimiento);
             usuario.emprendimientos.add(nuevoEmprendimiento);
             dataBase.usuariosBox.put(usuario);
             //Se recupera colección de datos jornadas en Pocketbase
@@ -122,7 +123,8 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                     fechaRegistro: elementJornada.created,
                     completada: elementJornada.completada,
                     idDBR: elementJornada.id,
-                    idEmiWeb: elementJornada.idEmiWeb,
+                    idEmiWeb: elementJornada.idEmiWeb, 
+                    idEmprendimiento: idEmprendimientoObjectBox!,
                   );
                   final nuevaTarea1 = Tareas(
                     tarea: elementJornada.expand.idTareaFk.tarea,
@@ -131,6 +133,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                     fechaRegistro: elementJornada.expand.idTareaFk.created,
                     idDBR: elementJornada.expand.idTareaFk.id,
                     idEmiWeb: elementJornada.expand.idTareaFk.idEmiWeb,
+                    idEmprendimiento: idEmprendimientoObjectBox!,
                   );
                   nuevaJornada1.tarea.target = nuevaTarea1;
                   nuevaJornada1.emprendimiento.target = nuevoEmprendimiento;
@@ -148,6 +151,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                     completada: elementJornada.completada,
                     idDBR: elementJornada.id,
                     idEmiWeb: elementJornada.idEmiWeb,
+                    idEmprendimiento: idEmprendimientoObjectBox!,
                   );
                   final nuevaTarea2 = Tareas(
                     tarea: elementJornada.expand.idTareaFk.tarea,
@@ -157,6 +161,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                     fechaRegistro: elementJornada.expand.idTareaFk.created,
                     idDBR: elementJornada.expand.idTareaFk.id,
                     idEmiWeb: elementJornada.expand.idTareaFk.idEmiWeb,
+                    idEmprendimiento: idEmprendimientoObjectBox!,
                   );
                   for (var i = 0; i < elementJornada.expand.idTareaFk.expand!.idImagenesFk.toList().length; i++) {
                     // Se agrega nueva imagen
@@ -171,6 +176,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                       base64: elementJornada.expand.idTareaFk.expand!.idImagenesFk.toList()[i].base64,
                       idDBR: elementJornada.expand.idTareaFk.expand!.idImagenesFk.toList()[i].id,
                       idEmiWeb: elementJornada.expand.idTareaFk.expand!.idImagenesFk.toList()[i].idEmiWeb,
+                      idEmprendimiento: idEmprendimientoObjectBox!,
                       ); //Se crea el objeto imagenes para la Tarea
                     nuevaImagenTarea.tarea.target = nuevaTarea2;
                     dataBase.imagenesBox.put(nuevaImagenTarea);
@@ -192,6 +198,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                     completada: elementJornada.completada,
                     idDBR: elementJornada.id,
                     idEmiWeb: elementJornada.idEmiWeb,
+                    idEmprendimiento: idEmprendimientoObjectBox!,
                   );
                   final nuevaTarea3 = Tareas(
                     tarea: elementJornada.expand.idTareaFk.tarea,
@@ -201,6 +208,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                     fechaRegistro: elementJornada.expand.idTareaFk.created,
                     idDBR: elementJornada.expand.idTareaFk.id,
                     idEmiWeb: elementJornada.expand.idTareaFk.idEmiWeb,
+                    idEmprendimiento: idEmprendimientoObjectBox!,
                   );
                   for (var i = 0; i < elementJornada.expand.idTareaFk.expand!.idImagenesFk.toList().length; i++) {
                     // Se agrega nueva imagen
@@ -215,6 +223,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                       base64: elementJornada.expand.idTareaFk.expand!.idImagenesFk.toList()[i].base64,
                       idDBR: elementJornada.expand.idTareaFk.expand!.idImagenesFk.toList()[i].id,
                       idEmiWeb: elementJornada.expand.idTareaFk.expand!.idImagenesFk.toList()[i].idEmiWeb,
+                      idEmprendimiento: idEmprendimientoObjectBox!,
                       ); //Se crea el objeto imagenes para la Tarea
                     nuevaImagenTarea.tarea.target = nuevaTarea3;
                     dataBase.imagenesBox.put(nuevaImagenTarea);
@@ -236,6 +245,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                     completada: elementJornada.completada,
                     idDBR: elementJornada.id,
                     idEmiWeb: elementJornada.idEmiWeb,
+                    idEmprendimiento: idEmprendimientoObjectBox!,
                   );
                   final nuevaTarea4 = Tareas(
                     tarea: "Creación Jornada 4",
@@ -245,6 +255,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                     fechaRegistro: elementJornada.expand.idTareaFk.created,
                     idDBR: elementJornada.expand.idTareaFk.id,
                     idEmiWeb: elementJornada.expand.idTareaFk.idEmiWeb,
+                    idEmprendimiento: idEmprendimientoObjectBox!,
                   );
                   for (var i = 0; i < elementJornada.expand.idTareaFk.expand!.idImagenesFk.toList().length; i++) {
                     // Se agrega nueva imagen
@@ -259,6 +270,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                       base64: elementJornada.expand.idTareaFk.expand!.idImagenesFk.toList()[i].base64,
                       idDBR: elementJornada.expand.idTareaFk.expand!.idImagenesFk.toList()[i].id,
                       idEmiWeb: elementJornada.expand.idTareaFk.expand!.idImagenesFk.toList()[i].idEmiWeb,
+                      idEmprendimiento: idEmprendimientoObjectBox!,
                       ); //Se crea el objeto imagenes para la Tarea
                     nuevaImagenTarea.tarea.target = nuevaTarea4;
                     dataBase.imagenesBox.put(nuevaImagenTarea);
@@ -293,6 +305,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                   archivado: elementConsultoria.archivado,
                   idDBR: elementConsultoria.id,
                   idEmiWeb: elementConsultoria.idEmiWeb,
+                  idEmprendimiento: idEmprendimientoObjectBox!,
                 );
                 for (var i = 0; i < elementConsultoria.expand.idTareaFk.toList().length; i++) {
                   final nuevaTarea = Tareas(
@@ -303,6 +316,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                     fechaRegistro: elementConsultoria.expand.idTareaFk[i].created,
                     idDBR: elementConsultoria.expand.idTareaFk[i].id,
                     idEmiWeb: elementConsultoria.expand.idTareaFk[i].idEmiWeb,
+                    idEmprendimiento: idEmprendimientoObjectBox!,
                   );
                   final porcentajeAvance = dataBase.porcentajeAvanceBox.query(PorcentajeAvance_.idEmiWeb.equals(elementConsultoria.expand.idTareaFk[i].expand!.idPorcentajeFk.idEmiWeb)).build().findFirst();
                   final ambito = dataBase.ambitoConsultoriaBox.query(AmbitoConsultoria_.idEmiWeb.equals(elementConsultoria.expand.idAmbitoFk.idEmiWeb)).build().findFirst();
@@ -328,6 +342,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                         base64: imagenConsultoriaParse.base64,
                         idDBR: imagenConsultoriaParse.id,
                         idEmiWeb: imagenConsultoriaParse.idEmiWeb,
+                        idEmprendimiento: idEmprendimientoObjectBox!,
                         ); //Se crea el objeto imagenes para la Tarea
                       nuevaImagenTarea.tarea.target = nuevaTarea;
                       dataBase.imagenesBox.put(nuevaImagenTarea);
@@ -365,6 +380,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                   costo: elementProductoEmp.costoProdEmp,
                   idDBR: elementProductoEmp.id,
                   idEmiWeb: elementProductoEmp.idEmiWeb,
+                  idEmprendimiento: idEmprendimientoObjectBox!,
                 );
                 final unidadMedida = dataBase.unidadesMedidaBox.query(UnidadMedida_.idEmiWeb.equals(elementProductoEmp.expand.idUndMedidaFk.idEmiWeb)).build().findFirst();
                 if (unidadMedida != null) {
@@ -383,6 +399,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                     base64: elementProductoEmp.expand.idImagenFk!.base64,
                     idDBR: elementProductoEmp.expand.idImagenFk!.id,
                     idEmiWeb: elementProductoEmp.expand.idImagenFk!.idEmiWeb,
+                    idEmprendimiento: idEmprendimientoObjectBox!,
                     ); //Se crea el objeto imagenes para el productoEmp
                   nuevaImagenProductoEmp.productosEmp.target = nuevoProductoEmp;
                   dataBase.imagenesBox.put(nuevaImagenProductoEmp);
@@ -416,6 +433,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                   total: elementVenta.total,
                   idDBR: elementVenta.id,
                   idEmiWeb: elementVenta.idEmiWeb,
+                  idEmprendimiento: idEmprendimientoObjectBox!,
                 );
                 var urlProdVendidos = Uri.parse("$baseUrl/api/collections/prod_vendidos/records?filter=(id_venta_fk='${elementVenta.id}')&expand=id_und_medida_fk");
 
@@ -436,6 +454,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                       precioVenta: elementProdVendido.precioVenta, 
                       idDBR: elementProdVendido.id,
                       idEmiWeb: elementProdVendido.idEmiWeb,
+                      idEmprendimiento: idEmprendimientoObjectBox!,
                     );
                     final productoEmp = dataBase.productosEmpBox.query(ProductosEmp_.idDBR.equals(elementProdVendido.idProductosEmpFk)).build().findFirst();
                     final unidadMedida = dataBase.unidadesMedidaBox.query(UnidadMedida_.idEmiWeb.equals(elementProdVendido.expand.idUndMedidaFk.idEmiWeb)).build().findFirst();
@@ -483,6 +502,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                   idDBR: elementInversion.id,
                   idEmiWeb: elementInversion.idEmiWeb,
                   jornada3: elementInversion.jornada3,
+                  idEmprendimiento: idEmprendimientoObjectBox!,
                 );
                 final estadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.idDBR.equals(elementInversion.expand.idEstadoInversionFk.id)).build().findFirst();
                 if (estadoInversion != null) {
@@ -517,6 +537,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                         fechaRegistro: elementProductosProyecto.created,
                         idDBR: elementProductosProyecto.id,
                         idEmiWeb: elementProductosProyecto.idEmiWeb,
+                        idEmprendimiento: idEmprendimientoObjectBox!,
                       );
                       final familiaProd = dataBase.familiaProductosBox.query(FamiliaProd_.idDBR.equals(elementProductosProyecto.idFamiliaProdFk)).build().findFirst();
                       final tipoEmpaques = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idDBR.equals(elementProductosProyecto.idTipoEmpaqueFk)).build().findFirst();
@@ -529,7 +550,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                       nuevaInversion.prodSolicitados.add(nuevoProdSolicitado);
                       dataBase.inversionesBox.put(nuevaInversion);
                     }
-                    final nuevaInversionXProdCotizados = InversionesXProdCotizados(); //Se crea la inversion x prod Cotizados
+                    final nuevaInversionXProdCotizados = InversionesXProdCotizados(idEmprendimiento: idEmprendimientoObjectBox!,); //Se crea la inversion x prod Cotizados
                     nuevaInversionXProdCotizados.inversion.target = nuevaInversion;
                     dataBase.inversionesXprodCotizadosBox.put(nuevaInversionXProdCotizados);
                     nuevaInversion.inversionXprodCotizados.add(nuevaInversionXProdCotizados);
@@ -568,6 +589,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                         fechaRegistro: elementProdSolicitado.created,
                         idDBR: elementProdSolicitado.id,
                         idEmiWeb: elementProdSolicitado.idEmiWeb,
+                        idEmprendimiento: idEmprendimientoObjectBox!,
                       );
                       final familiaProd = dataBase.familiaProductosBox.query(FamiliaProd_.idDBR.equals(elementProdSolicitado.idFamiliaProdFk)).build().findFirst();
                       final tipoEmpaques = dataBase.tipoEmpaquesBox.query(TipoEmpaques_.idDBR.equals(elementProdSolicitado.idTipoEmpaquesFk)).build().findFirst();
@@ -588,6 +610,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                           base64: elementProdSolicitado.expand.idImagenFk!.base64,
                           idDBR: elementProdSolicitado.expand.idImagenFk!.id,
                           idEmiWeb: elementProdSolicitado.expand.idImagenFk!.idEmiWeb,
+                          idEmprendimiento: idEmprendimientoObjectBox!,
                           ); //Se crea el objeto imagenes para el producto Solicitado
                         dataBase.imagenesBox.put(nuevaImagenProdSolicitado);
                         nuevoProdSolicitado.imagen.target = nuevaImagenProdSolicitado;
@@ -612,7 +635,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                   var basicInversionXProdCotizados = getBasicInversionXProdCotizadosPocketbaseFromMap(responseInversionXProdCotizados.body);
                   if (responseInversionXProdCotizados.statusCode == 200) {
                     if (basicInversionXProdCotizados.items.toList().isEmpty) {
-                        final nuevaInversionXProdCotizados = InversionesXProdCotizados(); //Se crea la inversion x prod Cotizados
+                        final nuevaInversionXProdCotizados = InversionesXProdCotizados(idEmprendimiento: idEmprendimientoObjectBox!,); //Se crea la inversion x prod Cotizados
                         nuevaInversionXProdCotizados.inversion.target = nuevaInversion;
                         dataBase.inversionesXprodCotizadosBox.put(nuevaInversionXProdCotizados);
                         nuevaInversion.inversionXprodCotizados.add(nuevaInversionXProdCotizados);
@@ -625,6 +648,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                           fechaRegistro: elementInversionXProdCotizados.created,
                           idDBR: elementInversionXProdCotizados.id,
                           idEmiWeb: elementInversionXProdCotizados.idEmiWeb,
+                          idEmprendimiento: idEmprendimientoObjectBox!,
                         );
                         nuevaInversionXProdCotizados.inversion.target = nuevaInversion;
                         dataBase.inversionesXprodCotizadosBox.put(nuevaInversionXProdCotizados);
@@ -649,6 +673,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                               fechaRegistro: elementProductosCotizados.created,
                               idDBR: elementProductosCotizados.id,
                               idEmiWeb: elementProductosCotizados.idEmiWeb,
+                              idEmprendimiento: idEmprendimientoObjectBox!,
                             );
                             final productoProv = dataBase.productosProvBox.query(ProductosProv_.idDBR.equals(elementProductosCotizados.idProductoProvFk)).build().findFirst();
                             if (productoProv != null) {
@@ -690,6 +715,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                       fechaRegistro: elementPagos.created,
                       idDBR: elementPagos.id,
                       idEmiWeb: elementPagos.idEmiWeb,
+                      idEmprendimiento: idEmprendimientoObjectBox!,
                     );
                     nuevoPago.inversion.target = nuevaInversion;
                     dataBase.pagosBox.put(nuevoPago);

@@ -67,6 +67,7 @@ class ProdSolicitado {
   String? idDBR;
   @Unique()
   String? idEmiWeb;
+  int idEmprendimiento;
   final familiaProducto = ToOne<FamiliaProd>();
   final unidadMedida = ToOne<UnidadMedida>();
   final tipoEmpaques = ToOne<TipoEmpaques>();
@@ -86,6 +87,7 @@ class ProdSolicitado {
     DateTime? fechaRegistro,
     this.idDBR,
     this.idEmiWeb,
+    required this.idEmprendimiento,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -142,6 +144,7 @@ class Inversiones {
   @Unique()
   String? idDBR;
   String? idEmiWeb;
+  int idEmprendimiento;
   final bitacora = ToMany<Bitacora>();
   final emprendimiento = ToOne<Emprendimientos>();
   final prodSolicitados = ToMany<ProdSolicitado>();
@@ -163,6 +166,7 @@ class Inversiones {
     this.jornada3 = false,
     this.idDBR,
     this.idEmiWeb,
+    required this.idEmprendimiento,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -180,6 +184,7 @@ class Pagos {
   String? idDBR;
   @Unique()
   String? idEmiWeb;
+  int idEmprendimiento;
   final inversion = ToOne<Inversiones>();
   final usuario = ToOne<Usuarios>();
   final bitacora = ToMany<Bitacora>();
@@ -191,6 +196,7 @@ class Pagos {
     DateTime? fechaRegistro,
     this.idDBR,
     this.idEmiWeb,
+    required this.idEmprendimiento,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -205,6 +211,7 @@ class InversionesXProdCotizados {
   @Unique()
   String? idDBR;
   String? idEmiWeb;
+  int idEmprendimiento;
   final inversion = ToOne<Inversiones>();
   final prodCotizados = ToMany<ProdCotizados>();
   final bitacora = ToMany<Bitacora>();
@@ -215,6 +222,7 @@ class InversionesXProdCotizados {
     DateTime? fechaRegistro,
     this.idDBR,
     this.idEmiWeb,
+    required this.idEmprendimiento,
     }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -447,6 +455,7 @@ class Jornadas {
   @Unique()
   String? idDBR;
   String? idEmiWeb;
+  int idEmprendimiento;
   final emprendimiento = ToOne<Emprendimientos>();
   final tarea = ToOne<Tareas>();
   final bitacora = ToMany<Bitacora>();
@@ -458,6 +467,7 @@ class Jornadas {
     required this.completada,
     this.idDBR,
     this.idEmiWeb,
+    required this.idEmprendimiento,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -475,6 +485,7 @@ class Tareas {
   @Unique()
   String? idDBR;
   String? idEmiWeb;
+  int idEmprendimiento;
   final jornada = ToOne<Jornadas>();
   final consultoria = ToOne<Consultorias>();
   final bitacora = ToMany<Bitacora>();
@@ -489,6 +500,7 @@ class Tareas {
     DateTime? fechaRegistro,
     this.idDBR,
     this.idEmiWeb,
+    required this.idEmprendimiento,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -573,6 +585,7 @@ class Ventas {
   String? idDBR;
   @Unique()
   String? idEmiWeb;
+  int idEmprendimiento;
   final bitacora = ToMany<Bitacora>();
   final emprendimiento = ToOne<Emprendimientos>();
   final prodVendidos= ToMany<ProdVendidos>();
@@ -586,6 +599,7 @@ class Ventas {
     this.archivado = false,
     this.idDBR,
     this.idEmiWeb,
+    required this.idEmprendimiento,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -607,6 +621,7 @@ class ProdVendidos {
   @Unique()
   String? idDBR;
   String? idEmiWeb;
+  int idEmprendimiento;
   final bitacora = ToMany<Bitacora>();
   final venta = ToOne<Ventas>();
   final unidadMedida = ToOne<UnidadMedida>();
@@ -623,6 +638,7 @@ class ProdVendidos {
     this.postEmiWeb = false,
     this.idDBR,
     this.idEmiWeb,
+    required this.idEmprendimiento,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -641,6 +657,7 @@ class ProductosEmp {
   String? idDBR;
   @Unique()
   String? idEmiWeb;
+  int idEmprendimiento;
   final emprendimientos = ToOne<Emprendimientos>();
   final unidadMedida = ToOne<UnidadMedida>();
   final imagen = ToOne<Imagenes>();
@@ -657,6 +674,7 @@ class ProductosEmp {
     this.archivado = false,
     this.idDBR,
     this.idEmiWeb,
+    required this.idEmprendimiento,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -675,6 +693,7 @@ class ProdCotizados {
   @Unique()
   String idEmiWeb;
   double costoUnitario;
+  int idEmprendimiento;
   final inversionXprodCotizados = ToOne<InversionesXProdCotizados>();
   final productosProv = ToOne<ProductosProv>();
   final bitacora = ToMany<Bitacora>();
@@ -688,6 +707,7 @@ class ProdCotizados {
     DateTime? fechaRegistro,
     this.idDBR,
     required this.idEmiWeb,
+    required this.idEmprendimiento,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -760,6 +780,7 @@ class Consultorias {
   @Unique()
   String? idEmiWeb;
   bool archivado;
+  int idEmprendimiento;
   final emprendimiento = ToOne<Emprendimientos>();
   final areaCirculo = ToOne<AreaCirculo>();
   final ambitoConsultoria = ToOne<AmbitoConsultoria>();
@@ -772,6 +793,7 @@ class Consultorias {
     this.idDBR,
     this.archivado = false,
     this.idEmiWeb,
+    required this.idEmprendimiento,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
@@ -1102,6 +1124,7 @@ class Imagenes {
   @Unique()
   String? idDBR;
   String? idEmiWeb;
+  int idEmprendimiento;
   final tarea = ToOne<Tareas>();
   final prodSolicitados = ToMany<ProdSolicitado>();
   final productosProv = ToOne<ProductosProv>();
@@ -1121,6 +1144,7 @@ class Imagenes {
     DateTime? fechaRegistro,
     this.idDBR,
     this.idEmiWeb,
+    required this.idEmprendimiento,
     }): fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);

@@ -239,7 +239,7 @@
     },
     {
       "id": "11:7673785883081583133",
-      "lastPropertyId": "14:5010841770389356201",
+      "lastPropertyId": "15:6698964233104397495",
       "name": "Ventas",
       "properties": [
         {
@@ -294,6 +294,11 @@
           "type": 9,
           "flags": 2080,
           "indexId": "243:1429204767736367358"
+        },
+        {
+          "id": "15:6698964233104397495",
+          "name": "idEmprendimiento",
+          "type": 6
         }
       ],
       "relations": [
@@ -311,7 +316,7 @@
     },
     {
       "id": "12:5075853906068129300",
-      "lastPropertyId": "16:3843038384942165449",
+      "lastPropertyId": "17:4902247676630630727",
       "name": "Consultorias",
       "properties": [
         {
@@ -372,6 +377,11 @@
           "type": 9,
           "flags": 2080,
           "indexId": "240:6874025484378531555"
+        },
+        {
+          "id": "17:4902247676630630727",
+          "name": "idEmprendimiento",
+          "type": 6
         }
       ],
       "relations": [
@@ -389,7 +399,7 @@
     },
     {
       "id": "19:2491530739310255510",
-      "lastPropertyId": "22:6170236630099654648",
+      "lastPropertyId": "23:1609489238474676070",
       "name": "Tareas",
       "properties": [
         {
@@ -458,6 +468,11 @@
           "id": "22:6170236630099654648",
           "name": "idEmiWeb",
           "type": 9
+        },
+        {
+          "id": "23:1609489238474676070",
+          "name": "idEmprendimiento",
+          "type": 6
         }
       ],
       "relations": [
@@ -718,7 +733,7 @@
     },
     {
       "id": "24:6358146304075079104",
-      "lastPropertyId": "14:6450285659452861803",
+      "lastPropertyId": "15:744399421319379407",
       "name": "Jornadas",
       "properties": [
         {
@@ -774,6 +789,11 @@
           "id": "14:6450285659452861803",
           "name": "completada",
           "type": 1
+        },
+        {
+          "id": "15:744399421319379407",
+          "name": "idEmprendimiento",
+          "type": 6
         }
       ],
       "relations": [
@@ -1345,7 +1365,7 @@
     },
     {
       "id": "43:8172937846526815489",
-      "lastPropertyId": "17:5476718282839441262",
+      "lastPropertyId": "18:5174371667876691074",
       "name": "ProductosEmp",
       "properties": [
         {
@@ -1416,6 +1436,11 @@
           "flags": 520,
           "indexId": "245:3873668621277198912",
           "relationTarget": "Imagenes"
+        },
+        {
+          "id": "18:5174371667876691074",
+          "name": "idEmprendimiento",
+          "type": 6
         }
       ],
       "relations": [
@@ -1554,7 +1579,7 @@
     },
     {
       "id": "47:4406411524870188538",
-      "lastPropertyId": "18:2485071929341118535",
+      "lastPropertyId": "19:5622714150718426006",
       "name": "Imagenes",
       "properties": [
         {
@@ -1655,6 +1680,11 @@
           "flags": 520,
           "indexId": "272:5363954372619465298",
           "relationTarget": "ProductosProv"
+        },
+        {
+          "id": "19:5622714150718426006",
+          "name": "idEmprendimiento",
+          "type": 6
         }
       ],
       "relations": [
@@ -1677,7 +1707,7 @@
     },
     {
       "id": "48:5212286852224162052",
-      "lastPropertyId": "18:2537752804515452942",
+      "lastPropertyId": "19:6787102826169269276",
       "name": "Inversiones",
       "properties": [
         {
@@ -1769,6 +1799,11 @@
           "flags": 520,
           "indexId": "268:370237648053660087",
           "relationTarget": "Imagenes"
+        },
+        {
+          "id": "19:6787102826169269276",
+          "name": "idEmprendimiento",
+          "type": 6
         }
       ],
       "relations": [
@@ -1796,7 +1831,7 @@
     },
     {
       "id": "49:100215042722630549",
-      "lastPropertyId": "18:4420051813097480449",
+      "lastPropertyId": "19:1346415551296560367",
       "name": "ProdSolicitado",
       "properties": [
         {
@@ -1898,6 +1933,11 @@
           "type": 9,
           "flags": 2080,
           "indexId": "273:713793477301725008"
+        },
+        {
+          "id": "19:1346415551296560367",
+          "name": "idEmprendimiento",
+          "type": 6
         }
       ],
       "relations": [
@@ -1974,7 +2014,7 @@
     },
     {
       "id": "51:1596057038243167918",
-      "lastPropertyId": "18:4465631852815783681",
+      "lastPropertyId": "19:6295741357351637114",
       "name": "ProdVendidos",
       "properties": [
         {
@@ -2058,6 +2098,11 @@
           "id": "18:4465631852815783681",
           "name": "postEmiWeb",
           "type": 1
+        },
+        {
+          "id": "19:6295741357351637114",
+          "name": "idEmprendimiento",
+          "type": 6
         }
       ],
       "relations": [
@@ -2168,7 +2213,7 @@
     },
     {
       "id": "54:858406953056318390",
-      "lastPropertyId": "17:1023970263587459046",
+      "lastPropertyId": "18:8052147635774927584",
       "name": "ProdCotizados",
       "properties": [
         {
@@ -2231,6 +2276,11 @@
           "id": "17:1023970263587459046",
           "name": "costoUnitario",
           "type": 8
+        },
+        {
+          "id": "18:8052147635774927584",
+          "name": "idEmprendimiento",
+          "type": 6
         }
       ],
       "relations": [
@@ -2344,7 +2394,7 @@
     },
     {
       "id": "57:2397636268740769237",
-      "lastPropertyId": "7:6157324509682149666",
+      "lastPropertyId": "8:1038874851836746200",
       "name": "InversionesXProdCotizados",
       "properties": [
         {
@@ -2382,6 +2432,11 @@
           "id": "7:6157324509682149666",
           "name": "idEmiWeb",
           "type": 9
+        },
+        {
+          "id": "8:1038874851836746200",
+          "name": "idEmprendimiento",
+          "type": 6
         }
       ],
       "relations": [
@@ -2399,7 +2454,7 @@
     },
     {
       "id": "58:6428801880818699617",
-      "lastPropertyId": "9:8582847983321332165",
+      "lastPropertyId": "10:5801515247847733125",
       "name": "Pagos",
       "properties": [
         {
@@ -2452,6 +2507,11 @@
           "type": 9,
           "flags": 2080,
           "indexId": "271:8536477397944553514"
+        },
+        {
+          "id": "10:5801515247847733125",
+          "name": "idEmprendimiento",
+          "type": 6
         }
       ],
       "relations": [

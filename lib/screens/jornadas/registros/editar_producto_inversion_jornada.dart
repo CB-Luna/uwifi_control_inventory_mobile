@@ -1098,7 +1098,10 @@ class _EditarProductoInversionJornadaState
                                                     widget.productoSol,
                                                     nombreImagen,
                                                     path,
-                                                    base64);
+                                                    base64,
+                                                    widget.
+                                                    emprendimientoActual.id
+                                                    );
                                                 } else {
                                                   print("SE ACTUALIZA IMAGEN NUEVA");
                                                   productoInversionJornadaController.updateImagenProductoSol(
@@ -1160,7 +1163,10 @@ class _EditarProductoInversionJornadaState
                                                     widget.productoSol,
                                                     nombreImagen,
                                                     path,
-                                                    base64);
+                                                    base64,
+                                                    widget.
+                                                    emprendimientoActual.id
+                                                    );
                                                 } else {
                                                   print("SE ACTUALIZA IMAGEN NUEVA");
                                                   productoInversionJornadaController.updateImagenProductoSol(

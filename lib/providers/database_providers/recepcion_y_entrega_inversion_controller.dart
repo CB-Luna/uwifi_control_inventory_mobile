@@ -120,7 +120,8 @@ void updatePago(double newMontoAbonado, int idInversion, int idEmprendimiento) {
     //Se agrega el nuevo pago para la Inversion
     final nuevoPago = Pagos(
       montoAbonado: newMontoAbonado,
-      fechaMovimiento: DateTime.now()
+      fechaMovimiento: DateTime.now(), 
+      idEmprendimiento: idEmprendimiento,
       );
     nuevoPago.inversion.target = updateInversion;
     nuevoPago.bitacora.add(nuevaInstruccion);
@@ -139,7 +140,8 @@ void updatePago(double newMontoAbonado, int idInversion, int idEmprendimiento) {
     //Se agrega el nuevo pago para la Inversion
     final nuevoPago = Pagos(
       montoAbonado: newMontoAbonado,
-      fechaMovimiento: DateTime.now()
+      fechaMovimiento: DateTime.now(), 
+      idEmprendimiento: idEmprendimiento,
       );
     nuevoPago.inversion.target = updateInversion;
     nuevoPago.bitacora.add(nuevaInstruccionPago);

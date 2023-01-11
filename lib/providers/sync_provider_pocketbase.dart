@@ -6216,7 +6216,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     aceptado: listProdCotizados[i].aceptado,
                     idEmiWeb: listProdCotizados[i].idEmiWeb,
                     costoUnitario: listProdCotizados[i].costoTotal /
-                        listProdCotizados[i].cantidad,
+                        listProdCotizados[i].cantidad, 
+                    idEmprendimiento: emprendimiento.id,
                   );
                   final productoProv = dataBase.productosProvBox
                       .query(ProductosProv_.idDBR
@@ -6256,7 +6257,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               // Se debe crear una nuevaIversionXprodCotizados
               final nuevaIversionXprodCotizados = InversionesXProdCotizados(
                 idDBR: inversionXprodCotizadosParse.id,
-                idEmiWeb: inversionXprodCotizadosParse.idEmiWeb,
+                idEmiWeb: inversionXprodCotizadosParse.idEmiWeb, 
+                idEmprendimiento: emprendimiento.id,
               );
               for (var i = 0; i < recordProdCotizados.length; i++) {
                 //Se valida que el nuevo prod Cotizado aún no existe en Objectbox
@@ -6272,7 +6274,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     aceptado: listProdCotizados[i].aceptado,
                     idEmiWeb: listProdCotizados[i].idEmiWeb,
                     costoUnitario: listProdCotizados[i].costoTotal /
-                        listProdCotizados[i].cantidad,
+                        listProdCotizados[i].cantidad, 
+                    idEmprendimiento: emprendimiento.id,
                   );
                   final productoProv = dataBase.productosProvBox
                       .query(ProductosProv_.idDBR

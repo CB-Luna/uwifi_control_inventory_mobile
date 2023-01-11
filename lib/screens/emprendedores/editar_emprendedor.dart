@@ -277,6 +277,10 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                                   nombre: image!.name,
                                                   path: image!.path,
                                                   base64: base64,
+                                                  idEmprendimiento: widget
+                                                    .emprendedor
+                                                    .emprendimiento
+                                                    .target!.id,
                                                   //imagenPocketbase:
                                                       //imagenUint8List
                                                       );

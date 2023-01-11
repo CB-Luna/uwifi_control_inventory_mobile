@@ -783,7 +783,9 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                                   imagenes: fotoAvance!.path,
                                                   nombre: fotoAvance!.name,
                                                   path: fotoAvance!.path,
-                                                  base64: base64);
+                                                  base64: base64, 
+                                                  idEmprendimiento: widget.emprendimientoEditar.id
+                                                  );
                                               consultoriaProvider.imagenLocal =
                                                   newImagen;
                                             });

@@ -44,12 +44,12 @@ class InversionController extends ChangeNotifier {
   int addInversion(int idEmprendimiento, String porcentaje) {
     int idInversion = -1;
     final nuevaInversion = Inversiones(
-      porcentajePago: int.parse(porcentaje),
+      porcentajePago: int.parse(porcentaje), idEmprendimiento: idEmprendimiento,
       );
       final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
       final estadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Solicitada")).build().findFirst();
       if (emprendimiento != null && estadoInversion != null) {
-        final nuevaInversionXprodCotizados = InversionesXProdCotizados(); //Se crea la instancia inversion x prod Cotizados
+        final nuevaInversionXprodCotizados = InversionesXProdCotizados(idEmprendimiento: idEmprendimiento); //Se crea la instancia inversion x prod Cotizados
         nuevaInversionXprodCotizados.inversion.target = nuevaInversion;
         final nuevaInstruccion = Bitacora(instruccion: 'syncAddInversion', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
         nuevaInversion.inversionXprodCotizados.add(nuevaInversionXprodCotizados); //Se agrega la nueva instancia de inversion x prod Cotizados
@@ -106,12 +106,12 @@ class InversionController extends ChangeNotifier {
     notifyListeners();
   }
 
-void addImagenProductoSolicitado(ProdSolicitado productoSol, String newNombreImagen, String newPath, String newBase64) {
+void addImagenProductoSolicitado(ProdSolicitado productoSol, String newNombreImagen, String newPath, String newBase64, int idEmprendimiento) {
       final nuevaImagenProductoSol = Imagenes(
         imagenes: newPath,
         nombre: newNombreImagen,
         base64: newBase64,
-        path: newPath,
+        path: newPath, idEmprendimiento: idEmprendimiento,
       );
       productoSol.imagen.target = nuevaImagenProductoSol;
       dataBase.imagenesBox.put(nuevaImagenProductoSol);
@@ -131,14 +131,14 @@ void addImagenProductoSolicitado(ProdSolicitado productoSol, String newNombreIma
       descripcion: descripcion,
       proveedorSugerido: proveedor,
       cantidad: int.parse(cantidad),
-      costoEstimado: costo != '' ? double.parse(costo) : 0.0,
+      costoEstimado: costo != '' ? double.parse(costo) : 0.0, idEmprendimiento: idEmprendimiento,
       );
       if (imagen != null) {
         final nuevaImagenProdSolicitado = Imagenes(
           imagenes: imagen!.path,
           nombre: imagen!.nombre,
           path: imagen!.path,
-          base64: imagen!.base64,
+          base64: imagen!.base64, idEmprendimiento: idEmprendimiento,
           ); //Se crea el objeto imagenes para el Prod Solicitado
         nuevoProdSolicitado.imagen.target = nuevaImagenProdSolicitado;
       }

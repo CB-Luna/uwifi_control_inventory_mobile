@@ -34,7 +34,8 @@ class VentaController extends ChangeNotifier {
       final nuevaVenta = Ventas(
       fechaInicio: fechaInicio,
       fechaTermino: fechaTermino!,
-      total: double.parse(total),
+      total: double.parse(total), 
+      idEmprendimiento: idEmprendimiento,
     );
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     if (emprendimiento != null) {

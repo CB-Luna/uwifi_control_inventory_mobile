@@ -927,7 +927,9 @@ class _CotizacionTabState extends State<CotizacionTab>
                                             .buscarOtraCotizacion(
                                                 widget.inversion,
                                                 widget.inversionesXprodCotizados
-                                                    .id)) {
+                                                    .id,
+                                                widget.
+                                                emprendimiento.id)) {
                                           // ignore: use_build_context_synchronously
                                           await Navigator.push(
                                             context,
