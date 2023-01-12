@@ -46,6 +46,8 @@ class _DescargaProyectosExternosEmiWebScreenState extends State<DescargaProyecto
                     DescargaProyectosExternosPocketbaseScreen(
                       idEmprendimiento: context.read<SyncEmpExternosEmiWebProvider>().idEmprendimientoPocketbase,
                       usuario: widget.usuario,
+                      tokenGlobal: context.read<SyncEmpExternosEmiWebProvider>().tokenGlobal,
+                      idEmprendimientoEmiWeb: widget.idEmprendimiento,
                     ),
               ),
             );

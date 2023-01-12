@@ -26,7 +26,6 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
   bool procesocargando = false;
   bool procesoterminado = false;
   bool procesoexitoso = false;
-  String tokenGlobal = "";
   int? idEmprendimientoObjectBox;
   List<bool> banderasExitoSync = [];
   bool exitoso = true;
@@ -48,7 +47,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
   }
 
 
-  Future<bool> getProyectosExternosPocketbase(String idEmprendimiento, Usuarios usuario) async {
+  Future<bool> getProyectosExternosPocketbase(String idEmprendimiento, Usuarios usuario, String tokenGlobal, String idEmprendimientoEmiWeb) async {
     try {
       print("ID Emprendimiento en Descarga Proyectos Pocketbase: $idEmprendimiento");
         //Se recupera toda la colección de datos emprendimientos en Pocketbase
@@ -788,12 +787,41 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
       }
       //Verificamos que no haya habido errores al sincronizar con las banderas
       if (exitoso) {
-        procesocargando = false;
-        procesoterminado = true;
-        procesoexitoso = true;
-        banderasExitoSync.clear();
-        notifyListeners();
-        return exitoso;
+        //Se agrega el API adicional que indica quién es el Usuario propietario del proyecto
+        final actualizarUsuarioUri =
+          Uri.parse('$baseUrlEmiWebServices/proyectos/status?idProyecto=$idEmprendimientoEmiWeb');
+        final headers = ({
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $tokenGlobal',
+        });
+        final responsePutUsuario = await post(actualizarUsuarioUri, 
+        headers: headers,
+        body: jsonEncode({
+          "idUsuarioRegistra": usuario.idEmiWeb,
+          "usuarioRegistra": "${usuario.nombre} ${
+            usuario.apellidoP} ${
+            usuario.apellidoM}",
+          "switchMovil": 0,
+          "idPromotor": usuario.idEmiWeb,
+        }));
+        switch(responsePutUsuario.statusCode)
+        {
+          case 200:
+            procesocargando = false;
+            procesoterminado = true;
+            procesoexitoso = true;
+            banderasExitoSync.clear();
+            notifyListeners();
+            return exitoso;
+          default:
+            procesocargando = false;
+            procesoterminado = true;
+            procesoexitoso = false;
+            await deleteEmprendimientoLocal(idEmprendimientoObjectBox ?? -1);
+            banderasExitoSync.clear();
+            notifyListeners();
+            return false;
+        }
       } else {
         procesocargando = false;
         procesoterminado = true;
