@@ -417,7 +417,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                         style: AppTheme.of(context).bodyText1.override(
                             fontFamily: 'Poppins',
                             color: const Color(0xFF4672FF),
-                            fontSize: 15),
+                            fontSize: 20),
                       ),
                     ],
                   ),
