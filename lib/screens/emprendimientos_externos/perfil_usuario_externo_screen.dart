@@ -88,15 +88,15 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                 color: Color.fromARGB(255, 255, 255, 255),
                               ),
                               child: Padding(
-                                padding:
-                                    const EdgeInsetsDirectional.fromSTEB(
-                                        10, 10, 0, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    10, 10, 0, 0),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsetsDirectional
-                                          .fromSTEB(0, 0, 10, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 10, 0),
                                       child: InkWell(
                                         onTap: () async {
                                           await Navigator.push(
@@ -104,9 +104,8 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   UsuariosExternosScreen(
-                                                listUsuariosProyectosTemp:
-                                                    widget
-                                                        .listUsuariosProyectosTemp,
+                                                listUsuariosProyectosTemp: widget
+                                                    .listUsuariosProyectosTemp,
                                               ),
                                             ),
                                           );
@@ -127,11 +126,9 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                                   BorderRadius.circular(10),
                                             ),
                                             child: Row(
-                                              mainAxisSize:
-                                                  MainAxisSize.max,
+                                              mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceEvenly,
+                                                  MainAxisAlignment.spaceEvenly,
                                               children: const [
                                                 Icon(
                                                   Icons.arrow_back_outlined,
@@ -155,82 +152,95 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsetsDirectional
-                                        .fromSTEB(0, 50, 0, 0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 50, 0, 0),
                                     child: Material(
                                       color: Colors.transparent,
                                       elevation: 10,
                                       shape: const CircleBorder(),
-                                      child:Container(
+                                      child: Container(
                                         decoration: const BoxDecoration(
                                           color: Color(0xFF4672FF),
                                           shape: BoxShape.circle,
                                         ),
-                                        child:widget.usuarioProyectosTemporal
-                                                .pathImagenPerfil ==
-                                            null
-                                        ? Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(3, 3, 3, 3),
-                                            child: Container(
-                                              width: 130,
-                                              height: 130,
-                                              decoration: BoxDecoration(
-                                                color: const Color.fromARGB(255, 255, 255, 255),
-                                                shape: BoxShape.circle,
-                                                border: Border.all(
-                                                  color: const Color.fromARGB(255, 255, 255, 255),
-                                                  width: 3.0,
-                                                ),
-                                              ),
-                                              child: Padding(
+                                        child: widget.usuarioProyectosTemporal
+                                                    .pathImagenPerfil ==
+                                                null
+                                            ? Padding(
                                                 padding:
                                                     const EdgeInsetsDirectional
-                                                        .fromSTEB(5, 5, 5, 5),
-                                                child: SizedBox(
-                                                  width: 80,
-                                                  height: 80,
-                                                  child: Center(
-                                                    child: Text(
-                                                      "${widget.usuarioProyectosTemporal.usuarioTemp.nombre.substring(0, 1)} ${widget.usuarioProyectosTemporal.usuarioTemp.apellidoPaterno.substring(0, 1)}",
-                                                      style: AppTheme.of(context)
-                                                          .bodyText1
-                                                          .override(
-                                                            fontFamily: AppTheme
-                                                                    .of(context)
-                                                                .bodyText1Family,
-                                                            color: Colors.black,
-                                                            fontSize: 50,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
+                                                        .fromSTEB(3, 3, 3, 3),
+                                                child: Container(
+                                                  width: 130,
+                                                  height: 130,
+                                                  decoration: BoxDecoration(
+                                                    color: const Color.fromARGB(
+                                                        255, 255, 255, 255),
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              255,
+                                                              255,
+                                                              255,
+                                                              255),
+                                                      width: 3.0,
+                                                    ),
+                                                  ),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                            5, 5, 5, 5),
+                                                    child: SizedBox(
+                                                      width: 80,
+                                                      height: 80,
+                                                      child: Center(
+                                                        child: Text(
+                                                          "${widget.usuarioProyectosTemporal.usuarioTemp.nombre.substring(0, 1)} ${widget.usuarioProyectosTemporal.usuarioTemp.apellidoPaterno.substring(0, 1)}",
+                                                          style: AppTheme.of(
+                                                                  context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily: AppTheme.of(
+                                                                        context)
+                                                                    .bodyText1Family,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize: 50,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
+                                              )
+                                            : Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(3, 3, 3, 3),
+                                                child: Container(
+                                                  width: 130,
+                                                  height: 130,
+                                                  clipBehavior: Clip.antiAlias,
+                                                  decoration: BoxDecoration(
+                                                    color:
+                                                        const Color(0x00EEEEEE),
+                                                    image: DecorationImage(
+                                                        fit: BoxFit.cover,
+                                                        image: FileImage(File(widget
+                                                            .usuarioProyectosTemporal
+                                                            .pathImagenPerfil!))),
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                ),
                                               ),
-                                            ),
-                                          )
-                                        : Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(3, 3, 3, 3),
-                                            child: Container(
-                                              width: 130,
-                                              height: 130,
-                                              clipBehavior: Clip.antiAlias,
-                                              decoration: BoxDecoration(
-                                                color: const Color(0x00EEEEEE),
-                                                image: DecorationImage(
-                                                    fit: BoxFit.cover,
-                                                    image: FileImage(File(widget
-                                                        .usuarioProyectosTemporal
-                                                        .pathImagenPerfil!))),
-                                                shape: BoxShape.circle,
-                                              ),
-                                            ),
                                       ),
-                                          
                                     ),
-                            ),
                                   ),
                                 ],
                               ),
@@ -246,26 +256,24 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                     children: [
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0, 5, 0, 5),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Padding(
-                                padding:
-                                    const EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 5, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 0, 5, 0),
                                 child: Text(
-                                  widget.usuarioProyectosTemporal
-                                      .usuarioTemp.nombre,
-                                  style:
-                                      AppTheme.of(context).title1.override(
-                                            fontFamily: 'Lexend Deca',
-                                            color: Colors.black,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                  widget.usuarioProyectosTemporal.usuarioTemp
+                                      .nombre,
+                                  style: AppTheme.of(context).title1.override(
+                                        fontFamily: 'Lexend Deca',
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                 ),
                               ),
                               Text(
@@ -284,8 +292,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                     ],
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(10, 5, 10, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(10, 5, 10, 0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -298,18 +305,18 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
                               ),
-                              textAlign: TextAlign.justify,
+                          textAlign: TextAlign.justify,
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              5, 0, 0, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                           child: Text(
                             widget.usuarioProyectosTemporal.usuarioTemp
                                         .telefono ==
                                     "Vacío"
                                 ? "Sin teléfono"
-                                : widget.usuarioProyectosTemporal
-                                    .usuarioTemp.telefono,
+                                : widget.usuarioProyectosTemporal.usuarioTemp
+                                    .telefono,
                             style: AppTheme.of(context).bodyText1.override(
                                   fontFamily: 'Poppins',
                                   color: Colors.black,
@@ -322,8 +329,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                     ),
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(10, 5, 10, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(10, 5, 10, 0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -336,11 +342,11 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
                               ),
-                              textAlign: TextAlign.center,
+                          textAlign: TextAlign.center,
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              5, 0, 0, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                           child: Text(
                             widget.usuarioProyectosTemporal.usuarioTemp
                                     .celular ??
@@ -357,8 +363,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                     ),
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(10, 5, 10, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(10, 5, 10, 0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -371,19 +376,19 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
                               ),
-                              textAlign: TextAlign.center,
+                          textAlign: TextAlign.center,
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              5, 0, 0, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                           child: Text(
                             widget.usuarioProyectosTemporal.usuarioTemp
                                         .fechaNacimiento !=
                                     null
                                 ? dateTimeFormat(
                                     "dd-MM-yyyy",
-                                    widget.usuarioProyectosTemporal
-                                        .usuarioTemp.fechaNacimiento!)
+                                    widget.usuarioProyectosTemporal.usuarioTemp
+                                        .fechaNacimiento!)
                                 : "",
                             style: AppTheme.of(context).bodyText1.override(
                                   fontFamily: 'Poppins',
@@ -425,48 +430,48 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                 controller: searchController,
                 onChanged: (value) => setState(() {}),
                 decoration: InputDecoration(
-                    labelText: 'Buscar Emprendimiento/Emprendedor...',
-                    labelStyle: AppTheme.of(context).bodyText2.override(
-                          fontFamily: 'Outfit',
-                          color: const Color(0xFF57636C),
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal,
-                        ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0x00000000),
-                        width: 1,
+                  labelText: 'Buscar Emprendimiento/Emprendedor...',
+                  labelStyle: AppTheme.of(context).bodyText2.override(
+                        fontFamily: 'Outfit',
+                        color: const Color(0xFF57636C),
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
                       ),
-                      borderRadius: BorderRadius.circular(30),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Color(0x00000000),
+                      width: 1,
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0x00000000),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0x00000000),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0x00000000),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    filled: true,
-                    fillColor: const Color(0xFFF1F4F8),
-                    prefixIcon: const Icon(
-                      Icons.search_outlined,
-                      color: Color(0xFF57636C),
-                    ),
+                    borderRadius: BorderRadius.circular(30),
                   ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Color(0x00000000),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Color(0x00000000),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Color(0x00000000),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  filled: true,
+                  fillColor: const Color(0xFFF1F4F8),
+                  prefixIcon: const Icon(
+                    Icons.search_outlined,
+                    color: Color(0xFF57636C),
+                  ),
+                ),
                 style: AppTheme.of(context).bodyText1.override(
                       fontFamily: 'Poppins',
                       color: Colors.black,
@@ -647,7 +652,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                       blurRadius: 5,
                                       color: Color(0x2B202529),
                                       offset: Offset(0, 3),
-                                      spreadRadius: 10,
+                                      spreadRadius: 5,
                                     )
                                   ],
                                   borderRadius: BorderRadius.circular(16),
