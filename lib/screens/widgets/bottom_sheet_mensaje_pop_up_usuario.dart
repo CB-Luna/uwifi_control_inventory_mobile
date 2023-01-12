@@ -108,7 +108,7 @@ class _BottomSheetMensajeWidgetState extends State<BottomSheetMensajeWidget> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 8, 0, 0),
                                 child: Text(
-                                  "Asegurate de que ${widget.usuarioProyectosTemporal.usuarioTemp.nombre} haya realizado la sincronización del Emprendimiento antes de descargarlo, de lo contrario se perdera la información que no haya sido sincronizada.",
+                                  "Asegurate de que ${widget.usuarioProyectosTemporal.usuarioTemp.nombre} haya realizado la sincronización del Emprendimiento antes de descargarlo, de lo contrario se perderá la información que no haya sido sincronizada.",
                                   textAlign: TextAlign.center,
                                   style: AppTheme.of(context)
                                       .bodyText2
