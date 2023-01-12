@@ -11,6 +11,8 @@ import 'package:bizpro_app/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../helpers/constants.dart';
+
 class DetalleCotizacion extends StatefulWidget {
   final ProdCotizados detalleCot;
 
@@ -405,7 +407,7 @@ class _DetalleCotizacionState extends State<DetalleCotizacion> {
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0, 5, 0, 5),
                                       child: AutoSizeText(
-                                        "\$${widget.detalleCot.productosProv.target!.costo.toStringAsFixed(2)}",
+                                        currencyFormat.format(widget.detalleCot.productosProv.target!.costo.toStringAsFixed(2)),
                                         textAlign: TextAlign.start,
                                         maxLines: 1,
                                         style: AppTheme.of(context)
@@ -435,7 +437,7 @@ class _DetalleCotizacionState extends State<DetalleCotizacion> {
                                     Padding(
                                       padding: const EdgeInsetsDirectional.fromSTEB(0,5,0,0),
                                       child: Text(
-                                        widget.detalleCot.costoTotal.toString(),
+                                        currencyFormat.format(widget.detalleCot.costoTotal.toString()),
                                         style: AppTheme.of(context)
                                             .bodyText1
                                             .override(
