@@ -60,323 +60,364 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.33,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFF4672FF),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(15),
-                      bottomRight: Radius.circular(15),
-                      topLeft: Radius.circular(0),
-                      topRight: Radius.circular(0),
-                    ),
-                  ),
-                  child: Column(
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.41,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(15),
+                  bottomRight: Radius.circular(15),
+                  topLeft: Radius.circular(0),
+                  topRight: Radius.circular(0),
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Expanded(
-                            child: Stack(
-                              children: [
-                                Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                    color: AppTheme.of(context)
-                                        .secondaryBackground,
-                                    image: DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image: Image.asset(
-                                        'assets/images/mesgbluegradient.jpeg',
-                                      ).image,
-                                    ),
-                                  ),
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            10, 10, 0, 0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0, 0, 10, 0),
-                                          child: InkWell(
-                                            onTap: () async {
-                                              await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      UsuariosExternosScreen(
-                                                    listUsuariosProyectosTemp:
-                                                        widget
-                                                            .listUsuariosProyectosTemp,
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            child: Material(
-                                              color: Colors.transparent,
-                                              elevation: 20,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
+                      Expanded(
+                        child: Stack(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 100,
+                              decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    10, 10, 0, 0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 10, 0),
+                                      child: InkWell(
+                                        onTap: () async {
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  UsuariosExternosScreen(
+                                                listUsuariosProyectosTemp: widget
+                                                    .listUsuariosProyectosTemp,
                                               ),
-                                              child: Container(
-                                                width: 45,
-                                                height: 45,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
+                                            ),
+                                          );
+                                        },
+                                        child: Material(
+                                          color: Colors.transparent,
+                                          elevation: 20,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: Container(
+                                            width: 45,
+                                            height: 45,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: const [
+                                                Icon(
+                                                  Icons.arrow_back_outlined,
+                                                  color: Color(0xFF4672FF),
+                                                  size: 25,
                                                 ),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: const [
-                                                    Icon(
-                                                      Icons.arrow_back_outlined,
-                                                      color: Color(0xFF4672FF),
-                                                      size: 25,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
+                                              ],
                                             ),
                                           ),
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                                Align(
-                                  alignment: const AlignmentDirectional(0, 0),
-                                  child: widget.usuarioProyectosTemporal
-                                              .pathImagenPerfil ==
-                                          null
-                                      ? Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0, 50, 0, 0),
-                                          child: Container(
-                                            width: 130,
-                                            height: 130,
-                                            decoration: BoxDecoration(
-                                              color: const Color(0xFF4672FF),
-                                              shape: BoxShape.circle,
-                                              border: Border.all(
-                                                color: Colors.blueAccent,
-                                                width: 3.0,
-                                              ),
-                                            ),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(5, 5, 5, 5),
-                                              child: SizedBox(
-                                                width: 80,
-                                                height: 80,
-                                                child: Center(
-                                                  child: Text(
-                                                    "${widget.usuarioProyectosTemporal.usuarioTemp.nombre.substring(0, 1)} ${widget.usuarioProyectosTemporal.usuarioTemp.apellidoPaterno.substring(0, 1)}",
-                                                    style: AppTheme.of(context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily: AppTheme
-                                                                  .of(context)
-                                                              .bodyText1Family,
-                                                          color: Colors.white,
-                                                          fontSize: 50,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      : Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0, 50, 0, 0),
-                                          child: Container(
-                                            width: 130,
-                                            height: 130,
-                                            clipBehavior: Clip.antiAlias,
-                                            decoration: BoxDecoration(
-                                              color: const Color(0x00EEEEEE),
-                                              image: DecorationImage(
-                                                  fit: BoxFit.cover,
-                                                  image: FileImage(File(widget
-                                                      .usuarioProyectosTemporal
-                                                      .pathImagenPerfil!))),
-                                              shape: BoxShape.circle,
-                                            ),
-                                          ),
-                                        ),
-                                ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 5, 0, 5),
+                            Align(
+                              alignment: const AlignmentDirectional(0, 0),
                               child: Row(
-                                mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 5, 0),
-                                    child: Text(
-                                      widget.usuarioProyectosTemporal
-                                          .usuarioTemp.nombre,
-                                      style:
-                                          AppTheme.of(context).title1.override(
-                                                fontFamily: 'Lexend Deca',
-                                                color: Colors.white,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                    ),
-                                  ),
-                                  Text(
-                                    "${widget.usuarioProyectosTemporal.usuarioTemp.apellidoPaterno} ${widget.usuarioProyectosTemporal.usuarioTemp.apellidoMaterno}",
-                                    style: AppTheme.of(context).title1.override(
-                                          fontFamily: 'Lexend Deca',
-                                          color: Colors.white,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
+                                            0, 50, 0, 0),
+                                    child: Material(
+                                      color: Colors.transparent,
+                                      elevation: 10,
+                                      shape: const CircleBorder(),
+                                      child: Container(
+                                        decoration: const BoxDecoration(
+                                          color: Color(0xFF4672FF),
+                                          shape: BoxShape.circle,
                                         ),
+                                        child: widget.usuarioProyectosTemporal
+                                                    .pathImagenPerfil ==
+                                                null
+                                            ? Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(3, 3, 3, 3),
+                                                child: Container(
+                                                  width: 130,
+                                                  height: 130,
+                                                  decoration: BoxDecoration(
+                                                    color: const Color.fromARGB(
+                                                        255, 255, 255, 255),
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              255,
+                                                              255,
+                                                              255,
+                                                              255),
+                                                      width: 3.0,
+                                                    ),
+                                                  ),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                            5, 5, 5, 5),
+                                                    child: SizedBox(
+                                                      width: 80,
+                                                      height: 80,
+                                                      child: Center(
+                                                        child: Text(
+                                                          "${widget.usuarioProyectosTemporal.usuarioTemp.nombre.substring(0, 1)} ${widget.usuarioProyectosTemporal.usuarioTemp.apellidoPaterno.substring(0, 1)}",
+                                                          style: AppTheme.of(
+                                                                  context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily: AppTheme.of(
+                                                                        context)
+                                                                    .bodyText1Family,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize: 50,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            : Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(3, 3, 3, 3),
+                                                child: Container(
+                                                  width: 130,
+                                                  height: 130,
+                                                  clipBehavior: Clip.antiAlias,
+                                                  decoration: BoxDecoration(
+                                                    color:
+                                                        const Color(0x00EEEEEE),
+                                                    image: DecorationImage(
+                                                        fit: BoxFit.cover,
+                                                        image: FileImage(File(widget
+                                                            .usuarioProyectosTemporal
+                                                            .pathImagenPerfil!))),
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                ),
+                                              ),
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
-                            ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 0, 5, 0),
+                                child: Text(
+                                  widget.usuarioProyectosTemporal.usuarioTemp
+                                      .nombre,
+                                  style: AppTheme.of(context).title1.override(
+                                        fontFamily: 'Lexend Deca',
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                ),
+                              ),
+                              Text(
+                                "${widget.usuarioProyectosTemporal.usuarioTemp.apellidoPaterno} ${widget.usuarioProyectosTemporal.usuarioTemp.apellidoMaterno}",
+                                style: AppTheme.of(context).title1.override(
+                                      fontFamily: 'Lexend Deca',
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(10, 5, 10, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              'Teléfono:',
-                              style: AppTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  5, 0, 0, 0),
-                              child: Text(
-                                widget.usuarioProyectosTemporal.usuarioTemp
-                                            .telefono ==
-                                        "Vacío"
-                                    ? "Sin teléfono"
-                                    : widget.usuarioProyectosTemporal
-                                        .usuarioTemp.telefono,
-                                style: AppTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                              ),
-                            ),
-                          ],
                         ),
                       ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(10, 5, 10, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              'Celular:',
-                              style: AppTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  5, 0, 0, 0),
-                              child: Text(
-                                widget.usuarioProyectosTemporal.usuarioTemp
-                                        .celular ??
-                                    "Sin celular",
-                                style: AppTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w300,
-                                    ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(10, 5, 10, 0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Teléfono:',
+                          style: AppTheme.of(context).bodyText1.override(
+                                fontFamily: 'Poppins',
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
                               ),
-                            ),
-                          ],
+                          textAlign: TextAlign.justify,
                         ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(10, 5, 10, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              'Fecha Nacimiento:',
-                              style: AppTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  5, 0, 0, 0),
-                              child: Text(
-                                widget.usuarioProyectosTemporal.usuarioTemp
-                                            .fechaNacimiento !=
-                                        null
-                                    ? dateTimeFormat(
-                                        "dd-MM-yyyy",
-                                        widget.usuarioProyectosTemporal
-                                            .usuarioTemp.fechaNacimiento!)
-                                    : "",
-                                style: AppTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w300,
-                                    ),
+                        Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                          child: Text(
+                            widget.usuarioProyectosTemporal.usuarioTemp
+                                        .telefono ==
+                                    "Vacío"
+                                ? "Sin teléfono"
+                                : widget.usuarioProyectosTemporal.usuarioTemp
+                                    .telefono,
+                            style: AppTheme.of(context).bodyText1.override(
+                                  fontFamily: 'Poppins',
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(10, 5, 10, 0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Celular:',
+                          style: AppTheme.of(context).bodyText1.override(
+                                fontFamily: 'Poppins',
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
                               ),
-                            ),
-                          ],
+                          textAlign: TextAlign.center,
                         ),
+                        Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                          child: Text(
+                            widget.usuarioProyectosTemporal.usuarioTemp
+                                    .celular ??
+                                "Sin celular",
+                            style: AppTheme.of(context).bodyText1.override(
+                                  fontFamily: 'Poppins',
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(10, 5, 10, 0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Fecha Nacimiento:',
+                          style: AppTheme.of(context).bodyText1.override(
+                                fontFamily: 'Poppins',
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                              ),
+                          textAlign: TextAlign.center,
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                          child: Text(
+                            widget.usuarioProyectosTemporal.usuarioTemp
+                                        .fechaNacimiento !=
+                                    null
+                                ? dateTimeFormat(
+                                    "dd-MM-yyyy",
+                                    widget.usuarioProyectosTemporal.usuarioTemp
+                                        .fechaNacimiento!)
+                                : "",
+                            style: AppTheme.of(context).bodyText1.override(
+                                  fontFamily: 'Poppins',
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 5),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Emprendimientos de ${widget.usuarioProyectosTemporal.usuarioTemp.nombre}',
+                        style: AppTheme.of(context).bodyText1.override(
+                            fontFamily: 'Poppins',
+                            color: const Color(0xFF4672FF),
+                            fontSize: 20),
                       ),
                     ],
                   ),
@@ -384,47 +425,31 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
               ],
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 5),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Emprendimientos de ${widget.usuarioProyectosTemporal.usuarioTemp.nombre}',
-                    style: AppTheme.of(context).bodyText1.override(
-                        fontFamily: 'Poppins',
-                        color: const Color(0xFF4672FF),
-                        fontSize: 15),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(4, 0, 4, 0),
               child: TextFormField(
                 controller: searchController,
                 onChanged: (value) => setState(() {}),
                 decoration: InputDecoration(
-                  labelText: 'Buscar...',
+                  labelText: 'Buscar Emprendimiento/Emprendedor...',
                   labelStyle: AppTheme.of(context).bodyText2.override(
-                        fontFamily: 'Poppins',
-                        color: Colors.black,
-                        fontSize: 13,
+                        fontFamily: 'Outfit',
+                        color: const Color(0xFF57636C),
+                        fontSize: 14,
                         fontWeight: FontWeight.normal,
                       ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
                       color: Color(0x00000000),
-                      width: 2,
+                      width: 1,
                     ),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(30),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
                       color: Color(0x00000000),
-                      width: 2,
+                      width: 1,
                     ),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(30),
                   ),
                   errorBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
@@ -443,9 +468,8 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                   filled: true,
                   fillColor: const Color(0xFFF1F4F8),
                   prefixIcon: const Icon(
-                    Icons.search_sharp,
-                    color: Colors.white,
-                    size: 15,
+                    Icons.search_outlined,
+                    color: Color(0xFF57636C),
                   ),
                 ),
                 style: AppTheme.of(context).bodyText1.override(
@@ -482,18 +506,6 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                         );
                       },
                     );
-
-                    // Va en el boton de aceptar.
-                    //  await Navigator.push(
-                    //    context,
-                    //    MaterialPageRoute(
-                    //      builder: (context) =>
-                    //         DescargaProyectosExternosEmiWebScreen(
-                    //   idEmprendimiento: emprendimientoSelected,
-                    //        usuario: usuarioProvider.usuarioCurrent!,
-                    //      ),
-                    //    ),
-                    //  );
                   } else {
                     await showDialog(
                       context: context,
@@ -584,15 +596,25 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                         "****Selected de ${emprendimientoTemp.proyecto.emprendimiento} es ${emprendimientoTemp.proyecto.selected}");
                                     if (emprendimientoTemp.proyecto.selected) {
                                       //Borrar los otros selected de los items
-                                      // for (var element in widget.usuarioProyectosTemporal.emprendimientosTemp) {
-                                      //   if (element.proyecto.idProyecto.toString() != emprendimientoTemp.proyecto.idProyecto.toString()) {
-                                      //     emprendimientoTemp.proyecto.selected = false;
+                                      // for (var element in widget
+                                      //     .usuarioProyectosTemporal
+                                      //     .emprendimientosTemp) {
+                                      //   if (element.proyecto.idProyecto
+                                      //           .toString() !=
+                                      //       emprendimientoTemp
+                                      //           .proyecto.idProyecto
+                                      //           .toString()) {
+                                      //     emprendimientoTemp.proyecto.selected =
+                                      //         false;
                                       //   }
                                       // }
+                                      // Hasta aca va el cerrado
+                                      print("Prendido");
                                       emprendimientoSelected =
                                           emprendimientoTemp.proyecto.idProyecto
                                               .toString();
                                     } else {
+                                      print("Apagado");
                                       if (emprendimientoSelected ==
                                           emprendimientoTemp.proyecto.idProyecto
                                               .toString()) {
@@ -602,33 +624,35 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                   });
                                 },
                                 value: emprendimientoTemp.proyecto.selected,
-                                onIcon: Icon(
-                                  Icons.check_box,
-                                  color: AppTheme.of(context).primaryText,
+                                onIcon: const Icon(
+                                  Icons.radio_button_checked_outlined,
+                                  color: Color(0xFF4672FF),
                                   size: 40,
                                 ),
-                                offIcon: Icon(
-                                  Icons.check_box_outline_blank,
-                                  color: AppTheme.of(context).primaryText,
+                                offIcon: const Icon(
+                                  Icons.radio_button_off_outlined,
+                                  color: Color(0xFF4672FF),
                                   size: 40,
                                 ),
                               ),
+                              const Padding(padding: EdgeInsets.all(5)),
                               Container(
-                                width: MediaQuery.of(context).size.width * 0.8,
+                                width: MediaQuery.of(context).size.width * 0.76,
                                 height: 165,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: Image.asset(
-                                      'assets/images/mesgbluegradient.jpeg',
-                                    ).image,
-                                  ),
+                                  // image: DecorationImage(
+                                  //   fit: BoxFit.cover,
+                                  //   image: Image.asset(
+                                  //     'assets/images/mesgbluegradient.jpeg',
+                                  //   ).image,
+                                  // ),
                                   boxShadow: const [
                                     BoxShadow(
                                       blurRadius: 5,
                                       color: Color(0x2B202529),
                                       offset: Offset(0, 3),
+                                      spreadRadius: 5,
                                     )
                                   ],
                                   borderRadius: BorderRadius.circular(16),
@@ -674,7 +698,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                                         .title2
                                                         .override(
                                                           fontFamily: 'Outfit',
-                                                          color: Colors.white,
+                                                          color: Colors.black,
                                                           fontSize: 22,
                                                           fontWeight:
                                                               FontWeight.w600,
@@ -696,7 +720,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                                           .override(
                                                             fontFamily:
                                                                 'Outfit',
-                                                            color: Colors.white,
+                                                            color: Colors.black,
                                                             fontSize: 16,
                                                             fontWeight:
                                                                 FontWeight.bold,
@@ -728,7 +752,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                                           .override(
                                                             fontFamily:
                                                                 'Outfit',
-                                                            color: Colors.white,
+                                                            color: Colors.black,
                                                             fontSize: 15,
                                                             fontWeight:
                                                                 FontWeight
