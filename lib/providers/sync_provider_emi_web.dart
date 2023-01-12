@@ -2206,7 +2206,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   "Content-Type": "application/json",
                   'Authorization': 'Bearer $tokenGlobal',
                 });
-                final responsePutUsuario = await post(actualizarUsuarioUri, 
+                final responsePutUsuario = await put(actualizarUsuarioUri, 
                 headers: headers,
                 body: jsonEncode({
                   "idUsuarioRegistra": emprendedor.emprendimiento.target!.usuario.target!.idEmiWeb,
@@ -2264,7 +2264,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 "Content-Type": "application/json",
                 'Authorization': 'Bearer $tokenGlobal',
               });
-              final responsePutUsuario = await post(actualizarUsuarioUri, 
+              final responsePutUsuario = await put(actualizarUsuarioUri, 
               headers: headers,
               body: jsonEncode({
                 "idUsuarioRegistra": emprendedor.emprendimiento.target!.usuario.target!.idEmiWeb,

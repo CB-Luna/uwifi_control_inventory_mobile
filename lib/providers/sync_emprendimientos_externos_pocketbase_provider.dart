@@ -794,7 +794,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
           "Content-Type": "application/json",
           'Authorization': 'Bearer $tokenGlobal',
         });
-        final responsePutUsuario = await post(actualizarUsuarioUri, 
+        final responsePutUsuario = await put(actualizarUsuarioUri, 
         headers: headers,
         body: jsonEncode({
           "idUsuarioRegistra": usuario.idEmiWeb,
