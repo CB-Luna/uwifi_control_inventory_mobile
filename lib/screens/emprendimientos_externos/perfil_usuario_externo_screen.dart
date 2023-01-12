@@ -594,7 +594,6 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                         !emprendimientoTemp.proyecto.selected;
                                     print(
                                         "****Selected de ${emprendimientoTemp.proyecto.emprendimiento} es ${emprendimientoTemp.proyecto.selected}");
-
                                     if (emprendimientoTemp.proyecto.selected) {
                                       //Borrar los otros selected de los items
                                       // for (var element in widget
@@ -636,6 +635,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                   size: 40,
                                 ),
                               ),
+                              const Padding(padding: EdgeInsets.all(5)),
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.76,
                                 height: 165,
