@@ -11,10 +11,14 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 class DescargaProyectosExternosPocketbaseScreen extends StatefulWidget {
   final Usuarios usuario;
   final String idEmprendimiento;
+  final String tokenGlobal;
+  final String idEmprendimientoEmiWeb;
   const DescargaProyectosExternosPocketbaseScreen({
     Key? key, 
     required this.idEmprendimiento, 
-    required this.usuario,
+    required this.usuario, 
+    required this.tokenGlobal, 
+    required this.idEmprendimientoEmiWeb,
     }) : super(key: key);
 
   @override
@@ -31,7 +35,7 @@ class _DescargaProyectosExternosPocketbaseScreenState extends State<DescargaProy
         context.read<SyncEmpExternosPocketbaseProvider>().procesoCargando(true);
         context.read<SyncEmpExternosPocketbaseProvider>().procesoTerminado(false);
         context.read<SyncEmpExternosPocketbaseProvider>().procesoExitoso(false);
-        context.read<SyncEmpExternosPocketbaseProvider>().getProyectosExternosPocketbase(widget.idEmprendimiento, widget.usuario);
+        context.read<SyncEmpExternosPocketbaseProvider>().getProyectosExternosPocketbase(widget.idEmprendimiento, widget.usuario, widget.tokenGlobal, widget.idEmprendimientoEmiWeb);
     });
   }
 
