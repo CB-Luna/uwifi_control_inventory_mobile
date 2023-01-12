@@ -482,18 +482,6 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                         );
                       },
                     );
-
-                    // Va en el boton de aceptar.
-                    //  await Navigator.push(
-                    //    context,
-                    //    MaterialPageRoute(
-                    //      builder: (context) =>
-                    //         DescargaProyectosExternosEmiWebScreen(
-                    //   idEmprendimiento: emprendimientoSelected,
-                    //        usuario: usuarioProvider.usuarioCurrent!,
-                    //      ),
-                    //    ),
-                    //  );
                   } else {
                     await showDialog(
                       context: context,
@@ -582,17 +570,28 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                         !emprendimientoTemp.proyecto.selected;
                                     print(
                                         "****Selected de ${emprendimientoTemp.proyecto.emprendimiento} es ${emprendimientoTemp.proyecto.selected}");
+
                                     if (emprendimientoTemp.proyecto.selected) {
                                       //Borrar los otros selected de los items
-                                      // for (var element in widget.usuarioProyectosTemporal.emprendimientosTemp) {
-                                      //   if (element.proyecto.idProyecto.toString() != emprendimientoTemp.proyecto.idProyecto.toString()) {
-                                      //     emprendimientoTemp.proyecto.selected = false;
+                                      // for (var element in widget
+                                      //     .usuarioProyectosTemporal
+                                      //     .emprendimientosTemp) {
+                                      //   if (element.proyecto.idProyecto
+                                      //           .toString() !=
+                                      //       emprendimientoTemp
+                                      //           .proyecto.idProyecto
+                                      //           .toString()) {
+                                      //     emprendimientoTemp.proyecto.selected =
+                                      //         false;
                                       //   }
                                       // }
+                                      // Hasta aca va el cerrado
+                                      print("Prendido");
                                       emprendimientoSelected =
                                           emprendimientoTemp.proyecto.idProyecto
                                               .toString();
                                     } else {
+                                      print("Apagado");
                                       if (emprendimientoSelected ==
                                           emprendimientoTemp.proyecto.idProyecto
                                               .toString()) {
@@ -602,33 +601,34 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                   });
                                 },
                                 value: emprendimientoTemp.proyecto.selected,
-                                onIcon: Icon(
-                                  Icons.check_box,
-                                  color: AppTheme.of(context).primaryText,
+                                onIcon: const Icon(
+                                  Icons.radio_button_checked_outlined,
+                                  color: Color(0xFF4672FF),
                                   size: 40,
                                 ),
-                                offIcon: Icon(
-                                  Icons.check_box_outline_blank,
-                                  color: AppTheme.of(context).primaryText,
+                                offIcon: const Icon(
+                                  Icons.radio_button_off_outlined,
+                                  color: Color(0xFF4672FF),
                                   size: 40,
                                 ),
                               ),
                               Container(
-                                width: MediaQuery.of(context).size.width * 0.8,
+                                width: MediaQuery.of(context).size.width * 0.76,
                                 height: 165,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: Image.asset(
-                                      'assets/images/mesgbluegradient.jpeg',
-                                    ).image,
-                                  ),
+                                  // image: DecorationImage(
+                                  //   fit: BoxFit.cover,
+                                  //   image: Image.asset(
+                                  //     'assets/images/mesgbluegradient.jpeg',
+                                  //   ).image,
+                                  // ),
                                   boxShadow: const [
                                     BoxShadow(
                                       blurRadius: 5,
                                       color: Color(0x2B202529),
                                       offset: Offset(0, 3),
+                                      spreadRadius: 10,
                                     )
                                   ],
                                   borderRadius: BorderRadius.circular(16),
@@ -674,7 +674,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                                         .title2
                                                         .override(
                                                           fontFamily: 'Outfit',
-                                                          color: Colors.white,
+                                                          color: Colors.black,
                                                           fontSize: 22,
                                                           fontWeight:
                                                               FontWeight.w600,
@@ -696,7 +696,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                                           .override(
                                                             fontFamily:
                                                                 'Outfit',
-                                                            color: Colors.white,
+                                                            color: Colors.black,
                                                             fontSize: 16,
                                                             fontWeight:
                                                                 FontWeight.bold,
@@ -728,7 +728,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                                           .override(
                                                             fontFamily:
                                                                 'Outfit',
-                                                            color: Colors.white,
+                                                            color: Colors.black,
                                                             fontSize: 15,
                                                             fontWeight:
                                                                 FontWeight
