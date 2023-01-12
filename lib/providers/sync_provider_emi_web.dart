@@ -2199,12 +2199,36 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 //Se recupera el id Emi Web del emprendimiento
                 final responseGetEmprendimientoParse = getEmprendimientoEmiWebFromMap(
                 const Utf8Decoder().convert(responseGetEmprendimiento.bodyBytes));
-                emprendedor.emprendimiento.target!.idEmiWeb = responseGetEmprendimientoParse.payload!.id.toString();
-                dataBase.emprendimientosBox.put(emprendedor.emprendimiento.target!);
-                //Se marca como realizada en EmiWeb la instrucción en Bitacora
-                bitacora.executeEmiWeb = true;
-                dataBase.bitacoraBox.put(bitacora);
-                return true;
+                //Se agrega el API adicional que indica quién es el Usuario propietario del proyecto
+                final actualizarUsuarioUri =
+                  Uri.parse('$baseUrlEmiWebServices/proyectos/status?idProyecto=${responseGetEmprendimientoParse.payload!.id}');
+                final headers = ({
+                  "Content-Type": "application/json",
+                  'Authorization': 'Bearer $tokenGlobal',
+                });
+                final responsePutUsuario = await post(actualizarUsuarioUri, 
+                headers: headers,
+                body: jsonEncode({
+                  "idUsuarioRegistra": emprendedor.emprendimiento.target!.usuario.target!.idEmiWeb,
+                  "usuarioRegistra": "${emprendedor.emprendimiento
+                  .target!.usuario.target!.nombre} ${emprendedor.emprendimiento
+                  .target!.usuario.target!.apellidoP} ${emprendedor.emprendimiento
+                  .target!.usuario.target!.apellidoM}",
+                  "switchMovil": 0,
+                  "idPromotor": emprendedor.emprendimiento.target!.usuario.target!.idEmiWeb,
+                }));
+                switch(responsePutUsuario.statusCode)
+                {
+                  case 200:
+                    emprendedor.emprendimiento.target!.idEmiWeb = responseGetEmprendimientoParse.payload!.id.toString();
+                    dataBase.emprendimientosBox.put(emprendedor.emprendimiento.target!);
+                    //Se marca como realizada en EmiWeb la instrucción en Bitacora
+                    bitacora.executeEmiWeb = true;
+                    dataBase.bitacoraBox.put(bitacora);
+                    return true;
+                  default:
+                    return false;
+                }
               default:
                 //No se obtiene con éxito el emprendimiento
                 return false;
@@ -2233,12 +2257,36 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               //Se recupera el id Emi Web del emprendimiento
               final responseGetEmprendimientoParse = getEmprendimientoEmiWebFromMap(
               const Utf8Decoder().convert(responseGetEmprendimiento.bodyBytes));
-              emprendedor.emprendimiento.target!.idEmiWeb = responseGetEmprendimientoParse.payload!.id.toString();
-              dataBase.emprendimientosBox.put(emprendedor.emprendimiento.target!);
-              //Se marca como realizada en EmiWeb la instrucción en Bitacora
-              bitacora.executeEmiWeb = true;
-              dataBase.bitacoraBox.put(bitacora);
-              return true;
+              //Se agrega el API adicional que indica quién es el Usuario propietario del proyecto
+              final actualizarUsuarioUri =
+                Uri.parse('$baseUrlEmiWebServices/proyectos/status?idProyecto=${responseGetEmprendimientoParse.payload!.id}');
+              final headers = ({
+                "Content-Type": "application/json",
+                'Authorization': 'Bearer $tokenGlobal',
+              });
+              final responsePutUsuario = await post(actualizarUsuarioUri, 
+              headers: headers,
+              body: jsonEncode({
+                "idUsuarioRegistra": emprendedor.emprendimiento.target!.usuario.target!.idEmiWeb,
+                "usuarioRegistra": "${emprendedor.emprendimiento
+                .target!.usuario.target!.nombre} ${emprendedor.emprendimiento
+                .target!.usuario.target!.apellidoP} ${emprendedor.emprendimiento
+                .target!.usuario.target!.apellidoM}",
+                "switchMovil": 0,
+                "idPromotor": emprendedor.emprendimiento.target!.usuario.target!.idEmiWeb,
+              }));
+              switch(responsePutUsuario.statusCode)
+              {
+                case 200:
+                  emprendedor.emprendimiento.target!.idEmiWeb = responseGetEmprendimientoParse.payload!.id.toString();
+                  dataBase.emprendimientosBox.put(emprendedor.emprendimiento.target!);
+                  //Se marca como realizada en EmiWeb la instrucción en Bitacora
+                  bitacora.executeEmiWeb = true;
+                  dataBase.bitacoraBox.put(bitacora);
+                  return true;
+                default:
+                  return false;
+              }
             default:
               //No se obtiene con éxito el emprendimiento
               return false;
