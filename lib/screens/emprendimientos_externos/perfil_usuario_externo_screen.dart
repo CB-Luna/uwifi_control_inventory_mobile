@@ -590,36 +590,28 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                               ToggleIcon(
                                 onPressed: () {
                                   setState(() {
-                                    emprendimientoTemp.proyecto.selected =
-                                        !emprendimientoTemp.proyecto.selected;
+                                    // emprendimientoTemp.proyecto.selected =
+                                    //     !emprendimientoTemp.proyecto.selected;
                                     print(
                                         "****Selected de ${emprendimientoTemp.proyecto.emprendimiento} es ${emprendimientoTemp.proyecto.selected}");
+                                    // Cuando se selecciona por segunda vez el mismo item entonces se mandaria una cadena vacia. EmprendimientoSelected
                                     if (emprendimientoTemp.proyecto.selected) {
-                                      //Borrar los otros selected de los items
-                                      // for (var element in widget
-                                      //     .usuarioProyectosTemporal
-                                      //     .emprendimientosTemp) {
-                                      //   if (element.proyecto.idProyecto
-                                      //           .toString() !=
-                                      //       emprendimientoTemp
-                                      //           .proyecto.idProyecto
-                                      //           .toString()) {
-                                      //     emprendimientoTemp.proyecto.selected =
-                                      //         false;
-                                      //   }
-                                      // }
-                                      // Hasta aca va el cerrado
-                                      print("Prendido");
+                                      emprendimientoSelected = "";
+                                      // Cambia el estado.
+                                      emprendimientoTemp.proyecto.selected =
+                                          !emprendimientoTemp.proyecto.selected;
+                                    } else {
+                                      // Cuando se selecciona por primera vez el item
+                                      for (var element in widget
+                                          .usuarioProyectosTemporal
+                                          .emprendimientosTemp) {
+                                        element.proyecto.selected = false;
+                                      }
                                       emprendimientoSelected =
                                           emprendimientoTemp.proyecto.idProyecto
                                               .toString();
-                                    } else {
-                                      print("Apagado");
-                                      if (emprendimientoSelected ==
-                                          emprendimientoTemp.proyecto.idProyecto
-                                              .toString()) {
-                                        emprendimientoSelected = "";
-                                      }
+                                      emprendimientoTemp.proyecto.selected =
+                                          !emprendimientoTemp.proyecto.selected;
                                     }
                                   });
                                 },
