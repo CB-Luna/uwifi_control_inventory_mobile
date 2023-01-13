@@ -2951,7 +2951,7 @@ void deleteEmprendimientoLocal(int idEmprendimiento) {
           //Se recorre toda la lista de emprendimientos para hacer el filtrado
           for (var elementEmprendimientoEmp in listEmpExternosEmiWebTemp.payload!.toList()) {
             //Se valida que el emprendimiento tenga promotor asociado y el switch móvil con la condición en False
-            if (elementEmprendimientoEmp.proyecto.promotor != null && elementEmprendimientoEmp.proyecto.switchMovil == false) {
+            if (elementEmprendimientoEmp.proyecto.promotor != null && elementEmprendimientoEmp.proyecto.switchMovil == true) {
               final emprendimientoLocal = dataBase.emprendimientosBox.query(Emprendimientos_.idEmiWeb.equals(elementEmprendimientoEmp.proyecto.idProyecto.toString())).build().findUnique();
               if (emprendimientoLocal == null) {
                 //Se puede recuperar emprendimiento externo
