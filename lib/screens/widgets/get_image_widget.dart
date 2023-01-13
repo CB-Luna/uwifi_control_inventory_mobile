@@ -175,7 +175,7 @@ Widget getWidgetContainImage(String? image) {
     return Container(
       color: Colors.transparent,
       child: const Image(
-        image: AssetImage("assets/images/default_image_placeholder.jpeg"),
+        image: AssetImage("assets/images/animation_500_l3ur8tqa.gif"),
         fit: BoxFit.contain,
       ),
     );
