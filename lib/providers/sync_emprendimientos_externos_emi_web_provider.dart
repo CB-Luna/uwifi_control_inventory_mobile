@@ -942,7 +942,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                       "proxima_visita": basicJornadas.payload!.jornada4!.fechaRevision.toUtc().toString(),
                       "id_emprendimiento_fk": idEmprendimientoPocketbase,
                       "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
-                      "completada": true,
+                      "completada": DateTime.now().difference(basicJornadas.payload!.jornada4!.fechaRegistro).inHours > 24 ? true : false,
                       "id_emi_web": basicJornadas.payload!.jornada4!.idJornada4.toString(),
                     });
 
@@ -999,7 +999,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                   final recordJ4 = await client.records.update('jornadas', recordValidateJornada.first.id, body: {
                     "proxima_visita": basicJornadas.payload!.jornada4!.fechaRevision.toUtc().toString(),
                     "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
-                    "completada": true,
+                    "completada": DateTime.now().difference(basicJornadas.payload!.jornada4!.fechaRegistro).inHours > 24 ? true : false,
                   });
 
                   if (recordJ4.id.isNotEmpty) {

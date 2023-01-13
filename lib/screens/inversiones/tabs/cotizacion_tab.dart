@@ -3,6 +3,7 @@ import 'package:bizpro_app/providers/sync_provider_emi_web.dart';
 import 'package:bizpro_app/screens/inversiones/detalle_cotizacion.dart';
 import 'package:bizpro_app/screens/inversiones/editar_producto_inversion.dart';
 import 'package:bizpro_app/screens/productos/productos_emprendedor_screen.dart';
+import 'package:bizpro_app/screens/screens.dart';
 import 'package:bizpro_app/screens/sync/cotizaciones_emi_web_screen.dart';
 import 'package:bizpro_app/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -762,28 +763,48 @@ class _CotizacionTabState extends State<CotizacionTab>
                                               "Necesitas conexión a internet para aceptar la cotización."),
                                         ));
                                       } else {
-                                        if (await cotizacionProvider
+                                        switch (await cotizacionProvider
                                             .acceptCotizacion(
                                                 widget.inversion,
                                                 widget.inversionesXprodCotizados
-                                                    .id)) {
-                                          // ignore: use_build_context_synchronously
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  CotizacionAceptada(
-                                                idEmprendimiento:
-                                                    widget.emprendimiento.id,
+                                                    .id, 
+                                                widget.emprendimiento.id)) {
+                                          case 0:
+                                            snackbarKey.currentState
+                                                ?.showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "No se pudo completar el proceso de aceptación, intente más tarde."),
+                                            ));
+                                            break;
+                                          case 1:
+                                            // ignore: use_build_context_synchronously
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    CotizacionAceptada(
+                                                  idEmprendimiento:
+                                                      widget.emprendimiento.id,
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                        } else {
-                                          snackbarKey.currentState
-                                              ?.showSnackBar(const SnackBar(
-                                            content: Text(
-                                                "No se pudo completar el proceso de aceptación, intente más tarde."),
-                                          ));
+                                            );
+                                          break;
+                                          case 2:
+                                            snackbarKey.currentState?.showSnackBar(SnackBar(
+                                                content: Text("El Emprendimiento ${widget.emprendimiento.nombre} con id Local ${widget.emprendimiento.id} ya no puede ser editado en este dispositivo."),
+                                              ));
+                                            // ignore: use_build_context_synchronously
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const EmprendimientosScreen(),
+                                              ),
+                                            );
+                                            cotizacionProvider.deleteEmprendimientoLocal(widget.emprendimiento.id);
+                                            break;
+                                          default:
+                                            break;
                                         }
                                       }
                                     } else {
@@ -837,28 +858,48 @@ class _CotizacionTabState extends State<CotizacionTab>
                                               "Necesitas conexión a internet para cancelar la cotización."),
                                         ));
                                       } else {
-                                        if (await cotizacionProvider
+                                        switch (await cotizacionProvider
                                             .cancelCotizacion(
                                                 widget.inversion,
                                                 widget.inversionesXprodCotizados
-                                                    .id)) {
-                                          // ignore: use_build_context_synchronously
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  CotizacionCancelada(
-                                                idEmprendimiento:
-                                                    widget.emprendimiento.id,
+                                                    .id, 
+                                                widget.emprendimiento.id)) {
+                                          case 0:
+                                            snackbarKey.currentState
+                                                ?.showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "No se pudo completar el proceso de cancelación, intente más tarde."),
+                                            ));
+                                            break;
+                                          case 1:
+                                            // ignore: use_build_context_synchronously
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    CotizacionCancelada(
+                                                  idEmprendimiento:
+                                                      widget.emprendimiento.id,
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                        } else {
-                                          snackbarKey.currentState
-                                              ?.showSnackBar(const SnackBar(
-                                            content: Text(
-                                                "No se pudo completar el proceso de cancelación, intente más tarde."),
-                                          ));
+                                            );
+                                          break;
+                                          case 2:
+                                            snackbarKey.currentState?.showSnackBar(SnackBar(
+                                                content: Text("El Emprendimiento ${widget.emprendimiento.nombre} con id Local ${widget.emprendimiento.id} ya no puede ser editado en este dispositivo."),
+                                              ));
+                                            // ignore: use_build_context_synchronously
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const EmprendimientosScreen(),
+                                              ),
+                                            );
+                                            cotizacionProvider.deleteEmprendimientoLocal(widget.emprendimiento.id);
+                                            break;
+                                          default:
+                                            break;
                                         }
                                       }
                                     } else {
@@ -923,30 +964,48 @@ class _CotizacionTabState extends State<CotizacionTab>
                                               "Necesitas conexión a internet para buscar Otra Cotización."),
                                         ));
                                       } else {
-                                        if (await cotizacionProvider
+                                        switch (await cotizacionProvider
                                             .buscarOtraCotizacion(
                                                 widget.inversion,
                                                 widget.inversionesXprodCotizados
-                                                    .id,
-                                                widget.
-                                                emprendimiento.id)) {
-                                          // ignore: use_build_context_synchronously
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  CotizacionSolicitarOtra(
-                                                idEmprendimiento:
-                                                    widget.emprendimiento.id,
+                                                    .id, 
+                                                widget.emprendimiento.id)) {
+                                          case 0:
+                                            snackbarKey.currentState
+                                                ?.showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "No se pudo completar el proceso de búsqueda de otra cotización, intente más tarde."),
+                                            ));
+                                            break;
+                                          case 1:
+                                            // ignore: use_build_context_synchronously
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    CotizacionSolicitarOtra(
+                                                  idEmprendimiento:
+                                                      widget.emprendimiento.id,
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                        } else {
-                                          snackbarKey.currentState
-                                              ?.showSnackBar(const SnackBar(
-                                            content: Text(
-                                                "No se pudo completar el proceso de búsqueda de otra cotización, intente más tarde."),
-                                          ));
+                                            );
+                                          break;
+                                          case 2:
+                                            snackbarKey.currentState?.showSnackBar(SnackBar(
+                                                content: Text("El Emprendimiento ${widget.emprendimiento.nombre} con id Local ${widget.emprendimiento.id} ya no puede ser editado en este dispositivo."),
+                                              ));
+                                            // ignore: use_build_context_synchronously
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const EmprendimientosScreen(),
+                                              ),
+                                            );
+                                            cotizacionProvider.deleteEmprendimientoLocal(widget.emprendimiento.id);
+                                            break;
+                                          default:
+                                            break;
                                         }
                                       }
                                     } else {

@@ -801,7 +801,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
           "usuarioRegistra": "${usuario.nombre} ${
             usuario.apellidoP} ${
             usuario.apellidoM}",
-          "switchMovil": 0,
+          "switchMovil": 1,
           "idPromotor": usuario.idEmiWeb,
         }));
         switch(responsePutUsuario.statusCode)
