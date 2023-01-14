@@ -340,6 +340,12 @@ class CotizacionController extends ChangeNotifier {
 
   void deleteEmprendimientoLocal(int idEmprendimiento) async {
   if (idEmprendimiento != -1) {
+    final listIntruccionesEmp = dataBase.bitacoraBox.getAll().toList();
+    for (var element in listIntruccionesEmp) {
+      if (element.idEmprendimiento == idEmprendimiento) {
+        dataBase.bitacoraBox.remove(element.id);
+      }
+    }
     //Se elimina la imagen del emprendimiento
     final idImagenEmprendimiento = dataBase.imagenesBox.query(Imagenes_.emprendimiento.equals(idEmprendimiento)).build().findUnique()?.id;
     if (idImagenEmprendimiento != null) {

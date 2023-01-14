@@ -326,6 +326,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(jornadaToSync != null){
                   //Se encontró a la jornada y se puede agregar
                   final nombreEmprendimiento = jornadaToSync.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddJornada1 = await syncAddJornada1(jornadaToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncAddJornada1) {
                     case 0:
@@ -340,10 +341,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -371,6 +373,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(jornadaToSync != null){
                   //Se encontró a la jornada y se puede agregar
                   final nombreEmprendimiento = jornadaToSync.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddJornada2 = await syncAddJornada2(jornadaToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncAddJornada2) {
                     case 0:
@@ -385,10 +388,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -416,6 +420,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(imagenToSync != null){
                   //Se encontró a la imagen y se puede agregar
                   final nombreEmprendimiento = imagenToSync.tarea.target!.jornada.target?.emprendimiento.target?.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddImagenJornada2 = await syncAddImagenJornada2(imagenToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncAddImagenJornada2) {
                     case 0:
@@ -430,10 +435,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -461,6 +467,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(jornadaToSync != null){
                   //Se encontró a la jornada y se puede agregar
                   final nombreEmprendimiento = jornadaToSync.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddJornada3 = await syncAddJornada3(jornadaToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncAddJornada3) {
                     case 0:
@@ -475,10 +482,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -506,6 +514,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(imagenToSync != null){
                   //Se encontró a la imagen y se puede agregar
                   final nombreEmprendimiento = imagenToSync.tarea.target!.jornada.target?.emprendimiento.target?.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddImagenJornada3 = await syncAddImagenJornada3(imagenToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncAddImagenJornada3) {
                     case 0:
@@ -520,10 +529,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -551,6 +561,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(prodSolicitadoToSync != null){
                   //Se encontró al producto de la inversión J3 y se puede agregar
                   final nombreEmprendimiento = prodSolicitadoToSync.inversion.target!.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddProductoInversionJ3 = await syncAddProductoInversionJ3(prodSolicitadoToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncAddProductoInversionJ3) {
                     case 0:
@@ -565,10 +576,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -596,6 +608,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(prodSolicitadoToSync != null){
                   //Se encontró al producto de la inversión J3 y se puede actualizar
                   final nombreEmprendimiento = prodSolicitadoToSync.inversion.target!.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateProductoInversionJ3 = await syncUpdateProductoInversionJ3(prodSolicitadoToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncUpdateProductoInversionJ3) {
                     case 0:
@@ -610,10 +623,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -641,6 +655,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(jornadaToSync != null){
                   //Se encontró a la jornada y se puede agregar
                   final nombreEmprendimiento = jornadaToSync.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddJornada4 = await syncAddJornada4(jornadaToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncAddJornada4) {
                     case 0:
@@ -655,10 +670,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -686,6 +702,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(imagenToSync != null){
                   //Se encontró a la imagen y se puede agregar
                   final nombreEmprendimiento = imagenToSync.tarea.target!.jornada.target?.emprendimiento.target?.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddImagenJornada4 = await syncAddImagenJornada4(imagenToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncAddImagenJornada4) {
                     case 0:
@@ -700,10 +717,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -731,6 +749,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(consultoriaToSync != null){
                   //Se encontró a la consultoría y se puede agregar
                   final nombreEmprendimiento = consultoriaToSync.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddConsultoria = await syncAddConsultoria(consultoriaToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncAddConsultoria) {
                     case 0:
@@ -745,10 +764,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -776,6 +796,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(productoEmpToSync != null){
                   //Se encontró el producto Emp y se puede agregar
                   final nombreEmprendimiento = productoEmpToSync.emprendimientos.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddProductoEmp = await syncAddProductoEmprendedor(productoEmpToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncAddProductoEmp) {
                     case 0:
@@ -790,10 +811,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -821,6 +843,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(imagenToSync != null){
                   //Se encontró a la imagen y se puede agregar
                   final nombreEmprendimiento = imagenToSync.productosEmp.target?.emprendimientos.target?.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddImagenProdEmprendedor = await syncAddImagenProductoEmprendedor(imagenToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncAddImagenProdEmprendedor) {
                     case 0:
@@ -835,10 +858,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -866,6 +890,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(ventaToSync != null){
                   //Se encontró la venta y se puede agregar
                   final nombreEmprendimiento = ventaToSync.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddVenta = await syncAddVenta(ventaToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncAddVenta) {
                     case 0:
@@ -880,10 +905,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -910,6 +936,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(prodVendidoToSync != null){
                   //Se encontró el producto Vendido y se puede agregar
                   final nombreEmprendimiento = prodVendidoToSync.venta.target?.emprendimiento.target?.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddProductoVendido = await syncAddProductoVendido(prodVendidoToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncAddProductoVendido) {
                     case 0:
@@ -924,10 +951,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -954,6 +982,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(prodVendidoToSync != null){
                   //Se encontró el producto Vendido y se puede agregar
                   final nombreEmprendimiento = prodVendidoToSync.venta.target?.emprendimiento.target?.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddSingleProductoVendido = await syncAddSingleProductoVendido(prodVendidoToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncAddSingleProductoVendido) {
                     case 0:
@@ -968,10 +997,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -999,6 +1029,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(inversionToSync != null){
                   //Se encontró la inversión y se puede agregar
                   final nombreEmprendimiento = inversionToSync.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddInversion = await syncAddInversion(inversionToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncAddInversion) {
                     case 0:
@@ -1013,10 +1044,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -1104,6 +1136,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(emprendimientoToSync != null){
                   //Se encontró fase del emprendimiento y se puede actualizar
                   final nombreEmprendimiento = emprendimientoToSync.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateFaseEmprendimiento = await syncUpdateFaseEmprendimiento(emprendimientoToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncUpdateFaseEmprendimiento) {
                     case 0:
@@ -1118,10 +1151,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -1149,6 +1183,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(emprendedorToSync != null){
                   //Se encontró el emprendedor y se puede actualizar
                   final nombreEmprendimiento = emprendedorToSync.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateEmprendedor = await syncUpdateEmprendedor(emprendedorToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncUpdateEmprendedor) {
                     case 0:
@@ -1163,10 +1198,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -1194,6 +1230,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(emprendimientoToSync != null){
                   //Se encontró al emprendimiento y se puede actualizar
                   final nombreEmprendimiento = emprendimientoToSync.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateEmprendimiento = await syncUpdateEmprendimiento(emprendimientoToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncUpdateEmprendimiento) {
                     case 0:
@@ -1208,10 +1245,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -1239,6 +1277,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(jornadaToSync != null){
                   //Se encontró a la jornada y se puede actualizar
                   final nombreEmprendimiento = jornadaToSync.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateJornada1 = await syncUpdateJornada1(jornadaToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncUpdateJornada1) {
                     case 0:
@@ -1253,10 +1292,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -1284,6 +1324,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(jornadaToSync != null){
                   //Se encontró a la jornada y se puede actualizar
                   final nombreEmprendimiento = jornadaToSync.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateJornada2 = await syncUpdateJornada2(jornadaToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncUpdateJornada2) {
                     case 0:
@@ -1298,10 +1339,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -1329,6 +1371,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(imagenToSync != null){
                   //Se encontró a la imagen y se puede agregar
                   final nombreEmprendimiento = imagenToSync.tarea.target!.jornada.target!.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateImagenJornada2 = await syncUpdateImagenJornada2(imagenToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncUpdateImagenJornada2) {
                     case 0:
@@ -1343,10 +1386,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -1374,6 +1418,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(jornadaToSync != null){
                   //Se encontró a la jornada y se puede actualizar
                   final nombreEmprendimiento = jornadaToSync.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateJornada3 = await syncUpdateJornada3(jornadaToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncUpdateJornada3) {
                     case 0:
@@ -1388,10 +1433,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -1419,6 +1465,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(imagenToSync != null){
                   //Se encontró a la imagen y se puede agregar
                   final nombreEmprendimiento = imagenToSync.tarea.target!.jornada.target!.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateImagenJornada3 = await syncUpdateImagenJornada3(imagenToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncUpdateImagenJornada3) {
                     case 0:
@@ -1433,10 +1480,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -1464,6 +1512,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(jornadaToSync != null){
                   //Se encontró a la jornada y se puede actualizar
                   final nombreEmprendimiento = jornadaToSync.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateJornada4 = await syncUpdateJornada4(jornadaToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncUpdateJornada4) {
                     case 0:
@@ -1478,10 +1527,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -1509,6 +1559,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(imagenToSync != null){
                   //Se encontró a la imagen y se puede actualizar
                   final nombreEmprendimiento = imagenToSync.tarea.target!.jornada.target!.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateImagenJornada4 = await syncUpdateImagenJornada4(imagenToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncUpdateImagenJornada4) {
                     case 0:
@@ -1523,10 +1574,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -1554,6 +1606,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(inversionToSync != null){
                   //Se encontró la inversión y se puede actualizar su estado
                   final nombreEmprendimiento = inversionToSync.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateEstadoInversion = await syncUpdateEstadoInversion(inversionToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncUpdateEstadoInversion) {
                     case 0:
@@ -1568,10 +1621,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -1599,6 +1653,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(tareaToSync != null){
                   //Se encontró la tarea y se puede agregar a la consultoría
                   final nombreEmprendimiento = tareaToSync.consultoria.target!.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateTareaConsultoria = await syncUpdateTareaConsultoria(tareaToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncUpdateTareaConsultoria) {
                     case 0:
@@ -1613,10 +1668,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -1644,6 +1700,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(productoEmprendedorToSync != null){
                   //Se encontró el producto emprendedor y se puede actualizar
                   final nombreEmprendimiento = productoEmprendedorToSync.emprendimientos.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateProductoEmprendedor = await syncUpdateProductoEmprendedor(productoEmprendedorToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncUpdateProductoEmprendedor) {
                     case 0:
@@ -1658,10 +1715,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -1689,6 +1747,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(imagenToSync != null){
                   //Se encontró a la imagen y se puede actualizar
                   final nombreEmprendimiento = imagenToSync.productosEmp.target?.emprendimientos.target?.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateImagenProdEmprendedor = await syncUpdateImagenProductoEmprendedor(imagenToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncUpdateImagenProdEmprendedor) {
                     case 0:
@@ -1703,10 +1762,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -1734,6 +1794,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(ventaToSync != null){
                   //Se encontró la venta y se puede actualizar
                   final nombreEmprendimiento = ventaToSync.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseUpdateVenta = await syncUpdateVenta(ventaToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseUpdateVenta) {
                     case 0:
@@ -1748,10 +1809,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -1778,6 +1840,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(prodVendidoToSync != null){
                   //Se encontró el producto vendido y se puede actualizar
                   final nombreEmprendimiento = prodVendidoToSync.venta.target!.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateProductoVendido = await syncUpdateProductoVendido(prodVendidoToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncUpdateProductoVendido) {
                     case 0:
@@ -1792,10 +1855,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -1823,6 +1887,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(ventaToSync != null){
                   //Se encontró la venta y se puede actualizar
                   final nombreEmprendimiento = ventaToSync.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncUpdateProductosVendidosVenta = await syncUpdateProductosVendidosVenta(ventaToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncUpdateProductosVendidosVenta) {
                     case 0:
@@ -1837,10 +1902,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -1865,6 +1931,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               print("Entro al caso de syncDeleteImagenJornada Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final nombreEmprendimiento = instruccionesBitacora[i].emprendimiento;
+                final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                 var caseSyncDeleteImagenJornada = await syncDeleteImagenJornada(instruccionesBitacora[i], usuarioActual.idEmiWeb);
                 switch (caseSyncDeleteImagenJornada) {
                   case 0:
@@ -1879,10 +1946,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     banderasExistoSync.add(true);
                     continue;
                   case 2:
+                    banderasExistoSync.add(false);
                     await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                     i = instruccionesBitacora.length;
                     snackbarKey.currentState?.showSnackBar(SnackBar(
-                      content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                      content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                     ));
                     continue;
                   default:
@@ -1897,6 +1965,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               print("Entro al caso de syncDeleteProductoInversionJ3 Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final nombreEmprendimiento = instruccionesBitacora[i].emprendimiento;
+                final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                 var caseSyncDeleteProductoInversionJ3 = await syncDeleteProductoInversionJ3(instruccionesBitacora[i], usuarioActual.idEmiWeb);
                 switch (caseSyncDeleteProductoInversionJ3) {
                   case 0:
@@ -1911,10 +1980,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     banderasExistoSync.add(true);
                     continue;
                   case 2:
+                    banderasExistoSync.add(false);
                     await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                     i = instruccionesBitacora.length;
                     snackbarKey.currentState?.showSnackBar(SnackBar(
-                      content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                      content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                     ));
                     continue;
                   default:
@@ -1929,6 +1999,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               print("Entro al caso de syncDeleteProductoVendido Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final nombreEmprendimiento = instruccionesBitacora[i].emprendimiento;
+                final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                 var caseSyncDeleteProductoVendido = await syncDeleteProductoVendido(instruccionesBitacora[i], usuarioActual.idEmiWeb);
                 switch (caseSyncDeleteProductoVendido) {
                   case 0:
@@ -1943,10 +2014,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     banderasExistoSync.add(true);
                     continue;
                   case 2:
+                    banderasExistoSync.add(false);
                     await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                     i = instruccionesBitacora.length;
                     snackbarKey.currentState?.showSnackBar(SnackBar(
-                      content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                      content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                     ));
                     continue;
                   default:
@@ -1964,6 +2036,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(emprendimientoToSync != null){
                   //Se encontró el emprendimiento y se puede archivar
                   final nombreEmprendimiento = emprendimientoToSync.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncArchivarEmprendimiento = await syncArchivarEmprendimiento(emprendimientoToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncArchivarEmprendimiento) {
                     case 0:
@@ -1978,10 +2051,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -2009,6 +2083,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(emprendimientoToSync != null){
                   //Se encontró el emprendimiento y se puede desarchivar
                   final nombreEmprendimiento = emprendimientoToSync.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncDesarchivarEmprendimiento = await syncDesarchivarEmprendimiento(emprendimientoToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncDesarchivarEmprendimiento) {
                     case 0:
@@ -2023,10 +2098,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -2054,6 +2130,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(consultoriaToSync != null){
                   //Se encontró la consultoría y se puede archivar
                   final nombreEmprendimiento = consultoriaToSync.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncArchivarConsultoria = await syncArchivarConsultoria(consultoriaToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncArchivarConsultoria) {
                     case 0:
@@ -2068,10 +2145,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -2099,6 +2177,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(consultoriaToSync != null){
                   //Se encontró la consultoría y se puede desarchivar
                   final nombreEmprendimiento = consultoriaToSync.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncDesarchivarConsultoria = await syncDesarchivarConsultoria(consultoriaToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncDesarchivarConsultoria) {
                     case 0:
@@ -2113,10 +2192,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -2144,6 +2224,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(inversionXproductoCotizadoToSync != null){
                   //Se encontró el inversion X producto Cotizado y se puede agregar
                   final nombreEmprendimiento = inversionXproductoCotizadoToSync.inversion.target!.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAcceptInversionXProductoCotizado = await syncAcceptInversionesXProductosCotizados(inversionXproductoCotizadoToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncAcceptInversionXProductoCotizado) {
                     case 0:
@@ -2158,10 +2239,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -2189,6 +2271,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(productoCotizadoToSync != null){
                   //Se encontró el producto Cotizado y se puede agregar
                   final nombreEmprendimiento = productoCotizadoToSync.inversionXprodCotizados.target!.inversion.target!.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAcceptProductoCotizado = await syncAcceptProdCotizado(productoCotizadoToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncAcceptProductoCotizado) {
                     case 0:
@@ -2203,10 +2286,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -2234,6 +2318,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(inversionToSync != null){
                   //Se encontró la inversión y se puede actualizar
                   final nombreEmprendimiento = inversionToSync.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddImagenesEntregaInversion = await syncAddImagenesEntregaInversion(inversionToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncAddImagenesEntregaInversion) {
                     case 0:
@@ -2248,10 +2333,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -2279,6 +2365,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 if(pagoToSync != null){
                   //Se encontró el pago y se puede agregar
                   final nombreEmprendimiento = pagoToSync.inversion.target!.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje = instruccionesBitacora[i].idEmprendimiento;
                   var caseSyncAddPagoInversion = await syncAddPagoInversion(pagoToSync, instruccionesBitacora[i], usuarioActual.idEmiWeb);
                   switch (caseSyncAddPagoInversion) {
                     case 0:
@@ -2293,10 +2380,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       banderasExistoSync.add(true);
                       continue;
                     case 2:
+                      banderasExistoSync.add(false);
                       await deleteEmprendimientoLocal(instruccionesBitacora[i].idEmprendimiento);
                       i = instruccionesBitacora.length;
                       snackbarKey.currentState?.showSnackBar(SnackBar(
-                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local ${instruccionesBitacora[i].idEmprendimiento} ya no puede ser editado en este dispositivo."),
+                        content: Text("El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
                       ));
                       continue;
                     default:
@@ -7647,6 +7735,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 }
 
 Future<void> deleteEmprendimientoLocal(int idEmprendimiento) async {
+  final listIntruccionesEmp = dataBase.bitacoraBox.getAll().toList();
+  for (var element in listIntruccionesEmp) {
+    if (element.idEmprendimiento == idEmprendimiento) {
+      dataBase.bitacoraBox.remove(element.id);
+    }
+  }
   if (idEmprendimiento != -1) {
     //Se elimina la imagen del emprendimiento
     final idImagenEmprendimiento = dataBase.imagenesBox.query(Imagenes_.emprendimiento.equals(idEmprendimiento)).build().findUnique()?.id;

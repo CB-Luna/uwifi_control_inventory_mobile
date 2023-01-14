@@ -848,6 +848,13 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
 //Función para quitar instrucciones asociadas al Emprendimiento que se eliminará localmente
 
 Future<void> deleteEmprendimientoLocal(int idEmprendimiento) async {
+  final listIntruccionesEmp = dataBase.bitacoraBox.getAll().toList();
+  for (var element in listIntruccionesEmp) {
+    if (element.idEmprendimiento == idEmprendimiento) {
+      dataBase.bitacoraBox.remove(element.id);
+    }
+  }
+  
   if (idEmprendimiento != -1) {
     //Se elimina la imagen del emprendimiento
     final idImagenEmprendimiento = dataBase.imagenesBox.query(Imagenes_.emprendimiento.equals(idEmprendimiento)).build().findUnique()?.id;
