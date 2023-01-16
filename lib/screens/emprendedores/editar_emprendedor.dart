@@ -273,17 +273,18 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                                   Uint8List.fromList(
                                                       fileInByte);
                                               newImagen = Imagenes(
-                                                  imagenes: image!.path,
-                                                  nombre: image!.name,
-                                                  path: image!.path,
-                                                  base64: base64,
-                                                  idEmprendimiento: widget
+                                                imagenes: image!.path,
+                                                nombre: image!.name,
+                                                path: image!.path,
+                                                base64: base64,
+                                                idEmprendimiento: widget
                                                     .emprendedor
                                                     .emprendimiento
-                                                    .target!.id,
-                                                  //imagenPocketbase:
-                                                      //imagenUint8List
-                                                      );
+                                                    .target!
+                                                    .id,
+                                                //imagenPocketbase:
+                                                //imagenUint8List
+                                              );
                                               emprendedorProvider.imagenLocal =
                                                   newImagen;
                                             });
@@ -1074,10 +1075,10 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                                                       .id,
                                                                   newImagen!,
                                                                   widget
-                                                                  .emprendedor
-                                                                  .emprendimiento
-                                                                  .target!
-                                                                  .id);
+                                                                      .emprendedor
+                                                                      .emprendimiento
+                                                                      .target!
+                                                                      .id);
                                                         }
                                                       }
                                                       emprendedorProvider.update(
@@ -1093,8 +1094,11 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                                           comentariosController
                                                               .text,
                                                           idComunidad,
-                                                          widget.emprendedor.emprendimiento.
-                                                          target!.id);
+                                                          widget
+                                                              .emprendedor
+                                                              .emprendimiento
+                                                              .target!
+                                                              .id);
                                                       await Navigator.push(
                                                         context,
                                                         MaterialPageRoute(
@@ -1160,10 +1164,10 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                                                 .id,
                                                             newImagen!,
                                                             widget
-                                                            .emprendedor
-                                                            .emprendimiento
-                                                            .target!
-                                                            .id);
+                                                                .emprendedor
+                                                                .emprendimiento
+                                                                .target!
+                                                                .id);
                                                   }
                                                   await Navigator.push(
                                                     context,

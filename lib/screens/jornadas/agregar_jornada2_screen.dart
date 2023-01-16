@@ -792,18 +792,13 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                                               libraryIO.File file =
                                                   libraryIO.File(
                                                       imagenesTemp[i].path);
-                                              print("-------------------");
-                                              print(file.toString());
+
                                               List<int> fileInByte =
                                                   file.readAsBytesSync();
-                                              print("-------------------");
-
-                                              print(fileInByte.toString());
 
                                               String base64 =
                                                   base64Encode(fileInByte);
-                                              print("-------------------");
-                                              print(base64.toString());
+
                                               var newImagenLocal =
                                                   SaveImagenesLocal(
                                                       nombre:
@@ -818,13 +813,13 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                                             }
                                           });
                                         },
-                                        text: 'Círculo Empresa',
+                                        text: 'Círculo Empresa*',
                                         icon: const Icon(
                                           Icons.add_a_photo,
                                           size: 15,
                                         ),
                                         options: FFButtonOptions(
-                                          width: 140,
+                                          width: 160,
                                           height: 40,
                                           color: AppTheme.of(context)
                                               .secondaryText,
@@ -864,9 +859,6 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                             onPressed: () async {
                               if (jornadaProvider.validateForm(formKey)) {
                                 // comunidadProvider.add();
-                                print(
-                                    "Fecha revision ${jornadaProvider.fechaRevision}");
-                                print("Tarea ${jornadaProvider.tarea}");
                                 jornadaProvider.addJornada2(
                                     widget.emprendimiento.id,
                                     widget.numJornada);

@@ -630,8 +630,6 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                                                 },
                                                               );
                                                               if (booleano) {
-                                                                print(
-                                                                    "Se elimina IMAGEN");
                                                                 for (var element
                                                                     in newAnalisisFinanciero) {
                                                                   if (element
@@ -1057,7 +1055,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                             }
                                           });
                                         },
-                                        text: 'Análisis Financiero',
+                                        text: 'Análisis Financiero*',
                                         icon: const Icon(
                                           Icons.add_a_photo,
                                           size: 15,
@@ -1541,10 +1539,9 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                       if (newAnalisisFinanciero !=
                                           oldAnalisisFinanciero) {
                                         jornadaProvider.updateImagenesJornada(
-                                          widget.jornada.tarea.target!,
-                                          listInstruccionesImagenesTemp,
-                                          widget.emprendimiento.id
-                                        );
+                                            widget.jornada.tarea.target!,
+                                            listInstruccionesImagenesTemp,
+                                            widget.emprendimiento.id);
                                       }
                                       jornadaProvider.updateJornada3(
                                           widget.jornada.id,
@@ -1574,10 +1571,9 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                   if (newAnalisisFinanciero !=
                                       oldAnalisisFinanciero) {
                                     jornadaProvider.updateImagenesJornada(
-                                      widget.jornada.tarea.target!,
-                                      listInstruccionesImagenesTemp,
-                                      widget.emprendimiento.id
-                                    );
+                                        widget.jornada.tarea.target!,
+                                        listInstruccionesImagenesTemp,
+                                        widget.emprendimiento.id);
                                   }
                                   await Navigator.push(
                                     context,

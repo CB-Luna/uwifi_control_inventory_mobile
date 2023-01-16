@@ -58,7 +58,8 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
       dataBase.estadosBox.getAll().forEach((element) {
         listEstados.add(element.nombre);
       });
-      listEstados.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+      listEstados
+          .sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     });
   }
 
@@ -210,16 +211,18 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                             setState(() {
                                               image = pickedFile;
                                               File file = File(image!.path);
-                                              List<int> fileInByte = file.readAsBytesSync();
-                                              String base64 = base64Encode(fileInByte);
+                                              List<int> fileInByte =
+                                                  file.readAsBytesSync();
+                                              String base64 =
+                                                  base64Encode(fileInByte);
                                               var newImagenLocal = Imagenes(
-                                                imagenes: image!.path,
-                                                nombre: image!.name, 
-                                                path: image!.path, 
-                                                base64: base64,
-                                                idEmprendimiento: 0
-                                                );
-                                              emprendedorProvider.imagenLocal = newImagenLocal;
+                                                  imagenes: image!.path,
+                                                  nombre: image!.name,
+                                                  path: image!.path,
+                                                  base64: base64,
+                                                  idEmprendimiento: 0);
+                                              emprendedorProvider.imagenLocal =
+                                                  newImagenLocal;
                                             });
                                           },
                                           child: Container(
@@ -264,8 +267,9 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                               children: [
                                 FormBuilder(
                                   child: Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        5, 0, 5, 10),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            5, 0, 5, 10),
                                     child: FormBuilderTextField(
                                       name: "nombre",
                                       maxLength: 30,
@@ -279,61 +283,65 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         labelText: 'Nombre(s)*',
-                                        labelStyle:
-                                            AppTheme.of(context).title3.override(
-                                                  fontFamily: 'Montserrat',
-                                                  color: const Color(0xFF4672FF),
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
+                                        labelStyle: AppTheme.of(context)
+                                            .title3
+                                            .override(
+                                              fontFamily: 'Montserrat',
+                                              color: const Color(0xFF4672FF),
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                            ),
                                         hintText: 'Ingresa nombre...',
-                                        hintStyle:
-                                            AppTheme.of(context).title3.override(
-                                                  fontFamily: 'Poppins',
-                                                  color: const Color(0xFF4672FF),
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
+                                        hintStyle: AppTheme.of(context)
+                                            .title3
+                                            .override(
+                                              fontFamily: 'Poppins',
+                                              color: const Color(0xFF4672FF),
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                            ),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: const BorderSide(
                                             color: Color(0xFF221573),
                                             width: 1.5,
                                           ),
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: const BorderSide(
                                             color: Color(0xFF221573),
                                             width: 1.5,
                                           ),
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
                                         filled: true,
                                         fillColor: const Color(0x49FFFFFF),
                                       ),
-                                      style: AppTheme.of(context).title3.override(
-                                            fontFamily: 'Poppins',
-                                            color: const Color(0xFF221573),
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.normal,
-                                          ),
+                                      style:
+                                          AppTheme.of(context).title3.override(
+                                                fontFamily: 'Poppins',
+                                                color: const Color(0xFF221573),
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.normal,
+                                              ),
                                       validator: FormBuilderValidators.compose([
                                         // (value){
                                         //   return (capitalizadoCharacters.hasMatch(value ?? ''))
                                         //   ? null
                                         //   : 'Para continuar, ingrese el nombre empezando por mayúscula.';
                                         // },
-                                        (value){
-                                          return (palabras.hasMatch(value ?? ''))
-                                          ? null
-                                          : 'Evite usar números o caracteres especiales como diéresis';
+                                        (value) {
+                                          return (palabras
+                                                  .hasMatch(value ?? ''))
+                                              ? null
+                                              : 'Evite usar números o caracteres especiales como diéresis';
                                         }
                                       ]),
                                       //  return (capitalizadoCharacters.hasMatch(value ?? ''))
                                       //       ? null
                                       //       : 'Para continuar, ingrese el nombre empezando por mayúscula.';
-                                      
-                                      
                                     ),
                                   ),
                                 ),
@@ -392,17 +400,17 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                           fontWeight: FontWeight.normal,
                                         ),
                                     validator: FormBuilderValidators.compose([
-                                        // (value){
-                                        //   return (capitalizadoCharacters.hasMatch(value ?? ''))
-                                        //   ? null
-                                        //   : 'Para continuar, ingrese el nombre empezando por mayúscula.';
-                                        // },
-                                        (value){
-                                          return (palabras.hasMatch(value ?? ''))
-                                          ? null
-                                          : 'Evite usar numeros o caracteres especiales como dieresis';
-                                        }
-                                      ]),
+                                      // (value){
+                                      //   return (capitalizadoCharacters.hasMatch(value ?? ''))
+                                      //   ? null
+                                      //   : 'Para continuar, ingrese el nombre empezando por mayúscula.';
+                                      // },
+                                      (value) {
+                                        return (palabras.hasMatch(value ?? ''))
+                                            ? null
+                                            : 'Evite usar numeros o caracteres especiales como dieresis';
+                                      }
+                                    ]),
                                   ),
                                 ),
                                 Padding(
@@ -532,68 +540,73 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       5, 0, 5, 10),
                                   child: FormBuilderTextField(
-                                    name:"telefono",
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    onChanged: (value) {
-                                      emprendedorProvider.telefono = value!;
-                                    },
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelText: 'Número telefónico',
-                                      labelStyle:
-                                          AppTheme.of(context).title3.override(
-                                                fontFamily: 'Montserrat',
-                                                color: const Color(0xFF4672FF),
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                      hintText: 'Ingrese número telefónico...',
-                                      hintStyle:
+                                      name: "telefono",
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      onChanged: (value) {
+                                        emprendedorProvider.telefono = value!;
+                                      },
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        labelText: 'Número telefónico',
+                                        labelStyle: AppTheme.of(context)
+                                            .title3
+                                            .override(
+                                              fontFamily: 'Montserrat',
+                                              color: const Color(0xFF4672FF),
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                        hintText:
+                                            'Ingrese número telefónico...',
+                                        hintStyle: AppTheme.of(context)
+                                            .title3
+                                            .override(
+                                              fontFamily: 'Poppins',
+                                              color: const Color(0xFF4672FF),
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color(0xFF221573),
+                                            width: 1.5,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color(0xFF221573),
+                                            width: 1.5,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        filled: true,
+                                        fillColor: const Color(0x49FFFFFF),
+                                      ),
+                                      style:
                                           AppTheme.of(context).title3.override(
                                                 fontFamily: 'Poppins',
-                                                color: const Color(0xFF4672FF),
+                                                color: const Color(0xFF221573),
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.normal,
                                               ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFF221573),
-                                          width: 1.5,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFF221573),
-                                          width: 1.5,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      filled: true,
-                                      fillColor: const Color(0x49FFFFFF),
-                                    ),
-                                    style: AppTheme.of(context).title3.override(
-                                          fontFamily: 'Poppins',
-                                          color: const Color(0xFF221573),
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                    keyboardType: TextInputType.number,
-                                    inputFormatters: [
-                                      LengthLimitingTextInputFormatter(12),
-                                      telefonoFormat
-                                    ],
-                                    validator: (value){
-                                     if(value != "" && value != null){
-                                       return value.length < 12
-                                          ? 'Por favor ingrese un número telefónico válido'
-                                          : null;
-                                     }else{
-                                      return null;
-                                     }
-                                    }
-                                  ),
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: [
+                                        LengthLimitingTextInputFormatter(12),
+                                        telefonoFormat
+                                      ],
+                                      validator: (value) {
+                                        if (value != "" && value != null) {
+                                          return value.length < 12
+                                              ? 'Por favor ingrese un número telefónico válido'
+                                              : null;
+                                        } else {
+                                          return null;
+                                        }
+                                      }),
                                 ),
                                 FormField(
                                   builder: (state) {
@@ -624,18 +637,21 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                                     .add(element.nombre);
                                               }
                                             });
-                                            listMunicipios.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+                                            listMunicipios.sort((a, b) =>
+                                                removeDiacritics(a).compareTo(
+                                                    removeDiacritics(b)));
                                           }
                                         }),
                                         width: double.infinity,
                                         height: 50,
-                                        textStyle:
-                                            AppTheme.of(context).title3.override(
-                                                  fontFamily: 'Poppins',
-                                                  color: const Color(0xFF221573),
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
+                                        textStyle: AppTheme.of(context)
+                                            .title3
+                                            .override(
+                                              fontFamily: 'Poppins',
+                                              color: const Color(0xFF221573),
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                            ),
                                         hintText: 'Seleccione un estado*',
                                         icon: const Icon(
                                           Icons.keyboard_arrow_down_rounded,
@@ -647,9 +663,8 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                         borderColor: const Color(0xFF221573),
                                         borderWidth: 2,
                                         borderRadius: 8,
-                                        margin:
-                                            const EdgeInsetsDirectional.fromSTEB(
-                                                12, 4, 12, 4),
+                                        margin: const EdgeInsetsDirectional
+                                            .fromSTEB(12, 4, 12, 4),
                                         hidesUnderline: true,
                                       ),
                                     );
@@ -693,18 +708,21 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                                     .add(element.nombre);
                                               }
                                             });
-                                            listComunidades.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+                                            listComunidades.sort((a, b) =>
+                                                removeDiacritics(a).compareTo(
+                                                    removeDiacritics(b)));
                                           }
                                         }),
                                         width: double.infinity,
                                         height: 50,
-                                        textStyle:
-                                            AppTheme.of(context).title3.override(
-                                                  fontFamily: 'Poppins',
-                                                  color: const Color(0xFF221573),
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
+                                        textStyle: AppTheme.of(context)
+                                            .title3
+                                            .override(
+                                              fontFamily: 'Poppins',
+                                              color: const Color(0xFF221573),
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                            ),
                                         hintText: 'Seleccione un municipio*',
                                         icon: const Icon(
                                           Icons.keyboard_arrow_down_rounded,
@@ -716,9 +734,8 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                         borderColor: const Color(0xFF221573),
                                         borderWidth: 2,
                                         borderRadius: 8,
-                                        margin:
-                                            const EdgeInsetsDirectional.fromSTEB(
-                                                12, 4, 12, 4),
+                                        margin: const EdgeInsetsDirectional
+                                            .fromSTEB(12, 4, 12, 4),
                                         hidesUnderline: true,
                                       ),
                                     );
@@ -755,13 +772,14 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                         }),
                                         width: double.infinity,
                                         height: 50,
-                                        textStyle:
-                                            AppTheme.of(context).title3.override(
-                                                  fontFamily: 'Poppins',
-                                                  color: const Color(0xFF221573),
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
+                                        textStyle: AppTheme.of(context)
+                                            .title3
+                                            .override(
+                                              fontFamily: 'Poppins',
+                                              color: const Color(0xFF221573),
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                            ),
                                         hintText: 'Seleccione una comunidad*',
                                         icon: const Icon(
                                           Icons.keyboard_arrow_down_rounded,
@@ -773,9 +791,8 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                         borderColor: const Color(0xFF221573),
                                         borderWidth: 2,
                                         borderRadius: 8,
-                                        margin:
-                                            const EdgeInsetsDirectional.fromSTEB(
-                                                12, 4, 12, 4),
+                                        margin: const EdgeInsetsDirectional
+                                            .fromSTEB(12, 4, 12, 4),
                                         hidesUnderline: true,
                                       ),
                                     );
@@ -863,28 +880,36 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                           onPressed: () async {
                                             if (emprendedorProvider
                                                 .validateForm(emprendedorKey)) {
-                                              final emprendedor = 
-                                              dataBase.emprendedoresBox.query(Emprendedores_.curp.equals(emprendedorProvider.curp)).build().findFirst();
+                                              final emprendedor = dataBase
+                                                  .emprendedoresBox
+                                                  .query(Emprendedores_.curp
+                                                      .equals(
+                                                          emprendedorProvider
+                                                              .curp))
+                                                  .build()
+                                                  .findFirst();
                                               if (emprendedor != null) {
-                                                  snackbarKey.currentState
-                                                      ?.showSnackBar(const SnackBar(
-                                                    content: Text(
-                                                        "El emprendedor ya se encuentra registrado."),
-                                                  ));
-                                              }
-                                              else {
-                                              final idEstado = dataBase.estadosBox
-                                                .query(Estados_.nombre
-                                                    .equals(nombreEstado))
-                                                .build()
-                                                .findFirst()
-                                                ?.id;
+                                                snackbarKey.currentState
+                                                    ?.showSnackBar(
+                                                        const SnackBar(
+                                                  content: Text(
+                                                      "El emprendedor ya se encuentra registrado."),
+                                                ));
+                                              } else {
+                                                final idEstado = dataBase
+                                                    .estadosBox
+                                                    .query(Estados_.nombre
+                                                        .equals(nombreEstado))
+                                                    .build()
+                                                    .findFirst()
+                                                    ?.id;
                                                 if (idEstado != null) {
                                                   final idMunicipio = dataBase
                                                       .municipiosBox
                                                       .query(Municipios_.estados
                                                           .equals(idEstado)
-                                                          .and(Municipios_.nombre
+                                                          .and(Municipios_
+                                                              .nombre
                                                               .equals(
                                                                   nombreMunicipio)))
                                                       .build()
@@ -893,9 +918,11 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                                   if (idMunicipio != null) {
                                                     final idComunidad = dataBase
                                                         .comunidadesBox
-                                                        .query(Comunidades_.municipios
+                                                        .query(Comunidades_
+                                                            .municipios
                                                             .equals(idMunicipio)
-                                                            .and(Comunidades_.nombre
+                                                            .and(Comunidades_
+                                                                .nombre
                                                                 .equals(
                                                                     nombreComunidad)))
                                                         .build()
@@ -903,10 +930,12 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                                         ?.id;
                                                     if (idComunidad != null) {
                                                       emprendedorProvider
-                                                        .addTemporal(idComunidad);
+                                                          .addTemporal(
+                                                              idComunidad);
                                                       Navigator.pop(context);
                                                       snackbarKey.currentState
-                                                          ?.showSnackBar(const SnackBar(
+                                                          ?.showSnackBar(
+                                                              const SnackBar(
                                                         content: Text(
                                                             "¡Emprendedor asocidado éxitosamente!"),
                                                       ));

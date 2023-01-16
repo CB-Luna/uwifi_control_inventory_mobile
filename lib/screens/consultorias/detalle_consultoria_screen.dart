@@ -64,7 +64,6 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
   Widget build(BuildContext context) {
     List<Tareas> tareas = [];
     tareas = widget.consultoria.tareas.toList();
-    print("Tareas: ${tareas.length}");
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -178,8 +177,6 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                             0, 0, 0, 10),
                                     child: InkWell(
                                       onTap: () async {
-                                        print(
-                                            "Tareas totales de consultoria: ${widget.consultoria.tareas.toList().length}");
                                         if (widget
                                                     .consultoria
                                                     .emprendimiento
@@ -975,7 +972,7 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                                                         BorderRadius
                                                                             .circular(8),
                                                                     child:
-                                                                        getWidgetContainerImage(
+                                                                        getWidgetContainerImageTarea(
                                                                       tareas[index + 1]
                                                                               .imagenes
                                                                               .isNotEmpty

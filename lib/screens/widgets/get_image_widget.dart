@@ -200,6 +200,35 @@ Widget? getWidgetContainerImage(String? image, double height, double width) {
       width: width,
       color: Colors.grey,
       child: const Image(
+        image: AssetImage("assets/images/animation_500_l3ur8tqa.gif"),
+        fit: BoxFit.cover,
+      ),
+    );
+  } else if (image.startsWith('http') || image.startsWith('https')) {
+    return FadeInImage(
+      height: height,
+      width: width,
+      placeholder: const AssetImage('assets/images/animation_500_l3ur8tqa.gif'),
+      image: NetworkImage(image),
+      fit: BoxFit.cover,
+    );
+  }
+  return Image.file(
+    height: height,
+    width: width,
+    File(image),
+    fit: BoxFit.cover,
+  );
+}
+
+Widget? getWidgetContainerImageTarea(
+    String? image, double height, double width) {
+  if (image == null || image == '') {
+    return Container(
+      height: height,
+      width: width,
+      color: Colors.grey,
+      child: const Image(
         image: AssetImage("assets/images/default_image_placeholder.jpeg"),
         fit: BoxFit.cover,
       ),
