@@ -13,7 +13,6 @@ class GetMunicipios {
         required this.updated,
         required this.nombreMunicipio,
         required this.idEstadoFk,
-        required this.idStatusSyncFk,
         required this.activo,
         required this.idEmiWeb,
     });
@@ -25,7 +24,6 @@ class GetMunicipios {
     final DateTime? updated;
     final String nombreMunicipio;
     final String idEstadoFk;
-    final String idStatusSyncFk;
     final bool activo;
     final String idEmiWeb;
 
@@ -37,7 +35,6 @@ class GetMunicipios {
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
         nombreMunicipio: json["nombre_municipio"],
         idEstadoFk: json["id_estado_fk"],
-        idStatusSyncFk: json["id_status_sync_fk"],
         activo: json["activo"],
         idEmiWeb: json["id_emi_web"],
     );
@@ -50,7 +47,6 @@ class GetMunicipios {
         "updated": updated == null ? null : updated!.toIso8601String(),
         "nombre_municipio": nombreMunicipio,
         "id_estado_fk": idEstadoFk,
-        "id_status_sync_fk": idStatusSyncFk,
         "activo": activo,
         "id_emi_web": idEmiWeb,
     };

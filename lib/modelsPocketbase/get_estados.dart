@@ -12,7 +12,6 @@ class GetEstados {
         required this.created,
         required this.updated,
         required this.nombreEstado,
-        required this.idStatusSyncFk,
         required this.activo,
         required this.idEmiWeb,
     });
@@ -23,7 +22,6 @@ class GetEstados {
     final DateTime? created;
     final DateTime? updated;
     final String nombreEstado;
-    final String idStatusSyncFk;
     final bool activo;
     final String idEmiWeb;
 
@@ -34,7 +32,6 @@ class GetEstados {
         created: json["created"] == null ? null : DateTime.parse(json["created"]),
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
         nombreEstado: json["nombre_estado"],
-        idStatusSyncFk: json["id_status_sync_fk"],
         activo: json["activo"],
         idEmiWeb: json["id_emi_web"],
     );
@@ -46,7 +43,6 @@ class GetEstados {
         "created": created == null ? null : created!.toIso8601String(),
         "updated": updated == null ? null : updated!.toIso8601String(),
         "nombre_estado": nombreEstado,
-        "id_status_sync_fk": idStatusSyncFk,
         "activo": activo,
         "id_emi_web": idEmiWeb,
     };

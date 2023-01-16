@@ -670,9 +670,7 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                             listMunicipios.sort((a, b) =>
                                                 removeDiacritics(a).compareTo(
                                                     removeDiacritics(b)));
-                                            print("Entro a con estados");
                                           }
-                                          print("Estado: $nombreEstado");
                                         }),
                                         width: double.infinity,
                                         height: 50,
@@ -744,9 +742,7 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                             listComunidades.sort((a, b) =>
                                                 removeDiacritics(a).compareTo(
                                                     removeDiacritics(b)));
-                                            print("Entro a con municipios");
                                           }
-                                          print("Municipio: $nombreMunicipio");
                                         }),
                                         width: double.infinity,
                                         height: 50,
@@ -804,9 +800,7 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                             ));
                                           } else {
                                             nombreComunidad = val!;
-                                            print("Entro a con comunidades");
                                           }
-                                          print("Comunidad: $nombreComunidad");
                                         }),
                                         width: double.infinity,
                                         height: 50,
@@ -852,7 +846,7 @@ class _EditarEmprendedorState extends State<EditarEmprendedor> {
                                       obscureText: false,
                                       controller: telefonoController,
                                       decoration: InputDecoration(
-                                        labelText: 'Numero telefónico',
+                                        labelText: 'Número telefónico',
                                         labelStyle: AppTheme.of(context)
                                             .title3
                                             .override(

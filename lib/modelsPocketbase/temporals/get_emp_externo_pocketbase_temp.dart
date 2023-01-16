@@ -48,7 +48,6 @@ class EmprendimientoTemp {
         required this.idNombreProyectoFk,
         required this.idPrioridadFk,
         required this.idPromotorFk,
-        required this.idStatusSyncFk,
         required this.nombreEmprendimiento,
         required this.updated,
         required this.selected,
@@ -68,7 +67,6 @@ class EmprendimientoTemp {
     final String? idNombreProyectoFk;
     final String idPrioridadFk;
     final String idPromotorFk;
-    final String idStatusSyncFk;
     final String nombreEmprendimiento;
     final DateTime? updated;
     bool selected = false;
@@ -88,7 +86,6 @@ class EmprendimientoTemp {
         idNombreProyectoFk: json["id_nombre_proyecto_fk"],
         idPrioridadFk: json["id_prioridad_fk"],
         idPromotorFk: json["id_promotor_fk"],
-        idStatusSyncFk: json["id_status_sync_fk"],
         nombreEmprendimiento: json["nombre_emprendimiento"],
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]), 
         selected: false,
@@ -109,7 +106,6 @@ class EmprendimientoTemp {
         "id_nombre_proyecto_fk": idNombreProyectoFk,
         "id_prioridad_fk": idPrioridadFk,
         "id_promotor_fk": idPromotorFk,
-        "id_status_sync_fk": idStatusSyncFk,
         "nombre_emprendimiento": nombreEmprendimiento,
         "updated": updated == null ? null : updated!.toIso8601String(),
         "selected": false,
@@ -147,7 +143,6 @@ class EmprendedorTemp {
         required this.id,
         required this.idComunidadFk,
         required this.idEmiWeb,
-        required this.idStatusSyncFk,
         required this.integrantesFamilia,
         required this.nombreEmprendedor,
         required this.telefono,
@@ -163,7 +158,6 @@ class EmprendedorTemp {
     final String id;
     final String idComunidadFk;
     final String idEmiWeb;
-    final String? idStatusSyncFk;
     final int? integrantesFamilia;
     final String nombreEmprendedor;
     final String? telefono;
@@ -179,7 +173,6 @@ class EmprendedorTemp {
         id: json["id"],
         idComunidadFk: json["id_comunidad_fk"],
         idEmiWeb: json["id_emi_web"],
-        idStatusSyncFk: json["id_status_sync_fk"],
         integrantesFamilia: json["integrantes_familia"],
         nombreEmprendedor: json["nombre_emprendedor"],
         telefono: json["telefono"],
@@ -196,7 +189,6 @@ class EmprendedorTemp {
         "id": id,
         "id_comunidad_fk": idComunidadFk,
         "id_emi_web": idEmiWeb,
-        "id_status_sync_fk": idStatusSyncFk,
         "integrantes_familia": integrantesFamilia,
         "nombre_emprendedor": nombreEmprendedor,
         "telefono": telefono,
@@ -217,7 +209,6 @@ class UsuarioTemp {
         required this.idEmiWeb,
         required this.idImagenFk,
         required this.idRolesFk,
-        required this.idStatusSyncFk,
         required this.nombreUsuario,
         required this.telefono,
         required this.updated,
@@ -235,7 +226,6 @@ class UsuarioTemp {
     final String idEmiWeb;
     final String? idImagenFk;
     final List<String>? idRolesFk;
-    final String idStatusSyncFk;
     final String nombreUsuario;
     final String? telefono;
     final DateTime? updated;
@@ -253,7 +243,6 @@ class UsuarioTemp {
         idEmiWeb: json["id_emi_web"],
         idImagenFk: json["id_imagen_fk"],
         idRolesFk: json["id_roles_fk"] == null ? null : List<String>.from(json["id_roles_fk"].map((x) => x)),
-        idStatusSyncFk: json["id_status_sync_fk"],
         nombreUsuario: json["nombre_usuario"],
         telefono: json["telefono"],
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
@@ -272,7 +261,6 @@ class UsuarioTemp {
         "id_emi_web": idEmiWeb,
         "id_imagen_fk": idImagenFk,
         "id_roles_fk": idRolesFk == null ? null : List<dynamic>.from(idRolesFk!.map((x) => x)),
-        "id_status_sync_fk": idStatusSyncFk,
         "nombre_usuario": nombreUsuario,
         "telefono": telefono,
         "updated": updated == null ? null : updated!.toIso8601String(),

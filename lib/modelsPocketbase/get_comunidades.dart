@@ -13,7 +13,6 @@ class GetComunidades {
         required this.updated,
         required this.nombreComunidad,
         required this.idMunicipioFk,
-        required this.idStatusSyncFk,
         required this.activo,
         required this.idEmiWeb,
     });
@@ -25,7 +24,6 @@ class GetComunidades {
     final DateTime? updated;
     final String nombreComunidad;
     final String idMunicipioFk;
-    final String idStatusSyncFk;
     final bool activo;
     final String idEmiWeb;
 
@@ -37,7 +35,6 @@ class GetComunidades {
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
         nombreComunidad: json["nombre_comunidad"],
         idMunicipioFk: json["id_municipio_fk"],
-        idStatusSyncFk: json["id_status_sync_fk"],
         activo: json["activo"],
         idEmiWeb: json["id_emi_web"],
     );
@@ -50,7 +47,6 @@ class GetComunidades {
         "updated": updated == null ? null : updated!.toIso8601String(),
         "nombre_comunidad": nombreComunidad,
         "id_municipio_fk": idMunicipioFk,
-        "id_status_sync_fk": idStatusSyncFk,
         "activo": activo,
         "id_emi_web": idEmiWeb,
     };

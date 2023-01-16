@@ -10,7 +10,6 @@ class GetSingleJornadaPocketbase {
         required this.idTareaFk,
         required this.proximaVisita,
         required this.idEmprendimientoFk,
-        required this.idStatusSyncFk,
         required this.completada,
         required this.idEmiWeb,
     });
@@ -19,7 +18,6 @@ class GetSingleJornadaPocketbase {
     final String idTareaFk;
     final DateTime proximaVisita;
     final String idEmprendimientoFk;
-    final String idStatusSyncFk;
     final bool completada;
     final String idEmiWeb;
 
@@ -28,7 +26,6 @@ class GetSingleJornadaPocketbase {
         idTareaFk: json["id_tarea_fk"],
         proximaVisita: DateTime.parse(json["proxima_visita"]),
         idEmprendimientoFk: json["id_emprendimiento_fk"],
-        idStatusSyncFk: json["id_status_sync_fk"],
         completada: json["completada"],
         idEmiWeb: json["id_emi_web"],
     );
@@ -38,7 +35,6 @@ class GetSingleJornadaPocketbase {
         "id_tarea_fk": idTareaFk,
         "proxima_visita": proximaVisita.toIso8601String(),
         "id_emprendimiento_fk": idEmprendimientoFk,
-        "id_status_sync_fk": idStatusSyncFk,
         "completada": completada,
         "id_emi_web": idEmiWeb,
     };

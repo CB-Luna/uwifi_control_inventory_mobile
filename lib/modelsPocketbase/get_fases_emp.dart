@@ -12,7 +12,6 @@ class GetFasesEmp {
         required this.created,
         required this.updated,
         required this.fase,
-        required this.idStatusSyncFk,
         required this.idEmiWeb,
     });
 
@@ -22,7 +21,6 @@ class GetFasesEmp {
     final DateTime? created;
     final DateTime? updated;
     final String fase;
-    final String idStatusSyncFk;
     final String idEmiWeb;
 
     factory GetFasesEmp.fromMap(Map<String, dynamic> json) => GetFasesEmp(
@@ -32,7 +30,6 @@ class GetFasesEmp {
         created: json["created"] == null ? null : DateTime.parse(json["created"]),
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
         fase: json["fase"],
-        idStatusSyncFk: json["id_status_sync_fk"],
         idEmiWeb: json["id_emi_web"],
     );
 
@@ -43,7 +40,6 @@ class GetFasesEmp {
         "created": created == null ? null : created!.toIso8601String(),
         "updated": updated == null ? null : updated!.toIso8601String(),
         "fase": fase,
-        "id_status_sync_fk": idStatusSyncFk,
         "id_emi_web": idEmiWeb,
     };
 }

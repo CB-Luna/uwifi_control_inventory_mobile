@@ -39,10 +39,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
     // Se recuperan instrucciones fallidas anteriores
     instruccionesFallidas = instruccionesFallidasEmiWeb;
     for (var i = 0; i < instruccionesBitacora.length; i++) {
-      print("La instrucción es: ${instruccionesBitacora[i].instruccion}");
       switch (instruccionesBitacora[i].instruccion) {
         case "syncAddImagenUsuario":
-          print("Entro al caso de syncAddImagenUsuario Pocketbase");
           final imagenToSync = getFirstImagen(
               dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
           if (imagenToSync != null) {
@@ -58,7 +56,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncAddImagenUsuario.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -69,11 +66,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para agregar Imagen de Perfil del Usuario en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddEmprendedor":
-          print("Entro al caso de syncAddEmprendedor Pocketbase");
           final emprendedorToSync = getFirstEmprendedor(
               dataBase.emprendedoresBox.getAll(), instruccionesBitacora[i].id);
           if (emprendedorToSync != null) {
@@ -91,7 +86,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncAddEmprendedor.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -103,11 +97,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para agregar el Emprendedor en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddEmprendimiento":
-          print("Entro al caso de syncAddEmprendimiento Pocketbase");
           final emprendimientoToSync = getFirstEmprendimiento(
               dataBase.emprendimientosBox.getAll(),
               instruccionesBitacora[i].id);
@@ -125,7 +117,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncAddEmprendimiento.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -137,11 +128,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para agregar el Emprendimiento en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddJornada1":
-          print("Entro al caso de syncAddJornada1 Pocketbase");
           final jornadaToSync = getFirstJornada(
               dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
           if (jornadaToSync != null) {
@@ -158,7 +147,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncAddJornada1.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -170,11 +158,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para agregar la Jornada 1 en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddJornada2":
-          print("Entro al caso de syncAddJornada2 Pocketbase");
           final jornadaToSync = getFirstJornada(
               dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
           if (jornadaToSync != null) {
@@ -191,7 +177,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncAddJornada2.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -203,11 +188,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para agregar la Jornada 2 en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddImagenJornada2":
-          print("Entro al caso de syncAddImagenJornada2 Pocketbase");
           final imagenToSync = getFirstImagen(
               dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
           if (imagenToSync != null) {
@@ -225,7 +208,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncAddImagenJornada2.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -237,11 +219,9 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para agregar una Imagen de la Jornada 2 en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddJornada3":
-          print("Entro al caso de syncAddJornada3 Pocketbase");
           final jornadaToSync = getFirstJornada(
               dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
           if (jornadaToSync != null) {
@@ -258,7 +238,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncAddJornada3.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -1997,7 +1976,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
               "telefono": emprendedor.telefono,
               "comentarios": emprendedor.comentarios,
               "id_emprendimiento_fk": "",
-              "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
               "id_emi_web": emprendedor.idEmiWeb,
             });
 
@@ -2016,7 +1994,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 "id_promotor_fk": emprendimientoToSync.usuario.target!.idDBR,
                 "id_prioridad_fk": "yuEVuBv9rxLM4cR",
                 "id_fase_emp_fk": faseInscricto.idDBR,
-                "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                 "id_emprendedor_fk":
                     emprendimientoToSync.emprendedor.target!.idDBR,
                 "id_emi_web": emprendimientoToSync.idEmiWeb,
@@ -2068,7 +2045,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 "id_prioridad_fk": "yuEVuBv9rxLM4cR",
                 "id_proveedor_fk": "",
                 "id_fase_emp_fk": faseInscricto.idDBR,
-                "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                 "id_emprendedor_fk":
                     emprendimientoToSync.emprendedor.target!.idDBR,
                 "id_emi_web": emprendimientoToSync.idEmiWeb,
@@ -2168,7 +2144,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
             "descripcion": tareaToSync.descripcion,
             "comentarios": tareaToSync.comentarios,
             "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
-            "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
             "id_emi_web": tareaToSync.idEmiWeb!.split("?")[0],
             "jornada": true,
             });
@@ -2183,7 +2158,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 "id_tarea_fk": tareaToSync.idDBR,
                 "proxima_visita": jornada.fechaRevision.toUtc().toString(),
                 "id_emprendimiento_fk": jornada.emprendimiento.target!.idDBR,
-                "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                 "completada": jornada.completada,
                 "id_emi_web": jornada.idEmiWeb!.split("?")[0],
               });
@@ -2221,7 +2195,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 "id_tarea_fk": tareaToSync.idDBR,
                 "proxima_visita": jornada.fechaRevision.toUtc().toString(),
                 "id_emprendimiento_fk": jornada.emprendimiento.target!.idDBR,
-                "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                 "completada": jornada.completada,
                 "id_emi_web": jornada.idEmiWeb!.split("?")[0],
               });
@@ -2315,7 +2288,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
             "descripcion": tareaToSync.descripcion,
             "comentarios": tareaToSync.comentarios,
             "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
-            "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
             "id_emi_web": tareaToSync.idEmiWeb!.split("?")[0],
             "id_imagenes_fk": idsDBRImagenes,
             "jornada": true,
@@ -2331,7 +2303,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 "id_tarea_fk": tareaToSync.idDBR,
                 "proxima_visita": jornada.fechaRevision.toUtc().toString(),
                 "id_emprendimiento_fk": jornada.emprendimiento.target!.idDBR,
-                "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                 "completada": jornada.completada,
                 "id_emi_web": jornada.idEmiWeb!.split("?")[0],
               });
@@ -2368,7 +2339,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 "id_tarea_fk": tareaToSync.idDBR,
                 "proxima_visita": jornada.fechaRevision.toUtc().toString(),
                 "id_emprendimiento_fk": jornada.emprendimiento.target!.idDBR,
-                "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                 "completada": jornada.completada,
                 "id_emi_web": jornada.idEmiWeb!.split("?")[0],
               });
@@ -2703,7 +2673,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   "descripcion": tareaToSync.descripcion,
                   "comentarios": tareaToSync.comentarios,
                   "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
-                  "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                   "id_emi_web": tareaToSync.idEmiWeb!.split("?")[0],
                   "id_imagenes_fk": idsDBRImagenes,
                   "jornada": true,
@@ -2736,7 +2705,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                               jornada.fechaRevision.toUtc().toString(),
                           "id_emprendimiento_fk":
                               jornada.emprendimiento.target!.idDBR,
-                          "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                           "completada": jornada.completada,
                           "id_emi_web": jornada.idEmiWeb!.split("?")[0],
                         });
@@ -2912,7 +2880,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 "descripcion": tareaToSync.descripcion,
                 "comentarios": tareaToSync.comentarios,
                 "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
-                "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                 "id_emi_web": tareaToSync.idEmiWeb!.split("?")[0],
                 "id_imagenes_fk": idsDBRImagenes,
                 "jornada": true,
@@ -2944,7 +2911,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                             jornada.fechaRevision.toUtc().toString(),
                         "id_emprendimiento_fk":
                             jornada.emprendimiento.target!.idDBR,
-                        "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                         "completada": jornada.completada,
                         "id_emi_web": jornada.idEmiWeb!.split("?")[0],
                       });
@@ -3022,7 +2988,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "proxima_visita": jornada.fechaRevision.toUtc().toString(),
                     "id_emprendimiento_fk":
                         jornada.emprendimiento.target!.idDBR,
-                    "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                     "completada": jornada.completada,
                     "id_emi_web": jornada.idEmiWeb!.split("?")[0],
                   });
@@ -3305,7 +3270,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
               if (listJornadas[i].numJornada != "4") {
                 final recordJornada = await client.records.update('jornadas', listJornadas[i].idDBR.toString(), body: {
                     "completada": true,
-                    "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                   }); 
                 if (recordJornada.id.isNotEmpty) {
                   continue;
@@ -3337,7 +3301,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
             "descripcion": tareaToSync.descripcion,
             "comentarios": tareaToSync.comentarios,
             "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
-            "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
             "id_emi_web": tareaToSync.idEmiWeb!.split("?")[0],
             "id_imagenes_fk": idsDBRImagenes,
             "jornada": true,
@@ -3352,7 +3315,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 "id_tarea_fk": tareaToSync.idDBR,
                 "proxima_visita": jornada.fechaRevision.toUtc().toString(),
                 "id_emprendimiento_fk": jornada.emprendimiento.target!.idDBR,
-                "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                 "completada": jornada.completada,
                 "id_emi_web": jornada.idEmiWeb!.split("?")[0],
               });
@@ -3383,7 +3345,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 "id_tarea_fk": tareaToSync.idDBR,
                 "proxima_visita": jornada.fechaRevision.toUtc().toString(),
                 "id_emprendimiento_fk": jornada.emprendimiento.target!.idDBR,
-                "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                 "completada": jornada.completada,
                 "id_emi_web": jornada.idEmiWeb!.split("?")[0],
               });
@@ -3537,7 +3498,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
             "comentarios": tareaToSync.comentarios,
             "id_porcentaje_fk": tareaToSync.porcentaje.target!.idDBR,
             "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
-            "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
             "id_emi_web": tareaToSync.idEmiWeb,
             "jornada": false,
           });
@@ -3551,7 +3511,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 "id_emprendimiento_fk":
                     consultoria.emprendimiento.target!.idDBR,
                 "id_tarea_fk": [recordTarea.id],
-                "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                 "id_ambito_fk": consultoria.ambitoConsultoria.target!.idDBR,
                 "id_area_circulo_fk": consultoria.areaCirculo.target!.idDBR,
                 "id_emi_web": consultoria.idEmiWeb,
@@ -3591,7 +3550,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 "id_emprendimiento_fk":
                     consultoria.emprendimiento.target!.idDBR,
                 "id_tarea_fk": [tareaToSync.idDBR],
-                "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                 "id_ambito_fk": consultoria.ambitoConsultoria.target!.idDBR,
                 "id_area_circulo_fk": consultoria.areaCirculo.target!.idDBR,
                 "id_emi_web": consultoria.idEmiWeb,
@@ -4602,7 +4560,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
       final record = await client.records
           .update('emprendimientos', emprendimiento.idDBR.toString(), body: {
         "nombre_emprendimiento": emprendimiento.nombre,
-        "id_status_sync_fk": "HoI36PzYw1wtbO1",
       });
 
       if (record.id.isNotEmpty) {
@@ -4633,7 +4590,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
           "id_comunidad_fk": emprendedor.comunidad.target!.idDBR,
           "telefono": emprendedor.telefono,
           "comentarios": emprendedor.comentarios,
-          "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
         });
 
         if (record.id.isNotEmpty) {
@@ -4678,7 +4634,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
           "tarea": jornada.tarea.target!.tarea,
           "fecha_revision":
               jornada.tarea.target!.fechaRevision.toUtc().toString(),
-          "id_status_sync_fk": "gdjz1oQlrSvQ8PB"
         });
         if (recordTarea.id.isNotEmpty) {
           //Segundo actualizamos la jornada
@@ -4686,7 +4641,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
               .update('jornadas', jornada.idDBR.toString(), body: {
             "proxima_visita": jornada.fechaRevision.toUtc().toString(),
             "completada": jornada.completada,
-            "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
           });
           if (recordJornada.id.isNotEmpty) {
             //Se marca como realizada en Pocketbase la instrucción en Bitacora
@@ -4739,7 +4693,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
           "comentarios": jornada.tarea.target!.comentarios,
           "fecha_revision":
               jornada.tarea.target!.fechaRevision.toUtc().toString(),
-          "id_status_sync_fk": "gdjz1oQlrSvQ8PB"
         });
         if (recordTarea.id.isNotEmpty) {
           //Segundo actualizamos la jornada
@@ -4747,7 +4700,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
               .update('jornadas', jornada.idDBR.toString(), body: {
             "proxima_visita": jornada.fechaRevision.toUtc().toString(),
             "completada": jornada.completada,
-            "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
           });
           if (recordJornada.id.isNotEmpty) {
             //Se marca como realizada en Pocketbase la instrucción en Bitacora
@@ -4840,9 +4792,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
           "tarea": jornada.tarea.target!.tarea,
           "comentarios": jornada.tarea.target!.comentarios,
           "descripcion": jornada.tarea.target!.descripcion,
-          "fecha_revision":
-              jornada.tarea.target!.fechaRevision.toUtc().toString(),
-          "id_status_sync_fk": "gdjz1oQlrSvQ8PB"
+          "fecha_revision":jornada.tarea.target!.fechaRevision.toUtc().toString(),
         });
         if (recordTarea.id.isNotEmpty) {
           //Segundo actualizamos la jornada
@@ -4850,7 +4800,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
               .update('jornadas', jornada.idDBR.toString(), body: {
             "proxima_visita": jornada.fechaRevision.toUtc().toString(),
             "completada": jornada.completada,
-            "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
           });
           if (recordJornada.id.isNotEmpty) {
             //Se marca como realizada en Pocketbase la instrucción en Bitacora
@@ -4942,9 +4891,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
             .update('tareas', jornada.tarea.target!.idDBR.toString(), body: {
           "tarea": jornada.tarea.target!.tarea,
           "comentarios": jornada.tarea.target!.comentarios,
-          "fecha_revision":
-              jornada.tarea.target!.fechaRevision.toUtc().toString(),
-          "id_status_sync_fk": "gdjz1oQlrSvQ8PB"
+          "fecha_revision":jornada.tarea.target!.fechaRevision.toUtc().toString(),
         });
         if (recordTarea.id.isNotEmpty) {
           //Segundo actualizamos la jornada
@@ -4952,7 +4899,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
               .update('jornadas', jornada.idDBR.toString(), body: {
             "proxima_visita": jornada.fechaRevision.toUtc().toString(),
             "completada": jornada.completada,
-            "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
           });
           if (recordJornada.id.isNotEmpty) {
             //Se marca como realizada en Pocketbase la instrucción en Bitacora
@@ -5060,7 +5006,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 "comentarios": tarea.comentarios,
                 "id_porcentaje_fk": tarea.porcentaje.target!.idDBR,
                 "fecha_revision": tarea.fechaRevision.toUtc().toString(),
-                "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                 "id_imagenes_fk": recordImagen.id,
                 "id_emi_web": tarea.idEmiWeb,
                 "jornada": false,
@@ -5080,7 +5025,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                       'consultorias', consultoria.idDBR.toString(),
                       body: {
                         "id_tarea_fk": tareasConsultoria,
-                        "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                       });
                   if (recordConsultoria.id.isNotEmpty) {
                     print("Consultoria updated succesfully");
@@ -5133,7 +5077,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 "comentarios": tarea.comentarios,
                 "id_porcentaje_fk": tarea.porcentaje.target!.idDBR,
                 "fecha_revision": tarea.fechaRevision.toUtc().toString(),
-                "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                 "id_imagenes_fk": tarea.imagenes.first.idDBR,
                 "id_emi_web": tarea.idEmiWeb,
                 "jornada": false,
@@ -5153,7 +5096,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                       'consultorias', consultoria.idDBR.toString(),
                       body: {
                         "id_tarea_fk": tareasConsultoria,
-                        "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                       });
                   if (recordConsultoria.id.isNotEmpty) {
                     print("Consultoria updated succesfully");
@@ -5209,7 +5151,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
               "comentarios": tarea.comentarios,
               "id_porcentaje_fk": tarea.porcentaje.target!.idDBR,
               "fecha_revision": tarea.fechaRevision.toUtc().toString(),
-              "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
               "id_emi_web": tarea.idEmiWeb,
               "jornada": false,
             });
@@ -5228,7 +5169,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     'consultorias', consultoria.idDBR.toString(),
                     body: {
                       "id_tarea_fk": tareasConsultoria,
-                      "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                     });
                 if (recordConsultoria.id.isNotEmpty) {
                   print("Consultoria updated succesfully");
@@ -5301,7 +5241,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
             "apellido_p": usuario.apellidoP,
             "apellido_m": usuario.apellidoM,
             "telefono": usuario.telefono,
-            "id_status_sync_fk": "HoI36PzYw1wtbO1"
           });
 
           if (record.id.isNotEmpty) {

@@ -477,7 +477,6 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
             child: FFButtonWidget(
               onPressed: () async {
                 if (emprendimientoSelected != "") {
-                  print("Emprendimiento: $emprendimientoSelected");
 
                   await showModalBottomSheet(
                     isScrollControlled: true,
@@ -583,8 +582,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                 setState(() {
                                   // emprendimientoTemp.proyecto.selected =
                                   //     !emprendimientoTemp.proyecto.selected;
-                                  print(
-                                      "****Selected de ${emprendimientoTemp.proyecto.emprendimiento} es ${emprendimientoTemp.proyecto.selected}");
+                                  
                                   // Cuando se selecciona por segunda vez el mismo item entonces se mandaria una cadena vacia. EmprendimientoSelected
                                   if (emprendimientoTemp.proyecto.selected) {
                                     emprendimientoSelected = "";

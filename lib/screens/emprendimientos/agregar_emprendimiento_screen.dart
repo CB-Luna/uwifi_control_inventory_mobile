@@ -147,7 +147,7 @@ class _AgregarEmprendimientoScreenState
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                'Imagen*',
+                                'Imagen',
                                 style: AppTheme.of(context).title3.override(
                                       fontFamily: 'Poppins',
                                       color: const Color(0xFF4672FF),
@@ -202,9 +202,7 @@ class _AgregarEmprendimientoScreenState
                                           file.readAsBytesSync();
                                       // Uint8list de imagenes
 
-                                      var imagenUint8List =
-                                          Uint8List.fromList(fileInByte);
-
+                                      //Uint8List imagenUint8List = file.readAsBytesSync();
                                       // Base64 de imagenes
                                       String base64 = base64Encode(fileInByte);
 
@@ -258,7 +256,6 @@ class _AgregarEmprendimientoScreenState
                           );
                         }, validator: (val) {
                           if (image?.path == null || image?.path == "") {
-                            print("Espera");
                             Container(
                               decoration: BoxDecoration(
                                   image: DecorationImage(
@@ -341,69 +338,6 @@ class _AgregarEmprendimientoScreenState
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    5, 0, 5, 10),
-                                child: TextFormField(
-                                  maxLength: 50,
-                                  textCapitalization:
-                                      TextCapitalization.sentences,
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  onChanged: (value) {
-                                    emprendimientoProvider.descripcion = value;
-                                  },
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    labelText: 'Descripción de emprendimiento*',
-                                    labelStyle:
-                                        AppTheme.of(context).title3.override(
-                                              fontFamily: 'Montserrat',
-                                              color: const Color(0xFF4672FF),
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                    hintText:
-                                        'Descripción del emprendimiento...',
-                                    hintStyle:
-                                        AppTheme.of(context).title3.override(
-                                              fontFamily: 'Poppins',
-                                              color: const Color(0xFF4672FF),
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0xFF221573),
-                                        width: 1.5,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0xFF221573),
-                                        width: 1.5,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    filled: true,
-                                    fillColor: const Color(0x49FFFFFF),
-                                  ),
-                                  style: AppTheme.of(context).title3.override(
-                                        fontFamily: 'Poppins',
-                                        color: const Color(0xFF221573),
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                  maxLines: 5,
-                                  validator: (value) {
-                                    return capitalizadoCharacters
-                                            .hasMatch(value ?? '')
-                                        ? null
-                                        : 'Para continuar, ingrese la descripción empezando por mayúscula';
-                                  },
-                                ),
-                              ),
-                              Padding(
                                 padding: const EdgeInsets.all(10),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
@@ -467,8 +401,8 @@ class _AgregarEmprendimientoScreenState
                                         if (emprendimientoProvider
                                                 .validateForm(formKey) &&
                                             emprendedorProvider.asociado) {
-                                          print("En asociar emprendedor");
-                                          // comunidadProvider.add();
+                                          
+                                          
                                           //Se crea emprendimiento sin emprendedor
                                           emprendimientoProvider.add();
                                           //Se asigna el emprendimiento al usuario actual

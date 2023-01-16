@@ -12,7 +12,6 @@ class ResponsePostEmprendedor {
         required this.id,
         required this.idComunidadFk,
         required this.idEmprendimientoFk,
-        required this.idStatusSyncFk,
         required this.integrantesFamilia,
         required this.nacimiento,
         required this.nombreEmprendedor,
@@ -30,7 +29,6 @@ class ResponsePostEmprendedor {
     String id;
     String idComunidadFk;
     String idEmprendimientoFk;
-    String idStatusSyncFk;
     int integrantesFamilia;
     DateTime? nacimiento;
     String nombreEmprendedor;
@@ -52,7 +50,6 @@ class ResponsePostEmprendedor {
         id: json["id"] == null ? null : json["id"],
         idComunidadFk: json["id_comunidad_fk"] == null ? null : json["id_comunidad_fk"],
         idEmprendimientoFk: json["id_emprendimiento_fk"] == null ? null : json["id_emprendimiento_fk"],
-        idStatusSyncFk: json["id_status_sync_fk"] == null ? null : json["id_status_sync_fk"],
         integrantesFamilia: json["integrantes_familia"] == null ? null : json["integrantes_familia"],
         nacimiento: json["nacimiento"] == null ? null : DateTime.parse(json["nacimiento"]),
         nombreEmprendedor: json["nombre_emprendedor"] == null ? null : json["nombre_emprendedor"],
@@ -71,7 +68,6 @@ class ResponsePostEmprendedor {
         "id": id == null ? null : id,
         "id_comunidad_fk": idComunidadFk == null ? null : idComunidadFk,
         "id_emprendimiento_fk": idEmprendimientoFk == null ? null : idEmprendimientoFk,
-        "id_status_sync_fk": idStatusSyncFk == null ? null : idStatusSyncFk,
         "integrantes_familia": integrantesFamilia == null ? null : integrantesFamilia,
         "nacimiento": nacimiento == null ? null : nacimiento!.toIso8601String(),
         "nombre_emprendedor": nombreEmprendedor == null ? null : nombreEmprendedor,

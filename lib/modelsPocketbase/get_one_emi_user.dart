@@ -17,7 +17,6 @@ class GetOneEmiUser {
         this.telefono,
         this.celular,
         this.idRolesFk,
-        required this.idStatusSyncFk,
         required this.archivado,
         required this.user,
         required this.idEmiWeb,
@@ -35,7 +34,6 @@ class GetOneEmiUser {
     final String? telefono;
     final String? celular;
     final List<String>? idRolesFk;
-    final String idStatusSyncFk;
     final bool archivado;
     final String user;
     final String idEmiWeb;
@@ -53,7 +51,6 @@ class GetOneEmiUser {
         telefono: json["telefono"],
         celular: json["celular"],
         idRolesFk: json["id_roles_fk"] == null ? null : List<String>.from(json["id_roles_fk"].map((x) => x)),
-        idStatusSyncFk: json["id_status_sync_fk"],
         archivado: json["archivado"],
         user: json["user"],
         idEmiWeb: json["id_emi_web"],
@@ -72,7 +69,6 @@ class GetOneEmiUser {
         "telefono": telefono,
         "celular": celular,
         "id_roles_fk": idRolesFk == null ? null : List<dynamic>.from(idRolesFk!.map((x) => x)),
-        "id_status_sync_fk": idStatusSyncFk,
         "archivado": archivado,
         "user": user,
         "id_emi_web": idEmiWeb,

@@ -42,7 +42,6 @@ class Jornada {
         required this.id,
         required this.idEmiWeb,
         required this.idEmprendimientoFk,
-        required this.idStatusSyncFk,
         required this.idTareaFk,
         required this.numJornada,
         required this.proximaVisita,
@@ -57,7 +56,6 @@ class Jornada {
     final String id;
     final String idEmiWeb;
     final String idEmprendimientoFk;
-    final String idStatusSyncFk;
     final String idTareaFk;
     final int numJornada;
     final DateTime? proximaVisita;
@@ -72,7 +70,6 @@ class Jornada {
         id: json["id"],
         idEmiWeb: json["id_emi_web"],
         idEmprendimientoFk: json["id_emprendimiento_fk"],
-        idStatusSyncFk: json["id_status_sync_fk"],
         idTareaFk: json["id_tarea_fk"],
         numJornada: json["num_jornada"],
         proximaVisita: json["proxima_visita"] == null ? null : DateTime.parse(json["proxima_visita"]),
@@ -88,7 +85,6 @@ class Jornada {
         "id": id,
         "id_emi_web": idEmiWeb,
         "id_emprendimiento_fk": idEmprendimientoFk,
-        "id_status_sync_fk": idStatusSyncFk,
         "id_tarea_fk": idTareaFk,
         "num_jornada": numJornada,
         "proxima_visita": proximaVisita == null ? null : proximaVisita!.toIso8601String(),
@@ -125,7 +121,6 @@ class TareaBasic {
         required this.idEmiWeb,
         required this.idImagenesFk,
         required this.idPorcentajeFk,
-        required this.idStatusSyncFk,
         required this.tarea,
         required this.updated,
         required this.jornada,
@@ -142,7 +137,6 @@ class TareaBasic {
     final String idEmiWeb;
     final List<String>? idImagenesFk;
     final String idPorcentajeFk;
-    final String idStatusSyncFk;
     final String tarea;
     final DateTime? updated;
     final bool jornada;
@@ -159,7 +153,6 @@ class TareaBasic {
         idEmiWeb: json["id_emi_web"],
         idImagenesFk: json["id_imagenes_fk"] == null ? null : List<String>.from(json["id_imagenes_fk"].map((x) => x)),
         idPorcentajeFk: json["id_porcentaje_fk"],
-        idStatusSyncFk: json["id_status_sync_fk"],
         tarea: json["tarea"],
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
         jornada: json["jornada"],
@@ -177,7 +170,6 @@ class TareaBasic {
         "id_emi_web": idEmiWeb,
         "id_imagenes_fk": idImagenesFk == null ? null : List<dynamic>.from(idImagenesFk!.map((x) => x)),
         "id_porcentaje_fk": idPorcentajeFk,
-        "id_status_sync_fk": idStatusSyncFk,
         "tarea": tarea,
         "updated": updated == null ? null : updated!.toIso8601String(),
         "jornada": jornada,

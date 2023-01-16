@@ -18,7 +18,6 @@ class GetSingleConsultoriasPocketbase {
         required this.idEmiWeb,
         this.idImagenesFk,
         this.idPorcentajeFk,
-        required this.idStatusSyncFk,
         required this.jornada,
         required this.tarea,
     });
@@ -35,7 +34,6 @@ class GetSingleConsultoriasPocketbase {
     final String idEmiWeb;
     final List<String>? idImagenesFk;
     final String? idPorcentajeFk;
-    final String idStatusSyncFk;
     final bool jornada;
     final String tarea;
 
@@ -52,7 +50,6 @@ class GetSingleConsultoriasPocketbase {
         idEmiWeb: json["id_emi_web"],
         idImagenesFk: json["id_imagenes_fk"] == null ? null : List<String>.from(json["id_imagenes_fk"].map((x) => x)),
         idPorcentajeFk: json["id_porcentaje_fk"],
-        idStatusSyncFk: json["id_status_sync_fk"],
         jornada: json["jornada"],
         tarea: json["tarea"],
     );
@@ -70,7 +67,6 @@ class GetSingleConsultoriasPocketbase {
         "id_emi_web": idEmiWeb,
         "id_imagenes_fk": idImagenesFk == null ? null : List<dynamic>.from(idImagenesFk!.map((x) => x)),
         "id_porcentaje_fk": idPorcentajeFk,
-        "id_status_sync_fk": idStatusSyncFk,
         "jornada": jornada,
         "tarea": tarea,
     };

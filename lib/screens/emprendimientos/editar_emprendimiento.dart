@@ -362,67 +362,6 @@ class _EditarEmprendimientoScreenState
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    5, 0, 5, 10),
-                                child: TextFormField(
-                                  maxLength: 50,
-                                  textCapitalization:
-                                      TextCapitalization.sentences,
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  obscureText: false,
-                                  controller: descController,
-                                  decoration: InputDecoration(
-                                    labelText: 'Descripción de emprendimiento',
-                                    labelStyle:
-                                        AppTheme.of(context).title3.override(
-                                              fontFamily: 'Montserrat',
-                                              color: const Color(0xFF4672FF),
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                    hintText:
-                                        'Descripción del emprendimiento...',
-                                    hintStyle:
-                                        AppTheme.of(context).title3.override(
-                                              fontFamily: 'Poppins',
-                                              color: const Color(0xFF4672FF),
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0xFF221573),
-                                        width: 1.5,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0xFF221573),
-                                        width: 1.5,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    filled: true,
-                                    fillColor: const Color(0x49FFFFFF),
-                                  ),
-                                  style: AppTheme.of(context).title3.override(
-                                        fontFamily: 'Poppins',
-                                        color: const Color(0xFF221573),
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                  maxLines: 5,
-                                  validator: (value) {
-                                    return capitalizadoCharacters
-                                            .hasMatch(value ?? '')
-                                        ? null
-                                        : 'Para continuar, ingrese la descripción empezando por mayúscula';
-                                  },
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 5, 0, 10),
                                 child: FFButtonWidget(
                                   onPressed: () async {

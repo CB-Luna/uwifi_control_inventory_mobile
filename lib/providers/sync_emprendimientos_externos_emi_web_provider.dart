@@ -136,7 +136,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                   "telefono": basicProyecto.payload.emprendedor.telefono,
                   "comentarios": basicProyecto.payload.emprendedor.comentarios,
                   "id_emprendimiento_fk": "",
-                  "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                   "id_emi_web": basicProyecto.payload.emprendedor.idEmprendedor,
                 });
 
@@ -151,7 +150,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                     "id_promotor_fk": usuario.idDBR,
                     "id_prioridad_fk": "yuEVuBv9rxLM4cR",
                     "id_fase_emp_fk": fase.idDBR,
-                    "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                     "id_emprendedor_fk": recordEmprendedor.id,
                     "id_emi_web": basicProyecto.payload.idProyecto,
                     "id_nombre_proyecto_fk": catProyecto?.idDBR ?? "",
@@ -183,7 +181,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                   "id_promotor_fk": usuario.idDBR,
                   "id_prioridad_fk": "yuEVuBv9rxLM4cR",
                   "id_fase_emp_fk": fase.idDBR,
-                  "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                   "id_emprendedor_fk": recordValidateEmprendedor.first.id,
                   "id_emi_web": basicProyecto.payload.idProyecto,
                   "id_nombre_proyecto_fk": catProyecto?.idDBR ?? "",
@@ -288,7 +285,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                   "tarea": basicJornadas.payload!.jornada1!.registrarTarea,
                   "descripcion": "Creación Jornada 1",
                   "fecha_revision": basicJornadas.payload!.jornada1!.fechaRevision.toUtc().toString(),
-                  "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                   "id_emi_web": basicJornadas.payload!.jornada1!.idJornada1.toString(),
                   "jornada": true,
                   });
@@ -299,7 +295,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                       "id_tarea_fk": recordTarea.id,
                       "proxima_visita": basicJornadas.payload!.jornada1!.fechaRevision.toUtc().toString(),
                       "id_emprendimiento_fk": idEmprendimientoPocketbase,
-                      "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                       "completada": basicJornadas.payload!.jornada1!.tareaCompletada,
                       "id_emi_web": basicJornadas.payload!.jornada1!.idJornada1.toString(),
                     });
@@ -320,7 +315,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                   //Primero actualizamos la Jornada 1
                   final recordJ1 = await client.records.update('jornadas', recordValidateJornada.first.id, body: {
                     "proxima_visita": basicJornadas.payload!.jornada1!.fechaRevision.toUtc().toString(),
-                    "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                     "completada": basicJornadas.payload!.jornada1!.tareaCompletada,
                   });
 
@@ -334,7 +328,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                       "tarea": basicJornadas.payload!.jornada1!.registrarTarea,
                       "descripcion": "Creación Jornada 1",
                       "fecha_revision": basicJornadas.payload!.jornada1!.fechaRevision.toUtc().toString(),
-                      "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                     });
                     if (recordTareaJ1.id.isNotEmpty) {
                       // Se hizo con éxito la actualización
@@ -399,7 +392,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                   "descripcion": "Creación Jornada 2",
                   "comentarios": basicJornadas.payload!.jornada2!.comentarios,
                   "fecha_revision": basicJornadas.payload!.jornada2!.fechaRevision.toUtc().toString(),
-                  "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                   "id_emi_web": basicJornadas.payload!.jornada2!.idJornada2.toString(),
                   "id_imagenes_fk": idsDBRImagenes,
                   "jornada": true,
@@ -411,7 +403,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                       "id_tarea_fk": recordTarea.id,
                       "proxima_visita": basicJornadas.payload!.jornada2!.fechaRevision.toUtc().toString(),
                       "id_emprendimiento_fk": idEmprendimientoPocketbase,
-                      "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                       "completada": basicJornadas.payload!.jornada2!.tareaCompletada,
                       "id_emi_web": basicJornadas.payload!.jornada2!.idJornada2.toString(),
                     });
@@ -468,7 +459,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                   //Primero actualizamos la Jornada 2
                   final recordJ2 = await client.records.update('jornadas', recordValidateJornada.first.id, body: {
                     "proxima_visita": basicJornadas.payload!.jornada2!.fechaRevision.toUtc().toString(),
-                    "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                     "completada": basicJornadas.payload!.jornada2!.tareaCompletada,
                   });
 
@@ -481,7 +471,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                       "descripcion": "Creación Jornada 2",
                       "comentarios": basicJornadas.payload!.jornada2!.comentarios,
                       "fecha_revision": basicJornadas.payload!.jornada2!.fechaRevision.toUtc().toString(),
-                      "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                     });
                     if (recordTareaJ2.id.isNotEmpty) {
                       // Se hizo con éxito la actualización
@@ -546,7 +535,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                   "descripcion": basicJornadas.payload!.jornada3!.descripcion,
                   "comentarios": basicJornadas.payload!.jornada3!.comentarios,
                   "fecha_revision": basicJornadas.payload!.jornada3!.fechaRevision.toUtc().toString(),
-                  "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                   "id_emi_web": basicJornadas.payload!.jornada3!.idJornada3.toString(),
                   "id_imagenes_fk": idsDBRImagenes,
                   "jornada": true,
@@ -558,7 +546,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                       "id_tarea_fk": recordTarea.id,
                       "proxima_visita": basicJornadas.payload!.jornada3!.fechaRevision.toUtc().toString(),
                       "id_emprendimiento_fk": idEmprendimientoPocketbase,
-                      "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                       "completada": basicJornadas.payload!.jornada3!.tareaCompletada,
                       "id_emi_web": basicJornadas.payload!.jornada3!.idJornada3.toString(),
                     });
@@ -676,7 +663,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                   //Primero actualizamos la Jornada 3
                   final recordJ3 = await client.records.update('jornadas', recordValidateJornada.first.id, body: {
                     "proxima_visita": basicJornadas.payload!.jornada3!.fechaRevision.toUtc().toString(),
-                    "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                     "completada": basicJornadas.payload!.jornada3!.tareaCompletada,
                   });
 
@@ -689,7 +675,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                       "descripcion": basicJornadas.payload!.jornada3!.descripcion,
                       "comentarios": basicJornadas.payload!.jornada3!.comentarios,
                       "fecha_revision": basicJornadas.payload!.jornada3!.fechaRevision.toUtc().toString(),
-                      "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                     });
                     if (recordTareaJ3.id.isNotEmpty) {
                       // Se hizo con éxito la actualización
@@ -929,7 +914,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                   "descripcion": "Creación Jornada 4",
                   "comentarios": basicJornadas.payload!.jornada4!.comentarios,
                   "fecha_revision": basicJornadas.payload!.jornada4!.fechaRevision.toUtc().toString(),
-                  "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                   "id_emi_web": basicJornadas.payload!.jornada4!.idJornada4.toString(),
                   "id_imagenes_fk": idsDBRImagenes,
                   "jornada": true,
@@ -941,7 +925,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                       "id_tarea_fk": recordTarea.id,
                       "proxima_visita": basicJornadas.payload!.jornada4!.fechaRevision.toUtc().toString(),
                       "id_emprendimiento_fk": idEmprendimientoPocketbase,
-                      "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                       "completada": DateTime.now().difference(basicJornadas.payload!.jornada4!.fechaRegistro).inHours > 24 ? true : false,
                       "id_emi_web": basicJornadas.payload!.jornada4!.idJornada4.toString(),
                     });
@@ -998,7 +981,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                   //Primero actualizamos la Jornada 4
                   final recordJ4 = await client.records.update('jornadas', recordValidateJornada.first.id, body: {
                     "proxima_visita": basicJornadas.payload!.jornada4!.fechaRevision.toUtc().toString(),
-                    "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                     "completada": DateTime.now().difference(basicJornadas.payload!.jornada4!.fechaRegistro).inHours > 24 ? true : false,
                   });
 
@@ -1009,7 +991,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                     final recordTareaJ4 = await client.records.update('tareas', singleJornada4.idTareaFk, body: {
                       "comentarios": basicJornadas.payload!.jornada4!.comentarios,
                       "fecha_revision": basicJornadas.payload!.jornada4!.fechaRevision.toUtc().toString(),
-                      "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                     });
                     if (recordTareaJ4.id.isNotEmpty) {
                       // Se hizo con éxito la actualización
@@ -1060,7 +1041,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                               "tarea": consultoria.asignarTarea,
                               "descripcion": "Creación de Consultoría",
                               "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
-                              "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                               "id_porcentaje_fk": porcentajeAvance.idDBR,
                               "id_emi_web": consultoria.idConsultorias.toString(),
                               "jornada": false,
@@ -1092,7 +1072,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                   "tarea": consultoria.tareas.toList()[i - 1].siguientesPasos,
                                   "descripcion": consultoria.tareas.toList()[i - 1].avanceObservado,
                                   "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
-                                  "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                                   "id_porcentaje_fk": porcentajeAvance.idDBR,
                                   "id_emi_web": consultoria.idConsultorias.toString(),
                                   "id_imagenes_fk": [recordImagen.id],
@@ -1121,7 +1100,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                 "tarea": consultoria.tareas.toList()[i - 1].siguientesPasos,
                                 "descripcion": consultoria.tareas.toList()[i - 1].avanceObservado,
                                 "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
-                                "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                                 "id_porcentaje_fk": porcentajeAvance.idDBR,
                                 "id_emi_web": consultoria.idConsultorias.toString(),
                                 "jornada": false,
@@ -1146,7 +1124,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                         final recordConsultoria = await client.records.create('consultorias', body: {
                           "id_emprendimiento_fk": idEmprendimientoPocketbase,
                           "id_tarea_fk": idsDBRTareas,
-                          "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                           "id_ambito_fk": ambito.idDBR,
                           "id_area_circulo_fk": areaCirculo.idDBR,
                           "id_emi_web": consultoria.idConsultorias.toString(),
@@ -1185,7 +1162,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                   "tarea": consultoria.asignarTarea,
                                   "descripcion": "Creación de Consultoría",
                                   "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
-                                  "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                                   "id_porcentaje_fk": porcentajeAvance.idDBR,
                                   "id_emi_web": consultoria.idConsultorias.toString(),
                                   "id_imagenes_fk": [],
@@ -1219,7 +1195,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                         "tarea": consultoria.tareas.toList()[i - 1].siguientesPasos,
                                         "descripcion": consultoria.tareas.toList()[i - 1].avanceObservado,
                                         "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
-                                        "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                                         "id_porcentaje_fk": porcentajeAvance.idDBR,
                                         "id_emi_web": consultoria.idConsultorias.toString(),
                                         "id_imagenes_fk": [recordImagen.id],
@@ -1252,7 +1227,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                         "tarea": consultoria.tareas.toList()[i - 1].siguientesPasos,
                                         "descripcion": consultoria.tareas.toList()[i - 1].avanceObservado,
                                         "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
-                                        "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                                         "id_porcentaje_fk": porcentajeAvance.idDBR,
                                         "id_emi_web": consultoria.idConsultorias.toString(),
                                         "id_imagenes_fk": [recordImagen.id],
@@ -1281,7 +1255,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                     "tarea": consultoria.tareas.toList()[i - 1].siguientesPasos,
                                     "descripcion": consultoria.tareas.toList()[i - 1].avanceObservado,
                                     "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
-                                    "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                                     "id_porcentaje_fk": porcentajeAvance.idDBR,
                                     "id_emi_web": consultoria.idConsultorias.toString(),
                                     "id_imagenes_fk": [],
@@ -1311,7 +1284,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                     "tarea": consultoria.asignarTarea,
                                     "descripcion": "Creación de Consultoría",
                                     "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
-                                    "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                                     "id_porcentaje_fk": porcentajeAvance.idDBR,
                                     "id_emi_web": consultoria.idConsultorias.toString(),
                                     "id_imagenes_fk": [],
@@ -1345,7 +1317,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                           "tarea": consultoria.tareas.toList()[i - 1].siguientesPasos,
                                           "descripcion": consultoria.tareas.toList()[i - 1].avanceObservado,
                                           "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
-                                          "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                                           "id_porcentaje_fk": porcentajeAvance.idDBR,
                                           "id_emi_web": consultoria.idConsultorias.toString(),
                                           "id_imagenes_fk": [recordImagen.id],
@@ -1378,7 +1349,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                           "tarea": consultoria.tareas.toList()[i - 1].siguientesPasos,
                                           "descripcion": consultoria.tareas.toList()[i - 1].avanceObservado,
                                           "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
-                                          "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                                           "id_porcentaje_fk": porcentajeAvance.idDBR,
                                           "id_emi_web": consultoria.idConsultorias.toString(),
                                           "id_imagenes_fk": [recordImagen.id],
@@ -1407,7 +1377,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                       "tarea": consultoria.tareas.toList()[i - 1].siguientesPasos,
                                       "descripcion": consultoria.tareas.toList()[i - 1].avanceObservado,
                                       "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
-                                      "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                                       "id_porcentaje_fk": porcentajeAvance.idDBR,
                                       "id_emi_web": consultoria.idConsultorias.toString(),
                                       "id_imagenes_fk": [],
@@ -1443,7 +1412,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                       "tarea": consultoria.tareas.toList()[i - 1].siguientesPasos,
                                       "descripcion": consultoria.tareas.toList()[i - 1].avanceObservado,
                                       "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
-                                      "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                                       "id_porcentaje_fk": porcentajeAvance.idDBR,
                                       "id_emi_web": consultoria.idConsultorias.toString(),
                                       "id_imagenes_fk": [recordImagen.id],
@@ -1472,7 +1440,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                     "tarea": consultoria.tareas.toList()[i - 1].siguientesPasos,
                                     "descripcion": consultoria.tareas.toList()[i - 1].avanceObservado,
                                     "fecha_revision": consultoria.proximaVisita.toUtc().toString(),
-                                    "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                                     "id_porcentaje_fk": porcentajeAvance.idDBR,
                                     "id_emi_web": consultoria.idConsultorias.toString(),
                                     "jornada": false,
@@ -1502,7 +1469,6 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                         final recordConsultoria = await client.records.update('consultorias', recordValidateConsultoria.first.id, body: {
                           "id_emprendimiento_fk": idEmprendimientoPocketbase,
                           "id_tarea_fk": idsDBRTareas,
-                          "id_status_sync_fk": "gdjz1oQlrSvQ8PB",
                           "id_ambito_fk": ambito.idDBR,
                           "id_area_circulo_fk": areaCirculo.idDBR,
                           "id_emi_web": consultoria.idConsultorias.toString(),

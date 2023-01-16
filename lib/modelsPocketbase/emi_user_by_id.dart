@@ -43,7 +43,6 @@ class Item {
         required this.created,
         required this.id,
         required this.idRolFk,
-        required this.idStatusSyncFk,
         required this.nacimiento,
         required this.nombreUsuario,
         this.telefono,
@@ -60,7 +59,7 @@ class Item {
     final DateTime? created;
     final String id;
     final List<String>? idRolFk;
-    final String idStatusSyncFk;
+    
     final DateTime? nacimiento;
     final String nombreUsuario;
     final String? telefono;
@@ -77,7 +76,6 @@ class Item {
         created: json["created"] == null ? null : DateTime.parse(json["created"]),
         id: json["id"],
         idRolFk: json["id_rol_fk"] == null ? null : List<String>.from(json["id_rol_fk"].map((x) => x)),
-        idStatusSyncFk: json["id_status_sync_fk"],
         nacimiento: json["nacimiento"] == null ? null : DateTime.parse(json["nacimiento"]),
         nombreUsuario: json["nombre_usuario"],
         telefono: json["telefono"],
@@ -95,7 +93,6 @@ class Item {
         "created": created == null ? null : created!.toIso8601String(),
         "id": id,
         "id_rol_fk": idRolFk == null ? null : List<dynamic>.from(idRolFk!.map((x) => x)),
-        "id_status_sync_fk": idStatusSyncFk,
         "nacimiento": nacimiento == null ? null : nacimiento!.toIso8601String(),
         "nombre_usuario": nombreUsuario,
         "telefono": telefono,

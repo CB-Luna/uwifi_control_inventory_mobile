@@ -2330,7 +2330,6 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                                   .payload!.telefono
                               : "",
                           "id_roles_fk": listRoles,
-                          "id_status_sync_fk": "xx5X7zjT7DhRA8a",
                           "archivado": responseGetUsuarioDataBasicoParse
                               .payload!.archivado,
                         });
@@ -2368,7 +2367,6 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                                   .payload!.telefono
                               : "",
                           "id_roles_fk": listRoles,
-                          "id_status_sync_fk": "xx5X7zjT7DhRA8a",
                           "id_imagen_fk": "",
                           "archivado": responseGetUsuarioDataBasicoParse
                               .payload!.archivado,
@@ -2444,7 +2442,6 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                                         .payload!.telefono
                                     : "",
                                 "id_roles_fk": listRoles,
-                                "id_status_sync_fk": "xx5X7zjT7DhRA8a",
                                 "archivado": responseGetUsuarioDataBasicoParse
                                     .payload!.archivado,
                                 "id_imagen_fk": newRecordImagenUsuario.id,
@@ -2505,7 +2502,6 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                                         .payload!.telefono
                                     : "",
                                 "id_roles_fk": listRoles,
-                                "id_status_sync_fk": "xx5X7zjT7DhRA8a",
                                 "archivado": responseGetUsuarioDataBasicoParse
                                     .payload!.archivado,
                                 "id_imagen_fk": updateRecordImagenUsuario.id,

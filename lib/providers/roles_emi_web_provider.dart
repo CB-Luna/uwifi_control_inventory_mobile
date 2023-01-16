@@ -129,7 +129,6 @@ class RolesEmiWebProvider extends ChangeNotifier {
               //Se agrega el rol como nuevo en la colección de Pocketbase
               final newRecordEstado = await client.records.create('roles', body: {
               "rol": responseListRoles.payload![i].rol,
-              "id_status_sync_fk": "xx5X7zjT7DhRA8a",
               "id_emi_web": responseListRoles.payload![i].idCatRoles.toString(),
               });
               if (newRecordEstado.id.isNotEmpty) {

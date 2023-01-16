@@ -1258,11 +1258,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                           listProyectos.sort((a, b) =>
                                               removeDiacritics(a).compareTo(
                                                   removeDiacritics(b)));
-                                          print("Entro a tipo proyecto");
                                         }
-                                        print("Tipo Proyecto: $tipoProyecto");
-                                        print(
-                                            "List proyectos: ${listProyectos.length}");
                                       }),
                                       width: double.infinity,
                                       height: 50,
@@ -1320,9 +1316,7 @@ class _EditarJornada3ScreenState extends State<EditarJornada3Screen> {
                                           ));
                                         } else {
                                           proyecto = val!;
-                                          print("Entro a proyectos");
                                         }
-                                        print("Proyecto: $proyecto");
                                       }),
                                       width: double.infinity,
                                       height: 50,

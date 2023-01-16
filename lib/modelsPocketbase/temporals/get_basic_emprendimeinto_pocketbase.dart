@@ -48,7 +48,6 @@ class BasicEmprendimiento{
         required this.idNombreProyectoFk,
         required this.idPrioridadFk,
         required this.idPromotorFk,
-        required this.idStatusSyncFk,
         required this.nombreEmprendimiento,
         required this.updated,
     });
@@ -67,7 +66,6 @@ class BasicEmprendimiento{
     final String? idNombreProyectoFk;
     final String idPrioridadFk;
     final String idPromotorFk;
-    final String idStatusSyncFk;
     final String nombreEmprendimiento;
     final DateTime? updated;
 
@@ -86,7 +84,6 @@ class BasicEmprendimiento{
         idNombreProyectoFk: json["id_nombre_proyecto_fk"],
         idPrioridadFk: json["id_prioridad_fk"],
         idPromotorFk: json["id_promotor_fk"],
-        idStatusSyncFk: json["id_status_sync_fk"],
         nombreEmprendimiento: json["nombre_emprendimiento"],
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
     );
@@ -106,7 +103,6 @@ class BasicEmprendimiento{
         "id_nombre_proyecto_fk": idNombreProyectoFk,
         "id_prioridad_fk": idPrioridadFk,
         "id_promotor_fk": idPromotorFk,
-        "id_status_sync_fk": idStatusSyncFk,
         "nombre_emprendimiento": nombreEmprendimiento,
         "updated": updated == null ? null : updated!.toIso8601String(),
     };
@@ -148,7 +144,6 @@ class BasicEmprendedor {
         required this.id,
         required this.idComunidadFk,
         required this.idEmiWeb,
-        required this.idStatusSyncFk,
         required this.integrantesFamilia,
         required this.nombreEmprendedor,
         required this.telefono,
@@ -165,7 +160,6 @@ class BasicEmprendedor {
     final String id;
     final String idComunidadFk;
     final String idEmiWeb;
-    final String? idStatusSyncFk;
     final int? integrantesFamilia;
     final String nombreEmprendedor;
     final String? telefono;
@@ -182,7 +176,6 @@ class BasicEmprendedor {
         id: json["id"],
         idComunidadFk: json["id_comunidad_fk"],
         idEmiWeb: json["id_emi_web"],
-        idStatusSyncFk: json["id_status_sync_fk"],
         integrantesFamilia: json["integrantes_familia"],
         nombreEmprendedor: json["nombre_emprendedor"],
         telefono: json["telefono"],
@@ -200,7 +193,6 @@ class BasicEmprendedor {
         "id": id,
         "id_comunidad_fk": idComunidadFk,
         "id_emi_web": idEmiWeb,
-        "id_status_sync_fk": idStatusSyncFk,
         "integrantes_familia": integrantesFamilia,
         "nombre_emprendedor": nombreEmprendedor,
         "telefono": telefono,
@@ -233,7 +225,6 @@ class BasicComunidad {
         required this.id,
         required this.idEmiWeb,
         required this.idMunicipioFk,
-        required this.idStatusSyncFk,
         required this.nombreComunidad,
         required this.updated,
     });
@@ -245,7 +236,6 @@ class BasicComunidad {
     final String id;
     final String idEmiWeb;
     final String idMunicipioFk;
-    final String? idStatusSyncFk;
     final String nombreComunidad;
     final DateTime? updated;
 
@@ -257,7 +247,6 @@ class BasicComunidad {
         id: json["id"],
         idEmiWeb: json["id_emi_web"],
         idMunicipioFk: json["id_municipio_fk"],
-        idStatusSyncFk: json["id_status_sync_fk"],
         nombreComunidad: json["nombre_comunidad"],
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
     );
@@ -270,7 +259,6 @@ class BasicComunidad {
         "id": id,
         "id_emi_web": idEmiWeb,
         "id_municipio_fk": idMunicipioFk,
-        "id_status_sync_fk": idStatusSyncFk,
         "nombre_comunidad": nombreComunidad,
         "updated": updated == null ? null : updated!.toIso8601String(),
     };
@@ -284,7 +272,6 @@ class BasicFaseEmp {
         required this.fase,
         required this.id,
         required this.idEmiWeb,
-        required this.idStatusSyncFk,
         required this.updated,
     });
 
@@ -294,7 +281,6 @@ class BasicFaseEmp {
     final String fase;
     final String id;
     final String idEmiWeb;
-    final String? idStatusSyncFk;
     final DateTime? updated;
 
     factory BasicFaseEmp.fromMap(Map<String, dynamic> json) => BasicFaseEmp(
@@ -304,7 +290,6 @@ class BasicFaseEmp {
         fase: json["fase"],
         id: json["id"],
         idEmiWeb: json["id_emi_web"],
-        idStatusSyncFk: json["id_status_sync_fk"],
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
     );
 
@@ -315,7 +300,6 @@ class BasicFaseEmp {
         "fase": fase,
         "id": id,
         "id_emi_web": idEmiWeb,
-        "id_status_sync_fk": idStatusSyncFk,
         "updated": updated == null ? null : updated!.toIso8601String(),
     };
 }

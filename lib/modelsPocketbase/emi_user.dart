@@ -45,7 +45,6 @@ class Item {
         required this.idEmiWeb,
         this.idImagenFk,
         required this.idRolesFk,
-        required this.idStatusSyncFk,
         required this.nombreUsuario,
         this.telefono,
         required this.updated,
@@ -63,7 +62,6 @@ class Item {
     final String idEmiWeb;
     final String? idImagenFk;
     final List<String>? idRolesFk;
-    final String idStatusSyncFk;
     final String nombreUsuario;
     final String? telefono;
     final DateTime? updated;
@@ -81,7 +79,6 @@ class Item {
         idEmiWeb: json["id_emi_web"],
         idImagenFk: json["id_imagen_fk"],
         idRolesFk: json["id_roles_fk"] == null ? null : List<String>.from(json["id_roles_fk"].map((x) => x)),
-        idStatusSyncFk: json["id_status_sync_fk"],
         nombreUsuario: json["nombre_usuario"],
         telefono: json["telefono"],
         updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
@@ -100,7 +97,6 @@ class Item {
         "id_emi_web": idEmiWeb,
         "id_imagen_fk": idImagenFk,
         "id_roles_fk": idRolesFk == null ? null : List<dynamic>.from(idRolesFk!.map((x) => x)),
-        "id_status_sync_fk": idStatusSyncFk,
         "nombre_usuario": nombreUsuario,
         "telefono": telefono,
         "updated": updated == null ? null : updated!.toIso8601String(),

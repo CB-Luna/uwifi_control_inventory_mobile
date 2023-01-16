@@ -226,7 +226,6 @@ abstract class AuthService {
                   "telefono": responseUsuarioCompletoEmiWeb.payload!.telefono != "Vacío" ? responseUsuarioCompletoEmiWeb.payload!.telefono : "",
                   "celular": responseUsuarioCompletoEmiWeb.payload!.celular != "Vacío" ? responseUsuarioCompletoEmiWeb.payload!.telefono : "",
                   "id_roles_fk": listRoles,
-                  "id_status_sync_fk": "xx5X7zjT7DhRA8a",
                   "archivado": false,
                   "user": nuevoUsuario.id,
                   "id_emi_web": responseUsuarioCompletoEmiWeb.payload!.idUsuario.toString(),
@@ -281,7 +280,6 @@ abstract class AuthService {
                         "telefono": responseUsuarioCompletoEmiWeb.payload!.telefono != "Vacío" ? responseUsuarioCompletoEmiWeb.payload!.telefono : "",
                         "celular": responseUsuarioCompletoEmiWeb.payload!.celular != "Vacío" ? responseUsuarioCompletoEmiWeb.payload!.telefono : "",
                         "id_roles_fk": listRoles,
-                        "id_status_sync_fk": "xx5X7zjT7DhRA8a",
                         "archivado": false,
                         "user": nuevoUsuario.id,
                         "id_emi_web": responseUsuarioCompletoEmiWeb.payload!.idUsuario.toString(),
@@ -394,7 +392,6 @@ abstract class AuthService {
                   "telefono": responseGetUsuarioDataCompletoParse.payload!.telefono != "Vacío" ? responseGetUsuarioDataCompletoParse.payload!.telefono : "",
                   "celular": responseGetUsuarioDataCompletoParse.payload!.celular != "Vacío" ? responseGetUsuarioDataCompletoParse.payload!.telefono : "",
                   "id_roles_fk": listRoles,
-                  "id_status_sync_fk": "xx5X7zjT7DhRA8a",
                   "archivado": responseUsuarioEmiWeb.payload!.archivado,
                 });
                 if (updateRecordEmiUser.id.isNotEmpty) {
@@ -427,7 +424,6 @@ abstract class AuthService {
                   "telefono": responseGetUsuarioDataCompletoParse.payload!.telefono != "Vacío" ? responseGetUsuarioDataCompletoParse.payload!.telefono : "",
                   "celular": responseGetUsuarioDataCompletoParse.payload!.celular != "Vacío" ? responseGetUsuarioDataCompletoParse.payload!.telefono : "",
                   "id_roles_fk": listRoles,
-                  "id_status_sync_fk": "xx5X7zjT7DhRA8a",
                   "id_imagen_fk": "",
                   "archivado": responseUsuarioEmiWeb.payload!.archivado,
                 });
@@ -493,7 +489,6 @@ abstract class AuthService {
                         "telefono": responseGetUsuarioDataCompletoParse.payload!.telefono != "Vacío" ? responseGetUsuarioDataCompletoParse.payload!.telefono : "",
                         "celular": responseGetUsuarioDataCompletoParse.payload!.celular != "Vacío" ? responseGetUsuarioDataCompletoParse.payload!.telefono : "",
                         "id_roles_fk": listRoles,
-                        "id_status_sync_fk": "xx5X7zjT7DhRA8a",
                         "archivado": responseUsuarioEmiWeb.payload!.archivado,
                         "id_imagen_fk": newRecordImagenUsuario.id,
                       });
@@ -538,7 +533,6 @@ abstract class AuthService {
                         "telefono": responseGetUsuarioDataCompletoParse.payload!.telefono != "Vacío" ? responseGetUsuarioDataCompletoParse.payload!.telefono : "",
                         "celular": responseGetUsuarioDataCompletoParse.payload!.celular != "Vacío" ? responseGetUsuarioDataCompletoParse.payload!.telefono : "",
                         "id_roles_fk": listRoles,
-                        "id_status_sync_fk": "xx5X7zjT7DhRA8a",
                         "archivado": responseUsuarioEmiWeb.payload!.archivado,
                         "id_imagen_fk": updateRecordImagenUsuario.id,
                       });
