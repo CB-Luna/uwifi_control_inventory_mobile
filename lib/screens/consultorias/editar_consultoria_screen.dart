@@ -783,9 +783,9 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                                   imagenes: fotoAvance!.path,
                                                   nombre: fotoAvance!.name,
                                                   path: fotoAvance!.path,
-                                                  base64: base64, 
-                                                  idEmprendimiento: widget.emprendimientoEditar.id
-                                                  );
+                                                  base64: base64,
+                                                  idEmprendimiento: widget
+                                                      .emprendimientoEditar.id);
                                               consultoriaProvider.imagenLocal =
                                                   newImagen;
                                             });
@@ -840,11 +840,10 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                     ?.id;
                                 if (idPorcentajeAvance != null) {
                                   consultoriaProvider.updateTareaConsultoria(
-                                    widget.consultoria.id,
-                                    widget.tarea,
-                                    idPorcentajeAvance,
-                                    widget.emprendimientoEditar.id
-                                  );
+                                      widget.consultoria.id,
+                                      widget.tarea,
+                                      idPorcentajeAvance,
+                                      widget.emprendimientoEditar.id);
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(

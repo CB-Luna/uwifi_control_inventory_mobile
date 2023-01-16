@@ -561,9 +561,7 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
                                         initiallySelected: !activoController,
                                         options: '¿Tarea Completada?',
                                         onChanged: (val) => setState(() {
-                                          print(val);
                                           activoController = val;
-                                          print(activoController);
                                         }),
                                         activeColor:
                                             AppTheme.of(context).primaryColor,

@@ -736,7 +736,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                             }
                                           });
                                         },
-                                        text: 'Análisis Financiero',
+                                        text: 'Análisis Financiero*',
                                         icon: const Icon(
                                           Icons.add_a_photo,
                                           size: 15,
@@ -942,7 +942,6 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                           listProyectos.sort((a, b) =>
                                               removeDiacritics(a).compareTo(
                                                   removeDiacritics(b)));
-                                          print("Entro a tipo proyecto");
                                         }
                                       }),
                                       width: double.infinity,
@@ -1002,9 +1001,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                         } else {
                                           proyecto = val!;
                                           jornadaProvider.proyecto = val;
-                                          print("Entro a proyectos");
                                         }
-                                        print("Proyecto: $proyecto");
                                       }),
                                       width: double.infinity,
                                       height: 50,
@@ -1305,7 +1302,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                             );
                                           }
                                         },
-                                        text: 'Agregar Inversión',
+                                        text: 'Agregar Inversión*',
                                         options: FFButtonOptions(
                                           width: 150,
                                           height: 50,

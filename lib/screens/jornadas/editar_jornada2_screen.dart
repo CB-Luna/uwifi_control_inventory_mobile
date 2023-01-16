@@ -1136,13 +1136,13 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                             }
                                           });
                                         },
-                                        text: 'Círculo Empresa',
+                                        text: 'Círculo Empresa*',
                                         icon: const Icon(
                                           Icons.add_a_photo,
                                           size: 15,
                                         ),
                                         options: FFButtonOptions(
-                                          width: 140,
+                                          width: 160,
                                           height: 40,
                                           color: AppTheme.of(context)
                                               .secondaryText,
@@ -1194,10 +1194,9 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                         !widget.jornada.completada) {
                                   if (newCirculoEmpresa != oldCirculoEmpresa) {
                                     jornadaProvider.updateImagenesJornada(
-                                      widget.jornada.tarea.target!,
-                                      listInstruccionesImagenesTemp,
-                                      widget.emprendimiento.id
-                                    );
+                                        widget.jornada.tarea.target!,
+                                        listInstruccionesImagenesTemp,
+                                        widget.emprendimiento.id);
                                   }
                                   jornadaProvider.updateJornada2(
                                       widget.jornada.id,
@@ -1220,10 +1219,9 @@ class _EditarJornada2ScreenState extends State<EditarJornada2Screen> {
                                 } else {
                                   if (newCirculoEmpresa != oldCirculoEmpresa) {
                                     jornadaProvider.updateImagenesJornada(
-                                      widget.jornada.tarea.target!,
-                                      listInstruccionesImagenesTemp,
-                                      widget.emprendimiento.id
-                                    );
+                                        widget.jornada.tarea.target!,
+                                        listInstruccionesImagenesTemp,
+                                        widget.emprendimiento.id);
                                   }
                                   await Navigator.push(
                                     context,

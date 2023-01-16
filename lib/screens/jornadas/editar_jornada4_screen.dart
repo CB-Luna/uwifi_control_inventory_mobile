@@ -924,7 +924,7 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                             }
                                           });
                                         },
-                                        text: 'Convenio',
+                                        text: 'Convenio*',
                                         icon: const Icon(
                                           Icons.add_a_photo,
                                           size: 15,
@@ -1008,10 +1008,9 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                         !widget.jornada.completada) {
                                   if (newConvenio != oldConvenio) {
                                     jornadaProvider.updateImagenesJornada(
-                                      widget.jornada.tarea.target!,
-                                      listInstruccionesImagenesTemp,
-                                      widget.emprendimiento.id
-                                    );
+                                        widget.jornada.tarea.target!,
+                                        listInstruccionesImagenesTemp,
+                                        widget.emprendimiento.id);
                                   }
                                   jornadaProvider.updateJornada4(
                                       widget.jornada.id,
@@ -1032,10 +1031,9 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                 } else {
                                   if (newConvenio != oldConvenio) {
                                     jornadaProvider.updateImagenesJornada(
-                                      widget.jornada.tarea.target!,
-                                      listInstruccionesImagenesTemp,
-                                      widget.emprendimiento.id
-                                    );
+                                        widget.jornada.tarea.target!,
+                                        listInstruccionesImagenesTemp,
+                                        widget.emprendimiento.id);
                                   }
                                   await Navigator.push(
                                     context,

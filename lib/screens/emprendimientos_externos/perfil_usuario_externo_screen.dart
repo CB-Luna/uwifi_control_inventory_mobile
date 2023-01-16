@@ -61,7 +61,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
         children: [
           Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.41,
+            height: MediaQuery.of(context).size.height * 0.35, // Decia 41
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
@@ -477,8 +477,6 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
             child: FFButtonWidget(
               onPressed: () async {
                 if (emprendimientoSelected != "") {
-                  print("Emprendimiento: $emprendimientoSelected");
-
                   await showModalBottomSheet(
                     isScrollControlled: true,
                     backgroundColor: Colors.transparent,
@@ -487,7 +485,8 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                       return Padding(
                         padding: MediaQuery.of(context).viewInsets,
                         child: SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.45,
+                          height: MediaQuery.of(context).size.height *
+                              0.45, //Decia 45
                           child: BottomSheetMensajeWidget(
                               isVisible: true,
                               idEmprendimiento: emprendimientoSelected,
@@ -561,7 +560,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
               }
               return SizedBox(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.5,
+                height: MediaQuery.of(context).size.height * 0.45,
                 child: SingleChildScrollView(
                   child: ListView.builder(
                     padding:
@@ -581,10 +580,6 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                             ToggleIcon(
                               onPressed: () {
                                 setState(() {
-                                  // emprendimientoTemp.proyecto.selected =
-                                  //     !emprendimientoTemp.proyecto.selected;
-                                  print(
-                                      "****Selected de ${emprendimientoTemp.proyecto.emprendimiento} es ${emprendimientoTemp.proyecto.selected}");
                                   // Cuando se selecciona por segunda vez el mismo item entonces se mandaria una cadena vacia. EmprendimientoSelected
                                   if (emprendimientoTemp.proyecto.selected) {
                                     emprendimientoSelected = "";
@@ -663,7 +658,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsetsDirectional
-                                                .fromSTEB(10, 10, 10, 10),
+                                                .fromSTEB(10, 5, 10, 5),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.max,
                                               crossAxisAlignment:
@@ -681,7 +676,7 @@ class _PerfilUsuarioExternoScreenState extends State<PerfilUsuarioExternoScreen>
                                                       .override(
                                                         fontFamily: 'Outfit',
                                                         color: Colors.black,
-                                                        fontSize: 22,
+                                                        fontSize: 20,
                                                         fontWeight:
                                                             FontWeight.w600,
                                                       ),

@@ -663,7 +663,7 @@ class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
                                             }
                                           });
                                         },
-                                        text: 'Convenio',
+                                        text: 'Convenio*',
                                         icon: const Icon(
                                           Icons.add_a_photo,
                                           size: 15,
@@ -708,9 +708,6 @@ class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
                           child: FFButtonWidget(
                             onPressed: () async {
                               if (jornadaProvider.validateForm(formKey)) {
-                                print(
-                                    "Fecha revision ${jornadaProvider.fechaRevision}");
-                                print("Tarea ${jornadaProvider.tarea}");
                                 jornadaProvider.addJornada4(
                                     widget.emprendimiento.id,
                                     widget.numJornada);

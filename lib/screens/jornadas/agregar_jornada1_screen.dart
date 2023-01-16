@@ -551,9 +551,6 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                             onPressed: () async {
                               if (jornadaProvider.validateForm(formKey)) {
                                 // comunidadProvider.add();
-                                print(
-                                    "Fecha revision ${jornadaProvider.fechaRevision}");
-                                print("Tarea ${jornadaProvider.tarea}");
                                 if (nombreController.text !=
                                     widget.emprendimiento.nombre) {
                                   emprendimientoProvider.updateName(
