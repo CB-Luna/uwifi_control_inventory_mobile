@@ -21,7 +21,7 @@ import 'package:bizpro_app/screens/widgets/drop_down.dart';
 class AgregarPrimerProductoInversionJornadaTemporal extends StatefulWidget {
   final Emprendimientos emprendimiento;
   const AgregarPrimerProductoInversionJornadaTemporal({
-    Key? key, 
+    Key? key,
     required this.emprendimiento,
   }) : super(key: key);
 
@@ -34,10 +34,9 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
     extends State<AgregarPrimerProductoInversionJornadaTemporal> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
-  TextEditingController porcentajeController = TextEditingController(text: "50");
-  List<String> listFamilias = [];
+  TextEditingController porcentajeController =
+      TextEditingController(text: "50");
   List<String> listTipoEmpaque = [];
-  String familia = "";
   String tipoEmpaque = "";
   String emprendedor = "";
   XFile? image;
@@ -45,7 +44,6 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
   @override
   void initState() {
     super.initState();
-    familia = "";
     tipoEmpaque = "";
     emprendedor = "";
     porcentajeController = TextEditingController(text: "50");
@@ -53,23 +51,20 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
       emprendedor =
           "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
     }
-    listFamilias = [];
     listTipoEmpaque = [];
-    dataBase.familiaProductosBox.getAll().forEach((element) {
-      listFamilias.add(element.nombre);
-    });
-    listFamilias.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+
     dataBase.tipoEmpaquesBox.getAll().forEach((element) {
       listTipoEmpaque.add(element.tipo);
     });
-    listTipoEmpaque.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+    listTipoEmpaque
+        .sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
   }
 
   @override
   Widget build(BuildContext context) {
     final productoInversionJornadaController =
         Provider.of<ProductoInversionJornadaController>(context);
-    final inversionJornadaController = 
+    final inversionJornadaController =
         Provider.of<InversionJornadaController>(context);
     return WillPopScope(
       onWillPop: () async => false,
@@ -179,86 +174,107 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      FormField(builder: (state) {
-                                        return Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                                  5, 0, 5, 10),
-                                              child: InkWell(
-                                                onTap: () async {
-                                                  String? option = await showModalBottomSheet(
-                                                    context: context,
-                                                    builder: (_) => const CustomBottomSheet(),
-                                                  );
-
-                                                  if (option == null) return;
-
-                                                  final picker = ImagePicker();
-
-                                                  late final XFile? pickedFile;
-
-                                                  if (option == 'camera') {
-                                                    pickedFile = await picker.pickImage(
-                                                      source: ImageSource.camera,
-                                                      imageQuality: 50,
+                                      FormField(
+                                        builder: (state) {
+                                          return Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(5, 0, 5, 10),
+                                                child: InkWell(
+                                                  onTap: () async {
+                                                    String? option =
+                                                        await showModalBottomSheet(
+                                                      context: context,
+                                                      builder: (_) =>
+                                                          const CustomBottomSheet(),
                                                     );
-                                                  } else {
-                                                    pickedFile = await picker.pickImage(
-                                                      source: ImageSource.gallery,
-                                                      imageQuality: 50,
-                                                    );
-                                                  }
 
-                                                  if (pickedFile == null) {
-                                                    return;
-                                                  }
+                                                    if (option == null) return;
 
-                                                  setState(() {
-                                                    image = pickedFile;
-                                                    productoInversionJornadaController.imagen =
-                                                        image!.path;
-                                                  });
-                                                },
-                                                child: Container(
-                                                  width:
-                                                      MediaQuery.of(context).size.width * 0.9,
-                                                  height: 180,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius: BorderRadius.circular(8),
-                                                    border: Border.all(
-                                                      color: const Color(0xFF221573),
-                                                      width: 1.5,
-                                                    ),
-                                                  ),
-                                                  child: Stack(
-                                                    children: [
-                                                      Lottie.asset(
-                                                        'assets/lottie_animations/75669-animation-for-the-photo-optimization-process.json',
-                                                        width: MediaQuery.of(context)
+                                                    final picker =
+                                                        ImagePicker();
+
+                                                    late final XFile?
+                                                        pickedFile;
+
+                                                    if (option == 'camera') {
+                                                      pickedFile = await picker
+                                                          .pickImage(
+                                                        source:
+                                                            ImageSource.camera,
+                                                        imageQuality: 50,
+                                                      );
+                                                    } else {
+                                                      pickedFile = await picker
+                                                          .pickImage(
+                                                        source:
+                                                            ImageSource.gallery,
+                                                        imageQuality: 50,
+                                                      );
+                                                    }
+
+                                                    if (pickedFile == null) {
+                                                      return;
+                                                    }
+
+                                                    setState(() {
+                                                      image = pickedFile;
+                                                      productoInversionJornadaController
+                                                          .imagen = image!.path;
+                                                    });
+                                                  },
+                                                  child: Container(
+                                                    width:
+                                                        MediaQuery.of(context)
                                                                 .size
                                                                 .width *
                                                             0.9,
-                                                        height: 180,
-                                                        fit: BoxFit.contain,
-                                                        animate: true,
+                                                    height: 180,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      border: Border.all(
+                                                        color: const Color(
+                                                            0xFF221573),
+                                                        width: 1.5,
                                                       ),
-                                                      ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius.circular(8),
-                                                        child: getImage(image?.path),
-                                                      ),
-                                                    ],
+                                                    ),
+                                                    child: Stack(
+                                                      children: [
+                                                        Lottie.asset(
+                                                          'assets/lottie_animations/75669-animation-for-the-photo-optimization-process.json',
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.9,
+                                                          height: 180,
+                                                          fit: BoxFit.contain,
+                                                          animate: true,
+                                                        ),
+                                                        ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          child: getImage(
+                                                              image?.path),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        );
-                                      },),
+                                            ],
+                                          );
+                                        },
+                                      ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
@@ -321,65 +337,6 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                           maxLines: 1,
                                         ),
                                       ),
-                                      FormField(
-                                        builder: (state) {
-                                          return Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(5, 0, 5, 10),
-                                            child: DropDown(
-                                              options: listFamilias,
-                                              onChanged: (val) => setState(() {
-                                                if (listFamilias.isEmpty) {
-                                                  snackbarKey.currentState
-                                                      ?.showSnackBar(
-                                                          const SnackBar(
-                                                    content: Text(
-                                                        "Debes descargar los catálogos desde la sección de tu perfil"),
-                                                  ));
-                                                } else {
-                                                  familia = val!;
-                                                }
-                                              }),
-                                              width: double.infinity,
-                                              height: 50,
-                                              textStyle: AppTheme.of(context)
-                                                  .title3
-                                                  .override(
-                                                    fontFamily: 'Poppins',
-                                                    color:
-                                                        const Color(0xFF221573),
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
-                                              hintText: 'Familia del producto*',
-                                              icon: const Icon(
-                                                Icons
-                                                    .keyboard_arrow_down_rounded,
-                                                color: Color(0xFF221573),
-                                                size: 30,
-                                              ),
-                                              fillColor: Colors.white,
-                                              elevation: 2,
-                                              borderColor:
-                                                  const Color(0xFF221573),
-                                              borderWidth: 2,
-                                              borderRadius: 8,
-                                              margin:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(12, 4, 12, 4),
-                                              hidesUnderline: true,
-                                            ),
-                                          );
-                                        },
-                                        validator: (val) {
-                                          if (familia == "" ||
-                                              familia.isEmpty) {
-                                            return 'Para continuar, seleccione una familia.';
-                                          }
-                                          return null;
-                                        },
-                                      ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
@@ -389,8 +346,8 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
-                                            productoInversionJornadaController.producto =
-                                                value;
+                                            productoInversionJornadaController
+                                                .producto = value;
                                           },
                                           obscureText: false,
                                           decoration: InputDecoration(
@@ -669,8 +626,7 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                             child: DropDown(
                                               options: listTipoEmpaque,
                                               onChanged: (val) => setState(() {
-                                                if (listTipoEmpaque
-                                                    .isEmpty) {
+                                                if (listTipoEmpaque.isEmpty) {
                                                   snackbarKey.currentState
                                                       ?.showSnackBar(
                                                           const SnackBar(
@@ -728,8 +684,8 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
-                                            productoInversionJornadaController.cantidad =
-                                                value;
+                                            productoInversionJornadaController
+                                                .cantidad = value;
                                           },
                                           obscureText: false,
                                           decoration: InputDecoration(
@@ -776,7 +732,8 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                           ),
                                           keyboardType: TextInputType.number,
                                           inputFormatters: [
-                                              FilteringTextInputFormatter.digitsOnly
+                                            FilteringTextInputFormatter
+                                                .digitsOnly
                                           ],
                                           style: AppTheme.of(context)
                                               .title3
@@ -789,7 +746,8 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                               ),
                                           maxLines: 1,
                                           validator: (val) {
-                                            double cantidad = double.tryParse(val!) ?? 0;
+                                            double cantidad =
+                                                double.tryParse(val!) ?? 0;
                                             if (cantidad <= 0) {
                                               return 'Para continuar, ingrese una cantidad.';
                                             }
@@ -814,7 +772,8 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                           },
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            labelText: 'Costo por unidad estimado*',
+                                            labelText:
+                                                'Costo por unidad estimado*',
                                             labelStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(
@@ -869,15 +828,16 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                               ),
                                           maxLines: 1,
                                           validator: (val) {
-                                            if(val!.length > 1){
-                                              double costo = double.parse(val.replaceAll('\$', '').replaceAll(',', ''));
-                                            if (costo <= 0) {
-                                              return 'Para continuar, ingrese un costo sugerido.';
-                                            }
+                                            if (val!.length > 1) {
+                                              double costo = double.parse(val
+                                                  .replaceAll('\$', '')
+                                                  .replaceAll(',', ''));
+                                              if (costo <= 0) {
+                                                return 'Para continuar, ingrese un costo sugerido.';
+                                              }
 
-                                            return null;
+                                              return null;
                                             }
-                                            
                                           },
                                         ),
                                       ),
@@ -893,14 +853,14 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                           decoration: InputDecoration(
                                             suffixText: "%",
                                             suffixStyle: AppTheme.of(context)
-                                              .title3
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                color: AppTheme.of(context)
-                                                    .primaryText,
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.normal,
-                                              ),
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  color: AppTheme.of(context)
+                                                      .primaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
                                             labelText: 'Porcentaje de pago*',
                                             labelStyle: AppTheme.of(context)
                                                 .title3
@@ -911,7 +871,8 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.normal,
                                                 ),
-                                            hintText: 'Ingresa porcentaje de pago...',
+                                            hintText:
+                                                'Ingresa porcentaje de pago...',
                                             hintStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(
@@ -944,8 +905,9 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                           ),
                                           keyboardType: TextInputType.number,
                                           inputFormatters: [
-                                              FilteringTextInputFormatter.digitsOnly,
-                                              PercentageTextInputFormatter()
+                                            FilteringTextInputFormatter
+                                                .digitsOnly,
+                                            PercentageTextInputFormatter()
                                           ],
                                           style: AppTheme.of(context)
                                               .title3
@@ -958,7 +920,9 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                               ),
                                           maxLines: 1,
                                           validator: (val) {
-                                            if (val == null || val.isEmpty || int.parse(val) < 50  ) {
+                                            if (val == null ||
+                                                val.isEmpty ||
+                                                int.parse(val) < 50) {
                                               return 'Para continuar, ingrese un porcentaje entre 50% y 100%.';
                                             }
                                             return null;
@@ -981,32 +945,25 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                               .costoEstimado));
                                       if (productoInversionJornadaController
                                           .validateForm(formKey)) {
-                                        final idFamiliaProd = dataBase
-                                            .familiaProductosBox
-                                            .query(FamiliaProd_.nombre
-                                                .equals(familia))
-                                            .build()
-                                            .findFirst()
-                                            ?.id;
-                                        final idTipoEmpaque= dataBase
+                                        final idTipoEmpaque = dataBase
                                             .tipoEmpaquesBox
                                             .query(TipoEmpaques_.tipo
                                                 .equals(tipoEmpaque))
                                             .build()
                                             .findFirst()
                                             ?.id;
-                                        if (idFamiliaProd != null &&
-                                            idTipoEmpaque!= null) {
-                                            print("Porcenatje:  ${porcentajeController.text}" );
-                                          inversionJornadaController.porcentajePago = porcentajeController.text;
+                                        if (idTipoEmpaque != null) {
+                                          print(
+                                              "Porcenatje:  ${porcentajeController.text}");
                                           inversionJornadaController
-                                                .addTemporal(
-                                                    widget.emprendimiento.id);
-                                          productoInversionJornadaController.addTemporal(
-                                              idFamiliaProd,
-                                              familia,
-                                              idTipoEmpaque,
-                                              tipoEmpaque);
+                                                  .porcentajePago =
+                                              porcentajeController.text;
+                                          inversionJornadaController
+                                              .addTemporal(
+                                                  widget.emprendimiento.id);
+                                          productoInversionJornadaController
+                                              .addTemporal(
+                                                  idTipoEmpaque, tipoEmpaque);
                                           Navigator.pop(context);
                                           snackbarKey.currentState
                                               ?.showSnackBar(const SnackBar(

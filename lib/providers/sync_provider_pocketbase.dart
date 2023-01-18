@@ -1988,7 +1988,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
               final recordEmprendimiento =
                   await client.records.create('emprendimientos', body: {
                 "nombre_emprendimiento": emprendimientoToSync.nombre,
-                "descripcion": emprendimientoToSync.descripcion,
+                "descripcion": emprendedor.comentarios,
                 "activo": emprendimientoToSync.activo,
                 "archivado": emprendimientoToSync.archivado,
                 "id_promotor_fk": emprendimientoToSync.usuario.target!.idDBR,
@@ -2038,7 +2038,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
               final recordEmprendimiento =
                   await client.records.create('emprendimientos', body: {
                 "nombre_emprendimiento": emprendimientoToSync.nombre,
-                "descripcion": emprendimientoToSync.descripcion,
+                "descripcion": emprendedor.comentarios,
                 "activo": emprendimientoToSync.activo,
                 "archivado": emprendimientoToSync.archivado,
                 "id_promotor_fk": emprendimientoToSync.usuario.target!.idDBR,
@@ -2140,12 +2140,12 @@ class SyncProviderPocketbase extends ChangeNotifier {
           if (tareaToSync.idDBR == null) {
             //Primero creamos la tarea asociada a la jornada
             final recordTarea = await client.records.create('tareas', body: {
-            "tarea": tareaToSync.tarea,
-            "descripcion": tareaToSync.descripcion,
-            "comentarios": tareaToSync.comentarios,
-            "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
-            "id_emi_web": tareaToSync.idEmiWeb!.split("?")[0],
-            "jornada": true,
+              "tarea": tareaToSync.tarea,
+              "descripcion": tareaToSync.descripcion,
+              "comentarios": tareaToSync.comentarios,
+              "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
+              "id_emi_web": tareaToSync.idEmiWeb!.split("?")[0],
+              "jornada": true,
             });
             if (recordTarea.id.isNotEmpty) {
               //Se recupera el idDBR de la tarea
@@ -2284,13 +2284,13 @@ class SyncProviderPocketbase extends ChangeNotifier {
             }
             //Primero creamos la tarea asociada a la jornada
             final recordTarea = await client.records.create('tareas', body: {
-            "tarea": tareaToSync.tarea,
-            "descripcion": tareaToSync.descripcion,
-            "comentarios": tareaToSync.comentarios,
-            "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
-            "id_emi_web": tareaToSync.idEmiWeb!.split("?")[0],
-            "id_imagenes_fk": idsDBRImagenes,
-            "jornada": true,
+              "tarea": tareaToSync.tarea,
+              "descripcion": tareaToSync.descripcion,
+              "comentarios": tareaToSync.comentarios,
+              "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
+              "id_emi_web": tareaToSync.idEmiWeb!.split("?")[0],
+              "id_imagenes_fk": idsDBRImagenes,
+              "jornada": true,
             });
             if (recordTarea.id.isNotEmpty) {
               //Se recupera el idDBR de la tarea
@@ -2580,12 +2580,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                           "costo_estimado": inversionJornada3.prodSolicitados
                               .toList()[i]
                               .costoEstimado,
-                          "id_familia_prod_fk": inversionJornada3
-                              .prodSolicitados
-                              .toList()[i]
-                              .familiaProducto
-                              .target!
-                              .idDBR,
                           "id_tipo_empaque_fk": inversionJornada3
                               .prodSolicitados
                               .toList()[i]
@@ -2633,12 +2627,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                           "costo_estimado": inversionJornada3.prodSolicitados
                               .toList()[i]
                               .costoEstimado,
-                          "id_familia_prod_fk": inversionJornada3
-                              .prodSolicitados
-                              .toList()[i]
-                              .familiaProducto
-                              .target!
-                              .idDBR,
                           "id_tipo_empaque_fk": inversionJornada3
                               .prodSolicitados
                               .toList()[i]
@@ -2668,14 +2656,16 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     }
                   }
                   //Primero creamos la tarea asociada a la jornada
-                  final recordTarea = await client.records.create('tareas', body: {
-                  "tarea": tareaToSync.tarea,
-                  "descripcion": tareaToSync.descripcion,
-                  "comentarios": tareaToSync.comentarios,
-                  "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
-                  "id_emi_web": tareaToSync.idEmiWeb!.split("?")[0],
-                  "id_imagenes_fk": idsDBRImagenes,
-                  "jornada": true,
+                  final recordTarea =
+                      await client.records.create('tareas', body: {
+                    "tarea": tareaToSync.tarea,
+                    "descripcion": tareaToSync.descripcion,
+                    "comentarios": tareaToSync.comentarios,
+                    "fecha_revision":
+                        tareaToSync.fechaRevision.toUtc().toString(),
+                    "id_emi_web": tareaToSync.idEmiWeb!.split("?")[0],
+                    "id_imagenes_fk": idsDBRImagenes,
+                    "jornada": true,
                   });
                   if (recordTarea.id.isNotEmpty) {
                     //Se recupera el idDBR de la tarea
@@ -2791,11 +2781,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                         "costo_estimado": inversionJornada3.prodSolicitados
                             .toList()[i]
                             .costoEstimado,
-                        "id_familia_prod_fk": inversionJornada3.prodSolicitados
-                            .toList()[i]
-                            .familiaProducto
-                            .target!
-                            .idDBR,
                         "id_tipo_empaque_fk": inversionJornada3.prodSolicitados
                             .toList()[i]
                             .tipoEmpaques
@@ -2842,11 +2827,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                         "costo_estimado": inversionJornada3.prodSolicitados
                             .toList()[i]
                             .costoEstimado,
-                        "id_familia_prod_fk": inversionJornada3.prodSolicitados
-                            .toList()[i]
-                            .familiaProducto
-                            .target!
-                            .idDBR,
                         "id_tipo_empaque_fk": inversionJornada3.prodSolicitados
                             .toList()[i]
                             .tipoEmpaques
@@ -2875,14 +2855,16 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   }
                 }
                 //Primero creamos la tarea asociada a la jornada
-                final recordTarea = await client.records.create('tareas', body: {
-                "tarea": tareaToSync.tarea,
-                "descripcion": tareaToSync.descripcion,
-                "comentarios": tareaToSync.comentarios,
-                "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
-                "id_emi_web": tareaToSync.idEmiWeb!.split("?")[0],
-                "id_imagenes_fk": idsDBRImagenes,
-                "jornada": true,
+                final recordTarea =
+                    await client.records.create('tareas', body: {
+                  "tarea": tareaToSync.tarea,
+                  "descripcion": tareaToSync.descripcion,
+                  "comentarios": tareaToSync.comentarios,
+                  "fecha_revision":
+                      tareaToSync.fechaRevision.toUtc().toString(),
+                  "id_emi_web": tareaToSync.idEmiWeb!.split("?")[0],
+                  "id_imagenes_fk": idsDBRImagenes,
+                  "jornada": true,
                 });
                 if (recordTarea.id.isNotEmpty) {
                   //Se recupera el idDBR de la tarea
@@ -3160,7 +3142,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
             "proveedo_sugerido": prodSolicitado.proveedorSugerido,
             "cantidad": prodSolicitado.cantidad,
             "costo_estimado": prodSolicitado.costoEstimado,
-            "id_familia_prod_fk": prodSolicitado.familiaProducto.target!.idDBR,
             "id_tipo_empaque_fk": prodSolicitado.tipoEmpaques.target!.idDBR,
             "id_inversion_fk": prodSolicitado.inversion.target!.idDBR,
             "id_emi_web": prodSolicitado.idEmiWeb,
@@ -3225,8 +3206,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
               "proveedo_sugerido": prodSolicitado.proveedorSugerido,
               "cantidad": prodSolicitado.cantidad,
               "costo_estimado": prodSolicitado.costoEstimado,
-              "id_familia_prod_fk":
-                  prodSolicitado.familiaProducto.target!.idDBR,
+
               "id_tipo_empaque_fk": prodSolicitado.tipoEmpaques.target!.idDBR,
               // "id_imagen_fk": prodSolicitado.imagen.target!.idDBR,
             });
@@ -3241,76 +3221,99 @@ class SyncProviderPocketbase extends ChangeNotifier {
           return SyncInstruction(exitoso: true, descripcion: "");
         } else {
           //No se pudo actualizar el producto Solicitado a Pocketbase
-          return SyncInstruction(exitoso: false, descripcion: "Falló al actualizar Producto Solicitado '${prodSolicitado.producto}' en Jornada 3, no se pudo actualizar información del producto solicitado '${prodSolicitado.producto}' en la inversión de la jornada 3.");
-        }   
+          return SyncInstruction(
+              exitoso: false,
+              descripcion:
+                  "Falló al actualizar Producto Solicitado '${prodSolicitado.producto}' en Jornada 3, no se pudo actualizar información del producto solicitado '${prodSolicitado.producto}' en la inversión de la jornada 3.");
+        }
       } else {
         if (bitacora.executeEmiWeb) {
           //Se elimina la instrucción de la bitacora
           dataBase.bitacoraBox.remove(bitacora.id);
-        } 
+        }
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
       print('ERROR - function syncUpdateProductoInversionJ3(): $e');
-      return SyncInstruction(exitoso: false, descripcion: "Falló en proceso de sincronizar actualización de Producto Solicitado '${prodSolicitado.producto}' en Jornada 3 en el Servidor Local, detalles: $e");
+      return SyncInstruction(
+          exitoso: false,
+          descripcion:
+              "Falló en proceso de sincronizar actualización de Producto Solicitado '${prodSolicitado.producto}' en Jornada 3 en el Servidor Local, detalles: $e");
     }
-}
+  }
 
-  Future<SyncInstruction> syncAddJornada4(Jornadas jornada, Bitacora bitacora) async {
+  Future<SyncInstruction> syncAddJornada4(
+      Jornadas jornada, Bitacora bitacora) async {
     print("Estoy en syncAddJornada4");
     final List<String> idsDBRImagenes = [];
     final listJornadas = jornada.emprendimiento.target!.jornadas.toList();
     try {
       if (!bitacora.executePocketbase) {
-        final tareaToSync = dataBase.tareasBox.query(Tareas_.id.equals(jornada.tarea.target!.id)).build().findUnique();
-        if (tareaToSync != null) {  
+        final tareaToSync = dataBase.tareasBox
+            .query(Tareas_.id.equals(jornada.tarea.target!.id))
+            .build()
+            .findUnique();
+        if (tareaToSync != null) {
           if (tareaToSync.idDBR == null) {
-            //Antes finalizamos las jornadas previas 
+            //Antes finalizamos las jornadas previas
             for (var i = 0; i < listJornadas.length; i++) {
               if (listJornadas[i].numJornada != "4") {
-                final recordJornada = await client.records.update('jornadas', listJornadas[i].idDBR.toString(), body: {
-                    "completada": true,
-                  }); 
+                final recordJornada = await client.records.update(
+                    'jornadas', listJornadas[i].idDBR.toString(),
+                    body: {
+                      "completada": true,
+                    });
                 if (recordJornada.id.isNotEmpty) {
                   continue;
-                }
-                else{
+                } else {
                   //No se pudo actualizar jornada en Pocketbase
-                  return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 4, no se pudo recuperar id desde Servidor Local para finalizar la jornada '${listJornadas[i].numJornada}'");
-                } 
+                  return SyncInstruction(
+                      exitoso: false,
+                      descripcion:
+                          "Falló al agregar Jornada 4, no se pudo recuperar id desde Servidor Local para finalizar la jornada '${listJornadas[i].numJornada}'");
+                }
               }
             }
             // Creamos y enviamos las imágenes de la jornada
-            for (var i = 0; i < jornada.tarea.target!.imagenes.toList().length; i++) {
+            for (var i = 0;
+                i < jornada.tarea.target!.imagenes.toList().length;
+                i++) {
               if (jornada.tarea.target!.imagenes.toList()[i].idDBR == null) {
-                final recordImagen = await client.records.create('imagenes', body: {
+                final recordImagen =
+                    await client.records.create('imagenes', body: {
                   "nombre": jornada.tarea.target!.imagenes.toList()[i].nombre,
-                  "id_emi_web": jornada.tarea.target!.imagenes.toList()[i].idEmiWeb,
+                  "id_emi_web":
+                      jornada.tarea.target!.imagenes.toList()[i].idEmiWeb,
                   "base64": jornada.tarea.target!.imagenes.toList()[i].base64,
                 });
-                jornada.tarea.target!.imagenes.toList()[i].idDBR = recordImagen.id;
-                dataBase.imagenesBox.put(jornada.tarea.target!.imagenes.toList()[i]);
-                idsDBRImagenes.add(jornada.tarea.target!.imagenes.toList()[i].idDBR!);
+                jornada.tarea.target!.imagenes.toList()[i].idDBR =
+                    recordImagen.id;
+                dataBase.imagenesBox
+                    .put(jornada.tarea.target!.imagenes.toList()[i]);
+                idsDBRImagenes
+                    .add(jornada.tarea.target!.imagenes.toList()[i].idDBR!);
               } else {
-                idsDBRImagenes.add(jornada.tarea.target!.imagenes.toList()[i].idDBR!);
-              } 
+                idsDBRImagenes
+                    .add(jornada.tarea.target!.imagenes.toList()[i].idDBR!);
+              }
             }
             //Primero creamos la tarea asociada a la jornada
             final recordTarea = await client.records.create('tareas', body: {
-            "tarea": tareaToSync.tarea,
-            "descripcion": tareaToSync.descripcion,
-            "comentarios": tareaToSync.comentarios,
-            "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
-            "id_emi_web": tareaToSync.idEmiWeb!.split("?")[0],
-            "id_imagenes_fk": idsDBRImagenes,
-            "jornada": true,
+              "tarea": tareaToSync.tarea,
+              "descripcion": tareaToSync.descripcion,
+              "comentarios": tareaToSync.comentarios,
+              "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
+              "id_emi_web": tareaToSync.idEmiWeb!.split("?")[0],
+              "id_imagenes_fk": idsDBRImagenes,
+              "jornada": true,
             });
             if (recordTarea.id.isNotEmpty) {
               //Se recupera el idDBR de la tarea
               tareaToSync.idDBR = recordTarea.id;
               dataBase.tareasBox.put(tareaToSync);
-              //Segundo creamos la jornada  
-              final recordJornada = await client.records.create('jornadas', body: {
+              //Segundo creamos la jornada
+              final recordJornada =
+                  await client.records.create('jornadas', body: {
                 "num_jornada": jornada.numJornada,
                 "id_tarea_fk": tareaToSync.idDBR,
                 "proxima_visita": jornada.fechaRevision.toUtc().toString(),
@@ -3329,18 +3332,25 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
                   //Se elimina la instrucción de la bitacora
                   dataBase.bitacoraBox.remove(bitacora.id);
-                } 
+                }
                 return SyncInstruction(exitoso: true, descripcion: "");
               } else {
-                return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 4, no se pudo recuperar id desde Servidor Local para la jornada creada.");
+                return SyncInstruction(
+                    exitoso: false,
+                    descripcion:
+                        "Falló al agregar Jornada 4, no se pudo recuperar id desde Servidor Local para la jornada creada.");
               }
             } else {
-              return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 4, no se pudo recuperar id desde Servidor Local para la tarea asociada a la jornada creada.");
+              return SyncInstruction(
+                  exitoso: false,
+                  descripcion:
+                      "Falló al agregar Jornada 4, no se pudo recuperar id desde Servidor Local para la tarea asociada a la jornada creada.");
             }
           } else {
             if (jornada.idDBR == null) {
-              //Segundo creamos la jornada  
-              final recordJornada = await client.records.create('jornadas', body: {
+              //Segundo creamos la jornada
+              final recordJornada =
+                  await client.records.create('jornadas', body: {
                 "num_jornada": jornada.numJornada,
                 "id_tarea_fk": tareaToSync.idDBR,
                 "proxima_visita": jornada.fechaRevision.toUtc().toString(),
@@ -3359,21 +3369,27 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
                   //Se elimina la instrucción de la bitacora
                   dataBase.bitacoraBox.remove(bitacora.id);
-                } 
+                }
                 return SyncInstruction(exitoso: true, descripcion: "");
               } else {
-                return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 4, no se pudo recuperar id desde Servidor Local para la jornada creada.");
+                return SyncInstruction(
+                    exitoso: false,
+                    descripcion:
+                        "Falló al agregar Jornada 4, no se pudo recuperar id desde Servidor Local para la jornada creada.");
               }
             } else {
               if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
                 //Se elimina la instrucción de la bitacora
                 dataBase.bitacoraBox.remove(bitacora.id);
-              } 
+              }
               return SyncInstruction(exitoso: true, descripcion: "");
             }
           }
-          } else {
-          return SyncInstruction(exitoso: false, descripcion: "Falló al agregar Jornada 4, tarea asociada no encontrada en el dispositivo para asignarle id del Servidor Local.");
+        } else {
+          return SyncInstruction(
+              exitoso: false,
+              descripcion:
+                  "Falló al agregar Jornada 4, tarea asociada no encontrada en el dispositivo para asignarle id del Servidor Local.");
         }
       } else {
         if (bitacora.executeEmiWeb) {
@@ -3493,14 +3509,14 @@ class SyncProviderPocketbase extends ChangeNotifier {
           if (tareaToSync.idDBR == null) {
             //Primero creamos la tarea asociada a la consultoría
             final recordTarea = await client.records.create('tareas', body: {
-            "tarea": tareaToSync.tarea,
-            "descripcion": tareaToSync.descripcion,
-            "comentarios": tareaToSync.comentarios,
-            "id_porcentaje_fk": tareaToSync.porcentaje.target!.idDBR,
-            "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
-            "id_emi_web": tareaToSync.idEmiWeb,
-            "jornada": false,
-          });
+              "tarea": tareaToSync.tarea,
+              "descripcion": tareaToSync.descripcion,
+              "comentarios": tareaToSync.comentarios,
+              "id_porcentaje_fk": tareaToSync.porcentaje.target!.idDBR,
+              "fecha_revision": tareaToSync.fechaRevision.toUtc().toString(),
+              "id_emi_web": tareaToSync.idEmiWeb,
+              "jornada": false,
+            });
             if (recordTarea.id.isNotEmpty) {
               //Se recupera el idDBR de la tarea
               tareaToSync.idDBR = recordTarea.id;
@@ -4071,10 +4087,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                           "cantidad": prodSolicitadosToSync[i].cantidad,
                           "costo_estimado":
                               prodSolicitadosToSync[i].costoEstimado,
-                          "id_familia_prod_fk": prodSolicitadosToSync[i]
-                              .familiaProducto
-                              .target!
-                              .idDBR,
                           "id_tipo_empaques_fk": prodSolicitadosToSync[i]
                               .tipoEmpaques
                               .target!
@@ -4118,10 +4130,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                         "cantidad": prodSolicitadosToSync[i].cantidad,
                         "costo_estimado":
                             prodSolicitadosToSync[i].costoEstimado,
-                        "id_familia_prod_fk": prodSolicitadosToSync[i]
-                            .familiaProducto
-                            .target!
-                            .idDBR,
                         "id_tipo_empaques_fk":
                             prodSolicitadosToSync[i].tipoEmpaques.target!.idDBR,
                         "id_inversion_fk": inversion.idDBR,
@@ -4203,10 +4211,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                           prodSolicitadosToSync[i].proveedorSugerido,
                       "cantidad": prodSolicitadosToSync[i].cantidad,
                       "costo_estimado": prodSolicitadosToSync[i].costoEstimado,
-                      "id_familia_prod_fk": prodSolicitadosToSync[i]
-                          .familiaProducto
-                          .target!
-                          .idDBR,
                       "id_tipo_empaques_fk":
                           prodSolicitadosToSync[i].tipoEmpaques.target!.idDBR,
                       "id_inversion_fk": inversion.idDBR,
@@ -4244,8 +4248,6 @@ class SyncProviderPocketbase extends ChangeNotifier {
                         prodSolicitadosToSync[i].proveedorSugerido,
                     "cantidad": prodSolicitadosToSync[i].cantidad,
                     "costo_estimado": prodSolicitadosToSync[i].costoEstimado,
-                    "id_familia_prod_fk":
-                        prodSolicitadosToSync[i].familiaProducto.target!.idDBR,
                     "id_tipo_empaques_fk":
                         prodSolicitadosToSync[i].tipoEmpaques.target!.idDBR,
                     "id_inversion_fk": inversion.idDBR,
@@ -4792,7 +4794,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
           "tarea": jornada.tarea.target!.tarea,
           "comentarios": jornada.tarea.target!.comentarios,
           "descripcion": jornada.tarea.target!.descripcion,
-          "fecha_revision":jornada.tarea.target!.fechaRevision.toUtc().toString(),
+          "fecha_revision":
+              jornada.tarea.target!.fechaRevision.toUtc().toString(),
         });
         if (recordTarea.id.isNotEmpty) {
           //Segundo actualizamos la jornada
@@ -4891,7 +4894,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
             .update('tareas', jornada.tarea.target!.idDBR.toString(), body: {
           "tarea": jornada.tarea.target!.tarea,
           "comentarios": jornada.tarea.target!.comentarios,
-          "fecha_revision":jornada.tarea.target!.fechaRevision.toUtc().toString(),
+          "fecha_revision":
+              jornada.tarea.target!.fechaRevision.toUtc().toString(),
         });
         if (recordTarea.id.isNotEmpty) {
           //Segundo actualizamos la jornada
@@ -6155,7 +6159,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     aceptado: listProdCotizados[i].aceptado,
                     idEmiWeb: listProdCotizados[i].idEmiWeb,
                     costoUnitario: listProdCotizados[i].costoTotal /
-                        listProdCotizados[i].cantidad, 
+                        listProdCotizados[i].cantidad,
                     idEmprendimiento: emprendimiento.id,
                   );
                   final productoProv = dataBase.productosProvBox
@@ -6196,7 +6200,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
               // Se debe crear una nuevaIversionXprodCotizados
               final nuevaIversionXprodCotizados = InversionesXProdCotizados(
                 idDBR: inversionXprodCotizadosParse.id,
-                idEmiWeb: inversionXprodCotizadosParse.idEmiWeb, 
+                idEmiWeb: inversionXprodCotizadosParse.idEmiWeb,
                 idEmprendimiento: emprendimiento.id,
               );
               for (var i = 0; i < recordProdCotizados.length; i++) {
@@ -6213,7 +6217,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     aceptado: listProdCotizados[i].aceptado,
                     idEmiWeb: listProdCotizados[i].idEmiWeb,
                     costoUnitario: listProdCotizados[i].costoTotal /
-                        listProdCotizados[i].cantidad, 
+                        listProdCotizados[i].cantidad,
                     idEmprendimiento: emprendimiento.id,
                   );
                   final productoProv = dataBase.productosProvBox

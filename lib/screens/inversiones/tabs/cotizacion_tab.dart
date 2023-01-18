@@ -687,32 +687,6 @@ class _CotizacionTabState extends State<CotizacionTab>
                                                           overflow: TextOverflow
                                                               .ellipsis,
                                                         ),
-                                                        Text(
-                                                          maybeHandleOverflow(
-                                                              productoCot
-                                                                      .productosProv
-                                                                      .target
-                                                                      ?.familiaProducto
-                                                                      .target
-                                                                      ?.nombre ??
-                                                                  "SIN FAMILIA",
-                                                              13,
-                                                              "..."),
-                                                          style:
-                                                              AppTheme.of(
-                                                                      context)
-                                                                  .bodyText1
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        AppTheme.of(context)
-                                                                            .bodyText1Family,
-                                                                    color: AppTheme.of(
-                                                                            context)
-                                                                        .secondaryText,
-                                                                  ),
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                        ),
                                                       ],
                                                     ),
                                                   ],
@@ -767,7 +741,7 @@ class _CotizacionTabState extends State<CotizacionTab>
                                             .acceptCotizacion(
                                                 widget.inversion,
                                                 widget.inversionesXprodCotizados
-                                                    .id, 
+                                                    .id,
                                                 widget.emprendimiento.id)) {
                                           case 0:
                                             snackbarKey.currentState
@@ -788,11 +762,13 @@ class _CotizacionTabState extends State<CotizacionTab>
                                                 ),
                                               ),
                                             );
-                                          break;
+                                            break;
                                           case 2:
-                                            snackbarKey.currentState?.showSnackBar(SnackBar(
-                                                content: Text("El Emprendimiento ${widget.emprendimiento.nombre} con id Local ${widget.emprendimiento.id} ya no puede ser editado en este dispositivo."),
-                                              ));
+                                            snackbarKey.currentState
+                                                ?.showSnackBar(SnackBar(
+                                              content: Text(
+                                                  "El Emprendimiento ${widget.emprendimiento.nombre} con id Local ${widget.emprendimiento.id} ya no puede ser editado en este dispositivo."),
+                                            ));
                                             // ignore: use_build_context_synchronously
                                             await Navigator.push(
                                               context,
@@ -801,7 +777,9 @@ class _CotizacionTabState extends State<CotizacionTab>
                                                     const EmprendimientosScreen(),
                                               ),
                                             );
-                                            cotizacionProvider.deleteEmprendimientoLocal(widget.emprendimiento.id);
+                                            cotizacionProvider
+                                                .deleteEmprendimientoLocal(
+                                                    widget.emprendimiento.id);
                                             break;
                                           default:
                                             break;
@@ -862,7 +840,7 @@ class _CotizacionTabState extends State<CotizacionTab>
                                             .cancelCotizacion(
                                                 widget.inversion,
                                                 widget.inversionesXprodCotizados
-                                                    .id, 
+                                                    .id,
                                                 widget.emprendimiento.id)) {
                                           case 0:
                                             snackbarKey.currentState
@@ -883,11 +861,13 @@ class _CotizacionTabState extends State<CotizacionTab>
                                                 ),
                                               ),
                                             );
-                                          break;
+                                            break;
                                           case 2:
-                                            snackbarKey.currentState?.showSnackBar(SnackBar(
-                                                content: Text("El Emprendimiento ${widget.emprendimiento.nombre} con id Local ${widget.emprendimiento.id} ya no puede ser editado en este dispositivo."),
-                                              ));
+                                            snackbarKey.currentState
+                                                ?.showSnackBar(SnackBar(
+                                              content: Text(
+                                                  "El Emprendimiento ${widget.emprendimiento.nombre} con id Local ${widget.emprendimiento.id} ya no puede ser editado en este dispositivo."),
+                                            ));
                                             // ignore: use_build_context_synchronously
                                             await Navigator.push(
                                               context,
@@ -896,7 +876,9 @@ class _CotizacionTabState extends State<CotizacionTab>
                                                     const EmprendimientosScreen(),
                                               ),
                                             );
-                                            cotizacionProvider.deleteEmprendimientoLocal(widget.emprendimiento.id);
+                                            cotizacionProvider
+                                                .deleteEmprendimientoLocal(
+                                                    widget.emprendimiento.id);
                                             break;
                                           default:
                                             break;
@@ -968,7 +950,7 @@ class _CotizacionTabState extends State<CotizacionTab>
                                             .buscarOtraCotizacion(
                                                 widget.inversion,
                                                 widget.inversionesXprodCotizados
-                                                    .id, 
+                                                    .id,
                                                 widget.emprendimiento.id)) {
                                           case 0:
                                             snackbarKey.currentState
@@ -989,11 +971,13 @@ class _CotizacionTabState extends State<CotizacionTab>
                                                 ),
                                               ),
                                             );
-                                          break;
+                                            break;
                                           case 2:
-                                            snackbarKey.currentState?.showSnackBar(SnackBar(
-                                                content: Text("El Emprendimiento ${widget.emprendimiento.nombre} con id Local ${widget.emprendimiento.id} ya no puede ser editado en este dispositivo."),
-                                              ));
+                                            snackbarKey.currentState
+                                                ?.showSnackBar(SnackBar(
+                                              content: Text(
+                                                  "El Emprendimiento ${widget.emprendimiento.nombre} con id Local ${widget.emprendimiento.id} ya no puede ser editado en este dispositivo."),
+                                            ));
                                             // ignore: use_build_context_synchronously
                                             await Navigator.push(
                                               context,
@@ -1002,7 +986,9 @@ class _CotizacionTabState extends State<CotizacionTab>
                                                     const EmprendimientosScreen(),
                                               ),
                                             );
-                                            cotizacionProvider.deleteEmprendimientoLocal(widget.emprendimiento.id);
+                                            cotizacionProvider
+                                                .deleteEmprendimientoLocal(
+                                                    widget.emprendimiento.id);
                                             break;
                                           default:
                                             break;

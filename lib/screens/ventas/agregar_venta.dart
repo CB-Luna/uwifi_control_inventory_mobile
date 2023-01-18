@@ -39,13 +39,17 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
   @override
   void initState() {
     super.initState();
-    actualEmprendimiento = dataBase.emprendimientosBox.get(widget.idEmprendimiento);
+    actualEmprendimiento =
+        dataBase.emprendimientosBox.get(widget.idEmprendimiento);
     if (actualEmprendimiento != null) {
-      fechaInicio = TextEditingController(text: dateTimeFormat('yMMMd', context.read<VentaController>().fechaInicio));
-      fechaTermino = TextEditingController(text: context.read<VentaController>().fechaTermino != null ? 
-      dateTimeFormat('yMMMd', context.read<VentaController>().fechaTermino!)
-      :
-      "");
+      fechaInicio = TextEditingController(
+          text: dateTimeFormat(
+              'yMMMd', context.read<VentaController>().fechaInicio));
+      fechaTermino = TextEditingController(
+          text: context.read<VentaController>().fechaTermino != null
+              ? dateTimeFormat(
+                  'yMMMd', context.read<VentaController>().fechaTermino!)
+              : "");
       emprendedor = "";
       if (actualEmprendimiento!.emprendedor.target != null) {
         emprendedor =
@@ -56,10 +60,8 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final ventaProvider =
-        Provider.of<VentaController>(context);
-    final productoVentaProvider =
-        Provider.of<ProductoVentaController>(context);
+    final ventaProvider = Provider.of<VentaController>(context);
+    final productoVentaProvider = Provider.of<ProductoVentaController>(context);
     List<ProductosVendidosTemporal> prodVendidos = [];
     for (var element in productoVentaProvider.productosVendidos) {
       prodVendidos.add(element);
@@ -84,16 +86,14 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
                       height: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: actualEmprendimiento!.imagen.target != null ?
-                          FileImage(
-                            File(
-                              actualEmprendimiento!.imagen.target!.path!))
-                          :
-                          Image.asset(
-                            "assets/images/default_image.png",
-                          ).image,
-                        fit: BoxFit.cover,
-                        filterQuality: FilterQuality.high,
+                          image: actualEmprendimiento!.imagen.target != null
+                              ? FileImage(File(
+                                  actualEmprendimiento!.imagen.target!.path!))
+                              : Image.asset(
+                                  "assets/images/default_image_placeholder.jpeg",
+                                ).image,
+                          fit: BoxFit.cover,
+                          filterQuality: FilterQuality.high,
                         ),
                       ),
                       child: Container(
@@ -152,15 +152,18 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
                                       child: InkWell(
                                         onTap: () async {
                                           ventaProvider.clearInformation();
-                                          productoVentaProvider.clearInformation();
+                                          productoVentaProvider
+                                              .clearInformation();
                                           await Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   VentasScreen(
-                                                    ventas: actualEmprendimiento!.ventas,
-                                                    emprendimiento: actualEmprendimiento!,
-                                                    ),
+                                                ventas: actualEmprendimiento!
+                                                    .ventas,
+                                                emprendimiento:
+                                                    actualEmprendimiento!,
+                                              ),
                                             ),
                                           );
                                         },
@@ -289,8 +292,7 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
                                         showTitleActions: true,
                                         onConfirm: (date) {
                                           setState(() {
-                                            ventaProvider.fechaInicio =
-                                                date;
+                                            ventaProvider.fechaInicio = date;
                                             fechaInicio.text =
                                                 dateTimeFormat('yMMMd', date);
                                           });
@@ -309,7 +311,8 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.normal,
                                               ),
-                                      hintText: 'Ingrese el periodo de inicio venta...',
+                                      hintText:
+                                          'Ingrese el periodo de inicio venta...',
                                       hintStyle:
                                           AppTheme.of(context).title3.override(
                                                 fontFamily: 'Poppins',
@@ -366,8 +369,7 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
                                         showTitleActions: true,
                                         onConfirm: (date) {
                                           setState(() {
-                                            ventaProvider.fechaTermino =
-                                                date;
+                                            ventaProvider.fechaTermino = date;
                                             fechaTermino.text =
                                                 dateTimeFormat('yMMMd', date);
                                           });
@@ -386,7 +388,8 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.normal,
                                               ),
-                                      hintText: 'Ingresa el periodo de término venta...',
+                                      hintText:
+                                          'Ingresa el periodo de término venta...',
                                       hintStyle:
                                           AppTheme.of(context).title3.override(
                                                 fontFamily: 'Poppins',
@@ -431,13 +434,11 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
                                     }),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsetsDirectional.fromSTEB(
-                                        10, 12, 5, 12),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    10, 12, 5, 12),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Badge(
                                       badgeContent: Text(totalProductos,
@@ -455,7 +456,10 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    RegistroVentaTemporalScreen(emprendimiento: actualEmprendimiento!,),
+                                                    RegistroVentaTemporalScreen(
+                                                  emprendimiento:
+                                                      actualEmprendimiento!,
+                                                ),
                                               ),
                                             );
                                           } else {
@@ -479,9 +483,8 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
                                           textStyle: AppTheme.of(context)
                                               .subtitle2
                                               .override(
-                                                fontFamily:
-                                                    AppTheme.of(context)
-                                                        .subtitle2Family,
+                                                fontFamily: AppTheme.of(context)
+                                                    .subtitle2Family,
                                                 color: Colors.white,
                                                 fontSize: 15,
                                               ),
@@ -505,34 +508,32 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
                               0, 20, 0, 10),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              if (ventaProvider
-                                      .validateForm(formKey)
-                                      && totalProductos != "0") {
-                                  productoVentaProvider.add(
+                              if (ventaProvider.validateForm(formKey) &&
+                                  totalProductos != "0") {
+                                productoVentaProvider.add(
                                     actualEmprendimiento!.id,
-                                    ventaProvider.add(actualEmprendimiento!.id)
-                                  );
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                           VentaCreadaScreen(empVenta: widget.idEmprendimiento,),
+                                    ventaProvider
+                                        .add(actualEmprendimiento!.id));
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => VentaCreadaScreen(
+                                      empVenta: widget.idEmprendimiento,
                                     ),
-                                  );
+                                  ),
+                                );
                               } else {
                                 await showDialog(
                                   context: context,
                                   builder: (alertDialogContext) {
                                     return AlertDialog(
-                                      title:
-                                          const Text('Campos vacíos'),
+                                      title: const Text('Campos vacíos'),
                                       content: const Text(
                                           'Para continuar, debe llenar todos los campos requeridos y agregar un producto de venta.'),
                                       actions: [
                                         TextButton(
                                           onPressed: () =>
-                                              Navigator.pop(
-                                                  alertDialogContext),
+                                              Navigator.pop(alertDialogContext),
                                           child: const Text('Bien'),
                                         ),
                                       ],

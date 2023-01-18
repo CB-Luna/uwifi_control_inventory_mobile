@@ -3,7 +3,7 @@ import 'package:bizpro_app/objectbox.g.dart';
 // import 'package:bizpro_app/objectbox.g.dart';
 
 class ObjectBoxDatabase {
- late final Store store;
+  late final Store store;
 
   late final Box<Usuarios> usuariosBox;
   late final Box<Emprendimientos> emprendimientosBox;
@@ -17,7 +17,6 @@ class ObjectBoxDatabase {
   late final Box<Comunidades> comunidadesBox;
   late final Box<Tareas> tareasBox;
   late final Box<TipoProyecto> tipoProyectoBox;
-  late final Box<FamiliaProd> familiaProductosBox;
   late final Box<CatalogoProyecto> catalogoProyectoBox;
   late final Box<ProductosEmp> productosEmpBox;
   late final Box<ProdCotizados> productosCotBox;
@@ -47,7 +46,7 @@ class ObjectBoxDatabase {
     usuariosBox = Box<Usuarios>(store);
     emprendimientosBox = Box<Emprendimientos>(store);
     emprendedoresBox = Box<Emprendedores>(store);
-    jornadasBox = Box<Jornadas>(store);                                                          
+    jornadasBox = Box<Jornadas>(store);
     consultoriasBox = Box<Consultorias>(store);
     bitacoraBox = Box<Bitacora>(store);
     imagenesBox = Box<Imagenes>(store);
@@ -56,7 +55,6 @@ class ObjectBoxDatabase {
     comunidadesBox = Box<Comunidades>(store);
     tareasBox = Box<Tareas>(store);
     tipoProyectoBox = Box<TipoProyecto>(store);
-    familiaProductosBox = Box<FamiliaProd>(store);
     catalogoProyectoBox = Box<CatalogoProyecto>(store);
     productosEmpBox = Box<ProductosEmp>(store);
     productosCotBox = Box<ProdCotizados>(store);
@@ -88,5 +86,4 @@ class ObjectBoxDatabase {
     final store = await openStore();
     return ObjectBoxDatabase._create(store);
   }
-  
 }

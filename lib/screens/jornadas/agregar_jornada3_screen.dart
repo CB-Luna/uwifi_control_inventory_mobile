@@ -1178,14 +1178,6 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                                                           0.0,
                                                                   cantidad: element
                                                                       .cantidad,
-                                                                  idFamiliaProd: element
-                                                                      .familiaProducto
-                                                                      .target!
-                                                                      .id,
-                                                                  familiaProd: element
-                                                                      .familiaProducto
-                                                                      .target!
-                                                                      .nombre,
                                                                   idTipoEmpaques: element
                                                                       .tipoEmpaque
                                                                       .target!

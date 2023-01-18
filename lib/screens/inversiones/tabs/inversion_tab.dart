@@ -415,7 +415,8 @@ class _InversionTabState extends State<InversionTab>
                                             EditarProductoInversionScreen(
                                           inversion: widget.inversion,
                                           prodSolicitado: productoSolicitado,
-                                          idEmprendimiento: widget.emprendimiento.id,
+                                          idEmprendimiento:
+                                              widget.emprendimiento.id,
                                         ),
                                       ),
                                     );
@@ -611,29 +612,6 @@ class _InversionTabState extends State<InversionTab>
                                                           maybeHandleOverflow(
                                                               productoSolicitado
                                                                   .descripcion,
-                                                              13,
-                                                              "..."),
-                                                          style:
-                                                              AppTheme.of(
-                                                                      context)
-                                                                  .bodyText1
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        AppTheme.of(context)
-                                                                            .bodyText1Family,
-                                                                    color: AppTheme.of(
-                                                                            context)
-                                                                        .secondaryText,
-                                                                  ),
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                        ),
-                                                        Text(
-                                                          maybeHandleOverflow(
-                                                              productoSolicitado
-                                                                  .familiaProducto
-                                                                  .target!
-                                                                  .nombre,
                                                               13,
                                                               "..."),
                                                           style:

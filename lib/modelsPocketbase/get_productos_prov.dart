@@ -19,7 +19,6 @@ class GetProductosProv {
     required this.idUndMedidaFk,
     required this.costoProdProv,
     required this.idProveedorFk,
-    required this.idFamiliaProdFk,
     required this.tiempoEntrega,
     required this.archivado,
     required this.idEmiWeb,
@@ -37,7 +36,6 @@ class GetProductosProv {
   final String idUndMedidaFk;
   final double costoProdProv;
   final String idProveedorFk;
-  final String idFamiliaProdFk;
   final int tiempoEntrega;
   final bool archivado;
   final String idEmiWeb;
@@ -60,7 +58,6 @@ class GetProductosProv {
             ? null
             : json["costo_prod_prov"]!.toDouble(),
         idProveedorFk: json["id_proveedor_fk"],
-        idFamiliaProdFk: json["id_familia_prod_fk"],
         tiempoEntrega: json["tiempo_entrega"],
         archivado: json["archivado"],
         idEmiWeb: json["id_emi_web"],
@@ -79,7 +76,6 @@ class GetProductosProv {
         "id_und_medida_fk": idUndMedidaFk,
         "costo_prod_prov": costoProdProv,
         "id_proveedor_fk": idProveedorFk,
-        "id_familia_prod_fk": idFamiliaProdFk,
         "tiempo_entrega": tiempoEntrega,
         "archivado": archivado,
         "id_emi_web": idEmiWeb,

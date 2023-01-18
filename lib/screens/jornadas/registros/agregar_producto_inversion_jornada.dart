@@ -52,25 +52,21 @@ class _AgregarProductoInversionJornadaScreenState
   String emprendedor = "";
   List<String> listFamilias = [];
   List<String> listTipoEmpaque = [];
-  TextEditingController porcentajeController =  TextEditingController();
+  TextEditingController porcentajeController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    familia = "";
     tipoEmpaque = "";
     emprendedor = "";
-    listFamilias = [];
     listTipoEmpaque = [];
-    dataBase.familiaProductosBox.getAll().forEach((element) {
-      listFamilias.add(element.nombre);
-    });
-    listFamilias.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+
     dataBase.tipoEmpaquesBox.getAll().forEach((element) {
       listTipoEmpaque.add(element.tipo);
     });
-    listTipoEmpaque.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
-      emprendedor = widget.emprendedor;
+    listTipoEmpaque
+        .sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+    emprendedor = widget.emprendedor;
     porcentajeController = TextEditingController(text: widget.porcentajePago);
   }
 
@@ -127,11 +123,13 @@ class _AgregarProductoInversionJornadaScreenState
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             EditarInversionJornadaScreen(
-                                              emprendimiento: widget.emprendimiento, 
-                                              jornada: widget.jornada, 
-                                              prodSolicitados: productoInversionJornadaController.listProdSolicitadosActual,
-                                              inversion: widget.inversion,
-                                            ),
+                                          emprendimiento: widget.emprendimiento,
+                                          jornada: widget.jornada,
+                                          prodSolicitados:
+                                              productoInversionJornadaController
+                                                  .listProdSolicitadosActual,
+                                          inversion: widget.inversion,
+                                        ),
                                       ),
                                     );
                                   },
@@ -197,86 +195,107 @@ class _AgregarProductoInversionJornadaScreenState
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      FormField(builder: (state) {
-                                        return Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                                  5, 0, 5, 10),
-                                              child: InkWell(
-                                                onTap: () async {
-                                                  String? option = await showModalBottomSheet(
-                                                    context: context,
-                                                    builder: (_) => const CustomBottomSheet(),
-                                                  );
-
-                                                  if (option == null) return;
-
-                                                  final picker = ImagePicker();
-
-                                                  late final XFile? pickedFile;
-
-                                                  if (option == 'camera') {
-                                                    pickedFile = await picker.pickImage(
-                                                      source: ImageSource.camera,
-                                                      imageQuality: 50,
+                                      FormField(
+                                        builder: (state) {
+                                          return Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(5, 0, 5, 10),
+                                                child: InkWell(
+                                                  onTap: () async {
+                                                    String? option =
+                                                        await showModalBottomSheet(
+                                                      context: context,
+                                                      builder: (_) =>
+                                                          const CustomBottomSheet(),
                                                     );
-                                                  } else {
-                                                    pickedFile = await picker.pickImage(
-                                                      source: ImageSource.gallery,
-                                                      imageQuality: 50,
-                                                    );
-                                                  }
 
-                                                  if (pickedFile == null) {
-                                                    return;
-                                                  }
+                                                    if (option == null) return;
 
-                                                  setState(() {
-                                                    image = pickedFile;
-                                                    productoInversionJornadaController.imagen =
-                                                        image!.path;
-                                                  });
-                                                },
-                                                child: Container(
-                                                  width:
-                                                      MediaQuery.of(context).size.width * 0.9,
-                                                  height: 180,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius: BorderRadius.circular(8),
-                                                    border: Border.all(
-                                                      color: const Color(0xFF221573),
-                                                      width: 1.5,
-                                                    ),
-                                                  ),
-                                                  child: Stack(
-                                                    children: [
-                                                      Lottie.asset(
-                                                        'assets/lottie_animations/75669-animation-for-the-photo-optimization-process.json',
-                                                        width: MediaQuery.of(context)
+                                                    final picker =
+                                                        ImagePicker();
+
+                                                    late final XFile?
+                                                        pickedFile;
+
+                                                    if (option == 'camera') {
+                                                      pickedFile = await picker
+                                                          .pickImage(
+                                                        source:
+                                                            ImageSource.camera,
+                                                        imageQuality: 50,
+                                                      );
+                                                    } else {
+                                                      pickedFile = await picker
+                                                          .pickImage(
+                                                        source:
+                                                            ImageSource.gallery,
+                                                        imageQuality: 50,
+                                                      );
+                                                    }
+
+                                                    if (pickedFile == null) {
+                                                      return;
+                                                    }
+
+                                                    setState(() {
+                                                      image = pickedFile;
+                                                      productoInversionJornadaController
+                                                          .imagen = image!.path;
+                                                    });
+                                                  },
+                                                  child: Container(
+                                                    width:
+                                                        MediaQuery.of(context)
                                                                 .size
                                                                 .width *
                                                             0.9,
-                                                        height: 180,
-                                                        fit: BoxFit.contain,
-                                                        animate: true,
+                                                    height: 180,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      border: Border.all(
+                                                        color: const Color(
+                                                            0xFF221573),
+                                                        width: 1.5,
                                                       ),
-                                                      ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius.circular(8),
-                                                        child: getImage(image?.path),
-                                                      ),
-                                                    ],
+                                                    ),
+                                                    child: Stack(
+                                                      children: [
+                                                        Lottie.asset(
+                                                          'assets/lottie_animations/75669-animation-for-the-photo-optimization-process.json',
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.9,
+                                                          height: 180,
+                                                          fit: BoxFit.contain,
+                                                          animate: true,
+                                                        ),
+                                                        ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          child: getImage(
+                                                              image?.path),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        );
-                                      },),
+                                            ],
+                                          );
+                                        },
+                                      ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
@@ -408,8 +427,8 @@ class _AgregarProductoInversionJornadaScreenState
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
-                                            productoInversionJornadaController.producto =
-                                                value;
+                                            productoInversionJornadaController
+                                                .producto = value;
                                           },
                                           obscureText: false,
                                           decoration: InputDecoration(
@@ -691,8 +710,7 @@ class _AgregarProductoInversionJornadaScreenState
                                             child: DropDown(
                                               options: listTipoEmpaque,
                                               onChanged: (val) => setState(() {
-                                                if (listTipoEmpaque
-                                                    .isEmpty) {
+                                                if (listTipoEmpaque.isEmpty) {
                                                   snackbarKey.currentState
                                                       ?.showSnackBar(
                                                           const SnackBar(
@@ -751,8 +769,8 @@ class _AgregarProductoInversionJornadaScreenState
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
-                                            productoInversionJornadaController.cantidad =
-                                                value;
+                                            productoInversionJornadaController
+                                                .cantidad = value;
                                           },
                                           obscureText: false,
                                           decoration: InputDecoration(
@@ -799,7 +817,8 @@ class _AgregarProductoInversionJornadaScreenState
                                           ),
                                           keyboardType: TextInputType.number,
                                           inputFormatters: [
-                                              FilteringTextInputFormatter.digitsOnly
+                                            FilteringTextInputFormatter
+                                                .digitsOnly
                                           ],
                                           style: AppTheme.of(context)
                                               .title3
@@ -812,7 +831,8 @@ class _AgregarProductoInversionJornadaScreenState
                                               ),
                                           maxLines: 1,
                                           validator: (val) {
-                                            double cantidad = double.tryParse(val!) ?? 0;
+                                            double cantidad =
+                                                double.tryParse(val!) ?? 0;
                                             if (cantidad <= 0) {
                                               return 'Para continuar, ingrese una cantidad.';
                                             }
@@ -837,7 +857,8 @@ class _AgregarProductoInversionJornadaScreenState
                                           },
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            labelText: 'Costo por unidad estimado*',
+                                            labelText:
+                                                'Costo por unidad estimado*',
                                             labelStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(
@@ -892,15 +913,16 @@ class _AgregarProductoInversionJornadaScreenState
                                               ),
                                           maxLines: 1,
                                           validator: (val) {
-                                            if(val!.length > 1){
-                                              double costo = double.parse(val.replaceAll('\$', '').replaceAll(',', ''));
-                                            if (costo <= 0) {
-                                              return 'Para continuar, ingrese un costo sugerido.';
-                                            }
+                                            if (val!.length > 1) {
+                                              double costo = double.parse(val
+                                                  .replaceAll('\$', '')
+                                                  .replaceAll(',', ''));
+                                              if (costo <= 0) {
+                                                return 'Para continuar, ingrese un costo sugerido.';
+                                              }
 
-                                            return null;
+                                              return null;
                                             }
-                                            
                                           },
                                         ),
                                       ),
@@ -915,14 +937,14 @@ class _AgregarProductoInversionJornadaScreenState
                                           decoration: InputDecoration(
                                             suffixText: "%",
                                             suffixStyle: AppTheme.of(context)
-                                              .title3
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                color: AppTheme.of(context)
-                                                    .primaryText,
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.normal,
-                                              ),
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  color: AppTheme.of(context)
+                                                      .primaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
                                             labelText: 'Porcentaje de pago*',
                                             labelStyle: AppTheme.of(context)
                                                 .title3
@@ -933,7 +955,8 @@ class _AgregarProductoInversionJornadaScreenState
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.normal,
                                                 ),
-                                            hintText: 'Ingresa porcentaje de pago...',
+                                            hintText:
+                                                'Ingresa porcentaje de pago...',
                                             hintStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(
@@ -966,8 +989,9 @@ class _AgregarProductoInversionJornadaScreenState
                                           ),
                                           keyboardType: TextInputType.number,
                                           inputFormatters: [
-                                              FilteringTextInputFormatter.digitsOnly,
-                                              PercentageTextInputFormatter()
+                                            FilteringTextInputFormatter
+                                                .digitsOnly,
+                                            PercentageTextInputFormatter()
                                           ],
                                           style: AppTheme.of(context)
                                               .title3
@@ -992,52 +1016,69 @@ class _AgregarProductoInversionJornadaScreenState
                                       print("Desde registro");
                                       if (productoInversionJornadaController
                                           .validateForm(formKey)) {
-                                        final actualFamiliaProd = dataBase
-                                            .familiaProductosBox
-                                            .query(FamiliaProd_.nombre
-                                                .equals(familia))
-                                            .build()
-                                            .findFirst();
-                                        final actualTipoEmpaque= dataBase
+                                        final actualTipoEmpaque = dataBase
                                             .tipoEmpaquesBox
                                             .query(TipoEmpaques_.tipo
                                                 .equals(tipoEmpaque))
                                             .build()
                                             .findFirst();
-                                        if (actualFamiliaProd != null &&
-                                            actualTipoEmpaque!= null) {
+                                        if (actualTipoEmpaque != null) {
                                           // productoInversionJornadaController.addSingle(idInversion, idFamiliaProd, idTipoEmpaque)
-                                          final newProductoSolicitado = ProdSolicitado(
-                                            idInversion: widget.inversion.id, 
-                                            producto: productoInversionJornadaController.producto, 
-                                            marcaSugerida: productoInversionJornadaController.marcaSugerida,
-                                            descripcion: productoInversionJornadaController.descripcion, 
-                                            proveedorSugerido: productoInversionJornadaController.proveedorSugerido,
-                                            cantidad: int.parse(productoInversionJornadaController.cantidad),
-                                            costoEstimado: double.parse(productoInversionJornadaController.costoEstimado), 
-                                            idEmprendimiento: widget.emprendimiento.id,
+                                          final newProductoSolicitado =
+                                              ProdSolicitado(
+                                            idInversion: widget.inversion.id,
+                                            producto:
+                                                productoInversionJornadaController
+                                                    .producto,
+                                            marcaSugerida:
+                                                productoInversionJornadaController
+                                                    .marcaSugerida,
+                                            descripcion:
+                                                productoInversionJornadaController
+                                                    .descripcion,
+                                            proveedorSugerido:
+                                                productoInversionJornadaController
+                                                    .proveedorSugerido,
+                                            cantidad: int.parse(
+                                                productoInversionJornadaController
+                                                    .cantidad),
+                                            costoEstimado: double.parse(
+                                                productoInversionJornadaController
+                                                    .costoEstimado),
+                                            idEmprendimiento:
+                                                widget.emprendimiento.id,
                                           );
-                                          newProductoSolicitado.tipoEmpaques.target = actualTipoEmpaque;
-                                          newProductoSolicitado.familiaProducto.target = actualFamiliaProd;
-                                          newProductoSolicitado.inversion.target = widget.inversion;
-                                          final newInstruccionProdInversionJ3 = SaveInstruccionProductoInversionJ3Temporal(
-                                            instruccion: "syncAddProductoInversionJ3", 
-                                            prodSolicitado: newProductoSolicitado,
+                                          newProductoSolicitado.tipoEmpaques
+                                              .target = actualTipoEmpaque;
+                                          newProductoSolicitado.inversion
+                                              .target = widget.inversion;
+                                          final newInstruccionProdInversionJ3 =
+                                              SaveInstruccionProductoInversionJ3Temporal(
+                                            instruccion:
+                                                "syncAddProductoInversionJ3",
+                                            prodSolicitado:
+                                                newProductoSolicitado,
                                           );
                                           productoInversionJornadaController
-                                            .listProdSolicitadosActual.add(newProductoSolicitado);
+                                              .listProdSolicitadosActual
+                                              .add(newProductoSolicitado);
                                           productoInversionJornadaController
-                                            .instruccionesProdInversionJ3Temp.add(newInstruccionProdInversionJ3);
+                                              .instruccionesProdInversionJ3Temp
+                                              .add(
+                                                  newInstruccionProdInversionJ3);
                                           await Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   EditarInversionJornadaScreen(
-                                                    emprendimiento: widget.emprendimiento, 
-                                                    jornada: widget.jornada, 
-                                                    prodSolicitados: productoInversionJornadaController.listProdSolicitadosActual,
-                                                    inversion: widget.inversion,
-                                                  ),
+                                                emprendimiento:
+                                                    widget.emprendimiento,
+                                                jornada: widget.jornada,
+                                                prodSolicitados:
+                                                    productoInversionJornadaController
+                                                        .listProdSolicitadosActual,
+                                                inversion: widget.inversion,
+                                              ),
                                             ),
                                           );
                                         }

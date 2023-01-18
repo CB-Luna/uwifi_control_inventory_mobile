@@ -30,12 +30,11 @@ class EditarProductoInversionScreen extends StatefulWidget {
   final int idEmprendimiento;
 
   const EditarProductoInversionScreen({
-    Key? key, 
-    required this.inversion, 
-    required this.prodSolicitado, 
+    Key? key,
+    required this.inversion,
+    required this.prodSolicitado,
     required this.idEmprendimiento,
-    })
-      : super(key: key);
+  }) : super(key: key);
 
   @override
   _EditarProductoInversionScreenState createState() =>
@@ -70,13 +69,18 @@ class _EditarProductoInversionScreenState
     nombreImagen = "";
     newImagen = widget.prodSolicitado.imagen.target?.path ?? "";
     emprendedor = "";
-    newFamilia = widget.prodSolicitado.familiaProducto.target!.nombre;
-    productoController = TextEditingController(text: widget.prodSolicitado.producto);
-    marcaController = TextEditingController(text: widget.prodSolicitado.marcaSugerida);
-    descripcionController = TextEditingController(text: widget.prodSolicitado.descripcion);
-    proveedorController = TextEditingController(text: widget.prodSolicitado.proveedorSugerido);
-    newTipoEmpaques = widget.prodSolicitado.tipoEmpaques.target?.tipo ?? "SIN TIPO DE EMPAQUE";
-    cantidadController = TextEditingController(text: widget.prodSolicitado.cantidad.toString());
+    productoController =
+        TextEditingController(text: widget.prodSolicitado.producto);
+    marcaController =
+        TextEditingController(text: widget.prodSolicitado.marcaSugerida);
+    descripcionController =
+        TextEditingController(text: widget.prodSolicitado.descripcion);
+    proveedorController =
+        TextEditingController(text: widget.prodSolicitado.proveedorSugerido);
+    newTipoEmpaques = widget.prodSolicitado.tipoEmpaques.target?.tipo ??
+        "SIN TIPO DE EMPAQUE";
+    cantidadController =
+        TextEditingController(text: widget.prodSolicitado.cantidad.toString());
     costoController = TextEditingController(
         text: currencyFormat.format(
             widget.prodSolicitado.costoEstimado?.toStringAsFixed(2) ?? ""));
@@ -89,18 +93,13 @@ class _EditarProductoInversionScreenState
 
   @override
   Widget build(BuildContext context) {
-    final inversionProvider =
-        Provider.of<InversionController>(context);
-    List<String> listFamilias = [];
+    final inversionProvider = Provider.of<InversionController>(context);
     List<String> listTipoEmpaques = [];
-    dataBase.familiaProductosBox.getAll().forEach((element) {
-      listFamilias.add(element.nombre);
-    });
-    listFamilias.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     dataBase.tipoEmpaquesBox.getAll().forEach((element) {
       listTipoEmpaques.add(element.tipo);
     });
-    listTipoEmpaques.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+    listTipoEmpaques
+        .sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -137,7 +136,8 @@ class _EditarProductoInversionScreenState
                                   20, 40, 20, 0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
                                     width: 80,
@@ -153,9 +153,10 @@ class _EditarProductoInversionScreenState
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 MainTabOpcionesScreen(
-                                                  emprendimiento: widget.inversion.emprendimiento.target!,
-                                                  idInversion: widget.inversion.id,
-                                                  ),
+                                              emprendimiento: widget.inversion
+                                                  .emprendimiento.target!,
+                                              idInversion: widget.inversion.id,
+                                            ),
                                           ),
                                         );
                                       },
@@ -174,8 +175,9 @@ class _EditarProductoInversionScreenState
                                             style: AppTheme.of(context)
                                                 .bodyText1
                                                 .override(
-                                                  fontFamily: AppTheme.of(context)
-                                                      .bodyText1Family,
+                                                  fontFamily:
+                                                      AppTheme.of(context)
+                                                          .bodyText1Family,
                                                   color: Colors.white,
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w300,
@@ -201,36 +203,41 @@ class _EditarProductoInversionScreenState
                                 ),
                                 child: InkWell(
                                   onTap: () async {
-                                    if (widget.inversion.estadoInversion.target!.estado == "Solicitada"
-                                    && widget.inversion.idDBR == null) {
-                                    String? option =
-                                        await showModalBottomSheet(
-                                      context: context,
-                                      builder: (_) =>
-                                          const BottomSheetEliminarProducto(),
-                                    );
-                                    if (option == 'eliminar') {
-                                     inversionProvider.remove(widget.prodSolicitado);
-                                      // ignore: use_build_context_synchronously
-                                      await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                      builder: (context) =>
-                                           ProductoInversionEliminado(
-                                            idEmprendimiento: widget.inversion.emprendimiento.target!.id,
-                                              ),
-                                            ),
+                                    if (widget.inversion.estadoInversion.target!
+                                                .estado ==
+                                            "Solicitada" &&
+                                        widget.inversion.idDBR == null) {
+                                      String? option =
+                                          await showModalBottomSheet(
+                                        context: context,
+                                        builder: (_) =>
+                                            const BottomSheetEliminarProducto(),
                                       );
-                                    } else { //Se aborta la opción
-                                      return;
+                                      if (option == 'eliminar') {
+                                        inversionProvider
+                                            .remove(widget.prodSolicitado);
+                                        // ignore: use_build_context_synchronously
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ProductoInversionEliminado(
+                                              idEmprendimiento: widget.inversion
+                                                  .emprendimiento.target!.id,
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        //Se aborta la opción
+                                        return;
+                                      }
+                                    } else {
+                                      snackbarKey.currentState
+                                          ?.showSnackBar(const SnackBar(
+                                        content: Text(
+                                            "Ya no puedes eliminar este producto."),
+                                      ));
                                     }
-                                  } else {
-                                    snackbarKey.currentState
-                                        ?.showSnackBar(const SnackBar(
-                                      content: Text(
-                                          "Ya no puedes eliminar este producto."),
-                                    ));
-                                  }
                                   },
                                   child: const Icon(
                                     Icons.delete,
@@ -266,90 +273,105 @@ class _EditarProductoInversionScreenState
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                FormField(builder: (state) {
-                                  return Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0, 10, 0, 0),
-                                        child: InkWell(
-                                          onTap: () async {
-                                            String? option = await showModalBottomSheet(
-                                              context: context,
-                                              builder: (_) => const CustomBottomSheet(),
-                                            );
-
-                                            if (option == null) return;
-
-                                            final picker = ImagePicker();
-
-                                            late final XFile? pickedFile;
-
-                                            if (option == 'camera') {
-                                              pickedFile = await picker.pickImage(
-                                                source: ImageSource.camera,
-                                                imageQuality: 50,
+                                FormField(
+                                  builder: (state) {
+                                    return Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(0, 10, 0, 0),
+                                          child: InkWell(
+                                            onTap: () async {
+                                              String? option =
+                                                  await showModalBottomSheet(
+                                                context: context,
+                                                builder: (_) =>
+                                                    const CustomBottomSheet(),
                                               );
-                                            } else {
-                                              pickedFile = await picker.pickImage(
-                                                source: ImageSource.gallery,
-                                                imageQuality: 50,
-                                              );
-                                            }
 
-                                            if (pickedFile == null) {
-                                              return;
-                                            }
+                                              if (option == null) return;
 
-                                            setState(() {
-                                              image = pickedFile;
-                                              File file = File(image!.path);
-                                              List<int> fileInByte = file.readAsBytesSync();
-                                              base64 = base64Encode(fileInByte);
-                                              path = image!.path;
-                                              newImagen = image!.path;
-                                              nombreImagen = image!.name;
-                                            });
-                                          },
-                                          child: Container(
-                                            width:
-                                                MediaQuery.of(context).size.width * 0.9,
-                                            height: 180,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius: BorderRadius.circular(8),
-                                              border: Border.all(
-                                                color: const Color(0xFF221573),
-                                                width: 1.5,
+                                              final picker = ImagePicker();
+
+                                              late final XFile? pickedFile;
+
+                                              if (option == 'camera') {
+                                                pickedFile =
+                                                    await picker.pickImage(
+                                                  source: ImageSource.camera,
+                                                  imageQuality: 50,
+                                                );
+                                              } else {
+                                                pickedFile =
+                                                    await picker.pickImage(
+                                                  source: ImageSource.gallery,
+                                                  imageQuality: 50,
+                                                );
+                                              }
+
+                                              if (pickedFile == null) {
+                                                return;
+                                              }
+
+                                              setState(() {
+                                                image = pickedFile;
+                                                File file = File(image!.path);
+                                                List<int> fileInByte =
+                                                    file.readAsBytesSync();
+                                                base64 =
+                                                    base64Encode(fileInByte);
+                                                path = image!.path;
+                                                newImagen = image!.path;
+                                                nombreImagen = image!.name;
+                                              });
+                                            },
+                                            child: Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.9,
+                                              height: 180,
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                border: Border.all(
+                                                  color:
+                                                      const Color(0xFF221573),
+                                                  width: 1.5,
+                                                ),
                                               ),
-                                            ),
-                                            child: Stack(
-                                              children: [
-                                                Lottie.asset(
-                                                  'assets/lottie_animations/75669-animation-for-the-photo-optimization-process.json',
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.9,
-                                                  height: 180,
-                                                  fit: BoxFit.contain,
-                                                  animate: true,
-                                                ),
-                                                ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  child: getImage(newImagen),
-                                                ),
-                                              ],
+                                              child: Stack(
+                                                children: [
+                                                  Lottie.asset(
+                                                    'assets/lottie_animations/75669-animation-for-the-photo-optimization-process.json',
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.9,
+                                                    height: 180,
+                                                    fit: BoxFit.contain,
+                                                    animate: true,
+                                                  ),
+                                                  ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    child: getImage(newImagen),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  );
-                                },),
+                                      ],
+                                    );
+                                  },
+                                ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       15, 16, 15, 0),
@@ -420,66 +442,6 @@ class _EditarProductoInversionScreenState
                                               ),
                                           maxLines: 1,
                                         ),
-                                      ),
-                                      FormField(
-                                        builder: (state) {
-                                          return Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(5, 0, 5, 10),
-                                            child: DropDown(
-                                              initialOption: newFamilia,
-                                              options: listFamilias,
-                                              onChanged: (val) => setState(() {
-                                                if (listFamilias.isEmpty) {
-                                                  snackbarKey.currentState
-                                                      ?.showSnackBar(
-                                                          const SnackBar(
-                                                    content: Text(
-                                                        "Debes descargar los catálogos desde la sección de tu perfil"),
-                                                  ));
-                                                } else {
-                                                  newFamilia = val!;
-                                                }
-                                              }),
-                                              width: double.infinity,
-                                              height: 50,
-                                              textStyle: AppTheme.of(context)
-                                                  .title3
-                                                  .override(
-                                                    fontFamily: 'Poppins',
-                                                    color:
-                                                        const Color(0xFF221573),
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
-                                              hintText: 'Familia del producto*',
-                                              icon: const Icon(
-                                                Icons
-                                                    .keyboard_arrow_down_rounded,
-                                                color: Color(0xFF221573),
-                                                size: 30,
-                                              ),
-                                              fillColor: Colors.white,
-                                              elevation: 2,
-                                              borderColor:
-                                                  const Color(0xFF221573),
-                                              borderWidth: 2,
-                                              borderRadius: 8,
-                                              margin:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(12, 4, 12, 4),
-                                              hidesUnderline: true,
-                                            ),
-                                          );
-                                        },
-                                        validator: (val) {
-                                          if (newFamilia == "" ||
-                                              newFamilia.isEmpty) {
-                                            return 'Para continuar, seleccione una familia.';
-                                          }
-                                          return null;
-                                        },
                                       ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional
@@ -553,8 +515,8 @@ class _EditarProductoInversionScreenState
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
-                                            inversionProvider
-                                                .marcaSugerida = value;
+                                            inversionProvider.marcaSugerida =
+                                                value;
                                           },
                                           obscureText: false,
                                           decoration: InputDecoration(
@@ -747,8 +709,7 @@ class _EditarProductoInversionScreenState
                                               initialOption: newTipoEmpaques,
                                               options: listTipoEmpaques,
                                               onChanged: (val) => setState(() {
-                                                if (listTipoEmpaques
-                                                    .isEmpty) {
+                                                if (listTipoEmpaques.isEmpty) {
                                                   snackbarKey.currentState
                                                       ?.showSnackBar(
                                                           const SnackBar(
@@ -803,88 +764,88 @@ class _EditarProductoInversionScreenState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
-                                          maxLength: 5,
-                                          controller: cantidadController,
-                                          autovalidateMode: AutovalidateMode
-                                              .onUserInteraction,
-                                          obscureText: false,
-                                          decoration: InputDecoration(
-                                            labelText: 'Cantidad*',
-                                            labelStyle: AppTheme.of(context)
-                                                .title3
-                                                .override(
-                                                  fontFamily: 'Montserrat',
+                                            maxLength: 5,
+                                            controller: cantidadController,
+                                            autovalidateMode: AutovalidateMode
+                                                .onUserInteraction,
+                                            obscureText: false,
+                                            decoration: InputDecoration(
+                                              labelText: 'Cantidad*',
+                                              labelStyle: AppTheme.of(context)
+                                                  .title3
+                                                  .override(
+                                                    fontFamily: 'Montserrat',
+                                                    color: AppTheme.of(context)
+                                                        .secondaryText,
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                              hintText: 'Ingresa cantidad...',
+                                              hintStyle: AppTheme.of(context)
+                                                  .title3
+                                                  .override(
+                                                    fontFamily: 'Poppins',
+                                                    color: AppTheme.of(context)
+                                                        .secondaryText,
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
                                                   color: AppTheme.of(context)
-                                                      .secondaryText,
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.normal,
+                                                      .primaryText,
+                                                  width: 1.5,
                                                 ),
-                                            hintText: 'Ingresa cantidad...',
-                                            hintStyle: AppTheme.of(context)
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: AppTheme.of(context)
+                                                      .primaryText,
+                                                  width: 1.5,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                              ),
+                                              filled: true,
+                                              fillColor:
+                                                  const Color(0x49FFFFFF),
+                                            ),
+                                            keyboardType: TextInputType.number,
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter
+                                                  .digitsOnly
+                                            ],
+                                            style: AppTheme.of(context)
                                                 .title3
                                                 .override(
                                                   fontFamily: 'Poppins',
                                                   color: AppTheme.of(context)
-                                                      .secondaryText,
+                                                      .primaryText,
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.normal,
                                                 ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: AppTheme.of(context)
-                                                    .primaryText,
-                                                width: 1.5,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: AppTheme.of(context)
-                                                    .primaryText,
-                                                width: 1.5,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                            ),
-                                            filled: true,
-                                            fillColor: const Color(0x49FFFFFF),
-                                          ),
-                                          keyboardType: TextInputType.number,
-                                          inputFormatters: [
-                                              FilteringTextInputFormatter.digitsOnly
-                                          ],
-                                          style: AppTheme.of(context)
-                                              .title3
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                color: AppTheme.of(context)
-                                                    .primaryText,
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                          maxLines: 1,
-                                          validator: (value){
-                                            if(value != null){
-                                              if(value.isNotEmpty)
-                                            {
-                                            double cant = double.parse(value);
-                                            if(cant <= 0){
-                                              return 'Para continuar, ingrese una cantidad mayor a 0.';
-                                            }
-                                            else{
-                                              return null;
-                                            }
-                                            }
-                                            else{
-                                              return 'Ingrese un Dato';
-                                            }
-                                            }
-                                            else{
-                                              return 'Ingrese un Dato';
-                                            }
-                                          }
-                                        ),
+                                            maxLines: 1,
+                                            validator: (value) {
+                                              if (value != null) {
+                                                if (value.isNotEmpty) {
+                                                  double cant =
+                                                      double.parse(value);
+                                                  if (cant <= 0) {
+                                                    return 'Para continuar, ingrese una cantidad mayor a 0.';
+                                                  } else {
+                                                    return null;
+                                                  }
+                                                } else {
+                                                  return 'Ingrese un Dato';
+                                                }
+                                              } else {
+                                                return 'Ingrese un Dato';
+                                              }
+                                            }),
                                       ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional
@@ -896,7 +857,8 @@ class _EditarProductoInversionScreenState
                                               .onUserInteraction,
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            labelText: 'Costo por unidad estimado',
+                                            labelText:
+                                                'Costo por unidad estimado',
                                             labelStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(
@@ -951,15 +913,16 @@ class _EditarProductoInversionScreenState
                                               ),
                                           maxLines: 1,
                                           validator: (val) {
-                                            if(val!.length > 1){
-                                               double costo = double.parse(val.replaceAll('\$', '').replaceAll(',', ''));
-                                            if (costo <= 0) {
-                                              return 'Para continuar, ingrese un costo mayor a 0.';
-                                            }
+                                            if (val!.length > 1) {
+                                              double costo = double.parse(val
+                                                  .replaceAll('\$', '')
+                                                  .replaceAll(',', ''));
+                                              if (costo <= 0) {
+                                                return 'Para continuar, ingrese un costo mayor a 0.';
+                                              }
 
-                                            return null;
+                                              return null;
                                             }
-                                            
                                           },
                                         ),
                                       ),
@@ -973,14 +936,14 @@ class _EditarProductoInversionScreenState
                                           decoration: InputDecoration(
                                             suffixText: "%",
                                             suffixStyle: AppTheme.of(context)
-                                              .title3
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                color: AppTheme.of(context)
-                                                    .primaryText,
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.normal,
-                                              ),
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  color: AppTheme.of(context)
+                                                      .primaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
                                             labelText: 'Porcentaje de pago*',
                                             labelStyle: AppTheme.of(context)
                                                 .title3
@@ -991,7 +954,8 @@ class _EditarProductoInversionScreenState
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.normal,
                                                 ),
-                                            hintText: 'Ingresa porcentaje de pago...',
+                                            hintText:
+                                                'Ingresa porcentaje de pago...',
                                             hintStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(
@@ -1024,8 +988,9 @@ class _EditarProductoInversionScreenState
                                           ),
                                           keyboardType: TextInputType.number,
                                           inputFormatters: [
-                                              FilteringTextInputFormatter.digitsOnly,
-                                              PercentageTextInputFormatter()
+                                            FilteringTextInputFormatter
+                                                .digitsOnly,
+                                            PercentageTextInputFormatter()
                                           ],
                                           style: AppTheme.of(context)
                                               .title3
@@ -1047,19 +1012,15 @@ class _EditarProductoInversionScreenState
                                       0, 20, 0, 20),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      if (widget.inversion.estadoInversion.target!.estado == "Solicitada" 
-                                      && widget.inversion.idDBR == null) {
+                                      if (widget.inversion.estadoInversion
+                                                  .target!.estado ==
+                                              "Solicitada" &&
+                                          widget.inversion.idDBR == null) {
                                         if (inversionProvider
-                                          .validateForm(formKey)) {
+                                            .validateForm(formKey)) {
                                           if (newFamilia !=
-                                                  widget
-                                                      .prodSolicitado
-                                                      .familiaProducto
-                                                      .target!
-                                                      .nombre ||
-                                              marcaController.text !=
-                                                  widget
-                                                      .prodSolicitado.marcaSugerida ||
+                                                  widget.prodSolicitado
+                                                      .marcaSugerida ||
                                               proveedorController.text !=
                                                   widget.prodSolicitado
                                                       .proveedorSugerido ||
@@ -1072,38 +1033,40 @@ class _EditarProductoInversionScreenState
                                               cantidadController.text !=
                                                   widget.prodSolicitado.cantidad
                                                       .toString() ||
-                                              costoController.text.substring(1) !=
-                                                  widget.prodSolicitado.costoEstimado
-                                                      ?.toStringAsFixed(2)
-                                                ) {
+                                              costoController.text
+                                                      .substring(1) !=
+                                                  widget.prodSolicitado
+                                                      .costoEstimado
+                                                      ?.toStringAsFixed(2)) {
                                             if (newImagen !=
-                                              widget.prodSolicitado.imagen.target?.imagenes
-                                            ) {
-                                              if (widget.prodSolicitado.imagen.target?.imagenes == null) {
+                                                widget.prodSolicitado.imagen
+                                                    .target?.imagenes) {
+                                              if (widget.prodSolicitado.imagen
+                                                      .target?.imagenes ==
+                                                  null) {
                                                 print("SE AGREGA IMAGEN NUEVA");
-                                                inversionProvider.addImagenProductoSolicitado(
-                                                  widget.prodSolicitado,
-                                                  nombreImagen,
-                                                  path,
-                                                  base64,
-                                                  widget.idEmprendimiento);
+                                                inversionProvider
+                                                    .addImagenProductoSolicitado(
+                                                        widget.prodSolicitado,
+                                                        nombreImagen,
+                                                        path,
+                                                        base64,
+                                                        widget
+                                                            .idEmprendimiento);
                                               } else {
-                                                print("SE ACTUALIZA IMAGEN NUEVA");
-                                                inversionProvider.updateImagenProductoSolicitado(
-                                                  widget.prodSolicitado,
-                                                  widget.prodSolicitado.imagen.target!.id,
-                                                  nombreImagen,
-                                                  path,
-                                                  base64);
+                                                print(
+                                                    "SE ACTUALIZA IMAGEN NUEVA");
+                                                inversionProvider
+                                                    .updateImagenProductoSolicitado(
+                                                        widget.prodSolicitado,
+                                                        widget.prodSolicitado
+                                                            .imagen.target!.id,
+                                                        nombreImagen,
+                                                        path,
+                                                        base64);
                                               }
                                             }
-                                            final idFamiliaProducto = dataBase
-                                            .familiaProductosBox
-                                            .query(FamiliaProd_.nombre
-                                                .equals(newFamilia))
-                                            .build()
-                                            .findFirst()
-                                            ?.id;
+
                                             final idTipoEmpaques = dataBase
                                                 .tipoEmpaquesBox
                                                 .query(TipoEmpaques_.tipo
@@ -1111,58 +1074,69 @@ class _EditarProductoInversionScreenState
                                                 .build()
                                                 .findFirst()
                                                 ?.id;
-                                            if (idFamiliaProducto != null &&
-                                                idTipoEmpaques != null) {
-                                                inversionProvider.updateProductoSolicitado(
-                                                  widget.prodSolicitado.id,
-                                                  widget.inversion.id,
-                                                  idFamiliaProducto,
-                                                  marcaController.text,
-                                                  proveedorController.text,
-                                                  idTipoEmpaques,
-                                                  int.parse(cantidadController.text),
-                                                  costoController.text != '' ? 
-                                                  double.parse(costoController.text.replaceAll("\$", "").replaceAll(",", ""))
-                                                  :
-                                                  null
-                                                );
-                                                await Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const ProductoInversionActualizado(),
-                                                  ),
-                                                );
+                                            if (idTipoEmpaques != null) {
+                                              inversionProvider
+                                                  .updateProductoSolicitado(
+                                                      widget.prodSolicitado.id,
+                                                      widget.inversion.id,
+                                                      marcaController.text,
+                                                      proveedorController.text,
+                                                      idTipoEmpaques,
+                                                      int.parse(
+                                                          cantidadController
+                                                              .text),
+                                                      costoController.text != ''
+                                                          ? double.parse(
+                                                              costoController
+                                                                  .text
+                                                                  .replaceAll(
+                                                                      "\$", "")
+                                                                  .replaceAll(
+                                                                      ",", ""))
+                                                          : null);
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const ProductoInversionActualizado(),
+                                                ),
+                                              );
                                             }
-                                        } else {
-                                        if (newImagen !=
-                                          widget.prodSolicitado.imagen.target?.path
-                                        ) {
-                                          if (widget.prodSolicitado.imagen.target?.path == null) {
-                                          inversionProvider.addImagenProductoSolicitado(
-                                              widget.prodSolicitado,
-                                              nombreImagen,
-                                              path,
-                                              base64,
-                                              widget.idEmprendimiento);
                                           } else {
-                                          inversionProvider.updateImagenProductoSolicitado(
-                                              widget.prodSolicitado,
-                                              widget.prodSolicitado.imagen.target!.id,
-                                              nombreImagen,
-                                              path,
-                                              base64);
+                                            if (newImagen !=
+                                                widget.prodSolicitado.imagen
+                                                    .target?.path) {
+                                              if (widget.prodSolicitado.imagen
+                                                      .target?.path ==
+                                                  null) {
+                                                inversionProvider
+                                                    .addImagenProductoSolicitado(
+                                                        widget.prodSolicitado,
+                                                        nombreImagen,
+                                                        path,
+                                                        base64,
+                                                        widget
+                                                            .idEmprendimiento);
+                                              } else {
+                                                inversionProvider
+                                                    .updateImagenProductoSolicitado(
+                                                        widget.prodSolicitado,
+                                                        widget.prodSolicitado
+                                                            .imagen.target!.id,
+                                                        nombreImagen,
+                                                        path,
+                                                        base64);
+                                              }
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const ProductoInversionActualizado(),
+                                                ),
+                                              );
+                                            }
                                           }
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const ProductoInversionActualizado(),
-                                            ),
-                                          );
-                                        }
-                                      }
-                                      } else {
+                                        } else {
                                           await showDialog(
                                             context: context,
                                             builder: (alertDialogContext) {

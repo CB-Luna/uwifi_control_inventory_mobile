@@ -61,7 +61,6 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
     banderasExistoSync.add(await getComunidades());
     banderasExistoSync.add(await getTipoProyecto());
     banderasExistoSync.add(await getCatalogosProyectos());
-    banderasExistoSync.add(await getFamiliaProd());
     banderasExistoSync.add(await getUnidadMedida());
     banderasExistoSync.add(await getAmbitoConsultoria());
     banderasExistoSync.add(await getAreaCirculo());
@@ -396,60 +395,6 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
               } else {
                 return false;
               }
-            }
-          }
-        }
-        return true;
-      } else {
-        //No existen datos de estados en Pocketbase
-        return false;
-      }
-    } catch (e) {
-      return false;
-    }
-  }
-
-//Función para recuperar el catálogo de familia de producto desde Pocketbase
-  Future<bool> getFamiliaProd() async {
-    try {
-      //Se recupera toda la colección de familia producto en Pocketbase
-      final records = await client.records
-          .getFullList('familia_prod', batch: 200, sort: '+nombre_tipo_prod');
-      if (records.isNotEmpty) {
-        //Existen datos de familia producto en Pocketbase
-        final List<GetFamiliaProductos> listFamiliaProductos = [];
-        for (var element in records) {
-          listFamiliaProductos
-              .add(getFamiliaProductosFromMap(element.toString()));
-        }
-        for (var i = 0; i < listFamiliaProductos.length; i++) {
-          //Se valida que la nueva familia producto aún no existe en Objectbox
-          final familiaProductoExistente = dataBase.familiaProductosBox
-              .query(FamiliaProd_.idDBR.equals(listFamiliaProductos[i].id))
-              .build()
-              .findUnique();
-          if (familiaProductoExistente == null) {
-            if (listFamiliaProductos[i].id.isNotEmpty) {
-              final nuevaFamiliaProducto = FamiliaProd(
-                nombre: listFamiliaProductos[i].nombreTipoProd,
-                activo: listFamiliaProductos[i].activo,
-                idDBR: listFamiliaProductos[i].id,
-                idEmiWeb: listFamiliaProductos[i].idEmiWeb,
-              );
-              dataBase.familiaProductosBox.put(nuevaFamiliaProducto);
-              print('Familia Producto Nueva agregada exitosamente');
-            }
-          } else {
-            //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
-            if (familiaProductoExistente.fechaRegistro !=
-                listFamiliaProductos[i].updated) {
-              //Se actualiza el registro en Objectbox
-              familiaProductoExistente.nombre =
-                  listFamiliaProductos[i].nombreTipoProd;
-              familiaProductoExistente.activo = listFamiliaProductos[i].activo;
-              familiaProductoExistente.fechaRegistro =
-                  listFamiliaProductos[i].updated!;
-              dataBase.familiaProductosBox.put(familiaProductoExistente);
             }
           }
         }
@@ -1102,11 +1047,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                   Proveedores_.idDBR.equals(listProductosProv[i].idProveedorFk))
               .build()
               .findUnique();
-          final familiaProd = dataBase.familiaProductosBox
-              .query(FamiliaProd_.idDBR
-                  .equals(listProductosProv[i].idFamiliaProdFk))
-              .build()
-              .findUnique();
+
           final unidadMedida = dataBase.unidadesMedidaBox
               .query(UnidadMedida_.idDBR
                   .equals(listProductosProv[i].idUndMedidaFk))
@@ -1133,11 +1074,8 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                   idEmiWeb: listProductosProv[i].idEmiWeb,
                   archivado: listProductosProv[i].archivado,
                 );
-                if (proveedor != null &&
-                    familiaProd != null &&
-                    unidadMedida != null) {
+                if (proveedor != null && unidadMedida != null) {
                   nuevoProductoProveedor.proveedor.target = proveedor;
-                  nuevoProductoProveedor.familiaProducto.target = familiaProd;
                   nuevoProductoProveedor.unidadMedida.target = unidadMedida;
                   dataBase.productosProvBox.put(nuevoProductoProveedor);
                   print('Producto Proveedor Nuevo agregado éxitosamente');
@@ -1179,15 +1117,12 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                   idDBR: recordsImagenParse.id,
                   idEmprendimiento: 0,
                 );
-                
+
                 print('info de imagen: ${nuevaImagenProductoProveedor}');
-                if (proveedor != null &&
-                    familiaProd != null &&
-                    unidadMedida != null) {
+                if (proveedor != null && unidadMedida != null) {
                   nuevaImagenProductoProveedor.productosProv.target =
                       nuevoProductoProveedor;
                   nuevoProductoProveedor.proveedor.target = proveedor;
-                  nuevoProductoProveedor.familiaProducto.target = familiaProd;
                   nuevoProductoProveedor.unidadMedida.target = unidadMedida;
                   nuevoProductoProveedor.imagen.target =
                       nuevaImagenProductoProveedor;
@@ -1237,9 +1172,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
             //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
             if (productoProveedorExistente.fechaRegistro !=
                 listProductosProv[i].updated) {
-              if (proveedor != null &&
-                  familiaProd != null &&
-                  unidadMedida != null) {
+              if (proveedor != null && unidadMedida != null) {
                 //Se actualiza el registro en Objectbox
                 productoProveedorExistente.nombre =
                     listProductosProv[i].nombreProdProv;
@@ -1255,98 +1188,87 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                 productoProveedorExistente.archivado =
                     listProductosProv[i].archivado;
                 productoProveedorExistente.proveedor.target = proveedor;
-                productoProveedorExistente.familiaProducto.target = familiaProd;
                 productoProveedorExistente.unidadMedida.target = unidadMedida;
                 dataBase.productosProvBox.put(productoProveedorExistente);
-                
               } else {
                 if (listProductosProv[i].id.isNotEmpty) {
-              if (listProductosProv[i].idImagenfk == '') {
-                
-                final nuevoProductoProveedor = ProductosProv(
-                  nombre: listProductosProv[i].nombreProdProv,
-                  descripcion: listProductosProv[i].descripcionProdProv,
-                  marca: listProductosProv[i].marca,
-                  costo: listProductosProv[i].costoProdProv,
-                  tiempoEntrega: listProductosProv[i].tiempoEntrega,
-                  idDBR: listProductosProv[i].id,
-                  fechaRegistro: listProductosProv[i].updated,
-                  idEmiWeb: listProductosProv[i].idEmiWeb,
-                  archivado: listProductosProv[i].archivado,
-                );
-                if (proveedor != null &&
-                    familiaProd != null &&
-                    unidadMedida != null) {
-                  nuevoProductoProveedor.proveedor.target = proveedor;
-                  nuevoProductoProveedor.familiaProducto.target = familiaProd;
-                  nuevoProductoProveedor.unidadMedida.target = unidadMedida;
-                  dataBase.productosProvBox.put(nuevoProductoProveedor);
-                  print('Producto Proveedor Nuevo agregado éxitosamente');
-                } else {
-                  return false;
-                }
-              } else {
-                final nuevoProductoProveedor = ProductosProv(
-                  nombre: listProductosProv[i].nombreProdProv,
-                  descripcion: listProductosProv[i].descripcionProdProv,
-                  marca: listProductosProv[i].marca,
-                  costo: listProductosProv[i].costoProdProv,
-                  tiempoEntrega: listProductosProv[i].tiempoEntrega,
-                  idDBR: listProductosProv[i].id,
-                  fechaRegistro: listProductosProv[i].updated,
-                  idEmiWeb: listProductosProv[i].idEmiWeb,
-                  archivado: listProductosProv[i].archivado,
-                );
-                final recordsImagen = await client.records.getFullList(
-                  'imagenes',
-                  batch: 200,
-                  filter: "id='${listProductosProv[i].idImagenfk}'",
-                );
-                final recordsImagenParse = getBasicImagenPocketbaseFromMap(
-                    recordsImagen[0].toString());
+                  if (listProductosProv[i].idImagenfk == '') {
+                    final nuevoProductoProveedor = ProductosProv(
+                      nombre: listProductosProv[i].nombreProdProv,
+                      descripcion: listProductosProv[i].descripcionProdProv,
+                      marca: listProductosProv[i].marca,
+                      costo: listProductosProv[i].costoProdProv,
+                      tiempoEntrega: listProductosProv[i].tiempoEntrega,
+                      idDBR: listProductosProv[i].id,
+                      fechaRegistro: listProductosProv[i].updated,
+                      idEmiWeb: listProductosProv[i].idEmiWeb,
+                      archivado: listProductosProv[i].archivado,
+                    );
+                    if (proveedor != null && unidadMedida != null) {
+                      nuevoProductoProveedor.proveedor.target = proveedor;
+                      nuevoProductoProveedor.unidadMedida.target = unidadMedida;
+                      dataBase.productosProvBox.put(nuevoProductoProveedor);
+                      print('Producto Proveedor Nuevo agregado éxitosamente');
+                    } else {
+                      return false;
+                    }
+                  } else {
+                    final nuevoProductoProveedor = ProductosProv(
+                      nombre: listProductosProv[i].nombreProdProv,
+                      descripcion: listProductosProv[i].descripcionProdProv,
+                      marca: listProductosProv[i].marca,
+                      costo: listProductosProv[i].costoProdProv,
+                      tiempoEntrega: listProductosProv[i].tiempoEntrega,
+                      idDBR: listProductosProv[i].id,
+                      fechaRegistro: listProductosProv[i].updated,
+                      idEmiWeb: listProductosProv[i].idEmiWeb,
+                      archivado: listProductosProv[i].archivado,
+                    );
+                    final recordsImagen = await client.records.getFullList(
+                      'imagenes',
+                      batch: 200,
+                      filter: "id='${listProductosProv[i].idImagenfk}'",
+                    );
+                    final recordsImagenParse = getBasicImagenPocketbaseFromMap(
+                        recordsImagen[0].toString());
 
-                final uInt8ListImagen = base64Decode(recordsImagenParse.base64);
-                final tempDir = await getTemporaryDirectory();
-                File file =
-                    await File('${tempDir.path}/${recordsImagenParse.nombre}')
+                    final uInt8ListImagen =
+                        base64Decode(recordsImagenParse.base64);
+                    final tempDir = await getTemporaryDirectory();
+                    File file = await File(
+                            '${tempDir.path}/${recordsImagenParse.nombre}')
                         .create();
-                file.writeAsBytesSync(uInt8ListImagen);
-                final nuevaImagenProductoProveedor = Imagenes(
-                  imagenes: file.path,
-                  nombre: recordsImagenParse.nombre,
-                  path: file.path,
-                  base64: recordsImagenParse.base64,
-                  idEmiWeb: recordsImagenParse.idEmiWeb,
-                  idDBR: recordsImagenParse.id,
-                  idEmprendimiento: 0,
-                );
-                
-                
-                if (proveedor != null &&
-                    familiaProd != null &&
-                    unidadMedida != null) {
-                  
-                  nuevoProductoProveedor.proveedor.target = proveedor;
-                  nuevoProductoProveedor.familiaProducto.target = familiaProd;
-                  nuevoProductoProveedor.unidadMedida.target = unidadMedida;
-                  nuevaImagenProductoProveedor.productosProv.target =
-                      nuevoProductoProveedor;
-                  nuevoProductoProveedor.imagen.target =
-                      nuevaImagenProductoProveedor;
-                  dataBase.imagenesBox.put(nuevaImagenProductoProveedor);
-                  dataBase.productosProvBox.put(nuevoProductoProveedor);
-                  print('Producto Proveedor Nuevo agregado éxitosamente');
+                    file.writeAsBytesSync(uInt8ListImagen);
+                    final nuevaImagenProductoProveedor = Imagenes(
+                      imagenes: file.path,
+                      nombre: recordsImagenParse.nombre,
+                      path: file.path,
+                      base64: recordsImagenParse.base64,
+                      idEmiWeb: recordsImagenParse.idEmiWeb,
+                      idDBR: recordsImagenParse.id,
+                      idEmprendimiento: 0,
+                    );
+
+                    if (proveedor != null && unidadMedida != null) {
+                      nuevoProductoProveedor.proveedor.target = proveedor;
+
+                      nuevoProductoProveedor.unidadMedida.target = unidadMedida;
+                      nuevaImagenProductoProveedor.productosProv.target =
+                          nuevoProductoProveedor;
+                      nuevoProductoProveedor.imagen.target =
+                          nuevaImagenProductoProveedor;
+                      dataBase.imagenesBox.put(nuevaImagenProductoProveedor);
+                      dataBase.productosProvBox.put(nuevoProductoProveedor);
+                      print('Producto Proveedor Nuevo agregado éxitosamente');
+                    } else {
+                      return false;
+                    }
+                  }
                 } else {
                   return false;
                 }
               }
-            } else {
-              return false;
             }
-              }
-            }
-            
-            
           }
         }
         return true;
@@ -1378,11 +1300,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                   .equals(listProdProyecto[i].idCatalogoProyectoFk))
               .build()
               .findUnique();
-          final familiaProd = dataBase.familiaProductosBox
-              .query(FamiliaProd_.idDBR
-                  .equals(listProdProyecto[i].idFamiliaProdFk))
-              .build()
-              .findUnique();
+
           final tipoEmpaque = dataBase.tipoEmpaquesBox
               .query(TipoEmpaques_.idDBR
                   .equals(listProdProyecto[i].idTipoEmpaqueFk))
@@ -1405,12 +1323,9 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                 idDBR: listProdProyecto[i].id,
                 idEmiWeb: listProdProyecto[i].idEmiWeb,
               );
-              if (catalogoProyecto != null &&
-                  familiaProd != null &&
-                  tipoEmpaque != null) {
+              if (catalogoProyecto != null && tipoEmpaque != null) {
                 nuevoProductoProyecto.catalogoProyecto.target =
                     catalogoProyecto;
-                nuevoProductoProyecto.familiaProducto.target = familiaProd;
                 nuevoProductoProyecto.tipoEmpaque.target = tipoEmpaque;
                 //Se agrega desde catálogo proyecto para visualizarlo en pantallas
                 catalogoProyecto.prodProyecto.add(nuevoProductoProyecto);
@@ -1424,9 +1339,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
             //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
             if (productoProyectoExistente.fechaRegistro !=
                 listProdProyecto[i].updated) {
-              if (catalogoProyecto != null &&
-                  familiaProd != null &&
-                  tipoEmpaque != null) {
+              if (catalogoProyecto != null && tipoEmpaque != null) {
                 //Se actualiza el registro en Objectbox
                 productoProyectoExistente.producto =
                     listProdProyecto[i].producto;
@@ -1444,7 +1357,6 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                     listProdProyecto[i].costoEstimado;
                 productoProyectoExistente.catalogoProyecto.target =
                     catalogoProyecto;
-                productoProyectoExistente.familiaProducto.target = familiaProd;
                 productoProyectoExistente.tipoEmpaque.target = tipoEmpaque;
                 dataBase.productosProyectoBox.put(productoProyectoExistente);
               } else {

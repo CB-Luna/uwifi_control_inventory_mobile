@@ -20,8 +20,8 @@ class EditarInversionJornadaScreen extends StatefulWidget {
   final Inversiones inversion;
   const EditarInversionJornadaScreen({
     Key? key,
-    required this.prodSolicitados, 
-    required this.jornada, 
+    required this.prodSolicitados,
+    required this.jornada,
     required this.emprendimiento,
     required this.inversion,
   }) : super(key: key);
@@ -35,7 +35,7 @@ class _EditarInversionJornadaScreenState
     extends State<EditarInversionJornadaScreen> with TickerProviderStateMixin {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   double totalProyecto = 0.0;
-  
+
   @override
   void initState() {
     super.initState();
@@ -53,7 +53,8 @@ class _EditarInversionJornadaScreenState
 
   @override
   Widget build(BuildContext context) {
-    final productoInversionJornadaProvider = Provider.of<ProductoInversionJornadaController>(context);
+    final productoInversionJornadaProvider =
+        Provider.of<ProductoInversionJornadaController>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -83,8 +84,8 @@ class _EditarInversionJornadaScreenState
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(20, 40, 20, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              20, 40, 20, 0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -98,14 +99,16 @@ class _EditarInversionJornadaScreenState
                                 ),
                                 child: InkWell(
                                   onTap: () async {
-                                    productoInversionJornadaProvider.clearInformation();
+                                    productoInversionJornadaProvider
+                                        .clearInformation();
                                     await Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             EditarJornada3Screen(
-                                                jornada:
-                                                    widget.jornada, emprendimiento: widget.emprendimiento,),
+                                          jornada: widget.jornada,
+                                          emprendimiento: widget.emprendimiento,
+                                        ),
                                       ),
                                     );
                                   },
@@ -139,8 +142,8 @@ class _EditarInversionJornadaScreenState
                           ),
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              10, 0, 10, 0),
                           child: Container(
                             width: MediaQuery.of(context).size.width,
                             decoration: const BoxDecoration(
@@ -152,8 +155,9 @@ class _EditarInversionJornadaScreenState
                                 topRight: Radius.circular(16),
                               ),
                             ),
-                          ).animated(
-                              [animationsMap['containerOnPageLoadAnimation1']!]),
+                          ).animated([
+                            animationsMap['containerOnPageLoadAnimation1']!
+                          ]),
                         ),
                         Align(
                           alignment: const AlignmentDirectional(0, 0),
@@ -169,12 +173,13 @@ class _EditarInversionJornadaScreenState
                                   children: [
                                     Text(
                                       'Inversión Sugerida',
-                                      style:
-                                          AppTheme.of(context).bodyText1.override(
-                                                fontFamily: AppTheme.of(context)
-                                                    .bodyText1Family,
-                                                fontSize: 20,
-                                              ),
+                                      style: AppTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: AppTheme.of(context)
+                                                .bodyText1Family,
+                                            fontSize: 20,
+                                          ),
                                     ),
                                   ],
                                 ),
@@ -193,18 +198,24 @@ class _EditarInversionJornadaScreenState
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                       child: Container(
-                                        width: MediaQuery.of(context).size.width *
-                                            0.92,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.92,
                                         height: 200,
                                         decoration: BoxDecoration(
                                           image: DecorationImage(
                                             fit: BoxFit.cover,
-                                            image: widget.emprendimiento.imagen.target != null
-                                            ? FileImage(File(
-                                                widget.emprendimiento.imagen.target!.path!))
-                                            : Image.asset(
-                                                "assets/images/default_image_placeholder.jpeg",
-                                              ).image,
+                                            image: widget.emprendimiento.imagen
+                                                        .target !=
+                                                    null
+                                                ? FileImage(File(widget
+                                                    .emprendimiento
+                                                    .imagen
+                                                    .target!
+                                                    .path!))
+                                                : Image.asset(
+                                                    "assets/images/default_image_placeholder.jpeg",
+                                                  ).image,
                                           ),
                                           boxShadow: const [
                                             BoxShadow(
@@ -219,29 +230,33 @@ class _EditarInversionJornadaScreenState
                                               Color(0xFFF2A384)
                                             ],
                                             stops: [0, 1],
-                                            begin: AlignmentDirectional(0.94, -1),
+                                            begin:
+                                                AlignmentDirectional(0.94, -1),
                                             end: AlignmentDirectional(-0.94, 1),
                                           ),
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(10, 20, 10, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(10, 20, 10, 0),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
                                                   Container(
-                                                    width: MediaQuery.of(context)
-                                                            .size
-                                                            .width *
-                                                        0.87,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.87,
                                                     height: 40,
                                                     decoration: BoxDecoration(
-                                                      color:
-                                                          const Color(0x9C000000),
+                                                      color: const Color(
+                                                          0x9C000000),
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               8),
@@ -256,7 +271,12 @@ class _EditarInversionJornadaScreenState
                                                             MainAxisSize.max,
                                                         children: [
                                                           Text(
-                                                            maybeHandleOverflow(widget.emprendimiento.nombre, 30, "..."),
+                                                            maybeHandleOverflow(
+                                                                widget
+                                                                    .emprendimiento
+                                                                    .nombre,
+                                                                30,
+                                                                "..."),
                                                             style: AppTheme.of(
                                                                     context)
                                                                 .bodyText1
@@ -277,8 +297,9 @@ class _EditarInversionJornadaScreenState
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(10, 5, 10, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(10, 5, 10, 0),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -286,14 +307,15 @@ class _EditarInversionJornadaScreenState
                                                         .spaceBetween,
                                                 children: [
                                                   Container(
-                                                    width: MediaQuery.of(context)
-                                                            .size
-                                                            .width *
-                                                        0.45,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.45,
                                                     height: 60,
                                                     decoration: BoxDecoration(
-                                                      color:
-                                                          const Color(0x9C000000),
+                                                      color: const Color(
+                                                          0x9C000000),
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               8),
@@ -309,7 +331,8 @@ class _EditarInversionJornadaScreenState
                                                         children: [
                                                           Column(
                                                             mainAxisSize:
-                                                                MainAxisSize.max,
+                                                                MainAxisSize
+                                                                    .max,
                                                             children: [
                                                               Padding(
                                                                 padding:
@@ -326,8 +349,7 @@ class _EditarInversionJornadaScreenState
                                                                       .bodyText1
                                                                       .override(
                                                                         fontFamily:
-                                                                            AppTheme.of(context)
-                                                                                .bodyText1Family,
+                                                                            AppTheme.of(context).bodyText1Family,
                                                                         color: Colors
                                                                             .white,
                                                                         fontSize:
@@ -336,7 +358,10 @@ class _EditarInversionJornadaScreenState
                                                                 ),
                                                               ),
                                                               Text(
-                                                                currencyFormat.format(totalProyecto.toStringAsFixed(2)),
+                                                                currencyFormat.format(
+                                                                    totalProyecto
+                                                                        .toStringAsFixed(
+                                                                            2)),
                                                                 style: AppTheme.of(
                                                                         context)
                                                                     .bodyText1
@@ -357,14 +382,15 @@ class _EditarInversionJornadaScreenState
                                                     ),
                                                   ),
                                                   Container(
-                                                    width: MediaQuery.of(context)
-                                                            .size
-                                                            .width *
-                                                        0.3,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.3,
                                                     height: 60,
                                                     decoration: BoxDecoration(
-                                                      color:
-                                                          const Color(0x9C000000),
+                                                      color: const Color(
+                                                          0x9C000000),
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               8),
@@ -387,7 +413,10 @@ class _EditarInversionJornadaScreenState
                                                               padding:
                                                                   const EdgeInsetsDirectional
                                                                           .fromSTEB(
-                                                                      0, 5, 0, 0),
+                                                                      0,
+                                                                      5,
+                                                                      0,
+                                                                      0),
                                                               child: Text(
                                                                 'Cantidad Partidas',
                                                                 style: AppTheme.of(
@@ -405,19 +434,21 @@ class _EditarInversionJornadaScreenState
                                                               ),
                                                             ),
                                                             Text(
-                                                              widget.prodSolicitados
+                                                              widget
+                                                                  .prodSolicitados
                                                                   .length
                                                                   .toString(),
                                                               style: AppTheme.of(
                                                                       context)
                                                                   .bodyText1
                                                                   .override(
-                                                                    fontFamily: AppTheme.of(
-                                                                            context)
-                                                                        .bodyText1Family,
+                                                                    fontFamily:
+                                                                        AppTheme.of(context)
+                                                                            .bodyText1Family,
                                                                     color: Colors
                                                                         .white,
-                                                                    fontSize: 25,
+                                                                    fontSize:
+                                                                        25,
                                                                   ),
                                                             ),
                                                           ],
@@ -433,8 +464,9 @@ class _EditarInversionJornadaScreenState
                                       ),
                                     ),
                                   ],
-                                ).animated(
-                                    [animationsMap['rowOnPageLoadAnimation1']!]),
+                                ).animated([
+                                  animationsMap['rowOnPageLoadAnimation1']!
+                                ]),
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
@@ -454,9 +486,8 @@ class _EditarInversionJornadaScreenState
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Padding(
-                                        padding:
-                                            const EdgeInsetsDirectional.fromSTEB(
-                                                10, 12, 5, 12),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(10, 12, 5, 12),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment:
@@ -480,20 +511,17 @@ class _EditarInversionJornadaScreenState
                                                   MaterialPageRoute(
                                                     builder: (context) =>
                                                         AgregarProductoInversionJornadaScreen(
-                                                          emprendimiento: 
-                                                              widget.emprendimiento,
-                                                          jornada: 
-                                                              widget.jornada,
-                                                          inversion: 
-                                                              widget.inversion,
-                                                          emprendedor: 
-                                                              "${widget.emprendimiento
-                                                                .emprendedor.target!.nombre} ${widget
-                                                                .emprendimiento.emprendedor
-                                                                .target!.apellidos}",
-                                                          porcentajePago:
-                                                              widget.inversion
-                                                              .porcentajePago.toString(),
+                                                      emprendimiento:
+                                                          widget.emprendimiento,
+                                                      jornada: widget.jornada,
+                                                      inversion:
+                                                          widget.inversion,
+                                                      emprendedor:
+                                                          "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}",
+                                                      porcentajePago: widget
+                                                          .inversion
+                                                          .porcentajePago
+                                                          .toString(),
                                                     ),
                                                   ),
                                                 );
@@ -535,7 +563,8 @@ class _EditarInversionJornadaScreenState
                                             padding: EdgeInsets.zero,
                                             shrinkWrap: true,
                                             scrollDirection: Axis.vertical,
-                                            itemCount: widget.prodSolicitados.length,
+                                            itemCount:
+                                                widget.prodSolicitados.length,
                                             itemBuilder: (context, index) {
                                               final prodSolicitado =
                                                   widget.prodSolicitados[index];
@@ -546,20 +575,23 @@ class _EditarInversionJornadaScreenState
                                                     MaterialPageRoute(
                                                       builder: (context) =>
                                                           EditarProductoInversionJornada(
-                                                              productoSol:
-                                                                  prodSolicitado, 
-                                                              jornada: 
-                                                                  widget.jornada,
-                                                              emprendimientoActual: widget.emprendimiento,
-                                                              inversion: 
-                                                                  widget.inversion,),
+                                                        productoSol:
+                                                            prodSolicitado,
+                                                        jornada: widget.jornada,
+                                                        emprendimientoActual:
+                                                            widget
+                                                                .emprendimiento,
+                                                        inversion:
+                                                            widget.inversion,
+                                                      ),
                                                     ),
                                                   );
                                                 },
                                                 child: Padding(
                                                   padding:
                                                       const EdgeInsetsDirectional
-                                                          .fromSTEB(0, 0, 0, 24),
+                                                              .fromSTEB(
+                                                          0, 0, 0, 24),
                                                   child: Column(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -581,11 +613,13 @@ class _EditarInversionJornadaScreenState
                                                                 0x374672FF),
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(8),
+                                                                    .circular(
+                                                                        8),
                                                           ),
                                                           child: Row(
                                                             mainAxisSize:
-                                                                MainAxisSize.max,
+                                                                MainAxisSize
+                                                                    .max,
                                                             children: [
                                                               Padding(
                                                                 padding:
@@ -595,7 +629,8 @@ class _EditarInversionJornadaScreenState
                                                                         0,
                                                                         0,
                                                                         0),
-                                                                child: Container(
+                                                                child:
+                                                                    Container(
                                                                   width: 35,
                                                                   height: 35,
                                                                   decoration:
@@ -618,14 +653,11 @@ class _EditarInversionJornadaScreenState
                                                                         (index +
                                                                                 1)
                                                                             .toString(),
-                                                                        style: AppTheme.of(
-                                                                                context)
+                                                                        style: AppTheme.of(context)
                                                                             .bodyText1
                                                                             .override(
-                                                                              fontFamily:
-                                                                                  AppTheme.of(context).bodyText1Family,
-                                                                              fontSize:
-                                                                                  20,
+                                                                              fontFamily: AppTheme.of(context).bodyText1Family,
+                                                                              fontSize: 20,
                                                                             ),
                                                                       ),
                                                                     ],
@@ -650,26 +682,26 @@ class _EditarInversionJornadaScreenState
                                                                     children: [
                                                                       Row(
                                                                         mainAxisSize:
-                                                                            MainAxisSize
-                                                                                .max,
+                                                                            MainAxisSize.max,
                                                                         mainAxisAlignment:
-                                                                            MainAxisAlignment
-                                                                                .spaceBetween,
+                                                                            MainAxisAlignment.spaceBetween,
                                                                         children: [
                                                                           Text(
-                                                                            maybeHandleOverflow(prodSolicitado.producto, 12, "..."),
-                                                                            style: AppTheme.of(context)
-                                                                                .subtitle1
-                                                                                .override(
+                                                                            maybeHandleOverflow(
+                                                                                prodSolicitado.producto,
+                                                                                12,
+                                                                                "..."),
+                                                                            style: AppTheme.of(context).subtitle1.override(
                                                                                   fontFamily: AppTheme.of(context).subtitle1Family,
                                                                                   color: AppTheme.of(context).primaryText,
                                                                                 ),
                                                                           ),
-                                                                           Text(
-                                                                            maybeHandleOverflow(prodSolicitado.tipoEmpaques.target?.tipo ?? "",8,"..."),
-                                                                            style: AppTheme.of(context)
-                                                                                .subtitle1
-                                                                                .override(
+                                                                          Text(
+                                                                            maybeHandleOverflow(
+                                                                                prodSolicitado.tipoEmpaques.target?.tipo ?? "",
+                                                                                8,
+                                                                                "..."),
+                                                                            style: AppTheme.of(context).subtitle1.override(
                                                                                   fontFamily: AppTheme.of(context).subtitle1Family,
                                                                                   color: AppTheme.of(context).primaryText,
                                                                                   fontSize: 18,
@@ -680,9 +712,7 @@ class _EditarInversionJornadaScreenState
                                                                             "\$ ${prodSolicitado.costoEstimado == null ? 0 : (prodSolicitado.costoEstimado! * prodSolicitado.cantidad).toStringAsFixed(2)}",
                                                                             textAlign:
                                                                                 TextAlign.end,
-                                                                            style: AppTheme.of(context)
-                                                                                .subtitle2
-                                                                                .override(
+                                                                            style: AppTheme.of(context).subtitle2.override(
                                                                                   fontFamily: AppTheme.of(context).subtitle2Family,
                                                                                   color: AppTheme.of(context).primaryText,
                                                                                 ),
@@ -690,10 +720,8 @@ class _EditarInversionJornadaScreenState
                                                                         ],
                                                                       ),
                                                                       Padding(
-                                                                        padding: const EdgeInsets
-                                                                                .symmetric(
-                                                                            vertical:
-                                                                                5),
+                                                                        padding:
+                                                                            const EdgeInsets.symmetric(vertical: 5),
                                                                         child:
                                                                             Row(
                                                                           mainAxisSize:
@@ -702,17 +730,8 @@ class _EditarInversionJornadaScreenState
                                                                               MainAxisAlignment.spaceBetween,
                                                                           children: [
                                                                             Text(
-                                                                              prodSolicitado.familiaProducto.target!.nombre,
-                                                                              style: AppTheme.of(context).bodyText1.override(
-                                                                                    fontFamily: AppTheme.of(context).bodyText1Family,
-                                                                                    color: AppTheme.of(context).secondaryText,
-                                                                                  ),
-                                                                            ),
-                                                                            Text(
-                                                                              dateTimeFormat('dd/MM/yyyy',
-                                                                                  prodSolicitado.fechaRegistro),
-                                                                              textAlign:
-                                                                                  TextAlign.end,
+                                                                              dateTimeFormat('dd/MM/yyyy', prodSolicitado.fechaRegistro),
+                                                                              textAlign: TextAlign.end,
                                                                               style: AppTheme.of(context).bodyText1.override(
                                                                                     fontFamily: AppTheme.of(context).bodyText1Family,
                                                                                     color: AppTheme.of(context).secondaryText,
@@ -724,18 +743,13 @@ class _EditarInversionJornadaScreenState
                                                                       ),
                                                                       Row(
                                                                         mainAxisSize:
-                                                                            MainAxisSize
-                                                                                .max,
+                                                                            MainAxisSize.max,
                                                                         mainAxisAlignment:
-                                                                            MainAxisAlignment
-                                                                                .spaceBetween,
+                                                                            MainAxisAlignment.spaceBetween,
                                                                         children: [
                                                                           Text(
-                                                                            prodSolicitado
-                                                                                .descripcion,
-                                                                            style: AppTheme.of(context)
-                                                                                .bodyText1
-                                                                                .override(
+                                                                            prodSolicitado.descripcion,
+                                                                            style: AppTheme.of(context).bodyText1.override(
                                                                                   fontFamily: AppTheme.of(context).bodyText1Family,
                                                                                   color: AppTheme.of(context).secondaryText,
                                                                                 ),
@@ -743,9 +757,7 @@ class _EditarInversionJornadaScreenState
                                                                           Text(
                                                                             prodSolicitado.proveedorSugerido ??
                                                                                 "",
-                                                                            style: AppTheme.of(context)
-                                                                                .bodyText1
-                                                                                .override(
+                                                                            style: AppTheme.of(context).bodyText1.override(
                                                                                   fontFamily: AppTheme.of(context).bodyText1Family,
                                                                                   color: AppTheme.of(context).secondaryText,
                                                                                 ),
@@ -769,21 +781,27 @@ class _EditarInversionJornadaScreenState
                                         },
                                       ),
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0, 20, 0, 10),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 20, 0, 10),
                                         child: FFButtonWidget(
                                           onPressed: () async {
                                             if (productoInversionJornadaProvider
-                                                .instruccionesProdInversionJ3Temp.isNotEmpty) {
+                                                .instruccionesProdInversionJ3Temp
+                                                .isNotEmpty) {
                                               productoInversionJornadaProvider
-                                              .updateProductosInversionJ3(widget.inversion, widget.emprendimiento.id);
-                                            await Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    InversionJornada3Actualizada(idEmprendimiento: widget.emprendimiento.id,),
-                                              ),
-                                            );
+                                                  .updateProductosInversionJ3(
+                                                      widget.inversion,
+                                                      widget.emprendimiento.id);
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      InversionJornada3Actualizada(
+                                                    idEmprendimiento: widget
+                                                        .emprendimiento.id,
+                                                  ),
+                                                ),
+                                              );
                                             }
                                           },
                                           text: 'Actualizar',
@@ -794,12 +812,14 @@ class _EditarInversionJornadaScreenState
                                           options: FFButtonOptions(
                                             width: 130,
                                             height: 40,
-                                            color: AppTheme.of(context).secondaryText,
+                                            color: AppTheme.of(context)
+                                                .secondaryText,
                                             textStyle: AppTheme.of(context)
                                                 .subtitle2
                                                 .override(
                                                   fontFamily:
-                                                      AppTheme.of(context).subtitle2Family,
+                                                      AppTheme.of(context)
+                                                          .subtitle2Family,
                                                   color: Colors.white,
                                                   fontSize: 15,
                                                 ),
@@ -807,7 +827,8 @@ class _EditarInversionJornadaScreenState
                                               color: Colors.transparent,
                                               width: 1,
                                             ),
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
                                         ),
                                       ),
@@ -817,7 +838,8 @@ class _EditarInversionJornadaScreenState
                                     ],
                                   ),
                                 ).animated([
-                                  animationsMap['containerOnPageLoadAnimation2']!
+                                  animationsMap[
+                                      'containerOnPageLoadAnimation2']!
                                 ]),
                               ),
                             ],

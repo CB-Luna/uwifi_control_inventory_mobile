@@ -29,8 +29,8 @@ class EditarProductoInversionJornadaTemporal extends StatefulWidget {
 
   const EditarProductoInversionJornadaTemporal({
     Key? key,
-    required this.productoSol, 
-    required this.emprendimiento, 
+    required this.productoSol,
+    required this.emprendimiento,
     required this.numJornada,
   }) : super(key: key);
 
@@ -44,10 +44,8 @@ class _EditarProductoInversionJornadaTemporalState
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
   String? newImagen;
-  String newFamilia = "";
   String newTipoEmpaque = "";
   String emprendedor = "";
-  List<String> listFamilias = [];
   List<String> listTipoEmpaque = [];
   late TextEditingController porcentajeController;
   late TextEditingController productoController;
@@ -62,7 +60,6 @@ class _EditarProductoInversionJornadaTemporalState
   void initState() {
     super.initState();
     newImagen = widget.productoSol.imagen;
-    newFamilia = widget.productoSol.familiaProd;
     newTipoEmpaque = widget.productoSol.tipoEmpaques!;
     productoController =
         TextEditingController(text: widget.productoSol.producto);
@@ -82,16 +79,13 @@ class _EditarProductoInversionJornadaTemporalState
       emprendedor =
           "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
     }
-    listFamilias = [];
     listTipoEmpaque = [];
-    dataBase.familiaProductosBox.getAll().forEach((element) {
-      listFamilias.add(element.nombre);
-    });
-    listFamilias.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+
     dataBase.tipoEmpaquesBox.getAll().forEach((element) {
       listTipoEmpaque.add(element.tipo);
     });
-    listTipoEmpaque.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+    listTipoEmpaque
+        .sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
   }
 
   @override
@@ -101,7 +95,8 @@ class _EditarProductoInversionJornadaTemporalState
         Provider.of<ProductoInversionJornadaController>(context);
     final inversionJornadaController =
         Provider.of<InversionJornadaController>(context);
-    porcentajeController = TextEditingController(text: inversionJornadaController.porcentajePago);
+    porcentajeController =
+        TextEditingController(text: inversionJornadaController.porcentajePago);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -138,7 +133,8 @@ class _EditarProductoInversionJornadaTemporalState
                                   20, 40, 20, 0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
                                     width: 80,
@@ -150,14 +146,15 @@ class _EditarProductoInversionJornadaTemporalState
                                     child: InkWell(
                                       onTap: () async {
                                         await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                        builder: (context) =>
-                                            InversionJornadaTemporalScreen(
-                                              emprendimiento: widget.emprendimiento, 
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                InversionJornadaTemporalScreen(
+                                              emprendimiento:
+                                                  widget.emprendimiento,
                                               numJornada: widget.numJornada,
-                                              ),
                                             ),
+                                          ),
                                         );
                                       },
                                       child: Row(
@@ -175,8 +172,9 @@ class _EditarProductoInversionJornadaTemporalState
                                             style: AppTheme.of(context)
                                                 .bodyText1
                                                 .override(
-                                                  fontFamily: AppTheme.of(context)
-                                                      .bodyText1Family,
+                                                  fontFamily:
+                                                      AppTheme.of(context)
+                                                          .bodyText1Family,
                                                   color: Colors.white,
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w300,
@@ -202,32 +200,33 @@ class _EditarProductoInversionJornadaTemporalState
                                 ),
                                 child: InkWell(
                                   onTap: () async {
-                                    String? option =
-                                        await showModalBottomSheet(
+                                    String? option = await showModalBottomSheet(
                                       context: context,
                                       builder: (_) =>
                                           const BottomSheetEliminarProducto(),
                                     );
                                     if (option == 'eliminar') {
-                                      productoInversionJornadaController.productosSolicitados.remove(widget.productoSol);
+                                      productoInversionJornadaController
+                                          .productosSolicitados
+                                          .remove(widget.productoSol);
                                       snackbarKey.currentState
-                                          ?.showSnackBar(
-                                              const SnackBar(
+                                          ?.showSnackBar(const SnackBar(
                                         content: Text(
                                             "Producto eliminado éxitosamente."),
                                       ));
                                       // ignore: use_build_context_synchronously
                                       await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                      builder: (context) =>
-                                          InversionJornadaTemporalScreen(
-                                            emprendimiento: widget.emprendimiento, 
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              InversionJornadaTemporalScreen(
+                                            emprendimiento:
+                                                widget.emprendimiento,
                                             numJornada: widget.numJornada,
-                                            ),
                                           ),
+                                        ),
                                       );
-                                    } else { 
+                                    } else {
                                       //Se aborta la opción
                                       return;
                                     }
@@ -275,145 +274,107 @@ class _EditarProductoInversionJornadaTemporalState
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      FormField(builder: (state) {
-                                        return Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                                  5, 0, 5, 10),
-                                              child: InkWell(
-                                                onTap: () async {
-                                                  String? option = await showModalBottomSheet(
-                                                    context: context,
-                                                    builder: (_) => const CustomBottomSheet(),
-                                                  );
-
-                                                  if (option == null) return;
-
-                                                  final picker = ImagePicker();
-
-                                                  late final XFile? pickedFile;
-
-                                                  if (option == 'camera') {
-                                                    pickedFile = await picker.pickImage(
-                                                      source: ImageSource.camera,
-                                                      imageQuality: 50,
+                                      FormField(
+                                        builder: (state) {
+                                          return Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(5, 0, 5, 10),
+                                                child: InkWell(
+                                                  onTap: () async {
+                                                    String? option =
+                                                        await showModalBottomSheet(
+                                                      context: context,
+                                                      builder: (_) =>
+                                                          const CustomBottomSheet(),
                                                     );
-                                                  } else {
-                                                    pickedFile = await picker.pickImage(
-                                                      source: ImageSource.gallery,
-                                                      imageQuality: 50,
-                                                    );
-                                                  }
 
-                                                  if (pickedFile == null) {
-                                                    return;
-                                                  }
+                                                    if (option == null) return;
 
-                                                  setState(() {
-                                                    image = pickedFile;
-                                                    newImagen = image!.path;
-                                                  });
-                                                },
-                                                child: Container(
-                                                  width:
-                                                      MediaQuery.of(context).size.width * 0.9,
-                                                  height: 180,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius: BorderRadius.circular(8),
-                                                    border: Border.all(
-                                                      color: const Color(0xFF221573),
-                                                      width: 1.5,
-                                                    ),
-                                                  ),
-                                                  child: Stack(
-                                                    children: [
-                                                      Lottie.asset(
-                                                        'assets/lottie_animations/75669-animation-for-the-photo-optimization-process.json',
-                                                        width: MediaQuery.of(context)
+                                                    final picker =
+                                                        ImagePicker();
+
+                                                    late final XFile?
+                                                        pickedFile;
+
+                                                    if (option == 'camera') {
+                                                      pickedFile = await picker
+                                                          .pickImage(
+                                                        source:
+                                                            ImageSource.camera,
+                                                        imageQuality: 50,
+                                                      );
+                                                    } else {
+                                                      pickedFile = await picker
+                                                          .pickImage(
+                                                        source:
+                                                            ImageSource.gallery,
+                                                        imageQuality: 50,
+                                                      );
+                                                    }
+
+                                                    if (pickedFile == null) {
+                                                      return;
+                                                    }
+
+                                                    setState(() {
+                                                      image = pickedFile;
+                                                      newImagen = image!.path;
+                                                    });
+                                                  },
+                                                  child: Container(
+                                                    width:
+                                                        MediaQuery.of(context)
                                                                 .size
                                                                 .width *
                                                             0.9,
-                                                        height: 180,
-                                                        fit: BoxFit.contain,
-                                                        animate: true,
+                                                    height: 180,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      border: Border.all(
+                                                        color: const Color(
+                                                            0xFF221573),
+                                                        width: 1.5,
                                                       ),
-                                                      ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius.circular(8),
-                                                        child: getImage(newImagen),
-                                                      ),
-                                                    ],
+                                                    ),
+                                                    child: Stack(
+                                                      children: [
+                                                        Lottie.asset(
+                                                          'assets/lottie_animations/75669-animation-for-the-photo-optimization-process.json',
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.9,
+                                                          height: 180,
+                                                          fit: BoxFit.contain,
+                                                          animate: true,
+                                                        ),
+                                                        ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          child: getImage(
+                                                              newImagen),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        );
-                                      },),
-                                      FormField(
-                                        builder: (state) {
-                                          return Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(5, 0, 5, 10),
-                                            child: DropDown(
-                                              initialOption: newFamilia,
-                                              options: listFamilias,
-                                              onChanged: (val) => setState(() {
-                                                if (listFamilias.isEmpty) {
-                                                  snackbarKey.currentState
-                                                      ?.showSnackBar(
-                                                          const SnackBar(
-                                                    content: Text(
-                                                        "Debes descargar los catálogos desde la sección de tu perfil"),
-                                                  ));
-                                                } else {
-                                                  newFamilia = val!;
-                                                }
-                                              }),
-                                              width: double.infinity,
-                                              height: 50,
-                                              textStyle: AppTheme.of(context)
-                                                  .title3
-                                                  .override(
-                                                    fontFamily: 'Poppins',
-                                                    color:
-                                                        const Color(0xFF221573),
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
-                                              hintText: 'Familia del producto*',
-                                              icon: const Icon(
-                                                Icons
-                                                    .keyboard_arrow_down_rounded,
-                                                color: Color(0xFF221573),
-                                                size: 30,
-                                              ),
-                                              fillColor: Colors.white,
-                                              elevation: 2,
-                                              borderColor:
-                                                  const Color(0xFF221573),
-                                              borderWidth: 2,
-                                              borderRadius: 8,
-                                              margin:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(12, 4, 12, 4),
-                                              hidesUnderline: true,
-                                            ),
+                                            ],
                                           );
                                         },
-                                        validator: (val) {
-                                          if (newFamilia == "" ||
-                                              newFamilia.isEmpty) {
-                                            return 'Para continuar, seleccione una familia.';
-                                          }
-                                          return null;
-                                        },
                                       ),
+
                                       Padding(
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
@@ -696,8 +657,7 @@ class _EditarProductoInversionJornadaTemporalState
                                               initialOption: newTipoEmpaque,
                                               options: listTipoEmpaque,
                                               onChanged: (val) => setState(() {
-                                                if (listTipoEmpaque
-                                                    .isEmpty) {
+                                                if (listTipoEmpaque.isEmpty) {
                                                   snackbarKey.currentState
                                                       ?.showSnackBar(
                                                           const SnackBar(
@@ -801,7 +761,8 @@ class _EditarProductoInversionJornadaTemporalState
                                           ),
                                           keyboardType: TextInputType.number,
                                           inputFormatters: [
-                                              FilteringTextInputFormatter.digitsOnly
+                                            FilteringTextInputFormatter
+                                                .digitsOnly
                                           ],
                                           style: AppTheme.of(context)
                                               .title3
@@ -814,7 +775,8 @@ class _EditarProductoInversionJornadaTemporalState
                                               ),
                                           maxLines: 1,
                                           validator: (val) {
-                                            double cantidad = double.tryParse(val!) ?? 0;
+                                            double cantidad =
+                                                double.tryParse(val!) ?? 0;
                                             if (cantidad <= 0) {
                                               return 'Para continuar, ingrese una cantidad.';
                                             }
@@ -833,7 +795,8 @@ class _EditarProductoInversionJornadaTemporalState
                                               .onUserInteraction,
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            labelText: 'Costo por unidad estimado*',
+                                            labelText:
+                                                'Costo por unidad estimado*',
                                             labelStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(
@@ -888,15 +851,16 @@ class _EditarProductoInversionJornadaTemporalState
                                               ),
                                           maxLines: 1,
                                           validator: (val) {
-                                            if(val!.length > 1){
-                                              double costo = double.parse(val.replaceAll('\$', '').replaceAll(',', ''));
-                                            if (costo <= 0) {
-                                              return 'Para continuar, ingrese un costo sugerido.';
-                                            }
+                                            if (val!.length > 1) {
+                                              double costo = double.parse(val
+                                                  .replaceAll('\$', '')
+                                                  .replaceAll(',', ''));
+                                              if (costo <= 0) {
+                                                return 'Para continuar, ingrese un costo sugerido.';
+                                              }
 
-                                            return null;
+                                              return null;
                                             }
-                                            
                                           },
                                         ),
                                       ),
@@ -911,14 +875,14 @@ class _EditarProductoInversionJornadaTemporalState
                                           decoration: InputDecoration(
                                             suffixText: "%",
                                             suffixStyle: AppTheme.of(context)
-                                              .title3
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                color: AppTheme.of(context)
-                                                    .primaryText,
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.normal,
-                                              ),
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  color: AppTheme.of(context)
+                                                      .primaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
                                             labelText: 'Porcentaje de pago*',
                                             labelStyle: AppTheme.of(context)
                                                 .title3
@@ -929,7 +893,8 @@ class _EditarProductoInversionJornadaTemporalState
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.normal,
                                                 ),
-                                            hintText: 'Ingresa porcentaje de pago...',
+                                            hintText:
+                                                'Ingresa porcentaje de pago...',
                                             hintStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(
@@ -962,8 +927,9 @@ class _EditarProductoInversionJornadaTemporalState
                                           ),
                                           keyboardType: TextInputType.number,
                                           inputFormatters: [
-                                              FilteringTextInputFormatter.digitsOnly,
-                                              PercentageTextInputFormatter()
+                                            FilteringTextInputFormatter
+                                                .digitsOnly,
+                                            PercentageTextInputFormatter()
                                           ],
                                           style: AppTheme.of(context)
                                               .title3
@@ -998,28 +964,19 @@ class _EditarProductoInversionJornadaTemporalState
                                             proveedorController.text !=
                                                 widget.productoSol
                                                     .proveedorSugerido ||
-                                            costoController.text.substring(1).replaceAll(",", "") !=
+                                            costoController.text
+                                                    .substring(1)
+                                                    .replaceAll(",", "") !=
                                                 widget.productoSol.costoEstimado
                                                     ?.toStringAsFixed(2) ||
                                             cantidadController.text !=
                                                 widget.productoSol.cantidad
                                                     .toString() ||
-                                            newFamilia !=
-                                                widget
-                                                    .productoSol.familiaProd ||
                                             newTipoEmpaque !=
                                                 widget
                                                     .productoSol.tipoEmpaques ||
-                                            newImagen != 
-                                                widget
-                                                    .productoSol.imagen) {
-                                          final newIdFamiliaProd = dataBase
-                                              .familiaProductosBox
-                                              .query(FamiliaProd_.nombre
-                                                  .equals(newFamilia))
-                                              .build()
-                                              .findFirst()
-                                              ?.id;
+                                            newImagen !=
+                                                widget.productoSol.imagen) {
                                           final newIdTipoEmpaque = dataBase
                                               .tipoEmpaquesBox
                                               .query(TipoEmpaques_.tipo
@@ -1027,8 +984,7 @@ class _EditarProductoInversionJornadaTemporalState
                                               .build()
                                               .findFirst()
                                               ?.id;
-                                          if (newIdFamiliaProd != null &&
-                                              newIdTipoEmpaque != null) {
+                                          if (newIdTipoEmpaque != null) {
                                             productoInversionJornadaController
                                                 .updateTemporal(
                                               widget.productoSol.id,
@@ -1036,10 +992,10 @@ class _EditarProductoInversionJornadaTemporalState
                                               marcaController.text,
                                               descripcionController.text,
                                               proveedorController.text,
-                                              costoController.text.replaceAll("\$", "").replaceAll(",", ""),
+                                              costoController.text
+                                                  .replaceAll("\$", "")
+                                                  .replaceAll(",", ""),
                                               cantidadController.text,
-                                              newIdFamiliaProd,
-                                              newFamilia,
                                               newIdTipoEmpaque,
                                               newTipoEmpaque,
                                               newImagen,

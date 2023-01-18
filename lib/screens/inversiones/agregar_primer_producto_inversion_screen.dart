@@ -27,10 +27,9 @@ class AgregarPrimerProductoInversionScreen extends StatefulWidget {
   final int idEmprendimiento;
 
   const AgregarPrimerProductoInversionScreen({
-    Key? key, 
+    Key? key,
     required this.idEmprendimiento,
-    })
-      : super(key: key);
+  }) : super(key: key);
 
   @override
   _AgregarPrimerProductoInversionScreenState createState() =>
@@ -55,29 +54,25 @@ class _AgregarPrimerProductoInversionScreenState
     tipoEmpaques = "";
     emprendedor = "";
     porcentajeController = TextEditingController(text: "50");
-    actualEmprendimiento = dataBase.emprendimientosBox.get(widget.idEmprendimiento);
+    actualEmprendimiento =
+        dataBase.emprendimientosBox.get(widget.idEmprendimiento);
     if (actualEmprendimiento != null) {
       if (actualEmprendimiento!.emprendedor.target != null) {
-      emprendedor =
-          "${actualEmprendimiento!.emprendedor.target!.nombre} ${actualEmprendimiento!.emprendedor.target!.apellidos}";
-    }
+        emprendedor =
+            "${actualEmprendimiento!.emprendedor.target!.nombre} ${actualEmprendimiento!.emprendedor.target!.apellidos}";
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final inversionProvider =
-        Provider.of<InversionController>(context);
-    List<String> listFamilias = [];
+    final inversionProvider = Provider.of<InversionController>(context);
     List<String> listTipoEmpaques = [];
-    dataBase.familiaProductosBox.getAll().forEach((element) {
-      listFamilias.add(element.nombre);
-    });
-    listFamilias.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     dataBase.tipoEmpaquesBox.getAll().forEach((element) {
       listTipoEmpaques.add(element.tipo);
     });
-    listTipoEmpaques.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+    listTipoEmpaques
+        .sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -125,9 +120,9 @@ class _AgregarPrimerProductoInversionScreenState
                                     await Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            InversionesScreen(
-                                              idEmprendimiento: widget.idEmprendimiento),
+                                        builder: (context) => InversionesScreen(
+                                            idEmprendimiento:
+                                                widget.idEmprendimiento),
                                       ),
                                     );
                                   },
@@ -184,92 +179,110 @@ class _AgregarPrimerProductoInversionScreenState
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                FormField(builder: (state) {
-                                  return Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0, 10, 0, 0),
-                                        child: InkWell(
-                                          onTap: () async {
-                                            String? option = await showModalBottomSheet(
-                                              context: context,
-                                              builder: (_) => const CustomBottomSheet(),
-                                            );
-
-                                            if (option == null) return;
-
-                                            final picker = ImagePicker();
-
-                                            late final XFile? pickedFile;
-
-                                            if (option == 'camera') {
-                                              pickedFile = await picker.pickImage(
-                                                source: ImageSource.camera,
-                                                imageQuality: 50,
+                                FormField(
+                                  builder: (state) {
+                                    return Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(0, 10, 0, 0),
+                                          child: InkWell(
+                                            onTap: () async {
+                                              String? option =
+                                                  await showModalBottomSheet(
+                                                context: context,
+                                                builder: (_) =>
+                                                    const CustomBottomSheet(),
                                               );
-                                            } else {
-                                              pickedFile = await picker.pickImage(
-                                                source: ImageSource.gallery,
-                                                imageQuality: 50,
-                                              );
-                                            }
 
-                                            if (pickedFile == null) {
-                                              return;
-                                            }
+                                              if (option == null) return;
 
-                                            setState(() {
-                                              image = pickedFile;
-                                              File file = File(image!.path);
-                                              List<int> fileInByte = file.readAsBytesSync();
-                                              String base64 = base64Encode(fileInByte);
-                                              var newImagenLocal = SaveImagenesLocal(
-                                                nombre: image!.name, 
-                                                path: image!.path, 
-                                                base64: base64);
-                                              inversionProvider.imagen = newImagenLocal;
-                                            });
-                                          },
-                                          child: Container(
-                                            width:
-                                                MediaQuery.of(context).size.width * 0.9,
-                                            height: 180,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius: BorderRadius.circular(8),
-                                              border: Border.all(
-                                                color: const Color(0xFF221573),
-                                                width: 1.5,
+                                              final picker = ImagePicker();
+
+                                              late final XFile? pickedFile;
+
+                                              if (option == 'camera') {
+                                                pickedFile =
+                                                    await picker.pickImage(
+                                                  source: ImageSource.camera,
+                                                  imageQuality: 50,
+                                                );
+                                              } else {
+                                                pickedFile =
+                                                    await picker.pickImage(
+                                                  source: ImageSource.gallery,
+                                                  imageQuality: 50,
+                                                );
+                                              }
+
+                                              if (pickedFile == null) {
+                                                return;
+                                              }
+
+                                              setState(() {
+                                                image = pickedFile;
+                                                File file = File(image!.path);
+                                                List<int> fileInByte =
+                                                    file.readAsBytesSync();
+                                                String base64 =
+                                                    base64Encode(fileInByte);
+                                                var newImagenLocal =
+                                                    SaveImagenesLocal(
+                                                        nombre: image!.name,
+                                                        path: image!.path,
+                                                        base64: base64);
+                                                inversionProvider.imagen =
+                                                    newImagenLocal;
+                                              });
+                                            },
+                                            child: Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.9,
+                                              height: 180,
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                border: Border.all(
+                                                  color:
+                                                      const Color(0xFF221573),
+                                                  width: 1.5,
+                                                ),
                                               ),
-                                            ),
-                                            child: Stack(
-                                              children: [
-                                                Lottie.asset(
-                                                  'assets/lottie_animations/75669-animation-for-the-photo-optimization-process.json',
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.9,
-                                                  height: 180,
-                                                  fit: BoxFit.contain,
-                                                  animate: true,
-                                                ),
-                                                ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  child: getImage(image?.path),
-                                                ),
-                                              ],
+                                              child: Stack(
+                                                children: [
+                                                  Lottie.asset(
+                                                    'assets/lottie_animations/75669-animation-for-the-photo-optimization-process.json',
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.9,
+                                                    height: 180,
+                                                    fit: BoxFit.contain,
+                                                    animate: true,
+                                                  ),
+                                                  ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    child:
+                                                        getImage(image?.path),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  );
-                                },),
+                                      ],
+                                    );
+                                  },
+                                ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       15, 16, 15, 0),
@@ -340,65 +353,6 @@ class _AgregarPrimerProductoInversionScreenState
                                               ),
                                           maxLines: 1,
                                         ),
-                                      ),
-                                      FormField(
-                                        builder: (state) {
-                                          return Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(5, 0, 5, 10),
-                                            child: DropDown(
-                                              options: listFamilias,
-                                              onChanged: (val) => setState(() {
-                                                if (listFamilias.isEmpty) {
-                                                  snackbarKey.currentState
-                                                      ?.showSnackBar(
-                                                          const SnackBar(
-                                                    content: Text(
-                                                        "Debes descargar los catálogos desde la sección de tu perfil"),
-                                                  ));
-                                                } else {
-                                                  familia = val!;
-                                                }
-                                              }),
-                                              width: double.infinity,
-                                              height: 50,
-                                              textStyle: AppTheme.of(context)
-                                                  .title3
-                                                  .override(
-                                                    fontFamily: 'Poppins',
-                                                    color:
-                                                        const Color(0xFF221573),
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
-                                              hintText: 'Familia del producto*',
-                                              icon: const Icon(
-                                                Icons
-                                                    .keyboard_arrow_down_rounded,
-                                                color: Color(0xFF221573),
-                                                size: 30,
-                                              ),
-                                              fillColor: Colors.white,
-                                              elevation: 2,
-                                              borderColor:
-                                                  const Color(0xFF221573),
-                                              borderWidth: 2,
-                                              borderRadius: 8,
-                                              margin:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(12, 4, 12, 4),
-                                              hidesUnderline: true,
-                                            ),
-                                          );
-                                        },
-                                        validator: (val) {
-                                          if (familia == "" ||
-                                              familia.isEmpty) {
-                                            return 'Para continuar, seleccione una familia.';
-                                          }
-                                          return null;
-                                        },
                                       ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional
@@ -483,8 +437,8 @@ class _AgregarPrimerProductoInversionScreenState
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
-                                            inversionProvider
-                                                .marcaSugerida = value;
+                                            inversionProvider.marcaSugerida =
+                                                value;
                                           },
                                           obscureText: false,
                                           decoration: InputDecoration(
@@ -619,14 +573,13 @@ class _AgregarPrimerProductoInversionScreenState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
-                                          maxLength:50,
+                                          maxLength: 50,
                                           textCapitalization:
                                               TextCapitalization.sentences,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
-                                            inversionProvider.proveedor =
-                                                value;
+                                            inversionProvider.proveedor = value;
                                           },
                                           obscureText: false,
                                           decoration: InputDecoration(
@@ -691,8 +644,7 @@ class _AgregarPrimerProductoInversionScreenState
                                             child: DropDown(
                                               options: listTipoEmpaques,
                                               onChanged: (val) => setState(() {
-                                                if (listTipoEmpaques
-                                                    .isEmpty) {
+                                                if (listTipoEmpaques.isEmpty) {
                                                   snackbarKey.currentState
                                                       ?.showSnackBar(
                                                           const SnackBar(
@@ -747,96 +699,91 @@ class _AgregarPrimerProductoInversionScreenState
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
                                         child: TextFormField(
-                                          maxLength:5,
-                                          
-                                          autovalidateMode: AutovalidateMode
-                                              .onUserInteraction,
-                                          onChanged: (value) {
-                                            inversionProvider.cantidad =
-                                                value;
-                                          },
-                                          obscureText: false,
-                                          decoration: InputDecoration(
-                                            labelText: 'Cantidad*',
-                                            labelStyle: AppTheme.of(context)
-                                                .title3
-                                                .override(
-                                                  fontFamily: 'Montserrat',
+                                            maxLength: 5,
+                                            autovalidateMode: AutovalidateMode
+                                                .onUserInteraction,
+                                            onChanged: (value) {
+                                              inversionProvider.cantidad =
+                                                  value;
+                                            },
+                                            obscureText: false,
+                                            decoration: InputDecoration(
+                                              labelText: 'Cantidad*',
+                                              labelStyle: AppTheme.of(context)
+                                                  .title3
+                                                  .override(
+                                                    fontFamily: 'Montserrat',
+                                                    color: AppTheme.of(context)
+                                                        .secondaryText,
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                              hintText: 'Ingresa cantidad...',
+                                              hintStyle: AppTheme.of(context)
+                                                  .title3
+                                                  .override(
+                                                    fontFamily: 'Poppins',
+                                                    color: AppTheme.of(context)
+                                                        .secondaryText,
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
                                                   color: AppTheme.of(context)
-                                                      .secondaryText,
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.normal,
+                                                      .primaryText,
+                                                  width: 1.5,
                                                 ),
-                                            hintText: 'Ingresa cantidad...',
-                                            hintStyle: AppTheme.of(context)
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: AppTheme.of(context)
+                                                      .primaryText,
+                                                  width: 1.5,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                              ),
+                                              filled: true,
+                                              fillColor:
+                                                  const Color(0x49FFFFFF),
+                                            ),
+                                            keyboardType: TextInputType.number,
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter
+                                                  .digitsOnly
+                                            ],
+                                            style: AppTheme.of(context)
                                                 .title3
                                                 .override(
                                                   fontFamily: 'Poppins',
                                                   color: AppTheme.of(context)
-                                                      .secondaryText,
+                                                      .primaryText,
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.normal,
                                                 ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: AppTheme.of(context)
-                                                    .primaryText,
-                                                width: 1.5,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: AppTheme.of(context)
-                                                    .primaryText,
-                                                width: 1.5,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                            ),
-                                            filled: true,
-                                            fillColor: const Color(0x49FFFFFF),
-                                          ),
-                                          keyboardType: TextInputType.number,
-                                          inputFormatters: [
-                                              FilteringTextInputFormatter.digitsOnly
-                                          ],
-                                          style: AppTheme.of(context)
-                                              .title3
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                color: AppTheme.of(context)
-                                                    .primaryText,
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                          maxLines: 1,
-                                          validator: (value){
-                                            if(value != null){
-                                              if(value.isNotEmpty)
-                                            {
-                                            double cant = double.parse(value);
-                                            if(cant <= 0){
-                                              return 'Para continuar, ingrese una cantidad mayor a 0.';
-                                            }
-                                            else{
-                                              return null;
-                                            }
-                                            }
-                                            else{
-                                              return 'Ingrese un Dato';
-                                            }
-                                            }
-                                            else{
-                                              return 'Ingrese un Dato';
-                                            }
-                                            
-                                            
-                                            
-                                          }
-                                          
-                                        ),
+                                            maxLines: 1,
+                                            validator: (value) {
+                                              if (value != null) {
+                                                if (value.isNotEmpty) {
+                                                  double cant =
+                                                      double.parse(value);
+                                                  if (cant <= 0) {
+                                                    return 'Para continuar, ingrese una cantidad mayor a 0.';
+                                                  } else {
+                                                    return null;
+                                                  }
+                                                } else {
+                                                  return 'Ingrese un Dato';
+                                                }
+                                              } else {
+                                                return 'Ingrese un Dato';
+                                              }
+                                            }),
                                       ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional
@@ -846,15 +793,15 @@ class _AgregarPrimerProductoInversionScreenState
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           onChanged: (value) {
-                                            inversionProvider
-                                                    .costo =
+                                            inversionProvider.costo =
                                                 currencyFormat
                                                     .getUnformattedValue()
                                                     .toStringAsFixed(2);
                                           },
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            labelText: 'Costo por unidad estimado',
+                                            labelText:
+                                                'Costo por unidad estimado',
                                             labelStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(
@@ -909,16 +856,16 @@ class _AgregarPrimerProductoInversionScreenState
                                               ),
                                           maxLines: 1,
                                           validator: (val) {
-                                            if(val!.length > 0){
-                                               double costo = double.parse(val.replaceAll('\$', '').replaceAll(',', ''));
-                                            if (costo <= 0) {
-                                              return 'Para continuar, ingrese un costo mayor a 0.';
-                                            }
+                                            if (val!.length > 0) {
+                                              double costo = double.parse(val
+                                                  .replaceAll('\$', '')
+                                                  .replaceAll(',', ''));
+                                              if (costo <= 0) {
+                                                return 'Para continuar, ingrese un costo mayor a 0.';
+                                              }
 
-                                            return null;
+                                              return null;
                                             }
-                                            
-                                            
                                           },
                                         ),
                                       ),
@@ -934,14 +881,14 @@ class _AgregarPrimerProductoInversionScreenState
                                           decoration: InputDecoration(
                                             suffixText: "%",
                                             suffixStyle: AppTheme.of(context)
-                                              .title3
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                color: AppTheme.of(context)
-                                                    .primaryText,
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.normal,
-                                              ),
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  color: AppTheme.of(context)
+                                                      .primaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
                                             labelText: 'Porcentaje de pago*',
                                             labelStyle: AppTheme.of(context)
                                                 .title3
@@ -952,7 +899,8 @@ class _AgregarPrimerProductoInversionScreenState
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.normal,
                                                 ),
-                                            hintText: 'Ingresa porcentaje de pago...',
+                                            hintText:
+                                                'Ingresa porcentaje de pago...',
                                             hintStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(
@@ -985,8 +933,9 @@ class _AgregarPrimerProductoInversionScreenState
                                           ),
                                           keyboardType: TextInputType.number,
                                           inputFormatters: [
-                                              FilteringTextInputFormatter.digitsOnly,
-                                              PercentageTextInputFormatter()
+                                            FilteringTextInputFormatter
+                                                .digitsOnly,
+                                            PercentageTextInputFormatter()
                                           ],
                                           style: AppTheme.of(context)
                                               .title3
@@ -999,7 +948,9 @@ class _AgregarPrimerProductoInversionScreenState
                                               ),
                                           maxLines: 1,
                                           validator: (val) {
-                                            if (val == null || val.isEmpty || int.parse(val) < 50  ) {
+                                            if (val == null ||
+                                                val.isEmpty ||
+                                                int.parse(val) < 50) {
                                               return 'Para continuar, ingrese un porcentaje entre 50% y 100%.';
                                             }
                                             return null;
@@ -1017,13 +968,7 @@ class _AgregarPrimerProductoInversionScreenState
                                       if (inversionProvider
                                           .validateForm(formKey)) {
                                         // comunidadProvider.add();
-                                        final idFamiliaProducto = dataBase
-                                            .familiaProductosBox
-                                            .query(FamiliaProd_.nombre
-                                                .equals(familia))
-                                            .build()
-                                            .findFirst()
-                                            ?.id;
+
                                         final idTipoEmpaques = dataBase
                                             .tipoEmpaquesBox
                                             .query(TipoEmpaques_.tipo
@@ -1031,24 +976,26 @@ class _AgregarPrimerProductoInversionScreenState
                                             .build()
                                             .findFirst()
                                             ?.id;
-                                        if (idFamiliaProducto != null && idTipoEmpaques != null) {
+                                        if (idTipoEmpaques != null) {
                                           print("Sí lo deja pasar");
-                                          inversionProvider.addProductoSolicitado(
-                                              actualEmprendimiento!.id,
-                                              inversionProvider.addInversion(
-                                                actualEmprendimiento!.id, 
-                                                porcentajeController.text
-                                                ),
-                                              idFamiliaProducto,
-                                              idTipoEmpaques
-                                            );
+                                          inversionProvider
+                                              .addProductoSolicitado(
+                                                  actualEmprendimiento!.id,
+                                                  inversionProvider
+                                                      .addInversion(
+                                                          actualEmprendimiento!
+                                                              .id,
+                                                          porcentajeController
+                                                              .text),
+                                                  idTipoEmpaques);
                                           await Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   InversionCreada(
-                                                    emprendimiento: actualEmprendimiento!, 
-                                                    ),
+                                                emprendimiento:
+                                                    actualEmprendimiento!,
+                                              ),
                                             ),
                                           );
                                         }

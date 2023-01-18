@@ -24,7 +24,6 @@ import 'package:bizpro_app/screens/widgets/drop_down.dart';
 
 import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
 
-
 class EditarProductoInversionJornada extends StatefulWidget {
   final ProdSolicitado productoSol;
   final Jornadas jornada;
@@ -33,8 +32,8 @@ class EditarProductoInversionJornada extends StatefulWidget {
 
   const EditarProductoInversionJornada({
     Key? key,
-    required this.productoSol, 
-    required this.jornada, 
+    required this.productoSol,
+    required this.jornada,
     required this.emprendimientoActual,
     required this.inversion,
   }) : super(key: key);
@@ -48,7 +47,6 @@ class _EditarProductoInversionJornadaState
     extends State<EditarProductoInversionJornada> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
-  String newFamilia = "";
   String newTipoEmpaque = "";
   String emprendedor = "";
   String? newImagen;
@@ -71,7 +69,6 @@ class _EditarProductoInversionJornadaState
     base64 = "";
     nombreImagen = "";
     newImagen = widget.productoSol.imagen.target?.imagenes;
-    newFamilia = widget.productoSol.familiaProducto.target!.nombre;
     newTipoEmpaque = widget.productoSol.tipoEmpaques.target!.tipo;
     productoController =
         TextEditingController(text: widget.productoSol.producto);
@@ -86,16 +83,14 @@ class _EditarProductoInversionJornadaState
             widget.productoSol.costoEstimado?.toStringAsFixed(2) ?? ""));
     cantidadController =
         TextEditingController(text: widget.productoSol.cantidad.toString());
-    porcentajeController = 
-        TextEditingController(text: widget.productoSol.inversion.target!.porcentajePago.toString());
+    porcentajeController = TextEditingController(
+        text: widget.productoSol.inversion.target!.porcentajePago.toString());
     emprendedor = "";
-    if (widget.productoSol.inversion.target!.emprendimiento.target!.emprendedor.target != null) {
+    if (widget.productoSol.inversion.target!.emprendimiento.target!.emprendedor
+            .target !=
+        null) {
       emprendedor =
-          "${widget.productoSol.
-          inversion.target!.emprendimiento.
-          target!.emprendedor.target!.nombre} ${widget.productoSol
-          .inversion.target!.emprendimiento.
-          target!.emprendedor.target!.apellidos}";
+          "${widget.productoSol.inversion.target!.emprendimiento.target!.emprendedor.target!.nombre} ${widget.productoSol.inversion.target!.emprendimiento.target!.emprendedor.target!.apellidos}";
     }
   }
 
@@ -104,16 +99,13 @@ class _EditarProductoInversionJornadaState
     print(widget.productoSol.costoEstimado.toString());
     final productoInversionJornadaController =
         Provider.of<ProductoInversionJornadaController>(context);
-    List<String> listFamilias = [];
     List<String> listTipoEmpaque = [];
-    dataBase.familiaProductosBox.getAll().forEach((element) {
-      listFamilias.add(element.nombre);
-    });
-    listFamilias.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+
     dataBase.tipoEmpaquesBox.getAll().forEach((element) {
       listTipoEmpaque.add(element.tipo);
     });
-    listTipoEmpaque.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+    listTipoEmpaque
+        .sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -150,7 +142,8 @@ class _EditarProductoInversionJornadaState
                                   20, 40, 20, 0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
                                     width: 80,
@@ -166,13 +159,13 @@ class _EditarProductoInversionJornadaState
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 EditarInversionJornadaScreen(
-                                                    prodSolicitados: 
-                                                        productoInversionJornadaController.listProdSolicitadosActual,
-                                                    jornada:
-                                                        widget.jornada,
-                                                    emprendimiento: 
-                                                        widget.emprendimientoActual,
-                                                    inversion: 
+                                                    prodSolicitados:
+                                                        productoInversionJornadaController
+                                                            .listProdSolicitadosActual,
+                                                    jornada: widget.jornada,
+                                                    emprendimiento: widget
+                                                        .emprendimientoActual,
+                                                    inversion:
                                                         widget.inversion),
                                           ),
                                         );
@@ -192,8 +185,9 @@ class _EditarProductoInversionJornadaState
                                             style: AppTheme.of(context)
                                                 .bodyText1
                                                 .override(
-                                                  fontFamily: AppTheme.of(context)
-                                                      .bodyText1Family,
+                                                  fontFamily:
+                                                      AppTheme.of(context)
+                                                          .bodyText1Family,
                                                   color: Colors.white,
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w300,
@@ -219,34 +213,43 @@ class _EditarProductoInversionJornadaState
                                 ),
                                 child: InkWell(
                                   onTap: () async {
-                                    String? option =
-                                        await showModalBottomSheet(
+                                    String? option = await showModalBottomSheet(
                                       context: context,
                                       builder: (_) =>
                                           const BottomSheetEliminarProducto(),
                                     );
                                     if (option == 'eliminar') {
                                       // productoInversionJornadaController.remove(widget.productoSol);
-                                      productoInversionJornadaController.listProdSolicitadosActual.remove(widget.productoSol);
-                                      final newInstruccionProdInversionJ3 = SaveInstruccionProductoInversionJ3Temporal(
-                                        instruccion: "syncDeleteProductoInversionJ3", 
+                                      productoInversionJornadaController
+                                          .listProdSolicitadosActual
+                                          .remove(widget.productoSol);
+                                      final newInstruccionProdInversionJ3 =
+                                          SaveInstruccionProductoInversionJ3Temporal(
+                                        instruccion:
+                                            "syncDeleteProductoInversionJ3",
                                         prodSolicitado: widget.productoSol,
                                       );
-                                      productoInversionJornadaController.instruccionesProdInversionJ3Temp.add(newInstruccionProdInversionJ3);
+                                      productoInversionJornadaController
+                                          .instruccionesProdInversionJ3Temp
+                                          .add(newInstruccionProdInversionJ3);
                                       // ignore: use_build_context_synchronously
                                       await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            EditarInversionJornadaScreen(
-                                              emprendimiento: widget.emprendimientoActual, 
-                                              jornada: widget.jornada, 
-                                              prodSolicitados: productoInversionJornadaController.listProdSolicitadosActual,
-                                              inversion: widget.inversion,
-                                            ),
-                                      ),
-                                    );
-                                    } else { //Se aborta la opción
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              EditarInversionJornadaScreen(
+                                            emprendimiento:
+                                                widget.emprendimientoActual,
+                                            jornada: widget.jornada,
+                                            prodSolicitados:
+                                                productoInversionJornadaController
+                                                    .listProdSolicitadosActual,
+                                            inversion: widget.inversion,
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      //Se aborta la opción
                                       return;
                                     }
                                   },
@@ -293,90 +296,115 @@ class _EditarProductoInversionJornadaState
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      FormField(builder: (state) {
-                                        return Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                                  5, 0, 5, 10),
-                                              child: InkWell(
-                                                onTap: () async {
-                                                  String? option = await showModalBottomSheet(
-                                                    context: context,
-                                                    builder: (_) => const CustomBottomSheet(),
-                                                  );
-
-                                                  if (option == null) return;
-
-                                                  final picker = ImagePicker();
-
-                                                  late final XFile? pickedFile;
-
-                                                  if (option == 'camera') {
-                                                    pickedFile = await picker.pickImage(
-                                                      source: ImageSource.camera,
-                                                      imageQuality: 50,
+                                      FormField(
+                                        builder: (state) {
+                                          return Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(5, 0, 5, 10),
+                                                child: InkWell(
+                                                  onTap: () async {
+                                                    String? option =
+                                                        await showModalBottomSheet(
+                                                      context: context,
+                                                      builder: (_) =>
+                                                          const CustomBottomSheet(),
                                                     );
-                                                  } else {
-                                                    pickedFile = await picker.pickImage(
-                                                      source: ImageSource.gallery,
-                                                      imageQuality: 50,
-                                                    );
-                                                  }
 
-                                                  if (pickedFile == null) {
-                                                    return;
-                                                  }
+                                                    if (option == null) return;
 
-                                                  setState(() {
-                                                    image = pickedFile;
-                                                    File file = File(image!.path);
-                                                    List<int> fileInByte = file.readAsBytesSync();
-                                                    base64 = base64Encode(fileInByte);
-                                                    path = image!.path;
-                                                    newImagen = image!.path;
-                                                    nombreImagen = image!.name;
-                                                  });
-                                                },
-                                                child: Container(
-                                                  width:
-                                                      MediaQuery.of(context).size.width * 0.9,
-                                                  height: 180,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius: BorderRadius.circular(8),
-                                                    border: Border.all(
-                                                      color: const Color(0xFF221573),
-                                                      width: 1.5,
-                                                    ),
-                                                  ),
-                                                  child: Stack(
-                                                    children: [
-                                                      Lottie.asset(
-                                                        'assets/lottie_animations/75669-animation-for-the-photo-optimization-process.json',
-                                                        width: MediaQuery.of(context)
+                                                    final picker =
+                                                        ImagePicker();
+
+                                                    late final XFile?
+                                                        pickedFile;
+
+                                                    if (option == 'camera') {
+                                                      pickedFile = await picker
+                                                          .pickImage(
+                                                        source:
+                                                            ImageSource.camera,
+                                                        imageQuality: 50,
+                                                      );
+                                                    } else {
+                                                      pickedFile = await picker
+                                                          .pickImage(
+                                                        source:
+                                                            ImageSource.gallery,
+                                                        imageQuality: 50,
+                                                      );
+                                                    }
+
+                                                    if (pickedFile == null) {
+                                                      return;
+                                                    }
+
+                                                    setState(() {
+                                                      image = pickedFile;
+                                                      File file =
+                                                          File(image!.path);
+                                                      List<int> fileInByte =
+                                                          file.readAsBytesSync();
+                                                      base64 = base64Encode(
+                                                          fileInByte);
+                                                      path = image!.path;
+                                                      newImagen = image!.path;
+                                                      nombreImagen =
+                                                          image!.name;
+                                                    });
+                                                  },
+                                                  child: Container(
+                                                    width:
+                                                        MediaQuery.of(context)
                                                                 .size
                                                                 .width *
                                                             0.9,
-                                                        height: 180,
-                                                        fit: BoxFit.contain,
-                                                        animate: true,
+                                                    height: 180,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      border: Border.all(
+                                                        color: const Color(
+                                                            0xFF221573),
+                                                        width: 1.5,
                                                       ),
-                                                      ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius.circular(8),
-                                                        child: getImage(newImagen),
-                                                      ),
-                                                    ],
+                                                    ),
+                                                    child: Stack(
+                                                      children: [
+                                                        Lottie.asset(
+                                                          'assets/lottie_animations/75669-animation-for-the-photo-optimization-process.json',
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.9,
+                                                          height: 180,
+                                                          fit: BoxFit.contain,
+                                                          animate: true,
+                                                        ),
+                                                        ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          child: getImage(
+                                                              newImagen),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        );
-                                      },),
+                                            ],
+                                          );
+                                        },
+                                      ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
@@ -439,66 +467,7 @@ class _EditarProductoInversionJornadaState
                                           maxLines: 1,
                                         ),
                                       ),
-                                      FormField(
-                                        builder: (state) {
-                                          return Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(5, 0, 5, 10),
-                                            child: DropDown(
-                                              initialOption: newFamilia,
-                                              options: listFamilias,
-                                              onChanged: (val) => setState(() {
-                                                if (listFamilias.isEmpty) {
-                                                  snackbarKey.currentState
-                                                      ?.showSnackBar(
-                                                          const SnackBar(
-                                                    content: Text(
-                                                        "Debes descargar los catálogos desde la sección de tu perfil"),
-                                                  ));
-                                                } else {
-                                                  newFamilia = val!;
-                                                }
-                                              }),
-                                              width: double.infinity,
-                                              height: 50,
-                                              textStyle: AppTheme.of(context)
-                                                  .title3
-                                                  .override(
-                                                    fontFamily: 'Poppins',
-                                                    color:
-                                                        const Color(0xFF221573),
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
-                                              hintText: 'Familia del producto*',
-                                              icon: const Icon(
-                                                Icons
-                                                    .keyboard_arrow_down_rounded,
-                                                color: Color(0xFF221573),
-                                                size: 30,
-                                              ),
-                                              fillColor: Colors.white,
-                                              elevation: 2,
-                                              borderColor:
-                                                  const Color(0xFF221573),
-                                              borderWidth: 2,
-                                              borderRadius: 8,
-                                              margin:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(12, 4, 12, 4),
-                                              hidesUnderline: true,
-                                            ),
-                                          );
-                                        },
-                                        validator: (val) {
-                                          if (newFamilia == "" ||
-                                              newFamilia.isEmpty) {
-                                            return 'Para continuar, seleccione una familia.';
-                                          }
-                                          return null;
-                                        },
-                                      ),
+
                                       Padding(
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
@@ -769,8 +738,7 @@ class _EditarProductoInversionJornadaState
                                               initialOption: newTipoEmpaque,
                                               options: listTipoEmpaque,
                                               onChanged: (val) => setState(() {
-                                                if (listTipoEmpaque
-                                                    .isEmpty) {
+                                                if (listTipoEmpaque.isEmpty) {
                                                   snackbarKey.currentState
                                                       ?.showSnackBar(
                                                           const SnackBar(
@@ -873,7 +841,8 @@ class _EditarProductoInversionJornadaState
                                           ),
                                           keyboardType: TextInputType.number,
                                           inputFormatters: [
-                                              FilteringTextInputFormatter.digitsOnly
+                                            FilteringTextInputFormatter
+                                                .digitsOnly
                                           ],
                                           style: AppTheme.of(context)
                                               .title3
@@ -886,7 +855,8 @@ class _EditarProductoInversionJornadaState
                                               ),
                                           maxLines: 1,
                                           validator: (val) {
-                                            double cantidad = double.parse(val!);
+                                            double cantidad =
+                                                double.parse(val!);
                                             if (cantidad <= 0) {
                                               return 'Para continuar, ingrese una cantidad.';
                                             }
@@ -905,7 +875,8 @@ class _EditarProductoInversionJornadaState
                                               .onUserInteraction,
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            labelText: 'Costo por unidad estimado*',
+                                            labelText:
+                                                'Costo por unidad estimado*',
                                             labelStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(
@@ -960,15 +931,16 @@ class _EditarProductoInversionJornadaState
                                               ),
                                           maxLines: 1,
                                           validator: (val) {
-                                            if(val!.length > 1){
-                                              double costo = double.parse(val.replaceAll('\$', '').replaceAll(',', ''));
-                                            if (costo <= 0) {
-                                              return 'Para continuar, ingrese un costo sugerido.';
-                                            }
+                                            if (val!.length > 1) {
+                                              double costo = double.parse(val
+                                                  .replaceAll('\$', '')
+                                                  .replaceAll(',', ''));
+                                              if (costo <= 0) {
+                                                return 'Para continuar, ingrese un costo sugerido.';
+                                              }
 
-                                            return null;
+                                              return null;
                                             }
-                                            
                                           },
                                         ),
                                       ),
@@ -983,14 +955,14 @@ class _EditarProductoInversionJornadaState
                                           decoration: InputDecoration(
                                             suffixText: "%",
                                             suffixStyle: AppTheme.of(context)
-                                              .title3
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                color: AppTheme.of(context)
-                                                    .primaryText,
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.normal,
-                                              ),
+                                                .title3
+                                                .override(
+                                                  fontFamily: 'Poppins',
+                                                  color: AppTheme.of(context)
+                                                      .primaryText,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
                                             labelText: 'Porcentaje de pago*',
                                             labelStyle: AppTheme.of(context)
                                                 .title3
@@ -1001,7 +973,8 @@ class _EditarProductoInversionJornadaState
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.normal,
                                                 ),
-                                            hintText: 'Ingresa porcentaje de pago...',
+                                            hintText:
+                                                'Ingresa porcentaje de pago...',
                                             hintStyle: AppTheme.of(context)
                                                 .title3
                                                 .override(
@@ -1034,8 +1007,9 @@ class _EditarProductoInversionJornadaState
                                           ),
                                           keyboardType: TextInputType.number,
                                           inputFormatters: [
-                                              FilteringTextInputFormatter.digitsOnly,
-                                              PercentageTextInputFormatter()
+                                            FilteringTextInputFormatter
+                                                .digitsOnly,
+                                            PercentageTextInputFormatter()
                                           ],
                                           style: AppTheme.of(context)
                                               .title3
@@ -1060,138 +1034,180 @@ class _EditarProductoInversionJornadaState
                                       print("Desde inversion");
                                       if (productoInversionJornadaController
                                           .validateForm(formKey)) {
-                                          print("Holaaaaaax");
+                                        print("Holaaaaaax");
                                         if (productoController.text !=
-                                                widget.productoSol.producto  ||
+                                                widget.productoSol.producto ||
                                             marcaController.text !=
                                                 widget.productoSol
-                                                    .marcaSugerida  ||
+                                                    .marcaSugerida ||
                                             descripcionController.text !=
                                                 widget
                                                     .productoSol.descripcion ||
                                             proveedorController.text !=
                                                 widget.productoSol
                                                     .proveedorSugerido ||
-                                            costoController.text.substring(1).replaceAll(",", "") !=
+                                            costoController.text
+                                                    .substring(1)
+                                                    .replaceAll(",", "") !=
                                                 widget.productoSol.costoEstimado
                                                     ?.toStringAsFixed(2) ||
                                             cantidadController.text !=
                                                 widget.productoSol.cantidad
                                                     .toString() ||
-                                            newFamilia !=
-                                                widget
-                                                    .productoSol
-                                                    .familiaProducto
-                                                    .target!
-                                                    .nombre ||
                                             newTipoEmpaque !=
                                                 widget.productoSol.tipoEmpaques
-                                                    .target!.tipo
-                                                    ) {
-                                                      print("Si se va a actualizar");
-                                            if (newImagen !=
-                                                    widget.productoSol.imagen.target?.imagenes
-                                              ) {
-                                                if (widget.productoSol.imagen.target?.path == null) {
-                                                  print("SE AGREGA IMAGEN NUEVA");
-                                                  productoInversionJornadaController.addImagenProductoSol(
-                                                    widget.productoSol,
-                                                    nombreImagen,
-                                                    path,
-                                                    base64,
-                                                    widget.
-                                                    emprendimientoActual.id
-                                                    );
-                                                } else {
-                                                  print("SE ACTUALIZA IMAGEN NUEVA");
-                                                  productoInversionJornadaController.updateImagenProductoSol(
-                                                    widget.productoSol,
-                                                    widget.productoSol.imagen.target!.id,
-                                                    nombreImagen,
-                                                    path,
-                                                    base64);
-                                                }
-                                              }
-                                            final nuevaFamiliaProd = dataBase
-                                                .familiaProductosBox
-                                                .query(FamiliaProd_.nombre
-                                                    .equals(newFamilia))
-                                                .build()
-                                                .findFirst();
-                                            final nuevoTipoEmpaque = dataBase
-                                                .tipoEmpaquesBox
-                                                .query(TipoEmpaques_.tipo
-                                                    .equals(newTipoEmpaque))
-                                                .build()
-                                                .findFirst();
-                                            if (nuevaFamiliaProd != null &&
-                                                nuevoTipoEmpaque != null) {
-                                              final indexUpdateProdSolicitado = productoInversionJornadaController
-                                                  .listProdSolicitadosActual
-                                                  .indexOf(widget.productoSol);
-                                              productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado].marcaSugerida = marcaController.text;
-                                              productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado].proveedorSugerido = proveedorController.text;
-                                              productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado].cantidad = int.parse(cantidadController.text);
-                                              productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado].costoEstimado = double.parse(costoController.text.replaceAll("\$", "").replaceAll(",", ""));
-                                              productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado].tipoEmpaques.target = nuevoTipoEmpaque;
-                                              productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado].familiaProducto.target = nuevaFamiliaProd;
-                                              final newInstruccionProdInversionJ3 = SaveInstruccionProductoInversionJ3Temporal(
-                                                instruccion: "syncUpdateProductoInversionJ3", 
-                                                prodSolicitado: productoInversionJornadaController.listProdSolicitadosActual[indexUpdateProdSolicitado],
-                                              );
-                                              productoInversionJornadaController.instruccionesProdInversionJ3Temp.add(newInstruccionProdInversionJ3);
-                                              await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      EditarInversionJornadaScreen(
-                                                        emprendimiento: widget.emprendimientoActual, 
-                                                        jornada: widget.jornada, 
-                                                        prodSolicitados: productoInversionJornadaController.listProdSolicitadosActual,
-                                                        inversion: widget.inversion,
-                                                      ),
-                                                ),
-                                              );
+                                                    .target!.tipo) {
+                                          print("Si se va a actualizar");
+                                          if (newImagen !=
+                                              widget.productoSol.imagen.target
+                                                  ?.imagenes) {
+                                            if (widget.productoSol.imagen.target
+                                                    ?.path ==
+                                                null) {
+                                              print("SE AGREGA IMAGEN NUEVA");
+                                              productoInversionJornadaController
+                                                  .addImagenProductoSol(
+                                                      widget.productoSol,
+                                                      nombreImagen,
+                                                      path,
+                                                      base64,
+                                                      widget
+                                                          .emprendimientoActual
+                                                          .id);
+                                            } else {
+                                              print(
+                                                  "SE ACTUALIZA IMAGEN NUEVA");
+                                              productoInversionJornadaController
+                                                  .updateImagenProductoSol(
+                                                      widget.productoSol,
+                                                      widget.productoSol.imagen
+                                                          .target!.id,
+                                                      nombreImagen,
+                                                      path,
+                                                      base64);
                                             }
+                                          }
+
+                                          final nuevoTipoEmpaque = dataBase
+                                              .tipoEmpaquesBox
+                                              .query(TipoEmpaques_.tipo
+                                                  .equals(newTipoEmpaque))
+                                              .build()
+                                              .findFirst();
+                                          if (nuevoTipoEmpaque != null) {
+                                            final indexUpdateProdSolicitado =
+                                                productoInversionJornadaController
+                                                    .listProdSolicitadosActual
+                                                    .indexOf(
+                                                        widget.productoSol);
+                                            productoInversionJornadaController
+                                                    .listProdSolicitadosActual[
+                                                        indexUpdateProdSolicitado]
+                                                    .marcaSugerida =
+                                                marcaController.text;
+                                            productoInversionJornadaController
+                                                    .listProdSolicitadosActual[
+                                                        indexUpdateProdSolicitado]
+                                                    .proveedorSugerido =
+                                                proveedorController.text;
+                                            productoInversionJornadaController
+                                                    .listProdSolicitadosActual[
+                                                        indexUpdateProdSolicitado]
+                                                    .cantidad =
+                                                int.parse(
+                                                    cantidadController.text);
+                                            productoInversionJornadaController
+                                                    .listProdSolicitadosActual[
+                                                        indexUpdateProdSolicitado]
+                                                    .costoEstimado =
+                                                double.parse(costoController
+                                                    .text
+                                                    .replaceAll("\$", "")
+                                                    .replaceAll(",", ""));
+                                            productoInversionJornadaController
+                                                .listProdSolicitadosActual[
+                                                    indexUpdateProdSolicitado]
+                                                .tipoEmpaques
+                                                .target = nuevoTipoEmpaque;
+                                            final newInstruccionProdInversionJ3 =
+                                                SaveInstruccionProductoInversionJ3Temporal(
+                                              instruccion:
+                                                  "syncUpdateProductoInversionJ3",
+                                              prodSolicitado:
+                                                  productoInversionJornadaController
+                                                          .listProdSolicitadosActual[
+                                                      indexUpdateProdSolicitado],
+                                            );
+                                            productoInversionJornadaController
+                                                .instruccionesProdInversionJ3Temp
+                                                .add(
+                                                    newInstruccionProdInversionJ3);
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    EditarInversionJornadaScreen(
+                                                  emprendimiento: widget
+                                                      .emprendimientoActual,
+                                                  jornada: widget.jornada,
+                                                  prodSolicitados:
+                                                      productoInversionJornadaController
+                                                          .listProdSolicitadosActual,
+                                                  inversion: widget.inversion,
+                                                ),
+                                              ),
+                                            );
+                                          }
                                         } else {
                                           if (newImagen !=
-                                                    widget.productoSol.imagen.target?.imagenes
-                                              ) {
-                                                if (widget.productoSol.imagen.target?.path == null) {
-                                                  print("SE AGREGA IMAGEN NUEVA");
-                                                  productoInversionJornadaController.addImagenProductoSol(
-                                                    widget.productoSol,
-                                                    nombreImagen,
-                                                    path,
-                                                    base64,
-                                                    widget.
-                                                    emprendimientoActual.id
-                                                    );
-                                                } else {
-                                                  print("SE ACTUALIZA IMAGEN NUEVA");
-                                                  productoInversionJornadaController.updateImagenProductoSol(
-                                                    widget.productoSol,
-                                                    widget.productoSol.imagen.target!.id,
-                                                    nombreImagen,
-                                                    path,
-                                                    base64);
-                                                }
-                                                snackbarKey.currentState?.showSnackBar(const SnackBar(
-                                                  content: Text("Se actualiza éxitosamente la imagen del Producto."),
-                                                ));
-                                                await Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        EditarInversionJornadaScreen(
-                                                          emprendimiento: widget.emprendimientoActual, 
-                                                          jornada: widget.jornada, 
-                                                          prodSolicitados: productoInversionJornadaController.listProdSolicitadosActual,
-                                                          inversion: widget.inversion,
-                                                        ),
-                                                  ),
-                                                );
-                                              }
+                                              widget.productoSol.imagen.target
+                                                  ?.imagenes) {
+                                            if (widget.productoSol.imagen.target
+                                                    ?.path ==
+                                                null) {
+                                              print("SE AGREGA IMAGEN NUEVA");
+                                              productoInversionJornadaController
+                                                  .addImagenProductoSol(
+                                                      widget.productoSol,
+                                                      nombreImagen,
+                                                      path,
+                                                      base64,
+                                                      widget
+                                                          .emprendimientoActual
+                                                          .id);
+                                            } else {
+                                              print(
+                                                  "SE ACTUALIZA IMAGEN NUEVA");
+                                              productoInversionJornadaController
+                                                  .updateImagenProductoSol(
+                                                      widget.productoSol,
+                                                      widget.productoSol.imagen
+                                                          .target!.id,
+                                                      nombreImagen,
+                                                      path,
+                                                      base64);
+                                            }
+                                            snackbarKey.currentState
+                                                ?.showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "Se actualiza éxitosamente la imagen del Producto."),
+                                            ));
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    EditarInversionJornadaScreen(
+                                                  emprendimiento: widget
+                                                      .emprendimientoActual,
+                                                  jornada: widget.jornada,
+                                                  prodSolicitados:
+                                                      productoInversionJornadaController
+                                                          .listProdSolicitadosActual,
+                                                  inversion: widget.inversion,
+                                                ),
+                                              ),
+                                            );
+                                          }
                                         }
                                       } else {
                                         await showDialog(
