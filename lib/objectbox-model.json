@@ -1831,7 +1831,7 @@
     },
     {
       "id": "49:100215042722630549",
-      "lastPropertyId": "19:1346415551296560367",
+      "lastPropertyId": "20:999937020643046967",
       "name": "ProdSolicitado",
       "properties": [
         {
@@ -1928,6 +1928,14 @@
           "id": "19:1346415551296560367",
           "name": "idEmprendimiento",
           "type": 6
+        },
+        {
+          "id": "20:999937020643046967",
+          "name": "familiaInversionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "276:2066412677136806621",
+          "relationTarget": "FamiliaInversion"
         }
       ],
       "relations": [
@@ -2613,10 +2621,53 @@
           "targetId": "44:7028042862098546470"
         }
       ]
+    },
+    {
+      "id": "63:3167743746507035878",
+      "lastPropertyId": "6:8224899873614020012",
+      "name": "FamiliaInversion",
+      "properties": [
+        {
+          "id": "1:2016948444927180239",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1663982090695204674",
+          "name": "familiaInversion",
+          "type": 9
+        },
+        {
+          "id": "3:8645563325765495312",
+          "name": "fechaRegistro",
+          "type": 10
+        },
+        {
+          "id": "4:8793093698124241452",
+          "name": "activo",
+          "type": 1
+        },
+        {
+          "id": "5:7056448703456479325",
+          "name": "idDBR",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "274:7778537774406173551"
+        },
+        {
+          "id": "6:8224899873614020012",
+          "name": "idEmiWeb",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "275:1197386415650895805"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "62:5967866020755512418",
-  "lastIndexId": "273:713793477301725008",
+  "lastEntityId": "63:3167743746507035878",
+  "lastIndexId": "276:2066412677136806621",
   "lastRelationId": "82:2481463102848550386",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

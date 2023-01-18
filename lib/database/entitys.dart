@@ -72,6 +72,7 @@ class ProdSolicitado {
   final inversion = ToOne<Inversiones>();
   final imagen = ToOne<Imagenes>();
   final bitacora = ToMany<Bitacora>();
+  final familiaInversion = ToOne<FamiliaInversion>();
 
   ProdSolicitado({
     this.id = 0,
@@ -937,6 +938,32 @@ class Proveedores {
     required this.archivado,
     required this.idEmiWeb,
     this.idDBR,
+  }) : fechaRegistro = fechaRegistro ?? DateTime.now();
+
+  String get fechaRegistroFormat =>
+      DateFormat('dd.MM.yyyy hh:mm:ss').format(fechaRegistro);
+}
+
+@Entity()
+class FamiliaInversion {
+  int id;
+  String familiaInversion;
+  DateTime fechaRegistro;
+  bool activo;
+  @Unique()
+  String? idDBR;
+  @Unique()
+  String idEmiWeb;
+  @Backlink()
+  final prodSolicitados = ToMany<ProdSolicitado>();
+
+  FamiliaInversion({
+    this.id = 0,
+    required this.familiaInversion,
+    DateTime? fechaRegistro,
+    required this.activo,
+    this.idDBR,
+    required this.idEmiWeb,
   }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat =>

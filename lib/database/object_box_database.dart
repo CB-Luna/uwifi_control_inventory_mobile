@@ -37,6 +37,7 @@ class ObjectBoxDatabase {
   late final Box<CondicionesPago> condicionesPagoBox;
   late final Box<Bancos> bancosBox;
   late final Box<Proveedores> proveedoresBox;
+  late final Box<FamiliaInversion> familiaInversionBox;
   late final Box<ProductosProv> productosProvBox;
   late final Box<InversionesXProdCotizados> inversionesXprodCotizadosBox;
   late final Box<PorcentajeAvance> porcentajeAvanceBox;
@@ -75,6 +76,7 @@ class ObjectBoxDatabase {
     condicionesPagoBox = Box<CondicionesPago>(store);
     bancosBox = Box<Bancos>(store);
     proveedoresBox = Box<Proveedores>(store);
+    familiaInversionBox = Box<FamiliaInversion>(store);
     productosProvBox = Box<ProductosProv>(store);
     inversionesXprodCotizadosBox = Box<InversionesXProdCotizados>(store);
     porcentajeAvanceBox = Box<PorcentajeAvance>(store);

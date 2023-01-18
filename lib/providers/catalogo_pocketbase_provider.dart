@@ -26,7 +26,7 @@ import 'package:bizpro_app/modelsPocketbase/get_unidades_medida.dart';
 import 'package:bizpro_app/modelsPocketbase/get_estados.dart';
 import 'package:bizpro_app/modelsPocketbase/get_municipios.dart';
 import 'package:bizpro_app/modelsPocketbase/get_estado_inversiones.dart';
-import 'package:bizpro_app/modelsPocketbase/get_familia_productos.dart';
+import 'package:bizpro_app/modelsPocketbase/get_familia_inversion.dart';
 import 'package:bizpro_app/modelsPocketbase/get_fases_emp.dart';
 import 'package:bizpro_app/modelsPocketbase/get_tipo_empaques.dart';
 import '../modelsPocketbase/temporals/get_basic_imagen_pocketbase.dart';
@@ -72,6 +72,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
     banderasExistoSync.add(await getBancos());
     banderasExistoSync.add(await getPorcentajeAvance());
     banderasExistoSync.add(await getProveedores());
+    banderasExistoSync.add(await getFamiliaInversion());
     banderasExistoSync.add(await getProductosProv());
     banderasExistoSync.add(await getProdProyecto());
     banderasExistoSync.add(await getInfoUsuarioPerfil());
@@ -1026,6 +1027,61 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
       return false;
     }
   }
+
+//Función para recuperar el catálogo de familia inversion desde Pocketbase
+  Future<bool> getFamiliaInversion() async {
+    try {
+      //Se recupera toda la colección de familia inversion en Pocketbase
+      final records = await client.records
+          .getFullList('familia_inversion', batch: 200, sort: '+familia_inversion');
+      if (records.isNotEmpty) {
+        //Existen datos de familia inversion en Pocketbase
+        final List<GetFamiliaInversion> listFamiliaInversion= [];
+        for (var element in records) {
+          listFamiliaInversion.add(getFamiliaInversionFromMap(element.toString()));
+        }
+        for (var i = 0; i < listFamiliaInversion.length; i++) {
+          //Se valida que la nueva familia inversion aún no existe en Objectbox
+          final familiaInversionExistente = dataBase.familiaInversionBox
+              .query(FamiliaInversion_.idDBR.equals(listFamiliaInversion[i].id))
+              .build()
+              .findUnique();
+          if (familiaInversionExistente == null) {
+            if (listFamiliaInversion[i].id.isNotEmpty) {
+              final nuevaFamiliaInversion = FamiliaInversion(
+                familiaInversion: listFamiliaInversion[i].familiaInversion,
+                activo: listFamiliaInversion[i].activo,
+                idDBR: listFamiliaInversion[i].id,
+                idEmiWeb: listFamiliaInversion[i].idEmiWeb,
+              );
+              dataBase.familiaInversionBox.put(nuevaFamiliaInversion);
+              print('Familia Inversion nueva agregada exitosamente');
+            }
+          } else {
+            //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
+            if (familiaInversionExistente.fechaRegistro !=
+                listFamiliaInversion[i].updated) {
+              //Se actualiza el registro en Objectbox
+              familiaInversionExistente.familiaInversion =
+                  listFamiliaInversion[i].familiaInversion;
+              familiaInversionExistente.activo =
+                  listFamiliaInversion[i].activo;
+              familiaInversionExistente.fechaRegistro =
+                  listFamiliaInversion[i].updated;
+              dataBase.familiaInversionBox.put(familiaInversionExistente);
+            }
+          }
+        }
+        return true;
+      } else {
+        //No existen datos de familia inversion en Pocketbase
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
 
 //Función para recuperar el catálogo de productos proveedores desde Pocketbase
   Future<bool> getProductosProv() async {

@@ -8,6 +8,7 @@ import 'package:bizpro_app/modelsEmiWeb/get_bancos_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_catalogo_proyectos_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_condiciones_pago_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_estado_inversiones_emi_web.dart';
+import 'package:bizpro_app/modelsEmiWeb/get_familia_inversion_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_fase_emprendimiento_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_imagen_producto_emi_web.dart';
 import 'package:bizpro_app/modelsEmiWeb/get_imagen_usuario_emi_web.dart';
@@ -25,6 +26,7 @@ import 'package:bizpro_app/modelsEmiWeb/get_usuario_emi_web.dart';
 import 'package:bizpro_app/modelsPocketbase/get_catalogo_proyectos.dart';
 import 'package:bizpro_app/modelsPocketbase/get_comunidades.dart';
 import 'package:bizpro_app/modelsPocketbase/get_estados.dart';
+import 'package:bizpro_app/modelsPocketbase/get_familia_inversion.dart';
 import 'package:bizpro_app/modelsPocketbase/get_municipios.dart';
 import 'package:bizpro_app/modelsPocketbase/get_tipo_proyecto.dart';
 import 'package:bizpro_app/objectbox.g.dart';
@@ -97,6 +99,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
       banderasExistoSync.add(await getPorcentajeAvance());
       banderasExistoSync.add(await getProveedoresNoArchivados());
       banderasExistoSync.add(await getProveedoresArchivados());
+      banderasExistoSync.add(await getFamiliaInversion());
       banderasExistoSync.add(await getProductosProv());
       banderasExistoSync.add(await getProdProyecto());
       banderasExistoSync.add(await getInfoUsuarioPerfil());
@@ -1721,6 +1724,90 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
     }
   }
 
+//Función para recuperar el catálogo de familia de inversión desde Emi Web
+  Future<bool> getFamiliaInversion() async {
+    try {
+      var url = Uri.parse("$baseUrlEmiWebServices/catalogos/familiainversion");
+      final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+      var response = await http.get(url, headers: headers);
+
+      switch (response.statusCode) {
+        case 200: //Caso éxitoso
+          final responseListFamiliaInversion = getFamiliaInversionEmiWebFromMap(
+              const Utf8Decoder().convert(response.bodyBytes));
+          for (var i = 0;
+              i < responseListFamiliaInversion.payload!.length;
+              i++) {
+            //Verificamos que la nueva familia de inversion no exista en Pocketbase
+            final recordFamiliaInversion = await client.records.getFullList(
+                'familia_inversion',
+                batch: 200,
+                filter:
+                    "id_emi_web='${responseListFamiliaInversion.payload![i].idCatFamiliaInversion}'");
+            if (recordFamiliaInversion.isEmpty) {
+              //Se agrega la familia inversión como nueva en la colección de Pocketbase
+              final newRecordFamiliaInversion =
+                  await client.records.create('familia_inversion', body: {
+                "familia_inversion":
+                    responseListFamiliaInversion.payload![i].familiaInversionNecesaria,
+                "activo": responseListFamiliaInversion.payload![i].activo,
+                "id_emi_web": responseListFamiliaInversion
+                    .payload![i].idCatFamiliaInversion
+                    .toString(),
+              });
+              if (newRecordFamiliaInversion.id.isNotEmpty) {
+                print(
+                    'Familia Inversión Emi Web agregado éxitosamente en Pocketbase');
+              } else {
+                return false;
+              }
+            } else {
+              //Se actualiza la familia inversion en la colección de Pocketbase
+              final recordFamiliaInversionParse = getFamiliaInversionFromMap(
+                  recordFamiliaInversion.first.toString());
+              //Verificamos que los campos de este registro sean diferentes para actualizarlo
+              if (recordFamiliaInversionParse.familiaInversion !=
+                  responseListFamiliaInversion.payload![i].familiaInversionNecesaria ||
+                  recordFamiliaInversionParse.activo !=
+                  responseListFamiliaInversion.payload![i].activo) {
+                final updateRecordFamiliaInversion = await client.records
+                    .update('familia_inversion', recordFamiliaInversionParse.id,
+                        body: {
+                      "familia_inversion":
+                        responseListFamiliaInversion.payload![i].familiaInversionNecesaria,
+                      "activo": responseListFamiliaInversion.payload![i].activo
+                    });
+                if (updateRecordFamiliaInversion.id.isNotEmpty) {
+                  print(
+                      'Familia Inversion Emi Web actualizado éxitosamente en Pocketbase');
+                } else {
+                  return false;
+                }
+              }
+            }
+          }
+          print("Exito 19");
+          return true;
+        case 401: //Error de Token incorrecto
+          if (await getTokenOAuth()) {
+            getFamiliaInversion();
+            return true;
+          } else {
+            return false;
+          }
+        case 404: //Error de ruta incorrecta
+          return false;
+        default:
+          return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
 //Función para recuperar el catálogo de productos proveedores desde Emi Web
   Future<bool> getProductosProv() async {
     try {
@@ -1944,7 +2031,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                 return false;
             }
           }
-          print("Exito 19");
+          print("Exito 20");
           return true;
         case 401: //Error de Token incorrecto
           if (await getTokenOAuth()) {
@@ -2102,7 +2189,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                 return false;
             }
           }
-          print("Exito 20");
+          print("Exito 21");
           return true;
         case 401: //Error de Token incorrecto
           if (await getTokenOAuth()) {
@@ -2403,7 +2490,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                               });
                           if (updateRecordEmiUser.id.isNotEmpty) {
                             // Usuario actualizado éxitosamente en Pocketbase
-                            print("Exito 21");
+                            print("Exito 22");
                             return true;
                           } else {
                             // Usuario Emi Web no actualizado éxitosamente en Pocketbase

@@ -1782,7 +1782,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(49, 100215042722630549),
       name: 'ProdSolicitado',
-      lastPropertyId: const IdUid(19, 1346415551296560367),
+      lastPropertyId: const IdUid(20, 999937020643046967),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -1873,7 +1873,14 @@ final _entities = <ModelEntity>[
             id: const IdUid(19, 1346415551296560367),
             name: 'idEmprendimiento',
             type: 6,
-            flags: 0)
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(20, 999937020643046967),
+            name: 'familiaInversionId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(276, 2066412677136806621),
+            relationTarget: 'FamiliaInversion')
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -2517,7 +2524,51 @@ final _entities = <ModelEntity>[
             name: 'categoriasProyecto',
             targetId: const IdUid(44, 7028042862098546470))
       ],
-      backlinks: <ModelBacklink>[])
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(63, 3167743746507035878),
+      name: 'FamiliaInversion',
+      lastPropertyId: const IdUid(6, 8224899873614020012),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 2016948444927180239),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 1663982090695204674),
+            name: 'familiaInversion',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 8645563325765495312),
+            name: 'fechaRegistro',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 8793093698124241452),
+            name: 'activo',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 7056448703456479325),
+            name: 'idDBR',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(274, 7778537774406173551)),
+        ModelProperty(
+            id: const IdUid(6, 8224899873614020012),
+            name: 'idEmiWeb',
+            type: 9,
+            flags: 2080,
+            indexId: const IdUid(275, 1197386415650895805))
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(
+            name: 'prodSolicitados', srcEntity: 'ProdSolicitado', srcField: '')
+      ])
 ];
 
 /// Open an ObjectBox store with the model declared in this file.
@@ -2540,8 +2591,8 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(62, 5967866020755512418),
-      lastIndexId: const IdUid(273, 713793477301725008),
+      lastEntityId: const IdUid(63, 3167743746507035878),
+      lastIndexId: const IdUid(276, 2066412677136806621),
       lastRelationId: const IdUid(82, 2481463102848550386),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -4877,7 +4928,8 @@ ModelDefinition getObjectBoxModel() {
               object.unidadMedida,
               object.tipoEmpaques,
               object.imagen,
-              object.inversion
+              object.inversion,
+              object.familiaInversion
             ],
         toManyRelations: (ProdSolicitado object) =>
             {RelInfo<ProdSolicitado>.toMany(33, object.id): object.bitacora},
@@ -4899,7 +4951,7 @@ ModelDefinition getObjectBoxModel() {
           final idEmiWebOffset = object.idEmiWeb == null
               ? null
               : fbb.writeString(object.idEmiWeb!);
-          fbb.startTable(20);
+          fbb.startTable(21);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.idInversion);
           fbb.addOffset(2, productoOffset);
@@ -4916,6 +4968,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(16, object.inversion.targetId);
           fbb.addOffset(17, idEmiWebOffset);
           fbb.addInt64(18, object.idEmprendimiento);
+          fbb.addInt64(19, object.familiaInversion.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4956,6 +5009,9 @@ ModelDefinition getObjectBoxModel() {
           object.inversion.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 36, 0);
           object.inversion.attach(store);
+          object.familiaInversion.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 42, 0);
+          object.familiaInversion.attach(store);
           InternalToManyAccess.setRelInfo(
               object.bitacora,
               store,
@@ -5566,6 +5622,58 @@ ModelDefinition getObjectBoxModel() {
               store,
               RelInfo<TipoProyecto>.toMany(71, object.id),
               store.box<TipoProyecto>());
+          return object;
+        }),
+    FamiliaInversion: EntityDefinition<FamiliaInversion>(
+        model: _entities[36],
+        toOneRelations: (FamiliaInversion object) => [],
+        toManyRelations: (FamiliaInversion object) => {
+              RelInfo<ProdSolicitado>.toOneBacklink(20, object.id,
+                      (ProdSolicitado srcObject) => srcObject.familiaInversion):
+                  object.prodSolicitados
+            },
+        getId: (FamiliaInversion object) => object.id,
+        setId: (FamiliaInversion object, int id) {
+          object.id = id;
+        },
+        objectToFB: (FamiliaInversion object, fb.Builder fbb) {
+          final familiaInversionOffset =
+              fbb.writeString(object.familiaInversion);
+          final idDBROffset =
+              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
+          final idEmiWebOffset = fbb.writeString(object.idEmiWeb);
+          fbb.startTable(7);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, familiaInversionOffset);
+          fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
+          fbb.addBool(3, object.activo);
+          fbb.addOffset(4, idDBROffset);
+          fbb.addOffset(5, idEmiWebOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = FamiliaInversion(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              familiaInversion: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
+              activo: const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 10, false),
+              idDBR: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 12),
+              idEmiWeb: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, ''));
+          InternalToManyAccess.setRelInfo(
+              object.prodSolicitados,
+              store,
+              RelInfo<ProdSolicitado>.toOneBacklink(20, object.id,
+                  (ProdSolicitado srcObject) => srcObject.familiaInversion),
+              store.box<FamiliaInversion>());
           return object;
         })
   };
@@ -6802,6 +6910,11 @@ class ProdSolicitado_ {
   static final idEmprendimiento =
       QueryIntegerProperty<ProdSolicitado>(_entities[25].properties[15]);
 
+  /// see [ProdSolicitado.familiaInversion]
+  static final familiaInversion =
+      QueryRelationToOne<ProdSolicitado, FamiliaInversion>(
+          _entities[25].properties[16]);
+
   /// see [ProdSolicitado.bitacora]
   static final bitacora =
       QueryRelationToMany<ProdSolicitado, Bitacora>(_entities[25].relations[0]);
@@ -7244,4 +7357,31 @@ class TipoProyecto_ {
   static final categoriasProyecto =
       QueryRelationToMany<TipoProyecto, CatalogoProyecto>(
           _entities[35].relations[0]);
+}
+
+/// [FamiliaInversion] entity fields to define ObjectBox queries.
+class FamiliaInversion_ {
+  /// see [FamiliaInversion.id]
+  static final id =
+      QueryIntegerProperty<FamiliaInversion>(_entities[36].properties[0]);
+
+  /// see [FamiliaInversion.familiaInversion]
+  static final familiaInversion =
+      QueryStringProperty<FamiliaInversion>(_entities[36].properties[1]);
+
+  /// see [FamiliaInversion.fechaRegistro]
+  static final fechaRegistro =
+      QueryIntegerProperty<FamiliaInversion>(_entities[36].properties[2]);
+
+  /// see [FamiliaInversion.activo]
+  static final activo =
+      QueryBooleanProperty<FamiliaInversion>(_entities[36].properties[3]);
+
+  /// see [FamiliaInversion.idDBR]
+  static final idDBR =
+      QueryStringProperty<FamiliaInversion>(_entities[36].properties[4]);
+
+  /// see [FamiliaInversion.idEmiWeb]
+  static final idEmiWeb =
+      QueryStringProperty<FamiliaInversion>(_entities[36].properties[5]);
 }

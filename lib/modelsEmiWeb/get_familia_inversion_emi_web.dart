@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-GetFamiliaProductoEmiWeb getFamiliaProductoEmiWebFromMap(String str) => GetFamiliaProductoEmiWeb.fromMap(json.decode(str));
+GetFamiliaInversionEmiWeb getFamiliaInversionEmiWebFromMap(String str) => GetFamiliaInversionEmiWeb.fromMap(json.decode(str));
 
-String getFamiliaProductoEmiWebToMap(GetFamiliaProductoEmiWeb data) => json.encode(data.toMap());
+String getFamiliaInversionEmiWebToMap(GetFamiliaInversionEmiWeb data) => json.encode(data.toMap());
 
-class GetFamiliaProductoEmiWeb {
-    GetFamiliaProductoEmiWeb({
+class GetFamiliaInversionEmiWeb {
+    GetFamiliaInversionEmiWeb({
         required this.status,
         required this.payload,
     });
@@ -13,14 +13,14 @@ class GetFamiliaProductoEmiWeb {
     final String status;
     final List<Payload>? payload;
 
-    factory GetFamiliaProductoEmiWeb.fromMap(Map<String, dynamic> json) => GetFamiliaProductoEmiWeb(
+    factory GetFamiliaInversionEmiWeb.fromMap(Map<String, dynamic> json) => GetFamiliaInversionEmiWeb(
         status: json["status"],
-        payload: json["payload"] == null ? null : List<Payload>.from(json["payload"].map((x) => Payload.fromMap(x))),
+        payload: List<Payload>.from(json["payload"].map((x) => Payload.fromMap(x))),
     );
 
     Map<String, dynamic> toMap() => {
         "status": status,
-        "payload": payload == null ? null : List<dynamic>.from(payload!.map((x) => x.toMap())),
+        "payload": List<dynamic>.from(payload!.map((x) => x.toMap())),
     };
 }
 
