@@ -156,10 +156,28 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                         .build()
                         .findUnique(); //Se recupera el rol actual del Usuario
                     if (rolActual != null) {
-                      updateUsuario.rol.target = rolActual;
+                      if (rolActual.rol == "Administrador" || rolActual.rol == "Promotor" || rolActual.rol == "Voluntario Estratégico") {
+                        updateUsuario.rol.target = rolActual;
+                        dataBase.usuariosBox.put(updateUsuario);
+                        return true;
+                      } else {
+                        updateUsuario.rol.target = rolActual;
+                        dataBase.usuariosBox.put(updateUsuario);
+                        snackbarKey.currentState?.showSnackBar(const SnackBar(
+                          content: Text(
+                              "El Usuario no cuenta con los permisos necesarios para sincronizar, favor de comunicarse con el Administrador."),
+                        ));
+                        usuarioExit = true;
+                        return false;
+                      }
+                    } else {
+                      snackbarKey.currentState?.showSnackBar(const SnackBar(
+                        content: Text(
+                            "No se pudo recuperar el rol actual del Usuario."),
+                      ));
+                      usuarioExit = true;
+                      return false;
                     }
-                    dataBase.usuariosBox.put(updateUsuario);
-                    return true;
                   } else {
                     snackbarKey.currentState?.showSnackBar(const SnackBar(
                       content: Text(
