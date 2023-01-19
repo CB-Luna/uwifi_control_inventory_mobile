@@ -437,7 +437,7 @@ class _DetalleCotizacionState extends State<DetalleCotizacion> {
                                     Padding(
                                       padding: const EdgeInsetsDirectional.fromSTEB(0,5,0,0),
                                       child: Text(
-                                        currencyFormat.format(widget.detalleCot.costoTotal.toString()),
+                                        currencyFormat.format(widget.detalleCot.productosProv.target!.costo.toStringAsFixed(2) * widget.detalleCot.cantidad),
                                         style: AppTheme.of(context)
                                             .bodyText1
                                             .override(
