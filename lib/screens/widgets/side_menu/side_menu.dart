@@ -250,8 +250,7 @@ class SideMenu extends StatelessWidget {
                       iconData: Icons.sync_rounded,
                       lineHeight: 1.2,
                       onTap: () async {
-                        if (currentUser.rol.target!.rol == "Voluntario Estratégico" ||
-                            currentUser.rol.target!.rol == "Amigo del Cambio" ||
+                        if (currentUser.rol.target!.rol == "Amigo del Cambio" ||
                             currentUser.rol.target!.rol == "Emprendedor") {
                           snackbarKey.currentState
                               ?.showSnackBar(const SnackBar(
@@ -295,8 +294,7 @@ class SideMenu extends StatelessWidget {
                       iconData: Icons.downloading_outlined,
                       lineHeight: 1.2,
                       onTap: () async {
-                        if (currentUser.rol.target!.rol == "Voluntario Estratégico" ||
-                            currentUser.rol.target!.rol == "Amigo del Cambio" ||
+                        if (currentUser.rol.target!.rol == "Amigo del Cambio" ||
                             currentUser.rol.target!.rol == "Emprendedor") {
                           snackbarKey.currentState
                               ?.showSnackBar(const SnackBar(
@@ -347,8 +345,7 @@ class SideMenu extends StatelessWidget {
                       iconData: Icons.fact_check_outlined,
                       lineHeight: 1.2,
                       onTap: () async {
-                        if (currentUser.rol.target!.rol == "Voluntario Estratégico" ||
-                            currentUser.rol.target!.rol == "Amigo del Cambio" ||
+                        if (currentUser.rol.target!.rol == "Amigo del Cambio" ||
                             currentUser.rol.target!.rol == "Emprendedor") {
                           snackbarKey.currentState
                               ?.showSnackBar(const SnackBar(
