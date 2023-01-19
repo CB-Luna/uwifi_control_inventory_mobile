@@ -56,7 +56,7 @@ class _DetalleCotizacionState extends State<DetalleCotizacion> {
                             ? FileImage(File(widget.detalleCot.productosProv
                                 .target!.imagen.target!.path!))
                             : Image.asset(
-                                "assets/images/animation_500_l3ur8tqa.gif",
+                                "assets/images/default_image_placeholder.jpeg",
                               ).image,
                         fit: BoxFit.cover,
                         filterQuality: FilterQuality.high,
@@ -437,7 +437,7 @@ class _DetalleCotizacionState extends State<DetalleCotizacion> {
                                     Padding(
                                       padding: const EdgeInsetsDirectional.fromSTEB(0,5,0,0),
                                       child: Text(
-                                        currencyFormat.format(widget.detalleCot.costoTotal.toString()),
+                                        currencyFormat.format((widget.detalleCot.productosProv.target!.costo * widget.detalleCot.cantidad).toStringAsFixed(2)),
                                         style: AppTheme.of(context)
                                             .bodyText1
                                             .override(
