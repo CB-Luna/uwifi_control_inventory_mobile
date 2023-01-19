@@ -36,7 +36,9 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
   final formKey = GlobalKey<FormState>();
   TextEditingController porcentajeController =
       TextEditingController(text: "50");
+  List<String> listFamilias = [];
   List<String> listTipoEmpaque = [];
+  String familia = "";
   String tipoEmpaque = "";
   String emprendedor = "";
   XFile? image;
@@ -44,6 +46,7 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
   @override
   void initState() {
     super.initState();
+    familia = "";
     tipoEmpaque = "";
     emprendedor = "";
     porcentajeController = TextEditingController(text: "50");
@@ -51,8 +54,15 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
       emprendedor =
           "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
     }
+    listFamilias = [];
     listTipoEmpaque = [];
 
+    dataBase.familiaInversionBox.getAll().forEach((element) {
+      if (element.activo) {
+        listFamilias.add(element.familiaInversion);
+      }
+    });
+    listFamilias.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     dataBase.tipoEmpaquesBox.getAll().forEach((element) {
       listTipoEmpaque.add(element.tipo);
     });
@@ -273,6 +283,65 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                               ),
                                             ],
                                           );
+                                        },
+                                      ),
+                                      FormField(
+                                        builder: (state) {
+                                          return Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(5, 0, 5, 10),
+                                            child: DropDown(
+                                              options: listFamilias,
+                                              onChanged: (val) => setState(() {
+                                                if (listFamilias.isEmpty) {
+                                                  snackbarKey.currentState
+                                                      ?.showSnackBar(
+                                                          const SnackBar(
+                                                    content: Text(
+                                                        "Debes descargar los catálogos desde la sección de tu perfil"),
+                                                  ));
+                                                } else {
+                                                  familia = val!;
+                                                }
+                                              }),
+                                              width: double.infinity,
+                                              height: 50,
+                                              textStyle: AppTheme.of(context)
+                                                  .title3
+                                                  .override(
+                                                    fontFamily: 'Poppins',
+                                                    color:
+                                                        const Color(0xFF221573),
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                              hintText: 'Familia de inversión*',
+                                              icon: const Icon(
+                                                Icons
+                                                    .keyboard_arrow_down_rounded,
+                                                color: Color(0xFF221573),
+                                                size: 30,
+                                              ),
+                                              fillColor: Colors.white,
+                                              elevation: 2,
+                                              borderColor:
+                                                  const Color(0xFF221573),
+                                              borderWidth: 2,
+                                              borderRadius: 8,
+                                              margin:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(12, 4, 12, 4),
+                                              hidesUnderline: true,
+                                            ),
+                                          );
+                                        },
+                                        validator: (val) {
+                                          if (familia == "" ||
+                                              familia.isEmpty) {
+                                            return 'Para continuar, seleccione una familia de inversión.';
+                                          }
+                                          return null;
                                         },
                                       ),
                                       Padding(
@@ -945,6 +1014,13 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                               .costoEstimado));
                                       if (productoInversionJornadaController
                                           .validateForm(formKey)) {
+                                        final idFamiliaInversion = dataBase
+                                            .familiaInversionBox
+                                            .query(FamiliaInversion_.familiaInversion
+                                                .equals(familia))
+                                            .build()
+                                            .findFirst()
+                                            ?.id;
                                         final idTipoEmpaque = dataBase
                                             .tipoEmpaquesBox
                                             .query(TipoEmpaques_.tipo
@@ -952,7 +1028,7 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                             .build()
                                             .findFirst()
                                             ?.id;
-                                        if (idTipoEmpaque != null) {
+                                        if (idFamiliaInversion != null && idTipoEmpaque != null) {
                                           print(
                                               "Porcenatje:  ${porcentajeController.text}");
                                           inversionJornadaController
@@ -963,7 +1039,8 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                                   widget.emprendimiento.id);
                                           productoInversionJornadaController
                                               .addTemporal(
-                                                  idTipoEmpaque, tipoEmpaque);
+                                                  idTipoEmpaque, tipoEmpaque, 
+                                                  idFamiliaInversion, familia,);
                                           Navigator.pop(context);
                                           snackbarKey.currentState
                                               ?.showSnackBar(const SnackBar(

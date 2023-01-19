@@ -47,7 +47,7 @@ class ProductoInversionJornadaController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addTemporal(int idTipoEmpaque, String tipoEmpaque) {
+  void addTemporal(int idTipoEmpaque, String tipoEmpaque, int idFamiliaInversion, String familiaInversion) {
     //Se crea un Id temporal
     final id = uuid.v4();
     final nuevoProductoSolicitado = ProductosSolicitadosTemporal(
@@ -61,6 +61,8 @@ class ProductoInversionJornadaController extends ChangeNotifier {
       idTipoEmpaques: idTipoEmpaque,
       tipoEmpaques: tipoEmpaque,
       imagen: imagen,
+      idFamiliaInversion: idFamiliaInversion,
+      familiaInversion: familiaInversion,
       fechaRegistro: DateTime.now(),
     );
     productosSolicitados.add(nuevoProductoSolicitado);
@@ -79,6 +81,8 @@ class ProductoInversionJornadaController extends ChangeNotifier {
       int newIdTipoEmpaque,
       String newTipoEmpaque,
       String? newImagen,
+      int newIdFamiliaInversion,
+      String newFamiliaInversion,
       DateTime fechaRegistro) {
     final updateProductoSolicitado = ProductosSolicitadosTemporal(
       id: idProdSolicitadoTemp,
@@ -91,6 +95,8 @@ class ProductoInversionJornadaController extends ChangeNotifier {
       cantidad: int.parse(newCantidad),
       idTipoEmpaques: newIdTipoEmpaque,
       tipoEmpaques: newTipoEmpaque,
+      idFamiliaInversion: newIdFamiliaInversion,
+      familiaInversion: newFamiliaInversion,
       imagen: newImagen,
       fechaRegistro: fechaRegistro,
     );
@@ -132,10 +138,13 @@ class ProductoInversionJornadaController extends ChangeNotifier {
           nuevoProdSolicitado.imagen.target = nuevaImagenProdSolicitado;
         }
         //Se recupera la familia y tipoEmpaque
+        final familiaInversion = dataBase.familiaInversionBox
+            .get(productosSolicitados[i].idFamiliaInversion!);
         final tipoEmpaque = dataBase.tipoEmpaquesBox
             .get(productosSolicitados[i].idTipoEmpaques!);
-        if (tipoEmpaque != null) {
+        if (familiaInversion != null && tipoEmpaque != null) {
           // final nuevaInstruccion = Bitacora(instrucciones: 'syncAddProductoSolicitado', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
+          nuevoProdSolicitado.familiaInversion.target = familiaInversion;
           nuevoProdSolicitado.tipoEmpaques.target = tipoEmpaque;
           nuevoProdSolicitado.inversion.target = inversion;
           // nuevoProdSolicitado.bitacora.add(nuevaInstruccion);
@@ -215,7 +224,11 @@ class ProductoInversionJornadaController extends ChangeNotifier {
                     .prodSolicitado
                     .tipoEmpaques
                     .target;
-
+            updateProductoInversionJ3.familiaInversion.target =
+                instruccionesProdInversionJ3Temp[i]
+                    .prodSolicitado
+                    .familiaInversion
+                    .target;
             inversion.totalInversion +=
                 updateProductoInversionJ3.costoEstimado != null
                     ? (updateProductoInversionJ3.cantidad *

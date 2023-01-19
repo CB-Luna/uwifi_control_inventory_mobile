@@ -696,7 +696,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                 dataBase.emprendimientosBox.put(nuevoEmprendimiento);
 
                 var urlProductosProyecto = Uri.parse(
-                    "$baseUrl/api/collections/productos_proyecto/records?filter=(id_inversion_fk='${elementInversion.id}')&expand=id_familia_prod_fk,id_tipo_empaque_fk");
+                    "$baseUrl/api/collections/productos_proyecto/records?filter=(id_inversion_fk='${elementInversion.id}')&expand=id_familia_inversion_fk,id_tipo_empaque_fk");
 
                 var responseProductosProyecto =
                     await get(urlProductosProyecto, headers: headers);
@@ -723,12 +723,18 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                       idEmprendimiento: idEmprendimientoObjectBox!,
                     );
 
+                    final familiaInversion = dataBase.familiaInversionBox
+                        .query(FamiliaInversion_.idDBR
+                            .equals(elementProductosProyecto.idFamiliaInversionFk))
+                        .build()
+                        .findFirst();
                     final tipoEmpaques = dataBase.tipoEmpaquesBox
                         .query(TipoEmpaques_.idDBR
                             .equals(elementProductosProyecto.idTipoEmpaqueFk))
                         .build()
                         .findFirst();
-                    if (tipoEmpaques != null) {
+                    if (familiaInversion != null && tipoEmpaques != null) {
+                      nuevoProdSolicitado.familiaInversion.target = familiaInversion;
                       nuevoProdSolicitado.tipoEmpaques.target = tipoEmpaques;
                     }
                     nuevoProdSolicitado.inversion.target = nuevaInversion;

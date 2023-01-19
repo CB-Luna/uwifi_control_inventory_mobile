@@ -2488,7 +2488,7 @@
     },
     {
       "id": "60:794331956868775333",
-      "lastPropertyId": "19:6258211936753955292",
+      "lastPropertyId": "20:9213895077009524929",
       "name": "ProdProyecto",
       "properties": [
         {
@@ -2569,6 +2569,14 @@
           "flags": 520,
           "indexId": "262:2908751672841509107",
           "relationTarget": "TipoEmpaques"
+        },
+        {
+          "id": "20:9213895077009524929",
+          "name": "familiaInversionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "277:5088118459977856954",
+          "relationTarget": "FamiliaInversion"
         }
       ],
       "relations": []
@@ -2667,7 +2675,7 @@
     }
   ],
   "lastEntityId": "63:3167743746507035878",
-  "lastIndexId": "276:2066412677136806621",
+  "lastIndexId": "277:5088118459977856954",
   "lastRelationId": "82:2481463102848550386",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

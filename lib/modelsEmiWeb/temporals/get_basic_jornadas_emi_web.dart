@@ -282,7 +282,7 @@ class ProductoDeProyecto {
     required this.cantidad,
     required this.costoEstimado,
     required this.proveedorSugerido,
-    //required this.idFamilia,
+    required this.idFamilia,
     required this.unidadMedida,
   });
 
@@ -293,7 +293,7 @@ class ProductoDeProyecto {
   final int cantidad;
   final double? costoEstimado;
   final String? proveedorSugerido;
-  //final int idFamilia;
+  final int idFamilia;
   final int unidadMedida;
 
   factory ProductoDeProyecto.fromMap(Map<String, dynamic> json) =>
@@ -305,7 +305,7 @@ class ProductoDeProyecto {
         cantidad: json["cantidad"],
         costoEstimado: json["costoEstimado"].toDouble(),
         proveedorSugerido: json["proveedorSugerido"],
-        //idFamilia: json["idFamilia"],
+        idFamilia: json["idFamilia"],
         unidadMedida: json["unidadMedida"],
       );
 
@@ -317,7 +317,7 @@ class ProductoDeProyecto {
         "cantidad": cantidad,
         "costoEstimado": costoEstimado,
         "proveedorSugerido": proveedorSugerido,
-        //"idFamilia": idFamilia,
+        "idFamilia": idFamilia,
         "unidadMedida": unidadMedida,
       };
 }

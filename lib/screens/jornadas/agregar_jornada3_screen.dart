@@ -1187,6 +1187,15 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                                                           .tipoEmpaque
                                                                           .target!
                                                                           .tipo,
+                                                                  idFamiliaInversion: element
+                                                                      .familiaInversion
+                                                                      .target!
+                                                                      .id,
+                                                                  familiaInversion:
+                                                                      element
+                                                                          .familiaInversion
+                                                                          .target!
+                                                                          .familiaInversion,
                                                                   fechaRegistro:
                                                                       DateTime
                                                                           .now());

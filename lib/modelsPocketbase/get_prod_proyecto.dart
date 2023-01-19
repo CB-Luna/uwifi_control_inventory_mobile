@@ -21,6 +21,7 @@ class GetProdProyecto {
     required this.idTipoEmpaqueFk,
     required this.idCatalogoProyectoFk,
     required this.idEmiWeb,
+    required this.idFamiliaInversionFk,
   });
 
   final String collectionId;
@@ -37,6 +38,7 @@ class GetProdProyecto {
   final String idTipoEmpaqueFk;
   final String idCatalogoProyectoFk;
   final String idEmiWeb;
+  final String idFamiliaInversionFk;
 
   factory GetProdProyecto.fromMap(Map<String, dynamic> json) => GetProdProyecto(
         collectionId: json["@collectionId"],
@@ -55,6 +57,7 @@ class GetProdProyecto {
         idTipoEmpaqueFk: json["id_tipo_empaque_fk"],
         idCatalogoProyectoFk: json["id_catalogo_proyecto_fk"],
         idEmiWeb: json["id_emi_web"],
+        idFamiliaInversionFk: json["id_familia_inversion_fk"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -72,5 +75,6 @@ class GetProdProyecto {
         "id_tipo_empaque_fk": idTipoEmpaqueFk,
         "id_catalogo_proyecto_fk": idCatalogoProyectoFk,
         "id_emi_web": idEmiWeb,
+        "id_familia_inversion_fk": idFamiliaInversionFk,
       };
 }

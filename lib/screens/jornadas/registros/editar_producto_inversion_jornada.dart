@@ -47,6 +47,7 @@ class _EditarProductoInversionJornadaState
     extends State<EditarProductoInversionJornada> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
+  String newFamilia = "";
   String newTipoEmpaque = "";
   String emprendedor = "";
   String? newImagen;
@@ -69,6 +70,7 @@ class _EditarProductoInversionJornadaState
     base64 = "";
     nombreImagen = "";
     newImagen = widget.productoSol.imagen.target?.imagenes;
+    newFamilia = widget.productoSol.familiaInversion.target!.familiaInversion;
     newTipoEmpaque = widget.productoSol.tipoEmpaques.target!.tipo;
     productoController =
         TextEditingController(text: widget.productoSol.producto);
@@ -99,13 +101,18 @@ class _EditarProductoInversionJornadaState
     print(widget.productoSol.costoEstimado.toString());
     final productoInversionJornadaController =
         Provider.of<ProductoInversionJornadaController>(context);
+    List<String> listFamilias = [];
     List<String> listTipoEmpaque = [];
-
+    dataBase.familiaInversionBox.getAll().forEach((element) {
+      if (element.activo) {
+        listFamilias.add(element.familiaInversion);
+      }
+    });
+    listFamilias.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     dataBase.tipoEmpaquesBox.getAll().forEach((element) {
       listTipoEmpaque.add(element.tipo);
     });
-    listTipoEmpaque
-        .sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
+    listTipoEmpaque.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -467,7 +474,66 @@ class _EditarProductoInversionJornadaState
                                           maxLines: 1,
                                         ),
                                       ),
-
+                                      FormField(
+                                        builder: (state) {
+                                          return Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(5, 0, 5, 10),
+                                            child: DropDown(
+                                              initialOption: newFamilia,
+                                              options: listFamilias,
+                                              onChanged: (val) => setState(() {
+                                                if (listFamilias.isEmpty) {
+                                                  snackbarKey.currentState
+                                                      ?.showSnackBar(
+                                                          const SnackBar(
+                                                    content: Text(
+                                                        "Debes descargar los catálogos desde la sección de tu perfil"),
+                                                  ));
+                                                } else {
+                                                  newFamilia = val!;
+                                                }
+                                              }),
+                                              width: double.infinity,
+                                              height: 50,
+                                              textStyle: AppTheme.of(context)
+                                                  .title3
+                                                  .override(
+                                                    fontFamily: 'Poppins',
+                                                    color:
+                                                        const Color(0xFF221573),
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                              hintText: 'Familia de inversión*',
+                                              icon: const Icon(
+                                                Icons
+                                                    .keyboard_arrow_down_rounded,
+                                                color: Color(0xFF221573),
+                                                size: 30,
+                                              ),
+                                              fillColor: Colors.white,
+                                              elevation: 2,
+                                              borderColor:
+                                                  const Color(0xFF221573),
+                                              borderWidth: 2,
+                                              borderRadius: 8,
+                                              margin:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(12, 4, 12, 4),
+                                              hidesUnderline: true,
+                                            ),
+                                          );
+                                        },
+                                        validator: (val) {
+                                          if (newFamilia == "" ||
+                                              newFamilia.isEmpty) {
+                                            return 'Para continuar, seleccione una familia de inversión.';
+                                          }
+                                          return null;
+                                        },
+                                      ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
@@ -1034,7 +1100,6 @@ class _EditarProductoInversionJornadaState
                                       print("Desde inversion");
                                       if (productoInversionJornadaController
                                           .validateForm(formKey)) {
-                                        print("Holaaaaaax");
                                         if (productoController.text !=
                                                 widget.productoSol.producto ||
                                             marcaController.text !=
@@ -1054,6 +1119,12 @@ class _EditarProductoInversionJornadaState
                                             cantidadController.text !=
                                                 widget.productoSol.cantidad
                                                     .toString() ||
+                                            newFamilia !=
+                                                widget
+                                                    .productoSol
+                                                    .familiaInversion
+                                                    .target!
+                                                    .familiaInversion ||
                                             newTipoEmpaque !=
                                                 widget.productoSol.tipoEmpaques
                                                     .target!.tipo) {
@@ -1087,14 +1158,20 @@ class _EditarProductoInversionJornadaState
                                                       base64);
                                             }
                                           }
-
+                                          final nuevaFamiliaInversion = dataBase
+                                                .familiaInversionBox
+                                                .query(FamiliaInversion_.familiaInversion
+                                                    .equals(newFamilia))
+                                                .build()
+                                                .findFirst();
                                           final nuevoTipoEmpaque = dataBase
                                               .tipoEmpaquesBox
                                               .query(TipoEmpaques_.tipo
                                                   .equals(newTipoEmpaque))
                                               .build()
                                               .findFirst();
-                                          if (nuevoTipoEmpaque != null) {
+                                          if (nuevaFamiliaInversion != null &&
+                                              nuevoTipoEmpaque != null) {
                                             final indexUpdateProdSolicitado =
                                                 productoInversionJornadaController
                                                     .listProdSolicitadosActual
@@ -1129,6 +1206,11 @@ class _EditarProductoInversionJornadaState
                                                     indexUpdateProdSolicitado]
                                                 .tipoEmpaques
                                                 .target = nuevoTipoEmpaque;
+                                            productoInversionJornadaController
+                                                .listProdSolicitadosActual[
+                                                    indexUpdateProdSolicitado]
+                                                .familiaInversion
+                                                .target = nuevaFamiliaInversion;
                                             final newInstruccionProdInversionJ3 =
                                                 SaveInstruccionProductoInversionJ3Temporal(
                                               instruccion:

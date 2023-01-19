@@ -50,6 +50,7 @@ class ProductoProyecto {
     required this.descripcion,
     required this.id,
     required this.idEmiWeb,
+    required this.idFamiliaInversionFk,
     required this.idImagenFk,
     required this.idInversionFk,
     required this.idTipoEmpaqueFk,
@@ -68,6 +69,7 @@ class ProductoProyecto {
   final String descripcion;
   final String id;
   final String idEmiWeb;
+  final String idFamiliaInversionFk;
   final String idImagenFk;
   final String idInversionFk;
   final String idTipoEmpaqueFk;
@@ -83,11 +85,11 @@ class ProductoProyecto {
         expand: ProductoProyectoExpand.fromMap(json["@expand"]),
         cantidad: json["cantidad"],
         costoEstimado: json["costo_estimado"],
-        created:
-            json["created"] == null ? null : DateTime.parse(json["created"]),
+        created: json["created"] == null ? null : DateTime.parse(json["created"]),
         descripcion: json["descripcion"],
         id: json["id"],
         idEmiWeb: json["id_emi_web"],
+        idFamiliaInversionFk: json["id_familia_inversion_fk"],
         idImagenFk: json["id_imagen_fk"],
         idInversionFk: json["id_inversion_fk"],
         idTipoEmpaqueFk: json["id_tipo_empaque_fk"],
@@ -108,6 +110,7 @@ class ProductoProyecto {
         "descripcion": descripcion,
         "id": id,
         "id_emi_web": idEmiWeb,
+        "id_familia_inversion_fk": idFamiliaInversionFk,
         "id_imagen_fk": idImagenFk,
         "id_inversion_fk": idInversionFk,
         "id_tipo_empaque_fk": idTipoEmpaqueFk,
@@ -120,30 +123,33 @@ class ProductoProyecto {
 
 class ProductoProyectoExpand {
   ProductoProyectoExpand({
+    required this.idFamiliaInversionFk,
     required this.idTipoEmpaqueFk,
   });
-
+  final IdFiFk idFamiliaInversionFk;
   final IdTeFk idTipoEmpaqueFk;
 
   factory ProductoProyectoExpand.fromMap(Map<String, dynamic> json) =>
       ProductoProyectoExpand(
+        idFamiliaInversionFk: IdFiFk.fromMap(json["id_familia_inversion_fk"]),
         idTipoEmpaqueFk: IdTeFk.fromMap(json["id_tipo_empaque_fk"]),
       );
 
   Map<String, dynamic> toMap() => {
+        "id_familia_inversion_fk": idFamiliaInversionFk.toMap(),
         "id_tipo_empaque_fk": idTipoEmpaqueFk.toMap(),
       };
 }
 
-class IdFpFk {
-  IdFpFk({
+class IdFiFk {
+  IdFiFk({
     required this.collectionId,
     required this.collectionName,
     required this.activo,
     required this.created,
     required this.id,
     required this.idEmiWeb,
-    required this.nombreTipoProd,
+    required this.familiaInversion,
     required this.updated,
   });
 
@@ -153,20 +159,18 @@ class IdFpFk {
   final DateTime? created;
   final String id;
   final String idEmiWeb;
-  final String nombreTipoProd;
+  final String familiaInversion;
   final DateTime? updated;
 
-  factory IdFpFk.fromMap(Map<String, dynamic> json) => IdFpFk(
+  factory IdFiFk.fromMap(Map<String, dynamic> json) => IdFiFk(
         collectionId: json["@collectionId"],
         collectionName: json["@collectionName"],
         activo: json["activo"],
-        created:
-            json["created"] == null ? null : DateTime.parse(json["created"]),
+        created: json["created"] == null ? null : DateTime.parse(json["created"]),
         id: json["id"],
         idEmiWeb: json["id_emi_web"],
-        nombreTipoProd: json["nombre_tipo_prod"],
-        updated:
-            json["updated"] == null ? null : DateTime.parse(json["updated"]),
+        familiaInversion: json["familia_inversion"],
+        updated: json["updated"] == null ? null : DateTime.parse(json["updated"]),
       );
 
   Map<String, dynamic> toMap() => {
@@ -176,7 +180,7 @@ class IdFpFk {
         "created": created == null ? null : created!.toIso8601String(),
         "id": id,
         "id_emi_web": idEmiWeb,
-        "nombre_tipo_prod": nombreTipoProd,
+        "familia_inversion": familiaInversion,
         "updated": updated == null ? null : updated!.toIso8601String(),
       };
 }

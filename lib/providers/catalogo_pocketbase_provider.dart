@@ -1351,12 +1351,16 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
         }
         for (var i = 0; i < listProdProyecto.length; i++) {
           //Se valida que el nuevo producto proyecto aún no existe en Objectbox
+          final familiaInversion = dataBase.familiaInversionBox
+              .query(FamiliaInversion_.idDBR
+                  .equals(listProdProyecto[i].idFamiliaInversionFk))
+              .build()
+              .findUnique();
           final catalogoProyecto = dataBase.catalogoProyectoBox
               .query(CatalogoProyecto_.idDBR
                   .equals(listProdProyecto[i].idCatalogoProyectoFk))
               .build()
               .findUnique();
-
           final tipoEmpaque = dataBase.tipoEmpaquesBox
               .query(TipoEmpaques_.idDBR
                   .equals(listProdProyecto[i].idTipoEmpaqueFk))
@@ -1379,7 +1383,8 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                 idDBR: listProdProyecto[i].id,
                 idEmiWeb: listProdProyecto[i].idEmiWeb,
               );
-              if (catalogoProyecto != null && tipoEmpaque != null) {
+              if (familiaInversion != null && catalogoProyecto != null && tipoEmpaque != null) {
+                nuevoProductoProyecto.familiaInversion.target = familiaInversion;
                 nuevoProductoProyecto.catalogoProyecto.target =
                     catalogoProyecto;
                 nuevoProductoProyecto.tipoEmpaque.target = tipoEmpaque;
@@ -1395,7 +1400,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
             //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
             if (productoProyectoExistente.fechaRegistro !=
                 listProdProyecto[i].updated) {
-              if (catalogoProyecto != null && tipoEmpaque != null) {
+              if (familiaInversion != null && catalogoProyecto != null && tipoEmpaque != null) {
                 //Se actualiza el registro en Objectbox
                 productoProyectoExistente.producto =
                     listProdProyecto[i].producto;
@@ -1411,8 +1416,8 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                     listProdProyecto[i].updated!;
                 productoProyectoExistente.costoEstimado =
                     listProdProyecto[i].costoEstimado;
-                productoProyectoExistente.catalogoProyecto.target =
-                    catalogoProyecto;
+                productoProyectoExistente.familiaInversion.target = familiaInversion;
+                productoProyectoExistente.catalogoProyecto.target = catalogoProyecto;
                 productoProyectoExistente.tipoEmpaque.target = tipoEmpaque;
                 dataBase.productosProyectoBox.put(productoProyectoExistente);
               } else {

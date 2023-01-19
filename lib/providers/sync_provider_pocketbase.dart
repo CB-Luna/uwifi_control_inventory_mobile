@@ -2590,7 +2590,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                           "id_emi_web": inversionJornada3.prodSolicitados
                               .toList()[i]
                               .idEmiWeb,
-                          // "id_imagen_fk": inversionJornada3.prodSolicitados.toList()[i].imagen.target!.idDBR,
+                          "id_familia_inversion_fk": inversionJornada3.prodSolicitados.toList()[i].familiaInversion.target!.idDBR,
                         });
                         if (recordProdSolicitado.id.isNotEmpty) {
                           //Se recupera el idDBR del prod Solicitado
@@ -2637,7 +2637,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                           "id_emi_web": inversionJornada3.prodSolicitados
                               .toList()[i]
                               .idEmiWeb,
-                          // "id_imagen_fk": inversionJornada3.prodSolicitados.toList()[i].imagen.target!.idDBR,
+                          "id_familia_inversion_fk": inversionJornada3.prodSolicitados.toList()[i].familiaInversion.target!.idDBR,
                         });
                         if (recordProdSolicitado.id.isNotEmpty) {
                           //Se recupera el idDBR del prod Solicitado
@@ -2790,7 +2790,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                         "id_emi_web": inversionJornada3.prodSolicitados
                             .toList()[i]
                             .idEmiWeb,
-                        // "id_imagen_fk": inversionJornada3.prodSolicitados.toList()[i].imagen.target!.idDBR,
+                        "id_familia_inversion_fk": inversionJornada3.prodSolicitados.toList()[i].familiaInversion.target!.idDBR,
                       });
                       if (recordProdSolicitado.id.isNotEmpty) {
                         //Se recupera el idDBR del prod Solicitado
@@ -2836,7 +2836,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                         "id_emi_web": inversionJornada3.prodSolicitados
                             .toList()[i]
                             .idEmiWeb,
-                        // "id_imagen_fk": inversionJornada3.prodSolicitados.toList()[i].imagen.target!.idDBR,
+                        "id_familia_inversion_fk": inversionJornada3.prodSolicitados.toList()[i].familiaInversion.target!.idDBR,
                       });
                       if (recordProdSolicitado.id.isNotEmpty) {
                         //Se recupera el idDBR del prod Solicitado
@@ -3145,7 +3145,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
             "id_tipo_empaque_fk": prodSolicitado.tipoEmpaques.target!.idDBR,
             "id_inversion_fk": prodSolicitado.inversion.target!.idDBR,
             "id_emi_web": prodSolicitado.idEmiWeb,
-            // "id_imagen_fk": prodSolicitado.imagen.target!.idDBR,
+            "id_familia_inversion_fk": prodSolicitado.familiaInversion.target!.idDBR,
           });
           if (recordProdSolicitado.id.isNotEmpty) {
             //Se recupera el idDBR del prod Solicitado
@@ -3206,9 +3206,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
               "proveedo_sugerido": prodSolicitado.proveedorSugerido,
               "cantidad": prodSolicitado.cantidad,
               "costo_estimado": prodSolicitado.costoEstimado,
-
               "id_tipo_empaque_fk": prodSolicitado.tipoEmpaques.target!.idDBR,
-              // "id_imagen_fk": prodSolicitado.imagen.target!.idDBR,
+              "id_familia_inversion_fk": prodSolicitado.familiaInversion.target!.idDBR,
             });
         if (recordProdSolicitado.id.isNotEmpty) {
           //Se marca como realizada en Pocketbase la instrucción en Bitacora

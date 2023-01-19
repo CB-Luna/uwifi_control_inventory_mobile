@@ -2086,8 +2086,12 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                     filter:
                         "id_emi_web='${responseListProdProyecto.payload![i].idCatInversionProyecto}'");
                 if (recordProductoProyecto.isEmpty) {
-                  //Se recupera el id familia producto, catalogo proyecto y tipo empaque en Pocketbase y se acocia con el nuevo Producto Proyecto
-
+                  //Se recupera el id familia inversion, catalogo proyecto y tipo empaque en Pocketbase y se acocia con el nuevo Producto Proyecto
+                  final recordFamiliaInversion = await client.records.getFullList(
+                      'familia_inversion',
+                      batch: 200,
+                      filter:
+                          "id_emi_web='${responseListProdProyecto.payload![i].familiaInversion!.idCatFamiliaInversion}'");
                   final recordCatalogoProyecto = await client.records.getFullList(
                       'cat_proyecto',
                       batch: 200,
@@ -2098,7 +2102,8 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                       batch: 200,
                       filter:
                           "id_emi_web='${responseProductoProveedor.payload!.idUnidadMedida}'");
-                  if (recordCatalogoProyecto.isNotEmpty &&
+                  if (recordFamiliaInversion.isNotEmpty && 
+                      recordCatalogoProyecto.isNotEmpty &&
                       recordTipoEmpaque.isNotEmpty) {
                     //Se agrega el producto proveedor como nuevo en la colección de Pocketbase
                     final recordProductoProyecto =
@@ -2119,6 +2124,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                           recordCatalogoProyecto.first.id,
                       "id_emi_web": responseListProdProyecto
                           .payload![i].idCatInversionProyecto,
+                      "id_familia_inversion_fk": recordFamiliaInversion.first.id,
                     });
                     if (recordProductoProyecto.id.isNotEmpty) {
                       print(

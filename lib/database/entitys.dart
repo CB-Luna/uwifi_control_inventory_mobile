@@ -110,6 +110,7 @@ class ProdProyecto {
   final tipoEmpaque = ToOne<TipoEmpaques>();
   final catalogoProyecto = ToOne<CatalogoProyecto>();
   final imagen = ToOne<Imagenes>();
+  final familiaInversion = ToOne<FamiliaInversion>();
 
   ProdProyecto({
     this.id = 0,
@@ -956,7 +957,9 @@ class FamiliaInversion {
   String idEmiWeb;
   @Backlink()
   final prodSolicitados = ToMany<ProdSolicitado>();
-
+  @Backlink()
+  final prodProyecto = ToMany<ProdProyecto>();
+  
   FamiliaInversion({
     this.id = 0,
     required this.familiaInversion,

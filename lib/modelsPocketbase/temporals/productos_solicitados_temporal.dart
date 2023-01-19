@@ -12,6 +12,8 @@ class ProductosSolicitadosTemporal {
   final String? unidadMedida;
   final String? imagen;
   final DateTime fechaRegistro;
+  final int? idFamiliaInversion;
+  final String? familiaInversion;
 
   ProductosSolicitadosTemporal({
     required this.id,
@@ -25,6 +27,8 @@ class ProductosSolicitadosTemporal {
     this.tipoEmpaques,
     this.idUnidadMedida,
     this.unidadMedida,
+    this.idFamiliaInversion,
+    this.familiaInversion,
     this.imagen,
     required this.fechaRegistro,
   });

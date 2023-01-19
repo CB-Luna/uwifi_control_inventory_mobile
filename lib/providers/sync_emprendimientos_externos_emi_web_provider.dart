@@ -173,6 +173,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                   });
                   if (recordEmprendimiento.id.isNotEmpty) {
                     // Se hizo con éxito el posteo
+                    idEmprendimientoPocketbase = recordEmprendimiento.id;
                   } else {
                     //No se pudo postear el Emprendimiento en Pocketbase
                     banderasExitoSync.add(false);
@@ -753,7 +754,15 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                         .toString()))
                                 .build()
                                 .findFirst();
-                            if (tipoEmpaque != null) {
+                            final familiaInversion = dataBase.familiaInversionBox
+                                .query(FamiliaInversion_.idEmiWeb.equals(
+                                    basicJornadas.payload!.productoDeProyecto!
+                                        .toList()[i]!
+                                        .idFamilia
+                                        .toString()))
+                                .build()
+                                .findFirst();
+                            if (familiaInversion != null && tipoEmpaque != null) {
                               final recordProdProyecto = await client.records
                                   .create('productos_proyecto', body: {
                                 "producto": basicJornadas
@@ -786,6 +795,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                     .payload!.productoDeProyecto!
                                     .toList()[i]!
                                     .idProductoDeProyecto,
+                                "id_familia_inversion_fk": familiaInversion.idDBR,
                               });
                               if (recordProdProyecto.id.isNotEmpty) {
                                 //Se hizo con éxito la alta
@@ -956,7 +966,15 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                           .toString()))
                                   .build()
                                   .findFirst();
-                              if (tipoEmpaque != null) {
+                              final familiaInversion = dataBase.familiaInversionBox
+                                .query(FamiliaInversion_.idEmiWeb.equals(
+                                    basicJornadas.payload!.productoDeProyecto!
+                                        .toList()[i]!
+                                        .idFamilia
+                                        .toString()))
+                                .build()
+                                .findFirst();
+                              if (familiaInversion != null && tipoEmpaque != null) {
                                 final recordProdProyecto = await client.records
                                     .create('productos_proyecto', body: {
                                   "producto": basicJornadas
@@ -989,6 +1007,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                       .payload!.productoDeProyecto!
                                       .toList()[i]!
                                       .idProductoDeProyecto,
+                                  "id_familia_inversion_fk": familiaInversion.idDBR,
                                 });
                                 if (recordProdProyecto.id.isNotEmpty) {
                                   //Se hizo con éxito la alta
@@ -1067,7 +1086,15 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                           .toString()))
                                   .build()
                                   .findFirst();
-                              if (tipoEmpaque != null) {
+                              final familiaInversion = dataBase.familiaInversionBox
+                                .query(FamiliaInversion_.idEmiWeb.equals(
+                                    basicJornadas.payload!.productoDeProyecto!
+                                        .toList()[i]!
+                                        .idFamilia
+                                        .toString()))
+                                .build()
+                                .findFirst();
+                              if (familiaInversion != null && tipoEmpaque != null) {
                                 final recordProdProyecto = await client.records
                                     .create('productos_proyecto', body: {
                                   "producto": basicJornadas
@@ -1100,6 +1127,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                       .payload!.productoDeProyecto!
                                       .toList()[i]!
                                       .idProductoDeProyecto,
+                                  "id_familia_inversion_fk": familiaInversion.idDBR,
                                 });
                                 if (recordProdProyecto.id.isNotEmpty) {
                                   //Se hizo con éxito la alta del producto proyecto
@@ -1123,7 +1151,15 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                           .toString()))
                                   .build()
                                   .findFirst();
-                              if (tipoEmpaque != null) {
+                              final familiaInversion = dataBase.familiaInversionBox
+                                .query(FamiliaInversion_.idEmiWeb.equals(
+                                    basicJornadas.payload!.productoDeProyecto!
+                                        .toList()[i]!
+                                        .idFamilia
+                                        .toString()))
+                                .build()
+                                .findFirst();
+                              if (familiaInversion != null && tipoEmpaque != null) {
                                 final recordProdProyecto = await client.records
                                     .update('productos_proyecto',
                                         recordProductoProyecto.first.id,
@@ -1153,6 +1189,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                           .toList()[i]!
                                           .costoEstimado,
                                       "id_tipo_empaque_fk": tipoEmpaque.idDBR,
+                                      "id_familia_inversion_fk": familiaInversion.idDBR,
                                     });
                                 if (recordProdProyecto.id.isNotEmpty) {
                                   //Se hizo con éxito la actualización del producto proyecto

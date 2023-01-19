@@ -2400,7 +2400,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(60, 794331956868775333),
       name: 'ProdProyecto',
-      lastPropertyId: const IdUid(19, 6258211936753955292),
+      lastPropertyId: const IdUid(20, 9213895077009524929),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -2475,7 +2475,14 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(262, 2908751672841509107),
-            relationTarget: 'TipoEmpaques')
+            relationTarget: 'TipoEmpaques'),
+        ModelProperty(
+            id: const IdUid(20, 9213895077009524929),
+            name: 'familiaInversionId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(277, 5088118459977856954),
+            relationTarget: 'FamiliaInversion')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
@@ -2567,7 +2574,9 @@ final _entities = <ModelEntity>[
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
         ModelBacklink(
-            name: 'prodSolicitados', srcEntity: 'ProdSolicitado', srcField: '')
+            name: 'prodSolicitados', srcEntity: 'ProdSolicitado', srcField: ''),
+        ModelBacklink(
+            name: 'prodProyecto', srcEntity: 'ProdProyecto', srcField: '')
       ])
 ];
 
@@ -2592,7 +2601,7 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(63, 3167743746507035878),
-      lastIndexId: const IdUid(276, 2066412677136806621),
+      lastIndexId: const IdUid(277, 5088118459977856954),
       lastRelationId: const IdUid(82, 2481463102848550386),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -5506,8 +5515,12 @@ ModelDefinition getObjectBoxModel() {
         }),
     ProdProyecto: EntityDefinition<ProdProyecto>(
         model: _entities[34],
-        toOneRelations: (ProdProyecto object) =>
-            [object.catalogoProyecto, object.imagen, object.tipoEmpaque],
+        toOneRelations: (ProdProyecto object) => [
+              object.catalogoProyecto,
+              object.imagen,
+              object.tipoEmpaque,
+              object.familiaInversion
+            ],
         toManyRelations: (ProdProyecto object) => {},
         getId: (ProdProyecto object) => object.id,
         setId: (ProdProyecto object, int id) {
@@ -5525,7 +5538,7 @@ ModelDefinition getObjectBoxModel() {
           final idDBROffset =
               object.idDBR == null ? null : fbb.writeString(object.idDBR!);
           final idEmiWebOffset = fbb.writeString(object.idEmiWeb);
-          fbb.startTable(20);
+          fbb.startTable(21);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, productoOffset);
           fbb.addOffset(2, marcaSugeridaOffset);
@@ -5539,6 +5552,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(12, object.imagen.targetId);
           fbb.addOffset(15, idEmiWebOffset);
           fbb.addInt64(18, object.tipoEmpaque.targetId);
+          fbb.addInt64(19, object.familiaInversion.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -5573,6 +5587,9 @@ ModelDefinition getObjectBoxModel() {
           object.tipoEmpaque.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 40, 0);
           object.tipoEmpaque.attach(store);
+          object.familiaInversion.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 42, 0);
+          object.familiaInversion.attach(store);
           return object;
         }),
     TipoProyecto: EntityDefinition<TipoProyecto>(
@@ -5630,7 +5647,10 @@ ModelDefinition getObjectBoxModel() {
         toManyRelations: (FamiliaInversion object) => {
               RelInfo<ProdSolicitado>.toOneBacklink(20, object.id,
                       (ProdSolicitado srcObject) => srcObject.familiaInversion):
-                  object.prodSolicitados
+                  object.prodSolicitados,
+              RelInfo<ProdProyecto>.toOneBacklink(20, object.id,
+                      (ProdProyecto srcObject) => srcObject.familiaInversion):
+                  object.prodProyecto
             },
         getId: (FamiliaInversion object) => object.id,
         setId: (FamiliaInversion object, int id) {
@@ -5673,6 +5693,12 @@ ModelDefinition getObjectBoxModel() {
               store,
               RelInfo<ProdSolicitado>.toOneBacklink(20, object.id,
                   (ProdSolicitado srcObject) => srcObject.familiaInversion),
+              store.box<FamiliaInversion>());
+          InternalToManyAccess.setRelInfo(
+              object.prodProyecto,
+              store,
+              RelInfo<ProdProyecto>.toOneBacklink(20, object.id,
+                  (ProdProyecto srcObject) => srcObject.familiaInversion),
               store.box<FamiliaInversion>());
           return object;
         })
@@ -7325,6 +7351,11 @@ class ProdProyecto_ {
   /// see [ProdProyecto.tipoEmpaque]
   static final tipoEmpaque = QueryRelationToOne<ProdProyecto, TipoEmpaques>(
       _entities[34].properties[12]);
+
+  /// see [ProdProyecto.familiaInversion]
+  static final familiaInversion =
+      QueryRelationToOne<ProdProyecto, FamiliaInversion>(
+          _entities[34].properties[13]);
 }
 
 /// [TipoProyecto] entity fields to define ObjectBox queries.

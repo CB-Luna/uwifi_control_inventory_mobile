@@ -45,10 +45,17 @@ class _AgregarProductoInversionJornadaTemporalState
   @override
   void initState() {
     super.initState();
+    familia = "";
     tipoEmpaque = "";
     emprendedor = "";
+    listFamilias = [];
     listTipoEmpaque = [];
-
+    dataBase.familiaInversionBox.getAll().forEach((element) {
+      if (element.activo) {
+        listFamilias.add(element.familiaInversion);
+      }
+    });
+    listFamilias.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     dataBase.tipoEmpaquesBox.getAll().forEach((element) {
       listTipoEmpaque.add(element.tipo);
     });
@@ -371,7 +378,7 @@ class _AgregarProductoInversionJornadaTemporalState
                                                     fontWeight:
                                                         FontWeight.normal,
                                                   ),
-                                              hintText: 'Familia del producto*',
+                                              hintText: 'Familia de inversión*',
                                               icon: const Icon(
                                                 Icons
                                                     .keyboard_arrow_down_rounded,
@@ -394,7 +401,7 @@ class _AgregarProductoInversionJornadaTemporalState
                                         validator: (val) {
                                           if (familia == "" ||
                                               familia.isEmpty) {
-                                            return 'Para continuar, seleccione una familia.';
+                                            return 'Para continuar, seleccione una familia de inversión.';
                                           }
                                           return null;
                                         },
@@ -1003,6 +1010,13 @@ class _AgregarProductoInversionJornadaTemporalState
                                               .costoEstimado));
                                       if (productoInversionJornadaController
                                           .validateForm(formKey)) {
+                                        final idFamiliaInversion = dataBase
+                                            .familiaInversionBox
+                                            .query(FamiliaInversion_.familiaInversion
+                                                .equals(familia))
+                                            .build()
+                                            .findFirst()
+                                            ?.id;
                                         final idTipoEmpaque = dataBase
                                             .tipoEmpaquesBox
                                             .query(TipoEmpaques_.tipo
@@ -1010,10 +1024,11 @@ class _AgregarProductoInversionJornadaTemporalState
                                             .build()
                                             .findFirst()
                                             ?.id;
-                                        if (idTipoEmpaque != null) {
+                                        if (idFamiliaInversion != null && idTipoEmpaque != null) {
                                           productoInversionJornadaController
                                               .addTemporal(
-                                                  idTipoEmpaque, tipoEmpaque);
+                                                  idTipoEmpaque, tipoEmpaque,
+                                                  idFamiliaInversion, familia);
                                           Navigator.pop(context);
                                           snackbarKey.currentState
                                               ?.showSnackBar(const SnackBar(

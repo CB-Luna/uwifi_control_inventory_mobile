@@ -45,8 +45,10 @@ class _EditarProductoInversionJornadaTemporalState
   final formKey = GlobalKey<FormState>();
   String? newImagen;
   String newTipoEmpaque = "";
+  String newFamilia = "";
   String emprendedor = "";
   List<String> listTipoEmpaque = [];
+  List<String> listFamilias = [];
   late TextEditingController porcentajeController;
   late TextEditingController productoController;
   late TextEditingController descripcionController;
@@ -60,6 +62,7 @@ class _EditarProductoInversionJornadaTemporalState
   void initState() {
     super.initState();
     newImagen = widget.productoSol.imagen;
+    newFamilia = widget.productoSol.familiaInversion!;
     newTipoEmpaque = widget.productoSol.tipoEmpaques!;
     productoController =
         TextEditingController(text: widget.productoSol.producto);
@@ -79,8 +82,14 @@ class _EditarProductoInversionJornadaTemporalState
       emprendedor =
           "${widget.emprendimiento.emprendedor.target!.nombre} ${widget.emprendimiento.emprendedor.target!.apellidos}";
     }
+    listFamilias = [];
     listTipoEmpaque = [];
-
+    dataBase.familiaInversionBox.getAll().forEach((element) {
+      if (element.activo) {
+        listFamilias.add(element.familiaInversion);
+      }
+    });
+    listFamilias.sort((a, b) => removeDiacritics(a).compareTo(removeDiacritics(b)));
     dataBase.tipoEmpaquesBox.getAll().forEach((element) {
       listTipoEmpaque.add(element.tipo);
     });
@@ -374,7 +383,66 @@ class _EditarProductoInversionJornadaTemporalState
                                           );
                                         },
                                       ),
-
+                                      FormField(
+                                        builder: (state) {
+                                          return Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(5, 0, 5, 10),
+                                            child: DropDown(
+                                              initialOption: newFamilia,
+                                              options: listFamilias,
+                                              onChanged: (val) => setState(() {
+                                                if (listFamilias.isEmpty) {
+                                                  snackbarKey.currentState
+                                                      ?.showSnackBar(
+                                                          const SnackBar(
+                                                    content: Text(
+                                                        "Debes descargar los catálogos desde la sección de tu perfil"),
+                                                  ));
+                                                } else {
+                                                  newFamilia = val!;
+                                                }
+                                              }),
+                                              width: double.infinity,
+                                              height: 50,
+                                              textStyle: AppTheme.of(context)
+                                                  .title3
+                                                  .override(
+                                                    fontFamily: 'Poppins',
+                                                    color:
+                                                        const Color(0xFF221573),
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                              hintText: 'Familia de inversión*',
+                                              icon: const Icon(
+                                                Icons
+                                                    .keyboard_arrow_down_rounded,
+                                                color: Color(0xFF221573),
+                                                size: 30,
+                                              ),
+                                              fillColor: Colors.white,
+                                              elevation: 2,
+                                              borderColor:
+                                                  const Color(0xFF221573),
+                                              borderWidth: 2,
+                                              borderRadius: 8,
+                                              margin:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(12, 4, 12, 4),
+                                              hidesUnderline: true,
+                                            ),
+                                          );
+                                        },
+                                        validator: (val) {
+                                          if (newFamilia == "" ||
+                                              newFamilia.isEmpty) {
+                                            return 'Para continuar, seleccione una familia de inversión.';
+                                          }
+                                          return null;
+                                        },
+                                      ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(5, 0, 5, 10),
@@ -975,8 +1043,18 @@ class _EditarProductoInversionJornadaTemporalState
                                             newTipoEmpaque !=
                                                 widget
                                                     .productoSol.tipoEmpaques ||
+                                            newFamilia !=
+                                                widget
+                                                    .productoSol.familiaInversion ||
                                             newImagen !=
                                                 widget.productoSol.imagen) {
+                                          final newIdFamiliaInversion = dataBase
+                                              .familiaInversionBox
+                                              .query(FamiliaInversion_.familiaInversion
+                                                  .equals(newFamilia))
+                                              .build()
+                                              .findFirst()
+                                              ?.id;
                                           final newIdTipoEmpaque = dataBase
                                               .tipoEmpaquesBox
                                               .query(TipoEmpaques_.tipo
@@ -984,7 +1062,8 @@ class _EditarProductoInversionJornadaTemporalState
                                               .build()
                                               .findFirst()
                                               ?.id;
-                                          if (newIdTipoEmpaque != null) {
+                                          if (newIdFamiliaInversion != null &&
+                                              newIdTipoEmpaque != null) {
                                             productoInversionJornadaController
                                                 .updateTemporal(
                                               widget.productoSol.id,
@@ -999,6 +1078,8 @@ class _EditarProductoInversionJornadaTemporalState
                                               newIdTipoEmpaque,
                                               newTipoEmpaque,
                                               newImagen,
+                                              newIdFamiliaInversion,
+                                              newFamilia,
                                               widget.productoSol.fechaRegistro,
                                             );
                                             Navigator.pop(context);

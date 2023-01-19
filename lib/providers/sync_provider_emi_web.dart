@@ -3911,7 +3911,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                               .proveedorSugerido,
                                           "idProyecto": jornada
                                               .emprendimiento.target!.idEmiWeb,
-                                          "idFamilia": 1,
+                                          "idFamilia": inversionJornada3
+                                              .prodSolicitados
+                                              .toList()[i]
+                                              .familiaInversion
+                                              .target!
+                                              .idEmiWeb,
                                           "unidadMedida": inversionJornada3
                                               .prodSolicitados
                                               .toList()[i]
@@ -3975,7 +3980,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                               .proveedorSugerido,
                                           "idProyecto": jornada
                                               .emprendimiento.target!.idEmiWeb,
-                                          "idFamilia": 1,
+                                          "idFamilia": inversionJornada3
+                                              .prodSolicitados
+                                              .toList()[i]
+                                              .familiaInversion
+                                              .target!
+                                              .idEmiWeb,
                                           "unidadMedida": inversionJornada3
                                               .prodSolicitados
                                               .toList()[i]
@@ -4155,7 +4165,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                             .proveedorSugerido,
                                         "idProyecto": jornada
                                             .emprendimiento.target!.idEmiWeb,
-                                        "idFamilia": 1,
+                                        "idFamilia": inversionJornada3
+                                            .prodSolicitados
+                                            .toList()[i]
+                                            .familiaInversion
+                                            .target!
+                                            .idEmiWeb,
                                         "unidadMedida": inversionJornada3
                                             .prodSolicitados
                                             .toList()[i]
@@ -4218,7 +4233,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                             .proveedorSugerido,
                                         "idProyecto": jornada
                                             .emprendimiento.target!.idEmiWeb,
-                                        "idFamilia": 1,
+                                        "idFamilia": inversionJornada3
+                                            .prodSolicitados
+                                            .toList()[i]
+                                            .familiaInversion
+                                            .target!
+                                            .idEmiWeb,
                                         "unidadMedida": inversionJornada3
                                             .prodSolicitados
                                             .toList()[i]
@@ -4664,7 +4684,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       "proveedorSugerido": prodSolicitado.proveedorSugerido,
                       "idProyecto": prodSolicitado
                           .inversion.target!.emprendimiento.target!.idEmiWeb,
-                      "idFamilia": 1,
+                      "idFamilia": prodSolicitado.familiaInversion.target!.idEmiWeb,
                       "unidadMedida":
                           prodSolicitado.tipoEmpaques.target!.idEmiWeb,
                     }));
@@ -7025,7 +7045,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       "proveedorSugerido": prodSolicitado.proveedorSugerido,
                       "idProyecto": prodSolicitado
                           .inversion.target!.emprendimiento.target!.idEmiWeb,
-                      "idFamilia": 1,
+                      "idFamilia": prodSolicitado.familiaInversion.target!.idEmiWeb,
                       "unidadMedida":
                           prodSolicitado.tipoEmpaques.target!.idEmiWeb,
                     }));
