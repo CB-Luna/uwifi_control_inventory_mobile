@@ -13,6 +13,7 @@ import 'package:bizpro_app/modelsPocketbase/login_response.dart';
 import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:image/image.dart';
 
 // https://www.djamware.com/post/618d094c5b9095915c5621c6/flutter-tutorial-login-role-and-permissions
 // https://mundanecode.com/posts/flutter-restapi-login/
@@ -258,10 +259,16 @@ abstract class AuthService {
                   final responseImagenUsuarioEmiWeb = getImagenUsuarioEmiWebFromMap(
                     const Utf8Decoder().convert(responseImagenUsuario.bodyBytes));
                   //Se crea imagen de perfil nueva en colección de pocketbase
+                  // Decodificar imagen base 64
+                  final image = decodeImage(base64.decode(responseImagenUsuarioEmiWeb.payload!.archivo));
+                  // Redimendsionar imagen
+                  final imageResized = copyResize(image!, width: 1920, height: 1080);
+                  // Codificar imagen a nueva calidad
+                  final List<int> imageBytes = encodeJpg(imageResized, quality: 30);
                   final newRecordImagenUsuario = await client.records.create('imagenes', body: {
                     "nombre": responseImagenUsuarioEmiWeb.payload!.nombreArchivo,
                     "id_emi_web": responseImagenUsuarioEmiWeb.payload!.idUsuario.toString(),
-                    "base64": responseImagenUsuarioEmiWeb.payload!.archivo
+                    "base64": base64.encode(imageBytes),
                   });
                   if (newRecordImagenUsuario.id.isNotEmpty) {
                     //Se crea Usuario nuevo en Pocketbase
@@ -474,11 +481,17 @@ abstract class AuthService {
                     const Utf8Decoder().convert(responseImagenUsuario.bodyBytes));
                   if(updateUsuario.idImagenFk == "" || updateUsuario.idImagenFk == null) {
                     // Se crea la imagen
+                    // Decodificar imagen base 64
+                    final image = decodeImage(base64.decode(responseImagenUsuarioEmiWeb.payload!.archivo));
+                    // Redimendsionar imagen
+                    final imageResized = copyResize(image!, width: 1920, height: 1080);
+                    // Codificar imagen a nueva calidad
+                    final List<int> imageBytes = encodeJpg(imageResized, quality: 30);
                     print("Se crea imagen");
                     final newRecordImagenUsuario = await client.records.create('imagenes', body: {
                       "nombre": responseImagenUsuarioEmiWeb.payload!.nombreArchivo,
                       "id_emi_web": responseGetUsuarioDataCompletoParse.payload!.idDocumento.toString(),
-                      "base64": responseImagenUsuarioEmiWeb.payload!.archivo
+                      "base64": base64.encode(imageBytes),
                     });
                     if (newRecordImagenUsuario.id.isNotEmpty) {
                       //Se actualiza Usuario emi_users nuevo en colección de pocketbase
@@ -519,10 +532,16 @@ abstract class AuthService {
                   } else {
                     // Se actualiza la imagen
                     print("Se actualiza imagen");
+                    // Decodificar imagen base 64
+                    final image = decodeImage(base64.decode(responseImagenUsuarioEmiWeb.payload!.archivo));
+                    // Redimendsionar imagen
+                    final imageResized = copyResize(image!, width: 1920, height: 1080);
+                    // Codificar imagen a nueva calidad
+                    final List<int> imageBytes = encodeJpg(imageResized, quality: 30);
                     final updateRecordImagenUsuario = await client.records.update('imagenes', updateUsuario.idImagenFk!, body: {
                       "nombre": responseImagenUsuarioEmiWeb.payload!.nombreArchivo,
                       "id_emi_web": responseGetUsuarioDataCompletoParse.payload!.idDocumento.toString(),
-                      "base64": responseImagenUsuarioEmiWeb.payload!.archivo
+                      "base64": base64.encode(imageBytes),
                     });
                     if (updateRecordImagenUsuario.id.isNotEmpty) {
                       //Se actualiza Usuario emi_users nuevo en colección de pocketbase

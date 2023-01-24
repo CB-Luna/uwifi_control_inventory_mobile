@@ -55,6 +55,7 @@ import 'package:bizpro_app/modelsPocketbase/get_tipo_empaques.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:image/image.dart';
 
 class CatalogoEmiWebProvider extends ChangeNotifier {
   bool procesocargando = false;
@@ -1861,12 +1862,17 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                         final responseImagenProductoProveedor =
                             getImagenProductoEmiWebFromMap(const Utf8Decoder()
                                 .convert(response.bodyBytes));
+                        // Decodificar imagen base 64
+                        final image = decodeImage(base64.decode(responseImagenProductoProveedor.payload!.archivo));
+                        // Redimendsionar imagen
+                        final imageResized = copyResize(image!, width: 1920, height: 1080);
+                        // Codificar imagen a nueva calidad
+                        final List<int> imageBytes = encodeJpg(imageResized, quality: 30);
                         final recordImagenProductoProveedor =
                             await client.records.create('imagenes', body: {
                           "nombre": responseImagenProductoProveedor
                               .payload!.nombreArchivo,
-                          "base64":
-                              responseImagenProductoProveedor.payload!.archivo,
+                          "base64": base64.encode(imageBytes),
                           "id_emi_web":
                               responseProductoProveedor.payload!.idDocumento,
                         });
@@ -2042,12 +2048,17 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                           final responseImagenProductoProveedor =
                               getImagenProductoEmiWebFromMap(const Utf8Decoder()
                                   .convert(response.bodyBytes));
+                          // Decodificar imagen base 64
+                          final image = decodeImage(base64.decode(responseImagenProductoProveedor.payload!.archivo));
+                          // Redimendsionar imagen
+                          final imageResized = copyResize(image!, width: 1920, height: 1080);
+                          // Codificar imagen a nueva calidad
+                          final List<int> imageBytes = encodeJpg(imageResized, quality: 30);
                           final recordImagenProductoProveedor =
                               await client.records.create('imagenes', body: {
                             "nombre": responseImagenProductoProveedor
                                 .payload!.nombreArchivo,
-                            "base64":
-                                responseImagenProductoProveedor.payload!.archivo,
+                            "base64": base64.encode(imageBytes),
                             "id_emi_web":
                                 responseProductoProveedor.payload!.idDocumento,
                           });
@@ -2117,12 +2128,17 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                           final responseImagenProductoProveedor =
                               getImagenProductoEmiWebFromMap(const Utf8Decoder()
                                   .convert(response.bodyBytes));
+                          // Decodificar imagen base 64
+                          final image = decodeImage(base64.decode(responseImagenProductoProveedor.payload!.archivo));
+                          // Redimendsionar imagen
+                          final imageResized = copyResize(image!, width: 1920, height: 1080);
+                          // Codificar imagen a nueva calidad
+                          final List<int> imageBytes = encodeJpg(imageResized, quality: 30);
                           final recordImagenProductoProveedor =
                               await client.records.update('imagenes', recordImagenProductoProv.first.id, body: {
                             "nombre": responseImagenProductoProveedor
                                 .payload!.nombreArchivo,
-                            "base64":
-                                responseImagenProductoProveedor.payload!.archivo,
+                            "base64": base64.encode(imageBytes),
                           });
                           if (recordImagenProductoProveedor.id.isNotEmpty) {
                             //Se actualiza Imagen de forma exitosa en Pocketbase
@@ -2583,6 +2599,12 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                       if (updateUsuario.imagen.target!.idDBR == null) {
                         // Se crea la imagen
                         print("Se crea imagen");
+                        // Decodificar imagen base 64
+                        final image = decodeImage(base64.decode(responseImagenUsuarioEmiWeb.payload!.archivo));
+                        // Redimendsionar imagen
+                        final imageResized = copyResize(image!, width: 1920, height: 1080);
+                        // Codificar imagen a nueva calidad
+                        final List<int> imageBytes = encodeJpg(imageResized, quality: 30);
                         final newRecordImagenUsuario =
                             await client.records.create('imagenes', body: {
                           "nombre": responseImagenUsuarioEmiWeb
@@ -2590,7 +2612,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                           "id_emi_web": responseImagenUsuarioEmiWeb
                               .payload!.idUsuario
                               .toString(),
-                          "base64": responseImagenUsuarioEmiWeb.payload!.archivo
+                          "base64": base64.encode(imageBytes),
                         });
                         if (newRecordImagenUsuario.id.isNotEmpty) {
                           //Se actualiza Usuario emi_users nuevo en colección de pocketbase
@@ -2640,6 +2662,12 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                         print("Se actualiza imagen");
                         print(
                             "${updateUsuario.imagen.target!.idDBR.toString()}");
+                        // Decodificar imagen base 64
+                        final image = decodeImage(base64.decode(responseImagenUsuarioEmiWeb.payload!.archivo));
+                        // Redimendsionar imagen
+                        final imageResized = copyResize(image!, width: 1920, height: 1080);
+                        // Codificar imagen a nueva calidad
+                        final List<int> imageBytes = encodeJpg(imageResized, quality: 30);
                         final updateRecordImagenUsuario = await client.records
                             .update('imagenes',
                                 updateUsuario.imagen.target!.idDBR.toString(),
@@ -2649,8 +2677,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                               "id_emi_web": responseImagenUsuarioEmiWeb
                                   .payload!.idUsuario
                                   .toString(),
-                              "base64":
-                                  responseImagenUsuarioEmiWeb.payload!.archivo
+                              "base64": base64.encode(imageBytes),
                             });
                         if (updateRecordImagenUsuario.id.isNotEmpty) {
                           //Se actualiza Usuario emi_users nuevo en colección de pocketbase

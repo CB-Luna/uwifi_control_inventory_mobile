@@ -19,6 +19,7 @@ import 'package:bizpro_app/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:bizpro_app/helpers/constants.dart';
 import 'package:http/http.dart';
+import 'package:image/image.dart' as imagenDart;
 import 'package:path_provider/path_provider.dart';
 
 class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
@@ -428,6 +429,12 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                             "id_emi_web='${basicJornadas.payload!.jornada2!.documentos.toList()[i].idDocumento}'");
                     if (recordValidateImagen.isEmpty) {
                       // La imagen no existe y se tiene que crear
+                      // Decodificar imagen base 64
+                      final image = imagenDart.decodeImage(base64.decode(basicJornadas.payload!.jornada2!.documentos.toList()[i].archivo));
+                      // Redimendsionar imagen
+                      final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                      // Codificar imagen a nueva calidad
+                      final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                       final recordImagen =
                           await client.records.create('imagenes', body: {
                         "nombre": basicJornadas.payload!.jornada2!.documentos
@@ -436,10 +443,8 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                         "id_emi_web": basicJornadas
                             .payload!.jornada2!.documentos
                             .toList()[i]
-                            .idDocumento,
-                        "base64": basicJornadas.payload!.jornada2!.documentos
-                            .toList()[i]
-                            .archivo,
+                            .idDocumento.toString(),
+                        "base64": base64.encode(imageBytes),
                       });
                       if (recordImagen.id.isNotEmpty) {
                         idsDBRImagenes.add(recordImagen.id);
@@ -449,6 +454,15 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                       }
                     } else {
                       // La imagen existe y se tiene que actualizar
+                      // Decodificar imagen base 64
+                      final image = imagenDart.decodeImage(base64.decode(basicJornadas
+                        .payload!.jornada2!.documentos
+                        .toList()[i]
+                        .archivo));
+                      // Redimendsionar imagen
+                      final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                      // Codificar imagen a nueva calidad
+                      final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                       final recordImagen = await client.records.update(
                           'imagenes', recordValidateImagen.first.id,
                           body: {
@@ -456,10 +470,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                 .payload!.jornada2!.documentos
                                 .toList()[i]
                                 .nombreArchivo,
-                            "base64": basicJornadas
-                                .payload!.jornada2!.documentos
-                                .toList()[i]
-                                .archivo,
+                            "base64": base64.encode(imageBytes),
                           });
                       if (recordImagen.id.isNotEmpty) {
                         idsDBRImagenes.add(recordImagen.id);
@@ -529,6 +540,12 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                             "id_emi_web='${basicJornadas.payload!.jornada2!.documentos.toList()[i].idDocumento}'");
                     if (recordValidateImagen.isEmpty) {
                       // La imagen no existe y se tiene que crear
+                      // Decodificar imagen base 64
+                      final image = imagenDart.decodeImage(base64.decode(basicJornadas.payload!.jornada2!.documentos.toList()[i].archivo));
+                      // Redimendsionar imagen
+                      final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                      // Codificar imagen a nueva calidad
+                      final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                       final recordImagen =
                           await client.records.create('imagenes', body: {
                         "nombre": basicJornadas.payload!.jornada2!.documentos
@@ -537,10 +554,8 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                         "id_emi_web": basicJornadas
                             .payload!.jornada2!.documentos
                             .toList()[i]
-                            .idDocumento,
-                        "base64": basicJornadas.payload!.jornada2!.documentos
-                            .toList()[i]
-                            .archivo,
+                            .idDocumento.toString(),
+                        "base64": base64.encode(imageBytes),
                       });
                       if (recordImagen.id.isNotEmpty) {
                         idsDBRImagenes.add(recordImagen.id);
@@ -550,6 +565,15 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                       }
                     } else {
                       // La imagen existe y se tiene que actualizar
+                      // Decodificar imagen base 64
+                      final image = imagenDart.decodeImage(base64.decode(basicJornadas
+                        .payload!.jornada2!.documentos
+                        .toList()[i]
+                        .archivo));
+                      // Redimendsionar imagen
+                      final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                      // Codificar imagen a nueva calidad
+                      final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                       final recordImagen = await client.records.update(
                           'imagenes', recordValidateImagen.first.id,
                           body: {
@@ -557,10 +581,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                 .payload!.jornada2!.documentos
                                 .toList()[i]
                                 .nombreArchivo,
-                            "base64": basicJornadas
-                                .payload!.jornada2!.documentos
-                                .toList()[i]
-                                .archivo,
+                            "base64": base64.encode(imageBytes),
                           });
                       if (recordImagen.id.isNotEmpty) {
                         idsDBRImagenes.add(recordImagen.id);
@@ -636,6 +657,12 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                             "id_emi_web='${basicJornadas.payload!.jornada3!.documentos.toList()[i].idDocumento}'");
                     if (recordValidateImagen.isEmpty) {
                       // La imagen no existe y se tiene que crear
+                      // Decodificar imagen base 64
+                      final image = imagenDart.decodeImage(base64.decode(basicJornadas.payload!.jornada3!.documentos.toList()[i].archivo));
+                      // Redimendsionar imagen
+                      final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                      // Codificar imagen a nueva calidad
+                      final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                       final recordImagen =
                           await client.records.create('imagenes', body: {
                         "nombre": basicJornadas.payload!.jornada3!.documentos
@@ -644,10 +671,8 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                         "id_emi_web": basicJornadas
                             .payload!.jornada3!.documentos
                             .toList()[i]
-                            .idDocumento,
-                        "base64": basicJornadas.payload!.jornada3!.documentos
-                            .toList()[i]
-                            .archivo,
+                            .idDocumento.toString(),
+                        "base64": base64.encode(imageBytes),
                       });
                       if (recordImagen.id.isNotEmpty) {
                         idsDBRImagenes.add(recordImagen.id);
@@ -657,6 +682,15 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                       }
                     } else {
                       // La imagen existe y se tiene que actualizar
+                      // Decodificar imagen base 64
+                      final image = imagenDart.decodeImage(base64.decode(basicJornadas
+                        .payload!.jornada3!.documentos
+                        .toList()[i]
+                        .archivo));
+                      // Redimendsionar imagen
+                      final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                      // Codificar imagen a nueva calidad
+                      final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                       final recordImagen = await client.records.update(
                           'imagenes', recordValidateImagen.first.id,
                           body: {
@@ -664,10 +698,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                 .payload!.jornada3!.documentos
                                 .toList()[i]
                                 .nombreArchivo,
-                            "base64": basicJornadas
-                                .payload!.jornada3!.documentos
-                                .toList()[i]
-                                .archivo,
+                            "base64": base64.encode(imageBytes),
                           });
                       if (recordImagen.id.isNotEmpty) {
                         idsDBRImagenes.add(recordImagen.id);
@@ -842,6 +873,14 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                             "id_emi_web='${basicJornadas.payload!.jornada3!.documentos.toList()[i].idDocumento}'");
                     if (recordValidateImagen.isEmpty) {
                       // La imagen no existe y se tiene que crear
+                      // Decodificar imagen base 64
+                      final image = imagenDart.decodeImage(base64.decode(basicJornadas.payload!.jornada3!.documentos
+                            .toList()[i]
+                            .archivo));
+                      // Redimendsionar imagen
+                      final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                      // Codificar imagen a nueva calidad
+                      final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                       final recordImagen =
                           await client.records.create('imagenes', body: {
                         "nombre": basicJornadas.payload!.jornada3!.documentos
@@ -850,10 +889,8 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                         "id_emi_web": basicJornadas
                             .payload!.jornada3!.documentos
                             .toList()[i]
-                            .idDocumento,
-                        "base64": basicJornadas.payload!.jornada3!.documentos
-                            .toList()[i]
-                            .archivo,
+                            .idDocumento.toString(),
+                        "base64": base64.encode(imageBytes),
                       });
                       if (recordImagen.id.isNotEmpty) {
                         idsDBRImagenes.add(recordImagen.id);
@@ -863,6 +900,15 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                       }
                     } else {
                       // La imagen existe y se tiene que actualizar
+                      // Decodificar imagen base 64
+                      final image = imagenDart.decodeImage(base64.decode(basicJornadas
+                        .payload!.jornada3!.documentos
+                        .toList()[i]
+                        .archivo));
+                      // Redimendsionar imagen
+                      final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                      // Codificar imagen a nueva calidad
+                      final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                       final recordImagen = await client.records.update(
                           'imagenes', recordValidateImagen.first.id,
                           body: {
@@ -870,10 +916,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                 .payload!.jornada3!.documentos
                                 .toList()[i]
                                 .nombreArchivo,
-                            "base64": basicJornadas
-                                .payload!.jornada3!.documentos
-                                .toList()[i]
-                                .archivo,
+                            "base64": base64.encode(imageBytes),
                           });
                       if (recordImagen.id.isNotEmpty) {
                         idsDBRImagenes.add(recordImagen.id);
@@ -1250,6 +1293,14 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                             "id_emi_web='${basicJornadas.payload!.jornada4!.documentos.toList()[i].idDocumento}'");
                     if (recordValidateImagen.isEmpty) {
                       // La imagen no existe y se tiene que crear
+                      // Decodificar imagen base 64
+                      final image = imagenDart.decodeImage(base64.decode(basicJornadas.payload!.jornada4!.documentos
+                            .toList()[i]
+                            .archivo));
+                      // Redimendsionar imagen
+                      final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                      // Codificar imagen a nueva calidad
+                      final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                       final recordImagen =
                           await client.records.create('imagenes', body: {
                         "nombre": basicJornadas.payload!.jornada4!.documentos
@@ -1258,10 +1309,8 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                         "id_emi_web": basicJornadas
                             .payload!.jornada4!.documentos
                             .toList()[i]
-                            .idDocumento,
-                        "base64": basicJornadas.payload!.jornada4!.documentos
-                            .toList()[i]
-                            .archivo,
+                            .idDocumento.toString(),
+                        "base64": base64.encode(imageBytes),
                       });
                       if (recordImagen.id.isNotEmpty) {
                         idsDBRImagenes.add(recordImagen.id);
@@ -1271,6 +1320,15 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                       }
                     } else {
                       // La imagen existe y se tiene que actualizar
+                      // Decodificar imagen base 64
+                      final image = imagenDart.decodeImage(base64.decode(basicJornadas
+                        .payload!.jornada4!.documentos
+                        .toList()[i]
+                        .archivo));
+                      // Redimendsionar imagen
+                      final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                      // Codificar imagen a nueva calidad
+                      final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                       final recordImagen = await client.records.update(
                           'imagenes', recordValidateImagen.first.id,
                           body: {
@@ -1278,10 +1336,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                 .payload!.jornada4!.documentos
                                 .toList()[i]
                                 .nombreArchivo,
-                            "base64": basicJornadas
-                                .payload!.jornada4!.documentos
-                                .toList()[i]
-                                .archivo,
+                            "base64": base64.encode(imageBytes),
                           });
                       if (recordImagen.id.isNotEmpty) {
                         idsDBRImagenes.add(recordImagen.id);
@@ -1356,6 +1411,14 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                             "id_emi_web='${basicJornadas.payload!.jornada4!.documentos.toList()[i].idDocumento}'");
                     if (recordValidateImagen.isEmpty) {
                       // La imagen no existe y se tiene que crear
+                      // Decodificar imagen base 64
+                      final image = imagenDart.decodeImage(base64.decode(basicJornadas.payload!.jornada4!.documentos
+                            .toList()[i]
+                            .archivo));
+                      // Redimendsionar imagen
+                      final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                      // Codificar imagen a nueva calidad
+                      final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                       final recordImagen =
                           await client.records.create('imagenes', body: {
                         "nombre": basicJornadas.payload!.jornada4!.documentos
@@ -1364,10 +1427,8 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                         "id_emi_web": basicJornadas
                             .payload!.jornada4!.documentos
                             .toList()[i]
-                            .idDocumento,
-                        "base64": basicJornadas.payload!.jornada4!.documentos
-                            .toList()[i]
-                            .archivo,
+                            .idDocumento.toString(),
+                        "base64": base64.encode(imageBytes),
                       });
                       if (recordImagen.id.isNotEmpty) {
                         idsDBRImagenes.add(recordImagen.id);
@@ -1377,6 +1438,15 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                       }
                     } else {
                       // La imagen existe y se tiene que actualizar
+                      // Decodificar imagen base 64
+                      final image = imagenDart.decodeImage(base64.decode(basicJornadas
+                        .payload!.jornada4!.documentos
+                        .toList()[i]
+                        .archivo));
+                      // Redimendsionar imagen
+                      final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                      // Codificar imagen a nueva calidad
+                      final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                       final recordImagen = await client.records.update(
                           'imagenes', recordValidateImagen.first.id,
                           body: {
@@ -1384,10 +1454,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                 .payload!.jornada4!.documentos
                                 .toList()[i]
                                 .nombreArchivo,
-                            "base64": basicJornadas
-                                .payload!.jornada4!.documentos
-                                .toList()[i]
-                                .archivo,
+                            "base64": base64.encode(imageBytes),
                           });
                       if (recordImagen.id.isNotEmpty) {
                         idsDBRImagenes.add(recordImagen.id);
@@ -1504,6 +1571,15 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                           if (consultoria.tareas.toList()[i - 1].documento !=
                               null) {
                             //La tarea tiene imagen asociada
+                            // Decodificar imagen base 64
+                            final image = imagenDart.decodeImage(base64.decode(consultoria.tareas
+                                  .toList()[i - 1]
+                                  .documento!
+                                  .archivo));
+                            // Redimendsionar imagen
+                            final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                            // Codificar imagen a nueva calidad
+                            final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                             final recordImagen =
                                 await client.records.create('imagenes', body: {
                               "nombre": consultoria.tareas
@@ -1513,11 +1589,8 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                               "id_emi_web": consultoria.tareas
                                   .toList()[i - 1]
                                   .documento!
-                                  .idDocumento,
-                              "base64": consultoria.tareas
-                                  .toList()[i - 1]
-                                  .documento!
-                                  .archivo,
+                                  .idDocumento.toString(),
+                              "base64": base64.encode(imageBytes),
                             });
                             if (recordImagen.id.isNotEmpty) {
                               final porcentajeAvance = dataBase
@@ -1702,6 +1775,15 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                 if (basicValidateConsultorias[i].idImagenesFk ==
                                     []) {
                                   //La tarea de Pocketbase no tiene Imagen, entonces se crea
+                                  // Decodificar imagen base 64
+                                  final image = imagenDart.decodeImage(base64.decode(consultoria.tareas
+                                        .toList()[i - 1]
+                                        .documento!
+                                        .archivo));
+                                  // Redimendsionar imagen
+                                  final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                                  // Codificar imagen a nueva calidad
+                                  final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                                   final recordImagen = await client.records
                                       .create('imagenes', body: {
                                     "nombre": consultoria.tareas
@@ -1711,11 +1793,8 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                     "id_emi_web": consultoria.tareas
                                         .toList()[i - 1]
                                         .documento!
-                                        .idDocumento,
-                                    "base64": consultoria.tareas
-                                        .toList()[i - 1]
-                                        .documento!
-                                        .archivo,
+                                        .idDocumento.toString(),
+                                    "base64": base64.encode(imageBytes),
                                   });
                                   if (recordImagen.id.isNotEmpty) {
                                     //Se actualiza la tarea de la Consultoría
@@ -1769,6 +1848,15 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                   }
                                 } else {
                                   //La tarea de Pocketbase tiene Imagen, entonces se actualiza
+                                  // Decodificar imagen base 64
+                                  final image = imagenDart.decodeImage(base64.decode(consultoria.tareas
+                                    .toList()[i - 1]
+                                    .documento!
+                                    .archivo));
+                                  // Redimendsionar imagen
+                                  final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                                  // Codificar imagen a nueva calidad
+                                  final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                                   final recordImagen = await client.records
                                       .update(
                                           'imagenes',
@@ -1781,10 +1869,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                             .toList()[i - 1]
                                             .documento!
                                             .nombreArchivo,
-                                        "base64": consultoria.tareas
-                                            .toList()[i - 1]
-                                            .documento!
-                                            .archivo,
+                                        "base64": base64.encode(imageBytes),
                                       });
                                   if (recordImagen.id.isNotEmpty) {
                                     //Se actualiza la tarea de la Consultoría
@@ -1940,6 +2025,15 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                           .idImagenesFk ==
                                       []) {
                                     //La tarea de Pocketbase no tiene Imagen, entonces se crea
+                                    // Decodificar imagen base 64
+                                    final image = imagenDart.decodeImage(base64.decode(consultoria.tareas
+                                          .toList()[i - 1]
+                                          .documento!
+                                          .archivo));
+                                    // Redimendsionar imagen
+                                    final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                                    // Codificar imagen a nueva calidad
+                                    final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                                     final recordImagen = await client.records
                                         .create('imagenes', body: {
                                       "nombre": consultoria.tareas
@@ -1949,11 +2043,8 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                       "id_emi_web": consultoria.tareas
                                           .toList()[i - 1]
                                           .documento!
-                                          .idDocumento,
-                                      "base64": consultoria.tareas
-                                          .toList()[i - 1]
-                                          .documento!
-                                          .archivo,
+                                          .idDocumento.toString(),
+                                      "base64": base64.encode(imageBytes),
                                     });
                                     if (recordImagen.id.isNotEmpty) {
                                       //Se actualiza la tarea de la Consultoría
@@ -2009,6 +2100,15 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                     }
                                   } else {
                                     //La tarea de Pocketbase tiene Imagen, entonces se actualiza
+                                    // Decodificar imagen base 64
+                                    final image = imagenDart.decodeImage(base64.decode(consultoria.tareas
+                                      .toList()[i - 1]
+                                      .documento!
+                                      .archivo));
+                                    // Redimendsionar imagen
+                                    final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                                    // Codificar imagen a nueva calidad
+                                    final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                                     final recordImagen = await client.records
                                         .update(
                                             'imagenes',
@@ -2021,10 +2121,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                               .toList()[i - 1]
                                               .documento!
                                               .nombreArchivo,
-                                          "base64": consultoria.tareas
-                                              .toList()[i - 1]
-                                              .documento!
-                                              .archivo,
+                                          "base64": base64.encode(imageBytes),
                                         });
                                     if (recordImagen.id.isNotEmpty) {
                                       //Se actualiza la tarea de la Consultoría
@@ -2136,6 +2233,15 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                       .documento !=
                                   null) {
                                 //La tarea tiene imagen asociada
+                                // Decodificar imagen base 64
+                                final image = imagenDart.decodeImage(base64.decode(consultoria.tareas
+                                  .toList()[i - 1]
+                                  .documento!
+                                  .archivo));
+                                // Redimendsionar imagen
+                                final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                                // Codificar imagen a nueva calidad
+                                final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                                 final recordImagen = await client.records
                                     .create('imagenes', body: {
                                   "nombre": consultoria.tareas
@@ -2145,11 +2251,8 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                   "id_emi_web": consultoria.tareas
                                       .toList()[i - 1]
                                       .documento!
-                                      .idDocumento,
-                                  "base64": consultoria.tareas
-                                      .toList()[i - 1]
-                                      .documento!
-                                      .archivo,
+                                      .idDocumento.toString(),
+                                  "base64": base64.encode(imageBytes),
                                 });
                                 if (recordImagen.id.isNotEmpty) {
                                   final porcentajeAvance = dataBase
@@ -2323,13 +2426,19 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                       if (productoEmprendedor.documento != null) {
                         //El Producto del Emprendedor tiene imagen asociada
                         //Se crea la imagen del Producto del Emprendedor
+                        // Decodificar imagen base 64
+                        final image = imagenDart.decodeImage(base64.decode(productoEmprendedor.documento!.archivo));
+                        // Redimendsionar imagen
+                        final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                        // Codificar imagen a nueva calidad
+                        final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                         final recordImagen =
                             await client.records.create('imagenes', body: {
                           "nombre":
                               productoEmprendedor.documento!.nombreArchivo,
                           "id_emi_web":
-                              productoEmprendedor.documento!.idDocumento,
-                          "base64": productoEmprendedor.documento!.archivo,
+                              productoEmprendedor.documento!.idDocumento.toString(),
+                          "base64": base64.encode(imageBytes),
                         });
                         if (recordImagen.id.isNotEmpty) {
                           final unidadMedida = dataBase.unidadesMedidaBox
@@ -2417,13 +2526,19 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                         if (recordValidateImagen.isEmpty) {
                           //La imagen del producto del emprendedor no existe en Pocketbase y se tiene que crear
                           //Se crea la imagen del Producto del Emprendedor
+                          // Decodificar imagen base 64
+                          final image = imagenDart.decodeImage(base64.decode(productoEmprendedor.documento!.archivo));
+                          // Redimendsionar imagen
+                          final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                          // Codificar imagen a nueva calidad
+                          final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                           final recordImagen =
                               await client.records.create('imagenes', body: {
                             "nombre":
                                 productoEmprendedor.documento!.nombreArchivo,
                             "id_emi_web":
-                                productoEmprendedor.documento!.idDocumento,
-                            "base64": productoEmprendedor.documento!.archivo,
+                                productoEmprendedor.documento!.idDocumento.toString(),
+                            "base64": base64.encode(imageBytes),
                           });
                           if (recordImagen.id.isNotEmpty) {
                             final unidadMedida = dataBase.unidadesMedidaBox
@@ -2470,13 +2585,18 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                         } else {
                           //La imagen del producto del emprendedor existe en Pocketbase y se tiene que actualizar
                           //Se actualiza la imagen del Producto del Emprendedor
+                          // Decodificar imagen base 64
+                          final image = imagenDart.decodeImage(base64.decode(productoEmprendedor.documento!.archivo));
+                          // Redimendsionar imagen
+                          final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                          // Codificar imagen a nueva calidad
+                          final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                           final recordImagen = await client.records.update(
                               'imagenes', recordValidateImagen.first.id,
                               body: {
                                 "nombre": productoEmprendedor
                                     .documento!.nombreArchivo,
-                                "base64":
-                                    productoEmprendedor.documento!.archivo,
+                                "base64": base64.encode(imageBytes),
                               });
                           if (recordImagen.id.isNotEmpty) {
                             final unidadMedida = dataBase.unidadesMedidaBox
@@ -2949,6 +3069,16 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                 null) {
                               //El producto Solicitado está asociado a una imagen
                               //La imagen del prod Solicitado se debe de crear
+                              // Decodificar imagen base 64
+                              final image = imagenDart.decodeImage(base64.decode(inversion.productosSolicitados
+                                .toList()[i]
+                                .productoSolicitado
+                                .documento!
+                                .archivo));
+                              // Redimendsionar imagen
+                              final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                              // Codificar imagen a nueva calidad
+                              final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                               final recordImagen = await client.records
                                   .create('imagenes', body: {
                                 "nombre": inversion.productosSolicitados
@@ -2960,12 +3090,8 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                     .toList()[i]
                                     .productoSolicitado
                                     .documento!
-                                    .idDocumento,
-                                "base64": inversion.productosSolicitados
-                                    .toList()[i]
-                                    .productoSolicitado
-                                    .documento!
-                                    .archivo,
+                                    .idDocumento.toString(),
+                                "base64": base64.encode(imageBytes),
                               });
                               if (recordImagen.id.isNotEmpty) {
                                 //Se crea el producto Solicitado
@@ -3160,12 +3286,17 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                           }
                           //Cuarto creamos la Firma de Recibido y el Documento Producto Entregado, sí es que existen
                           if (inversion.firmaRecibidoDocumento != null) {
+                            // Decodificar imagen base 64
+                            final image = imagenDart.decodeImage(base64.decode(inversion.firmaRecibidoDocumento!.archivo));
+                            // Redimendsionar imagen
+                            final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                            // Codificar imagen a nueva calidad
+                            final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                             final recordImagenFirmaRecibido =
                                 await client.records.create('imagenes', body: {
                               "nombre": inversion
                                   .firmaRecibidoDocumento!.nombreArchivo,
-                              "base64":
-                                  inversion.firmaRecibidoDocumento!.archivo,
+                              "base64": base64.encode(imageBytes),
                               "id_emi_web": inversion
                                   .firmaRecibidoDocumento!.idDocumento
                                   .toString(),
@@ -3192,12 +3323,17 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                             }
                           }
                           if (inversion.productoEntregadoDocumento != null) {
+                            // Decodificar imagen base 64
+                            final image = imagenDart.decodeImage(base64.decode(inversion.productoEntregadoDocumento!.archivo));
+                            // Redimendsionar imagen
+                            final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                            // Codificar imagen a nueva calidad
+                            final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                             final recordImagenProductoEntregado =
                                 await client.records.create('imagenes', body: {
                               "nombre": inversion
                                   .productoEntregadoDocumento!.nombreArchivo,
-                              "base64":
-                                  inversion.productoEntregadoDocumento!.archivo,
+                              "base64": base64.encode(imageBytes),
                               "id_emi_web": inversion
                                   .productoEntregadoDocumento!.idDocumento
                                   .toString(),
@@ -3338,6 +3474,16 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                 if (recordValidateImagenProdSolicitado
                                     .isEmpty) {
                                   //La imagen del prod Solicitado no existe y se debe de crear
+                                  // Decodificar imagen base 64
+                                  final image = imagenDart.decodeImage(base64.decode(inversion.productosSolicitados
+                                    .toList()[i]
+                                    .productoSolicitado
+                                    .documento!
+                                    .archivo));
+                                  // Redimendsionar imagen
+                                  final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                                  // Codificar imagen a nueva calidad
+                                  final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                                   final recordImagen = await client.records
                                       .create('imagenes', body: {
                                     "nombre": inversion.productosSolicitados
@@ -3349,12 +3495,8 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                         .toList()[i]
                                         .productoSolicitado
                                         .documento!
-                                        .idDocumento,
-                                    "base64": inversion.productosSolicitados
-                                        .toList()[i]
-                                        .productoSolicitado
-                                        .documento!
-                                        .archivo,
+                                        .idDocumento.toString(),
+                                    "base64": base64.encode(imageBytes),
                                   });
                                   if (recordImagen.id.isNotEmpty) {
                                     //Se actualiza el producto Solicitado
@@ -3429,6 +3571,16 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                   }
                                 } else {
                                   //La imagen del prod Solicitado ya existe y se debe de actualizar
+                                  // Decodificar imagen base 64
+                                  final image = imagenDart.decodeImage(base64.decode(inversion.productosSolicitados
+                                    .toList()[i]
+                                    .productoSolicitado
+                                    .documento!
+                                    .archivo));
+                                  // Redimendsionar imagen
+                                  final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                                  // Codificar imagen a nueva calidad
+                                  final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                                   final recordImagen = await client.records
                                       .update(
                                           'imagenes',
@@ -3440,11 +3592,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                             .productoSolicitado
                                             .documento!
                                             .nombreArchivo,
-                                        "base64": inversion.productosSolicitados
-                                            .toList()[i]
-                                            .productoSolicitado
-                                            .documento!
-                                            .archivo,
+                                        "base64": base64.encode(imageBytes),
                                       });
                                   if (recordImagen.id.isNotEmpty) {
                                     //Se actualiza el producto Solicitado
@@ -3603,6 +3751,16 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                 if (recordValidateImagenProdSolicitado
                                     .isEmpty) {
                                   //La imagen del prod Solicitado no existe y se debe de crear
+                                  // Decodificar imagen base 64
+                                  final image = imagenDart.decodeImage(base64.decode(inversion.productosSolicitados
+                                    .toList()[i]
+                                    .productoSolicitado
+                                    .documento!
+                                    .archivo));
+                                  // Redimendsionar imagen
+                                  final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                                  // Codificar imagen a nueva calidad
+                                  final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                                   final recordImagen = await client.records
                                       .create('imagenes', body: {
                                     "nombre": inversion.productosSolicitados
@@ -3614,12 +3772,8 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                         .toList()[i]
                                         .productoSolicitado
                                         .documento!
-                                        .idDocumento,
-                                    "base64": inversion.productosSolicitados
-                                        .toList()[i]
-                                        .productoSolicitado
-                                        .documento!
-                                        .archivo,
+                                        .idDocumento.toString(),
+                                    "base64": base64.encode(imageBytes),
                                   });
                                   if (recordImagen.id.isNotEmpty) {
                                     //Se crea el producto Solicitado
@@ -3700,6 +3854,16 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                   }
                                 } else {
                                   //La imagen del prod Solicitado ya existe y se debe de actualizar
+                                  // Decodificar imagen base 64
+                                  final image = imagenDart.decodeImage(base64.decode(inversion.productosSolicitados
+                                    .toList()[i]
+                                    .productoSolicitado
+                                    .documento!
+                                    .archivo));
+                                  // Redimendsionar imagen
+                                  final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                                  // Codificar imagen a nueva calidad
+                                  final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                                   final recordImagen = await client.records
                                       .update(
                                           'imagenes',
@@ -3711,11 +3875,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                             .productoSolicitado
                                             .documento!
                                             .nombreArchivo,
-                                        "base64": inversion.productosSolicitados
-                                            .toList()[i]
-                                            .productoSolicitado
-                                            .documento!
-                                            .archivo,
+                                        "base64": base64.encode(imageBytes),
                                       });
                                   if (recordImagen.id.isNotEmpty) {
                                     //Se crea el producto Solicitado
@@ -4058,6 +4218,13 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                         "id_emi_web='${inversion.firmaRecibidoDocumento!.idDocumento}'");
                             if (recordValidateImagenFirmaRecibido.isNotEmpty) {
                               //La firma de Recibido existe en pocketbase y se actualiza
+                              // Decodificar imagen base 64
+                              final image = imagenDart.decodeImage(base64.decode(inversion
+                                        .firmaRecibidoDocumento!.archivo));
+                              // Redimendsionar imagen
+                              final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                              // Codificar imagen a nueva calidad
+                              final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                               final recordImagenFirmaRecibido =
                                   await client.records.update(
                                       'imagenes',
@@ -4066,8 +4233,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                       body: {
                                     "nombre": inversion
                                         .firmaRecibidoDocumento!.nombreArchivo,
-                                    "base64": inversion
-                                        .firmaRecibidoDocumento!.archivo,
+                                    "base64": base64.encode(imageBytes),
                                   });
                               if (recordImagenFirmaRecibido.id.isNotEmpty) {
                                 //Se actualiza con éxito la imagen Firma de Recibido en Pocketbase
@@ -4092,13 +4258,18 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                               }
                             } else {
                               //La firma de Recibido no existe en pocketbase y se crea
+                              // Decodificar imagen base 64
+                              final image = imagenDart.decodeImage(base64.decode(inversion.firmaRecibidoDocumento!.archivo));
+                              // Redimendsionar imagen
+                              final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                              // Codificar imagen a nueva calidad
+                              final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                               final recordImagenFirmaRecibido = await client
                                   .records
                                   .create('imagenes', body: {
                                 "nombre": inversion
                                     .firmaRecibidoDocumento!.nombreArchivo,
-                                "base64":
-                                    inversion.firmaRecibidoDocumento!.archivo,
+                                "base64": base64.encode(imageBytes),
                                 "id_emi_web": inversion
                                     .firmaRecibidoDocumento!.idDocumento
                                     .toString(),
@@ -4137,6 +4308,13 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                             if (recordValidateImagenProductoEntregado
                                 .isNotEmpty) {
                               //El producto Entregado existe en pocketbase y se actualiza
+                              // Decodificar imagen base 64
+                              final image = imagenDart.decodeImage(base64.decode(inversion
+                                        .firmaRecibidoDocumento!.archivo));
+                              // Redimendsionar imagen
+                              final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                              // Codificar imagen a nueva calidad
+                              final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                               final recordImagenProductoEntregado =
                                   await client.records.update(
                                       'imagenes',
@@ -4146,8 +4324,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                     "nombre": inversion
                                         .productoEntregadoDocumento!
                                         .nombreArchivo,
-                                    "base64": inversion
-                                        .productoEntregadoDocumento!.archivo,
+                                    "base64": base64.encode(imageBytes),
                                   });
                               if (recordImagenProductoEntregado.id.isNotEmpty) {
                                 //Se actualiza con éxito la imagen Documento Producto Entregado en Pocketbase
@@ -4172,13 +4349,19 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                               }
                             } else {
                               //El producto Entregado no existe en pocketbase y se crea
+                              // Decodificar imagen base 64
+                              final image = imagenDart.decodeImage(base64.decode(inversion
+                                    .productoEntregadoDocumento!.archivo));
+                              // Redimendsionar imagen
+                              final imageResized = imagenDart.copyResize(image!, width: 1920, height: 1080);
+                              // Codificar imagen a nueva calidad
+                              final List<int> imageBytes = imagenDart.encodeJpg(imageResized, quality: 30);
                               final recordImagenProductoEntregado = await client
                                   .records
                                   .create('imagenes', body: {
                                 "nombre": inversion
                                     .productoEntregadoDocumento!.nombreArchivo,
-                                "base64": inversion
-                                    .productoEntregadoDocumento!.archivo,
+                                "base64": base64.encode(imageBytes),
                                 "id_emi_web": inversion
                                     .productoEntregadoDocumento!.idDocumento
                                     .toString(),
