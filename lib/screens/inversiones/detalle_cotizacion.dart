@@ -31,8 +31,8 @@ class _DetalleCotizacionState extends State<DetalleCotizacion> {
   @override
   Widget build(BuildContext context) {
     final productoCotizadoProvider = Provider.of<CotizacionController>(context);
-    print('que manda: ${widget.detalleCot.productosProv.target!.imagen
-                                    .target}');
+    print(
+        'que manda: ${widget.detalleCot.productosProv.target!.imagen.target}');
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -45,33 +45,31 @@ class _DetalleCotizacionState extends State<DetalleCotizacion> {
             children: [
               Stack(
                 children: [
-                  Container(
-                    width: double.infinity,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: widget.detalleCot.productosProv.target!.imagen
-                                    .target !=
-                                null
-                            ? FileImage(File(widget.detalleCot.productosProv
-                                .target!.imagen.target!.path!))
-                            : Image.asset(
-                                "assets/images/default_image_placeholder.jpeg",
-                              ).image,
-                        fit: BoxFit.cover,
-                        filterQuality: FilterQuality.high,
-                      ),
-                    ),
+                  Padding(
+                    padding: const EdgeInsets.all(0.1),
                     child: Container(
+                      width: double.infinity,
+                      height: 200,
                       decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            const Color(0x0014181B),
-                            AppTheme.of(context).secondaryBackground
-                          ],
-                          stops: const [0, 1],
-                          begin: const AlignmentDirectional(0, -1),
-                          end: const AlignmentDirectional(0, 1),
+                        image: DecorationImage(
+                          image: Image.asset(
+                            "assets/images/default_image_placeholder.jpeg",
+                          ).image,
+                          fit: BoxFit.cover,
+                          filterQuality: FilterQuality.high,
+                        ),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              const Color(0x0014181B),
+                              AppTheme.of(context).secondaryBackground
+                            ],
+                            stops: const [0, 1],
+                            begin: const AlignmentDirectional(0, -1),
+                            end: const AlignmentDirectional(0, 1),
+                          ),
                         ),
                       ),
                     ),
@@ -359,11 +357,16 @@ class _DetalleCotizacionState extends State<DetalleCotizacion> {
                                             ),
                                       ),
                                     ),
-                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                              0, 5, 0, 0,
-                                              ),
-                                      child: Text('Cantidad',
+                                    Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                        0,
+                                        5,
+                                        0,
+                                        0,
+                                      ),
+                                      child: Text(
+                                        'Cantidad',
                                         style: AppTheme.of(context)
                                             .bodyText1
                                             .override(
@@ -371,10 +374,12 @@ class _DetalleCotizacionState extends State<DetalleCotizacion> {
                                                   .bodyText1Family,
                                               fontSize: 15,
                                             ),
-                                    ),        
+                                      ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(0,5,0,0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 5, 0, 0),
                                       child: Text(
                                         widget.detalleCot.cantidad.toString(),
                                         style: AppTheme.of(context)
@@ -407,7 +412,9 @@ class _DetalleCotizacionState extends State<DetalleCotizacion> {
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0, 5, 0, 5),
                                       child: AutoSizeText(
-                                        currencyFormat.format(widget.detalleCot.productosProv.target!.costo.toStringAsFixed(2)),
+                                        currencyFormat.format(widget.detalleCot
+                                            .productosProv.target!.costo
+                                            .toStringAsFixed(2)),
                                         textAlign: TextAlign.start,
                                         maxLines: 1,
                                         style: AppTheme.of(context)
@@ -421,10 +428,15 @@ class _DetalleCotizacionState extends State<DetalleCotizacion> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                              0, 5, 0, 0,
-                                              ),
-                                      child: Text('Costo Total',
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                        0,
+                                        5,
+                                        0,
+                                        0,
+                                      ),
+                                      child: Text(
+                                        'Costo Total',
                                         style: AppTheme.of(context)
                                             .bodyText1
                                             .override(
@@ -432,12 +444,20 @@ class _DetalleCotizacionState extends State<DetalleCotizacion> {
                                                   .bodyText1Family,
                                               fontSize: 15,
                                             ),
-                                    ),        
+                                      ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(0,5,0,0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 5, 0, 0),
                                       child: Text(
-                                        currencyFormat.format((widget.detalleCot.productosProv.target!.costo * widget.detalleCot.cantidad).toStringAsFixed(2)),
+                                        currencyFormat.format((widget
+                                                    .detalleCot
+                                                    .productosProv
+                                                    .target!
+                                                    .costo *
+                                                widget.detalleCot.cantidad)
+                                            .toStringAsFixed(2)),
                                         style: AppTheme.of(context)
                                             .bodyText1
                                             .override(
@@ -448,7 +468,42 @@ class _DetalleCotizacionState extends State<DetalleCotizacion> {
                                             ),
                                       ),
                                     ),
-                                    
+                                    Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 5, 0),
+                                      child: Container(
+                                        width: double.infinity,
+                                        height: 200,
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: widget
+                                                        .detalleCot
+                                                        .productosProv
+                                                        .target!
+                                                        .imagen
+                                                        .target !=
+                                                    null
+                                                ? FileImage(File(widget
+                                                    .detalleCot
+                                                    .productosProv
+                                                    .target!
+                                                    .imagen
+                                                    .target!
+                                                    .path!))
+                                                : Image.asset(
+                                                    "assets/images/default_image_placeholder.jpeg",
+                                                  ).image,
+                                            fit: BoxFit.scaleDown,
+                                            filterQuality: FilterQuality.high,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 5, 0, 5),
+                                    ),
                                   ],
                                 ),
                               ),
