@@ -532,7 +532,8 @@ class _AgregarEmprendedorScreenState extends State<AgregarEmprendedorScreen> {
                                       return familiaCharacters
                                               .hasMatch(value ?? '')
                                           ? null
-                                          : 'Para continuar, ingrese un número de integrantes [0-99].';
+                                          : 'Para continuar, ingrese un número de integrantes [1-99].';
+                                      
                                     },
                                   ),
                                 ),

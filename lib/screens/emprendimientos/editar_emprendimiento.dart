@@ -257,7 +257,7 @@ class _EditarEmprendimientoScreenState
                                     imagenes: image!.path,
                                     nombre: image!.name,
                                     path: image!.path,
-                                    base64: base64, 
+                                    base64: base64,
                                     idEmprendimiento: widget.emprendimiento.id);
                                 emprendimientoProvider.imagenLocal = newImagen;
                               });
@@ -375,11 +375,10 @@ class _EditarEmprendimientoScreenState
                                             widget
                                                 .emprendimiento.imagen.target) {
                                           emprendimientoProvider.updateImagen(
-                                            widget.emprendimiento.imagen.target!
-                                                .id,
-                                            newImagen!,
-                                            widget.emprendimiento.id
-                                          );
+                                              widget.emprendimiento.imagen
+                                                  .target!.id,
+                                              newImagen!,
+                                              widget.emprendimiento.id);
                                         }
                                         emprendimientoProvider.update(
                                             widget.emprendimiento.id,
@@ -420,11 +419,11 @@ class _EditarEmprendimientoScreenState
                                         if (emprendimientoProvider
                                             .validateForm(formKey)) {
                                           emprendimientoProvider.updateImagen(
-                                            widget.emprendimiento.imagen.target!
-                                                .id,
-                                            newImagen!,
-                                            widget.emprendimiento.id
-                                          );
+                                              widget.emprendimiento.imagen
+                                                      .target?.id ??
+                                                  -1,
+                                              newImagen!,
+                                              widget.emprendimiento.id);
 
                                           await Navigator.push(
                                             context,

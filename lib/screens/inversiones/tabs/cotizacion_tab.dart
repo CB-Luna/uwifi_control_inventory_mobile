@@ -769,6 +769,9 @@ class _CotizacionTabState extends State<CotizacionTab>
                                               content: Text(
                                                   "El Emprendimiento ${widget.emprendimiento.nombre} con id Local ${widget.emprendimiento.id} ya no puede ser editado en este dispositivo."),
                                             ));
+                                            cotizacionProvider
+                                                .deleteEmprendimientoLocal(
+                                                    widget.emprendimiento.id);
                                             // ignore: use_build_context_synchronously
                                             await Navigator.push(
                                               context,
@@ -777,9 +780,7 @@ class _CotizacionTabState extends State<CotizacionTab>
                                                     const EmprendimientosScreen(),
                                               ),
                                             );
-                                            cotizacionProvider
-                                                .deleteEmprendimientoLocal(
-                                                    widget.emprendimiento.id);
+
                                             break;
                                           default:
                                             break;
@@ -868,6 +869,9 @@ class _CotizacionTabState extends State<CotizacionTab>
                                               content: Text(
                                                   "El Emprendimiento ${widget.emprendimiento.nombre} con id Local ${widget.emprendimiento.id} ya no puede ser editado en este dispositivo."),
                                             ));
+                                            cotizacionProvider
+                                                .deleteEmprendimientoLocal(
+                                                    widget.emprendimiento.id);
                                             // ignore: use_build_context_synchronously
                                             await Navigator.push(
                                               context,
@@ -876,9 +880,7 @@ class _CotizacionTabState extends State<CotizacionTab>
                                                     const EmprendimientosScreen(),
                                               ),
                                             );
-                                            cotizacionProvider
-                                                .deleteEmprendimientoLocal(
-                                                    widget.emprendimiento.id);
+
                                             break;
                                           default:
                                             break;
@@ -978,6 +980,9 @@ class _CotizacionTabState extends State<CotizacionTab>
                                               content: Text(
                                                   "El Emprendimiento ${widget.emprendimiento.nombre} con id Local ${widget.emprendimiento.id} ya no puede ser editado en este dispositivo."),
                                             ));
+                                            cotizacionProvider
+                                                .deleteEmprendimientoLocal(
+                                                    widget.emprendimiento.id);
                                             // ignore: use_build_context_synchronously
                                             await Navigator.push(
                                               context,
@@ -986,9 +991,7 @@ class _CotizacionTabState extends State<CotizacionTab>
                                                     const EmprendimientosScreen(),
                                               ),
                                             );
-                                            cotizacionProvider
-                                                .deleteEmprendimientoLocal(
-                                                    widget.emprendimiento.id);
+
                                             break;
                                           default:
                                             break;
