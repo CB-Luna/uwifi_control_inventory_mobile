@@ -1533,8 +1533,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccionesBitacora[i].id);
           if (inversionXproductoCotizadoToSync != null) {
             final responseSyncAcceptInversionXProductoCotizado =
-                await syncAcceptInversionesXProductosCotizados(
-                    inversionXproductoCotizadoToSync, instruccionesBitacora[i]);
+                await syncAcceptInversionesXProductosCotizados(instruccionesBitacora[i]);
             if (responseSyncAcceptInversionXProductoCotizado.exitoso) {
               // banderasExistoSync
               //     .add(responseSyncAcceptInversionXProductoCotizado.exitoso);
@@ -1560,6 +1559,46 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 emprendimiento: "No encontrado",
                 instruccion:
                     "La instrucción para aceptar la Cotización de la Inversión en el Servidor Local no pudo ejecutarse.",
+                fecha: instruccionesBitacora[i].fechaRegistro);
+            // instruccionesFallidas.add(instruccionNoSincronizada);
+            print(instruccionNoSincronizada.instruccion);
+            continue;
+          }
+        case "syncUpdateInversionXProdCotizado":
+          print("Entro al caso de syncUpdateInversionXProdCotizado Pocketbase");
+          final inversionXproductoCotizadoToSync =
+              getFirstInversionXProductosCotizados(
+                  dataBase.inversionesXprodCotizadosBox.getAll(),
+                  instruccionesBitacora[i].id);
+          if (inversionXproductoCotizadoToSync != null) {
+            final responseSyncUpdateInversionXProductoCotizado =
+                await syncUpdateInversionesXProductosCotizados(
+                    inversionXproductoCotizadoToSync, instruccionesBitacora[i]);
+            if (responseSyncUpdateInversionXProductoCotizado.exitoso) {
+              // banderasExistoSync
+              //     .add(responseSyncUpdateInversionXProductoCotizado.exitoso);
+              continue;
+            } else {
+              //Recuperamos la instrucción que no se ejecutó
+              // banderasExistoSync
+              //     .add(responseSyncUpdateInversionXProductoCotizado.exitoso);
+              final instruccionNoSincronizada = InstruccionNoSincronizada(
+                  emprendimiento: inversionXproductoCotizadoToSync
+                      .inversion.target!.emprendimiento.target!.nombre,
+                  instruccion:
+                      responseSyncUpdateInversionXProductoCotizado.descripcion,
+                  fecha: instruccionesBitacora[i].fechaRegistro);
+              // instruccionesFallidas.add(instruccionNoSincronizada);
+              print(instruccionNoSincronizada.instruccion);
+              continue;
+            }
+          } else {
+            //Recuperamos la instrucción que no se ejecutó
+            // banderasExistoSync.add(false);
+            final instruccionNoSincronizada = InstruccionNoSincronizada(
+                emprendimiento: "No encontrado",
+                instruccion:
+                    "La instrucción para actualizar la Cotización de la Inversión en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
             print(instruccionNoSincronizada.instruccion);
@@ -5461,10 +5500,30 @@ class SyncProviderPocketbase extends ChangeNotifier {
     }
   }
 
-  Future<SyncInstruction> syncAcceptInversionesXProductosCotizados(
+SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
+    print("Estoy en El syncAcceptInversionesXProductosCotizados de Emi Web");
+    try {
+      //Se marca como realizada en Pocketbase la instrucción en Bitacora
+      bitacora.executePocketbase = true;
+      dataBase.bitacoraBox.put(bitacora);
+      if (bitacora.executeEmiWeb && bitacora.executePocketbase) {
+        //Se elimina la instrucción de la bitacora
+        dataBase.bitacoraBox.remove(bitacora.id);
+      }
+      return SyncInstruction(exitoso: true, descripcion: "");
+    } catch (e) {
+      print('ERROR - function syncAcceptInversionesXProductosCotizados(): $e');
+      return SyncInstruction(
+          exitoso: false,
+          descripcion:
+              "Falló en proceso de sincronizar AcceptInversionesXProductosCotizados en el Servidor Local, detalles: $e");
+    }
+  }
+
+  Future<SyncInstruction> syncUpdateInversionesXProductosCotizados(
       InversionesXProdCotizados inversionXprodCotizados,
       Bitacora bitacora) async {
-    print("Estoy en syncAcceptInversionesXProductosCotizados");
+    print("Estoy en syncUpdateInversionesXProductosCotizados");
     try {
       if (!bitacora.executePocketbase) {
         final recordInversionXProdCotizados = await client.records.update(
@@ -5516,7 +5575,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncAcceptInversionesXProductosCotizados(): $e');
+      print('ERROR - function syncUpdateInversionesXProductosCotizados(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:

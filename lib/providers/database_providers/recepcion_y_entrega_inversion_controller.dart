@@ -62,7 +62,7 @@ class RecepcionYEntregaController extends ChangeNotifier {
         }
     }
     var totalProyecto = 0.0;
-    final nuevaInstruccionInversionXprodCotizado = Bitacora(instruccion: 'syncAcceptInversionXProdCotizado', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
+    final nuevaInstruccionInversionXprodCotizado = Bitacora(instruccion: 'syncUpdateInversionXProdCotizado', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
     inversionXProdCotizados.aceptado = true;
     inversionXProdCotizados.bitacora.add(nuevaInstruccionInversionXprodCotizado);
     dataBase.inversionesXprodCotizadosBox.put(inversionXProdCotizados);

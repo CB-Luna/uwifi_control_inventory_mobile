@@ -2687,7 +2687,68 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   final instruccionNoSincronizada = InstruccionNoSincronizada(
                       emprendimiento: "No encontrado",
                       instruccion:
-                          "Aceptar Inversion por Productos Cotizados Emi Web",
+                          "Actualizar Inversion por Productos Cotizados Emi Web",
+                      fecha: instruccionesBitacora[i].fechaRegistro);
+                  instruccionesFallidas.add(instruccionNoSincronizada);
+                  continue;
+                }
+              } else {
+                // Ya se ha ejecutado esta instrucción en Emi Web
+                banderasExistoSync.add(true);
+                continue;
+              }
+            case "syncUpdateInversionXProdCotizado":
+              print(
+                  "Entro al caso de syncUpdateInversionXProdCotizado Emi Web");
+              if (!instruccionesBitacora[i].executeEmiWeb) {
+                final inversionXproductoCotizadoToSync =
+                    getFirstInversionXProductosCotizados(
+                        dataBase.inversionesXprodCotizadosBox.getAll(),
+                        instruccionesBitacora[i].id);
+                if (inversionXproductoCotizadoToSync != null) {
+                  //Se encontró el inversion X producto Cotizado y se puede agregar
+                  final nombreEmprendimiento = inversionXproductoCotizadoToSync
+                      .inversion.target!.emprendimiento.target!.nombre;
+                  final idEmprendimientoMensaje =
+                      instruccionesBitacora[i].idEmprendimiento;
+                  var caseSyncAcceptInversionXProductoCotizado =
+                      await syncUpdateInversionesXProductosCotizados(
+                          inversionXproductoCotizadoToSync,
+                          instruccionesBitacora[i],
+                          usuarioActual.idEmiWeb);
+                  switch (caseSyncAcceptInversionXProductoCotizado) {
+                    case 0:
+                      banderasExistoSync.add(false);
+                      final instruccionNoSincronizada = InstruccionNoSincronizada(
+                          emprendimiento: nombreEmprendimiento,
+                          instruccion:
+                              "Actualizar Inversion por Productos Cotizados Emi Web",
+                          fecha: instruccionesBitacora[i].fechaRegistro);
+                      instruccionesFallidas.add(instruccionNoSincronizada);
+                      continue;
+                    case 1:
+                      banderasExistoSync.add(true);
+                      continue;
+                    case 2:
+                      banderasExistoSync.add(false);
+                      await deleteEmprendimientoLocal(
+                          instruccionesBitacora[i].idEmprendimiento);
+                      i = instruccionesBitacora.length;
+                      snackbarKey.currentState?.showSnackBar(SnackBar(
+                        content: Text(
+                            "El Emprendimiento $nombreEmprendimiento con id Local $idEmprendimientoMensaje ya no puede ser editado en este dispositivo."),
+                      ));
+                      continue;
+                    default:
+                      continue;
+                  }
+                } else {
+                  //Recuperamos la instrucción que no se ejecutó
+                  banderasExistoSync.add(false);
+                  final instruccionNoSincronizada = InstruccionNoSincronizada(
+                      emprendimiento: "No encontrado",
+                      instruccion:
+                          "Actualizar Inversion por Productos Cotizados Emi Web",
                       fecha: instruccionesBitacora[i].fechaRegistro);
                   instruccionesFallidas.add(instruccionNoSincronizada);
                   continue;
@@ -6008,7 +6069,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     "montoPagar": inversion.montoPagar,
                     "saldo": inversion.saldo,
                     "totalInversion": 0.0,
-                    "inversionRecibida": true,
+                    "inversionRecibida": false,
                   }));
               print("Respuesta Post Inversión");
               print(responsePostInversion.body);
@@ -8101,6 +8162,129 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         if (responseProyecto.payload.idPromotor.toString() == idUsuario &&
             responseProyecto.payload.switchMovil == true) {
           try {
+            // Primero creamos el API para realizar la actualización
+            final aceptarInversionXProdCotizadosEmprendedorUri = Uri.parse(
+                '$baseUrlEmiWebServices/cotizacion/aceptadoCotizacion');
+            final headers = ({
+              "Content-Type": "application/json",
+              'Authorization': 'Bearer $tokenGlobal',
+            });
+            final responseAceptarInversionXProdCotizados =
+                await put(aceptarInversionXProdCotizadosEmprendedorUri,
+                    headers: headers,
+                    body: jsonEncode({
+                      "idUsuarioRegistra": inversionXprodCotizados
+                          .inversion
+                          .target!
+                          .emprendimiento
+                          .target!
+                          .usuario
+                          .target!
+                          .idEmiWeb,
+                      "usuarioRegistra":
+                          "${inversionXprodCotizados.inversion.target!.emprendimiento.target!.usuario.target!.nombre} ${inversionXprodCotizados.inversion.target!.emprendimiento.target!.usuario.target!.apellidoP} ${inversionXprodCotizados.inversion.target!.emprendimiento.target!.usuario.target!.apellidoM}",
+                      "aceptado": inversionXprodCotizados.aceptado,
+                      "idListaCotizacion": inversionXprodCotizados.idEmiWeb,
+                      "idInversion":
+                          inversionXprodCotizados.inversion.target!.idEmiWeb,
+                    }));
+            print(responseAceptarInversionXProdCotizados.statusCode);
+            print(responseAceptarInversionXProdCotizados.body);
+            switch (responseAceptarInversionXProdCotizados.statusCode) {
+              case 200:
+                print("Caso 200 en Emi Web Aceptar Inversión x Prod cotizados");
+                // Segundo creamos el API para realizar la actualización de prod Cotizados
+                for (var productoCotizado in inversionXprodCotizados.prodCotizados.toList()) {
+                  final agregarProdCotizadoUri = Uri.parse(
+                    '$baseUrlEmiWebServices/inversiones/productos/cotizados/aprobados?id=${inversionXprodCotizados.inversion.target!.idEmiWeb!}');
+                  final headers = ({
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer $tokenGlobal',
+                  });
+                  final responseAgregarProdCotizado =
+                      await put(agregarProdCotizadoUri,
+                          headers: headers,
+                          body: jsonEncode({
+                            "productos": [
+                              {
+                                "idProducto": productoCotizado.idEmiWeb,
+                                "cantidad": productoCotizado.cantidad,
+                                "aceptado": false,
+                                "costoTotal": productoCotizado.costoTotal
+                              }
+                            ],
+                            "idUsuario": productoCotizado
+                                .inversionXprodCotizados
+                                .target!
+                                .inversion
+                                .target!
+                                .emprendimiento
+                                .target!
+                                .usuario
+                                .target!
+                                .idEmiWeb,
+                            "nombreUsuario":
+                                "${productoCotizado.inversionXprodCotizados.target!.inversion.target!.emprendimiento.target!.usuario.target!.nombre} ${productoCotizado.inversionXprodCotizados.target!.inversion.target!.emprendimiento.target!.usuario.target!.apellidoP} ${productoCotizado.inversionXprodCotizados.target!.inversion.target!.emprendimiento.target!.usuario.target!.apellidoM}",
+                          }));
+                  switch (responseAgregarProdCotizado.statusCode) {
+                    case 200:
+                      print("Caso 200 en Emi Web Agregar Prod cotizados");
+                      //Se marca como realizada en EmiWeb la instrucción en Bitacora
+                      continue;
+                    default: //No se realizo con éxito el update
+                      print("Error en agregar Prod cotizados Emi Web");
+                      return 0;
+                  }
+                }
+                bitacora.executeEmiWeb = true;
+                dataBase.bitacoraBox.put(bitacora);
+                return 1;
+              default: //No se realizo con éxito el update
+                print( "Error en aceptar Inversion por Prod cotizados Emi Web");
+                return 0;
+            }
+          } catch (e) {
+            print('Catch en syncAcceptInversionesXProductosCotizados(): $e');
+            return 0;
+          }
+        } else {
+          //El estatus o el Usuario del Proyecto cambiaron, así que se tienen que eliminar de este dispositivo
+          return 2;
+        }
+      } else {
+        //No se pudo llamar el API de validación en EmiWeb del estatus-usuario proyecto
+        return 0;
+      }
+    } else {
+      //No se pudo recuperar el idEmiWeb del Proyecto
+      return 0;
+    }
+  }
+
+  Future<int> syncUpdateInversionesXProductosCotizados(
+      InversionesXProdCotizados inversionXprodCotizados,
+      Bitacora bitacora,
+      String idUsuario) async {
+    print("Estoy en El syncUpdateInversionesXProductosCotizados Emi Web");
+    String? idProyectoEmiWeb =
+        dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
+    if (idProyectoEmiWeb != null) {
+      final getUsuarioEstatusUri = Uri.parse(
+          '$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idProyectoEmiWeb');
+      final headers = ({
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $tokenGlobal',
+      });
+      final responseGetUsuarioEstatusProyecto =
+          await get(getUsuarioEstatusUri, headers: headers);
+      if (responseGetUsuarioEstatusProyecto.statusCode == 200) {
+        //Se recupera el Usuario y el Estatus
+        final responseProyecto = getValidateUsuarioEstatusEmiWebFromMap(
+            const Utf8Decoder()
+                .convert(responseGetUsuarioEstatusProyecto.bodyBytes));
+        if (responseProyecto.payload.idPromotor.toString() == idUsuario &&
+            responseProyecto.payload.switchMovil == true) {
+          try {
             final actualEstadoInversion = dataBase.estadoInversionBox
                 .query(EstadoInversion_.estado.equals("Entregada Al Promotor"))
                 .build()
@@ -8225,7 +8409,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               return 0;
             }
           } catch (e) {
-            print('Catch en syncAcceptInversionesXProductosCotizados(): $e');
+            print('Catch en syncUpdateInversionesXProductosCotizados(): $e');
             return 0;
           }
         } else {

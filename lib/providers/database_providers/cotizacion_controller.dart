@@ -156,6 +156,11 @@ class CotizacionController extends ChangeNotifier {
               switch (responsePutUpdateEstadoInversion.statusCode) {
                 case 200:
                   print("Caso 200 en Emi Web Update Estado Inversión");
+                  //Se agrega la instrucción para mandar Proyectos a Emi Web
+                  final nuevaInstruccionInversionXprodCotizado = Bitacora(instruccion: 'syncAcceptInversionXProdCotizado', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
+                  inversionXprodCotizados.aceptado = true;
+                  inversionXprodCotizados.bitacora.add(nuevaInstruccionInversionXprodCotizado);
+                  dataBase.inversionesXprodCotizadosBox.put(inversionXprodCotizados);
                   //Se actualiza el estado de la Inversión en Pocketbase
                   final record = await client.records.update('inversiones', inversion.idDBR.toString(), body: {
                     "id_estado_inversion_fk": newEstadoInversion.idDBR,
