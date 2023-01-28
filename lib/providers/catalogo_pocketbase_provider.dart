@@ -1229,23 +1229,134 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
             if (productoProveedorExistente.fechaRegistro !=
                 listProductosProv[i].updated) {
               if (proveedor != null && unidadMedida != null) {
-                //Se actualiza el registro en Objectbox
-                productoProveedorExistente.nombre =
-                    listProductosProv[i].nombreProdProv;
-                productoProveedorExistente.descripcion =
-                    listProductosProv[i].descripcionProdProv;
-                productoProveedorExistente.marca = listProductosProv[i].marca;
-                productoProveedorExistente.costo =
-                    listProductosProv[i].costoProdProv;
-                productoProveedorExistente.tiempoEntrega =
-                    listProductosProv[i].tiempoEntrega;
-                productoProveedorExistente.fechaRegistro =
-                    listProductosProv[i].updated!;
-                productoProveedorExistente.archivado =
-                    listProductosProv[i].archivado;
-                productoProveedorExistente.proveedor.target = proveedor;
-                productoProveedorExistente.unidadMedida.target = unidadMedida;
-                dataBase.productosProvBox.put(productoProveedorExistente);
+                if (listProductosProv[i].idImagenfk == '') {
+                  if (productoProveedorExistente.imagen.target != null) {
+                    //Se elimina la imagen actual del producto proveedor
+                    dataBase.imagenesBox.remove(productoProveedorExistente.imagen.target!.id);
+                    //Se actualiza el registro en Objectbox
+                    productoProveedorExistente.nombre =
+                        listProductosProv[i].nombreProdProv;
+                    productoProveedorExistente.descripcion =
+                        listProductosProv[i].descripcionProdProv;
+                    productoProveedorExistente.marca = listProductosProv[i].marca;
+                    productoProveedorExistente.costo =
+                        listProductosProv[i].costoProdProv;
+                    productoProveedorExistente.tiempoEntrega =
+                        listProductosProv[i].tiempoEntrega;
+                    productoProveedorExistente.fechaRegistro =
+                        listProductosProv[i].updated!;
+                    productoProveedorExistente.archivado =
+                        listProductosProv[i].archivado;
+                    productoProveedorExistente.proveedor.target = proveedor;
+                    productoProveedorExistente.unidadMedida.target = unidadMedida;
+                    dataBase.productosProvBox.put(productoProveedorExistente);
+                  } else {
+                    //No hay imagen actual asociada al producto proveedor, no hay imagen que eliminar
+                    //Se actualiza el registro en Objectbox
+                    productoProveedorExistente.nombre =
+                        listProductosProv[i].nombreProdProv;
+                    productoProveedorExistente.descripcion =
+                        listProductosProv[i].descripcionProdProv;
+                    productoProveedorExistente.marca = listProductosProv[i].marca;
+                    productoProveedorExistente.costo =
+                        listProductosProv[i].costoProdProv;
+                    productoProveedorExistente.tiempoEntrega =
+                        listProductosProv[i].tiempoEntrega;
+                    productoProveedorExistente.fechaRegistro =
+                        listProductosProv[i].updated!;
+                    productoProveedorExistente.archivado =
+                        listProductosProv[i].archivado;
+                    productoProveedorExistente.proveedor.target = proveedor;
+                    productoProveedorExistente.unidadMedida.target = unidadMedida;
+                    dataBase.productosProvBox.put(productoProveedorExistente);
+                    }
+                } else {
+                  if (productoProveedorExistente.imagen.target != null) {
+                    //Se actualiza la imagen actual del producto proveedor
+                    final recordsImagen = await client.records.getFullList(
+                      'imagenes',
+                      batch: 200,
+                      filter: "id='${listProductosProv[i].idImagenfk}'",
+                    );
+                    final recordsImagenParse =
+                        getBasicImagenPocketbaseFromMap(recordsImagen[0].toString());
+                    final uInt8ListImagen = base64Decode(recordsImagenParse.base64);
+                    final tempDir = await getTemporaryDirectory();
+                    File file =
+                        await File('${tempDir.path}/${recordsImagenParse.nombre}')
+                            .create();
+                    file.writeAsBytesSync(uInt8ListImagen);
+                    productoProveedorExistente.imagen.target!.imagenes = file.path;
+                    productoProveedorExistente.imagen.target!.nombre =
+                        recordsImagenParse.nombre;
+                    productoProveedorExistente.imagen.target!.path = file.path;
+                    productoProveedorExistente.imagen.target!.base64 =
+                        recordsImagenParse.base64;
+                    dataBase.imagenesBox.put(productoProveedorExistente.imagen.target!);
+                    productoProveedorExistente.nombre =
+                          listProductosProv[i].nombreProdProv;
+                    productoProveedorExistente.descripcion =
+                        listProductosProv[i].descripcionProdProv;
+                    productoProveedorExistente.marca = listProductosProv[i].marca;
+                    productoProveedorExistente.costo =
+                        listProductosProv[i].costoProdProv;
+                    productoProveedorExistente.tiempoEntrega =
+                        listProductosProv[i].tiempoEntrega;
+                    productoProveedorExistente.fechaRegistro =
+                        listProductosProv[i].updated!;
+                    productoProveedorExistente.archivado =
+                        listProductosProv[i].archivado;
+                    productoProveedorExistente.proveedor.target = proveedor;
+                    productoProveedorExistente.unidadMedida.target = unidadMedida;
+                    dataBase.productosProvBox.put(productoProveedorExistente);
+                  } else {
+                    //Se agrega la imagen nueva del producto proveedor
+                    final recordsImagen = await client.records.getFullList(
+                      'imagenes',
+                      batch: 200,
+                      filter: "id='${listProductosProv[i].idImagenfk}'",
+                    );
+                    final recordsImagenParse = getBasicImagenPocketbaseFromMap(
+                        recordsImagen[0].toString());
+
+                    final uInt8ListImagen = base64Decode(recordsImagenParse.base64);
+                    final tempDir = await getTemporaryDirectory();
+                    File file =
+                        await File('${tempDir.path}/${recordsImagenParse.nombre}')
+                            .create();
+                    file.writeAsBytesSync(uInt8ListImagen);
+                    final nuevaImagenProductoProveedor = Imagenes(
+                      imagenes: file.path,
+                      nombre: recordsImagenParse.nombre,
+                      path: file.path,
+                      base64: recordsImagenParse.base64,
+                      idEmiWeb: recordsImagenParse.idEmiWeb,
+                      idDBR: recordsImagenParse.id,
+                      idEmprendimiento: 0,
+                    );
+                    nuevaImagenProductoProveedor.productosProv.target =
+                      productoProveedorExistente;
+                    productoProveedorExistente.imagen.target =
+                      nuevaImagenProductoProveedor;
+                    dataBase.imagenesBox.put(nuevaImagenProductoProveedor);
+                    productoProveedorExistente.nombre =
+                          listProductosProv[i].nombreProdProv;
+                    productoProveedorExistente.descripcion =
+                        listProductosProv[i].descripcionProdProv;
+                    productoProveedorExistente.marca = listProductosProv[i].marca;
+                    productoProveedorExistente.costo =
+                        listProductosProv[i].costoProdProv;
+                    productoProveedorExistente.tiempoEntrega =
+                        listProductosProv[i].tiempoEntrega;
+                    productoProveedorExistente.fechaRegistro =
+                        listProductosProv[i].updated!;
+                    productoProveedorExistente.archivado =
+                        listProductosProv[i].archivado;
+                    productoProveedorExistente.proveedor.target = proveedor;
+                    productoProveedorExistente.unidadMedida.target = unidadMedida;
+                    dataBase.productosProvBox.put(productoProveedorExistente);
+                  }
+                }
               } else {
                 if (listProductosProv[i].id.isNotEmpty) {
                   if (listProductosProv[i].idImagenfk == '') {

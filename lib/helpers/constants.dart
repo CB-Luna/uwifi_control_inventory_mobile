@@ -12,23 +12,35 @@ import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
 // const String baseUrl = 'https://emi-des.cbluna-dev.com';
 
 //Producción
-//const String baseUrl = 'https://pocketbase.cbluna-dev.com';
+// const String baseUrl = 'https://pocketbase.cbluna-dev.com';
 
 //UAT
-//const String baseUrl = 'https://emi-uat.cbluna-dev.com';
+// const String baseUrl = 'https://emi-uat.cbluna-dev.com';
+
+//***********< SERVIDORES DE POCKETBASE PRIVADOS >**************/
+
+//SERVER QA
+// const String baseUrl = 'https://pocketbase.cbluna-dev.com';
 
 //***********< SERVIDORES DE POCKETBASE PÚBLICOS >**************/
 
 //SERVER UAT
-const String baseUrl = 'http://20.14.206.48';
+// const String baseUrl = 'http://20.14.206.48';
 
 //SERVER UAT2
-// const String baseUrl = 'http://20.62.101.226';
+const String baseUrl = 'http://20.62.101.226';
 
 //SERVER DE PRODUCCIÓN
 // const String baseUrl = 'http://20.10.160.70';
 
-//***********< SERVICIOS DE EMI >**************/
+//***********< SERVICIOS DE EMI PRIVADOS >**************/
+
+//QA
+// const String baseUrlEmiWebServices = "http://172.16.0.164:9021/ememi-secure-services/api";
+// const String baseUrlEmiWebSecurity = "http://172.16.0.164:9021/ememi-secure-security/api";
+// const String baseUrlEmiWebNonSecure = "http://172.16.0.164:9023/ememi-nonsecure-services/api";
+
+//***********< SERVICIOS DE EMI PÚBLICOS >**************/
 
 // Producción y Desarrollo
 // const String baseUrlEmiWebServices = "http://20.186.180.168:9021/ememi-secure-services/api";
@@ -36,14 +48,14 @@ const String baseUrl = 'http://20.14.206.48';
 // const String baseUrlEmiWebNonSecure = "http://20.186.180.168:9023/ememi-nonsecure-services/api";
 
 //UAT
-const String baseUrlEmiWebServices = "http://20.186.180.168:9021/ememi-secure-services/api";
-const String baseUrlEmiWebSecurity = "http://20.186.180.168:9021/ememi-secure-security/api";
-const String baseUrlEmiWebNonSecure = "http://20.186.180.168:9023/ememi-nonsecure-services/api";
+// const String baseUrlEmiWebServices = "http://20.186.180.168:9021/ememi-secure-services/api";
+// const String baseUrlEmiWebSecurity = "http://20.186.180.168:9021/ememi-secure-security/api";
+// const String baseUrlEmiWebNonSecure = "http://20.186.180.168:9023/ememi-nonsecure-services/api";
 
 //UAT2
-//const String baseUrlEmiWebServices = "http://20.186.180.168:29021/ememi-secure-services/api";
-//const String baseUrlEmiWebSecurity = "http://20.186.180.168:29021/ememi-secure-security/api";
-//const String baseUrlEmiWebNonSecure = "http://20.186.180.168:29023/ememi-nonsecure-services/api";
+const String baseUrlEmiWebServices = "http://20.186.180.168:29021/ememi-secure-services/api";
+const String baseUrlEmiWebSecurity = "http://20.186.180.168:29021/ememi-secure-security/api";
+const String baseUrlEmiWebNonSecure = "http://20.186.180.168:29023/ememi-nonsecure-services/api";
 
 //PRODUCCIÓN
 // const String baseUrlEmiWebServices = "http://20.186.180.168:19021/ememi-secure-services/api";
