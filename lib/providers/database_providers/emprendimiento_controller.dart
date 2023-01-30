@@ -60,7 +60,7 @@ class EmprendimientoController extends ChangeNotifier {
           idEmprendimiento: idEmprendimiento ??
               0); //Se crea la nueva instruccion a realizar en bitacora
       nuevoEmprendimiento.bitacora.add(nuevaInstruccion);
-      print('Emprendimiento agregado exitosamente');
+      //print('Emprendimiento agregado exitosamente');
       notifyListeners();
     }
   }
@@ -77,7 +77,7 @@ class EmprendimientoController extends ChangeNotifier {
       updateEmprendimiento.descripcion = newDescripcion;
       updateEmprendimiento.bitacora.add(nuevaInstruccion);
       dataBase.emprendimientosBox.put(updateEmprendimiento);
-      print('Emprendimiento actualizado exitosamente');
+      //print('Emprendimiento actualizado exitosamente');
     }
     notifyListeners();
   }
@@ -96,7 +96,7 @@ class EmprendimientoController extends ChangeNotifier {
         updateImagen.base64 = newImagen.base64;
         updateImagen.bitacora.add(nuevaInstruccion);
         dataBase.imagenesBox.put(updateImagen);
-        print('Imagen de Emprendimiento actualizada exitosamente');
+        //print('Imagen de Emprendimiento actualizada exitosamente');
       }
     } else {
       final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
@@ -116,7 +116,7 @@ class EmprendimientoController extends ChangeNotifier {
         emprendimiento.imagen.target = newImagenEmprendimiento;
         dataBase.imagenesBox.put(newImagenEmprendimiento);
         dataBase.emprendimientosBox.put(emprendimiento);
-        print('Sin Imagen de Emprendimiento actualizada exitosamente');
+        //print('Sin Imagen de Emprendimiento actualizada exitosamente');
       }
     }
     notifyListeners();
@@ -133,7 +133,7 @@ class EmprendimientoController extends ChangeNotifier {
       updateEmprendimiento.nombre = newNombre;
       updateEmprendimiento.bitacora.add(nuevaInstruccion);
       dataBase.emprendimientosBox.put(updateEmprendimiento);
-      print('Nombre de Emprendimiento actualizado exitosamente');
+      //print('Nombre de Emprendimiento actualizado exitosamente');
     }
     notifyListeners();
   }
@@ -171,11 +171,11 @@ class EmprendimientoController extends ChangeNotifier {
       emprendimiento.faseEmp.add(faseEmp);
       emprendimiento.faseActual = faseEmp.fase;
       emprendimiento.faseEmp.toList().forEach((element) {
-        print(element.fase);
+        //print(element.fase);
       });
       emprendimiento.bitacora.add(nuevaInstruccionEmprendimiento);
       dataBase.emprendimientosBox.put(emprendimiento);
-      print('Emprendimiento actualizado exitosamente');
+      //print('Emprendimiento actualizado exitosamente');
     }
   }
 
@@ -194,7 +194,7 @@ class EmprendimientoController extends ChangeNotifier {
       emprendimiento.faseActual = emprendimiento.faseAnterior;
       emprendimiento.bitacora.add(nuevaInstruccionEmprendimiento);
       dataBase.emprendimientosBox.put(emprendimiento);
-      print('Emprendimiento actualizado exitosamente');
+      //print('Emprendimiento actualizado exitosamente');
     }
   }
 
@@ -216,7 +216,7 @@ class EmprendimientoController extends ChangeNotifier {
       emprendimiento.faseActual = faseEmp.fase;
       emprendimiento.bitacora.add(nuevaInstruccionEmprendimiento);
       dataBase.emprendimientosBox.put(emprendimiento);
-      print('Emprendimiento actualizado exitosamente');
+      //print('Emprendimiento actualizado exitosamente');
     }
   }
 
@@ -232,7 +232,7 @@ class EmprendimientoController extends ChangeNotifier {
       emprendimiento.archivado = true;
       emprendimiento.bitacora.add(nuevaInstruccion);
       dataBase.emprendimientosBox.put(emprendimiento);
-      print('Emprendimiento archivado exitosamente');
+      //print('Emprendimiento archivado exitosamente');
     }
   }
 
@@ -248,7 +248,7 @@ class EmprendimientoController extends ChangeNotifier {
       emprendimiento.archivado = false;
       emprendimiento.bitacora.add(nuevaInstruccion);
       dataBase.emprendimientosBox.put(emprendimiento);
-      print('Emprendimiento desarchivado exitosamente');
+      //print('Emprendimiento desarchivado exitosamente');
     }
   }
 }

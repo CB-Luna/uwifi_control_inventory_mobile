@@ -71,7 +71,7 @@ class RolesEmiWebProvider extends ChangeNotifier {
         body: bodyMsg
       );
 
-      print(response.body);
+      //print(response.body);
 
       switch (response.statusCode) {
           case 200:
@@ -116,7 +116,7 @@ class RolesEmiWebProvider extends ChangeNotifier {
 
       switch (response.statusCode) {
         case 200: //Caso éxitoso
-          print("Caso exitoso 200 en get Roles Emi Web");
+          //print("Caso exitoso 200 en get Roles Emi Web");
           final responseListRoles = getRolesEmiWebFromMap(
           const Utf8Decoder().convert(response.bodyBytes));
           for (var i = 0; i < responseListRoles.payload!.length; i++) {
@@ -132,7 +132,7 @@ class RolesEmiWebProvider extends ChangeNotifier {
               "id_emi_web": responseListRoles.payload![i].idCatRoles.toString(),
               });
               if (newRecordEstado.id.isNotEmpty) {
-                print('Rol Emi Web agregado éxitosamente en Pocketbase');
+                //print('Rol Emi Web agregado éxitosamente en Pocketbase');
               } else {
                 return false;
               }
@@ -146,7 +146,7 @@ class RolesEmiWebProvider extends ChangeNotifier {
                     "rol": responseListRoles.payload![i].rol,
                   });
                   if (updateRecordRol.id.isNotEmpty) {
-                    print('Rol Emi Web actualizado éxitosamente en Pocketbase');
+                    //print('Rol Emi Web actualizado éxitosamente en Pocketbase');
                   } else {
                     return false;
                   }
@@ -155,7 +155,7 @@ class RolesEmiWebProvider extends ChangeNotifier {
           }
           return true;
         case 401: //Error de Token incorrecto
-          print("Caso 401 en Emi web");
+          //print("Caso 401 en Emi web");
           if(await getTokenOAuth(email, password)) {
             getRoles(email, password);
             return true;
@@ -168,7 +168,7 @@ class RolesEmiWebProvider extends ChangeNotifier {
           return false;
       }  
     } catch (e) {
-      print("Catch con Error: $e");
+      //print("Catch con Error: $e");
       return false;
     }
   }

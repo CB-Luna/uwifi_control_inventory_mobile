@@ -63,7 +63,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
 
       var response = await post(url, headers: headers, body: bodyMsg);
 
-      print(response.body);
+      //print(response.body);
 
       switch (response.statusCode) {
         case 200:
@@ -91,7 +91,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
       String idEmprendimiento, Usuarios usuario) async {
     try {
       if (await getTokenOAuth()) {
-        print("INICIO CON LLAMADO DE API 2");
+        //print("INICIO CON LLAMADO DE API 2");
         //API 2 Se recupera la información básica del Emprendimiento y el Emprendedor
         var url = Uri.parse(
             "$baseUrlEmiWebServices/proyectos/emprendedor?idProyecto=$idEmprendimiento");
@@ -101,10 +101,10 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
         });
         var responseAPI2 = await get(url, headers: headers);
         if (responseAPI2.statusCode == 200) {
-          print("Respuesta 200 en API 2");
+          //print("Respuesta 200 en API 2");
           var basicProyecto = getBasicEmprendimientoEmiWebFromMap(
               const Utf8Decoder().convert(responseAPI2.bodyBytes));
-          print("Se realiza el parseo exitoso de la respuesta API 2");
+          //print("Se realiza el parseo exitoso de la respuesta API 2");
           final comunidad = dataBase.comunidadesBox
               .query(Comunidades_.idEmiWeb.equals(
                   basicProyecto.payload.emprendedor.comunidad.toString()))
@@ -121,7 +121,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
               batch: 200,
               filter: "id_emi_web='${basicProyecto.payload.idProyecto}'");
           if (recordValidateEmprendimiento.isEmpty) {
-            print("El Emprendimiento no existe en Pocketbase");
+            //print("El Emprendimiento no existe en Pocketbase");
             //El emprendimiento no existe en Pocketbase
             // Se valida que el emprendedor exista en Pocketbase
             final recordValidateEmprendedor = await client.records.getFullList(
@@ -225,8 +225,8 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
               }
             }
           } else {
-            print("El Emprendimiento ya existe en Pocketbase");
-            print(recordValidateEmprendimiento.toString());
+            //print("El Emprendimiento ya existe en Pocketbase");
+            //print(recordValidateEmprendimiento.toString());
             //El emprendimiento ya existe en Pocketbase
             if (comunidad != null && fase != null) {
               final recordRecoverEmprendedor = await client.records.getFullList(
@@ -298,7 +298,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
               banderasExitoSync.add(false);
             }
           }
-          print("LLAMADO DE API 3");
+          //print("LLAMADO DE API 3");
           // API 3 Se recupera la información básica de las Jornadas
           var url = Uri.parse(
               "$baseUrlEmiWebServices/jornadas/emprendimiento?idProyecto=$idEmprendimiento");
@@ -309,7 +309,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
           var responseAPI3 = await get(url, headers: headers);
           switch (responseAPI3.statusCode) {
             case 200:
-              print("Respuesta 200 en API 3");
+              //print("Respuesta 200 en API 3");
               var basicJornadas = getBasicJornadasEmiWebFromMap(
                   const Utf8Decoder().convert(responseAPI3.bodyBytes));
               if (basicJornadas.payload!.jornada1 != null) {
@@ -320,7 +320,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                     filter:
                         "id_emi_web='${basicJornadas.payload!.jornada1!.idJornada1}'&&num_jornada~1");
                 if (recordValidateJornada.isEmpty) {
-                  print("La jornada 1 no existe en Pocketbase");
+                  //print("La jornada 1 no existe en Pocketbase");
                   //Primero creamos la tarea asociada a la jornada
                   final recordTarea =
                       await client.records.create('tareas', body: {
@@ -362,7 +362,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                     banderasExitoSync.add(false);
                   }
                 } else {
-                  print("La jornada 1 ya existe en Pocketbase");
+                  //print("La jornada 1 ya existe en Pocketbase");
                   //Se actualiza la Jornada 1 y su Tarea asociada
                   //Primero actualizamos la Jornada 1
                   final recordJ1 = await client.records.update(
@@ -377,8 +377,8 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                       });
 
                   if (recordJ1.id.isNotEmpty) {
-                    print("Se actualiza la Tarea de la J1");
-                    print(recordJ1.toString());
+                    //print("Se actualiza la Tarea de la J1");
+                    //print(recordJ1.toString());
                     //Se recupere el id de la tarea asociada a la J1
                     var singleJornada1 =
                         getSingleJornadaPocketbaseFromMap(recordJ1.toString());
@@ -412,7 +412,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                     filter:
                         "id_emi_web='${basicJornadas.payload!.jornada2!.idJornada2}'&&num_jornada~2");
                 if (recordValidateJornada.isEmpty) {
-                  print("La jornada 2 no existe en Pocketbase");
+                  //print("La jornada 2 no existe en Pocketbase");
                   // Creamos las imágenes de la jornada
                   List<String> idsDBRImagenes = [];
                   for (var i = 0;
@@ -523,7 +523,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                     banderasExitoSync.add(false);
                   }
                 } else {
-                  print("La jornada 2 ya existe en Pocketbase");
+                  //print("La jornada 2 ya existe en Pocketbase");
                   // ACtualizamos las imágenes de la jornada
                   List<String> idsDBRImagenes = [];
                   for (var i = 0;
@@ -640,7 +640,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                     filter:
                         "id_emi_web='${basicJornadas.payload!.jornada3!.idJornada3}'&&num_jornada~3");
                 if (recordValidateJornada.isEmpty) {
-                  print("La jornada 3 no existe en Pocketbase");
+                  //print("La jornada 3 no existe en Pocketbase");
                   // Creamos las imágenes de la jornada
                   List<String> idsDBRImagenes = [];
                   for (var i = 0;
@@ -856,7 +856,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                     banderasExitoSync.add(false);
                   }
                 } else {
-                  print("La jornada 3 ya existe en Pocketbase");
+                  //print("La jornada 3 ya existe en Pocketbase");
                   // ACtualizamos las imágenes de la jornada
                   List<String> idsDBRImagenes = [];
                   for (var i = 0;
@@ -1276,7 +1276,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                     filter:
                         "id_emi_web='${basicJornadas.payload!.jornada4!.idJornada4}'&&num_jornada~4");
                 if (recordValidateJornada.isEmpty) {
-                  print("La jornada 4 no existe en Pocketbase");
+                  //print("La jornada 4 no existe en Pocketbase");
                   // Creamos las imágenes de la jornada
                   List<String> idsDBRImagenes = [];
                   for (var i = 0;
@@ -1394,7 +1394,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                     banderasExitoSync.add(false);
                   }
                 } else {
-                  print("La jornada 4 ya existe en Pocketbase");
+                  //print("La jornada 4 ya existe en Pocketbase");
                   // Actualizamos las imágenes de la jornada
                   List<String> idsDBRImagenes = [];
                   for (var i = 0;
@@ -1508,7 +1508,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                   }
                 }
               }
-              print("LLAMADO DE API 4");
+              //print("LLAMADO DE API 4");
               // API 4 Se recupera la información básica de las Consultorías
               var urlAPI4 = Uri.parse(
                   "$baseUrlEmiWebServices/consultorias/tareas?idProyecto=$idEmprendimiento");
@@ -1519,7 +1519,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
               var responseAPI4 = await get(urlAPI4, headers: headersAPI4);
               switch (responseAPI4.statusCode) {
                 case 200:
-                  print("Respuesta 200 en API 4");
+                  //print("Respuesta 200 en API 4");
                   var basicConsultorias = getBasicConsultoriasEmiWebFromMap(
                       const Utf8Decoder().convert(responseAPI4.bodyBytes));
                   for (var consultoria in basicConsultorias.payload!) {
@@ -1530,8 +1530,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                             filter:
                                 "id_emi_web='${consultoria.idConsultorias}'");
                     if (recordValidateConsultoria.isEmpty) {
-                      print(
-                          "La consultoría con id ${consultoria.idConsultorias} no existe en Pocketbase");
+                      //print("La consultoría con id ${consultoria.idConsultorias} no existe en Pocketbase");
                       List<String> idsDBRTareas = [];
                       for (var i = 0;
                           i < (consultoria.tareas.toList().length + 1);
@@ -1710,7 +1709,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                         banderasExitoSync.add(false);
                       }
                     } else {
-                      print("La consultoría ya existe en Pocketbase");
+                      //print("La consultoría ya existe en Pocketbase");
                       List<String> idsDBRTareas = [];
                       for (var i = 0;
                           i < (consultoria.tareas.toList().length + 1);
@@ -1724,7 +1723,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                     "id_emi_web='${consultoria.idConsultorias}'&&jornada=false");
                         if (recordValidateTareasConsultoria.isNotEmpty) {
                           //Lista de Consultorías en Pocketbase
-                          print(recordValidateTareasConsultoria.toString());
+                          //print(recordValidateTareasConsultoria.toString());
                           var basicValidateConsultorias =
                               getSingleConsultoriasPocketbaseFromMap(
                                   recordValidateTareasConsultoria.toString());
@@ -2387,16 +2386,16 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                 case 202:
                   break;
                 case 404:
-                  print("Error en llamado al API 4");
-                  print(responseAPI4.statusCode);
+                  //print("Error en llamado al API 4");
+                  //print(responseAPI4.statusCode);
                   banderasExitoSync.add(false);
                   break;
                 default:
-                  print("Error en llamado al API 4");
-                  print(responseAPI4.statusCode);
+                  //print("Error en llamado al API 4");
+                  //print(responseAPI4.statusCode);
                   banderasExitoSync.add(false);
               }
-              print("LLAMADO DE API 5");
+              //print("LLAMADO DE API 5");
               // API 5 Se recupera la información básica de los productos del Emprendedor
               var url = Uri.parse(
                   "$baseUrlEmiWebServices/productosEmprendedor/emprendimiento?idEmprendimiento=$idEmprendimiento");
@@ -2407,7 +2406,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
               var responseAPI5 = await get(url, headers: headers);
               switch (responseAPI5.statusCode) {
                 case 200:
-                  print("Respuesta 200 en API 5");
+                  //print("Respuesta 200 en API 5");
                   var basicProductosEmprendedor =
                       getBasicProductosEmprendedorEmiWebFromMap(
                           const Utf8Decoder().convert(responseAPI5.bodyBytes));
@@ -2420,8 +2419,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                             filter:
                                 "id_emi_web='${productoEmprendedor.idProductoEmprendedor}'");
                     if (recordValidateProductoEmp.isEmpty) {
-                      print(
-                          "El Producto del Emprendedor con id Emi Web ${productoEmprendedor.idProductoEmprendedor} no existe en Pocketbase");
+                      //print("El Producto del Emprendedor con id Emi Web ${productoEmprendedor.idProductoEmprendedor} no existe en Pocketbase");
                       //Se verifica que el producto del emprendedor tenga imagen
                       if (productoEmprendedor.documento != null) {
                         //El Producto del Emprendedor tiene imagen asociada
@@ -2512,8 +2510,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                         }
                       }
                     } else {
-                      print(
-                          "El Producto del Emprendedor con id Emi Web ${productoEmprendedor.idProductoEmprendedor} ya existe en Pocketbase");
+                      //print("El Producto del Emprendedor con id Emi Web ${productoEmprendedor.idProductoEmprendedor} ya existe en Pocketbase");
                       //Se verifica que el producto del emprendedor tenga imagen
                       if (productoEmprendedor.documento != null) {
                         //El Producto del Emprendedor tiene imagen asociada
@@ -2679,7 +2676,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                       }
                     }
                   }
-                  print("LLAMADO DE API 6");
+                  //print("LLAMADO DE API 6");
                   // API 6 Se recupera la información básica de las Ventas
                   var url = Uri.parse(
                       "$baseUrlEmiWebServices/ventas/emprendimiento?idEmprendimiento=$idEmprendimiento");
@@ -2690,7 +2687,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                   var responseAPI6 = await get(url, headers: headers);
                   switch (responseAPI6.statusCode) {
                     case 200:
-                      print("Respuesta 200 en API 6");
+                      //print("Respuesta 200 en API 6");
                       var basicVentas = getBasicVentasEmiWebFromMap(
                           const Utf8Decoder().convert(responseAPI6.bodyBytes));
                       for (var venta in basicVentas.payload!) {
@@ -2700,8 +2697,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                                 batch: 200,
                                 filter: "id_emi_web='${venta.idVentas}'");
                         if (recordValidateVenta.isEmpty) {
-                          print(
-                              "La venta con id Emi Web ${venta.idVentas} no existe en Pocketbase");
+                          //print("La venta con id Emi Web ${venta.idVentas} no existe en Pocketbase");
                           // Se crea la venta
                           final recordVenta =
                               await client.records.create('ventas', body: {
@@ -2788,8 +2784,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                             banderasExitoSync.add(false);
                           }
                         } else {
-                          print(
-                              "La venta con id Emi Web ${venta.idVentas} ya existe en Pocketbase");
+                          //print("La venta con id Emi Web ${venta.idVentas} ya existe en Pocketbase");
                           // Se actualiza la venta
                           final recordVenta = await client.records.update(
                               'ventas', recordValidateVenta.first.id,
@@ -2981,29 +2976,29 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                     case 202:
                       break;
                     case 404:
-                      print("Error en llamado al API 6");
-                      print(responseAPI6.statusCode);
+                      //print("Error en llamado al API 6");
+                      //print(responseAPI6.statusCode);
                       banderasExitoSync.add(false);
                       break;
                     default:
-                      print("Error en llamado al API 6");
-                      print(responseAPI6.statusCode);
+                      //print("Error en llamado al API 6");
+                      //print(responseAPI6.statusCode);
                       banderasExitoSync.add(false);
                   }
                   break;
                 case 202:
                   break;
                 case 404:
-                  print("Error en llamado al API 5");
-                  print(responseAPI5.statusCode);
+                  //print("Error en llamado al API 5");
+                  //print(responseAPI5.statusCode);
                   banderasExitoSync.add(false);
                   break;
                 default:
-                  print("Error en llamado al API 5");
-                  print(responseAPI5.statusCode);
+                  //print("Error en llamado al API 5");
+                  //print(responseAPI5.statusCode);
                   banderasExitoSync.add(false);
               }
-              print("LLAMADO DE API 7");
+              //print("LLAMADO DE API 7");
               // API 7 Se recupera la información básica de las Inversiones
               var urlAPI7 = Uri.parse(
                   "$baseUrlEmiWebServices/inversiones/emprendimiento?idEmprendimiento=$idEmprendimiento");
@@ -3014,10 +3009,10 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
               var responseAPI7 = await get(urlAPI7, headers: headersAPI7);
               switch (responseAPI7.statusCode) {
                 case 200:
-                  print("Respuesta 200 en API 7");
+                  //print("Respuesta 200 en API 7");
                   var basicInversiones = getBasicInversionesEmiWebFromMap(
                       const Utf8Decoder().convert(responseAPI7.bodyBytes));
-                  print("Parseo EXITOSO EN API 7");
+                  //print("Parseo EXITOSO EN API 7");
                   for (var inversion in basicInversiones!.payload!) {
                     // Se valida que la inversión exista en Pocketbase
                     final recordValidateInversion = await client.records
@@ -4479,31 +4474,31 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
                 case 202:
                   break;
                 case 404:
-                  print("Error en llamado al API 7");
-                  print(responseAPI7.statusCode);
+                  //print("Error en llamado al API 7");
+                  //print(responseAPI7.statusCode);
                   banderasExitoSync.add(false);
                   break;
                 default:
-                  print("Error en llamado al API 7");
-                  print(responseAPI7.statusCode);
+                  //print("Error en llamado al API 7");
+                  //print(responseAPI7.statusCode);
                   banderasExitoSync.add(false);
               }
               break;
             case 202:
               break;
             case 404:
-              print("Error en llamado al API 3");
-              print(responseAPI3.statusCode);
+              //print("Error en llamado al API 3");
+              //print(responseAPI3.statusCode);
               banderasExitoSync.add(false);
               break;
             default:
-              print("Error en llamado al API 3");
-              print(responseAPI3.statusCode);
+              //print("Error en llamado al API 3");
+              //print(responseAPI3.statusCode);
               banderasExitoSync.add(false);
           }
         } else {
-          print("Error en llamado al API 2");
-          print(responseAPI2.statusCode);
+          //print("Error en llamado al API 2");
+          //print(responseAPI2.statusCode);
           banderasExitoSync.add(false);
         }
         for (var element in banderasExitoSync) {
@@ -4527,7 +4522,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
           return exitoso;
         }
       } else {
-        print("Falló en Recuperar Token");
+        //print("Falló en Recuperar Token");
         procesocargando = false;
         procesoterminado = true;
         procesoexitoso = false;
@@ -4536,7 +4531,7 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
         return false;
       }
     } catch (e) {
-      print("Catch de Descarga Productos Externos Emi Web: $e");
+      //print("Catch de Descarga Productos Externos Emi Web: $e");
       procesocargando = false;
       procesoterminado = true;
       procesoexitoso = false;
@@ -4615,17 +4610,17 @@ class SyncEmpExternosEmiWebProvider extends ChangeNotifier {
           }
           return listUsuariosProyectosTemp;
         } else {
-          print("Error en llamado al API");
-          print(response.statusCode);
+          //print("Error en llamado al API");
+          //print(response.statusCode);
           return null;
         }
       } else {
-        print("Falló en Recuperar Token");
+        //print("Falló en Recuperar Token");
         return null;
       }
     } catch (e) {
-      print("Catch en Recuperación de Usuarios");
-      print(e);
+      //print("Catch en Recuperación de Usuarios");
+      //print(e);
       return null;
     }
   }

@@ -66,7 +66,7 @@ class ProductoInversionJornadaController extends ChangeNotifier {
       fechaRegistro: DateTime.now(),
     );
     productosSolicitados.add(nuevoProductoSolicitado);
-    print('Registro agregado exitosamente');
+    //print('Registro agregado exitosamente');
     notifyListeners();
   }
 
@@ -103,11 +103,11 @@ class ProductoInversionJornadaController extends ChangeNotifier {
     //Se actualiza el registro
     for (var i = 0; i < productosSolicitados.length; i++) {
       if (productosSolicitados[i].id == idProdSolicitadoTemp) {
-        print("Desde actualizar");
+        //print("Desde actualizar");
         productosSolicitados[i] = updateProductoSolicitado;
       }
     }
-    print('Registro actualizado exitosamente');
+    //print('Registro actualizado exitosamente');
     notifyListeners();
   }
 
@@ -129,8 +129,8 @@ class ProductoInversionJornadaController extends ChangeNotifier {
         );
         if (productosSolicitados[i].imagen != '' &&
             productosSolicitados[i].imagen != null) {
-          print(
-              "A ver contenido del producto $i: ${productosSolicitados[i].imagen}");
+          //print(
+             // "A ver contenido del producto $i: ${productosSolicitados[i].imagen}");
           final nuevaImagenProdSolicitado = Imagenes(
               imagenes: productosSolicitados[i].imagen!,
               idEmprendimiento:
@@ -157,7 +157,7 @@ class ProductoInversionJornadaController extends ChangeNotifier {
           dataBase.inversionesBox.put(inversion);
         }
       }
-      print('Registro agregado exitosamente');
+      //print('Registro agregado exitosamente');
       clearInformation();
       notifyListeners();
     }
@@ -294,7 +294,7 @@ class ProductoInversionJornadaController extends ChangeNotifier {
       dataBase.imagenesBox.put(updateImagenProductoSol);
       updateProdSol.imagen.target = updateImagenProductoSol;
       dataBase.productosSolicitadosBox.put(updateProdSol);
-      print('Imagen Prod Solicitado actualizada exitosamente');
+      //print('Imagen Prod Solicitado actualizada exitosamente');
     }
     notifyListeners();
   }
@@ -311,7 +311,7 @@ class ProductoInversionJornadaController extends ChangeNotifier {
     productoSol.imagen.target = nuevaImagenProductoSol;
     dataBase.imagenesBox.put(nuevaImagenProductoSol);
     dataBase.productosSolicitadosBox.put(productoSol);
-    print('Imagen Prod Solicitado agregada exitosamente');
+    //print('Imagen Prod Solicitado agregada exitosamente');
     notifyListeners();
   }
 }

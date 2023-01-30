@@ -38,7 +38,7 @@ class _DescargaProyectosExternosEmiWebScreenState extends State<DescargaProyecto
         Future<bool> booleano = context.read<SyncEmpExternosEmiWebProvider>().getProyectosExternosEmiWeb(widget.idEmprendimiento, widget.usuario);
         Future(() async {
           if (await booleano) {
-            print("Se ha realizado con éxito el proceso de Descarga del Proyecto de Emi Web");
+            //print("Se ha realizado con éxito el proceso de Descarga del Proyecto de Emi Web");
             Navigator.push(
               context,
               MaterialPageRoute(

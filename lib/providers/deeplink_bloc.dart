@@ -22,7 +22,7 @@ class DeepLinkBloc extends Bloc {
     //Checking broadcast stream, if deep link was clicked in opened appication
     uriLinkStream.listen(
       (event) => _onRedirected(event),
-      // onError: (err) => print(err),
+      // onError: (err) => //print(err),
     );
   }
 
@@ -46,10 +46,10 @@ class DeepLinkBloc extends Bloc {
     try {
       return await getInitialUri();
     } on PlatformException catch (e) {
-      print("Failed to Invoke: '${e.message}'.");
+      //print("Failed to Invoke: '${e.message}'.");
       return null;
     } on FormatException catch (_) {
-      print("Malformed initial Uri.");
+      //print("Malformed initial Uri.");
       return null;
     }
   }

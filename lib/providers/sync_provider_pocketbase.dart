@@ -249,11 +249,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para agregar la Jornada 3 en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddImagenJornada3":
-          print("Entro al caso de syncAddImagenJornada3 Pocketbase");
+          //print("Entro al caso de syncAddImagenJornada3 Pocketbase");
           final imagenToSync = getFirstImagen(
               dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
           if (imagenToSync != null) {
@@ -271,7 +271,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncAddImagenJornada3.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -283,11 +283,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para agregar una Imagen de la Jornada 3 en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddProductoInversionJ3":
-          print("Entro al caso de syncAddProductoInversionJ3 Pocketbase");
+          //print("Entro al caso de syncAddProductoInversionJ3 Pocketbase");
           final prodSolicitadoToSync = getFirstProdSolicitado(
               dataBase.productosSolicitadosBox.getAll(),
               instruccionesBitacora[i].id);
@@ -309,7 +309,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncAddProductoInversionJ3.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -321,11 +321,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para agregar un Producto Solicitado en la Jornada 3 en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddJornada4":
-          print("Entro al caso de syncAddJornada4 Pocketbase");
+          //print("Entro al caso de syncAddJornada4 Pocketbase");
           final jornadaToSync = getFirstJornada(
               dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
           if (jornadaToSync != null) {
@@ -342,7 +342,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncAddJornada4.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -354,11 +354,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para agregar la Jornada 4 en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddImagenJornada4":
-          print("Entro al caso de syncAddImagenJornada4 Pocketbase");
+          //print("Entro al caso de syncAddImagenJornada4 Pocketbase");
           final imagenToSync = getFirstImagen(
               dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
           if (imagenToSync != null) {
@@ -376,7 +376,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncAddImagenJornada4.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -388,11 +388,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para agregar una Imagen de la Jornada 4 en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddConsultoria":
-          print("Entro al caso de syncAddConsultoria Pocketbase");
+          //print("Entro al caso de syncAddConsultoria Pocketbase");
           final consultoriaToSync = getFirstConsultoria(
               dataBase.consultoriasBox.getAll(), instruccionesBitacora[i].id);
           if (consultoriaToSync != null) {
@@ -410,7 +410,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncAddConsultoria.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -422,11 +422,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para agregar una Consultoría en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddProductoEmprendedor":
-          print("Entro al caso de syncAddProductoEmprendedor Pocketbase");
+          //print("Entro al caso de syncAddProductoEmprendedor Pocketbase");
           final productoEmpToSync = getFirstProductoEmprendedor(
               dataBase.productosEmpBox.getAll(), instruccionesBitacora[i].id);
           if (productoEmpToSync != null) {
@@ -444,7 +444,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncAddProductoEmp.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -456,11 +456,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para agregar un Producto del Emprendedor en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddImagenProductoEmprendedor":
-          print("Entro al caso de syncAddImagenProductoEmprendedor Pocketbase");
+          //print("Entro al caso de syncAddImagenProductoEmprendedor Pocketbase");
           final imagenToSync = getFirstImagen(
               dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
           if (imagenToSync != null) {
@@ -480,7 +480,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                       responseSyncAddImagenProductoEmprendedor.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -491,11 +491,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para agregar una Imagen del Producto del Emprendedor en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddVenta":
-          print("Entro al caso de syncAddVenta Pocketbase");
+          //print("Entro al caso de syncAddVenta Pocketbase");
           final ventaToSync = getFirstVenta(
               dataBase.ventasBox.getAll(), instruccionesBitacora[i].id);
           if (ventaToSync != null) {
@@ -512,7 +512,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncAddVenta.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -524,11 +524,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para agregar una Venta en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddProductoVendido":
-          print("Entro al caso de syncAddProductoVendido Pocketbase");
+          //print("Entro al caso de syncAddProductoVendido Pocketbase");
           final prodVendidoToSync = getFirstProductoVendido(
               dataBase.productosVendidosBox.getAll(),
               instruccionesBitacora[i].id);
@@ -547,7 +547,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncAddProductoVendido.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -559,11 +559,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para agregar un Producto Vendido en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddSingleProductoVendido":
-          print("Entro al caso de syncAddSingleProductoVendido Pocketbase");
+          //print("Entro al caso de syncAddSingleProductoVendido Pocketbase");
           final prodVendidoToSync = getFirstProductoVendido(
               dataBase.productosVendidosBox.getAll(),
               instruccionesBitacora[i].id);
@@ -586,7 +586,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncAddSingleProductoVendido.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -598,11 +598,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para agregar un Producto Vendido en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddInversion":
-          print("Entro al caso de syncAddInversion Pocketbase");
+          //print("Entro al caso de syncAddInversion Pocketbase");
           final inversionToSync = getFirstInversion(
               dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
           if (inversionToSync != null) {
@@ -619,7 +619,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncAddInversion.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -631,11 +631,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para agregar una Inversión en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateFaseEmprendimiento":
-          print("Entro al caso de syncUpdateFaseEmprendimiento Pocketbase");
+          //print("Entro al caso de syncUpdateFaseEmprendimiento Pocketbase");
           final emprendimientoToSync = getFirstEmprendimiento(
               dataBase.emprendimientosBox.getAll(),
               instruccionesBitacora[i].id);
@@ -656,7 +656,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncUpdateFaseEmprendimiento.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -668,11 +668,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para actualizar la Fase del Emprendimiento a ${instruccionesBitacora[i].instruccionAdicional} en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateImagenUsuario":
-          print("Entro al caso de syncUpdateImagenUsuario Pocketbase");
+          //print("Entro al caso de syncUpdateImagenUsuario Pocketbase");
           final imagenToSync = getFirstImagen(
               dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
           if (imagenToSync != null) {
@@ -680,7 +680,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 await syncUpdateImagenUsuario(
                     imagenToSync, instruccionesBitacora[i]);
             if (responseSyncUpdateImagenUsuario.exitoso) {
-              print("La respuesta es: $responseSyncUpdateImagenUsuario");
+              //print("La respuesta es: $responseSyncUpdateImagenUsuario");
               // banderasExistoSync.add(responseSyncUpdateImagenUsuario.exitoso);
               continue;
             } else {
@@ -690,7 +690,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncUpdateImagenUsuario.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -701,7 +701,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para actualizar Imagen de Perfil del Usuario en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateNameEmprendimiento":
@@ -709,17 +709,17 @@ class SyncProviderPocketbase extends ChangeNotifier {
               dataBase.emprendimientosBox.getAll(),
               instruccionesBitacora[i].id);
           if (emprendimientoToSync != null) {
-            print("Entro aqui en el else");
+            //print("Entro aqui en el else");
             if (emprendimientoToSync.idDBR != null) {
-              print("Ya ha sido enviado al backend");
+              //print("Ya ha sido enviado al backend");
               syncUpdateNameEmprendimiento(emprendimientoToSync);
             } else {
-              print("No ha sido enviado al backend");
+              //print("No ha sido enviado al backend");
             }
           }
           continue;
         case "syncUpdateEmprendedor":
-          print("Entro al caso de syncUpdateEmprendedor Pocketbase");
+          //print("Entro al caso de syncUpdateEmprendedor Pocketbase");
           final emprendedorToSync = getFirstEmprendedor(
               dataBase.emprendedoresBox.getAll(), instruccionesBitacora[i].id);
           if (emprendedorToSync != null) {
@@ -736,7 +736,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncUpdateEmprendedor.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -748,11 +748,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para actualizar Emprendedor en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateEmprendimiento":
-          print("Entro al caso de syncUpdateEmprendimiento Pocketbase");
+          //print("Entro al caso de syncUpdateEmprendimiento Pocketbase");
           final emprendedorToSync = getFirstEmprendimiento(
               dataBase.emprendimientosBox.getAll(),
               instruccionesBitacora[i].id);
@@ -771,7 +771,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncUpdateEmprendimiento.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -783,11 +783,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para actualizar Emprendimiento en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateJornada1":
-          print("Entro al caso de syncUpdateJornada1 Pocketbase");
+          //print("Entro al caso de syncUpdateJornada1 Pocketbase");
           final jornadaToSync = getFirstJornada(
               dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
           if (jornadaToSync != null) {
@@ -804,7 +804,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncUpdateJornada1.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -816,11 +816,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para actualizar la Jornada 1 en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateJornada2":
-          print("Entro al caso de syncUpdateJornada2 Pocketbase");
+          //print("Entro al caso de syncUpdateJornada2 Pocketbase");
           final jornadaToSync = getFirstJornada(
               dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
           if (jornadaToSync != null) {
@@ -837,7 +837,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncUpdateJornada2.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -849,11 +849,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para actualizar la Jornada 2 en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateImagenJornada2":
-          print("Entro al caso de syncUpdateImagenJornada2 Pocketbase");
+          //print("Entro al caso de syncUpdateImagenJornada2 Pocketbase");
           final imagenToSync = getFirstImagen(
               dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
           if (imagenToSync != null) {
@@ -871,7 +871,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncUpdateImagenJornada2.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -883,11 +883,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para actualizar la Imagen en Jornada 2 en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateJornada3":
-          print("Entro al caso de syncUpdateJornada3 Pocketbase");
+          //print("Entro al caso de syncUpdateJornada3 Pocketbase");
           final jornadaToSync = getFirstJornada(
               dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
           if (jornadaToSync != null) {
@@ -904,7 +904,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncUpdateJornada3.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -916,11 +916,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para actualizar la Jornada 3 en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateImagenJornada3":
-          print("Entro al caso de syncUpdateImagenJornada3 Pocketbase");
+          //print("Entro al caso de syncUpdateImagenJornada3 Pocketbase");
           final imagenToSync = getFirstImagen(
               dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
           if (imagenToSync != null) {
@@ -938,7 +938,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncUpdateImagenJornada3.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -950,11 +950,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para actualizar la Imagen en Jornada 3 en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateProductoInversionJ3":
-          print("Entro al caso de syncUpdateProductoInversionJ3 Pocketbase");
+          //print("Entro al caso de syncUpdateProductoInversionJ3 Pocketbase");
           final prodSolicitadoToSync = getFirstProdSolicitado(
               dataBase.productosSolicitadosBox.getAll(),
               instruccionesBitacora[i].id);
@@ -977,7 +977,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                       responseSyncUpdateProductoInversionJ3.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -989,11 +989,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para actualizar Producto Solicitado en Inversión de la Jornada 3 en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateJornada4":
-          print("Entro al caso de syncUpdateJornada4 Pocketbase");
+          //print("Entro al caso de syncUpdateJornada4 Pocketbase");
           final jornadaToSync = getFirstJornada(
               dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
           if (jornadaToSync != null) {
@@ -1010,7 +1010,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncUpdateJornada4.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -1022,11 +1022,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para actualizar la Imagen en Jornada 4 en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateImagenJornada4":
-          print("Entro al caso de syncUpdateImagenJornada4 Pocketbase");
+          //print("Entro al caso de syncUpdateImagenJornada4 Pocketbase");
           final imagenToSync = getFirstImagen(
               dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
           if (imagenToSync != null) {
@@ -1044,7 +1044,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncUpdateImagenJornada4.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -1056,11 +1056,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para actualizar Producto Solicitado en Inversión de la Jornada 4 en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncDeleteImagenJornada":
-          print("Entro al caso de syncDeleteImagenJornada Pocketbase");
+          //print("Entro al caso de syncDeleteImagenJornada Pocketbase");
           final responseSyncDeleteImagenJornada =
               await syncDeleteImagenJornada(instruccionesBitacora[i]);
           if (responseSyncDeleteImagenJornada.exitoso) {
@@ -1074,11 +1074,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 instruccion: responseSyncDeleteImagenJornada.descripcion,
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncDeleteProductoInversionJ3":
-          print("Entro al caso de syncDeleteProductoInversionJ3 Pocketbase");
+          //print("Entro al caso de syncDeleteProductoInversionJ3 Pocketbase");
           final responseSyncDeleteProductoInversionJ3 =
               await syncDeleteProductoInversionJ3(instruccionesBitacora[i]);
           if (responseSyncDeleteProductoInversionJ3.exitoso) {
@@ -1094,11 +1094,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 instruccion: responseSyncDeleteProductoInversionJ3.descripcion,
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateTareaConsultoria":
-          print("Entro al caso de syncUpdateTareaConsultoria Pocketbase");
+          //print("Entro al caso de syncUpdateTareaConsultoria Pocketbase");
           final tareaToSync = getFirstTarea(
               dataBase.tareasBox.getAll(), instruccionesBitacora[i].id);
           if (tareaToSync != null) {
@@ -1119,7 +1119,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncUpdateTareaConsultoria.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -1131,11 +1131,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para actualizar Tarea en Consultoría en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateUsuario":
-          print("Entro al caso de syncUpdateUsuario Pocketbase");
+          //print("Entro al caso de syncUpdateUsuario Pocketbase");
           final usuarioToSync = getFirstUsuario(
               dataBase.usuariosBox.getAll(), instruccionesBitacora[i].id);
           if (usuarioToSync != null) {
@@ -1151,7 +1151,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncUpdateUsuario.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -1162,11 +1162,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para actualizar información de Usuario en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateEstadoInversion":
-          print("Entro al caso de syncUpdateEstadoInversion Pocketbase");
+          //print("Entro al caso de syncUpdateEstadoInversion Pocketbase");
           final inversionToSync = getFirstInversion(
               dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
           if (inversionToSync != null) {
@@ -1184,7 +1184,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncUpdateEstadoInversion.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -1196,11 +1196,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para actualizar el Estado de la Inversión en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateProductoEmprendedor":
-          print("Entro al caso de syncUpdateProductoEmprendedor Pocketbase");
+          //print("Entro al caso de syncUpdateProductoEmprendedor Pocketbase");
           final productoEmprendedorToSync = getFirstProductoEmprendedor(
               dataBase.productosEmpBox.getAll(), instruccionesBitacora[i].id);
           if (productoEmprendedorToSync != null) {
@@ -1221,7 +1221,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                       responseSyncUpdateProductoEmprendedor.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -1233,12 +1233,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para actualizar el Producto del Emprendedor en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateImagenProductoEmprendedor":
-          print(
-              "Entro al caso de syncUpdateImagenProductoEmprendedor Pocketbase");
+          //print("Entro al caso de syncUpdateImagenProductoEmprendedor Pocketbase");
           final imagenToSync = getFirstImagen(
               dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
           if (imagenToSync != null) {
@@ -1258,7 +1257,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                       responseSyncUpdateImagenProdEmprendedor.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -1269,11 +1268,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para actualizar la Imagen del Producto del Emprendedor en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateProductoVendido":
-          print("Entro al caso de syncUpdateProductoVendido Pocketbase");
+          //print("Entro al caso de syncUpdateProductoVendido Pocketbase");
           final prodVendidoToSync = getFirstProductoVendido(
               dataBase.productosVendidosBox.getAll(),
               instruccionesBitacora[i].id);
@@ -1293,7 +1292,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncUpdateProductoVendido.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -1305,11 +1304,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para actualizar el Producto Vendido en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateVenta":
-          print("Entro al caso de syncUpdateVenta Pocketbase");
+          //print("Entro al caso de syncUpdateVenta Pocketbase");
           final ventaToSync = getFirstVenta(
               dataBase.ventasBox.getAll(), instruccionesBitacora[i].id);
           if (ventaToSync != null) {
@@ -1326,7 +1325,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncUpdateVenta.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -1338,11 +1337,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para actualizar información de Venta en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateProductosVendidosVenta":
-          print("Entro al caso de syncUpdateProductosVendidosVenta Pocketbase");
+          //print("Entro al caso de syncUpdateProductosVendidosVenta Pocketbase");
           final ventaToSync = getFirstVenta(
               dataBase.ventasBox.getAll(), instruccionesBitacora[i].id);
           if (ventaToSync != null) {
@@ -1363,7 +1362,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                       responseSyncUpdateProductosVendidosVenta.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -1375,11 +1374,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para actualizar Total de Venta en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncArchivarEmprendimiento":
-          print("Entro al caso de syncArchivarEmprendimiento Pocketbase");
+          //print("Entro al caso de syncArchivarEmprendimiento Pocketbase");
           final emprendedorToSync = getFirstEmprendimiento(
               dataBase.emprendimientosBox.getAll(),
               instruccionesBitacora[i].id);
@@ -1400,7 +1399,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncArchivarEmprendimiento.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -1412,11 +1411,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para archivar Emprendimiento en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncDesarchivarEmprendimiento":
-          print("Entro al caso de syncDesarchivarEmprendimiento Pocketbase");
+          //print("Entro al caso de syncDesarchivarEmprendimiento Pocketbase");
           final emprendedorToSync = getFirstEmprendimiento(
               dataBase.emprendimientosBox.getAll(),
               instruccionesBitacora[i].id);
@@ -1438,7 +1437,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                       responseSyncDesarchivarEmprendimiento.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -1450,11 +1449,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para desarchivar el Emprendimiento en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncArchivarConsultoria":
-          print("Entro al caso de syncArchivarConsultoria Pocketbase");
+          //print("Entro al caso de syncArchivarConsultoria Pocketbase");
           final consultoriaToSync = getFirstConsultoria(
               dataBase.consultoriasBox.getAll(), instruccionesBitacora[i].id);
           if (consultoriaToSync != null) {
@@ -1473,7 +1472,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncArchivarConsultoria.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -1485,11 +1484,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para archivar la Consultoría en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncDesarchivarConsultoria":
-          print("Entro al caso de syncDesarchivarConsultoria Pocketbase");
+          //print("Entro al caso de syncDesarchivarConsultoria Pocketbase");
           final consultoriaToSync = getFirstConsultoria(
               dataBase.consultoriasBox.getAll(), instruccionesBitacora[i].id);
           if (consultoriaToSync != null) {
@@ -1510,7 +1509,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncDesarchivarConsultoria.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -1522,11 +1521,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para desarchivar la Consultoría en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAcceptInversionXProdCotizado":
-          print("Entro al caso de syncAcceptInversionXProdCotizado Pocketbase");
+          //print("Entro al caso de syncAcceptInversionXProdCotizado Pocketbase");
           final inversionXproductoCotizadoToSync =
               getFirstInversionXProductosCotizados(
                   dataBase.inversionesXprodCotizadosBox.getAll(),
@@ -1549,7 +1548,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                       responseSyncAcceptInversionXProductoCotizado.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -1561,11 +1560,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para aceptar la Cotización de la Inversión en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncUpdateInversionXProdCotizado":
-          print("Entro al caso de syncUpdateInversionXProdCotizado Pocketbase");
+          //print("Entro al caso de syncUpdateInversionXProdCotizado Pocketbase");
           final inversionXproductoCotizadoToSync =
               getFirstInversionXProductosCotizados(
                   dataBase.inversionesXprodCotizadosBox.getAll(),
@@ -1589,7 +1588,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                       responseSyncUpdateInversionXProductoCotizado.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -1601,11 +1600,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para actualizar la Cotización de la Inversión en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAcceptProdCotizado":
-          print("Entro al caso de syncAcceptProdCotizado Pocketbase");
+          //print("Entro al caso de syncAcceptProdCotizado Pocketbase");
           final productoCotizadoToSync = getFirstProductoCotizado(
               dataBase.productosCotBox.getAll(), instruccionesBitacora[i].id);
           if (productoCotizadoToSync != null) {
@@ -1626,7 +1625,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncAcceptProductoCotizado.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -1638,11 +1637,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para aceptar Producto Cotizado en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncDeleteProductoVendido":
-          print("Entro al caso de syncDeleteProductoVendido Pocketbase");
+          //print("Entro al caso de syncDeleteProductoVendido Pocketbase");
           final responseSyncDeleteProductoVendido =
               await syncDeleteProductoVendido(instruccionesBitacora[i]);
           if (responseSyncDeleteProductoVendido.exitoso) {
@@ -1656,20 +1655,20 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 instruccion: responseSyncDeleteProductoVendido.descripcion,
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncDeleteProductoSolicitado":
           final idDBRProdSolicitado = instruccionesBitacora[i].idDBR;
-          print("Entro aqui en el DeleteProductoSolicitado");
+          //print("Entro aqui en el DeleteProductoSolicitado");
           if (idDBRProdSolicitado != null) {
             //TODO Hacer el método para eliminar en backend
           } else {
-            print("No se había sincronizado");
+            //print("No se había sincronizado");
           }
           continue;
         case "syncAddPagoInversion":
-          print("Entro al caso de syncAddPagoInversion Pocketbase");
+          //print("Entro al caso de syncAddPagoInversion Pocketbase");
           final pagoToSync = getFirstPago(
               dataBase.pagosBox.getAll(), instruccionesBitacora[i].id);
           if (pagoToSync != null) {
@@ -1687,7 +1686,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                   instruccion: responseSyncAddPago.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               // instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -1699,11 +1698,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para agregar Pago a la Inversión en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             // instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         case "syncAddImagenesEntregaInversion":
-          print("Entro al caso de syncAddImagenesEntregaInversion Pocketbase");
+          //print("Entro al caso de syncAddImagenesEntregaInversion Pocketbase");
           final inversionToSync = getFirstInversion(
               dataBase.inversionesBox.getAll(), instruccionesBitacora[i].id);
           if (inversionToSync != null) {
@@ -1724,7 +1723,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                       responseSyncAddImagenesEntregaInversion.descripcion,
                   fecha: instruccionesBitacora[i].fechaRegistro);
               instruccionesFallidas.add(instruccionNoSincronizada);
-              print(instruccionNoSincronizada.instruccion);
+              //print(instruccionNoSincronizada.instruccion);
               continue;
             }
           } else {
@@ -1736,7 +1735,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                     "La instrucción para agregar Imágenes de Firma de Recibido y Producto Entregado a la Inversión en el Servidor Local no pudo ejecutarse.",
                 fecha: instruccionesBitacora[i].fechaRegistro);
             instruccionesFallidas.add(instruccionNoSincronizada);
-            print(instruccionNoSincronizada.instruccion);
+            //print(instruccionNoSincronizada.instruccion);
             continue;
           }
         default:
@@ -1991,7 +1990,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncAddEmprendedor(
       Emprendedores emprendedor, Bitacora bitacora) async {
-    print("Estoy en El syncAddEmprendedor de Pocketbase");
+    //print("Estoy en El syncAddEmprendedor de Pocketbase");
     try {
       if (!bitacora.executePocketbase) {
         final emprendimientoToSync = dataBase.emprendimientosBox
@@ -2138,7 +2137,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncAddEmprendedor(): $e');
+      //print('ERROR - function syncAddEmprendedor(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -2147,7 +2146,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
   }
 
   SyncInstruction syncAddEmprendimiento(Bitacora bitacora) {
-    print("Estoy en El syncAddEmprendimiento de Emi Web");
+    //print("Estoy en El syncAddEmprendimiento de Emi Web");
     try {
       //Se marca como realizada en Pocketbase la instrucción en Bitacora
       bitacora.executePocketbase = true;
@@ -2158,7 +2157,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
       }
       return SyncInstruction(exitoso: true, descripcion: "");
     } catch (e) {
-      print('ERROR - function syncAddEmprendimiento(): $e');
+      //print('ERROR - function syncAddEmprendimiento(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -2168,7 +2167,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncAddJornada1(
       Jornadas jornada, Bitacora bitacora) async {
-    print("Estoy en syncAddJornada1");
+    //print("Estoy en syncAddJornada1");
     try {
       if (!bitacora.executePocketbase) {
         final tareaToSync = dataBase.tareasBox
@@ -2278,7 +2277,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncAddJornada1(): $e');
+      //print('ERROR - function syncAddJornada1(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -2288,7 +2287,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncAddJornada2(
       Jornadas jornada, Bitacora bitacora) async {
-    print("Estoy en syncAddJornada2");
+    //print("Estoy en syncAddJornada2");
     final List<String> idsDBRImagenes = [];
     try {
       if (!bitacora.executePocketbase) {
@@ -2422,7 +2421,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncAddJornada2(): $e');
+      //print('ERROR - function syncAddJornada2(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -2432,8 +2431,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncAddImagenJornada2(
       Imagenes imagen, Bitacora bitacora) async {
-    print("Estoy en syncAddImagenJornada2");
-    print(imagen.idEmiWeb);
+    //print("Estoy en syncAddImagenJornada2");
+    //print(imagen.idEmiWeb);
     final List<String> idsDBRImagenes = [];
 
     try {
@@ -2516,7 +2515,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncAddImagenJornada2(): $e');
+      //print('ERROR - function syncAddImagenJornada2(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -2526,7 +2525,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncAddJornada3(
       Jornadas jornada, Bitacora bitacora) async {
-    print("Estoy en syncAddJornada3");
+    //print("Estoy en syncAddJornada3");
     final List<String> idsDBRImagenes = [];
     try {
       if (!bitacora.executePocketbase) {
@@ -3069,7 +3068,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncAddJornada3(): $e');
+      //print('ERROR - function syncAddJornada3(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -3079,7 +3078,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncAddImagenJornada3(
       Imagenes imagen, Bitacora bitacora) async {
-    print("Estoy en syncAddImagenJornada3");
+    //print("Estoy en syncAddImagenJornada3");
     final List<String> idsDBRImagenes = [];
     try {
       if (!bitacora.executePocketbase) {
@@ -3158,7 +3157,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncAddImagenJornada3(): $e');
+      //print('ERROR - function syncAddImagenJornada3(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -3168,7 +3167,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncAddProductoInversionJ3(
       ProdSolicitado prodSolicitado, Bitacora bitacora) async {
-    print("Estoy en syncAddProductoInversionJ3");
+    //print("Estoy en syncAddProductoInversionJ3");
     try {
       if (!bitacora.executePocketbase) {
         if (prodSolicitado.idDBR == null) {
@@ -3223,7 +3222,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncAddProductoInversionJ3(): $e');
+      //print('ERROR - function syncAddProductoInversionJ3(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -3233,7 +3232,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncUpdateProductoInversionJ3(
       ProdSolicitado prodSolicitado, Bitacora bitacora) async {
-    print("Estoy en syncUpdateProductoInversionJ3");
+    //print("Estoy en syncUpdateProductoInversionJ3");
     try {
       if (!bitacora.executePocketbase) {
         final recordProdSolicitado = await client.records.update(
@@ -3272,7 +3271,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncUpdateProductoInversionJ3(): $e');
+      //print('ERROR - function syncUpdateProductoInversionJ3(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -3282,7 +3281,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncAddJornada4(
       Jornadas jornada, Bitacora bitacora) async {
-    print("Estoy en syncAddJornada4");
+    //print("Estoy en syncAddJornada4");
     final List<String> idsDBRImagenes = [];
     final listJornadas = jornada.emprendimiento.target!.jornadas.toList();
     try {
@@ -3437,7 +3436,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncAddJornada4(): $e');
+      //print('ERROR - function syncAddJornada4(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -3447,7 +3446,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncAddImagenJornada4(
       Imagenes imagen, Bitacora bitacora) async {
-    print("Estoy en syncAddImagenJornada4");
+    //print("Estoy en syncAddImagenJornada4");
     final List<String> idsDBRImagenes = [];
     try {
       if (!bitacora.executePocketbase) {
@@ -3526,7 +3525,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncAddImagenJornada4(): $e');
+      //print('ERROR - function syncAddImagenJornada4(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -3536,7 +3535,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncAddConsultoria(
       Consultorias consultoria, Bitacora bitacora) async {
-    print("Estoy en syncAddConsultoria");
+    //print("Estoy en syncAddConsultoria");
     try {
       if (!bitacora.executePocketbase) {
         final tareaToSync = dataBase.tareasBox
@@ -3651,7 +3650,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncAddConsultoria(): $e');
+      //print('ERROR - function syncAddConsultoria(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -3661,7 +3660,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncAddProductoEmprendedor(
       ProductosEmp productoEmp, Bitacora bitacora) async {
-    print("Estoy en El syncAddProductoEmp");
+    //print("Estoy en El syncAddProductoEmp");
     try {
       if (!bitacora.executePocketbase) {
         final imagenToSync = dataBase.imagenesBox
@@ -3669,7 +3668,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
             .build()
             .findUnique();
         if (imagenToSync != null) {
-          print("SÍ HAY IMAGEN ASOCIADA");
+          //print("SÍ HAY IMAGEN ASOCIADA");
           if (imagenToSync.idDBR == null) {
             //Primero creamos la imagen asociada al producto Emp
             final recordImagen = await client.records.create('imagenes', body: {
@@ -3761,17 +3760,17 @@ class SyncProviderPocketbase extends ChangeNotifier {
             }
           }
         } else {
-          print("NO HAY IMAGEN ASOCIADA");
+          //print("NO HAY IMAGEN ASOCIADA");
           // No hay imagen asociada al producto Emp
           if (productoEmp.idDBR == null) {
-            print("Info productos");
-            print(productoEmp.nombre);
-            print(productoEmp.descripcion);
-            print(productoEmp.unidadMedida.target!.idDBR);
-            print(productoEmp.costo);
-            print(productoEmp.emprendimientos.target!.idDBR);
-            print(productoEmp.archivado);
-            print(productoEmp.idEmiWeb);
+            //print("Info productos");
+            //print(productoEmp.nombre);
+            //print(productoEmp.descripcion);
+            //print(productoEmp.unidadMedida.target!.idDBR);
+            //print(productoEmp.costo);
+            //print(productoEmp.emprendimientos.target!.idDBR);
+            //print(productoEmp.archivado);
+            //print(productoEmp.idEmiWeb);
             //Primero creamos el producto Emp
             final recordProductoEmp =
                 await client.records.create('productos_emp', body: {
@@ -3817,8 +3816,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print("Orale es CATCH");
-      print('ERROR - function syncAddProductoEmp(): $e');
+      //print("Orale es CATCH");
+      //print('ERROR - function syncAddProductoEmp(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -3828,7 +3827,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncAddImagenProductoEmprendedor(
       Imagenes imagen, Bitacora bitacora) async {
-    print("Estoy en syncAddImagenProductoEmprendedor");
+    //print("Estoy en syncAddImagenProductoEmprendedor");
     try {
       if (!bitacora.executePocketbase) {
         final recordImagenProductoEmprendedor =
@@ -3863,7 +3862,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncAddImagenProductoEmprendedor(): $e');
+      //print('ERROR - function syncAddImagenProductoEmprendedor(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -3872,7 +3871,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
   }
 
   Future<SyncInstruction> syncAddVenta(Ventas venta, Bitacora bitacora) async {
-    print("Estoy en El syncAddVenta");
+    //print("Estoy en El syncAddVenta");
     try {
       if (!bitacora.executePocketbase) {
         if (venta.idDBR == null) {
@@ -3922,7 +3921,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncAddVenta(): $e');
+      //print('ERROR - function syncAddVenta(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -3932,7 +3931,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncAddProductoVendido(
       ProdVendidos productoVendido, Bitacora bitacora) async {
-    print("Estoy en El syncAddProductoVendido");
+    //print("Estoy en El syncAddProductoVendido");
     try {
       if (!bitacora.executePocketbase) {
         if (productoVendido.idDBR == null) {
@@ -3987,7 +3986,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncAddProductoVendido(): $e');
+      //print('ERROR - function syncAddProductoVendido(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -3997,7 +3996,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncAddSingleProductoVendido(
       ProdVendidos productoVendido, Bitacora bitacora) async {
-    print("Estoy en El syncAddSingleProductoVendido");
+    //print("Estoy en El syncAddSingleProductoVendido");
     try {
       if (!bitacora.executePocketbase) {
         if (productoVendido.idDBR == null) {
@@ -4052,7 +4051,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncAddSingleProductoVendido(): $e');
+      //print('ERROR - function syncAddSingleProductoVendido(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -4063,7 +4062,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
   Future<SyncInstruction> syncAddInversion(
       Inversiones inversion, Bitacora bitacora) async {
     try {
-      print("Estoy en syncAddInversion");
+      //print("Estoy en syncAddInversion");
       if (!bitacora.executePocketbase) {
         if (inversion.idDBR == null) {
           //Primero creamos la inversion
@@ -4134,7 +4133,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                           "id_imagen_fk":
                               prodSolicitadosToSync[i].imagen.target!.idDBR,
                         });
-                        print("No postea productos");
+                        //print("No postea productos");
                         if (recordProdSolicitado.id.isNotEmpty) {
                           //Se recupera el idDBR del prod Solicitado
                           prodSolicitadosToSync[i].idDBR =
@@ -4330,7 +4329,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncAddInversion(): $e');
+      //print('ERROR - function syncAddInversion(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -4340,7 +4339,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncAddImagenUsuario(
       Imagenes imagen, Bitacora bitacora) async {
-    print("Estoy en syncAddImagenUsuario");
+    //print("Estoy en syncAddImagenUsuario");
     try {
       if (bitacora.executeEmiWeb) {
         if (!bitacora.executePocketbase) {
@@ -4383,7 +4382,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 "Falló al agregar Imagen de Perfil del Usuario, no se ha recuperado el id de la imagen de Perfil del Usuario desde Emi Web para poder agregarla en Servidor Local.");
       }
     } catch (e) {
-      print('ERROR - function syncAddImagenUsuario(): $e');
+      //print('ERROR - function syncAddImagenUsuario(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -4393,7 +4392,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncUpdateImagenUsuario(
       Imagenes imagen, Bitacora bitacora) async {
-    print("Estoy en El syncUpdateImagenUsuario en Pocketbase");
+    //print("Estoy en El syncUpdateImagenUsuario en Pocketbase");
     try {
       if (bitacora.executeEmiWeb) {
         if (!bitacora.executePocketbase) {
@@ -4432,7 +4431,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 "Falló al actualizar Imagen de Perfil del Usuario, no se ha actualizado imagen del Usuario en Emi Web para poder actualizar en Servidor Local.");
       }
     } catch (e) {
-      print('ERROR - function syncUpdateImagenUsuario(): $e');
+      //print('ERROR - function syncUpdateImagenUsuario(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -4442,7 +4441,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncUpdateFaseEmprendimiento(
       Emprendimientos emprendimiento, Bitacora bitacora) async {
-    print("Estoy en El syncUpdateFaseEmprendimiento en Pocketbase");
+    //print("Estoy en El syncUpdateFaseEmprendimiento en Pocketbase");
     try {
       if (!bitacora.executePocketbase) {
         final faseActual = dataBase.fasesEmpBox
@@ -4450,8 +4449,8 @@ class SyncProviderPocketbase extends ChangeNotifier {
             .build()
             .findUnique();
         if (faseActual != null) {
-          print("ID Promotor: ${emprendimiento.usuario.target!.idDBR}");
-          print("ID Emprendedor: ${emprendimiento.emprendedor.target!.idDBR}");
+          //print("ID Promotor: ${emprendimiento.usuario.target!.idDBR}");
+          //print("ID Emprendedor: ${emprendimiento.emprendedor.target!.idDBR}");
 
           final record = await client.records.update(
               'emprendimientos', emprendimiento.idDBR.toString(),
@@ -4488,7 +4487,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncUpdateFaseEmprendimiento(): $e');
+      //print('ERROR - function syncUpdateFaseEmprendimiento(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -4498,7 +4497,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncUpdateEstadoInversion(
       Inversiones inversion, Bitacora bitacora) async {
-    print("Estoy en El syncUpdateEstadoInversion en Pocketbase");
+    //print("Estoy en El syncUpdateEstadoInversion en Pocketbase");
     try {
       if (!bitacora.executePocketbase) {
         final estadoActual = dataBase.estadoInversionBox
@@ -4543,7 +4542,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncUpdateEstadoInversion(): $e');
+      //print('ERROR - function syncUpdateEstadoInversion(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -4553,7 +4552,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncUpdateEmprendimiento(
       Emprendimientos emprendimiento, Bitacora bitacora) async {
-    print("Estoy en El syncUpdateEmprendimiento");
+    //print("Estoy en El syncUpdateEmprendimiento");
     try {
       if (!bitacora.executePocketbase) {
         final record = await client.records
@@ -4585,7 +4584,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncUpdateEmprendedimiento(): $e');
+      //print('ERROR - function syncUpdateEmprendedimiento(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -4595,7 +4594,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<bool?> syncUpdateNameEmprendimiento(
       Emprendimientos emprendimiento) async {
-    print("Estoy en El syncUpdateNameEmprendimiento");
+    //print("Estoy en El syncUpdateNameEmprendimiento");
     try {
       final record = await client.records
           .update('emprendimientos', emprendimiento.idDBR.toString(), body: {
@@ -4611,14 +4610,14 @@ class SyncProviderPocketbase extends ChangeNotifier {
       }
       return true;
     } catch (e) {
-      print('ERROR - function syncUpdateNameEmprendimiento(): $e');
+      //print('ERROR - function syncUpdateNameEmprendimiento(): $e');
       return false;
     }
   }
 
   Future<SyncInstruction> syncUpdateEmprendedor(
       Emprendedores emprendedor, Bitacora bitacora) async {
-    print("Estoy en El syncUpdateEmprendedor");
+    //print("Estoy en El syncUpdateEmprendedor");
     try {
       if (!bitacora.executePocketbase) {
         final record = await client.records
@@ -4655,7 +4654,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncUpdateEmprendedor(): $e');
+      //print('ERROR - function syncUpdateEmprendedor(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -4665,7 +4664,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncUpdateJornada1(
       Jornadas jornada, Bitacora bitacora) async {
-    print("Estoy en El syncUpdateJornada1");
+    //print("Estoy en El syncUpdateJornada1");
     try {
       if (!bitacora.executePocketbase) {
         //Primero actualizamos la tarea
@@ -4713,7 +4712,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncUpdateJornada1(): $e');
+      //print('ERROR - function syncUpdateJornada1(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -4723,7 +4722,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncUpdateJornada2(
       Jornadas jornada, Bitacora bitacora) async {
-    print("Estoy en El syncUpdateJornada2");
+    //print("Estoy en El syncUpdateJornada2");
     try {
       if (!bitacora.executePocketbase) {
         //Primero actualizamos la tarea
@@ -4772,7 +4771,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncUpdateJornada2(): $e');
+      //print('ERROR - function syncUpdateJornada2(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -4782,7 +4781,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncUpdateImagenJornada2(
       Imagenes imagen, Bitacora bitacora) async {
-    print("Estoy en El syncUpdateImagenJornada2 en Pocketbase");
+    //print("Estoy en El syncUpdateImagenJornada2 en Pocketbase");
     try {
       if (!bitacora.executePocketbase) {
         final record = await client.records
@@ -4813,7 +4812,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncUpdateImagenJornada2(): $e');
+      //print('ERROR - function syncUpdateImagenJornada2(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -4823,7 +4822,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncUpdateJornada3(
       Jornadas jornada, Bitacora bitacora) async {
-    print("Estoy en El syncUpdateJornada3");
+    //print("Estoy en El syncUpdateJornada3");
     try {
       if (!bitacora.executePocketbase) {
         //Primero actualizamos la tarea
@@ -4873,7 +4872,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncUpdateJornada3(): $e');
+      //print('ERROR - function syncUpdateJornada3(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -4883,7 +4882,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncUpdateImagenJornada3(
       Imagenes imagen, Bitacora bitacora) async {
-    print("Estoy en El syncUpdateImagenJornada3 en Pocketbase");
+    //print("Estoy en El syncUpdateImagenJornada3 en Pocketbase");
     try {
       if (!bitacora.executePocketbase) {
         final record = await client.records
@@ -4914,7 +4913,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncUpdateImagenJornada3(): $e');
+      //print('ERROR - function syncUpdateImagenJornada3(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -4924,7 +4923,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncUpdateJornada4(
       Jornadas jornada, Bitacora bitacora) async {
-    print("Estoy en El syncUpdateJornada4");
+    //print("Estoy en El syncUpdateJornada4");
     try {
       if (!bitacora.executePocketbase) {
         //Primero actualizamos la tarea
@@ -4973,7 +4972,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncUpdateJornada4(): $e');
+      //print('ERROR - function syncUpdateJornada4(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -4983,7 +4982,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncUpdateImagenJornada4(
       Imagenes imagen, Bitacora bitacora) async {
-    print("Estoy en El syncUpdateImagenJornada4 en Pocketbase");
+    //print("Estoy en El syncUpdateImagenJornada4 en Pocketbase");
     try {
       if (!bitacora.executePocketbase) {
         final record = await client.records
@@ -5014,7 +5013,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncUpdateImagenJornada4(): $e');
+      //print('ERROR - function syncUpdateImagenJornada4(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -5024,12 +5023,12 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncUpdateTareaConsultoria(
       Tareas tarea, Bitacora bitacora) async {
-    print("Estoy en El syncUpdateTareaConsultoria");
+    //print("Estoy en El syncUpdateTareaConsultoria");
     List<String> tareasConsultoria = [];
     try {
       if (!bitacora.executePocketbase) {
         if (tarea.imagenes.toList().isNotEmpty) {
-          print("SI ES NOT EMPTY");
+          //print("SI ES NOT EMPTY");
           if (tarea.imagenes.first.idDBR == null) {
             //Primero creamos la imagen asociada al producto Emp
             final recordImagen = await client.records.create('imagenes', body: {
@@ -5069,11 +5068,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                         "id_tarea_fk": tareasConsultoria,
                       });
                   if (recordConsultoria.id.isNotEmpty) {
-                    print("Consultoria updated succesfully");
+                    //print("Consultoria updated succesfully");
                     //Se recupera el idDBR de la tarea
                     tarea.idDBR = recordTarea.id;
                     dataBase.tareasBox.put(tarea);
-                    print("Se recupera el idDBR de la Tarea");
+                    //print("Se recupera el idDBR de la Tarea");
                     //Se marca como realizada en Pocketbase la instrucción en Bitacora
                     bitacora.executePocketbase = true;
                     dataBase.bitacoraBox.put(bitacora);
@@ -5140,11 +5139,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                         "id_tarea_fk": tareasConsultoria,
                       });
                   if (recordConsultoria.id.isNotEmpty) {
-                    print("Consultoria updated succesfully");
+                    //print("Consultoria updated succesfully");
                     //Se recupera el idDBR de la tarea
                     tarea.idDBR = recordTarea.id;
                     dataBase.tareasBox.put(tarea);
-                    print("Se recupera el idDBR de la Tarea");
+                    //print("Se recupera el idDBR de la Tarea");
                     //Se marca como realizada en Pocketbase la instrucción en Bitacora
                     bitacora.executePocketbase = true;
                     dataBase.bitacoraBox.put(bitacora);
@@ -5183,7 +5182,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
             }
           }
         } else {
-          print("NO ES NOT EMPTY");
+          //print("NO ES NOT EMPTY");
           if (tarea.idDBR == null) {
             // No hay imagen asociada al producto Emp
             //Segundo creamos la tarea asociada a la consultoria
@@ -5213,11 +5212,11 @@ class SyncProviderPocketbase extends ChangeNotifier {
                       "id_tarea_fk": tareasConsultoria,
                     });
                 if (recordConsultoria.id.isNotEmpty) {
-                  print("Consultoria updated succesfully");
+                  //print("Consultoria updated succesfully");
                   //Se recupera el idDBR de la tarea
                   tarea.idDBR = recordTarea.id;
                   dataBase.tareasBox.put(tarea);
-                  print("Se recupera el idDBR de la Tarea");
+                  //print("Se recupera el idDBR de la Tarea");
                   //Se marca como realizada en Pocketbase la instrucción en Bitacora
                   bitacora.executePocketbase = true;
                   dataBase.bitacoraBox.put(bitacora);
@@ -5263,7 +5262,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncUpdateTareaConsultoria(): $e');
+      //print('ERROR - function syncUpdateTareaConsultoria(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -5273,7 +5272,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncUpdateUsuario(
       Usuarios usuario, Bitacora bitacora) async {
-    print("Estoy en El syncUpdateUsuario");
+    //print("Estoy en El syncUpdateUsuario");
     try {
       if (bitacora.executeEmiWeb) {
         if (!bitacora.executePocketbase) {
@@ -5286,7 +5285,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
           });
 
           if (record.id.isNotEmpty) {
-            print("Usuario updated succesfully");
+            //print("Usuario updated succesfully");
             //Se marca como realizada en Pocketbase la instrucción en Bitacora
             bitacora.executePocketbase = true;
             dataBase.bitacoraBox.put(bitacora);
@@ -5316,7 +5315,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
                 "Falló en proceso de sincronizar actualización de Usuario '${usuario.nombre} ${usuario.apellidoM} ${usuario.apellidoP}' en el Servidor Local, la información en Emi Web aún no ha sido actualizada.");
       }
     } catch (e) {
-      print('ERROR - function syncUpdateUsuario(): $e');
+      //print('ERROR - function syncUpdateUsuario(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -5331,7 +5330,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncUpdateProductoEmprendedor(
       ProductosEmp prodEmprendedor, Bitacora bitacora) async {
-    print("Estoy en El syncUpdateProductoEmprendedor");
+    //print("Estoy en El syncUpdateProductoEmprendedor");
     try {
       if (!bitacora.executePocketbase) {
         final record = await client.records
@@ -5367,7 +5366,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncUpdateProductoEmprendedor(): $e');
+      //print('ERROR - function syncUpdateProductoEmprendedor(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -5377,7 +5376,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncUpdateImagenProductoEmprendedor(
       Imagenes imagen, Bitacora bitacora) async {
-    print("Estoy en El syncUpdateImagenProductoEmprendedor en Pocketbase");
+    //print("Estoy en El syncUpdateImagenProductoEmprendedor en Pocketbase");
     try {
       if (!bitacora.executePocketbase) {
         final recordImagen = await client.records
@@ -5408,7 +5407,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncUpdateImagenProductoEmprendedor(): $e');
+      //print('ERROR - function syncUpdateImagenProductoEmprendedor(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -5418,7 +5417,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncUpdateVenta(
       Ventas venta, Bitacora bitacora) async {
-    print("Estoy en El syncUpdateVenta");
+    //print("Estoy en El syncUpdateVenta");
     try {
       if (!bitacora.executePocketbase) {
         final recordVenta =
@@ -5451,7 +5450,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncUpdateVenta(): $e');
+      //print('ERROR - function syncUpdateVenta(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -5461,7 +5460,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
 
   Future<SyncInstruction> syncUpdateProductosVendidosVenta(
       Ventas venta, Bitacora bitacora) async {
-    print("Estoy en El syncUpdateProductosVendidosVenta");
+    //print("Estoy en El syncUpdateProductosVendidosVenta");
     try {
       if (!bitacora.executePocketbase) {
         final recordVenta =
@@ -5492,7 +5491,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncUpdateProductosVendidosVenta(): $e');
+      //print('ERROR - function syncUpdateProductosVendidosVenta(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -5501,7 +5500,7 @@ class SyncProviderPocketbase extends ChangeNotifier {
   }
 
 SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
-    print("Estoy en El syncAcceptInversionesXProductosCotizados de Emi Web");
+    //print("Estoy en El syncAcceptInversionesXProductosCotizados de Emi Web");
     try {
       //Se marca como realizada en Pocketbase la instrucción en Bitacora
       bitacora.executePocketbase = true;
@@ -5512,7 +5511,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
       }
       return SyncInstruction(exitoso: true, descripcion: "");
     } catch (e) {
-      print('ERROR - function syncAcceptInversionesXProductosCotizados(): $e');
+      //print('ERROR - function syncAcceptInversionesXProductosCotizados(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -5523,7 +5522,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
   Future<SyncInstruction> syncUpdateInversionesXProductosCotizados(
       InversionesXProdCotizados inversionXprodCotizados,
       Bitacora bitacora) async {
-    print("Estoy en syncUpdateInversionesXProductosCotizados");
+    //print("Estoy en syncUpdateInversionesXProductosCotizados");
     try {
       if (!bitacora.executePocketbase) {
         final recordInversionXProdCotizados = await client.records.update(
@@ -5575,7 +5574,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncUpdateInversionesXProductosCotizados(): $e');
+      //print('ERROR - function syncUpdateInversionesXProductosCotizados(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -5585,7 +5584,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
 
   Future<SyncInstruction> syncAcceptProdCotizado(
       ProdCotizados prodCotizado, Bitacora bitacora) async {
-    print("Estoy en syncAcceptProductoCotizado");
+    //print("Estoy en syncAcceptProductoCotizado");
     try {
       if (!bitacora.executePocketbase) {
         final recordProdCotizados = await client.records.update(
@@ -5619,7 +5618,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncAcceptProductoCotizado(): $e');
+      //print('ERROR - function syncAcceptProductoCotizado(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -5629,7 +5628,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
 
   Future<SyncInstruction> syncAddPagoInversion(
       Pagos pago, Bitacora bitacora) async {
-    print("Estoy en syncAddPagoInversion");
+    //print("Estoy en syncAddPagoInversion");
     try {
       if (!bitacora.executePocketbase) {
         if (pago.idDBR == null) {
@@ -5708,7 +5707,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncAddPagoInversion(): $e');
+      //print('ERROR - function syncAddPagoInversion(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -5718,7 +5717,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
 
   Future<SyncInstruction> syncUpdateProductoVendido(
       ProdVendidos productoVendido, Bitacora bitacora) async {
-    print("Estoy en syncUpdateProductoVendido");
+    //print("Estoy en syncUpdateProductoVendido");
     try {
       if (!bitacora.executePocketbase) {
         final record = await client.records
@@ -5752,7 +5751,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncUpdateProductoVendido(): $e');
+      //print('ERROR - function syncUpdateProductoVendido(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -5762,7 +5761,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
 
   Future<SyncInstruction> syncArchivarEmprendimiento(
       Emprendimientos emprendimiento, Bitacora bitacora) async {
-    print("Estoy en El syncArchivarEmprendimiento");
+    //print("Estoy en El syncArchivarEmprendimiento");
     try {
       if (!bitacora.executePocketbase) {
         final record = await client.records
@@ -5793,7 +5792,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncArchivarEmprendimiento(): $e');
+      //print('ERROR - function syncArchivarEmprendimiento(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -5803,7 +5802,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
 
   Future<SyncInstruction> syncDesarchivarEmprendimiento(
       Emprendimientos emprendimiento, Bitacora bitacora) async {
-    print("Estoy en El syncDesarchivarEmprendimiento");
+    //print("Estoy en El syncDesarchivarEmprendimiento");
     try {
       if (!bitacora.executePocketbase) {
         final record = await client.records
@@ -5834,7 +5833,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncDesarchivarEmprendimiento(): $e');
+      //print('ERROR - function syncDesarchivarEmprendimiento(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -5844,7 +5843,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
 
   Future<SyncInstruction> syncArchivarConsultoria(
       Consultorias consultoria, Bitacora bitacora) async {
-    print("Estoy en El syncArchivarConsultoria");
+    //print("Estoy en El syncArchivarConsultoria");
     try {
       if (!bitacora.executePocketbase) {
         final record = await client.records
@@ -5875,7 +5874,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncArchivarConsultoria(): $e');
+      //print('ERROR - function syncArchivarConsultoria(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -5885,7 +5884,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
 
   Future<SyncInstruction> syncDesarchivarConsultoria(
       Consultorias consultoria, Bitacora bitacora) async {
-    print("Estoy en El syncDesarchivarConsultoria");
+    //print("Estoy en El syncDesarchivarConsultoria");
     try {
       if (!bitacora.executePocketbase) {
         final record = await client.records
@@ -5916,7 +5915,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncDesarchivarConsultoria(): $e');
+      //print('ERROR - function syncDesarchivarConsultoria(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -5925,7 +5924,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
   }
 
   Future<SyncInstruction> syncDeleteImagenJornada(Bitacora bitacora) async {
-    print("Estoy en El syncDelteImagenJornada en Pocketbase");
+    //print("Estoy en El syncDelteImagenJornada en Pocketbase");
     try {
       if (!bitacora.executePocketbase) {
         await client.records.delete('imagenes', bitacora.idDBR.toString());
@@ -5945,7 +5944,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncDelteImagenJornada(): $e');
+      //print('ERROR - function syncDelteImagenJornada(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -5955,8 +5954,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
 
   Future<SyncInstruction> syncDeleteProductoInversionJ3(
       Bitacora bitacora) async {
-    print(
-        "Estoy en El syncDelteProdusyncDeleteProductoInversionJ3 en Pocketbase");
+    //print("Estoy en El syncDelteProdusyncDeleteProductoInversionJ3 en Pocketbase");
     try {
       if (!bitacora.executePocketbase) {
         await client.records
@@ -5977,7 +5975,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncDeleteProductoInversionJ3(): $e');
+      //print('ERROR - function syncDeleteProductoInversionJ3(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -5986,7 +5984,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
   }
 
   Future<SyncInstruction> syncDeleteProductoVendido(Bitacora bitacora) async {
-    print("Estoy en El syncDelteOroductoVendido en Pocketbase");
+    //print("Estoy en El syncDelteOroductoVendido en Pocketbase");
     try {
       if (!bitacora.executePocketbase) {
         await client.records.delete('prod_vendidos', bitacora.idDBR.toString());
@@ -6006,7 +6004,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncDeleteProductoVendido(): $e');
+      //print('ERROR - function syncDeleteProductoVendido(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -6016,7 +6014,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
 
   Future<SyncInstruction> syncAddImagenesEntregaInversion(
       Inversiones inversion, Bitacora bitacora) async {
-    print("Estoy en syncAddImagenesEntregaInversion");
+    //print("Estoy en syncAddImagenesEntregaInversion");
     try {
       if (!bitacora.executePocketbase) {
         if (inversion.imagenFirmaRecibido.target!.idDBR == null) {
@@ -6127,7 +6125,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
         return SyncInstruction(exitoso: true, descripcion: "");
       }
     } catch (e) {
-      print('ERROR - function syncAddImagenesEntregaInversion(): $e');
+      //print('ERROR - function syncAddImagenesEntregaInversion(): $e');
       return SyncInstruction(
           exitoso: false,
           descripcion:
@@ -6194,8 +6192,8 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
               listProdCotizados
                   .add(getProdCotizadosFromMap(element.toString()));
             }
-            print("Dentro de En Cotización");
-            print("****Informacion productos cotizados****");
+            //print("Dentro de En Cotización");
+            //print("****Informacion productos cotizados****");
             // Se recupera el idDBR de la instancia de inversion x prod Cotizados
             if (inversion.inversionXprodCotizados.last.idEmiWeb == null) {
               // Se debe actualizar la IversionXprodCotizados
@@ -6249,7 +6247,7 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
                 dataBase.inversionesXprodCotizadosBox
                     .put(inversion.inversionXprodCotizados.last);
                 dataBase.inversionesBox.put(inversion);
-                print("Inversion updated succesfully");
+                //print("Inversion updated succesfully");
                 return true;
               } else {
                 return false;
@@ -6311,14 +6309,14 @@ SyncInstruction syncAcceptInversionesXProductosCotizados(Bitacora bitacora) {
                 inversion.inversionXprodCotizados
                     .add(nuevaIversionXprodCotizados);
                 dataBase.inversionesBox.put(inversion);
-                print("Inversion updated succesfully");
+                //print("Inversion updated succesfully");
                 return true;
               } else {
                 return false;
               }
             }
           } else {
-            print("No se encuentar en Cotización la inversión");
+            //print("No se encuentar en Cotización la inversión");
             return false;
           }
         } else {

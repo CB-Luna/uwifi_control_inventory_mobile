@@ -182,7 +182,7 @@ class UserState extends ChangeNotifier {
               );
               switch (responseUpdateContrasenaUsuario.statusCode) {
                 case 200: //Caso éxitoso
-                  print("Caso exitoso 200 en put Contraseña Usuario");
+                  //print("Caso exitoso 200 en put Contraseña Usuario");
                   usuario.password = newPasswordEncrypted;
                   dataBase.usuariosBox.put(usuario);
                   prefs.setString("passEncrypted", newPasswordEncrypted);

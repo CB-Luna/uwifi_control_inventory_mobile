@@ -39,7 +39,7 @@ class _EditFlutterFlowCarouselState extends State<EditFlutterFlowCarousel> {
                   const CustomBottomEliminarImagen(),
             );
             if (option == 'eliminar') {
-              print("Eliminar a ${File(i)}");
+              //print("Eliminar a ${File(i)}");
               var booleano = await showModalBottomSheet(
                 isScrollControlled: true,
                 backgroundColor: Colors.transparent,
@@ -56,7 +56,7 @@ class _EditFlutterFlowCarouselState extends State<EditFlutterFlowCarousel> {
                 },
               );
               if (booleano) {
-                print("Se elimina IMAGEN");
+                //print("Se elimina IMAGEN");
                 setState(() {
                   widget.listaImagenes.remove(i);
                 });
@@ -65,7 +65,7 @@ class _EditFlutterFlowCarouselState extends State<EditFlutterFlowCarousel> {
             } else { //Se aborta la opción
               return;
             }
-            print("Fin");
+            //print("Fin");
           },
           child: Container(
               width: MediaQuery.of(context).size.width,

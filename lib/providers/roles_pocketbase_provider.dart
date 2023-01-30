@@ -67,7 +67,7 @@ class RolesPocketbaseProvider extends ChangeNotifier {
             idEmiWeb: listRoles[i].idEmiWeb,
             );
             dataBase.rolesBox.put(nuevoRol);
-            print('Rol Nuevo agregado exitosamente');
+            //print('Rol Nuevo agregado exitosamente');
           } else {
             //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
             if (rolExistente.fechaRegistro != listRoles[i].updated) {

@@ -435,7 +435,7 @@ class _VentasScreenState extends State<VentasScreen> {
                                           listActualVentas[resultadoIndex];
                                       return InkWell(
                                           onTap: () async {
-                                            print("Total: ${venta.total}");
+                                            //print("Total: ${venta.total}");
                                             if (widget
                                                         .emprendimiento
                                                         .usuario

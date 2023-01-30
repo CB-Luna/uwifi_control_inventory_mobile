@@ -98,7 +98,7 @@ class _EditarProductoInversionJornadaState
 
   @override
   Widget build(BuildContext context) {
-    print(widget.productoSol.costoEstimado.toString());
+    //print(widget.productoSol.costoEstimado.toString());
     final productoInversionJornadaController =
         Provider.of<ProductoInversionJornadaController>(context);
     List<String> listFamilias = [];
@@ -1097,7 +1097,7 @@ class _EditarProductoInversionJornadaState
                                       0, 0, 0, 20),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      print("Desde inversion");
+                                      //print("Desde inversion");
                                       if (productoInversionJornadaController
                                           .validateForm(formKey)) {
                                         if (productoController.text !=
@@ -1128,14 +1128,14 @@ class _EditarProductoInversionJornadaState
                                             newTipoEmpaque !=
                                                 widget.productoSol.tipoEmpaques
                                                     .target!.tipo) {
-                                          print("Si se va a actualizar");
+                                          //print("Si se va a actualizar");
                                           if (newImagen !=
                                               widget.productoSol.imagen.target
                                                   ?.imagenes) {
                                             if (widget.productoSol.imagen.target
                                                     ?.path ==
                                                 null) {
-                                              print("SE AGREGA IMAGEN NUEVA");
+                                              //print("SE AGREGA IMAGEN NUEVA");
                                               productoInversionJornadaController
                                                   .addImagenProductoSol(
                                                       widget.productoSol,
@@ -1146,8 +1146,7 @@ class _EditarProductoInversionJornadaState
                                                           .emprendimientoActual
                                                           .id);
                                             } else {
-                                              print(
-                                                  "SE ACTUALIZA IMAGEN NUEVA");
+                                              //print("SE ACTUALIZA IMAGEN NUEVA");
                                               productoInversionJornadaController
                                                   .updateImagenProductoSol(
                                                       widget.productoSol,
@@ -1247,7 +1246,7 @@ class _EditarProductoInversionJornadaState
                                             if (widget.productoSol.imagen.target
                                                     ?.path ==
                                                 null) {
-                                              print("SE AGREGA IMAGEN NUEVA");
+                                              //print("SE AGREGA IMAGEN NUEVA");
                                               productoInversionJornadaController
                                                   .addImagenProductoSol(
                                                       widget.productoSol,
@@ -1258,8 +1257,7 @@ class _EditarProductoInversionJornadaState
                                                           .emprendimientoActual
                                                           .id);
                                             } else {
-                                              print(
-                                                  "SE ACTUALIZA IMAGEN NUEVA");
+                                              //print("SE ACTUALIZA IMAGEN NUEVA");
                                               productoInversionJornadaController
                                                   .updateImagenProductoSol(
                                                       widget.productoSol,

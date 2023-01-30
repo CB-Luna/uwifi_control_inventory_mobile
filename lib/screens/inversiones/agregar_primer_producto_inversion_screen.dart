@@ -977,7 +977,7 @@ class _AgregarPrimerProductoInversionScreenState
                                             .findFirst()
                                             ?.id;
                                         if (idTipoEmpaques != null) {
-                                          print("Sí lo deja pasar");
+                                          //print("Sí lo deja pasar");
                                           inversionProvider
                                               .addProductoSolicitado(
                                                   actualEmprendimiento!.id,

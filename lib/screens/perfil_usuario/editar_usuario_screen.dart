@@ -364,9 +364,9 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                             0, 20, 0, 0),
                                     child: CustomButton(
                                       onPressed: () async {
-                                        print("ID IMAGEN: ${widget.usuario.imagen.target?.idEmiWeb}");
+                                        //print("ID IMAGEN: ${widget.usuario.imagen.target?.idEmiWeb}");
                                         if (imagenTemp != widget.usuario.imagen.target?.path) {
-                                          print("Sí");
+                                          //print("Sí");
                                           if (nombreController.text !=
                                                 widget.usuario.nombre ||
                                             apellidoPController.text !=
@@ -384,7 +384,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                                   .findFirst()
                                                   ?.id;
                                               if (idRol != null) {
-                                                print("Se va a actualizar el rol del Usuario");
+                                                //print("Se va a actualizar el rol del Usuario");
                                                 usuarioProvider.updateRol(
                                                   widget.usuario.id,
                                                   idRol,
@@ -392,7 +392,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                               }
                                             }
                                             if (widget.usuario.imagen.target?.path != null) {
-                                                print("Se va a actualizar la imagen del Usuario");
+                                                //print("Se va a actualizar la imagen del Usuario");
                                                 usuarioProvider.updateImagenUsuario(
                                                   widget.usuario.imagen.target!.id,
                                                   newImagen!.nombre!,
@@ -400,7 +400,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                                   newImagen!.base64!,
                                                 );
                                               } else {
-                                                print("Se va a agregar la imagen del Usuario");
+                                                //print("Se va a agregar la imagen del Usuario");
                                                 usuarioProvider.addImagenUsuario(
                                                   widget.usuario.imagen.target!.id,
                                                   newImagen!.nombre!,
@@ -408,7 +408,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                                   newImagen!.base64!,
                                                 );
                                               }
-                                              print("Sí se actualizan los datos del Usuario");
+                                              //print("Sí se actualizan los datos del Usuario");
                                               usuarioProvider.updateDatos(
                                                 widget.usuario.id,
                                                 nombreController.text,
@@ -452,7 +452,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                                 .findFirst()
                                                 ?.id;
                                             if (idRol != null) {
-                                              print("Sólo se va a actualizar el rol del Usuario");
+                                              //print("Sólo se va a actualizar el rol del Usuario");
                                               usuarioProvider.updateRol(
                                                 widget.usuario.id,
                                                 idRol,
@@ -461,7 +461,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                           }
                                           if (imagenTemp != widget.usuario.imagen.target?.path) {
                                             if (widget.usuario.imagen.target?.path != null) {
-                                              print("Se va a actualizar la imagen del Usuario");
+                                              //print("Se va a actualizar la imagen del Usuario");
                                               usuarioProvider.updateImagenUsuario(
                                                 widget.usuario.imagen.target!.id,
                                                 newImagen!.nombre!,
@@ -469,7 +469,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                                 newImagen!.base64!,
                                               );
                                             } else {
-                                              print("Se va a agregar la imagen del Usuario");
+                                              //print("Se va a agregar la imagen del Usuario");
                                               usuarioProvider.addImagenUsuario(
                                                 widget.usuario.imagen.target!.id,
                                                 newImagen!.nombre!,
@@ -487,7 +487,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                           );
                                         }
                                         } else {
-                                          print("No");
+                                          //print("No");
                                           if (nombreController.text !=
                                                   widget.usuario.nombre ||
                                               apellidoPController.text !=
@@ -505,14 +505,14 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                                     .findFirst()
                                                     ?.id;
                                                 if (idRol != null) {
-                                                  print("Se va a actualizar el rol del Usuario");
+                                                  //print("Se va a actualizar el rol del Usuario");
                                                   usuarioProvider.updateRol(
                                                     widget.usuario.id,
                                                     idRol,
                                                   );
                                                 }
                                               }
-                                              print("Sí se actualizan los datos del Usuario");
+                                              //print("Sí se actualizan los datos del Usuario");
                                               usuarioProvider.updateDatos(
                                                 widget.usuario.id,
                                                 nombreController.text,
@@ -556,7 +556,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                                     .findFirst()
                                                     ?.id;
                                                 if (idRol != null) {
-                                                  print("Sólo se va a actualizar el rol del Usuario");
+                                                  //print("Sólo se va a actualizar el rol del Usuario");
                                                   usuarioProvider.updateRol(
                                                     widget.usuario.id,
                                                     idRol,

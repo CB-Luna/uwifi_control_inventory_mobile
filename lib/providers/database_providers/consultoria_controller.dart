@@ -72,7 +72,7 @@ class ConsultoriaController extends ChangeNotifier {
       emprendimiento.faseEmp.toList().forEach((element) {print(element.fase);});
       dataBase.emprendimientosBox.put(emprendimiento);
       consultorias.add(nuevaConsultoria);
-      print('Consultoria agregada exitosamente');
+      //print('Consultoria agregada exitosamente');
       clearInformation(); //Se limpia información para usar el mismo controller en otro registro
       notifyListeners();
     }
@@ -91,7 +91,7 @@ class ConsultoriaController extends ChangeNotifier {
     //Se actualiza el porcentaje de la Tarea
     final porcentajeAvance = dataBase.porcentajeAvanceBox.get(idPorcentajeAvance);
     if (porcentajeAvance != null) {
-      print("Se actualiza porcentaje");
+      //print("Se actualiza porcentaje");
       nuevaTarea.porcentaje.target = porcentajeAvance;
     }
     var updateConsultoria = dataBase.consultoriasBox.get(id);
@@ -103,7 +103,7 @@ class ConsultoriaController extends ChangeNotifier {
       dataBase.consultoriasBox.put(updateConsultoria);
       nuevaTarea.bitacora.add(nuevaInstruccion);
       dataBase.tareasBox.put(nuevaTarea);
-      print('Tarea de Consultoría actualizada exitosamente');
+      //print('Tarea de Consultoría actualizada exitosamente');
       clearInformation(); //Se limpia información para usar el mismo controller en otro registro
       notifyListeners();
     }
@@ -117,7 +117,7 @@ class ConsultoriaController extends ChangeNotifier {
       consultoria.archivado = true;
       consultoria.bitacora.add(nuevaInstruccion);
       dataBase.consultoriasBox.put(consultoria);
-      print('Consultoria actualizada exitosamente');
+      //print('Consultoria actualizada exitosamente');
     }
   }
 
@@ -129,7 +129,7 @@ class ConsultoriaController extends ChangeNotifier {
       consultoria.archivado = false;
       consultoria.bitacora.add(nuevaInstruccion);
       dataBase.consultoriasBox.put(consultoria);
-      print('Consultoria actualizada exitosamente');
+      //print('Consultoria actualizada exitosamente');
     }
   }
 

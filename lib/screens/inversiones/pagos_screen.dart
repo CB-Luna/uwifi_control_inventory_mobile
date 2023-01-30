@@ -595,7 +595,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                               // for (var element in actualInversion!.inversionXprodCotizados.last.prodCotizados.toList()) {
 
                                                               //   if (element.aceptado) {
-                                                              //     print("${element.productosProv.target!.nombre}");
+                                                              //     //print("${element.productosProv.target!.nombre}");
 
                                                               //   }
                                                               // }

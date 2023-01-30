@@ -185,7 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             final connectivityResult =
                                 await (Connectivity().checkConnectivity());
                             if (connectivityResult == ConnectivityResult.none) {
-                              print("Proceso offline");
+                              //print("Proceso offline");
                               //Proceso Offline
                               final passwordEncrypted = processEncryption(
                                   userState.passwordController.text);
@@ -197,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       userState.emailController.text,
                                       passwordEncrypted);
                               if (usuarioActual != null) {
-                                print('Usuario ya existente');
+                                //print('Usuario ya existente');
                                 if (usuarioActual.archivado) {
                                   snackbarKey.currentState
                                       ?.showSnackBar(const SnackBar(
@@ -243,7 +243,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 );
                               } else {
-                                print('Usuario no existente localmente');
+                                //print('Usuario no existente localmente');
                                 snackbarKey.currentState
                                     ?.showSnackBar(const SnackBar(
                                   content: Text(
@@ -251,7 +251,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ));
                               }
                             } else {
-                              print("Proceso online");
+                              //print("Proceso online");
                               //Login a Emi Web
                               final passwordEncrypted = processEncryption(
                                   userState.passwordController.text);
@@ -275,8 +275,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         passwordEncrypted);
                                 if (await booleanoEmiWeb) {
                                   //Se descargan los roles desde Pocketbase
-                                  print(
-                                      "Se ha realizado con éxito el proceso de Roles Emi Web");
+                                  //print("Se ha realizado con éxito el proceso de Roles Emi Web");
                                   rolesPocketbaseProvider.exitoso = true;
                                   rolesPocketbaseProvider.procesoCargando(true);
                                   rolesPocketbaseProvider
@@ -286,13 +285,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                       rolesPocketbaseProvider
                                           .getRolesPocketbase();
                                   if (await booleanoPocketbase) {
-                                    print(
-                                        "Se ha realizado con éxito el proceso de getRolesPocketbase");
+                                    //print("Se ha realizado con éxito el proceso de getRolesPocketbase");
                                     var stringValidateUsuario =
                                         AuthService.validateUsuarioInPocketbase(
                                             userState.emailController.text);
                                     if (await stringValidateUsuario == "Null") {
-                                      print("Es null");
+                                      //print("Es null");
                                       snackbarKey.currentState
                                           ?.showSnackBar(const SnackBar(
                                         content: Text(
@@ -301,7 +299,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     } else {
                                       if (await stringValidateUsuario ==
                                           "NoUserExist") {
-                                        print("Es NoUserExist");
+                                        //print("Es NoUserExist");
                                         //Se postea el Usuario en Pocketbase
                                         if (!await AuthService
                                             .postUsuarioPocketbase(
@@ -364,15 +362,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 emiUser?.items?[0].idImagenFk ??
                                                     "empty");
 
-                                        print("Hola miro el IdDBR $idDBR");
+                                        //print("Hola miro el IdDBR $idDBR");
                                         if (emiUser == null) {
-                                          print("Si es null");
+                                          //print("Si es null");
                                           return;
                                         }
-                                        print("Hola miro el IdDBR post $idDBR");
+                                        //print("Hola miro el IdDBR post $idDBR");
                                         if (usuarioProvider
                                             .validateUsuario(userId)) {
-                                          print('Usuario ya existente');
+                                          //print('Usuario ya existente');
                                           usuarioProvider.getUser(userId);
                                           usuarioProvider.update(
                                             loginResponsePocketbase.user.email,

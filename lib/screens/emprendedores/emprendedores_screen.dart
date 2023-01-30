@@ -52,7 +52,7 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
   }
 
   getInfo() {
-    print("PREFERS: ${prefs.getString("userId")}");
+    //print("PREFERS: ${prefs.getString("userId")}");
     context.read<EmprendedorController>().getEmprendedoresActualUser(
         context.read<UsuarioController>().getEmprendimientos());
   }
@@ -379,8 +379,7 @@ class _EmprendedoresScreenState extends State<EmprendedoresScreen> {
                                     ),
                                     child: InkWell(
                                       onTap: () async {
-                                        print(
-                                            "Length emprendedores: ${emprendedoresPDF.length}");
+                                        //print("Length emprendedores: ${emprendedoresPDF.length}");
                                         final date = DateTime.now();
                                         final invoice = EmprendedorInvoice(
                                           info: InvoiceInfo(

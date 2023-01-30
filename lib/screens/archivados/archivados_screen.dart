@@ -44,7 +44,7 @@ class _ArchivadosScreenState extends State<ArchivadosScreen> {
   }
 
   getInfo() {
-    print("PREFERS: ${prefs.getString("userId")}");
+    //print("PREFERS: ${prefs.getString("userId")}");
     context
         .read<UsuarioController>()
         .getUser(prefs.getString("userId") ?? "NONE");

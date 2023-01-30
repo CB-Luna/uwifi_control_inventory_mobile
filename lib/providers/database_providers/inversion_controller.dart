@@ -67,7 +67,7 @@ class InversionController extends ChangeNotifier {
       idInversion = dataBase.inversionesBox.put(nuevaInversion);
       emprendimiento.inversiones.add(nuevaInversion);
       dataBase.emprendimientosBox.put(emprendimiento);
-      print('Inversion agregada exitosamente');
+      //print('Inversion agregada exitosamente');
       notifyListeners();
     }
     return idInversion;
@@ -106,7 +106,7 @@ class InversionController extends ChangeNotifier {
           ? 0.0
           : (newCostoTotalEstimado * newCantidad);
       dataBase.inversionesBox.put(updateInversion);
-      print('Prod Solicitado actualizado exitosamente');
+      //print('Prod Solicitado actualizado exitosamente');
       clearInformation();
       notifyListeners();
     }
@@ -128,7 +128,7 @@ class InversionController extends ChangeNotifier {
       dataBase.imagenesBox.put(updateImagenProductoSol);
       updateProdSol.imagen.target = updateImagenProductoSol;
       dataBase.productosSolicitadosBox.put(updateProdSol);
-      print('Imagen Prod Solicitado actualizada exitosamente');
+      //print('Imagen Prod Solicitado actualizada exitosamente');
     }
     notifyListeners();
   }
@@ -149,15 +149,15 @@ class InversionController extends ChangeNotifier {
     productoSol.imagen.target = nuevaImagenProductoSol;
     dataBase.imagenesBox.put(nuevaImagenProductoSol);
     dataBase.productosSolicitadosBox.put(productoSol);
-    print('Imagen Prod Solicitado agregada exitosamente');
+    //print('Imagen Prod Solicitado agregada exitosamente');
     notifyListeners();
   }
 
   void addProductoSolicitado(
       int idEmprendimiento, int idInversion, int idTipoEmpaques) {
-    print("Nombre: $cantidad");
-    print("descrip: $descripcion");
-    print("Cantidad: $cantidad");
+    //print("Nombre: $cantidad");
+    //print("descrip: $descripcion");
+    //print("Cantidad: $cantidad");
     final nuevoProdSolicitado = ProdSolicitado(
       idInversion: idInversion,
       producto: nombre,
@@ -190,7 +190,7 @@ class InversionController extends ChangeNotifier {
       inversion.totalInversion +=
           costo != '' ? (double.parse(costo) * double.parse(cantidad)) : 0.0;
       dataBase.inversionesBox.put(inversion);
-      print('ProdSolicitado agregado exitosamente');
+      //print('ProdSolicitado agregado exitosamente');
       clearInformation();
       notifyListeners();
     }
@@ -200,8 +200,8 @@ class InversionController extends ChangeNotifier {
     final inversion =
         dataBase.inversionesBox.get(productoSolicitado.idInversion);
     if (inversion != null) {
-      print(
-          "Tamaño productos solicitados antes de remover: ${dataBase.productosSolicitadosBox.getAll().length}");
+      //print(
+         // "Tamaño productos solicitados antes de remover: ${dataBase.productosSolicitadosBox.getAll().length}");
       // final nuevaInstruccion = Bitacora(instruccion: 'syncDeleteProductoSolicitado', usuario: prefs.getString("userId")!, idDBR: productoSolicitado.idDBR); //Se crea la nueva instruccion a realizar en bitacora
       //Se resta de la inversión el costo del Prod Solicitado
       inversion.totalInversion -= productoSolicitado.costoEstimado != null
@@ -211,8 +211,8 @@ class InversionController extends ChangeNotifier {
       // productoSolicitado.bitacora.add(nuevaInstruccion);
       dataBase.productosSolicitadosBox.remove(productoSolicitado
           .id); //Se elimina de bitacora la instruccion creada anteriormente?
-      print(
-          "Tamaño productos solicitados después de remover: ${dataBase.productosSolicitadosBox.getAll().length}");
+      //print(
+      //    "Tamaño productos solicitados después de remover: ${dataBase.productosSolicitadosBox.getAll().length}");
       notifyListeners();
     }
   }

@@ -29,7 +29,7 @@ class VentaController extends ChangeNotifier {
   }
 
   int add(int idEmprendimiento) {
-    print(total);
+    //print(total);
     int idVenta = -1;
       final nuevaVenta = Ventas(
       fechaInicio: fechaInicio,
@@ -45,7 +45,7 @@ class VentaController extends ChangeNotifier {
       idVenta = dataBase.ventasBox.put(nuevaVenta);
       emprendimiento.ventas.add(nuevaVenta);
       dataBase.emprendimientosBox.put(emprendimiento);
-      print('Venta agregada exitosamente');
+      //print('Venta agregada exitosamente');
       clearInformation();
       notifyListeners();
     }
@@ -63,13 +63,13 @@ void update(int id, DateTime newFechaInicio, DateTime newFechaTermino, double ne
       updateVenta.bitacora.add(nuevaInstruccion);
       dataBase.ventasBox.put(updateVenta);
       notifyListeners();
-      print('Venta actualizada exitosamente');
+      //print('Venta actualizada exitosamente');
     }
 }
   void remove(Ventas ventas) {
-    print("Tamaño ventas antes de remover: ${dataBase.ventasBox.getAll().length}");
+    //print("Tamaño ventas antes de remover: ${dataBase.ventasBox.getAll().length}");
     dataBase.ventasBox.remove(ventas.id); //Se elimina de bitacora la instruccion creada anteriormente
-    print("Tamaño ventas después de remover: ${dataBase.ventasBox.getAll().length}");
+    //print("Tamaño ventas después de remover: ${dataBase.ventasBox.getAll().length}");
     notifyListeners(); 
   }
 

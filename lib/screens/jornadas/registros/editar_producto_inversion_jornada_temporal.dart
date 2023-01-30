@@ -99,7 +99,7 @@ class _EditarProductoInversionJornadaTemporalState
 
   @override
   Widget build(BuildContext context) {
-    print("Imagen es: $newImagen");
+    //print("Imagen es: $newImagen");
     final productoInversionJornadaController =
         Provider.of<ProductoInversionJornadaController>(context);
     final inversionJornadaController =

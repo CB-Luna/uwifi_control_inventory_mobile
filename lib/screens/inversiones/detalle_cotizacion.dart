@@ -31,8 +31,7 @@ class _DetalleCotizacionState extends State<DetalleCotizacion> {
   @override
   Widget build(BuildContext context) {
     final productoCotizadoProvider = Provider.of<CotizacionController>(context);
-    print(
-        'que manda: ${widget.detalleCot.productosProv.target!.imagen.target}');
+    //print('que manda: ${widget.detalleCot.productosProv.target!.imagen.target}');
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(

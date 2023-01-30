@@ -623,7 +623,7 @@ class _EditarProductoEmprendedorScreenState
                                                   widget.productoEmprendedor.imagen.target?.path
                                                 ) {
                                                   if (widget.productoEmprendedor.imagen.target?.path == null) {
-                                                    print("SE AGREGA IMAGEN NUEVA");
+                                                    //print("SE AGREGA IMAGEN NUEVA");
                                                     productoEmprendedorProvider.addImagenProductoEmp(
                                                       widget.productoEmprendedor,
                                                       nombreImagen,
@@ -632,7 +632,7 @@ class _EditarProductoEmprendedorScreenState
                                                       widget.emprendimiento.id
                                                       );
                                                   } else {
-                                                    print("SE ACTUALIZA IMAGEN NUEVA");
+                                                    //print("SE ACTUALIZA IMAGEN NUEVA");
                                                     productoEmprendedorProvider.updateImagenProductoEmp(
                                                       widget.productoEmprendedor.imagen.target!.id,
                                                       nombreImagen,

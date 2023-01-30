@@ -48,7 +48,7 @@ class JornadaController extends ChangeNotifier {
 
 
   void addJornada1(int idEmprendimiento, int numJornada) {
-    print("Numero jornada: $numJornada");
+    //print("Numero jornada: $numJornada");
     final nuevaJornada = Jornadas(
       numJornada: numJornada.toString(),
       fechaRevision: fechaRevision ?? DateTime.now(),
@@ -65,7 +65,7 @@ class JornadaController extends ChangeNotifier {
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Jornada 1")).build().findFirst();
     if (emprendimiento != null && faseEmp != null) {
-      print("Fase de Add1: ${faseEmp.fase}");
+      //print("Fase de Add1: ${faseEmp.fase}");
       final nuevaInstruccionJornada = Bitacora(instruccion: 'syncAddJornada1', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Jornada 1", usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza la fase del Emprendimiento
@@ -82,11 +82,11 @@ class JornadaController extends ChangeNotifier {
       emprendimiento.jornadas.add(nuevaJornada);
       dataBase.emprendimientosBox.put(emprendimiento);
       jornadas.add(nuevaJornada);
-      print('Jornada 1 agregada exitosamente');
+      //print('Jornada 1 agregada exitosamente');
       clearInformation(); //Se limpia información para usar el mismo controller en otro registro
       notifyListeners();
     }
-    print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
+    //print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
   }
 
   void updateJornada1(int id, DateTime newFechaRegistro, DateTime newFechaRevision, String newTarea, bool newCompletada, int idTarea, int idEmprendimiento) {
@@ -104,7 +104,7 @@ class JornadaController extends ChangeNotifier {
         updateJornada.completada = newCompletada;
         updateJornada.bitacora.add(nuevaInstruccion);
         dataBase.jornadasBox.put(updateJornada);
-        print('Jornada actualizada exitosamente');
+        //print('Jornada actualizada exitosamente');
       }
     }
     notifyListeners();
@@ -112,7 +112,7 @@ class JornadaController extends ChangeNotifier {
 
 
   void addJornada2(int idEmprendimiento, int numJornada) {
-    print("Numero jornada: $numJornada");
+    //print("Numero jornada: $numJornada");
     final nuevaJornada = Jornadas(
       numJornada: numJornada.toString(),
       fechaRevision: fechaRevision ?? DateTime.now(),
@@ -143,7 +143,7 @@ class JornadaController extends ChangeNotifier {
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Jornada 2")).build().findFirst();
     if (emprendimiento != null && faseEmp != null) {
-      print("Fase de Add2: ${faseEmp.fase}");
+      //print("Fase de Add2: ${faseEmp.fase}");
       final nuevaInstruccionJornada = Bitacora(instruccion: 'syncAddJornada2', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Jornada 2", usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza la fase del Emprendimiento
@@ -160,11 +160,11 @@ class JornadaController extends ChangeNotifier {
       emprendimiento.jornadas.add(nuevaJornada);
       dataBase.emprendimientosBox.put(emprendimiento);
       jornadas.add(nuevaJornada);
-      print('Jornada 2 agregada exitosamente');
+      //print('Jornada 2 agregada exitosamente');
       clearInformation(); //Se limpia información para usar el mismo controller en otro registro
       notifyListeners();
     }
-    print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
+    //print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
   }
 
   void updateJornada2(int id, DateTime newFechaRegistro, DateTime newFechaRevision, String newTarea, String newComentarios, bool newCompletada, int idTarea, int idEmprendimiento) {
@@ -184,7 +184,7 @@ class JornadaController extends ChangeNotifier {
         updateJornada.completada = newCompletada;
         updateJornada.bitacora.add(nuevaInstruccion);
         dataBase.jornadasBox.put(updateJornada);
-        print('Jornada actualizada exitosamente');
+        //print('Jornada actualizada exitosamente');
       }
     }
     notifyListeners();
@@ -305,7 +305,7 @@ class JornadaController extends ChangeNotifier {
   }
 
   void addJornada3(int idEmprendimiento, int idCatalogoProyecto, int numJornada) {
-    print("Numero jornada: $numJornada");
+    //print("Numero jornada: $numJornada");
     final nuevaJornada = Jornadas(
       numJornada: numJornada.toString(),
       fechaRevision: fechaRevision ?? DateTime.now(),
@@ -338,7 +338,7 @@ class JornadaController extends ChangeNotifier {
     //Se recupera el tipo proyecto y proyecto
     final catalogoProyecto = dataBase.catalogoProyectoBox.get(idCatalogoProyecto);
     if (emprendimiento != null && catalogoProyecto != null && faseEmp != null) {
-      print("Fase de Add3: ${faseEmp.fase}");
+      //print("Fase de Add3: ${faseEmp.fase}");
       final nuevaInstruccionJornada = Bitacora(instruccion: 'syncAddJornada3', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Jornada 3", usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza la fase del Emprendimiento
@@ -357,12 +357,12 @@ class JornadaController extends ChangeNotifier {
       emprendimiento.jornadas.add(nuevaJornada);
       dataBase.emprendimientosBox.put(emprendimiento);
       jornadas.add(nuevaJornada);
-      print('Jornada 3 agregada exitosamente');
+      //print('Jornada 3 agregada exitosamente');
       // Se actualiza el estado del emprendimiento porque se cambia su clasificacionEmp
       clearInformation(); //Se limpia información para usar el mismo controller en otro registro
       notifyListeners();
     }
-    print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
+    //print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
   }
 
   void updateJornada3(int id, int idEmprendimiento, DateTime newFechaRegistro, String newTarea, bool newCompletada, DateTime newFechaRevision, 
@@ -394,14 +394,14 @@ class JornadaController extends ChangeNotifier {
           // Se actualiza el estado del emprendimiento porque se cambia su clasificacionEmp
           updateJornada.bitacora.add(nuevaInstruccion);
           notifyListeners();
-          print('Jornada 3 actualizada exitosamente');
+          //print('Jornada 3 actualizada exitosamente');
         }
       }
     }
   }
 
   void addJornada4(int idEmprendimiento, int numJornada) {
-    print("Numero jornada: $numJornada");
+    //print("Numero jornada: $numJornada");
     final nuevaJornada = Jornadas(
       numJornada: numJornada.toString(),
       fechaRevision: fechaRevision ?? DateTime.now(),
@@ -417,7 +417,7 @@ class JornadaController extends ChangeNotifier {
       fechaRegistro: fechaRegistro, 
       idEmprendimiento: idEmprendimiento,
       );
-      print("Entro aca");
+      //print("Entro aca");
     //Se agregan las imagenes a la Tarea
     for (var i = 0; i < imagenes.length; i++) {
       final nuevaImagenTarea = Imagenes(
@@ -433,15 +433,15 @@ class JornadaController extends ChangeNotifier {
     final emprendimiento = dataBase.emprendimientosBox.get(idEmprendimiento);
     final faseEmp = dataBase.fasesEmpBox.query(FasesEmp_.fase.equals("Jornada 4")).build().findFirst();
     if (emprendimiento != null && faseEmp != null) {
-      print("Fase de Add4: ${faseEmp.fase}");
+      //print("Fase de Add4: ${faseEmp.fase}");
       // Se actualiza el estado activo de las jornadas anteriores
       jornadas = emprendimiento.jornadas.toList();
       for (var i = 0; i < jornadas.length; i++) {
         jornadas[i].completada = true;
         dataBase.jornadasBox.put(jornadas[i]);
-        print('Jornada ${i + 1} actualizada exitosamente');
+        //print('Jornada ${i + 1} actualizada exitosamente');
       }
-      print("Entro aca");
+      //print("Entro aca");
       final nuevaInstruccionJornada = Bitacora(instruccion: 'syncAddJornada4', usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       final nuevaInstruccionEmprendimiento = Bitacora(instruccion: 'syncUpdateFaseEmprendimiento', instruccionAdicional: "Jornada 4", usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
       //Se actualiza la fase del Emprendimiento
@@ -458,11 +458,11 @@ class JornadaController extends ChangeNotifier {
       emprendimiento.jornadas.add(nuevaJornada);
       dataBase.emprendimientosBox.put(emprendimiento);
       jornadas.add(nuevaJornada);
-      print('Jornada 4 agregada exitosamente');
+      //print('Jornada 4 agregada exitosamente');
       clearInformation(); //Se limpia información para usar el mismo controller en otro registro
       notifyListeners();
     }
-    print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
+    //print("Data base de jornadas: ${dataBase.jornadasBox.getAll().length}");
   }
 
   void updateJornada4(int id, DateTime newFechaRegistro, String? newComentarios, bool newCompletada, int idTarea, int idEmprendimiento) {
@@ -480,7 +480,7 @@ class JornadaController extends ChangeNotifier {
         updateJornada.completada = newCompletada;
         updateJornada.bitacora.add(nuevaInstruccion);
         dataBase.jornadasBox.put(updateJornada);
-        print('Jornada actualizada exitosamente');
+        //print('Jornada actualizada exitosamente');
       }
     }
     notifyListeners();

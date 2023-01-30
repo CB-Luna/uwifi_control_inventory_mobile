@@ -131,7 +131,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                 idEmiWeb: listEstados[i].idEmiWeb,
               );
               dataBase.estadosBox.put(nuevoEstado);
-              print('Estado Nuevo agregado exitosamente');
+              //print('Estado Nuevo agregado exitosamente');
             }
           } else {
             //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
@@ -188,7 +188,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
               if (estado != null) {
                 nuevoMunicipio.estados.target = estado;
                 dataBase.municipiosBox.put(nuevoMunicipio);
-                print('Municipio Nuevo agregado éxitosamente');
+                //print('Municipio Nuevo agregado éxitosamente');
               } else {
                 return false;
               }
@@ -253,7 +253,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
               if (municipio != null) {
                 nuevaComunidad.municipios.target = municipio;
                 dataBase.comunidadesBox.put(nuevaComunidad);
-                print('Comunidad Nueva agregada éxitosamente');
+                //print('Comunidad Nueva agregada éxitosamente');
               } else {
                 return false;
               }
@@ -312,7 +312,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                 idEmiWeb: listTipoProyecto[i].idEmiWeb,
               );
               dataBase.tipoProyectoBox.put(nuevoTipoProyecto);
-              print('Tipo Proyecto Nuevo agregado exitosamente');
+              //print('Tipo Proyecto Nuevo agregado exitosamente');
             }
           } else {
             //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
@@ -374,7 +374,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
               if (tipoProyecto != null) {
                 nuevoCatalogoProyecto.tipoProyecto.target = tipoProyecto;
                 dataBase.catalogoProyectoBox.put(nuevoCatalogoProyecto);
-                print('Catalogo Proyecto Nuevo agregado éxitosamente');
+                //print('Catalogo Proyecto Nuevo agregado éxitosamente');
               } else {
                 return false;
               }
@@ -436,7 +436,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                 idEmiWeb: listUnidadMedida[i].idEmiWeb,
               );
               dataBase.unidadesMedidaBox.put(nuevaUnidadMedida);
-              print('Unidad de Medida Nueva agregada exitosamente');
+              //print('Unidad de Medida Nueva agregada exitosamente');
             }
           } else {
             //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
@@ -491,7 +491,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                 idEmiWeb: listAmbitoConsultoria[i].idEmiWeb,
               );
               dataBase.ambitoConsultoriaBox.put(nuevoAmbitoConsultoria);
-              print('Ámbito Consultoría Nuevo agregado exitosamente');
+              //print('Ámbito Consultoría Nuevo agregado exitosamente');
             }
           } else {
             //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
@@ -545,7 +545,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                 idEmiWeb: listAreaCirculo[i].idEmiWeb,
               );
               dataBase.areaCirculoBox.put(nuevaAreaCirculo);
-              print('Área Círculo Nueva agregada exitosamente');
+              //print('Área Círculo Nueva agregada exitosamente');
             }
           } else {
             //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
@@ -594,7 +594,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                 idEmiWeb: listFasesEmp[i].idEmiWeb,
               );
               dataBase.fasesEmpBox.put(nuevaFaseEmp);
-              print('Fase Emprendimiento Nueva agregada exitosamente');
+              //print('Fase Emprendimiento Nueva agregada exitosamente');
             }
           } else {
             //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
@@ -645,7 +645,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                 idEmiWeb: listTipoEmpaques[i].idEmiWeb,
               );
               dataBase.tipoEmpaquesBox.put(nuevaFaseEmp);
-              print('Tipo Empaque Nuevo agregado exitosamente');
+              //print('Tipo Empaque Nuevo agregado exitosamente');
             }
           } else {
             //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
@@ -696,7 +696,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                 idEmiWeb: listEstadoInversiones[i].idEmiWeb,
               );
               dataBase.estadoInversionBox.put(nuevaFaseEmp);
-              print('Estado de Inversión Nuevo agregado exitosamente');
+              //print('Estado de Inversión Nuevo agregado exitosamente');
             }
           } else {
             //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
@@ -747,7 +747,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                 idEmiWeb: listTipoProveedor[i].idEmiWeb,
               );
               dataBase.tipoProveedorBox.put(nuevoTipoProveedor);
-              print('Tipo de Proveedor Nuevo agregado exitosamente');
+              //print('Tipo de Proveedor Nuevo agregado exitosamente');
             }
           } else {
             //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
@@ -800,7 +800,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                 idEmiWeb: listCondicionesPago[i].idEmiWeb,
               );
               dataBase.condicionesPagoBox.put(nuevoTipoProveedor);
-              print('Condición de Pago Nueva agregada exitosamente');
+              //print('Condición de Pago Nueva agregada exitosamente');
             }
           } else {
             //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
@@ -853,7 +853,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                 idEmiWeb: listBancos[i].idEmiWeb,
               );
               dataBase.bancosBox.put(nuevoTipoProveedor);
-              print('Banco Nuevo agregado exitosamente');
+              //print('Banco Nuevo agregado exitosamente');
             }
           } else {
             //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
@@ -902,7 +902,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                 idEmiWeb: listPorcentaje[i].idEmiWeb,
               );
               dataBase.porcentajeAvanceBox.put(nuevoPorcentajeAvance);
-              print('Porcentaje Avance Nuevo agregado exitosamente');
+              //print('Porcentaje Avance Nuevo agregado exitosamente');
             }
           } else {
             //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
@@ -987,7 +987,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                 nuevoProveedor.banco.target = banco;
                 nuevoProveedor.comunidades.target = comunidad;
                 dataBase.proveedoresBox.put(nuevoProveedor);
-                print('Proveedor Nuevo agregado éxitosamente');
+                //print('Proveedor Nuevo agregado éxitosamente');
               } else {
                 return false;
               }
@@ -1055,7 +1055,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                 idEmiWeb: listFamiliaInversion[i].idEmiWeb,
               );
               dataBase.familiaInversionBox.put(nuevaFamiliaInversion);
-              print('Familia Inversion nueva agregada exitosamente');
+              //print('Familia Inversion nueva agregada exitosamente');
             }
           } else {
             //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
@@ -1134,7 +1134,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                   nuevoProductoProveedor.proveedor.target = proveedor;
                   nuevoProductoProveedor.unidadMedida.target = unidadMedida;
                   dataBase.productosProvBox.put(nuevoProductoProveedor);
-                  print('Producto Proveedor Nuevo agregado éxitosamente');
+                  //print('Producto Proveedor Nuevo agregado éxitosamente');
                 } else {
                   return false;
                 }
@@ -1174,7 +1174,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                   idEmprendimiento: 0,
                 );
 
-                print('info de imagen: ${nuevaImagenProductoProveedor}');
+                //print('info de imagen: ${nuevaImagenProductoProveedor}');
                 if (proveedor != null && unidadMedida != null) {
                   nuevaImagenProductoProveedor.productosProv.target =
                       nuevoProductoProveedor;
@@ -1184,13 +1184,13 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                       nuevaImagenProductoProveedor;
                   dataBase.imagenesBox.put(nuevaImagenProductoProveedor);
                   dataBase.productosProvBox.put(nuevoProductoProveedor);
-                  print('Producto Proveedor Nuevo agregado éxitosamente');
+                  //print('Producto Proveedor Nuevo agregado éxitosamente');
                 } else {
                   return false;
                 }
               }
             } else {
-              print('se actualiza la imagen');
+              //print('se actualiza la imagen');
               final nuevoProductoProveedor = ProductosProv(
                 nombre: listProductosProv[i].nombreProdProv,
                 descripcion: listProductosProv[i].descripcionProdProv,
@@ -1375,7 +1375,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                       nuevoProductoProveedor.proveedor.target = proveedor;
                       nuevoProductoProveedor.unidadMedida.target = unidadMedida;
                       dataBase.productosProvBox.put(nuevoProductoProveedor);
-                      print('Producto Proveedor Nuevo agregado éxitosamente');
+                      //print('Producto Proveedor Nuevo agregado éxitosamente');
                     } else {
                       return false;
                     }
@@ -1426,7 +1426,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                           nuevaImagenProductoProveedor;
                       dataBase.imagenesBox.put(nuevaImagenProductoProveedor);
                       dataBase.productosProvBox.put(nuevoProductoProveedor);
-                      print('Producto Proveedor Nuevo agregado éxitosamente');
+                      //print('Producto Proveedor Nuevo agregado éxitosamente');
                     } else {
                       return false;
                     }
@@ -1502,7 +1502,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                 //Se agrega desde catálogo proyecto para visualizarlo en pantallas
                 catalogoProyecto.prodProyecto.add(nuevoProductoProyecto);
                 dataBase.catalogoProyectoBox.put(catalogoProyecto);
-                print('Producto Proyecto Nuevo agregado éxitosamente');
+                //print('Producto Proyecto Nuevo agregado éxitosamente');
               } else {
                 return false;
               }
@@ -1579,12 +1579,12 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
             }
           }
           if (usuario.idImagenFk != "") {
-            print("Id Imagen Usuario: ${usuario.idImagenFk}");
+            //print("Id Imagen Usuario: ${usuario.idImagenFk}");
             final recordImagen = await client.records.getFullList('imagenes',
                 batch: 200, filter: "id='${usuario.idImagenFk}'");
             if (recordImagen.isNotEmpty) {
               if (updateUsuario.imagen.target!.idDBR == null) {
-                print("Se agrega imagen Pocketbase");
+                //print("Se agrega imagen Pocketbase");
                 // Se agrega nueva imagen
                 final imagenUsuarioPocketbase =
                     getImagenUsuarioFromMap(recordImagen[0].toString());
@@ -1608,7 +1608,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
                 dataBase.imagenesBox.put(nuevaImagenUsuario);
                 updateUsuario.imagen.target = nuevaImagenUsuario;
               } else {
-                print("Se actualiza imagen Pocketbase");
+                //print("Se actualiza imagen Pocketbase");
                 // Se actualiza imagen
                 final imagenUsuarioPocketbase =
                     getImagenUsuarioFromMap(recordImagen[0].toString());
@@ -1629,7 +1629,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
               }
             } else {
               // No se encontró imagen en Pocketbase
-              print("No se encontro imagen en Pocketbase");
+              //print("No se encontro imagen en Pocketbase");
               return false;
             }
           } else {
@@ -1650,16 +1650,16 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
           return true;
         } else {
           // No se encontro al usuario en pocketbase
-          print("No se encontro usuario en Pocketbase");
+          //print("No se encontro usuario en Pocketbase");
           return false;
         }
       } else {
         // No se encontró el usuario a actualizar en ObjectBox
-        print("No se encontro usuario en ObjectBox");
+        //print("No se encontro usuario en ObjectBox");
         return false;
       }
     } catch (e) {
-      print("Catch error Pocketbase Info usuario: $e");
+      //print("Catch error Pocketbase Info usuario: $e");
       return false;
     }
   }

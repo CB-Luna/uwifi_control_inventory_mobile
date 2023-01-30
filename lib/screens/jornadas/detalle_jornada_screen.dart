@@ -289,8 +289,7 @@ class _DetalleJornadaScreenState extends State<DetalleJornadaScreen>
                                                     if (widget.jornada
                                                             .completada ==
                                                         false) {
-                                                      print(
-                                                          "Entro a actualizar activo de tarea en J4");
+                                                      //print("Entro a actualizar activo de tarea en J4");
                                                       jornadaProvider
                                                           .updateJornada4(
                                                               widget.jornada.id,

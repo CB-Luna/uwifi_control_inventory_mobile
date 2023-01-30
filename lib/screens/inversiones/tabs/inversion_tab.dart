@@ -394,7 +394,7 @@ class _InversionTabState extends State<InversionTab>
                             final productoSolicitado = prodSolicitado[index];
                             return InkWell(
                               onTap: () async {
-                                print("object");
+                                //print("object");
                                 if (widget.emprendimiento.usuario.target!.rol
                                             .target!.rol !=
                                         "Amigo del Cambio" &&
@@ -674,7 +674,7 @@ class _InversionTabState extends State<InversionTab>
                                           .checkConnectivity());
                                   final bitacora =
                                       dataBase.bitacoraBox.getAll().toList();
-                                  print("Tamaño bitacora: ${bitacora.length}");
+                                  //print("Tamaño bitacora: ${bitacora.length}");
                                   await showModalBottomSheet(
                                     isScrollControlled: true,
                                     backgroundColor: Colors.transparent,

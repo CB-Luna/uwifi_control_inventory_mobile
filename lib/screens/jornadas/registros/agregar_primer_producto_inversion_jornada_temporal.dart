@@ -1006,12 +1006,9 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                       0, 0, 0, 20),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      print("Desde registro");
-                                      print(productoInversionJornadaController
-                                          .costoEstimado);
-                                      print(currencyFormat.format(
-                                          productoInversionJornadaController
-                                              .costoEstimado));
+                                      //print("Desde registro");
+                                      //print(productoInversionJornadaController.costoEstimado);
+                                      //print(currencyFormat.format(productoInversionJornadaController.costoEstimado));
                                       if (productoInversionJornadaController
                                           .validateForm(formKey)) {
                                         final idFamiliaInversion = dataBase
@@ -1029,8 +1026,7 @@ class _AgregarPrimerProductoInversionJornadaTemporalState
                                             .findFirst()
                                             ?.id;
                                         if (idFamiliaInversion != null && idTipoEmpaque != null) {
-                                          print(
-                                              "Porcenatje:  ${porcentajeController.text}");
+                                          //print("Porcenatje:  ${porcentajeController.text}");
                                           inversionJornadaController
                                                   .porcentajePago =
                                               porcentajeController.text;

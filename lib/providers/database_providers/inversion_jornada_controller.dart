@@ -59,7 +59,7 @@ class InversionJornadaController extends ChangeNotifier {
         // emprendimiento.productosEmp.add(nuevoProductoEmp);
         // dataBase.emprendimientosBox.put(emprendimiento);
         inversion = inversionTemporal;
-        print('Registro agregado exitosamente');
+        //print('Registro agregado exitosamente');
         notifyListeners();
       }
   }
@@ -80,7 +80,7 @@ class InversionJornadaController extends ChangeNotifier {
       emprendimiento.inversiones.add(inversion!);
       emprendimiento.idInversionJornada = idInversion;
       dataBase.emprendimientosBox.put(emprendimiento);
-      print('Inversion agregada exitosamente');
+      //print('Inversion agregada exitosamente');
       clearInformation();
       notifyListeners();
     }

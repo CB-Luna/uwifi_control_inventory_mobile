@@ -43,11 +43,11 @@ class RecepcionYEntregaController extends ChangeNotifier {
           updateProdCotizado.cantidad = prodCotizadosTemp[i].cantidad;
           updateProdCotizado.costoTotal = prodCotizadosTemp[i].costoTotal;
           dataBase.productosCotBox.put(updateProdCotizado);
-          print('Prod Cotizado aceptado exitosamente');
+          //print('Prod Cotizado aceptado exitosamente');
         } else {
           updateProdCotizado.aceptado = prodCotizadosTemp[i].aceptado;
           dataBase.productosCotBox.put(updateProdCotizado);
-          print('Prod Cotizado rechazado exitosamente');
+          //print('Prod Cotizado rechazado exitosamente');
         }
       }
     }
@@ -66,7 +66,7 @@ class RecepcionYEntregaController extends ChangeNotifier {
     inversionXProdCotizados.aceptado = true;
     inversionXProdCotizados.bitacora.add(nuevaInstruccionInversionXprodCotizado);
     dataBase.inversionesXprodCotizadosBox.put(inversionXProdCotizados);
-    print('Inversion X Prod Cotizado actualizado exitosamente');
+    //print('Inversion X Prod Cotizado actualizado exitosamente');
     //Se actualiza el estado de la inversión, monto, saldo y total de la inversión
     final nuevaInstruccionEstadoInversion = Bitacora(instruccion: 'syncUpdateEstadoInversion', instruccionAdicional: "Entregada Al Promotor", usuario: prefs.getString("userId")!, idEmprendimiento: idEmprendimiento); //Se crea la nueva instruccion a realizar en bitacora
     final newEstadoInversion = dataBase.estadoInversionBox.query(EstadoInversion_.estado.equals("Entregada Al Promotor")).build().findFirst();
@@ -83,7 +83,7 @@ class RecepcionYEntregaController extends ChangeNotifier {
       updateInversion.estadoInversion.target = newEstadoInversion;
       updateInversion.bitacora.add(nuevaInstruccionEstadoInversion);
       dataBase.inversionesBox.put(updateInversion);
-      print("Inversion updated succesfully");
+      //print("Inversion updated succesfully");
     }
   }
 
@@ -110,7 +110,7 @@ class RecepcionYEntregaController extends ChangeNotifier {
         updateInversion.bitacora.add(nuevaInstruccionImagenesEntregaInversion);
         updateInversion.bitacora.add(nuevaInstruccionEstadoInversion);
         dataBase.inversionesBox.put(updateInversion);
-        print("Inversion updated succesfully");
+        //print("Inversion updated succesfully");
       }
     }
   }
@@ -159,7 +159,7 @@ void updatePago(double newMontoAbonado, int idInversion, int idEmprendimiento) {
       updateInversion.estadoInversion.target = newEstadoInversion;
       updateInversion.bitacora.add(nuevaInstruccionEstadoInversion);
       dataBase.inversionesBox.put(updateInversion);
-      print("Inversion updated succesfully");
+      //print("Inversion updated succesfully");
     }
   }
   }

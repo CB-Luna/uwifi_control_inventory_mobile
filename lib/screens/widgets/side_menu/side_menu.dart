@@ -109,7 +109,7 @@ class SideMenu extends StatelessWidget {
                           const EdgeInsetsDirectional.fromSTEB(5, 25, 5, 0),
                       child: InkWell(
                         onTap: () async {
-                          print("Veamos que tiene Imagen: ${currentUser.imagen.target!.nombre}");
+                          //print("Veamos que tiene Imagen: ${currentUser.imagen.target!.nombre}");
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -261,7 +261,7 @@ class SideMenu extends StatelessWidget {
                           final connectivityResult =
                               await (Connectivity().checkConnectivity());
                           final bitacora = dataBase.bitacoraBox.getAll().toList();
-                          print("Tamaño bitacora: ${bitacora.length}");
+                          //print("Tamaño bitacora: ${bitacora.length}");
                           await showModalBottomSheet(
                             isScrollControlled: true,
                             backgroundColor: Colors.transparent,

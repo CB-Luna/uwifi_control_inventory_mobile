@@ -534,9 +534,8 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                             onPressed: () async {
                               if (consultoriaProvider.validateForm(formKey)) {
                                 // comunidadProvider.add();
-                                print(
-                                    "Fecha revision ${consultoriaProvider.fechaRevision}");
-                                print("Tarea ${consultoriaProvider.tarea}");
+                                //print("Fecha revision ${consultoriaProvider.fechaRevision}");
+                                //print("Tarea ${consultoriaProvider.tarea}");
                                 final idAmbito = dataBase.ambitoConsultoriaBox
                                     .query(AmbitoConsultoria_.nombreAmbito
                                         .equals(ambito))

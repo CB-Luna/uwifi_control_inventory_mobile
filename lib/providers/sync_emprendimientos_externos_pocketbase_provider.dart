@@ -52,8 +52,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
       String tokenGlobal,
       String idEmprendimientoEmiWeb) async {
     try {
-      print(
-          "ID Emprendimiento en Descarga Proyectos Pocketbase: $idEmprendimiento");
+      //print("ID Emprendimiento en Descarga Proyectos Pocketbase: $idEmprendimiento");
       //Se recupera toda la colección de datos emprendimientos en Pocketbase
       var url = Uri.parse(
           "$baseUrl/api/collections/emprendimientos/records?filter=(id='$idEmprendimiento')&expand=id_emprendedor_fk.id_comunidad_fk,id_fase_emp_fk,id_nombre_proyecto_fk");
@@ -65,7 +64,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
           getBasicEmprendimientoPocketbaseFromMap(response.body);
 
       if (response.statusCode == 200) {
-        print("STATUS 200");
+        //print("STATUS 200");
         final faseEmp = dataBase.fasesEmpBox
             .query(FasesEmp_.fase
                 .equals(basicEmprendimiento.items[0].expand.idFaseEmpFk.fase))
@@ -83,8 +82,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
             .build()
             .findFirst();
         if (faseEmp != null && comunidad != null) {
-          print(
-              "Sí se ecnontró la fase y comunidad en el dispositivo para Pockectbase");
+          //print("Sí se ecnontró la fase y comunidad en el dispositivo para Pockectbase");
           final nuevoEmprendimiento = Emprendimientos(
             faseActual: faseEmp.fase,
             faseAnterior: faseEmp.fase,
@@ -368,7 +366,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
             }
             banderasExitoSync.add(true);
           } else {
-            print("No éxito en recuperar jornadas");
+            //print("No éxito en recuperar jornadas");
             banderasExitoSync.add(false);
           }
           //Se recupera colección de datos consultorías en Pocketbase
@@ -470,8 +468,8 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
             }
             banderasExitoSync.add(true);
           } else {
-            print(responseConsultoria.statusCode);
-            print("No éxito en recuperar consultorías");
+            //print(responseConsultoria.statusCode);
+            //print("No éxito en recuperar consultorías");
             banderasExitoSync.add(false);
           }
           //Se recupera colección de datos productos emp en Pocketbase
@@ -529,8 +527,8 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
             }
             banderasExitoSync.add(true);
           } else {
-            print(responseProductosEmp.statusCode);
-            print("No éxito en recuperar productos emp");
+            //print(responseProductosEmp.statusCode);
+            //print("No éxito en recuperar productos emp");
             banderasExitoSync.add(false);
           }
           //Se recupera colección de datos ventas en Pocketbase
@@ -589,8 +587,8 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                   nuevaVenta.prodVendidos.add(nuevoProdVendido);
                 }
               } else {
-                print(responseProdVendidos.statusCode);
-                print("No éxito en recuperar prod vendidos");
+                //print(responseProdVendidos.statusCode);
+                //print("No éxito en recuperar prod vendidos");
                 banderasExitoSync.add(false);
                 continue;
               }
@@ -601,8 +599,8 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
             }
             banderasExitoSync.add(true);
           } else {
-            print(responseVentas.statusCode);
-            print("No éxito en recuperar ventas");
+            //print(responseVentas.statusCode);
+            //print("No éxito en recuperar ventas");
             banderasExitoSync.add(false);
           }
           //Se recupera colección de datos inveriones en Pocketbase
@@ -754,8 +752,8 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                       .add(nuevaInversionXProdCotizados);
                   dataBase.inversionesBox.put(nuevaInversion);
                 } else {
-                  print(responseProductosProyecto.statusCode);
-                  print("No éxito en recuperar Productos Proyecto");
+                  //print(responseProductosProyecto.statusCode);
+                  //print("No éxito en recuperar Productos Proyecto");
                   banderasExitoSync.add(false);
                   continue;
                 }
@@ -828,8 +826,8 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                     dataBase.inversionesBox.put(nuevaInversion);
                   }
                 } else {
-                  print(responseProdSolicitados.statusCode);
-                  print("No éxito en recuperar prod solicitados");
+                  //print(responseProdSolicitados.statusCode);
+                  //print("No éxito en recuperar prod solicitados");
                   banderasExitoSync.add(false);
                   continue;
                 }
@@ -916,16 +914,16 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                               .put(nuevaInversionXProdCotizados);
                         }
                       } else {
-                        print(responseProductosCotizados.statusCode);
-                        print("No éxito en recuperar Prod cotizados");
+                        //print(responseProductosCotizados.statusCode);
+                        //print("No éxito en recuperar Prod cotizados");
                         banderasExitoSync.add(false);
                         continue;
                       }
                     }
                   }
                 } else {
-                  print(responseInversionXProdCotizados.statusCode);
-                  print("No éxito en recuperar inversiones x Prod cotizados");
+                  //print(responseInversionXProdCotizados.statusCode);
+                  //print("No éxito en recuperar inversiones x Prod cotizados");
                   banderasExitoSync.add(false);
                   continue;
                 }
@@ -953,21 +951,20 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
                   dataBase.inversionesBox.put(nuevaInversion);
                 }
               } else {
-                print(responsePagos.statusCode);
-                print("No éxito en recuperar Prod cotizados");
+                //print(responsePagos.statusCode);
+                //print("No éxito en recuperar Prod cotizados");
                 banderasExitoSync.add(false);
                 continue;
               }
             }
             banderasExitoSync.add(true);
           } else {
-            print(responseInverisones.statusCode);
-            print("No éxito en recuperar inversiones");
+            //print(responseInverisones.statusCode);
+            //print("No éxito en recuperar inversiones");
             banderasExitoSync.add(false);
           }
         } else {
-          print(
-              "No se encontro la fase y comunidad en Pocketbase en el dispositivo");
+          //print("No se encontro la fase y comunidad en Pocketbase en el dispositivo");
           banderasExitoSync.add(false);
         }
       } else {
@@ -1022,7 +1019,7 @@ class SyncEmpExternosPocketbaseProvider extends ChangeNotifier {
         return exitoso;
       }
     } catch (e) {
-      print("Catch de Descarga Productos Externos Pocketbase: $e");
+      //print("Catch de Descarga Productos Externos Pocketbase: $e");
       procesocargando = false;
       procesoterminado = true;
       procesoexitoso = false;

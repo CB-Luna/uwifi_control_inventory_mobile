@@ -74,7 +74,7 @@ abstract class AuthService {
 
       switch (response.statusCode) {
           case 200:
-            print("Es 200 en getTokenOAuthEmiWeb");
+            //print("Es 200 en getTokenOAuthEmiWeb");
             final responseTokenEmiWeb = getTokenEmiWebFromMap(
               response.body);
             storage.write(key: "tokenEmiWeb", value: responseTokenEmiWeb.accessToken);
@@ -119,7 +119,7 @@ abstract class AuthService {
             //Se recupera la información del usuario desde Emi Web
             var url = Uri.parse("$baseUrlEmiWebServices/usuarios?correo=$email");
             var tokenActual = await storage.read(key: "tokenEmiWeb");
-            print("Token Actual: $tokenActual");
+            //print("Token Actual: $tokenActual");
             final headers = ({
                 "Content-Type": "application/json",
                 'Authorization': 'Bearer $tokenActual',
@@ -130,16 +130,16 @@ abstract class AuthService {
             );
             switch (responseUsuarioData.statusCode) {
               case 200: //Caso éxitoso
-                print("Es 200 en loginEmiWeb");
+                //print("Es 200 en loginEmiWeb");
                 final responseUsuarioEmiWeb = getUsuarioEmiWebFromMap(
                 const Utf8Decoder().convert(responseUsuarioData.bodyBytes));
                 return responseUsuarioEmiWeb;
               case 401: //Error de Token incorrecto
-                print("Es 401 en loginEmiWeb");
+                //print("Es 401 en loginEmiWeb");
                 loginEmiWeb(email, password);
                 return null;
               case 404: //Error de ruta incorrecta
-                print("Es 404 en loginEmiWeb");
+                //print("Es 404 en loginEmiWeb");
                 return null;
               default:
                 return null;
@@ -166,15 +166,15 @@ abstract class AuthService {
         return "NoUserExist";
       }
     } catch (e) {
-      print("Catch en validateUsuarioInPocketbase");
-      print("Error: ${e}");
+      //print("Catch en validateUsuarioInPocketbase");
+      //print("Error: ${e}");
       return "Null";
     }
   }
 
   static Future<bool> postUsuarioPocketbase(GetUsuarioEmiWeb responseUsuarioEmiWeb, String email, String password) async {
     try {
-      print("Entramos a crear el Usuario en postUsuarioPocketbase");
+      //print("Entramos a crear el Usuario en postUsuarioPocketbase");
       var url = Uri.parse("$baseUrlEmiWebServices/usuarios/registro/${responseUsuarioEmiWeb.payload!.idUsuario}");
       var tokenActual = await storage.read(key: "tokenEmiWeb");
       final headers = ({
@@ -187,7 +187,7 @@ abstract class AuthService {
       );
       switch (responseUsuarioCompleto.statusCode) {
         case 200: //Caso éxitoso
-        print("Caso éxitoso 200 en postUsuarioPocketbase");
+        //print("Caso éxitoso 200 en postUsuarioPocketbase");
           final responseUsuarioCompletoEmiWeb = getUsuarioCompletoEmiWebFromMap(
             const Utf8Decoder().convert(responseUsuarioCompleto.bodyBytes));
           List<String> listRoles = [];
@@ -195,7 +195,7 @@ abstract class AuthService {
           for (var i = 0; i < responseUsuarioCompletoEmiWeb.payload!.tiposUsuario!.length; i++) {
             final rol = dataBase.rolesBox.query(Roles_.idEmiWeb.equals(responseUsuarioCompletoEmiWeb.payload!.tiposUsuario![i].idCatRoles.toString())).build().findUnique();
             if (rol != null) {
-              print("Se recupera el rol tipo: '${rol.rol}' del usuario a registrar con id: '${rol.idDBR}'");
+              //print("Se recupera el rol tipo: '${rol.rol}' del usuario a registrar con id: '${rol.idDBR}'");
               if (rol.rol != "Staff Logística" && rol.rol != "Staff Dirección") {
                 listRoles.add(rol.idDBR!);
               }
@@ -218,7 +218,7 @@ abstract class AuthService {
                   'passwordConfirm': password,
               });
               if(nuevoUsuario.id.isNotEmpty) {
-                print("Se crea el Usuario en Pocketbase");
+                //print("Se crea el Usuario en Pocketbase");
                 //Se crea Usuario emi_users nuevo en colección de pocketbase
                 final newRecordEmiUser = await client.records.create('emi_users', body: {
                   "nombre_usuario": responseUsuarioCompletoEmiWeb.payload!.nombre,
@@ -232,14 +232,14 @@ abstract class AuthService {
                   "id_emi_web": responseUsuarioCompletoEmiWeb.payload!.idUsuario.toString(),
                 });
                 if (newRecordEmiUser.id.isNotEmpty) {
-                  print('Usuario Emi Web agregado éxitosamente en Pocketbase');
+                  //print('Usuario Emi Web agregado éxitosamente en Pocketbase');
                 } else {
-                  print('Usuario Emi Web no agregado éxitosamente en Pocketbase');
+                  //print('Usuario Emi Web no agregado éxitosamente en Pocketbase');
                   return false;
                 }
                 return true;
               } else {
-                print("No se crea el Usuario en Pocketbase");
+                //print("No se crea el Usuario en Pocketbase");
                 return false;
               }
             } else {
@@ -278,7 +278,7 @@ abstract class AuthService {
                         'passwordConfirm': password,
                     });
                     if(nuevoUsuario.id.isNotEmpty) {
-                      print("Se crea el Usuario en Pocketbase");
+                      //print("Se crea el Usuario en Pocketbase");
                       //Se crea Usuario emi_users nuevo en colección de pocketbase
                       final newRecordEmiUser = await client.records.create('emi_users', body: {
                         "nombre_usuario": responseUsuarioCompletoEmiWeb.payload!.nombre,
@@ -293,22 +293,22 @@ abstract class AuthService {
                         "id_imagen_fk": newRecordImagenUsuario.id,
                       });
                       if (newRecordEmiUser.id.isNotEmpty) {
-                        print('Usuario Emi Web agregado éxitosamente en Pocketbase');
+                        //print('Usuario Emi Web agregado éxitosamente en Pocketbase');
                       } else {
-                        print('Usuario Emi Web no agregado éxitosamente en Pocketbase');
+                        //print('Usuario Emi Web no agregado éxitosamente en Pocketbase');
                         return false;
                       }
                       return true;
                     } else {
-                      print("No se crea el Usuario en Pocketbase");
+                      //print("No se crea el Usuario en Pocketbase");
                       return false;
                     }
                   } else {
-                    print('Imagen usuario Emi Web no agregado éxitosamente en Pocketbase');
+                    //print('Imagen usuario Emi Web no agregado éxitosamente en Pocketbase');
                     return false;
                   }
                 case 401: //Error de Token incorrecto
-                  print("Caso 401 en postUsuarioPocketbase");
+                  //print("Caso 401 en postUsuarioPocketbase");
                   if(await getTokenOAuthEmiWeb(email, password) != null) {
                     postUsuarioPocketbase(responseUsuarioEmiWeb, email, password);
                     return true;
@@ -316,17 +316,17 @@ abstract class AuthService {
                     return false;
                   }
                 case 404: //Error de ruta incorrecta
-                  print("Caso 404 en postUsuarioPocketbase");
+                  //print("Caso 404 en postUsuarioPocketbase");
                   return false;
                 default:
-                  print("Caso default en postUsuarioPocketbase");
+                  //print("Caso default en postUsuarioPocketbase");
                   return false;
               }
             }
           }
 
         case 401: //Error de Token incorrecto
-          print("Caso 401 en postUsuarioPocketbase");
+          //print("Caso 401 en postUsuarioPocketbase");
           if(await getTokenOAuthEmiWeb(email, password) != null) {
             postUsuarioPocketbase(responseUsuarioEmiWeb, email, password);
             return true;
@@ -334,15 +334,15 @@ abstract class AuthService {
             return false;
           }
         case 404: //Error de ruta incorrecta
-          print("Caso 404 en postUsuarioPocketbase");
+          //print("Caso 404 en postUsuarioPocketbase");
           return false;
         default:
-          print("Caso default en postUsuarioPocketbase");
+          //print("Caso default en postUsuarioPocketbase");
           return false;
       }
     } catch (e) {
-      print("Catch en postUsuarioPocketbase");
-      print("Error: ${e}");
+      //print("Catch en postUsuarioPocketbase");
+      //print("Error: ${e}");
       return false;
     }
   }
@@ -378,19 +378,19 @@ abstract class AuthService {
             for (var i = 0; i < responseGetUsuarioDataCompletoParse.payload!.tiposUsuario!.length; i++) {
               final rol = dataBase.rolesBox.query(Roles_.idEmiWeb.equals(responseGetUsuarioDataCompletoParse.payload!.tiposUsuario![i].idCatRoles.toString())).build().findUnique();
               if (rol != null) {
-                print("Se recupera el rol tipo: '${rol.rol}' del usuario a registrar con id: '${rol.idDBR}'");
+                //print("Se recupera el rol tipo: '${rol.rol}' del usuario a registrar con id: '${rol.idDBR}'");
                 if (rol.rol != "Staff Logística" && rol.rol != "Staff Dirección") {
                   listRoles.add(rol.idDBR!);
                 }
               } 
             }
-            print("Se termina de recuperar los roles");
+            //print("Se termina de recuperar los roles");
             //Se recupera la imagen del Usuario
             if(responseGetUsuarioDataCompletoParse.payload!.idDocumento == 0) {
-              print("No hay imagen asociada");
+              //print("No hay imagen asociada");
               //No hay imagen nueva asociada al usuario
               if (updateUsuario.idImagenFk == "" || updateUsuario.idImagenFk == null) {
-                print("No había imagen previa");
+                //print("No había imagen previa");
                 //Se actualiza Usuario emi_users nuevo en colección de pocketbase
                 final updateRecordEmiUser = await client.records.update('emi_users', updateUsuario.id, body: {
                   "nombre_usuario": responseGetUsuarioDataCompletoParse.payload!.nombre,
@@ -403,7 +403,7 @@ abstract class AuthService {
                 });
                 if (updateRecordEmiUser.id.isNotEmpty) {
                   // Usuario actualizado éxitosamente en Pocketbase
-                  print("Entramos a actualizar password Usuario en updateUsuarioPocketbase");
+                  //print("Entramos a actualizar password Usuario en updateUsuarioPocketbase");
                   //Se actualiza Usuario nuevo en Pocketbase
                   final usuarioUpdated = await client.users.update(
                     idDBRUsers,
@@ -414,7 +414,7 @@ abstract class AuthService {
                   if(usuarioUpdated.id.isNotEmpty) {
                     return true;
                   } else {
-                    print("No se actualiza el Usuario en Pocketbase");
+                    //print("No se actualiza el Usuario en Pocketbase");
                     return false;
                   }
                 } else {
@@ -422,7 +422,7 @@ abstract class AuthService {
                   return false;
                 }
               } else {
-                print("Ya había imagen previa");
+                //print("Ya había imagen previa");
                 //Se actualiza Usuario emi_users nuevo en colección de pocketbase
                 final updateRecordEmiUser = await client.records.update('emi_users', updateUsuario.id, body: {
                   "nombre_usuario": responseGetUsuarioDataCompletoParse.payload!.nombre,
@@ -439,7 +439,7 @@ abstract class AuthService {
                   //Se elimina la imagen de Pocketbase anterior
                   await client.records.delete('imagenes', '${updateUsuario.idImagenFk}');
                   // Usuario actualizado éxitosamente en Pocketbase
-                  print("Entramos a actualizar password Usuario en updateUsuarioPocketbase");
+                  //print("Entramos a actualizar password Usuario en updateUsuarioPocketbase");
                   //Se actualiza Usuario nuevo en Pocketbase
                   final usuarioUpdated = await client.users.update(
                     idDBRUsers,
@@ -450,7 +450,7 @@ abstract class AuthService {
                   if(usuarioUpdated.id.isNotEmpty) {
                     return true;
                   } else {
-                    print("No se actualiza el Usuario en Pocketbase");
+                    //print("No se actualiza el Usuario en Pocketbase");
                     return false;
                   }
                 } else {
@@ -459,9 +459,9 @@ abstract class AuthService {
                 }
               }
             } else {
-              print("Si hay imagen asociada");
+              //print("Si hay imagen asociada");
               //Si hay imagen asociada al usuario
-              print("ID Documento: ${responseGetUsuarioDataCompletoParse.payload!.idDocumento}");
+              //print("ID Documento: ${responseGetUsuarioDataCompletoParse.payload!.idDocumento}");
               var url = Uri.parse("$baseUrlEmiWebServices/documentos?id=${responseGetUsuarioDataCompletoParse.payload!.idDocumento}");
               var tokenActual = await storage.read(key: "tokenEmiWeb");
               final headers = ({
@@ -472,11 +472,11 @@ abstract class AuthService {
                 url,
                 headers: headers
               );
-              print("${responseImagenUsuario.body}");
-              print("${responseImagenUsuario.statusCode}");
+              //print("${responseImagenUsuario.body}");
+              //print("${responseImagenUsuario.statusCode}");
               switch (responseImagenUsuario.statusCode) {
                 case 200: //Caso éxitoso
-                  print("Hay imagen éxitoso");
+                  //print("Hay imagen éxitoso");
                   final responseImagenUsuarioEmiWeb = getImagenUsuarioEmiWebFromMap(
                     const Utf8Decoder().convert(responseImagenUsuario.bodyBytes));
                   if(updateUsuario.idImagenFk == "" || updateUsuario.idImagenFk == null) {
@@ -487,7 +487,7 @@ abstract class AuthService {
                     final imageResized = copyResize(image!, width: 1920, height: 1080);
                     // Codificar imagen a nueva calidad
                     final List<int> imageBytes = encodeJpg(imageResized, quality: 30);
-                    print("Se crea imagen");
+                    //print("Se crea imagen");
                     final newRecordImagenUsuario = await client.records.create('imagenes', body: {
                       "nombre": responseImagenUsuarioEmiWeb.payload!.nombreArchivo,
                       "id_emi_web": responseGetUsuarioDataCompletoParse.payload!.idDocumento.toString(),
@@ -507,7 +507,7 @@ abstract class AuthService {
                       });
                       if (updateRecordEmiUser.id.isNotEmpty) {
                         // Usuario actualizado éxitosamente en Pocketbase
-                        print("Entramos a actualizar password Usuario en updateUsuarioPocketbase");
+                        //print("Entramos a actualizar password Usuario en updateUsuarioPocketbase");
                         //Se actualiza Usuario nuevo en Pocketbase
                         final usuarioUpdated = await client.users.update(
                           idDBRUsers,
@@ -518,7 +518,7 @@ abstract class AuthService {
                         if(usuarioUpdated.id.isNotEmpty) {
                           return true;
                         } else {
-                          print("No se actualiza el Usuario en Pocketbase");
+                          //print("No se actualiza el Usuario en Pocketbase");
                           return false;
                         }
                       } else {
@@ -531,7 +531,7 @@ abstract class AuthService {
                     }
                   } else {
                     // Se actualiza la imagen
-                    print("Se actualiza imagen");
+                    //print("Se actualiza imagen");
                     // Decodificar imagen base 64
                     final image = decodeImage(base64.decode(responseImagenUsuarioEmiWeb.payload!.archivo));
                     // Redimendsionar imagen
@@ -557,7 +557,7 @@ abstract class AuthService {
                       });
                       if (updateRecordEmiUser.id.isNotEmpty) {
                         // Usuario actualizado éxitosamente en Pocketbase
-                        print("Entramos a actualizar password Usuario en updateUsuarioPocketbase");
+                        //print("Entramos a actualizar password Usuario en updateUsuarioPocketbase");
                         //Se actualiza Usuario nuevo en Pocketbase
                         final usuarioUpdated = await client.users.update(
                           idDBRUsers,
@@ -568,7 +568,7 @@ abstract class AuthService {
                         if(usuarioUpdated.id.isNotEmpty) {
                           return true;
                         } else {
-                          print("No se actualiza el Usuario en Pocketbase");
+                          //print("No se actualiza el Usuario en Pocketbase");
                           return false;
                         }
                       } else {
@@ -586,7 +586,7 @@ abstract class AuthService {
               }
             }  
           case 401: //Error de Token incorrecto
-            print("Caso 401 en postUsuarioPocketbase");
+            //print("Caso 401 en postUsuarioPocketbase");
             if(await getTokenOAuthEmiWeb(email, password) != null) {
               postUsuarioPocketbase(responseUsuarioEmiWeb, email, password);
               return true;
@@ -594,18 +594,18 @@ abstract class AuthService {
               return false;
             }
           case 404: //Error de ruta incorrecta
-            print("Caso 404 en postUsuarioPocketbase");
+            //print("Caso 404 en postUsuarioPocketbase");
             return false;
           default:
-            print("Caso default en postUsuarioPocketbase");
+            //print("Caso default en postUsuarioPocketbase");
             return false;
         }
       } else {
         return false;
       }
     } catch (e) {
-      print("Catch en updateUsuarioPasswordPocketbase");
-      print("Error: ${e}");
+      //print("Catch en updateUsuarioPasswordPocketbase");
+      //print("Error: ${e}");
       return false;
     }
   }
@@ -613,25 +613,25 @@ abstract class AuthService {
   static Future<String?> userEMIByID(String idUser) async {
     try {
 
-      print("User ID: $idUser");
+      //print("User ID: $idUser");
       var url = Uri.parse("$baseUrl/api/collections/emi_users/records/?filter=(user='$idUser')");
 
       var response = await get(url);
 
-      print(response.body);
+      //print(response.body);
 
       final reverseUserEMIById = emiUserByIdFromMap(
           response.body);
 
-      print("Resultado del userEMIByID: ${reverseUserEMIById.items?[0].id}");
+      //print("Resultado del userEMIByID: ${reverseUserEMIById.items?[0].id}");
 
       if (reverseUserEMIById.items == null) {
-        print('Items not Found');
+        //print('Items not Found');
       } else {
         return reverseUserEMIById.items?[0].id;
       }
     } catch (e) {
-      print('ERROR - function userEMIByID(): $e');
+      //print('ERROR - function userEMIByID(): $e');
       return null;
     }
     return null;
@@ -647,15 +647,15 @@ abstract class AuthService {
       filter: "id='$idImagenUsuario'",
       sort: "-created");
       if (recordsImagenUsuario.isNotEmpty) {
-        print("Se retorna Imagen de imagenUsuarioById");
-        print(recordsImagenUsuario[0].toString());
+        //print("Se retorna Imagen de imagenUsuarioById");
+        //print(recordsImagenUsuario[0].toString());
       return getImagenUsuarioFromMap(recordsImagenUsuario[0].toString());
       } else{
-        print("No se retorna Imagen de imagenUsuarioById");
+        //print("No se retorna Imagen de imagenUsuarioById");
         return null;
       }
     } catch (e) {
-      print('ERROR - function userEMIByID(): $e');
+      //print('ERROR - function userEMIByID(): $e');
       return null;
     }
   }

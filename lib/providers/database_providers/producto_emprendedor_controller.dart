@@ -69,7 +69,7 @@ class ProductoEmprendedorController extends ChangeNotifier {
         dataBase.emprendimientosBox.put(emprendimiento);
         // dataBase.emprendedoresBox.put(nuevoEmprendedor);
         productosEmp.add(nuevoProductoEmp);
-        print('Producto Emprendedor agregado exitosamente');
+        //print('Producto Emprendedor agregado exitosamente');
         clearInformation();
         notifyListeners();
       }
@@ -89,7 +89,7 @@ class ProductoEmprendedorController extends ChangeNotifier {
       updateProdEmprendedor.bitacora.add(nuevaInstruccion);
       dataBase.productosEmpBox.put(updateProdEmprendedor);
     }
-    print('Producto Emprendedor actualizado exitosamente');
+    //print('Producto Emprendedor actualizado exitosamente');
     notifyListeners();
 }
 
@@ -103,7 +103,7 @@ void updateImagenProductoEmp(int idImagenProductoEmp, String newNombreImagen, St
       updateImagenProductoEmp.path = newPath;
       updateImagenProductoEmp.bitacora.add(nuevaInstruccion);
       dataBase.imagenesBox.put(updateImagenProductoEmp);
-      print('Imagen Prod Emprendedor actualizada exitosamente');
+      //print('Imagen Prod Emprendedor actualizada exitosamente');
     }
     notifyListeners();
   }
@@ -124,7 +124,7 @@ void addImagenProductoEmp(ProductosEmp productoEmp, String newNombreImagen, Stri
       nuevaImagenProductoEmp.bitacora.add(nuevaInstruccionImagen);
       dataBase.imagenesBox.put(nuevaImagenProductoEmp);
       dataBase.productosEmpBox.put(productoEmp);
-      print('Imagen Prod Emprendedor agregada exitosamente');
+      //print('Imagen Prod Emprendedor agregada exitosamente');
     notifyListeners();
   }
   

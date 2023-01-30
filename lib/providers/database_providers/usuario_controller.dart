@@ -28,14 +28,14 @@ class UsuarioController extends ChangeNotifier {
   int? currentUserId;
 
   UsuarioController({String? email}) {
-    print("El email es: $email");
-    print("Currentuser: $currentUser");
+    //print("El email es: $email");
+    //print("Currentuser: $currentUser");
     if (email != null) {
       final query =
           dataBase.usuariosBox.query(Usuarios_.correo.equals(email)).build();
       currentUser = currentUser;
       usuarioCurrent = query.findFirst();
-      print(usuarioCurrent?.nombre ?? "SIN NOMBRE");
+      //print(usuarioCurrent?.nombre ?? "SIN NOMBRE");
     }
   }
 
@@ -90,9 +90,9 @@ class UsuarioController extends ChangeNotifier {
       idDBR: imagen.id,
       idEmprendimiento: 0,
       );   
-      print("Se guarda exitosamente la imagen de perfil");
+      //print("Se guarda exitosamente la imagen de perfil");
     } else{
-      print("No hay imagen de perfil");
+      //print("No hay imagen de perfil");
       nuevaImagenUsuario = Imagenes(
       imagenes: "",
       idEmprendimiento: 0,
@@ -114,7 +114,7 @@ class UsuarioController extends ChangeNotifier {
       nuevaImagenUsuario.usuario.target = nuevoUsuario;
       dataBase.usuariosBox.put(nuevoUsuario);
       usuarios.add(nuevoUsuario);
-      print('Usuario agregado exitosamente');
+      //print('Usuario agregado exitosamente');
       notifyListeners();
     }
   }
@@ -174,9 +174,9 @@ class UsuarioController extends ChangeNotifier {
           dataBase.imagenesBox.put(nuevaImagenUsuario);
           updateUsuario.imagen.target = nuevaImagenUsuario;
         } else {
-          print("Se actualiza imagen USUARIO");
+          //print("Se actualiza imagen USUARIO");
           // Se actualiza imagen
-          print("ID IMAGEN: ${newImagen.idEmiWeb}");
+          //print("ID IMAGEN: ${newImagen.idEmiWeb}");
           final uInt8ListImagen = base64Decode(newImagen.base64);
           final tempDir = await getTemporaryDirectory();
           File file = await File('${tempDir.path}/${newImagen.nombre}').create();
@@ -205,7 +205,7 @@ class UsuarioController extends ChangeNotifier {
       return true;
     } else {
       // No se encontró el usuario a actualizar en ObjectBox
-      print("No se encontro usuario en ObjectBox");
+      //print("No se encontro usuario en ObjectBox");
       return false;
     }
   }
@@ -218,7 +218,7 @@ void updateRol(int id, int newIdRol) {
         updateUsuario.rol.target = updateRol; //Se actualiza el rol del Usuario
       }
       dataBase.usuariosBox.put(updateUsuario);
-      print('Usuario actualizado exitosamente');
+      //print('Usuario actualizado exitosamente');
     }
     notifyListeners();
   }
@@ -234,7 +234,7 @@ void updateDatos(int id, String newNombre, String newApellidoP, String newApelli
       updateUsuario.telefono = newTelefono;
       updateUsuario.bitacora.add(nuevaInstruccion);
       dataBase.usuariosBox.put(updateUsuario);
-      print('Usuario actualizado exitosamente');
+      //print('Usuario actualizado exitosamente');
     }
     notifyListeners();
   }
@@ -250,8 +250,8 @@ void updateImagenUsuario(int idImagenUsuario, String newNombreImagen, String new
       updateImagenUsuario.path = newPath;
       updateImagenUsuario.bitacora.add(nuevaInstruccion);
       dataBase.imagenesBox.put(updateImagenUsuario);
-      print("ID IMAGEN CONFIRMAR: ${updateImagenUsuario.idEmiWeb}");
-      print('Imagen Usuario actualizado exitosamente');
+      //print("ID IMAGEN CONFIRMAR: ${updateImagenUsuario.idEmiWeb}");
+      //print('Imagen Usuario actualizado exitosamente');
     }
     notifyListeners();
   }
@@ -267,7 +267,7 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
       newImagenUsuario.path = newPath;
       newImagenUsuario.bitacora.add(nuevaInstruccion);
       dataBase.imagenesBox.put(newImagenUsuario);
-      print('Imagen Usuario agregada exitosamente');
+      //print('Imagen Usuario agregada exitosamente');
     }
     notifyListeners();
   }
@@ -304,7 +304,7 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
       if (usuarios[i].correo == email) {
         currentUserId = usuarios[i].id;
         currentUser = email;
-        print('ID Usuario recuperado exitosamente');
+        //print('ID Usuario recuperado exitosamente');
       }
     }
     getUser(email);
@@ -329,7 +329,7 @@ void addImagenUsuario(int idImagenUsuario, String newNombreImagen, String newPat
   void addEmprendimiento(Emprendimientos emprendimiento) {
     usuarioCurrent!.emprendimientos.add(emprendimiento);
     dataBase.usuariosBox.put(usuarioCurrent!);
-    print('Emprendimiento modificado exitosamente');
+    //print('Emprendimiento modificado exitosamente');
     notifyListeners();
   }
 

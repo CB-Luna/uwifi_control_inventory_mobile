@@ -157,7 +157,7 @@ class _MainTabOpcionesScreenState extends State<MainTabOpcionesScreen>
                                               ));
                                             }
                                             else {
-                                              print(actualInversion!.idDBR);
+                                              //print(actualInversion!.idDBR);
                                             if (await syncProviderEmiWeb.validateInversionComprada(actualInversion!)) {
                                               snackbarKey.currentState
                                                 ?.showSnackBar(const SnackBar(

@@ -63,7 +63,7 @@ class _EmprendimientosScreenState extends State<EmprendimientosScreen> {
   }
 
   getInfo() {
-    print("PREFERS: ${prefs.getString("userId")}");
+    //print("PREFERS: ${prefs.getString("userId")}");
     context
         .read<UsuarioController>()
         .getUser(prefs.getString("userId") ?? "NONE");

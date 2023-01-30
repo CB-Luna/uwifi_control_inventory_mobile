@@ -56,7 +56,7 @@ class CotizacionController extends ChangeNotifier {
 
         var response = await post(url, headers: headers, body: bodyMsg);
 
-        print(response.body);
+        //print(response.body);
 
         switch (response.statusCode) {
           case 200:
@@ -127,11 +127,11 @@ class CotizacionController extends ChangeNotifier {
           for (var i = 0; i < listProdCotizados.length; i++) {
             listProdCotizados[i].aceptado = false;
             dataBase.productosCotBox.put(listProdCotizados[i]);
-            print("Prod Cotizado updated succesfully");
+            //print("Prod Cotizado updated succesfully");
           }
           inversion.estadoInversion.target = newEstadoInversion;
           dataBase.inversionesBox.put(inversion);
-          print("Inversion updated succesfully");
+          //print("Inversion updated succesfully");
           switch (await getTokenOAuth(idEmprendimiento)) {
             case 0:
               return 0;
@@ -155,10 +155,10 @@ class CotizacionController extends ChangeNotifier {
                         "idInversiones": inversion.idEmiWeb,
                         "idCatEstadoInversion": newEstadoInversion.idEmiWeb,
                       }));
-              print("Id Inversión: ${inversion.idEmiWeb}");
+              //print("Id Inversión: ${inversion.idEmiWeb}");
               switch (responsePutUpdateEstadoInversion.statusCode) {
                 case 200:
-                  print("Caso 200 en Emi Web Update Estado Inversión");
+                  //print("Caso 200 en Emi Web Update Estado Inversión");
                   //Se agrega la instrucción para mandar Proyectos a Emi Web
                   final nuevaInstruccionInversionXprodCotizado = Bitacora(
                       instruccion: 'syncAcceptInversionXProdCotizado',
@@ -181,7 +181,7 @@ class CotizacionController extends ChangeNotifier {
                     return 0;
                   }
                 default: //No se realizo con éxito el put
-                  print("Error en actualizar estado inversión Emi Web");
+                  //print("Error en actualizar estado inversión Emi Web");
                   return 0;
               }
             case 2:
@@ -196,7 +196,7 @@ class CotizacionController extends ChangeNotifier {
         return 0;
       }
     } catch (e) {
-      print("Error en acceptCotizacion(): $e");
+      //print("Error en acceptCotizacion(): $e");
       return 0;
     }
   }
@@ -234,7 +234,7 @@ class CotizacionController extends ChangeNotifier {
                     }));
             switch (responsePutUpdateEstadoInversion.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Update Estado Inversión");
+                //print("Caso 200 en Emi Web Update Estado Inversión");
                 //Se actualiza el estado de la Inversión en Pocketbase
                 final record = await client.records
                     .update('inversiones', inversion.idDBR.toString(), body: {
@@ -252,11 +252,11 @@ class CotizacionController extends ChangeNotifier {
                     for (var i = 0; i < listProdCotizados.length; i++) {
                       listProdCotizados[i].aceptado = false;
                       dataBase.productosCotBox.put(listProdCotizados[i]);
-                      print("Prod Cotizado updated succesfully");
+                      //print("Prod Cotizado updated succesfully");
                     }
                     inversion.estadoInversion.target = newEstadoInversion;
                     dataBase.inversionesBox.put(inversion);
-                    print("Inversion updated succesfully");
+                    //print("Inversion updated succesfully");
                     return 1;
                   } else {
                     return 0;
@@ -265,7 +265,7 @@ class CotizacionController extends ChangeNotifier {
                   return 0;
                 }
               default: //No se realizo con éxito el put
-                print("Error en actualizar estado inversión Emi Web");
+                //print("Error en actualizar estado inversión Emi Web");
                 return 0;
             }
           } else {
@@ -277,7 +277,7 @@ class CotizacionController extends ChangeNotifier {
           return 0;
       }
     } catch (e) {
-      print("Error en cancelCotizacion(): $e");
+      //print("Error en cancelCotizacion(): $e");
       return 0;
     }
   }
@@ -315,7 +315,7 @@ class CotizacionController extends ChangeNotifier {
                     }));
             switch (responsePutUpdateEstadoInversion.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Update Estado Inversión");
+                //print("Caso 200 en Emi Web Update Estado Inversión");
                 //Se actualiza el estado de la Inversión en Pocketbase
                 final record = await client.records
                     .update('inversiones', inversion.idDBR.toString(), body: {
@@ -333,7 +333,7 @@ class CotizacionController extends ChangeNotifier {
                     for (var i = 0; i < listProdCotizados.length; i++) {
                       listProdCotizados[i].aceptado = false;
                       dataBase.productosCotBox.put(listProdCotizados[i]);
-                      print("Prod Cotizado updated succesfully");
+                      //print("Prod Cotizado updated succesfully");
                     }
                     final nuevaInversionXprodCotizados = InversionesXProdCotizados(
                         idEmprendimiento:
@@ -345,7 +345,7 @@ class CotizacionController extends ChangeNotifier {
                     inversion.inversionXprodCotizados
                         .add(nuevaInversionXprodCotizados);
                     dataBase.inversionesBox.put(inversion);
-                    print("Inversion updated succesfully");
+                    //print("Inversion updated succesfully");
                     return 1;
                   } else {
                     return 0;
@@ -354,7 +354,7 @@ class CotizacionController extends ChangeNotifier {
                   return 0;
                 }
               default: //No se realizo con éxito el put
-                print("Error en actualizar estado inversión Emi Web");
+                //print("Error en actualizar estado inversión Emi Web");
                 return 0;
             }
           } else {
@@ -366,7 +366,7 @@ class CotizacionController extends ChangeNotifier {
           return 0;
       }
     } catch (e) {
-      print("Error en cancelCotizacion(): $e");
+      //print("Error en cancelCotizacion(): $e");
       return 0;
     }
   }

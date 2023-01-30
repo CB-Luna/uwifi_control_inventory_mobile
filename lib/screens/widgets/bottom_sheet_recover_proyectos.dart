@@ -148,7 +148,7 @@ class _BottomSheetRecoverProyectosWidgetState
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   final listUsuariosProyectosTemp = await empExternosProvider.getUsuariosProyectosEmiWeb();
-                                  print("******Tamaño de list Usuarios Proyectos: ${listUsuariosProyectosTemp?.length}");
+                                  //print("******Tamaño de list Usuarios Proyectos: ${listUsuariosProyectosTemp?.length}");
                                   // ignore: use_build_context_synchronously
                                   await Navigator.push(
                                     context,

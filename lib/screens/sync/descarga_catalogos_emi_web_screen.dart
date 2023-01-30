@@ -30,7 +30,7 @@ class _DescargaCatalogosEmiWebScreenState extends State<DescargaCatalogosEmiWebS
         Future<bool> booleano = context.read<CatalogoEmiWebProvider>().getCatalogosEmiWeb();
         Future(() async {
           if (await booleano) {
-            print("Se ha realizado con éxito el proceso de Descarga Emi Web");
+            //print("Se ha realizado con éxito el proceso de Descarga Emi Web");
             Navigator.push(
               context,
               MaterialPageRoute(

@@ -53,7 +53,7 @@ class ProductoVentaController extends ChangeNotifier {
       fechaRegistro: DateTime.now(),
     );
     productosVendidos.add(nuevoProductoVendido);
-    print('Producto Vendido agregado exitosamente');
+    //print('Producto Vendido agregado exitosamente');
     notifyListeners();
   }
 
@@ -78,7 +78,7 @@ class ProductoVentaController extends ChangeNotifier {
         productosVendidos[i] = updateProductoVendido;
       }
     }
-    print('Producto Vendido actualizado exitosamente');
+    //print('Producto Vendido actualizado exitosamente');
     notifyListeners();
   
   }
@@ -111,7 +111,7 @@ void add(int idEmprendimiento, int idVenta) {
         dataBase.ventasBox.put(venta);
       }
     }
-    print('Productos Vendidos agregados exitosamente');
+    //print('Productos Vendidos agregados exitosamente');
     clearInformation();
     notifyListeners();
   }
@@ -149,7 +149,7 @@ void add(int idEmprendimiento, int idVenta) {
         case "syncDeleteProductoVendido":
           final deleteProductoVendido = dataBase.productosVendidosBox.get(instruccionesProdVendido[i].prodVendido.id);
           if(deleteProductoVendido != null) {
-            print("Se elimina producto Vendido");
+            //print("Se elimina producto Vendido");
             final nuevaInstruccion = Bitacora(
               instruccion: 'syncDeleteProductoVendido', 
               instruccionAdicional: deleteProductoVendido.nombreProd,
@@ -166,7 +166,7 @@ void add(int idEmprendimiento, int idVenta) {
             dataBase.productosVendidosBox.remove(deleteProductoVendido.id);
             continue;
           } else {
-            print("No se elimina producto Vendido");
+            //print("No se elimina producto Vendido");
             continue;
           }
         default:
@@ -189,16 +189,16 @@ void update(int id, int idProductoEmp, double newPrecioVenta, int newCantidad, d
       updateProdVendido.bitacora.add(nuevaInstruccion);
       dataBase.productosVendidosBox.put(updateProdVendido);
     }
-    print('Producto Vendido actualizado exitosamente');
+    //print('Producto Vendido actualizado exitosamente');
     notifyListeners();
 }
   //TODO Eliminar producto del backend, agregando un campo idbr en la bitacora
 
   // void remove(ProductosEmp productosEmp) {
-  //   print("Tamaño productos antes de remover: ${dataBase.productosEmpBox.getAll().length}");
+  //   //print("Tamaño productos antes de remover: ${dataBase.productosEmpBox.getAll().length}");
   //   final nuevaInstruccion = Bitacora(instrucciones: 'syncDeleteProductoEmprendedor', usuario: prefs.getString("userId")!); //Se crea la nueva instruccion a realizar en bitacora
   //   dataBase.productosEmpBox.remove(productosEmp.id); //Se elimina de bitacora la instruccion creada anteriormente
-  //   print("Tamaño productos después de remover: ${dataBase.productosEmpBox.getAll().length}");
+  //   //print("Tamaño productos después de remover: ${dataBase.productosEmpBox.getAll().length}");
   //   notifyListeners(); 
   // }
 

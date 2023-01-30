@@ -56,7 +56,7 @@ class EmprendedorController extends ChangeNotifier {
     fechaRegistro: DateTime.now(),
   );
   asociado = true;
-  print('Emprendedor temporal guardado éxitosamente');
+  //print('Emprendedor temporal guardado éxitosamente');
   notifyListeners();
 }
 
@@ -83,7 +83,7 @@ class EmprendedorController extends ChangeNotifier {
           emprendimiento.emprendedor.target = nuevoEmprendedor;
           dataBase.emprendimientosBox.put(emprendimiento);
           // dataBase.emprendedoresBox.put(nuevoEmprendedor);
-          print('Emprendedor agregado exitosamente');
+          //print('Emprendedor agregado exitosamente');
           notifyListeners();
         }
       }
@@ -105,7 +105,7 @@ class EmprendedorController extends ChangeNotifier {
       updateEmprendedor.comunidad.target = dataBase.comunidadesBox.get(idComunidad);
       updateEmprendedor.bitacora.add(nuevaInstruccion);
       dataBase.emprendedoresBox.put(updateEmprendedor);
-      print('Emprendedor actualizado exitosamente');
+      //print('Emprendedor actualizado exitosamente');
 
     }
     notifyListeners();
@@ -119,7 +119,7 @@ class EmprendedorController extends ChangeNotifier {
       emprendimiento.emprendedor.target!.imagen.target = imagenLocal;
       dataBase.imagenesBox.put(imagenLocal!);
       dataBase.emprendedoresBox.put(emprendimiento.emprendedor.target!);
-      print('Imagen Emprendedor agregada exitosamente');
+      //print('Imagen Emprendedor agregada exitosamente');
       notifyListeners();
     } 
   }
@@ -133,7 +133,7 @@ class EmprendedorController extends ChangeNotifier {
       updateImagen.base64 = newImagen.base64;
       updateImagen.bitacora.add(nuevaInstruccion);
       dataBase.imagenesBox.put(updateImagen);
-      print('Imagen de Emprendedor actualizada exitosamente');
+      //print('Imagen de Emprendedor actualizada exitosamente');
     }
     notifyListeners();
   }

@@ -1021,7 +1021,7 @@ class _AgregarProductoInversionJornadaScreenState
                                       0, 0, 0, 20),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      print("Desde registro");
+                                      //print("Desde registro");
                                       if (productoInversionJornadaController
                                           .validateForm(formKey)) {
                                         final actualFamiliaInversion = dataBase

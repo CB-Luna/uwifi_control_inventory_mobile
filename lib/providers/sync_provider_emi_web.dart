@@ -66,8 +66,8 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       });
 
       var response = await post(url, headers: headers, body: bodyMsg);
-      print("Response body");
-      print(response.body);
+      //print("Response body");
+      //print(response.body);
       //Se actualiza la información del usuario de forma autómatica, cada vez que se hace una sincronización
       final updateUsuario = dataBase.usuariosBox
           .query(Usuarios_.correo.equals(prefs.getString("userId")!))
@@ -88,7 +88,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 await get(urlgetRolesUsuario, headers: headers);
             switch (responseGetRolesUsuario.statusCode) {
               case 200: //Caso éxitoso
-                print("Caso exitoso 200 en get Roles Emi Web");
+                //print("Caso exitoso 200 en get Roles Emi Web");
                 final responseListRoles = getRolesEmiWebFromMap(
                     const Utf8Decoder()
                         .convert(responseGetRolesUsuario.bodyBytes));
@@ -101,8 +101,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       .build()
                       .findUnique();
                   if (rol != null) {
-                    print(
-                        "Se recupera el rol tipo: '${rol.rol}' del usuario a registrar con id: '${rol.idDBR}'");
+                    //print( "Se recupera el rol tipo: '${rol.rol}' del usuario a registrar con id: '${rol.idDBR}'");
                     if (rol.rol != "Staff Logística" &&
                         rol.rol != "Staff Dirección") {
                       listRoles.add(rol.idDBR!);
@@ -245,13 +244,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       // Se recupera el Usuario Actual del dispositivo
       if (await getTokenOAuth()) {
         for (var i = 0; i < instruccionesBitacora.length; i++) {
-          print(
-              "Tamaño instrucciones Emi Web: ${instruccionesBitacora.length}");
-          print(
-              "Instrucción a realizar en Emi Web: ${instruccionesBitacora[i].instruccion}");
+          //print( "Tamaño instrucciones Emi Web: ${instruccionesBitacora.length}");
+          //print("Instrucción a realizar en Emi Web: ${instruccionesBitacora[i].instruccion}");
           switch (instruccionesBitacora[i].instruccion) {
             case "syncAddImagenUsuario":
-              print("Entro al caso de syncAddImagenUsuario Emi Web");
+              //print("Entro al caso de syncAddImagenUsuario Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final imagenToSync = getFirstImagen(
                     dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
@@ -286,7 +283,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncAddEmprendedor":
-              print("Entro al caso de syncAddEmprendedor Emi Web");
+              //print("Entro al caso de syncAddEmprendedor Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final emprendedorToSync = getFirstEmprendedor(
                     dataBase.emprendedoresBox.getAll(),
@@ -339,7 +336,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncAddEmprendimiento":
-              print("Entro al caso de syncAddEmprendimiento Emi Web");
+              //print("Entro al caso de syncAddEmprendimiento Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final emprendimientoToSync = getFirstEmprendimiento(
                     dataBase.emprendimientosBox.getAll(),
@@ -377,7 +374,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncAddJornada1":
-              print("Entro al caso de syncAddJornada1 Emi Web");
+              //print("Entro al caso de syncAddJornada1 Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final jornadaToSync = getFirstJornada(
                     dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
@@ -431,7 +428,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncAddJornada2":
-              print("Entro al caso de syncAddJornada2 Emi Web");
+              //print("Entro al caso de syncAddJornada2 Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final jornadaToSync = getFirstJornada(
                     dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
@@ -485,7 +482,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncAddImagenJornada2":
-              print("Entro al caso de syncAddImagenJornada2 Emi Web");
+              //print("Entro al caso de syncAddImagenJornada2 Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final imagenToSync = getFirstImagen(
                     dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
@@ -541,7 +538,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncAddJornada3":
-              print("Entro al caso de syncAddJornada3 Emi Web");
+              //print("Entro al caso de syncAddJornada3 Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final jornadaToSync = getFirstJornada(
                     dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
@@ -595,7 +592,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncAddImagenJornada3":
-              print("Entro al caso de syncAddImagenJornada3 Emi Web");
+              //print("Entro al caso de syncAddImagenJornada3 Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final imagenToSync = getFirstImagen(
                     dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
@@ -651,7 +648,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncAddProductoInversionJ3":
-              print("Entro al caso de syncAddProductoInversionJ3 Emi Web");
+              //print("Entro al caso de syncAddProductoInversionJ3 Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final prodSolicitadoToSync = getFirstProdSolicitado(
                     dataBase.productosSolicitadosBox.getAll(),
@@ -709,7 +706,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncUpdateProductoInversionJ3":
-              print("Entro al caso de syncUpdateProductoInversionJ3 Emi Web");
+              //print("Entro al caso de syncUpdateProductoInversionJ3 Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final prodSolicitadoToSync = getFirstProdSolicitado(
                     dataBase.productosSolicitadosBox.getAll(),
@@ -766,7 +763,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncAddJornada4":
-              print("Entro al caso de syncAddJornada4 Emi Web");
+              //print("Entro al caso de syncAddJornada4 Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final jornadaToSync = getFirstJornada(
                     dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
@@ -820,7 +817,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncAddImagenJornada4":
-              print("Entro al caso de syncAddImagenJornada4 Emi Web");
+              //print("Entro al caso de syncAddImagenJornada4 Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final imagenToSync = getFirstImagen(
                     dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
@@ -876,7 +873,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncAddConsultoria":
-              print("Entro al caso de syncAddConsultoria Emi Web");
+              //print("Entro al caso de syncAddConsultoria Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final consultoriaToSync = getFirstConsultoria(
                     dataBase.consultoriasBox.getAll(),
@@ -933,7 +930,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncAddProductoEmprendedor":
-              print("Entro al caso de syncAddProductoEmprendedor Emi Web");
+              //print("Entro al caso de syncAddProductoEmprendedor Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final productoEmpToSync = getFirstProductoEmprendedor(
                     dataBase.productosEmpBox.getAll(),
@@ -991,8 +988,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncAddImagenProductoEmprendedor":
-              print(
-                  "Entro al caso de syncAddImagenProductoEmprendedor Emi Web");
+              //print("Entro al caso de syncAddImagenProductoEmprendedor Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final imagenToSync = getFirstImagen(
                     dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
@@ -1048,7 +1044,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncAddVenta":
-              print("Entro al caso de syncAddVenta Emi Web");
+              //print("Entro al caso de syncAddVenta Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final ventaToSync = getFirstVenta(
                     dataBase.ventasBox.getAll(), instruccionesBitacora[i].id);
@@ -1214,7 +1210,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncAddInversion":
-              print("Entro al caso de syncAddInversion Emi Web");
+              //print("Entro al caso de syncAddInversion Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final inversionToSync = getFirstInversion(
                     dataBase.inversionesBox.getAll(),
@@ -1271,7 +1267,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncUpdateUsuario":
-              print("Entro al caso de syncUpdateUsuario Emi Web");
+              //print("Entro al caso de syncUpdateUsuario Emi Web");
               final usuarioToSync = getFirstUsuario(
                   dataBase.usuariosBox.getAll(), instruccionesBitacora[i].id);
               if (usuarioToSync != null) {
@@ -1300,7 +1296,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncUpdateImagenUsuario":
-              print("Entro al caso de syncUpdateImagenUsuario Emi Web");
+              //print("Entro al caso de syncUpdateImagenUsuario Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final imagenToSync = getFirstImagen(
                     dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
@@ -1337,7 +1333,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncUpdateFaseEmprendimiento":
-              print("Entro al caso de syncUpdateFaseEmprendimiento Emi Web");
+              //print("Entro al caso de syncUpdateFaseEmprendimiento Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final emprendimientoToSync = getFirstEmprendimiento(
                     dataBase.emprendimientosBox.getAll(),
@@ -1393,7 +1389,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncUpdateEmprendedor":
-              print("Entro al caso de syncUpdateEmprendedor Emi Web");
+              //print("Entro al caso de syncUpdateEmprendedor Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final emprendedorToSync = getFirstEmprendedor(
                     dataBase.emprendedoresBox.getAll(),
@@ -1450,7 +1446,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncUpdateEmprendimiento":
-              print("Entro al caso de syncUpdateEmprendimiento Emi Web");
+              //print("Entro al caso de syncUpdateEmprendimiento Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final emprendimientoToSync = getFirstEmprendimiento(
                     dataBase.emprendimientosBox.getAll(),
@@ -1506,7 +1502,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncUpdateJornada1":
-              print("Entro al caso de syncUpdateJornada1 Emi Web");
+              //print("Entro al caso de syncUpdateJornada1 Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final jornadaToSync = getFirstJornada(
                     dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
@@ -1562,7 +1558,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncUpdateJornada2":
-              print("Entro al caso de syncUpdateJornada2 Emi Web");
+              //print("Entro al caso de syncUpdateJornada2 Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final jornadaToSync = getFirstJornada(
                     dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
@@ -1618,7 +1614,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncUpdateImagenJornada2":
-              print("Entro al caso de syncUpdateImagenJornada2 Emi Web");
+              //print("Entro al caso de syncUpdateImagenJornada2 Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final imagenToSync = getFirstImagen(
                     dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
@@ -1674,7 +1670,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncUpdateJornada3":
-              print("Entro al caso de syncUpdateJornada3 Emi Web");
+              //print("Entro al caso de syncUpdateJornada3 Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final jornadaToSync = getFirstJornada(
                     dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
@@ -1730,7 +1726,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncUpdateImagenJornada3":
-              print("Entro al caso de syncUpdateImagenJornada3 Emi Web");
+              //print("Entro al caso de syncUpdateImagenJornada3 Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final imagenToSync = getFirstImagen(
                     dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
@@ -1786,7 +1782,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncUpdateJornada4":
-              print("Entro al caso de syncUpdateJornada4 Emi Web");
+              //print("Entro al caso de syncUpdateJornada4 Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final jornadaToSync = getFirstJornada(
                     dataBase.jornadasBox.getAll(), instruccionesBitacora[i].id);
@@ -1842,7 +1838,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncUpdateImagenJornada4":
-              print("Entro al caso de syncUpdateImagenJornada4 Emi Web");
+              //print("Entro al caso de syncUpdateImagenJornada4 Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final imagenToSync = getFirstImagen(
                     dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
@@ -1898,7 +1894,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncUpdateEstadoInversion":
-              print("Entro al caso de syncUpdateEstadoInversion Emi Web");
+              //print("Entro al caso de syncUpdateEstadoInversion Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final inversionToSync = getFirstInversion(
                     dataBase.inversionesBox.getAll(),
@@ -1955,7 +1951,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncUpdateTareaConsultoria":
-              print("Entro al caso de syncUpdateTareaConsultoria Emi Web");
+              //print("Entro al caso de syncUpdateTareaConsultoria Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final tareaToSync = getFirstTarea(
                     dataBase.tareasBox.getAll(), instruccionesBitacora[i].id);
@@ -2011,7 +2007,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncUpdateProductoEmprendedor":
-              print("Entro al caso de syncUpdateProductoEmprendedor Emi Web");
+              //print("Entro al caso de syncUpdateProductoEmprendedor Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final productoEmprendedorToSync = getFirstProductoEmprendedor(
                     dataBase.productosEmpBox.getAll(),
@@ -2070,8 +2066,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncUpdateImagenProductoEmprendedor":
-              print(
-                  "Entro al caso de syncUpdateImagenProductoEmprendedor Emi Web");
+              //print("Entro al caso de syncUpdateImagenProductoEmprendedor Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final imagenToSync = getFirstImagen(
                     dataBase.imagenesBox.getAll(), instruccionesBitacora[i].id);
@@ -2127,7 +2122,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncUpdateVenta":
-              print("Entro al caso de syncUpdateVenta Emi Web");
+              //print("Entro al caso de syncUpdateVenta Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final ventaToSync = getFirstVenta(
                     dataBase.ventasBox.getAll(), instruccionesBitacora[i].id);
@@ -2237,8 +2232,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncUpdateProductosVendidosVenta":
-              print(
-                  "Entro al caso de syncUpdateProductosVendidosVenta Emi Web");
+              //print("Entro al caso de syncUpdateProductosVendidosVenta Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final ventaToSync = getFirstVenta(
                     dataBase.ventasBox.getAll(), instruccionesBitacora[i].id);
@@ -2294,7 +2288,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncDeleteImagenJornada":
-              print("Entro al caso de syncDeleteImagenJornada Emi Web");
+              //print("Entro al caso de syncDeleteImagenJornada Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final nombreEmprendimiento =
                     instruccionesBitacora[i].emprendimiento;
@@ -2334,7 +2328,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncDeleteProductoInversionJ3":
-              print("Entro al caso de syncDeleteProductoInversionJ3 Emi Web");
+              //print("Entro al caso de syncDeleteProductoInversionJ3 Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final nombreEmprendimiento =
                     instruccionesBitacora[i].emprendimiento;
@@ -2375,7 +2369,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncDeleteProductoVendido":
-              print("Entro al caso de syncDeleteProductoVendido Emi Web");
+              //print("Entro al caso de syncDeleteProductoVendido Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final nombreEmprendimiento =
                     instruccionesBitacora[i].emprendimiento;
@@ -2415,7 +2409,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncArchivarEmprendimiento":
-              print("Entro al caso de syncArchivarEmprendimiento Emi Web");
+              //print("Entro al caso de syncArchivarEmprendimiento Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final emprendimientoToSync = getFirstEmprendimiento(
                     dataBase.emprendimientosBox.getAll(),
@@ -2470,7 +2464,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncDesarchivarEmprendimiento":
-              print("Entro al caso de syncDesarchivarEmprendimiento Emi Web");
+              //print("Entro al caso de syncDesarchivarEmprendimiento Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final emprendimientoToSync = getFirstEmprendimiento(
                     dataBase.emprendimientosBox.getAll(),
@@ -2525,7 +2519,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncArchivarConsultoria":
-              print("Entro al caso de syncArchivarConsultoria Emi Web");
+              //print("Entro al caso de syncArchivarConsultoria Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final consultoriaToSync = getFirstConsultoria(
                     dataBase.consultoriasBox.getAll(),
@@ -2581,7 +2575,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncDesarchivarConsultoria":
-              print("Entro al caso de syncDesarchivarConsultoria Emi Web");
+              //print("Entro al caso de syncDesarchivarConsultoria Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final consultoriaToSync = getFirstConsultoria(
                     dataBase.consultoriasBox.getAll(),
@@ -2637,8 +2631,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncAcceptInversionXProdCotizado":
-              print(
-                  "Entro al caso de syncAcceptInversionXProdCotizado Emi Web");
+              //print("Entro al caso de syncAcceptInversionXProdCotizado Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final inversionXproductoCotizadoToSync =
                     getFirstInversionXProductosCotizados(
@@ -2698,8 +2691,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncUpdateInversionXProdCotizado":
-              print(
-                  "Entro al caso de syncUpdateInversionXProdCotizado Emi Web");
+              //print("Entro al caso de syncUpdateInversionXProdCotizado Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final inversionXproductoCotizadoToSync =
                     getFirstInversionXProductosCotizados(
@@ -2759,7 +2751,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncAcceptProdCotizado":
-              print("Entro al caso de syncAcceptProdCotizado Emi Web");
+              //print("Entro al caso de syncAcceptProdCotizado Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final productoCotizadoToSync = getFirstProductoCotizado(
                     dataBase.productosCotBox.getAll(),
@@ -2821,7 +2813,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncAddImagenesEntregaInversion":
-              print("Entro al caso de syncAddImagenesEntregaInversion Emi Web");
+              //print("Entro al caso de syncAddImagenesEntregaInversion Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final inversionToSync = getFirstInversion(
                     dataBase.inversionesBox.getAll(),
@@ -2878,7 +2870,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 continue;
               }
             case "syncAddPagoInversion":
-              print("Entro al caso de syncAddPagoInversion Emi Web");
+              //print("Entro al caso de syncAddPagoInversion Emi Web");
               if (!instruccionesBitacora[i].executeEmiWeb) {
                 final pagoToSync = getFirstPago(
                     dataBase.pagosBox.getAll(), instruccionesBitacora[i].id);
@@ -2943,7 +2935,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         }
         //Verificamos que no haya habido errores al sincronizar con las banderas
         if (exitoso) {
-          print("Proceso de sync Emi Web exitoso");
+          //print("Proceso de sync Emi Web exitoso");
           procesocargando = false;
           procesoterminado = true;
           procesoexitoso = true;
@@ -2951,7 +2943,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           notifyListeners();
           return exitoso;
         } else {
-          print("Proceso de sync Emi Web fallido");
+          //print("Proceso de sync Emi Web fallido");
           procesocargando = false;
           procesoterminado = true;
           procesoexitoso = false;
@@ -2960,7 +2952,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           return exitoso;
         }
       } else {
-        print("Proceso de sync Emi Web fallido por Token");
+        //print("Proceso de sync Emi Web fallido por Token");
         procesocargando = false;
         procesoterminado = true;
         procesoexitoso = false;
@@ -3200,7 +3192,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<bool?> syncAddEmprendedor(
       Emprendedores emprendedor, Bitacora bitacora) async {
-    print("Estoy en El syncAddEmprendedor de Emi Web");
+    //print("Estoy en El syncAddEmprendedor de Emi Web");
     try {
       if (emprendedor.emprendimiento.target!.idEmiWeb == null) {
         //Verificamos que no se haya posteado anteriormente el emprendedor y emprendimiento
@@ -3236,11 +3228,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     .toString(),
                 "archivado": false
               }));
-          print("Respuesta Post Emprendedor");
-          print(responsePostEmprendedor.body);
+          //print("Respuesta Post Emprendedor");
+          //print(responsePostEmprendedor.body);
           switch (responsePostEmprendedor.statusCode) {
             case 200:
-              print("Caso 200 en Emi Web Emprendedor");
+              //print("Caso 200 en Emi Web Emprendedor");
               //Se recupera el id Emi Web del Emprendedor que será el mismo id para el Emprendimiento
               final responsePostEmprendedorParse =
                   postRegistroExitosoEmiWebFromMap(const Utf8Decoder()
@@ -3260,8 +3252,8 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 obtenerEmprendimientoUri,
                 headers: headers,
               );
-              print("Respuesta Get Emprendimiento");
-              print(responseGetEmprendimiento.body);
+              //print("Respuesta Get Emprendimiento");
+              //print(responseGetEmprendimiento.body);
               switch (responseGetEmprendimiento.statusCode) {
                 case 200:
                   //Se recupera el id Emi Web del emprendimiento
@@ -3306,7 +3298,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             case 409:
               return null;
             default: //No se realizo con éxito el post
-              print("Error en postear emprendedor Emi Web");
+              //print("Error en postear emprendedor Emi Web");
               return false;
           }
         } else {
@@ -3321,8 +3313,8 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             obtenerEmprendimientoUri,
             headers: headers,
           );
-          print("Respuesta Get Emprendimiento");
-          print(responseGetEmprendimiento.body);
+          //print("Respuesta Get Emprendimiento");
+          //print(responseGetEmprendimiento.body);
           switch (responseGetEmprendimiento.statusCode) {
             case 200:
               //Se recupera el id Emi Web del emprendimiento
@@ -3373,27 +3365,27 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       }
     } catch (e) {
       //Fallo en el momento se sincronizar
-      print("ERROR - function syncAddEmprendedor(): $e");
+      //print("ERROR - function syncAddEmprendedor(): $e");
       return false;
     }
   }
 
   bool syncAddEmprendimiento(Bitacora bitacora) {
-    print("Estoy en El syncAddEmprendimiento de Emi Web");
+    //print("Estoy en El syncAddEmprendimiento de Emi Web");
     try {
       //Se marca como realizada en EmiWeb la instrucción en Bitacora
       bitacora.executeEmiWeb = true;
       dataBase.bitacoraBox.put(bitacora);
       return true;
     } catch (e) {
-      print('ERROR - function syncAddEmprendimiento(): $e');
+      //print('ERROR - function syncAddEmprendimiento(): $e');
       return false;
     }
   }
 
   Future<int> syncAddJornada1(
       Jornadas jornada, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncAddJornada1 de Emi Web");
+    //print("Estoy en El syncAddJornada1 de Emi Web");
     // Validamos que se pueda ejecutar la instrucción
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
@@ -3446,23 +3438,23 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       "nombreEmprendimiento":
                           jornada.emprendimiento.target!.nombre,
                     }));
-                print("Respuesta Post Jornada 1");
-                print(responsePostJornada.body);
+                //print("Respuesta Post Jornada 1");
+                //print(responsePostJornada.body);
                 switch (responsePostJornada.statusCode) {
                   case 200:
-                    print("Caso 200 en Emi Web Jornada");
+                    //print("Caso 200 en Emi Web Jornada");
                     //Se recupera el id Emi Web de la Jornada que será el mismo id para la Tarea
                     final responsePostJornadaParse =
                         postRegistroExitosoEmiWebFromMap(const Utf8Decoder()
                             .convert(responsePostJornada.bodyBytes));
-                    print("Se convierte a utf8 exitosamente");
+                    //print("Se convierte a utf8 exitosamente");
                     //Se concatena el id recuperado con uuid para que los ids no se repitan
                     final idEmiWebUUid =
                         "${responsePostJornadaParse.payload!.id.toString()}?${uuid.v1()}";
                     jornada.idEmiWeb = idEmiWebUUid;
-                    print("Se recupera el idEmiWeb");
+                    //print("Se recupera el idEmiWeb");
                     dataBase.jornadasBox.put(jornada);
-                    print("Se hace put a la jornada");
+                    //print("Se hace put a la jornada");
                     //Segundo creamos la Tarea
                     //Se recupera el id Emi Web de la Tarea
                     tareaToSync.idEmiWeb = idEmiWebUUid;
@@ -3472,13 +3464,13 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     dataBase.bitacoraBox.put(bitacora);
                     return 1;
                   default: //No se realizo con éxito el post
-                    print("Error en postear jornada Emi Web");
+                    //print("Error en postear jornada Emi Web");
                     return 0;
                 }
               } else {
                 if (tareaToSync.idEmiWeb == null) {
                   //Se concatena el id recuperado con uuid para que los ids no se repitan
-                  print("Se hace put a la jornada");
+                  //print("Se hace put a la jornada");
                   //Segundo creamos la Tarea
                   //Se recupera el id Emi Web de la Tarea
                   tareaToSync.idEmiWeb = jornada.idEmiWeb;
@@ -3497,12 +3489,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               }
             } else {
               //No existe una tarea asociada a la jornada de forma local
-              print("No existe una tarea asociada a la jornada de forma local");
+              //print("No existe una tarea asociada a la jornada de forma local");
               return 0;
             }
           } catch (e) {
             //Fallo en el momento se sincronizar
-            print("Catch de syncAddJornada1: $e");
+            //print("Catch de syncAddJornada1: $e");
             return 0;
           }
         } else {
@@ -3521,7 +3513,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncAddJornada2(
       Jornadas jornada, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncAddJornada2 de Emi Web");
+    //print("Estoy en El syncAddJornada2 de Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -3573,11 +3565,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       "nombreEmprendimiento":
                           jornada.emprendimiento.target!.nombre,
                     }));
-                print("Respuesta Post Jornada 2");
-                print(responsePostJornada.body);
+                //print("Respuesta Post Jornada 2");
+                //print(responsePostJornada.body);
                 switch (responsePostJornada.statusCode) {
                   case 200:
-                    print("Caso 200 en Emi Web Jornada");
+                    //print("Caso 200 en Emi Web Jornada");
                     //Se recupera el id Emi Web de la Jornada que será el mismo id para la Tarea
                     final responsePostJornadaParse =
                         postRegistroExitosoEmiWebFromMap(const Utf8Decoder()
@@ -3587,7 +3579,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                         "${responsePostJornadaParse.payload!.id.toString()}?${uuid.v1()}";
                     jornada.idEmiWeb = idEmiWebUuid;
                     dataBase.jornadasBox.put(jornada);
-                    print("Se hace put a la jornada");
+                    //print("Se hace put a la jornada");
                     // Segundo creamos y enviamos las imágenes de la jornada
                     for (var i = 0;
                         i < jornada.tarea.target!.imagenes.toList().length;
@@ -3627,13 +3619,13 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     // Se recupera el id Emi Web de la Tarea
                     tareaToSync.idEmiWeb = idEmiWebUuid;
                     dataBase.tareasBox.put(tareaToSync);
-                    print("Se hace put a la tarea");
+                    //print("Se hace put a la tarea");
                     //Se marca como realizada en EmiWeb la instrucción en Bitacora
                     bitacora.executeEmiWeb = true;
                     dataBase.bitacoraBox.put(bitacora);
                     return 1;
                   default: //No se realizo con éxito el post
-                    print("Error en postear jornada Emi Web");
+                    //print("Error en postear jornada Emi Web");
                     return 0;
                 }
               } else {
@@ -3680,7 +3672,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   // Se recupera el id Emi Web de la Tarea
                   tareaToSync.idEmiWeb = jornada.idEmiWeb;
                   dataBase.tareasBox.put(tareaToSync);
-                  print("Se hace put a la tarea");
+                  //print("Se hace put a la tarea");
                   //Se marca como realizada en EmiWeb la instrucción en Bitacora
                   bitacora.executeEmiWeb = true;
                   dataBase.bitacoraBox.put(bitacora);
@@ -3695,12 +3687,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               }
             } else {
               //No existe una tarea asociada a la jornada de forma local
-              print("No existe una tarea asociada a la jornada de forma local");
+              //print("No existe una tarea asociada a la jornada de forma local");
               return 0;
             }
           } catch (e) {
             //Fallo en el momento se sincronizar
-            print("Catch de syncAddJornada2: $e");
+            //print("Catch de syncAddJornada2: $e");
             return 0;
           }
         } else {
@@ -3719,7 +3711,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncAddImagenJornada2(
       Imagenes imagen, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncAddImagenJornada2() en Emi Web");
+    //print("Estoy en El syncAddImagenJornada2() en Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -3761,7 +3753,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     }));
             switch (responsePostAddImagenJornada2.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Add Imagen Usuario");
+                //print("Caso 200 en Emi Web Add Imagen Usuario");
                 //Se recupera el id Emi Web
                 final responsePostImagenUsuarioParse =
                     postRegistroImagenExitosoEmiWebFromMap(const Utf8Decoder()
@@ -3775,11 +3767,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el post
-                print("Error en agregar imagen jornada 2 Emi Web");
+                //print("Error en agregar imagen jornada 2 Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('ERROR - function syncAddImagenJornada2(): $e');
+            //print('ERROR - function syncAddImagenJornada2(): $e');
             return 0;
           }
         } else {
@@ -3798,7 +3790,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncAddJornada3(
       Jornadas jornada, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncAddJornada3 de Emi Web");
+    //print("Estoy en El syncAddJornada3 de Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -3852,7 +3844,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     }));
                 switch (responsePostJornada.statusCode) {
                   case 200:
-                    print("Caso 200 en Emi Web Jornada");
+                    //print("Caso 200 en Emi Web Jornada");
                     //Se recupera el id Emi Web de la Jornada que será el mismo id para la Tarea
                     final responsePostJornadaParse =
                         postRegistroExitosoEmiWebFromMap(const Utf8Decoder()
@@ -3893,8 +3885,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                         responseUpdateTipoProyectoEmprendimiento.statusCode) {
                       case 200:
                         // Tercero creamos y enviamos las imágenes de la jornada
-                        print(
-                            "Caso 200 en Emi Web Actualización Tipo de Proyecto");
+                        //print("Caso 200 en Emi Web Actualización Tipo de Proyecto");
                         for (var i = 0;
                             i < jornada.tarea.target!.imagenes.toList().length;
                             i++) {
@@ -4101,12 +4092,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                           return 0;
                         }
                       default: //No se realizo con éxito el post
-                        print(
-                            "Error en actualizar tipo proyecto de emprendimiento");
+                        //print("Error en actualizar tipo proyecto de emprendimiento");
                         return 0;
                     }
                   default: //No se realizo con éxito el post
-                    print("Error en postear jornada Emi Web");
+                    //print("Error en postear jornada Emi Web");
                     return 0;
                 }
               } else {
@@ -4141,8 +4131,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   switch (responseUpdateTipoProyectoEmprendimiento.statusCode) {
                     case 200:
                       // Tercero creamos y enviamos las imágenes de la jornada
-                      print(
-                          "Caso 200 en Emi Web Actualización Tipo de Proyecto");
+                      //print("Caso 200 en Emi Web Actualización Tipo de Proyecto");
                       for (var i = 0;
                           i < jornada.tarea.target!.imagenes.toList().length;
                           i++) {
@@ -4182,7 +4171,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                               .put(jornada.tarea.target!.imagenes.toList()[i]);
                         }
                       }
-                      print("Se postean imagenes de jornada");
+                      //print("Se postean imagenes de jornada");
                       // Cuarto creamos y enviamos los productos de la inversión asociada
                       final inversionJornada3 = dataBase.inversionesBox.get(
                           jornada.emprendimiento.target?.idInversionJornada ??
@@ -4325,7 +4314,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                             .target!
                                             .idEmiWeb,
                                       }));
-                              print(responsePostProductoProyecto.body);
+                              //print(responsePostProductoProyecto.body);
                               final responsePostProductoProyectoParse =
                                   postRegistroExitosoEmiWebFromMap(
                                       const Utf8Decoder().convert(
@@ -4354,8 +4343,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                         return 0;
                       }
                     default: //No se realizo con éxito el post
-                      print(
-                          "Error en actualizar tipo proyecto de emprendimiento");
+                      //print("Error en actualizar tipo proyecto de emprendimiento");
                       return 0;
                   }
                 } else {
@@ -4368,12 +4356,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               }
             } else {
               //No existe una tarea asociada a la jornada de forma local
-              print("No existe una tarea asociada a la jornada de forma local");
+              //print("No existe una tarea asociada a la jornada de forma local");
               return 0;
             }
           } catch (e) {
             //Fallo en el momento se sincronizar
-            print("Catch de syncAddJornada3: $e");
+            //print("Catch de syncAddJornada3: $e");
             return 0;
           }
         } else {
@@ -4392,7 +4380,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncAddImagenJornada3(
       Imagenes imagen, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncAddImagenJornada3() en Emi Web");
+    //print("Estoy en El syncAddImagenJornada3() en Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -4434,7 +4422,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     }));
             switch (responsePostAddImagenJornada3.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Add Imagen Jornada 3");
+                //print("Caso 200 en Emi Web Add Imagen Jornada 3");
                 //Se recupera el id Emi Web
                 final responsePostImagenUsuarioParse =
                     postRegistroImagenExitosoEmiWebFromMap(const Utf8Decoder()
@@ -4448,11 +4436,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el post
-                print("Error en agregar imagen jornada 3 Emi Web");
+                //print("Error en agregar imagen jornada 3 Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('ERROR - function syncAddImagenJornada3(): $e');
+            //print('ERROR - function syncAddImagenJornada3(): $e');
             return 0;
           }
         } else {
@@ -4471,7 +4459,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncAddJornada4(
       Jornadas jornada, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncAddJornada4 de Emi Web");
+    //print("Estoy en El syncAddJornada4 de Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -4539,10 +4527,10 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
                     switch (responseUpdateJornada.statusCode) {
                       case 200:
-                        print("Caso 200 en Emi Web Update Jornada");
+                        //print("Caso 200 en Emi Web Update Jornada");
                         continue;
                       default: //No se realizo con éxito el update
-                        print("Error en actualizar jornadas Emi Web");
+                        //print("Error en actualizar jornadas Emi Web");
                         return 0;
                     }
                   }
@@ -4574,11 +4562,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       "nombreEmprendimiento":
                           jornada.emprendimiento.target!.nombre,
                     }));
-                print("Respuesta Post Jornada 4");
-                print(responsePostJornada.body);
+                //print("Respuesta Post Jornada 4");
+                //print(responsePostJornada.body);
                 switch (responsePostJornada.statusCode) {
                   case 200:
-                    print("Caso 200 en Emi Web Jornada");
+                    //print("Caso 200 en Emi Web Jornada");
                     //Se recupera el id Emi Web de la Jornada que será el mismo id para la Tarea
                     final responsePostJornadaParse =
                         postRegistroExitosoEmiWebFromMap(const Utf8Decoder()
@@ -4588,7 +4576,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                         "${responsePostJornadaParse.payload!.id.toString()}?${uuid.v1()}";
                     jornada.idEmiWeb = idEmiWebUuid;
                     dataBase.jornadasBox.put(jornada);
-                    print("Se hace put a la jornada");
+                    //print("Se hace put a la jornada");
                     // Segundo creamos y enviamos las imágenes de la jornada
                     for (var i = 0;
                         i < jornada.tarea.target!.imagenes.toList().length;
@@ -4628,13 +4616,13 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     // Se recupera el id Emi Web de la Tarea
                     tareaToSync.idEmiWeb = idEmiWebUuid;
                     dataBase.tareasBox.put(tareaToSync);
-                    print("Se hace put a la tarea");
+                    //print("Se hace put a la tarea");
                     //Se marca como realizada en EmiWeb la instrucción en Bitacora
                     bitacora.executeEmiWeb = true;
                     dataBase.bitacoraBox.put(bitacora);
                     return 1;
                   default: //No se realizo con éxito el post
-                    print("Error en postear jornada Emi Web");
+                    //print("Error en postear jornada Emi Web");
                     return 0;
                 }
               } else {
@@ -4681,7 +4669,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   // Se recupera el id Emi Web de la Tarea
                   tareaToSync.idEmiWeb = jornada.idEmiWeb;
                   dataBase.tareasBox.put(tareaToSync);
-                  print("Se hace put a la tarea");
+                  //print("Se hace put a la tarea");
                   //Se marca como realizada en EmiWeb la instrucción en Bitacora
                   bitacora.executeEmiWeb = true;
                   dataBase.bitacoraBox.put(bitacora);
@@ -4696,12 +4684,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               }
             } else {
               //No existe una tarea asociada a la jornada de forma local
-              print("No existe una tarea asociada a la jornada de forma local");
+              //print("No existe una tarea asociada a la jornada de forma local");
               return 0;
             }
           } catch (e) {
             //Fallo en el momento se sincronizar
-            print("Catch de syncAddJornada4: $e");
+            //print("Catch de syncAddJornada4: $e");
             return 0;
           }
         } else {
@@ -4720,7 +4708,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncAddProductoInversionJ3(ProdSolicitado prodSolicitado,
       Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncAddProductoInversionJ3() en Emi Web");
+    //print("Estoy en El syncAddProductoInversionJ3() en Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -4769,7 +4757,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     }));
             switch (responsePostProductoProyecto.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Add Producto Inversion J3");
+                //print("Caso 200 en Emi Web Add Producto Inversion J3");
                 //Se recupera el id Emi Web
                 final responsePostProductoProyectoParse =
                     postRegistroExitosoEmiWebFromMap(const Utf8Decoder()
@@ -4782,11 +4770,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el post
-                print("Error en agregar producto inversión J3 Emi Web");
+                //print("Error en agregar producto inversión J3 Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('ERROR - function syncAddProductoInversionJ3(): $e');
+            //print('ERROR - function syncAddProductoInversionJ3(): $e');
             return 0;
           }
         } else {
@@ -4805,7 +4793,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncAddImagenJornada4(
       Imagenes imagen, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncAddImagenJornada4() en Emi Web");
+    //print("Estoy en El syncAddImagenJornada4() en Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -4847,7 +4835,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     }));
             switch (responsePostAddImagenJornada4.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Add Imagen Jornada 4");
+                //print("Caso 200 en Emi Web Add Imagen Jornada 4");
                 //Se recupera el id Emi Web
                 final responsePostImagenUsuarioParse =
                     postRegistroImagenExitosoEmiWebFromMap(const Utf8Decoder()
@@ -4861,11 +4849,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el post
-                print("Error en agregar imagen jornada 4 Emi Web");
+                //print("Error en agregar imagen jornada 4 Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('ERROR - function syncAddImagenJornada4(): $e');
+            //print('ERROR - function syncAddImagenJornada4(): $e');
             return 0;
           }
         } else {
@@ -4884,7 +4872,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncAddConsultoria(
       Consultorias consultoria, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncAddConsultoria de Emi Web");
+    //print("Estoy en El syncAddConsultoria de Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -4936,12 +4924,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       "fechaRegistro": DateFormat("yyyy-MM-ddTHH:mm:ss")
                           .format(consultoria.tareas.first.fechaRegistro),
                     }));
-                print(responsePostConsultoria.statusCode);
-                print(responsePostConsultoria.body);
-                print("Respuesta Post Consultoria");
+                //print(responsePostConsultoria.statusCode);
+                //print(responsePostConsultoria.body);
+                //print("Respuesta Post Consultoria");
                 switch (responsePostConsultoria.statusCode) {
                   case 200:
-                    print("Caso 200 en Emi Web Consultoría");
+                    //print("Caso 200 en Emi Web Consultoría");
                     //Se recupera el id Emi Web de la Consultoría que será el mismo id para la Tarea
                     final responsePostConsultoriaParse =
                         postRegistroExitosoEmiWebFromMap(const Utf8Decoder()
@@ -4958,7 +4946,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     dataBase.bitacoraBox.put(bitacora);
                     return 1;
                   default: //No se realizo con éxito el post
-                    print("Error en postear consultoría Emi Web");
+                    //print("Error en postear consultoría Emi Web");
                     return 0;
                 }
               } else {
@@ -4981,13 +4969,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               }
             } else {
               //No existe una tarea asociada a la consultoría de forma local
-              print(
-                  "No existe una tarea asociada a la consultoría de forma local");
+              //print("No existe una tarea asociada a la consultoría de forma local");
               return 0;
             }
           } catch (e) {
             //Fallo en el momento se sincronizar
-            print("Catch de syncAddConsultoria: $e");
+            //print("Catch de syncAddConsultoria: $e");
             return 0;
           }
         } else {
@@ -5006,7 +4993,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncAddProductoEmprendedor(
       ProductosEmp productoEmp, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncAddProductoEmprendedor de Emi Web");
+    //print("Estoy en El syncAddProductoEmprendedor de Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -5031,10 +5018,10 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 .build()
                 .findUnique();
             if (imagenToSync != null) {
-              print("SÍ HAY IMAGEN ASOCIADA EN EMI WEB");
+              //print("SÍ HAY IMAGEN ASOCIADA EN EMI WEB");
               //Verificamos que no se haya posteado anteriormente la imagen
               if (imagenToSync.idEmiWeb == null) {
-                print("Primer if");
+                //print("Primer if");
                 //Aún no se ha posteado la imagen
                 //Primero se postea la imagen
                 final crearImagenProductoEmpUri =
@@ -5055,7 +5042,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                         }));
                 switch (responsePostImagenProductoEmp.statusCode) {
                   case 200:
-                    print("Caso 200 en Emi Web Imagen Producto Emprendedor 1");
+                    //print("Caso 200 en Emi Web Imagen Producto Emprendedor 1");
                     final responsePostImagenProductoEmpParse =
                         postRegistroImagenExitosoEmiWebFromMap(
                             const Utf8Decoder().convert(
@@ -5065,8 +5052,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                         .toString();
                     dataBase.imagenesBox.put(imagenToSync);
                     // Segundo creamos el producto Emprendedor
-                    print(
-                        "Id Imagen Emi Web Prod EMPRENDEDOR: ${responsePostImagenProductoEmpParse.payload.idDocumento.toString()}");
+                    //print("Id Imagen Emi Web Prod EMPRENDEDOR: ${responsePostImagenProductoEmpParse.payload.idDocumento.toString()}");
                     final crearProductoEmprendedorUri = Uri.parse(
                         '$baseUrlEmiWebServices/productos/emprendedores/registro/crear');
                     final headers = ({
@@ -5096,7 +5082,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                             }));
                     switch (responsePostProductoEmprendedor.statusCode) {
                       case 200:
-                        print("Caso 200 en Emi Web Producto Emprendedor 1");
+                        //print("Caso 200 en Emi Web Producto Emprendedor 1");
                         //Tercero se recupera el id Emi Web del Producto Emprendedor
                         final responsePostProductoEmprendedorParse =
                             postRegistroExitosoEmiWebSingleFromMap(
@@ -5107,22 +5093,22 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                             responsePostProductoEmprendedorParse.payload
                                 .toString();
                         dataBase.productosEmpBox.put(productoEmp);
-                        print("Se hace put al producto emprendedor 1");
+                        //print("Se hace put al producto emprendedor 1");
                         //Se marca como realizada en EmiWeb la instrucción en Bitacora
                         bitacora.executeEmiWeb = true;
                         dataBase.bitacoraBox.put(bitacora);
                         return 1;
                       default: //No se realizo con éxito el post del producto Emp
-                        print("Error en Emi Web Producto Emprendedor 1");
+                        //print("Error en Emi Web Producto Emprendedor 1");
                         return 0;
                     }
                   default:
                     //No se realizo con éxito el post de la imagen asociada
-                    print("Error en Emi Web Imagen Producto Emprendedor 1");
+                    //print("Error en Emi Web Imagen Producto Emprendedor 1");
                     return 0;
                 }
               } else {
-                print("Primer else");
+                //print("Primer else");
                 if (productoEmp.idEmiWeb == null) {
                   // Segundo creamos el producto Emprendedor
                   final crearProductoEmprendedorUri = Uri.parse(
@@ -5150,11 +5136,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                             "descripcion": productoEmp.descripcion,
                             "costoUnidadMedida": productoEmp.costo,
                           }));
-                  print("${responsePostProductoEmprendedor.statusCode}");
-                  print("${responsePostProductoEmprendedor.body.toString()}");
+                  //print("${responsePostProductoEmprendedor.statusCode}");
+                  //print("${responsePostProductoEmprendedor.body.toString()}");
                   switch (responsePostProductoEmprendedor.statusCode) {
                     case 200:
-                      print("Caso 200 en Emi Web Producto Emprendedor 2");
+                      //print("Caso 200 en Emi Web Producto Emprendedor 2");
                       //Tercero se recupera el id Emi Web del Producto Emprendedor
                       final responsePostProductoEmprendedorParse =
                           postRegistroExitosoEmiWebSingleFromMap(
@@ -5165,13 +5151,13 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                           responsePostProductoEmprendedorParse.payload
                               .toString();
                       dataBase.productosEmpBox.put(productoEmp);
-                      print("Se hace put al producto emprendedor 2");
+                      //print("Se hace put al producto emprendedor 2");
                       //Se marca como realizada en EmiWeb la instrucción en Bitacora
                       bitacora.executeEmiWeb = true;
                       dataBase.bitacoraBox.put(bitacora);
                       return 1;
                     default: //No se realizo con éxito el post del producto Emp
-                      print("Error en Emi Web Producto Emprendedor 2");
+                      //print("Error en Emi Web Producto Emprendedor 2");
                       return 0;
                   }
                 } else {
@@ -5183,7 +5169,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 }
               }
             } else {
-              print("NO HAY IMAGEN ASOCIADA EN EMI WEB");
+              //print("NO HAY IMAGEN ASOCIADA EN EMI WEB");
               if (productoEmp.idEmiWeb == null) {
                 //No existe una imagen asociada al producto Emp
                 // Primero creamos el producto Emprendedor
@@ -5213,7 +5199,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                         }));
                 switch (responsePostProductoEmprendedor.statusCode) {
                   case 200:
-                    print("Caso 200 en Emi Web Producto Emprendedor 3");
+                    //print("Caso 200 en Emi Web Producto Emprendedor 3");
                     //Segundo se recupera el id Emi Web del Producto Emprendedor mediante otro API
                     final responsePostProductoEmprendedorParse =
                         postRegistroExitosoEmiWebSingleFromMap(
@@ -5223,13 +5209,13 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     productoEmp.idEmiWeb =
                         responsePostProductoEmprendedorParse.payload.toString();
                     dataBase.productosEmpBox.put(productoEmp);
-                    print("Se hace put al producto emprendedor 3");
+                    //print("Se hace put al producto emprendedor 3");
                     //Se marca como realizada en EmiWeb la instrucción en Bitacora
                     bitacora.executeEmiWeb = true;
                     dataBase.bitacoraBox.put(bitacora);
                     return 1;
                   default: //No se realizo con éxito el post del producto Emp
-                    print("Error en Emi Web Producto Emprendedor 3");
+                    //print("Error en Emi Web Producto Emprendedor 3");
                     return 0;
                 }
               } else {
@@ -5242,7 +5228,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             }
           } catch (e) {
             //Fallo en el momento se sincronizar
-            print("Catch de syncAddProductoEmprendedor: $e");
+            //print("Catch de syncAddProductoEmprendedor: $e");
             return 0;
           }
         } else {
@@ -5261,7 +5247,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncAddImagenProductoEmprendedor(
       Imagenes imagen, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncAddImagenProductoEmprendedor() en Emi Web");
+    //print("Estoy en El syncAddImagenProductoEmprendedor() en Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -5288,11 +5274,10 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               "Content-Type": "application/json",
               'Authorization': 'Bearer $tokenGlobal',
             });
-            print("DATOS DE LA IMAGEN DEL PROD EMPRENDEDOR");
-            print(imagen.nombre);
-            print(imagen.base64);
-            print(imagen.productosEmp.target!.emprendimientos.target!.usuario
-                .target!.idEmiWeb);
+            //print("DATOS DE LA IMAGEN DEL PROD EMPRENDEDOR");
+            //print(imagen.nombre);
+            //print(imagen.base64);
+            //print(imagen.productosEmp.target!.emprendimientos.target!.usuario.target!.idEmiWeb);
             final responsePostAddImagenProductoEmprendedor =
                 await post(crearImagenProductoEmprendedorUri,
                     headers: headers,
@@ -5306,7 +5291,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
             switch (responsePostAddImagenProductoEmprendedor.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Add Imagen Usuario");
+                //print("Caso 200 en Emi Web Add Imagen Usuario");
                 //Se recupera el id Emi Web
                 final responsePostImagenProductoEmprendedorParse =
                     postRegistroImagenExitosoEmiWebFromMap(const Utf8Decoder()
@@ -5321,11 +5306,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el post
-                print("Error en agregar imagen usuario Emi Web");
+                //print("Error en agregar imagen usuario Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('ERROR - function syncAddImagenProductoEmprendedor(): $e');
+            //print('ERROR - function syncAddImagenProductoEmprendedor(): $e');
             return 0;
           }
         } else {
@@ -5344,7 +5329,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncAddVenta(
       Ventas venta, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncAddVenta de Emi Web");
+    //print("Estoy en El syncAddVenta de Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -5381,7 +5366,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     precioVenta: venta.prodVendidos[i].precioVenta);
                 ventaCrearRequestList.add(newVentaCreada.toMap());
               }
-              print(jsonEncode(ventaCrearRequestList));
+              //print(jsonEncode(ventaCrearRequestList));
               final responsePostVenta = await post(crearVentaUri,
                   headers: headers,
                   body: jsonEncode({
@@ -5397,11 +5382,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     "total": venta.total,
                     "ventaCrearRequestList": ventaCrearRequestList,
                   }));
-              print("Respuesta Post Venta");
-              print(responsePostVenta.body);
+              //print("Respuesta Post Venta");
+              //print(responsePostVenta.body);
               switch (responsePostVenta.statusCode) {
                 case 200:
-                  print("Caso 200 en Emi Web Venta");
+                  //print("Caso 200 en Emi Web Venta");
                   //Se recupera el id Emi Web de la Venta
                   final responsePostVentaParse =
                       postRegistroExitosoEmiWebSingleFromMap(const Utf8Decoder()
@@ -5419,8 +5404,8 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     obtenerProductosVendidosUri,
                     headers: headers,
                   );
-                  print("Respuesta Get Productos Vendidos");
-                  print(responseGetProductosVendidos.body);
+                  //print("Respuesta Get Productos Vendidos");
+                  //print(responseGetProductosVendidos.body);
                   switch (responseGetProductosVendidos.statusCode) {
                     case 200:
                       //Se recupera el id Emi Web de los Prod Vendidos
@@ -5485,7 +5470,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       return 0;
                   }
                 default: //No se realizo con éxito el post
-                  print("Error en postear venta Emi Web");
+                  //print("Error en postear venta Emi Web");
                   return 0;
               }
             } else {
@@ -5500,8 +5485,8 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 obtenerProductosVendidosUri,
                 headers: headers,
               );
-              print("Respuesta Get Productos Vendidos");
-              print(responseGetProductosVendidos.body);
+              //print("Respuesta Get Productos Vendidos");
+              //print(responseGetProductosVendidos.body);
               switch (responseGetProductosVendidos.statusCode) {
                 case 200:
                   //Se recupera el id Emi Web de los Prod Vendidos
@@ -5567,7 +5552,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             }
           } catch (e) {
             //Fallo en el momento se sincronizar
-            print("Catch de syncAddVenta: $e");
+            //print("Catch de syncAddVenta: $e");
             return 0;
           }
         } else {
@@ -5586,7 +5571,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncAddProductoVendido(
       ProdVendidos prodVendido, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncAddProductoVendido de Emi Web");
+    //print("Estoy en El syncAddProductoVendido de Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -5612,7 +5597,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             return 1;
           } catch (e) {
             //Fallo en el momento se sincronizar
-            print('ERROR - function syncAddProductoVendido(): $e');
+            //print('ERROR - function syncAddProductoVendido(): $e');
             return 0;
           }
         } else {
@@ -5631,7 +5616,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncAddSingleProductoVendido(
       ProdVendidos prodVendido, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncAddSingleProductoVendido de Emi Web");
+    //print("Estoy en El syncAddSingleProductoVendido de Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -5688,11 +5673,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     "total": prodVendido.venta.target!.total,
                     "ventaActualizarRequestList": ventaActualizarRequestList,
                   }));
-              print("Respuesta Add prod vendido");
-              print(responseAddProdVendido.body);
+              //print("Respuesta Add prod vendido");
+              //print(responseAddProdVendido.body);
               switch (responseAddProdVendido.statusCode) {
                 case 200:
-                  print("Caso 200 en Emi Web Prod Vendido");
+                  //print("Caso 200 en Emi Web Prod Vendido");
                   prodVendido.postEmiWeb = true;
                   dataBase.productosVendidosBox.put(prodVendido);
                   // Se recuperan el id del producto vendido
@@ -5706,8 +5691,8 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     obtenerProductosVendidosUri,
                     headers: headers,
                   );
-                  print("Respuesta Get Productos Vendidos");
-                  print(responseGetProductosVendidos.body);
+                  //print("Respuesta Get Productos Vendidos");
+                  //print(responseGetProductosVendidos.body);
                   switch (responseGetProductosVendidos.statusCode) {
                     case 200:
                       //Se recupera el id Emi Web del Prod Vendido
@@ -5769,7 +5754,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       return 0;
                   }
                 default: //No se realizo con éxito el agregar
-                  print("Error en agregar prod Vendido Emi Web");
+                  //print("Error en agregar prod Vendido Emi Web");
                   return 0;
               }
             } else {
@@ -5784,8 +5769,8 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 obtenerProductosVendidosUri,
                 headers: headers,
               );
-              print("Respuesta Get Productos Vendidos");
-              print(responseGetProductosVendidos.body);
+              //print("Respuesta Get Productos Vendidos");
+              //print(responseGetProductosVendidos.body);
               switch (responseGetProductosVendidos.statusCode) {
                 case 200:
                   //Se recupera el id Emi Web del Prod Vendido
@@ -5848,7 +5833,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             }
           } catch (e) {
             //Fallo en el momento se sincronizar
-            print('ERROR - function syncAddSingleProductoVendido(): $e');
+            //print('ERROR - function syncAddSingleProductoVendido(): $e');
             return 0;
           }
         } else {
@@ -5867,7 +5852,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncUpdateProductoVendido(
       ProdVendidos prodVendido, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncUpdateProductoVendido de Emi Web");
+    //print("Estoy en El syncUpdateProductoVendido de Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -5905,8 +5890,8 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               unidadMedida: prodVendido.unidadMedida.target!.idEmiWeb,
             );
             ventaActualizarRequestList.add(updateProdVenido.toMap());
-            print(jsonEncode(ventaActualizarRequestList));
-            print("Total: ${prodVendido.venta.target!.total}");
+            //print(jsonEncode(ventaActualizarRequestList));
+            //print("Total: ${prodVendido.venta.target!.total}");
             final responsePutProdVendido = await put(actualizarProdVendidoUri,
                 headers: headers,
                 body: jsonEncode({
@@ -5924,22 +5909,22 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   "total": prodVendido.venta.target!.total,
                   "ventaActualizarRequestList": ventaActualizarRequestList,
                 }));
-            print("Respuesta Put prod vendido");
-            print(responsePutProdVendido.body);
+            //print("Respuesta Put prod vendido");
+            //print(responsePutProdVendido.body);
             switch (responsePutProdVendido.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Prod Vendido");
+                //print("Caso 200 en Emi Web Prod Vendido");
                 //Se marca como realizada en EmiWeb la instrucción en Bitacora
                 bitacora.executeEmiWeb = true;
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el actualizar
-                print("Error en actualizar prod Vendido Emi Web");
+                //print("Error en actualizar prod Vendido Emi Web");
                 return 0;
             }
           } catch (e) {
             //Fallo en el momento se sincronizar
-            print("Catch de syncUpdateProductoVendido: $e");
+            //print("Catch de syncUpdateProductoVendido: $e");
             return 0;
           }
         } else {
@@ -5958,7 +5943,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncDeleteProductoVendido(
       Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncDeleteProductoVendido de Emi Web");
+    //print("Estoy en El syncDeleteProductoVendido de Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -5994,17 +5979,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 }));
             switch (responseDeleteProdVendido.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Delete Prod vendido");
+                //print("Caso 200 en Emi Web Delete Prod vendido");
                 //Se marca como realizada en EmiWeb la instrucción en Bitacora
                 bitacora.executeEmiWeb = true;
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el delete
-                print("Error en eliminar prod vendido Emi Web");
+                //print("Error en eliminar prod vendido Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('ERROR - function syncDeleteProductoVendido(): $e');
+            //print('ERROR - function syncDeleteProductoVendido(): $e');
             return 0;
           }
         } else {
@@ -6023,7 +6008,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncAddInversion(
       Inversiones inversion, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncAddInversion de Emi Web");
+    //print("Estoy en El syncAddInversion de Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -6071,11 +6056,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     "totalInversion": 0.0,
                     "inversionRecibida": false,
                   }));
-              print("Respuesta Post Inversión");
-              print(responsePostInversion.body);
+              //print("Respuesta Post Inversión");
+              //print(responsePostInversion.body);
               switch (responsePostInversion.statusCode) {
                 case 200:
-                  print("Caso 200 en Emi Web Inversión");
+                  //print("Caso 200 en Emi Web Inversión");
                   final responsePostInversionParse =
                       postSimpleRegistroExitosoEmiWebFromMap(const Utf8Decoder()
                           .convert(responsePostInversion.bodyBytes));
@@ -6118,8 +6103,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                   const Utf8Decoder().convert(
                                       responsePostImagenProdSolicitado
                                           .bodyBytes));
-                          print(
-                              "Id de la Imagen: ${responsePostImagenProdSolicitadoParse.payload.idDocumento.toString()}");
+                          //print("Id de la Imagen: ${responsePostImagenProdSolicitadoParse.payload.idDocumento.toString()}");
                           inversion.prodSolicitados
                                   .toList()[i]
                                   .imagen
@@ -6132,8 +6116,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                               .toList()[i]
                               .imagen
                               .target!);
-                          print(
-                              "Se recupera el idEmiWeb de la imagen prod solicitado");
+                          //print("Se recupera el idEmiWeb de la imagen prod solicitado");
                           final crearProdSolicitadosUri = Uri.parse(
                               '$baseUrlEmiWebServices/productosSolicitados');
                           final responsePostProdSolicitado =
@@ -6266,7 +6249,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   inversion.idEmiWeb =
                       responsePostInversionParse.payload.toString();
                   dataBase.inversionesBox.put(inversion);
-                  print("Se recupera el idEmiWeb de la inversión");
+                  //print("Se recupera el idEmiWeb de la inversión");
                   //Se marca como realizada en EmiWeb la instrucción en Bitacora
                   bitacora.executeEmiWeb = true;
                   dataBase.bitacoraBox.put(bitacora);
@@ -6283,7 +6266,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             }
           } catch (e) {
             //Fallo en el momento se sincronizar
-            print("Catch de syncAddInversion: $e");
+            //print("Catch de syncAddInversion: $e");
             return 0;
           }
         } else {
@@ -6302,7 +6285,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncAddPagoInversion(
       Pagos pago, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncAddPagoInversion de Emi Web");
+    //print("Estoy en El syncAddPagoInversion de Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -6340,11 +6323,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     "nombreUsuario":
                         "${pago.inversion.target!.emprendimiento.target!.usuario.target!.nombre} ${pago.inversion.target!.emprendimiento.target!.usuario.target!.apellidoP} ${pago.inversion.target!.emprendimiento.target!.usuario.target!.apellidoM}",
                   }));
-              print("Respuesta Post Pago");
-              print(responsePostPago.body);
+              //print("Respuesta Post Pago");
+              //print(responsePostPago.body);
               switch (responsePostPago.statusCode) {
                 case 200:
-                  print("Caso 200 en Emi Web Pago");
+                  //print("Caso 200 en Emi Web Pago");
                   //Se recupera el id Emi Web del Pago
                   final responsePostPagoParse =
                       postRegistroExitosoEmiWebFromMap(const Utf8Decoder()
@@ -6356,7 +6339,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   dataBase.bitacoraBox.put(bitacora);
                   return 1;
                 default: //No se realizo con éxito el post
-                  print("Error en postear pago Emi Web");
+                  //print("Error en postear pago Emi Web");
                   return 0;
               }
             } else {
@@ -6367,7 +6350,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             }
           } catch (e) {
             //Fallo en el momento se sincronizar
-            print("ERROR - function syncAddPagoInversion(): $e");
+            //print("ERROR - function syncAddPagoInversion(): $e");
             return 0;
           }
         } else {
@@ -6386,7 +6369,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncUpdateEmprendedor(
       Emprendedores emprendedor, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncUpdateEmprendedor Emi Web");
+    //print("Estoy en El syncUpdateEmprendedor Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -6440,21 +6423,21 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                           .toString(),
                       "archivado": emprendedor.emprendimiento.target!.archivado,
                     }));
-            print(responseUpdateEmprendedor.statusCode);
-            print(responseUpdateEmprendedor.body);
+            //print(responseUpdateEmprendedor.statusCode);
+            //print(responseUpdateEmprendedor.body);
             switch (responseUpdateEmprendedor.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Update Emprendedor");
+                //print("Caso 200 en Emi Web Update Emprendedor");
                 //Se marca como realizada en EmiWeb la instrucción en Bitacora
                 bitacora.executeEmiWeb = true;
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el update
-                print("Error en actualizar Emprendedor Emi Web");
+                //print("Error en actualizar Emprendedor Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('Catch en syncUpdateEmprendedor(): $e');
+            //print('Catch en syncUpdateEmprendedor(): $e');
             return 0;
           }
         } else {
@@ -6473,7 +6456,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncUpdateEmprendimiento(Emprendimientos emprendimiento,
       Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncUpdateEmprendimiento Emi Web");
+    //print("Estoy en El syncUpdateEmprendimiento Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -6511,21 +6494,21 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       "emprendimiento": emprendimiento.nombre,
                       "id": emprendimiento.idEmiWeb,
                     }));
-            print(responseUpdateEmprendimiento.statusCode);
-            print(responseUpdateEmprendimiento.body);
+            //print(responseUpdateEmprendimiento.statusCode);
+            //print(responseUpdateEmprendimiento.body);
             switch (responseUpdateEmprendimiento.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Update Emprendedor");
+                //print("Caso 200 en Emi Web Update Emprendedor");
                 //Se marca como realizada en EmiWeb la instrucción en Bitacora
                 bitacora.executeEmiWeb = true;
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el update
-                print("Error en actualizar Emprendedor Emi Web");
+                //print("Error en actualizar Emprendedor Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('Catch en syncUpdateEmprendimiento(): $e');
+            //print('Catch en syncUpdateEmprendimiento(): $e');
             return 0;
           }
         } else {
@@ -6544,7 +6527,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncUpdateFaseEmprendimiento(Emprendimientos emprendimiento,
       Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncUpdateFaseEmprendimiento en Emi Web");
+    //print("Estoy en El syncUpdateFaseEmprendimiento en Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -6576,8 +6559,8 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 "Content-Type": "application/json",
                 'Authorization': 'Bearer $tokenGlobal',
               });
-              print("Fase Actual: ${faseActual.fase}");
-              print("Id Emprendimiento: ${emprendimiento.idEmiWeb}");
+              //print("Fase Actual: ${faseActual.fase}");
+              //print("Id Emprendimiento: ${emprendimiento.idEmiWeb}");
               final responseUpdateFaseEmprendimiento =
                   await put(actualizarFaseEmprendimientoUri,
                       headers: headers,
@@ -6592,20 +6575,20 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
               switch (responseUpdateFaseEmprendimiento.statusCode) {
                 case 200:
-                  print("Caso 200 en Emi Web Update Fase Emprendimiento");
+                  //print("Caso 200 en Emi Web Update Fase Emprendimiento");
                   //Se marca como realizada en EmiWeb la instrucción en Bitacora
                   bitacora.executeEmiWeb = true;
                   dataBase.bitacoraBox.put(bitacora);
                   return 1;
                 default: //No se realizo con éxito el update
-                  print("Error en actualizar fase emprendimiento Emi Web");
+                  //print("Error en actualizar fase emprendimiento Emi Web");
                   return 0;
               }
             } else {
               return 0;
             }
           } catch (e) {
-            print('ERROR - function syncUpdateFaseEmprendimiento(): $e');
+            //print('ERROR - function syncUpdateFaseEmprendimiento(): $e');
             return 0;
           }
         } else {
@@ -6624,7 +6607,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncUpdateEstadoInversion(
       Inversiones inversion, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncUpdateEstadoInversion en Emi Web");
+    //print("Estoy en El syncUpdateEstadoInversion en Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -6657,7 +6640,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 "Content-Type": "application/json",
                 'Authorization': 'Bearer $tokenGlobal',
               });
-              print("Fase Actual: ${estadoActual.estado}");
+              //print("Fase Actual: ${estadoActual.estado}");
               final responseUpdateEstasyncUpdateEstadoInversion =
                   await put(syncUpdateEstadoInversionUri,
                       headers: headers,
@@ -6672,13 +6655,13 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
               switch (responseUpdateEstasyncUpdateEstadoInversion.statusCode) {
                 case 200:
-                  print("Caso 200 en Emi Web Update Estado Inversión");
+                  //print("Caso 200 en Emi Web Update Estado Inversión");
                   //Se marca como realizada en EmiWeb la instrucción en Bitacora
                   bitacora.executeEmiWeb = true;
                   dataBase.bitacoraBox.put(bitacora);
                   return 1;
                 default: //No se realizo con éxito el update de la actualización de estado de la inversión
-                  print("Error en actualizar estado inversion Emi Web");
+                  //print("Error en actualizar estado inversion Emi Web");
                   return 0;
               }
             } else {
@@ -6686,7 +6669,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               return 0;
             }
           } catch (e) {
-            print('ERROR - function syncUpdateEstadoInversion(): $e');
+            //print('ERROR - function syncUpdateEstadoInversion(): $e');
             return 0;
           }
         } else {
@@ -6705,7 +6688,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncUpdateJornada1(
       Jornadas jornada, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncUpdateJornada1() en Emi Web");
+    //print("Estoy en El syncUpdateJornada1() en Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -6753,17 +6736,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
             switch (responseUpdateJornada1.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Update Jornada 1");
+                //print("Caso 200 en Emi Web Update Jornada 1");
                 //Se marca como realizada en EmiWeb la instrucción en Bitacora
                 bitacora.executeEmiWeb = true;
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el update
-                print("Error en actualizar jornada 1 Emi Web");
+                //print("Error en actualizar jornada 1 Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('ERROR - function syncUpdateJornada1(): $e');
+            //print('ERROR - function syncUpdateJornada1(): $e');
             return 0;
           }
         } else {
@@ -6782,7 +6765,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncUpdateJornada2(
       Jornadas jornada, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncUpdateJornada2() en Emi Web");
+    //print("Estoy en El syncUpdateJornada2() en Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -6830,17 +6813,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
             switch (responseUpdateJornada2.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Update Jornada 2");
+                //print("Caso 200 en Emi Web Update Jornada 2");
                 //Se marca como realizada en EmiWeb la instrucción en Bitacora
                 bitacora.executeEmiWeb = true;
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el update
-                print("Error en actualizar jornada 2 Emi Web");
+                //print("Error en actualizar jornada 2 Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('ERROR - function syncUpdateJornada2(): $e');
+            //print('ERROR - function syncUpdateJornada2(): $e');
             return 0;
           }
         } else {
@@ -6859,7 +6842,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncUpdateImagenJornada2(
       Imagenes imagen, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncUpdateImagenJornada2() en Emi Web");
+    //print("Estoy en El syncUpdateImagenJornada2() en Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -6880,7 +6863,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             responseProyecto.payload.switchMovil == true) {
           try {
             // Primero creamos el API para realizar la actualización
-            print("${imagen.idEmiWeb}");
+            //print("${imagen.idEmiWeb}");
             final actualizarImagenJornada2Uri = Uri.parse(
                 '$baseUrlEmiWebServices/documentos/actualizar?id=${imagen.idEmiWeb}');
             final headers = ({
@@ -6902,17 +6885,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     }));
             switch (responseUpdateImagenJornada2.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Update Imagen Jornada 2");
+                //print("Caso 200 en Emi Web Update Imagen Jornada 2");
                 //Se marca como realizada en EmiWeb la instrucción en Bitacora
                 bitacora.executeEmiWeb = true;
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el update
-                print("Error en actualizar imagen jornada 2 Emi Web");
+                //print("Error en actualizar imagen jornada 2 Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('ERROR - function syncUpdateImagenJornada2(): $e');
+            //print('ERROR - function syncUpdateImagenJornada2(): $e');
             return 0;
           }
         } else {
@@ -6931,7 +6914,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncUpdateJornada3(
       Jornadas jornada, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncUpdateJornada3() en Emi Web");
+    //print("Estoy en El syncUpdateJornada3() en Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -6979,17 +6962,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
             switch (responseUpdateJornada3.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Update Jornada 3");
+                //print("Caso 200 en Emi Web Update Jornada 3");
                 //Se marca como realizada en EmiWeb la instrucción en Bitacora
                 bitacora.executeEmiWeb = true;
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el update
-                print("Error en actualizar jornada 3 Emi Web");
+                //print("Error en actualizar jornada 3 Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('ERROR - function syncUpdateJornada3(): $e');
+            //print('ERROR - function syncUpdateJornada3(): $e');
             return 0;
           }
         } else {
@@ -7008,7 +6991,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncUpdateImagenJornada3(
       Imagenes imagen, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncUpdateImagenJornada3() en Emi Web");
+    //print("Estoy en El syncUpdateImagenJornada3() en Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -7029,7 +7012,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             responseProyecto.payload.switchMovil == true) {
           try {
             // Primero creamos el API para realizar la actualización
-            print("${imagen.idEmiWeb}");
+            //print("${imagen.idEmiWeb}");
             final actualizarImagenJornada3Uri = Uri.parse(
                 '$baseUrlEmiWebServices/documentos/actualizar?id=${imagen.idEmiWeb}');
             final headers = ({
@@ -7051,17 +7034,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     }));
             switch (responseUpdateImagenJornada3.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Update Imagen Jornada 3");
+                //print("Caso 200 en Emi Web Update Imagen Jornada 3");
                 //Se marca como realizada en EmiWeb la instrucción en Bitacora
                 bitacora.executeEmiWeb = true;
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el update
-                print("Error en actualizar imagen jornada 3 Emi Web");
+                //print("Error en actualizar imagen jornada 3 Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('ERROR - function syncUpdateImagenJornada3(): $e');
+            //print('ERROR - function syncUpdateImagenJornada3(): $e');
             return 0;
           }
         } else {
@@ -7080,7 +7063,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncUpdateProductoInversionJ3(ProdSolicitado prodSolicitado,
       Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncUpdateProductoInversionJ3() en Emi Web");
+    //print("Estoy en El syncUpdateProductoInversionJ3() en Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -7130,17 +7113,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     }));
             switch (responseUpdateProductoProyecto.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Update Producto Inversion J3");
+                //print("Caso 200 en Emi Web Update Producto Inversion J3");
                 //Se marca como realizada en EmiWeb la instrucción en Bitacora
                 bitacora.executeEmiWeb = true;
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el put
-                print("Error en actualizar producto inversión J3 Emi Web");
+                //print("Error en actualizar producto inversión J3 Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('ERROR - function syncUpdateProductoInversionJ3(): $e');
+            //print('ERROR - function syncUpdateProductoInversionJ3(): $e');
             return 0;
           }
         } else {
@@ -7159,7 +7142,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncUpdateJornada4(
       Jornadas jornada, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncUpdateJornada4() en Emi Web");
+    //print("Estoy en El syncUpdateJornada4() en Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -7207,17 +7190,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
             switch (responseUpdateJornada4.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Update Jornada 4");
+                //print("Caso 200 en Emi Web Update Jornada 4");
                 //Se marca como realizada en EmiWeb la instrucción en Bitacora
                 bitacora.executeEmiWeb = true;
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el update
-                print("Error en actualizar jornada 4 Emi Web");
+                //print("Error en actualizar jornada 4 Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('ERROR - function syncUpdateJornada4(): $e');
+            //print('ERROR - function syncUpdateJornada4(): $e');
             return 0;
           }
         } else {
@@ -7236,7 +7219,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncUpdateImagenJornada4(
       Imagenes imagen, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncUpdateImagenJornada4() en Emi Web");
+    //print("Estoy en El syncUpdateImagenJornada4() en Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -7257,7 +7240,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             responseProyecto.payload.switchMovil == true) {
           try {
             // Primero creamos el API para realizar la actualización
-            print("${imagen.idEmiWeb}");
+            //print("${imagen.idEmiWeb}");
             final actualizarImagenJornada4Uri = Uri.parse(
                 '$baseUrlEmiWebServices/documentos/actualizar?id=${imagen.idEmiWeb}');
             final headers = ({
@@ -7279,17 +7262,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     }));
             switch (responseUpdateImagenJornada4.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Update Imagen Jornada 4");
+                //print("Caso 200 en Emi Web Update Imagen Jornada 4");
                 //Se marca como realizada en EmiWeb la instrucción en Bitacora
                 bitacora.executeEmiWeb = true;
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el update
-                print("Error en actualizar imagen jornada 4 Emi Web");
+                //print("Error en actualizar imagen jornada 4 Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('ERROR - function syncUpdateImagenJornada4(): $e');
+            //print('ERROR - function syncUpdateImagenJornada4(): $e');
             return 0;
           }
         } else {
@@ -7308,7 +7291,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncDeleteImagenJornada(
       Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncDeleteImagenJornada() en Emi Web");
+    //print("Estoy en El syncDeleteImagenJornada() en Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -7341,17 +7324,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 body: jsonEncode({}));
             switch (responseDeleteImagenJornada.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Delete Imagen Usuario");
+                //print("Caso 200 en Emi Web Delete Imagen Usuario");
                 //Se marca como realizada en EmiWeb la instrucción en Bitacora
                 bitacora.executeEmiWeb = true;
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el delete
-                print("Error en eliminar imagen usuario Emi Web");
+                //print("Error en eliminar imagen usuario Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('ERROR - function syncDeleteImagenJornada(): $e');
+            //print('ERROR - function syncDeleteImagenJornada(): $e');
             return 0;
           }
         } else {
@@ -7370,7 +7353,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncDeleteProductoInversionJ3(
       Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncDeleteProductoInversionJ3() en Emi Web");
+    //print("Estoy en El syncDeleteProductoInversionJ3() en Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -7409,17 +7392,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     }));
             switch (responseDeleteProductoInversionJ3.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Delete Producto Inversion J3");
+                //print("Caso 200 en Emi Web Delete Producto Inversion J3");
                 //Se marca como realizada en EmiWeb la instrucción en Bitacora
                 bitacora.executeEmiWeb = true;
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el delete
-                print("Error en eliminar producto inversion J3 Emi Web");
+                //print("Error en eliminar producto inversion J3 Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('ERROR - function syncDeleteProductoInversionJ3(): $e');
+            //print('ERROR - function syncDeleteProductoInversionJ3(): $e');
             return 0;
           }
         } else {
@@ -7438,7 +7421,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncUpdateTareaConsultoria(
       Tareas tarea, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncUpdateTareaConsultoria de Emi Web");
+    //print("Estoy en El syncUpdateTareaConsultoria de Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -7481,7 +7464,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                         }));
                 switch (responsePostImagenProductoEmp.statusCode) {
                   case 200:
-                    print("Caso 200 en Emi Web Imagen Avance tarea");
+                    //print("Caso 200 en Emi Web Imagen Avance tarea");
                     final responsePostImagenProductoEmpParse =
                         postRegistroImagenExitosoEmiWebFromMap(
                             const Utf8Decoder().convert(
@@ -7490,7 +7473,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                         responsePostImagenProductoEmpParse.payload.idDocumento
                             .toString();
                     dataBase.imagenesBox.put(tarea.imagenes.first);
-                    // print("${responsePostImagenProductoEmpParse.payload.idDocumento.toString()}");
+                    // //print("${responsePostImagenProductoEmpParse.payload.idDocumento.toString()}");
                     // Segundo creamos la nueva tarea asociada a la consultoría
                     final actualizarTareaConsultoriaUri =
                         Uri.parse('$baseUrlEmiWebServices/tareas');
@@ -7523,12 +7506,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                               "idDocumento": responsePostImagenProductoEmpParse
                                   .payload.idDocumento,
                             }));
-                    print(responsePostConsultoria.statusCode);
-                    print(responsePostConsultoria.body);
-                    print("Respuesta Post Tarea Consultoria");
+                    //print(responsePostConsultoria.statusCode);
+                    //print(responsePostConsultoria.body);
+                    //print("Respuesta Post Tarea Consultoria");
                     switch (responsePostConsultoria.statusCode) {
                       case 200:
-                        print("Caso 200 en Emi Web Tarea Consultoría");
+                        //print("Caso 200 en Emi Web Tarea Consultoría");
                         //Se recupera el id Emi Web de la Consultoría que será el mismo id para la nueva Tarea
                         tarea.idEmiWeb = tarea.consultoria.target!.idEmiWeb;
                         dataBase.tareasBox.put(tarea);
@@ -7537,12 +7520,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                         dataBase.bitacoraBox.put(bitacora);
                         return 1;
                       default: //No se realizo con éxito el post
-                        print("Error en postear tarea consultoría Emi Web");
+                        //print("Error en postear tarea consultoría Emi Web");
                         return 0;
                     }
                   default:
                     //No se realizo con éxito el post de la imagen asociada
-                    print("Error en Emi Web Imagen Producto Emprendedor");
+                    //print("Error en Emi Web Imagen Producto Emprendedor");
                     return 0;
                 }
               } else {
@@ -7577,12 +7560,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                 .format(tarea.fechaRegistro),
                             "idDocumento": tarea.imagenes.first.idEmiWeb,
                           }));
-                  print(responsePostConsultoria.statusCode);
-                  print(responsePostConsultoria.body);
-                  print("Respuesta Post Tarea Consultoria");
+                  //print(responsePostConsultoria.statusCode);
+                  //print(responsePostConsultoria.body);
+                  //print("Respuesta Post Tarea Consultoria");
                   switch (responsePostConsultoria.statusCode) {
                     case 200:
-                      print("Caso 200 en Emi Web Tarea Consultoría");
+                      //print("Caso 200 en Emi Web Tarea Consultoría");
                       //Se recupera el id Emi Web de la Consultoría que será el mismo id para la nueva Tarea
                       tarea.idEmiWeb = tarea.consultoria.target!.idEmiWeb;
                       dataBase.tareasBox.put(tarea);
@@ -7591,7 +7574,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       dataBase.bitacoraBox.put(bitacora);
                       return 1;
                     default: //No se realizo con éxito el post
-                      print("Error en postear tarea consultoría Emi Web");
+                      //print("Error en postear tarea consultoría Emi Web");
                       return 0;
                   }
                 } else {
@@ -7627,12 +7610,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                           "fechaRegistro": DateFormat("yyyy-MM-ddTHH:mm:ss")
                               .format(tarea.fechaRegistro),
                         }));
-                print(responsePostConsultoria.statusCode);
-                print(responsePostConsultoria.body);
-                print("Respuesta Post Tarea Consultoria");
+                //print(responsePostConsultoria.statusCode);
+                //print(responsePostConsultoria.body);
+                //print("Respuesta Post Tarea Consultoria");
                 switch (responsePostConsultoria.statusCode) {
                   case 200:
-                    print("Caso 200 en Emi Web Tarea Consultoría");
+                    //print("Caso 200 en Emi Web Tarea Consultoría");
                     //Se recupera el id Emi Web de la Consultoría que será el mismo id para la nueva Tarea
                     tarea.idEmiWeb = tarea.consultoria.target!.idEmiWeb;
                     dataBase.tareasBox.put(tarea);
@@ -7641,7 +7624,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     dataBase.bitacoraBox.put(bitacora);
                     return 1;
                   default: //No se realizo con éxito el post
-                    print("Error en postear tarea consultoría Emi Web");
+                    //print("Error en postear tarea consultoría Emi Web");
                     return 0;
                 }
               } else {
@@ -7654,7 +7637,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             }
           } catch (e) {
             //Fallo en el momento se sincronizar
-            print("Catch de syncUpdateTareaConsultoria: $e");
+            //print("Catch de syncUpdateTareaConsultoria: $e");
             return 0;
           }
         } else {
@@ -7673,7 +7656,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncUpdateProductoEmprendedor(ProductosEmp productoEmprendedor,
       Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncUpdateProductoEmprendedor Emi Web");
+    //print("Estoy en El syncUpdateProductoEmprendedor Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -7723,21 +7706,21 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       "idDocumento":
                           productoEmprendedor.imagen.target?.idEmiWeb ?? "",
                     }));
-            print(responseUpdateEmprendedor.statusCode);
-            print(responseUpdateEmprendedor.body);
+            //print(responseUpdateEmprendedor.statusCode);
+            //print(responseUpdateEmprendedor.body);
             switch (responseUpdateEmprendedor.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Update Emprendedor");
+                //print("Caso 200 en Emi Web Update Emprendedor");
                 //Se marca como realizada en EmiWeb la instrucción en Bitacora
                 bitacora.executeEmiWeb = true;
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el update
-                print("Error en actualizar Emprendedor Emi Web");
+                //print("Error en actualizar Emprendedor Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('Catch en syncUpdateProductoEmprendedor(): $e');
+            //print('Catch en syncUpdateProductoEmprendedor(): $e');
             return 0;
           }
         } else {
@@ -7756,7 +7739,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncUpdateImagenProductoEmprendedor(
       Imagenes imagen, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncUpdateImagenProductoEmprendedor Emi Web");
+    //print("Estoy en El syncUpdateImagenProductoEmprendedor Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -7777,7 +7760,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             responseProyecto.payload.switchMovil == true) {
           try {
             // Primero creamos el API para realizar la actualización
-            print("${imagen.idEmiWeb}");
+            //print("${imagen.idEmiWeb}");
             final actualizarImagenProdEmprendedorUri = Uri.parse(
                 '$baseUrlEmiWebServices/documentos/actualizar?id=${imagen.idEmiWeb}');
             final headers = ({
@@ -7796,17 +7779,17 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     }));
             switch (responseUpdateImagenProductoEmprendedor.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Update Imagen Prod Emprendedor");
+                //print("Caso 200 en Emi Web Update Imagen Prod Emprendedor");
                 //Se marca como realizada en EmiWeb la instrucción en Bitacora
                 bitacora.executeEmiWeb = true;
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el update
-                print("Error en actualizar imagen prod emprendedor Emi Web");
+                //print("Error en actualizar imagen prod emprendedor Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('ERROR - function syncUpdateImagenProductoEmprendedor(): $e');
+            //print('ERROR - function syncUpdateImagenProductoEmprendedor(): $e');
             return 0;
           }
         } else {
@@ -7825,7 +7808,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncUpdateVenta(
       Ventas venta, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncUpdateVenta de Emi Web");
+    //print("Estoy en El syncUpdateVenta de Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -7869,7 +7852,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 ventaActualizarRequestList.add(newVentaCreada.toMap());
               }
             }
-            print(jsonEncode(ventaActualizarRequestList));
+            //print(jsonEncode(ventaActualizarRequestList));
             final responsePutVenta = await put(actualizarVentaUri,
                 headers: headers,
                 body: jsonEncode({
@@ -7886,22 +7869,22 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   "total": venta.total,
                   "ventaActualizarRequestList": ventaActualizarRequestList,
                 }));
-            print("Respuesta Put Venta");
-            print(responsePutVenta.body);
+            //print("Respuesta Put Venta");
+            //print(responsePutVenta.body);
             switch (responsePutVenta.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Venta");
+                //print("Caso 200 en Emi Web Venta");
                 //Se marca como realizada en EmiWeb la instrucción en Bitacora
                 bitacora.executeEmiWeb = true;
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el actualizar
-                print("Error en actualizar venta Emi Web");
+                //print("Error en actualizar venta Emi Web");
                 return 0;
             }
           } catch (e) {
             //Fallo en el momento se sincronizar
-            print("Catch de syncUpdateVenta: $e");
+            //print("Catch de syncUpdateVenta: $e");
             return 0;
           }
         } else {
@@ -7919,7 +7902,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
   }
 
   Future<bool> syncUpdateUsuario(Usuarios usuario, Bitacora bitacora) async {
-    print("Estoy en El syncUpdateUsuario() en Emi Web");
+    //print("Estoy en El syncUpdateUsuario() en Emi Web");
     try {
       //Primero creamos el API para realizar la actualización
       final actualizarUsuarioUri =
@@ -7943,24 +7926,24 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
       switch (responsePutUpdateUsuario.statusCode) {
         case 200:
-          print("Caso 200 en Emi Web Update Usuario");
+          //print("Caso 200 en Emi Web Update Usuario");
           //Se marca como realizada en EmiWeb la instrucción en Bitacora
           bitacora.executeEmiWeb = true;
           dataBase.bitacoraBox.put(bitacora);
           return true;
         default: //No se realizo con éxito el post
-          print("Error en actualizar usuario Emi Web");
+          //print("Error en actualizar usuario Emi Web");
           return false;
       }
     } catch (e) {
-      print('ERROR - function syncUpdateUsuario(): $e');
+      //print('ERROR - function syncUpdateUsuario(): $e');
       return false;
     }
   }
 
   Future<int> syncUpdateProductosVendidosVenta(
       Ventas venta, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncUpdateProductosVendidosVenta de Emi Web");
+    //print("Estoy en El syncUpdateProductosVendidosVenta de Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -8004,7 +7987,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 ventaActualizarRequestList.add(newVentaCreada.toMap());
               }
             }
-            print(jsonEncode(ventaActualizarRequestList));
+            //print(jsonEncode(ventaActualizarRequestList));
             final responsePutVenta = await put(actualizarVentaUri,
                 headers: headers,
                 body: jsonEncode({
@@ -8021,22 +8004,22 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   "total": venta.total,
                   "ventaActualizarRequestList": ventaActualizarRequestList,
                 }));
-            print("Respuesta Put Venta");
-            print(responsePutVenta.body);
+            //print("Respuesta Put Venta");
+            //print(responsePutVenta.body);
             switch (responsePutVenta.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Venta");
+                //print("Caso 200 en Emi Web Venta");
                 //Se marca como realizada en EmiWeb la instrucción en Bitacora
                 bitacora.executeEmiWeb = true;
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el actualizar
-                print("Error en actualizar venta Emi Web");
+                //print("Error en actualizar venta Emi Web");
                 return 0;
             }
           } catch (e) {
             //Fallo en el momento se sincronizar
-            print("Catch de syncUpdateProductosVendidosVenta: $e");
+            //print("Catch de syncUpdateProductosVendidosVenta: $e");
             return 0;
           }
         } else {
@@ -8055,7 +8038,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncAcceptProdCotizado(
       ProdCotizados prodCotizado, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncAcceptProdCotizado Emi Web");
+    //print("Estoy en El syncAcceptProdCotizado Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -8107,21 +8090,21 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       "nombreUsuario":
                           "${prodCotizado.inversionXprodCotizados.target!.inversion.target!.emprendimiento.target!.usuario.target!.nombre} ${prodCotizado.inversionXprodCotizados.target!.inversion.target!.emprendimiento.target!.usuario.target!.apellidoP} ${prodCotizado.inversionXprodCotizados.target!.inversion.target!.emprendimiento.target!.usuario.target!.apellidoM}",
                     }));
-            print(responseAceptarProdCotizado.statusCode);
-            print(responseAceptarProdCotizado.body);
+            //print(responseAceptarProdCotizado.statusCode);
+            //print(responseAceptarProdCotizado.body);
             switch (responseAceptarProdCotizado.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Aceptar Prod cotizados");
+                //print("Caso 200 en Emi Web Aceptar Prod cotizados");
                 //Se marca como realizada en EmiWeb la instrucción en Bitacora
                 bitacora.executeEmiWeb = true;
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el update
-                print("Error en aceptar Inversion por Prod cotizados Emi Web");
+                //print("Error en aceptar Inversion por Prod cotizados Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('Catch en syncAcceptProdCotizado(): $e');
+            //print('Catch en syncAcceptProdCotizado(): $e');
             return 0;
           }
         } else {
@@ -8142,7 +8125,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       InversionesXProdCotizados inversionXprodCotizados,
       Bitacora bitacora,
       String idUsuario) async {
-    print("Estoy en El syncAcceptInversionesXProductosCotizados Emi Web");
+    //print("Estoy en El syncAcceptInversionesXProductosCotizados Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -8188,11 +8171,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       "idInversion":
                           inversionXprodCotizados.inversion.target!.idEmiWeb,
                     }));
-            print(responseAceptarInversionXProdCotizados.statusCode);
-            print(responseAceptarInversionXProdCotizados.body);
+            //print(responseAceptarInversionXProdCotizados.statusCode);
+            //print(responseAceptarInversionXProdCotizados.body);
             switch (responseAceptarInversionXProdCotizados.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Aceptar Inversión x Prod cotizados");
+                //print("Caso 200 en Emi Web Aceptar Inversión x Prod cotizados");
                 // Segundo creamos el API para realizar la actualización de prod Cotizados
                 for (var productoCotizado in inversionXprodCotizados.prodCotizados.toList()) {
                   final agregarProdCotizadoUri = Uri.parse(
@@ -8228,11 +8211,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                           }));
                   switch (responseAgregarProdCotizado.statusCode) {
                     case 200:
-                      print("Caso 200 en Emi Web Agregar Prod cotizados");
+                      //print("Caso 200 en Emi Web Agregar Prod cotizados");
                       //Se marca como realizada en EmiWeb la instrucción en Bitacora
                       continue;
                     default: //No se realizo con éxito el update
-                      print("Error en agregar Prod cotizados Emi Web");
+                      //print("Error en agregar Prod cotizados Emi Web");
                       return 0;
                   }
                 }
@@ -8240,11 +8223,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el update
-                print( "Error en aceptar Inversion por Prod cotizados Emi Web");
+                //print( "Error en aceptar Inversion por Prod cotizados Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('Catch en syncAcceptInversionesXProductosCotizados(): $e');
+            //print('Catch en syncAcceptInversionesXProductosCotizados(): $e');
             return 0;
           }
         } else {
@@ -8265,7 +8248,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       InversionesXProdCotizados inversionXprodCotizados,
       Bitacora bitacora,
       String idUsuario) async {
-    print("Estoy en El syncUpdateInversionesXProductosCotizados Emi Web");
+    //print("Estoy en El syncUpdateInversionesXProductosCotizados Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -8316,12 +8299,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                         "idInversion":
                             inversionXprodCotizados.inversion.target!.idEmiWeb,
                       }));
-              print(responseAceptarInversionXProdCotizados.statusCode);
-              print(responseAceptarInversionXProdCotizados.body);
+              //print(responseAceptarInversionXProdCotizados.statusCode);
+              //print(responseAceptarInversionXProdCotizados.body);
               switch (responseAceptarInversionXProdCotizados.statusCode) {
                 case 200:
-                  print(
-                      "Caso 200 en Emi Web Aceptar Inversión x Prod cotizados");
+                  //print("Caso 200 en Emi Web Aceptar Inversión x Prod cotizados");
                   // Creamos el API para realizar la actualización del estado de inversión
                   final actualizarEstadoInversionUri = Uri.parse(
                       '$baseUrlEmiWebServices/inversion/estadoInversion');
@@ -8348,12 +8330,12 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                             "idCatEstadoInversion":
                                 actualEstadoInversion.idEmiWeb,
                           }));
-                  print(responsePutEstadoInversion.statusCode);
-                  print(responsePutEstadoInversion.body);
-                  print("Respuesta Put Estado Inversión");
+                  //print(responsePutEstadoInversion.statusCode);
+                  //print(responsePutEstadoInversion.body);
+                  //print("Respuesta Put Estado Inversión");
                   switch (responsePutEstadoInversion.statusCode) {
                     case 200:
-                      print("Caso 200 en Emi Web  Actualizar Estado Inversión");
+                      //print("Caso 200 en Emi Web  Actualizar Estado Inversión");
                       // Creamos el API para realizar la actualización del monto, saldo y total de la inversión
                       final actualizarMontoSaldoTotalInversionUri = Uri.parse(
                           '$baseUrlEmiWebServices/inversiones/promotor/inversionRecibida');
@@ -8379,37 +8361,34 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                                     .inversion.target!.idEmiWeb,
                                 "inversionRecibida": true,
                               }));
-                      print(responsePutMontoSaldoTotalInversion.statusCode);
-                      print(responsePutMontoSaldoTotalInversion.body);
-                      print("Respuesta Put Monto Saldo y total Inversión");
+                      //print(responsePutMontoSaldoTotalInversion.statusCode);
+                      //print(responsePutMontoSaldoTotalInversion.body);
+                      //print("Respuesta Put Monto Saldo y total Inversión");
                       switch (responsePutMontoSaldoTotalInversion.statusCode) {
                         case 200:
-                          print(
-                              "Caso 200 en Emi Web  Actualizar monto, saldo, total Inversión");
+                          //print("Caso 200 en Emi Web  Actualizar monto, saldo, total Inversión");
                           //Se marca como realizada en EmiWeb la instrucción en Bitacora
                           bitacora.executeEmiWeb = true;
                           dataBase.bitacoraBox.put(bitacora);
                           return 1;
                         default: //No se realizo con éxito el put
-                          print(
-                              "Error en actualizar monto, saldo y total inversion Emi Web");
+                          //print("Error en actualizar monto, saldo y total inversion Emi Web");
                           return 0;
                       }
                     default: //No se realizo con éxito el put
-                      print("Error en actualizar estado inversion Emi Web");
+                      //print("Error en actualizar estado inversion Emi Web");
                       return 0;
                   }
                 default: //No se realizo con éxito el update
-                  print(
-                      "Error en aceptar Inversion por Prod cotizados Emi Web");
+                  //print("Error en aceptar Inversion por Prod cotizados Emi Web");
                   return 0;
               }
             } else {
-              print("no se pudo recuperar el estado");
+              //print("no se pudo recuperar el estado");
               return 0;
             }
           } catch (e) {
-            print('Catch en syncUpdateInversionesXProductosCotizados(): $e');
+            //print('Catch en syncUpdateInversionesXProductosCotizados(): $e');
             return 0;
           }
         } else {
@@ -8428,10 +8407,10 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<bool> syncUpdateImagenUsuario(
       Imagenes imagen, Bitacora bitacora) async {
-    print("Estoy en El syncUpdateImagenUsuario() en Emi Web");
+    //print("Estoy en El syncUpdateImagenUsuario() en Emi Web");
     try {
-      print("ID IMAGEN: ${imagen.idEmiWeb}");
-      print("NOMBRE IMAGEN: ${imagen.nombre}");
+      //print("ID IMAGEN: ${imagen.idEmiWeb}");
+      //print("NOMBRE IMAGEN: ${imagen.nombre}");
       // Primero creamos el API para realizar la actualización
       final actualizarImagenUsuarioUri = Uri.parse(
           '$baseUrlEmiWebServices/documentos/actualizar?id=${imagen.idEmiWeb}');
@@ -8450,23 +8429,23 @@ class SyncProviderEmiWeb extends ChangeNotifier {
               }));
       switch (responsePostUpdateImagenUsuario.statusCode) {
         case 200:
-          print("Caso 200 en Emi Web Update Imagen Usuario");
+          //print("Caso 200 en Emi Web Update Imagen Usuario");
           //Se marca como realizada en EmiWeb la instrucción en Bitacora
           bitacora.executeEmiWeb = true;
           dataBase.bitacoraBox.put(bitacora);
           return true;
         default: //No se realizo con éxito el post
-          print("Error en actualizar imagen usuario Emi Web");
+          //print("Error en actualizar imagen usuario Emi Web");
           return false;
       }
     } catch (e) {
-      print('ERROR - function syncUpdateImagenUsuario(): $e');
+      //print('ERROR - function syncUpdateImagenUsuario(): $e');
       return false;
     }
   }
 
   Future<bool> syncAddImagenUsuario(Imagenes imagen, Bitacora bitacora) async {
-    print("Estoy en El syncAddImagenUsuario() en Emi Web");
+    //print("Estoy en El syncAddImagenUsuario() en Emi Web");
     try {
       // Primero creamos el API para realizar la actualización
       final crearImagenUsuarioUri =
@@ -8486,7 +8465,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
       switch (responsePostAddImagenUsuario.statusCode) {
         case 200:
-          print("Caso 200 en Emi Web Add Imagen Usuario");
+          //print("Caso 200 en Emi Web Add Imagen Usuario");
           //Se recupera el id Emi Web
           final responsePostImagenUsuarioParse =
               postRegistroImagenExitosoEmiWebFromMap(const Utf8Decoder()
@@ -8494,25 +8473,24 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           imagen.idEmiWeb =
               responsePostImagenUsuarioParse.payload.idDocumento.toString();
           dataBase.imagenesBox.put(imagen);
-          print(
-              "ID DE IMAGEN NUEVO: ${responsePostImagenUsuarioParse.payload.idDocumento.toString()}");
+          //print("ID DE IMAGEN NUEVO: ${responsePostImagenUsuarioParse.payload.idDocumento.toString()}");
           //Se marca como realizada en EmiWeb la instrucción en Bitacora
           bitacora.executeEmiWeb = true;
           dataBase.bitacoraBox.put(bitacora);
           return true;
         default: //No se realizo con éxito el post
-          print("Error en agregar imagen usuario Emi Web");
+          //print("Error en agregar imagen usuario Emi Web");
           return false;
       }
     } catch (e) {
-      print('ERROR - function syncAddImagenUsuario(): $e');
+      //print('ERROR - function syncAddImagenUsuario(): $e');
       return false;
     }
   }
 
   Future<int> syncArchivarEmprendimiento(Emprendimientos emprendimiento,
       Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncArchivarEmprendimiento Emi Web");
+    //print("Estoy en El syncArchivarEmprendimiento Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -8550,21 +8528,21 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       "id": emprendimiento.idEmiWeb,
                       "archivado": true,
                     }));
-            print(responseArchivarEmprendimiento.statusCode);
-            print(responseArchivarEmprendimiento.body);
+            //print(responseArchivarEmprendimiento.statusCode);
+            //print(responseArchivarEmprendimiento.body);
             switch (responseArchivarEmprendimiento.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Archivar Emprendedor");
+                //print("Caso 200 en Emi Web Archivar Emprendedor");
                 //Se marca como realizada en EmiWeb la instrucción en Bitacora
                 bitacora.executeEmiWeb = true;
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el update
-                print("Error en archivar Emprendedor Emi Web");
+                //print("Error en archivar Emprendedor Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('Catch en syncArchivarEmprendimiento(): $e');
+            //print('Catch en syncArchivarEmprendimiento(): $e');
             return 0;
           }
         } else {
@@ -8583,7 +8561,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncDesarchivarEmprendimiento(Emprendimientos emprendimiento,
       Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncDesarchivarEmprendimiento Emi Web");
+    //print("Estoy en El syncDesarchivarEmprendimiento Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -8621,21 +8599,21 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       "id": emprendimiento.idEmiWeb,
                       "archivado": false,
                     }));
-            print(responseDesarchivarEmprendimiento.statusCode);
-            print(responseDesarchivarEmprendimiento.body);
+            //print(responseDesarchivarEmprendimiento.statusCode);
+            //print(responseDesarchivarEmprendimiento.body);
             switch (responseDesarchivarEmprendimiento.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Desarchivar Emprendedor");
+                //print("Caso 200 en Emi Web Desarchivar Emprendedor");
                 //Se marca como realizada en EmiWeb la instrucción en Bitacora
                 bitacora.executeEmiWeb = true;
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el update
-                print("Error en desarchivar Emprendedor Emi Web");
+                //print("Error en desarchivar Emprendedor Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('Catch en syncDesarchivarEmprendimiento(): $e');
+            //print('Catch en syncDesarchivarEmprendimiento(): $e');
             return 0;
           }
         } else {
@@ -8654,7 +8632,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncArchivarConsultoria(
       Consultorias consultoria, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncArchivarConsultoria Emi Web");
+    //print("Estoy en El syncArchivarConsultoria Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -8692,21 +8670,21 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       "idConsultoria": consultoria.idEmiWeb,
                       "archivado": true,
                     }));
-            print(responseArchivarConsultoria.statusCode);
-            print(responseArchivarConsultoria.body);
+            //print(responseArchivarConsultoria.statusCode);
+            //print(responseArchivarConsultoria.body);
             switch (responseArchivarConsultoria.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Archivar Consultoria");
+                //print("Caso 200 en Emi Web Archivar Consultoria");
                 //Se marca como realizada en EmiWeb la instrucción en Bitacora
                 bitacora.executeEmiWeb = true;
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el update
-                print("Error en archivar Consultoria Emi Web");
+                //print("Error en archivar Consultoria Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('Catch en syncArchivarConsultoria(): $e');
+            //print('Catch en syncArchivarConsultoria(): $e');
             return 0;
           }
         } else {
@@ -8725,7 +8703,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncDesarchivarConsultoria(
       Consultorias consultoria, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncDesarchivarConsultoria Emi Web");
+    //print("Estoy en El syncDesarchivarConsultoria Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -8763,21 +8741,21 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       "idConsultoria": consultoria.idEmiWeb,
                       "archivado": false,
                     }));
-            print(responseDesarchivarConsultoria.statusCode);
-            print(responseDesarchivarConsultoria.body);
+            //print(responseDesarchivarConsultoria.statusCode);
+            //print(responseDesarchivarConsultoria.body);
             switch (responseDesarchivarConsultoria.statusCode) {
               case 200:
-                print("Caso 200 en Emi Web Desarchivar Consultoria");
+                //print("Caso 200 en Emi Web Desarchivar Consultoria");
                 //Se marca como realizada en EmiWeb la instrucción en Bitacora
                 bitacora.executeEmiWeb = true;
                 dataBase.bitacoraBox.put(bitacora);
                 return 1;
               default: //No se realizo con éxito el update
-                print("Error en desarchivar Consultoria Emi Web");
+                //print("Error en desarchivar Consultoria Emi Web");
                 return 0;
             }
           } catch (e) {
-            print('Catch en syncDesarchivarConsultoria(): $e');
+            //print('Catch en syncDesarchivarConsultoria(): $e');
             return 0;
           }
         } else {
@@ -8796,7 +8774,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
 
   Future<int> syncAddImagenesEntregaInversion(
       Inversiones inversion, Bitacora bitacora, String idUsuario) async {
-    print("Estoy en El syncAddImagenesEntregaInversion de Emi Web");
+    //print("Estoy en El syncAddImagenesEntregaInversion de Emi Web");
     String? idProyectoEmiWeb =
         dataBase.emprendimientosBox.get(bitacora.idEmprendimiento)?.idEmiWeb;
     if (idProyectoEmiWeb != null) {
@@ -8837,7 +8815,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                       }));
               switch (responsePostImagenFirmaRecibido.statusCode) {
                 case 200:
-                  print("Caso 200 en Emi Web Imagen Frirma de recibo");
+                  //print("Caso 200 en Emi Web Imagen Frirma de recibo");
                   final responsePostImagenFirmaRecibidoParse =
                       postRegistroImagenExitosoEmiWebFromMap(const Utf8Decoder()
                           .convert(responsePostImagenFirmaRecibido.bodyBytes));
@@ -8865,11 +8843,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                             "idUsuario": inversion.emprendimiento.target!
                                 .usuario.target!.idEmiWeb,
                           }));
-                  print(responsePostImagenProductoEntregado.statusCode);
-                  print(responsePostImagenProductoEntregado.body);
+                  //print(responsePostImagenProductoEntregado.statusCode);
+                  //print(responsePostImagenProductoEntregado.body);
                   switch (responsePostImagenProductoEntregado.statusCode) {
                     case 200:
-                      print("Caso 200 en Emi Web Imagen Frirma de recibo");
+                      //print("Caso 200 en Emi Web Imagen Frirma de recibo");
                       final responsePostImagenProductoEntregadoParse =
                           postRegistroImagenExitosoEmiWebFromMap(
                               const Utf8Decoder().convert(
@@ -8906,25 +8884,23 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                           responseActualizarImagenesFirmaRecibidoProductoEntregado
                               .statusCode) {
                         case 200:
-                          print(
-                              "Caso 200 en Emi Web Actualizar Imagen Frirma de recibo y Producto Entregado");
+                          //print("Caso 200 en Emi Web Actualizar Imagen Frirma de recibo y Producto Entregado");
                           //Se marca como realizada en EmiWeb la instrucción en Bitacora
                           bitacora.executeEmiWeb = true;
                           dataBase.bitacoraBox.put(bitacora);
                           return 1;
                         default:
                           //No se realizo con éxito el put de la acción
-                          print(
-                              "Error en Emi Web Imagen Firma de recibo y Producto Entregado");
+                          //print("Error en Emi Web Imagen Firma de recibo y Producto Entregado");
                           return 0;
                       }
                     default: //No se realizo con éxito el post
-                      print("Error en Emi Web Imagen Producto Entregado");
+                      //print("Error en Emi Web Imagen Producto Entregado");
                       return 0;
                   }
                 default:
                   //No se realizo con éxito el post de la imagen asociada
-                  print("Error en Emi Web Imagen Firma de recibo");
+                  //print("Error en Emi Web Imagen Firma de recibo");
                   return 0;
               }
             } else {
@@ -8948,11 +8924,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                           "idUsuario": inversion
                               .emprendimiento.target!.usuario.target!.idEmiWeb,
                         }));
-                print(responsePostImagenProductoEntregado.statusCode);
-                print(responsePostImagenProductoEntregado.body);
+                //print(responsePostImagenProductoEntregado.statusCode);
+                //print(responsePostImagenProductoEntregado.body);
                 switch (responsePostImagenProductoEntregado.statusCode) {
                   case 200:
-                    print("Caso 200 en Emi Web Imagen Frirma de recibo");
+                    //print("Caso 200 en Emi Web Imagen Frirma de recibo");
                     final responsePostImagenProductoEntregadoParse =
                         postRegistroImagenExitosoEmiWebFromMap(
                             const Utf8Decoder().convert(
@@ -8986,20 +8962,18 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                         responseActualizarImagenesFirmaRecibidoProductoEntregado
                             .statusCode) {
                       case 200:
-                        print(
-                            "Caso 200 en Emi Web Actualizar Imagen Frirma de recibo y Producto Entregado");
+                        //print("Caso 200 en Emi Web Actualizar Imagen Frirma de recibo y Producto Entregado");
                         //Se marca como realizada en EmiWeb la instrucción en Bitacora
                         bitacora.executeEmiWeb = true;
                         dataBase.bitacoraBox.put(bitacora);
                         return 1;
                       default:
                         //No se realizo con éxito el put de la acción
-                        print(
-                            "Error en Emi Web Imagen Firma de recibo y Producto Entregado");
+                        //print("Error en Emi Web Imagen Firma de recibo y Producto Entregado");
                         return 0;
                     }
                   default: //No se realizo con éxito el post
-                    print("Error en Emi Web Imagen Producto Entregado");
+                    //print("Error en Emi Web Imagen Producto Entregado");
                     return 0;
                 }
               } else {
@@ -9023,23 +8997,21 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 switch (responseActualizarImagenesFirmaRecibidoProductoEntregado
                     .statusCode) {
                   case 200:
-                    print(
-                        "Caso 200 en Emi Web Actualizar Imagen Frirma de recibo y Producto Entregado");
+                    //print("Caso 200 en Emi Web Actualizar Imagen Frirma de recibo y Producto Entregado");
                     //Se marca como realizada en EmiWeb la instrucción en Bitacora
                     bitacora.executeEmiWeb = true;
                     dataBase.bitacoraBox.put(bitacora);
                     return 1;
                   default:
                     //No se realizo con éxito el put de la acción
-                    print(
-                        "Error en Emi Web Imagen Firma de recibo y Producto Entregado");
+                    //print("Error en Emi Web Imagen Firma de recibo y Producto Entregado");
                     return 0;
                 }
               }
             }
           } catch (e) {
             //Fallo en el momento se sincronizar
-            print("Catch de syncAddImagenesEntregaInversion: $e");
+            //print("Catch de syncAddImagenesEntregaInversion: $e");
             return 0;
           }
         } else {
@@ -9075,7 +9047,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         return exitoso;
       }
     } else {
-      print("Proceso de sync Emi Web fallido por Token");
+      //print("Proceso de sync Emi Web fallido por Token");
       procesocargando = false;
       procesoterminado = true;
       procesoexitoso = false;
@@ -9090,7 +9062,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
   Future<bool> validateCotizacionFirstTimeEmiWeb(Inversiones inversion) async {
     try {
       if (await getTokenOAuth()) {
-        print("idInversion Emi Web: ${inversion.idEmiWeb}");
+        //print("idInversion Emi Web: ${inversion.idEmiWeb}");
         var url = Uri.parse(
             "$baseUrlEmiWebServices/productosCotizados?idInversion=${inversion.idEmiWeb}");
         final headers = ({
@@ -9100,21 +9072,21 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         var response = await get(url, headers: headers);
         switch (response.statusCode) {
           case 200: //Caso éxitoso
-            print("Caso 200");
+            //print("Caso 200");
             return true;
           case 404: //Error no existen productos cotizados a esta inversión
-            print("Caso 404");
+            //print("Caso 404");
             return false;
           default:
-            print("Default");
+            //print("Default");
             return false;
         }
       } else {
-        print("Error en el token");
+        //print("Error en el token");
         return false;
       }
     } catch (e) {
-      print("Error en validateCotizacionEmiWeb(): $e");
+      //print("Error en validateCotizacionEmiWeb(): $e");
       return false;
     }
   }
@@ -9131,26 +9103,23 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         var response = await get(url, headers: headers);
         switch (response.statusCode) {
           case 200: //Caso éxitoso
-            print("Caso exitoso");
-            print("${inversion.idEmiWeb}");
-            print(
-                "Tamaño: ${inversion.inversionXprodCotizados.toList().length}");
+            //print("Caso exitoso");
+            //print("${inversion.idEmiWeb}");
+            //print("Tamaño: ${inversion.inversionXprodCotizados.toList().length}");
             final responseListProdCotizados = getProdCotizadosEmiWebFromMap(
                 const Utf8Decoder().convert(response.bodyBytes));
-            print(
-                "Indice a buscar: ${int.parse(inversion.inversionXprodCotizados.toList()[inversion.inversionXprodCotizados.toList().length - 2].idEmiWeb!)}");
-            print(
-                "${responseListProdCotizados.payload![int.parse(inversion.inversionXprodCotizados.toList()[inversion.inversionXprodCotizados.toList().length - 2].idEmiWeb!)] != []}");
+            //print("Indice a buscar: ${int.parse(inversion.inversionXprodCotizados.toList()[inversion.inversionXprodCotizados.toList().length - 2].idEmiWeb!)}");
+            //print("${responseListProdCotizados.payload![int.parse(inversion.inversionXprodCotizados.toList()[inversion.inversionXprodCotizados.toList().length - 2].idEmiWeb!)] != []}");
             if (responseListProdCotizados.payload![int.parse(inversion
                     .inversionXprodCotizados
                     .toList()[
                         inversion.inversionXprodCotizados.toList().length - 2]
                     .idEmiWeb!)] !=
                 []) {
-              print("es true");
+              //print("es true");
               return true;
             } else {
-              print("Es false");
+              //print("Es false");
               return false;
             }
           case 404: //Error no existen productos cotizados a esta inversión
@@ -9162,7 +9131,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         return false;
       }
     } catch (e) {
-      print("Error en validateCotizacionEmiWeb(): $e");
+      //print("Error en validateCotizacionEmiWeb(): $e");
       return false;
     }
   }
@@ -9173,7 +9142,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
       final recordInversion =
           await client.records.getOne('inversiones', inversion.idDBR!);
       if (recordInversion.id.isNotEmpty) {
-        print("Record Inversión no está vacía");
+        //print("Record Inversión no está vacía");
         final GetInversion inversionParse =
             getInversionFromMap(recordInversion.toString());
         final estadoInversion = dataBase.estadoInversionBox
@@ -9183,11 +9152,11 @@ class SyncProviderEmiWeb extends ChangeNotifier {
             .findUnique();
         if (estadoInversion != null) {
           if (estadoInversion.estado == "En Cotización") {
-            print("Ya se ha realizado la inversión");
+            //print("Ya se ha realizado la inversión");
             //Ya se ha realizado el proceso para Emi Web
             return true;
           } else {
-            print("No se ha realizado la cotización");
+            //print("No se ha realizado la cotización");
             if (await getTokenOAuth()) {
               var url = Uri.parse(
                   "$baseUrlEmiWebServices/productosCotizados?idInversion=${inversion.idEmiWeb}");
@@ -9196,24 +9165,20 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 'Authorization': 'Bearer $tokenGlobal',
               });
               var response = await get(url, headers: headers);
-              print("Response: ${response.body}");
+              //print("Response: ${response.body}");
               switch (response.statusCode) {
                 case 200: //Caso éxitoso
-                  print(
-                      "200 Con Caso éxitoso en get Productos Exitosos Emi Web");
+                  //print("200 Con Caso éxitoso en get Productos Exitosos Emi Web");
                   final responseListProdCotizados =
                       getProdCotizadosEmiWebFromMap(
                           const Utf8Decoder().convert(response.bodyBytes));
                   //Se crea la instancia de inversion x prod Cotizados en el backend
-                  print(
-                      "SE CREA LA INSTANCIA DE INVERSION X PROD COTIZADOS EN BACKEND");
+                  //print("SE CREA LA INSTANCIA DE INVERSION X PROD COTIZADOS EN BACKEND");
                   final inversionXprodCotizados =
                       inversion.inversionXprodCotizados.last;
-                  print(
-                      "ID EMI WEB: ${responseListProdCotizados.payload![responseListProdCotizados.payload!.length - 1].first.idListaCotizacion.toString()}");
-                  // print("Yo supongo que es: ${responseListProdCotizados.payload!.first[responseListProdCotizados.payload!.length - 1].idListaCotizacion.toString()}");
-                  print(
-                      "ID INVERSION FK: ${inversionXprodCotizados.inversion.target!.idDBR}");
+                  //print("ID EMI WEB: ${responseListProdCotizados.payload![responseListProdCotizados.payload!.length - 1].first.idListaCotizacion.toString()}");
+                  // //print("Yo supongo que es: ${responseListProdCotizados.payload!.first[responseListProdCotizados.payload!.length - 1].idListaCotizacion.toString()}");
+                  //print("ID INVERSION FK: ${inversionXprodCotizados.inversion.target!.idDBR}");
                   final recordInversionXProdCotizados = await client.records
                       .create('inversion_x_prod_cotizados', body: {
                     "id_inversion_fk":
@@ -9344,7 +9309,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         return false;
       }
     } catch (e) {
-      print("Error en getProductosCotizadosEmiWeb(): $e");
+      //print("Error en getProductosCotizadosEmiWeb(): $e");
       return false;
     }
   }
@@ -9353,7 +9318,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
   Future<bool> validateInversionComprada(Inversiones inversion) async {
     try {
       if (await getTokenOAuth()) {
-        print("Id inversion Emi Web: ${inversion.idEmiWeb}");
+        //print("Id inversion Emi Web: ${inversion.idEmiWeb}");
         var url = Uri.parse(
             "$baseUrlEmiWebServices/inversiones/${inversion.idEmiWeb}");
         final headers = ({
@@ -9361,8 +9326,8 @@ class SyncProviderEmiWeb extends ChangeNotifier {
           'Authorization': 'Bearer $tokenGlobal',
         });
         var response = await get(url, headers: headers);
-        print("Status: ${response.statusCode}");
-        print("Body: ${response.body}");
+        //print("Status: ${response.statusCode}");
+        //print("Body: ${response.body}");
         switch (response.statusCode) {
           case 200: //Caso éxitoso
             final responseGetInversionParse = getInversionEmiWebFromMap(
@@ -9401,7 +9366,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
         return false;
       }
     } catch (e) {
-      print("Error en validateInversionComprada(): $e");
+      //print("Error en validateInversionComprada(): $e");
       return false;
     }
   }

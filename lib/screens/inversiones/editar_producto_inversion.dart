@@ -1044,7 +1044,7 @@ class _EditarProductoInversionScreenState
                                               if (widget.prodSolicitado.imagen
                                                       .target?.imagenes ==
                                                   null) {
-                                                print("SE AGREGA IMAGEN NUEVA");
+                                                //print("SE AGREGA IMAGEN NUEVA");
                                                 inversionProvider
                                                     .addImagenProductoSolicitado(
                                                         widget.prodSolicitado,
@@ -1054,8 +1054,7 @@ class _EditarProductoInversionScreenState
                                                         widget
                                                             .idEmprendimiento);
                                               } else {
-                                                print(
-                                                    "SE ACTUALIZA IMAGEN NUEVA");
+                                                //print("SE ACTUALIZA IMAGEN NUEVA");
                                                 inversionProvider
                                                     .updateImagenProductoSolicitado(
                                                         widget.prodSolicitado,
