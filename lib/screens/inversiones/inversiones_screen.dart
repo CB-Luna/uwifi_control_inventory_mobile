@@ -598,7 +598,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                 children: [
                                                                   Text(
                                                                     dateTimeFormat(
-                                                                        "dd/MMM/yyyy",
+                                                                        "dd/MM/yyyy",
                                                                         inversion
                                                                             .fechaRegistro),
                                                                     style: AppTheme.of(

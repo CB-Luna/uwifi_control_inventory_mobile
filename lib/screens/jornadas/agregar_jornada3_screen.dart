@@ -66,14 +66,14 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
     fechaRevision = TextEditingController(
         text: context.read<JornadaController>().fechaRevision != null
             ? dateTimeFormat(
-                'yMMMd', context.read<JornadaController>().fechaRevision!)
+                'yMMd', context.read<JornadaController>().fechaRevision!)
             : "");
     tareaController =
         TextEditingController(text: context.read<JornadaController>().tarea);
     fechaRegistro = TextEditingController();
     comentariosController = TextEditingController(
         text: context.read<JornadaController>().comentarios);
-    fechaRegistro.text = dateTimeFormat('yMMMd', DateTime.now());
+    fechaRegistro.text = dateTimeFormat('yMMd', DateTime.now());
     tipoProyecto = context.read<JornadaController>().tipoProyecto;
     proyecto = context.read<JornadaController>().proyecto;
     descripcionController = TextEditingController(
@@ -344,7 +344,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                             jornadaProvider.fechaRegistro =
                                                 date;
                                             fechaRegistro.text =
-                                                dateTimeFormat('yMMMd', date);
+                                                dateTimeFormat('yMMd', date);
                                           });
                                         },
                                         currentTime: getCurrentTimestamp,
@@ -788,7 +788,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                             jornadaProvider.fechaRevision =
                                                 date;
                                             fechaRevision.text =
-                                                dateTimeFormat('yMMMd', date);
+                                                dateTimeFormat('yMMd', date);
                                           });
                                         },
                                         currentTime: getCurrentTimestamp,

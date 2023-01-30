@@ -48,7 +48,7 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
     super.initState();
     fechaRevision = TextEditingController();
     fechaRegistro = TextEditingController();
-    fechaRegistro.text = dateTimeFormat('yMMMd', DateTime.now());
+    fechaRegistro.text = dateTimeFormat('yMMd', DateTime.now());
     imagenesTemp = [];
   }
 
@@ -283,7 +283,7 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                                             jornadaProvider.fechaRegistro =
                                                 date;
                                             fechaRegistro.text =
-                                                dateTimeFormat('yMMMd', date);
+                                                dateTimeFormat('yMMd', date);
                                           });
                                         },
                                         currentTime: getCurrentTimestamp,
@@ -362,7 +362,7 @@ class _AgregarJornada2ScreenState extends State<AgregarJornada2Screen> {
                                             jornadaProvider.fechaRevision =
                                                 date;
                                             fechaRevision.text =
-                                                dateTimeFormat('yMMMd', date);
+                                                dateTimeFormat('yMMd', date);
                                           });
                                         },
                                         currentTime: getCurrentTimestamp,

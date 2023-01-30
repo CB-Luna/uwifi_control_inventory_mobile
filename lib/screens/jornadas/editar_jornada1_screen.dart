@@ -44,9 +44,9 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
     fechaRevision = widget.jornada.fechaRevision;
     fechaRegistro = widget.jornada.fechaRegistro;
     fechaRevisionText = TextEditingController(
-        text: dateTimeFormat('yMMMd', widget.jornada.fechaRevision));
+        text: dateTimeFormat('yMMd', widget.jornada.fechaRevision));
     fechaRegistroText = TextEditingController(
-        text: dateTimeFormat('yMMMd', widget.jornada.fechaRegistro));
+        text: dateTimeFormat('yMMd', widget.jornada.fechaRegistro));
     tareaController =
         TextEditingController(text: widget.jornada.tarea.target!.tarea);
     activoController = !widget.jornada.completada;
@@ -347,7 +347,7 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
                                           setState(() {
                                             fechaRegistro = date;
                                             fechaRegistroText.text =
-                                                dateTimeFormat('yMMMd', date);
+                                                dateTimeFormat('yMMd', date);
                                           });
                                         },
                                         currentTime: getCurrentTimestamp,
@@ -425,7 +425,7 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
                                           setState(() {
                                             fechaRevision = date;
                                             fechaRevisionText.text =
-                                                dateTimeFormat('yMMMd', date);
+                                                dateTimeFormat('yMMd', date);
                                           });
                                         },
                                         currentTime: getCurrentTimestamp,

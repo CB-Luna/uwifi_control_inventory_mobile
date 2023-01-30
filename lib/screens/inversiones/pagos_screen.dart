@@ -1830,7 +1830,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                             const EdgeInsets.all(8.0),
                                                                         child:
                                                                             Text(
-                                                                          "${dateTimeFormat('dd/MMM/yyyy', pago.fechaMovimiento)} \n ${currencyFormat.format(pago.montoAbonado.toStringAsFixed(2))}",
+                                                                          "${dateTimeFormat('dd/MM/yyyy', pago.fechaMovimiento)} \n ${currencyFormat.format(pago.montoAbonado.toStringAsFixed(2))}",
                                                                           style: AppTheme.of(context)
                                                                               .bodyText1
                                                                               .override(
@@ -2165,7 +2165,7 @@ class _PagosScreenState extends State<PagosScreen> {
                     fontWeight: FontWeight.normal,
                   ),
               inputFormatters: [
-                LengthLimitingTextInputFormatter(2),
+                LengthLimitingTextInputFormatter(5),
                 FilteringTextInputFormatter.allow(RegExp(r'^[1-9][0-9]*'))
               ],
             ),

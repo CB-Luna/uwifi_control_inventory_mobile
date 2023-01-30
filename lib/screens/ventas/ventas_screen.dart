@@ -579,7 +579,7 @@ class _VentasScreenState extends State<VentasScreen> {
                                                                           const EdgeInsets.all(
                                                                               5.0),
                                                                       child: Text(dateTimeFormat(
-                                                                          "dd/MMM/yyyy",
+                                                                          "dd/MM/yyyy",
                                                                           venta
                                                                               .fechaInicio)))
                                                                               ,
@@ -589,7 +589,7 @@ class _VentasScreenState extends State<VentasScreen> {
                                                                             5.0),
                                                                         child:Text(
                                                                           maybeHandleOverflow(
-                                                                              dateTimeFormat("dd/MMM/yyyy", venta.fechaTermino),
+                                                                              dateTimeFormat("dd/MM/yyyy", venta.fechaTermino),
                                                                               19,
                                                                               "..."),
                                                                         ),

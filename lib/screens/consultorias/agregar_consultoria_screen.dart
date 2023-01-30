@@ -462,7 +462,7 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                             consultoriaProvider.fechaRevision =
                                                 date;
                                             fechaRevision.text =
-                                                dateTimeFormat('yMMMd', date);
+                                                dateTimeFormat('yMMd', date);
                                           });
                                         },
                                         minTime: getCurrentTimestamp,

@@ -44,11 +44,11 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
     if (actualEmprendimiento != null) {
       fechaInicio = TextEditingController(
           text: dateTimeFormat(
-              'yMMMd', context.read<VentaController>().fechaInicio));
+              'yMMd', context.read<VentaController>().fechaInicio));
       fechaTermino = TextEditingController(
           text: context.read<VentaController>().fechaTermino != null
               ? dateTimeFormat(
-                  'yMMMd', context.read<VentaController>().fechaTermino!)
+                  'yMMd', context.read<VentaController>().fechaTermino!)
               : "");
       emprendedor = "";
       if (actualEmprendimiento!.emprendedor.target != null) {
@@ -294,7 +294,7 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
                                           setState(() {
                                             ventaProvider.fechaInicio = date;
                                             fechaInicio.text =
-                                                dateTimeFormat('yMMMd', date);
+                                                dateTimeFormat('yMMd', date);
                                           });
                                         },
                                         maxTime: getCurrentTimestamp,
@@ -371,7 +371,7 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
                                           setState(() {
                                             ventaProvider.fechaTermino = date;
                                             fechaTermino.text =
-                                                dateTimeFormat('yMMMd', date);
+                                                dateTimeFormat('yMMd', date);
                                           });
                                         },
                                         maxTime: getCurrentTimestamp,

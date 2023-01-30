@@ -45,7 +45,7 @@ class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
     super.initState();
     imagenesTemp = [];
     fechaRegistro = TextEditingController();
-    fechaRegistro.text = dateTimeFormat('yMMMd', DateTime.now());
+    fechaRegistro.text = dateTimeFormat('yMMd', DateTime.now());
   }
 
   @override
@@ -278,7 +278,7 @@ class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
                                             jornadaProvider.fechaRegistro =
                                                 date;
                                             fechaRegistro.text =
-                                                dateTimeFormat('yMMMd', date);
+                                                dateTimeFormat('yMMd', date);
                                           });
                                         },
                                         currentTime: getCurrentTimestamp,

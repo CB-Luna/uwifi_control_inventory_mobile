@@ -38,7 +38,7 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
     super.initState();
     fechaRevision = TextEditingController();
     fechaRegistro = TextEditingController();
-    fechaRegistro.text = dateTimeFormat('yMMMd', DateTime.now());
+    fechaRegistro.text = dateTimeFormat('yMMd', DateTime.now());
     nombreController =
         TextEditingController(text: widget.emprendimiento.nombre);
   }
@@ -335,7 +335,7 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                                             jornadaProvider.fechaRegistro =
                                                 date;
                                             fechaRegistro.text =
-                                                dateTimeFormat('yMMMd', date);
+                                                dateTimeFormat('yMMd', date);
                                           });
                                         },
                                         currentTime: getCurrentTimestamp,
@@ -414,7 +414,7 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                                             jornadaProvider.fechaRevision =
                                                 date;
                                             fechaRevision.text =
-                                                dateTimeFormat('yMMMd', date);
+                                                dateTimeFormat('yMMd', date);
                                           });
                                         },
                                         currentTime: getCurrentTimestamp,

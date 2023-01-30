@@ -42,9 +42,9 @@ class _EditarVentaScreenState extends State<EditarVentaScreen> {
   void initState() {
     super.initState();
     fechaInicioText = TextEditingController(
-        text: dateTimeFormat('yMMMd', widget.venta.fechaInicio));
+        text: dateTimeFormat('yMMd', widget.venta.fechaInicio));
     fechaTerminoText = TextEditingController(
-        text: dateTimeFormat('yMMMd', widget.venta.fechaTermino));
+        text: dateTimeFormat('yMMd', widget.venta.fechaTermino));
     fechaInicio = widget.venta.fechaInicio;
     fechaTermino = widget.venta.fechaTermino;
     emprendedor = "";
@@ -291,7 +291,7 @@ class _EditarVentaScreenState extends State<EditarVentaScreen> {
                                             fechaInicio =
                                                 date;
                                             fechaInicioText.text =
-                                                dateTimeFormat('yMMMd', date);
+                                                dateTimeFormat('yMMd', date);
                                           });
                                         },
                                         maxTime: getCurrentTimestamp,
@@ -368,7 +368,7 @@ class _EditarVentaScreenState extends State<EditarVentaScreen> {
                                             fechaTermino =
                                                 date;
                                             fechaTerminoText.text =
-                                                dateTimeFormat('yMMMd', date);
+                                                dateTimeFormat('yMMd', date);
                                           });
                                         },
                                         minTime: getCurrentTimestamp,
