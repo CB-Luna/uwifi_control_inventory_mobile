@@ -2166,14 +2166,14 @@ class _PagosScreenState extends State<PagosScreen> {
                   ),
               inputFormatters: [
                 LengthLimitingTextInputFormatter(5),
-                FilteringTextInputFormatter.allow(RegExp(r'^[1-9][0-9]*'))
+                //FilteringTextInputFormatter.allow(RegExp(r'^[1-9][0-9]*'))
               ],
             ),
           ),
         )),
         DataCell(Center(
           child: Text(
-              currencyFormat.format(prodCotizado.costoTotal.toStringAsFixed(2)),
+              maybeHandleOverflow(currencyFormat.format(prodCotizado.costoTotal.toStringAsFixed(2)),8,'...'),
               style: GoogleFonts.roboto(
                   fontSize: 12.0,
                   fontWeight: FontWeight.w400,
