@@ -612,7 +612,7 @@ class _AgregarTareaScreenState extends State<AgregarTareaScreen> {
                                                     12, 6, 0, 0),
                                             child: Text(
                                               dateTimeFormat(
-                                                  'dd/MM/yyyy', datePicked),
+                                                  'd/MMMM/y', datePicked),
                                               style: AppTheme.of(context)
                                                   .bodyText1
                                                   .override(

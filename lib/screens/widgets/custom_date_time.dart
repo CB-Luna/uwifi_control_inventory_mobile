@@ -149,9 +149,9 @@ class CustomDateTimeState extends State<CustomDateTime> {
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     setState(() {
       if (args.value is PickerDateRange) {
-        _range = '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
+        _range = '${DateFormat('d/MMMM/y').format(args.value.startDate)} -'
             // ignore: lines_longer_than_80_chars
-            ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
+            ' ${DateFormat('d/MMMM/y').format(args.value.endDate ?? args.value.startDate)}';
       } else if (args.value is DateTime) {
         selectedDate = args.value;
       } else if (args.value is List<DateTime>) {

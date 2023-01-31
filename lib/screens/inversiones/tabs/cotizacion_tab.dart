@@ -584,7 +584,7 @@ class _CotizacionTabState extends State<CotizacionTab>
                                                         ),
                                                         Text(
                                                           dateTimeFormat(
-                                                              'dd/MM/yyyy',
+                                                              'd/MMMM/y',
                                                               productoCot
                                                                   .fechaRegistro),
                                                           textAlign:
