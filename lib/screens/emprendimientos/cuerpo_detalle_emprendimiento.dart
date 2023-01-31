@@ -197,7 +197,7 @@ class _CuerpoDetalleEmprendimientoState extends State<CuerpoDetalleEmprendimient
                                     .fromSTEB(0, 5, 0, 5),
                             child: AutoSizeText(
                               dateTimeFormat(
-                                  'dd/MM/yyyy',
+                                  'd/MMMM/y',
                                   widget.emprendimiento
                                       .fechaRegistro),
                               textAlign: TextAlign.start,

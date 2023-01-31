@@ -66,7 +66,7 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
     fechaRevision = TextEditingController(
         text: context.read<JornadaController>().fechaRevision != null
             ? dateTimeFormat(
-                'dd/MM/yyyy', context.read<JornadaController>().fechaRevision!)
+                'd/MMMM/y', context.read<JornadaController>().fechaRevision!)
             : "");
     tareaController =
         TextEditingController(text: context.read<JornadaController>().tarea);

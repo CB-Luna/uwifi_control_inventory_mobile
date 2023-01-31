@@ -526,7 +526,7 @@ class _InversionTabState extends State<InversionTab>
                                                         ),
                                                         Text(
                                                           dateTimeFormat(
-                                                              'dd/MM/yyyy',
+                                                              'd/MMMM/y',
                                                               productoSolicitado
                                                                   .fechaRegistro),
                                                           textAlign:

@@ -44,11 +44,11 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
     if (actualEmprendimiento != null) {
       fechaInicio = TextEditingController(
           text: dateTimeFormat(
-              'dd/MM/yyyy', context.read<VentaController>().fechaInicio));
+              'd/MMMM/y', context.read<VentaController>().fechaInicio));
       fechaTermino = TextEditingController(
           text: context.read<VentaController>().fechaTermino != null
               ? dateTimeFormat(
-                  'dd/MM/yyyy', context.read<VentaController>().fechaTermino!)
+                  'd/MMMM/y', context.read<VentaController>().fechaTermino!)
               : "");
       emprendedor = "";
       if (actualEmprendimiento!.emprendedor.target != null) {

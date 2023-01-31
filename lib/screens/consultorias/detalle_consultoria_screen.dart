@@ -398,7 +398,7 @@ class _DetalleConsultoriaScreenState extends State<DetalleConsultoriaScreen>
                                       0, 5, 0, 5),
                                   child: AutoSizeText(
                                     dateTimeFormat(
-                                        'dd/MM/yyyy',
+                                        'd/MMMM/y',
                                         widget.consultoria.tareas.last
                                             .fechaRevision),
                                     textAlign: TextAlign.start,
