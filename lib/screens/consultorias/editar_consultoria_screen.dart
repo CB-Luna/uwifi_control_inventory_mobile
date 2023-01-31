@@ -618,13 +618,14 @@ class _EditarConsultoriaScreenState extends State<EditarConsultoriaScreen> {
                                     onTap: () async {
                                       await DatePicker.showDatePicker(
                                         context,
+                                        locale: LocaleType.es,
                                         showTitleActions: true,
                                         onConfirm: (date) {
                                           setState(() {
                                             consultoriaProvider.fechaRevision =
                                                 date;
                                             fechaRevision.text =
-                                                dateTimeFormat('yMMd', date);
+                                                dateTimeFormat('d/MMMM/y', date);
                                           });
                                         },
                                         minTime: getCurrentTimestamp,

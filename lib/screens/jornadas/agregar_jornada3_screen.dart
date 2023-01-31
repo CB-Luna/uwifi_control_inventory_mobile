@@ -66,14 +66,14 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
     fechaRevision = TextEditingController(
         text: context.read<JornadaController>().fechaRevision != null
             ? dateTimeFormat(
-                'yMMd', context.read<JornadaController>().fechaRevision!)
+                'dd/MM/yyyy', context.read<JornadaController>().fechaRevision!)
             : "");
     tareaController =
         TextEditingController(text: context.read<JornadaController>().tarea);
     fechaRegistro = TextEditingController();
     comentariosController = TextEditingController(
         text: context.read<JornadaController>().comentarios);
-    fechaRegistro.text = dateTimeFormat('yMMd', DateTime.now());
+    fechaRegistro.text = dateTimeFormat('d/MMMM/y', DateTime.now());
     tipoProyecto = context.read<JornadaController>().tipoProyecto;
     proyecto = context.read<JornadaController>().proyecto;
     descripcionController = TextEditingController(
@@ -338,13 +338,14 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                     onTap: () async {
                                       await DatePicker.showDatePicker(
                                         context,
+                                        locale: LocaleType.es,
                                         showTitleActions: true,
                                         onConfirm: (date) {
                                           setState(() {
                                             jornadaProvider.fechaRegistro =
                                                 date;
                                             fechaRegistro.text =
-                                                dateTimeFormat('yMMd', date);
+                                                dateTimeFormat('d/MMMM/y', date);
                                           });
                                         },
                                         currentTime: getCurrentTimestamp,
@@ -782,13 +783,14 @@ class _AgregarJornada3ScreenState extends State<AgregarJornada3Screen> {
                                     onTap: () async {
                                       await DatePicker.showDatePicker(
                                         context,
+                                        locale: LocaleType.es,
                                         showTitleActions: true,
                                         onConfirm: (date) {
                                           setState(() {
                                             jornadaProvider.fechaRevision =
                                                 date;
                                             fechaRevision.text =
-                                                dateTimeFormat('yMMd', date);
+                                                dateTimeFormat('d/MMMM/y', date);
                                           });
                                         },
                                         currentTime: getCurrentTimestamp,

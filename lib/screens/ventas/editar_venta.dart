@@ -42,9 +42,9 @@ class _EditarVentaScreenState extends State<EditarVentaScreen> {
   void initState() {
     super.initState();
     fechaInicioText = TextEditingController(
-        text: dateTimeFormat('yMMd', widget.venta.fechaInicio));
+        text: dateTimeFormat('d/MMMM/y', widget.venta.fechaInicio));
     fechaTerminoText = TextEditingController(
-        text: dateTimeFormat('yMMd', widget.venta.fechaTermino));
+        text: dateTimeFormat('d/MMMM/y', widget.venta.fechaTermino));
     fechaInicio = widget.venta.fechaInicio;
     fechaTermino = widget.venta.fechaTermino;
     emprendedor = "";
@@ -285,13 +285,14 @@ class _EditarVentaScreenState extends State<EditarVentaScreen> {
                                     onTap: () async {
                                       await DatePicker.showDatePicker(
                                         context,
+                                        locale: LocaleType.es,
                                         showTitleActions: true,
                                         onConfirm: (date) {
                                           setState(() {
                                             fechaInicio =
                                                 date;
                                             fechaInicioText.text =
-                                                dateTimeFormat('yMMd', date);
+                                                dateTimeFormat('d/MMMM/y', date);
                                           });
                                         },
                                         maxTime: getCurrentTimestamp,
@@ -362,13 +363,14 @@ class _EditarVentaScreenState extends State<EditarVentaScreen> {
                                     onTap: () async {
                                       await DatePicker.showDatePicker(
                                         context,
+                                        locale: LocaleType.es,
                                         showTitleActions: true,
                                         onConfirm: (date) {
                                           setState(() {
                                             fechaTermino =
                                                 date;
                                             fechaTerminoText.text =
-                                                dateTimeFormat('yMMd', date);
+                                                dateTimeFormat('d/MMMM/y', date);
                                           });
                                         },
                                         minTime: getCurrentTimestamp,

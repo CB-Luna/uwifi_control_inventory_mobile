@@ -1830,7 +1830,7 @@ class _PagosScreenState extends State<PagosScreen> {
                                                                             const EdgeInsets.all(8.0),
                                                                         child:
                                                                             Text(
-                                                                          "${dateTimeFormat('dd/MM/yyyy', pago.fechaMovimiento)} \n ${currencyFormat.format(pago.montoAbonado.toStringAsFixed(2))}",
+                                                                          "${dateTimeFormat('d/MMMM/y', pago.fechaMovimiento)} \n ${currencyFormat.format(pago.montoAbonado.toStringAsFixed(2))}",
                                                                           style: AppTheme.of(context)
                                                                               .bodyText1
                                                                               .override(

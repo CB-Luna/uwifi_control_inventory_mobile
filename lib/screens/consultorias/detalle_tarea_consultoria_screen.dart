@@ -389,7 +389,7 @@ class _DetalleTareaConsultoriaScreenState
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     5, 0, 5, 10),
                                 child: TextFormField(
-                                    initialValue: dateTimeFormat('yMMd', widget.tarea.fechaRevision),
+                                    initialValue: dateTimeFormat('d/MMMM/y', widget.tarea.fechaRevision),
                                     enabled: false,
                                     readOnly: true,
                                     obscureText: false,

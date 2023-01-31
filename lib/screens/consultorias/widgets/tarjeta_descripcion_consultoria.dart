@@ -177,7 +177,7 @@ class _TarjetaDescripcionConsultoriaState extends State<TarjetaDescripcionConsul
                         16,
                         5),
                 child: Text(
-                  'Registro: ${dateTimeFormat('dd/MM/yyyy', widget.consultoria.fechaRegistro)}',
+                  'Registro: ${dateTimeFormat('d/MMMM/y', widget.consultoria.fechaRegistro)}',
                   maxLines: 1,
                   style: AppTheme.of(
                           context)

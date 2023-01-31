@@ -718,7 +718,7 @@ class _RegistroVentaScreenState
                                                                                       .end,
                                                                               children: [
                                                                                 Text(
-                                                                                      "Inicio: ${dateTimeFormat('dd/MM/yyyy',
+                                                                                      "Inicio: ${dateTimeFormat('d/MMMM/y',
                                                                                           widget.venta.fechaInicio)}",
                                                                                       textAlign:
                                                                                           TextAlign.end,
@@ -729,7 +729,7 @@ class _RegistroVentaScreenState
                                                                                           ),
                                                                                     ),
                                                                                 Text(
-                                                                                      "Termino: ${dateTimeFormat('dd/MM/yyyy',
+                                                                                      "Termino: ${dateTimeFormat('d/MMMM/y',
                                                                                           widget.venta.fechaTermino)}",
                                                                                       textAlign:
                                                                                           TextAlign.end,

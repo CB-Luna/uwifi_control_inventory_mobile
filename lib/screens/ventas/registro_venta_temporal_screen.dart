@@ -702,7 +702,7 @@ class _RegistroVentaTemporalScreenState
                                                                                       .end,
                                                                               children: [
                                                                                 Text(
-                                                                                      "Inicio: ${dateTimeFormat('dd/MM/yyyy',
+                                                                                      "Inicio: ${dateTimeFormat('d/MMMM/y',
                                                                                           ventaController.fechaInicio)}",
                                                                                       textAlign:
                                                                                           TextAlign.end,
@@ -713,7 +713,7 @@ class _RegistroVentaTemporalScreenState
                                                                                           ),
                                                                                     ),
                                                                                 Text(
-                                                                                      "Termino: ${dateTimeFormat('dd/MM/yyyy',
+                                                                                      "Termino: ${dateTimeFormat('d/MMMM/y',
                                                                                           ventaController.fechaTermino!)}",
                                                                                       textAlign:
                                                                                           TextAlign.end,

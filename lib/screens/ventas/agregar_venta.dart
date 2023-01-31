@@ -44,11 +44,11 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
     if (actualEmprendimiento != null) {
       fechaInicio = TextEditingController(
           text: dateTimeFormat(
-              'yMMd', context.read<VentaController>().fechaInicio));
+              'dd/MM/yyyy', context.read<VentaController>().fechaInicio));
       fechaTermino = TextEditingController(
           text: context.read<VentaController>().fechaTermino != null
               ? dateTimeFormat(
-                  'yMMd', context.read<VentaController>().fechaTermino!)
+                  'dd/MM/yyyy', context.read<VentaController>().fechaTermino!)
               : "");
       emprendedor = "";
       if (actualEmprendimiento!.emprendedor.target != null) {
@@ -289,12 +289,13 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
                                     onTap: () async {
                                       await DatePicker.showDatePicker(
                                         context,
+                                        locale: LocaleType.es,
                                         showTitleActions: true,
                                         onConfirm: (date) {
                                           setState(() {
                                             ventaProvider.fechaInicio = date;
                                             fechaInicio.text =
-                                                dateTimeFormat('yMMd', date);
+                                                dateTimeFormat('d/MMMM/y', date);
                                           });
                                         },
                                         maxTime: getCurrentTimestamp,
@@ -366,12 +367,13 @@ class _AgregarVentaScreenState extends State<AgregarVentaScreen> {
                                     onTap: () async {
                                       await DatePicker.showDatePicker(
                                         context,
+                                        locale: LocaleType.es,
                                         showTitleActions: true,
                                         onConfirm: (date) {
                                           setState(() {
                                             ventaProvider.fechaTermino = date;
                                             fechaTermino.text =
-                                                dateTimeFormat('yMMd', date);
+                                                dateTimeFormat('d/MMMM/y', date);
                                           });
                                         },
                                         maxTime: getCurrentTimestamp,

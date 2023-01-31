@@ -555,6 +555,7 @@ class _AgregarTareaScreenState extends State<AgregarTareaScreen> {
                                 onTap: () async {
                                   await DatePicker.showDatePicker(
                                     context,
+                                    locale: LocaleType.es,
                                     showTitleActions: true,
                                     onConfirm: (date) {
                                       setState(() => datePicked = date);
@@ -611,7 +612,7 @@ class _AgregarTareaScreenState extends State<AgregarTareaScreen> {
                                                     12, 6, 0, 0),
                                             child: Text(
                                               dateTimeFormat(
-                                                  'yMMd', datePicked),
+                                                  'dd/MM/yyyy', datePicked),
                                               style: AppTheme.of(context)
                                                   .bodyText1
                                                   .override(

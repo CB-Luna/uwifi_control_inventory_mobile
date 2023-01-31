@@ -456,13 +456,14 @@ class _AgregarConsultoriaScreenState extends State<AgregarConsultoriaScreen> {
                                     onTap: () async {
                                       await DatePicker.showDatePicker(
                                         context,
+                                        locale: LocaleType.es,
                                         showTitleActions: true,
                                         onConfirm: (date) {
                                           setState(() {
                                             consultoriaProvider.fechaRevision =
                                                 date;
                                             fechaRevision.text =
-                                                dateTimeFormat('yMMd', date);
+                                                dateTimeFormat('d/MMMM/y', date);
                                           });
                                         },
                                         minTime: getCurrentTimestamp,

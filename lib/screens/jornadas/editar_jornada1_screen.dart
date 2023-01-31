@@ -44,9 +44,9 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
     fechaRevision = widget.jornada.fechaRevision;
     fechaRegistro = widget.jornada.fechaRegistro;
     fechaRevisionText = TextEditingController(
-        text: dateTimeFormat('yMMd', widget.jornada.fechaRevision));
+        text: dateTimeFormat('d/MMMM/y', widget.jornada.fechaRevision));
     fechaRegistroText = TextEditingController(
-        text: dateTimeFormat('yMMd', widget.jornada.fechaRegistro));
+        text: dateTimeFormat('d/MMMM/y', widget.jornada.fechaRegistro));
     tareaController =
         TextEditingController(text: widget.jornada.tarea.target!.tarea);
     activoController = !widget.jornada.completada;
@@ -342,12 +342,13 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
                                     onTap: () async {
                                       await DatePicker.showDatePicker(
                                         context,
+                                        locale: LocaleType.es,
                                         showTitleActions: true,
                                         onConfirm: (date) {
                                           setState(() {
                                             fechaRegistro = date;
                                             fechaRegistroText.text =
-                                                dateTimeFormat('yMMd', date);
+                                                dateTimeFormat('d/MMMM/y', date);
                                           });
                                         },
                                         currentTime: getCurrentTimestamp,
@@ -420,12 +421,13 @@ class _EditarJornada1ScreenState extends State<EditarJornada1Screen> {
                                     onTap: () async {
                                       await DatePicker.showDatePicker(
                                         context,
+                                        locale: LocaleType.es,
                                         showTitleActions: true,
                                         onConfirm: (date) {
                                           setState(() {
                                             fechaRevision = date;
                                             fechaRevisionText.text =
-                                                dateTimeFormat('yMMd', date);
+                                                dateTimeFormat('d/MMMM/y', date);
                                           });
                                         },
                                         currentTime: getCurrentTimestamp,

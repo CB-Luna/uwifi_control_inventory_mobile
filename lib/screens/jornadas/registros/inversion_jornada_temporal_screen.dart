@@ -734,7 +734,7 @@ class _InversionJornadaTemporalScreenState
                                                                               MainAxisAlignment.spaceBetween,
                                                                           children: [
                                                                             Text(
-                                                                              dateTimeFormat('dd/MM/yyyy', prodSolicitado.fechaRegistro),
+                                                                              dateTimeFormat('d/MMMM/y', prodSolicitado.fechaRegistro),
                                                                               textAlign: TextAlign.end,
                                                                               style: AppTheme.of(context).bodyText1.override(
                                                                                     fontFamily: AppTheme.of(context).bodyText1Family,

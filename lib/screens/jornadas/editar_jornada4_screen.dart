@@ -54,9 +54,9 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
     fechaRevision = widget.jornada.fechaRevision;
     fechaRegistro = widget.jornada.fechaRegistro;
     fechaRevisionText = TextEditingController(
-        text: dateTimeFormat('yMMd', widget.jornada.fechaRevision));
+        text: dateTimeFormat('d/MMMM/y', widget.jornada.fechaRevision));
     fechaRegistroText = TextEditingController(
-        text: dateTimeFormat('yMMd', widget.jornada.fechaRegistro));
+        text: dateTimeFormat('d/MMMM/y', widget.jornada.fechaRegistro));
     comentariosController =
         TextEditingController(text: widget.jornada.tarea.target!.comentarios);
     imagenesTemp = [];
@@ -301,12 +301,13 @@ class _EditarJornada4ScreenState extends State<EditarJornada4Screen> {
                                     onTap: () async {
                                       await DatePicker.showDatePicker(
                                         context,
+                                        locale: LocaleType.es,
                                         showTitleActions: true,
                                         onConfirm: (date) {
                                           setState(() {
                                             fechaRegistro = date;
                                             fechaRegistroText.text =
-                                                dateTimeFormat('yMMd', date);
+                                                dateTimeFormat('d/MMMM/y', date);
                                           });
                                         },
                                         currentTime: getCurrentTimestamp,

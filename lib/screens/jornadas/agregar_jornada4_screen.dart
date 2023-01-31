@@ -45,7 +45,7 @@ class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
     super.initState();
     imagenesTemp = [];
     fechaRegistro = TextEditingController();
-    fechaRegistro.text = dateTimeFormat('yMMd', DateTime.now());
+    fechaRegistro.text = dateTimeFormat('d/MMMM/y', DateTime.now());
   }
 
   @override
@@ -272,13 +272,14 @@ class _AgregarJornada4ScreenState extends State<AgregarJornada4Screen> {
                                     onTap: () async {
                                       await DatePicker.showDatePicker(
                                         context,
+                                        locale: LocaleType.es,
                                         showTitleActions: true,
                                         onConfirm: (date) {
                                           setState(() {
                                             jornadaProvider.fechaRegistro =
                                                 date;
                                             fechaRegistro.text =
-                                                dateTimeFormat('yMMd', date);
+                                                dateTimeFormat('d/MMMM/y', date);
                                           });
                                         },
                                         currentTime: getCurrentTimestamp,

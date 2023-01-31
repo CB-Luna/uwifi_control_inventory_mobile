@@ -410,7 +410,7 @@ class _CuerpoDetalleEmprendimientoState extends State<CuerpoDetalleEmprendimient
                                                   .fromSTEB(
                                               16, 0, 16, 5),
                                       child: Text(
-                                        'Próxima visita: ${dateTimeFormat('dd/MM/yyyy', jornada.fechaRevision)}',
+                                        'Próxima visita: ${dateTimeFormat('d/MMMM/y', jornada.fechaRevision)}',
                                         maxLines: 1,
                                         style: AppTheme.of(
                                                 context)

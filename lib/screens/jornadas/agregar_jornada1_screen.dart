@@ -38,7 +38,7 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
     super.initState();
     fechaRevision = TextEditingController();
     fechaRegistro = TextEditingController();
-    fechaRegistro.text = dateTimeFormat('yMMd', DateTime.now());
+    fechaRegistro.text = dateTimeFormat('d/MMMM/y', DateTime.now());
     nombreController =
         TextEditingController(text: widget.emprendimiento.nombre);
   }
@@ -329,13 +329,14 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                                     onTap: () async {
                                       await DatePicker.showDatePicker(
                                         context,
+                                        locale: LocaleType.es,
                                         showTitleActions: true,
                                         onConfirm: (date) {
                                           setState(() {
                                             jornadaProvider.fechaRegistro =
                                                 date;
                                             fechaRegistro.text =
-                                                dateTimeFormat('yMMd', date);
+                                                dateTimeFormat('d/MMMM/y', date);
                                           });
                                         },
                                         currentTime: getCurrentTimestamp,
@@ -408,13 +409,14 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                                     onTap: () async {
                                       await DatePicker.showDatePicker(
                                         context,
+                                        locale: LocaleType.es,
                                         showTitleActions: true,
                                         onConfirm: (date) {
                                           setState(() {
                                             jornadaProvider.fechaRevision =
                                                 date;
                                             fechaRevision.text =
-                                                dateTimeFormat('yMMd', date);
+                                                dateTimeFormat('d/MMMM/y', date);
                                           });
                                         },
                                         currentTime: getCurrentTimestamp,
