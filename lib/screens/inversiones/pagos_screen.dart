@@ -2131,7 +2131,7 @@ class _PagosScreenState extends State<PagosScreen> {
         )),
         DataCell(Center(
           child: Padding(
-            padding: const EdgeInsets.all(18.0),
+            padding: const EdgeInsets.all(15.0),
             child: TextFormField(
               readOnly: bandera,
               //maxLength: 2,
@@ -2166,7 +2166,7 @@ class _PagosScreenState extends State<PagosScreen> {
                   ),
               inputFormatters: [
                 LengthLimitingTextInputFormatter(5),
-                //FilteringTextInputFormatter.allow(RegExp(r'^[1-9][0-9]*'))
+                FilteringTextInputFormatter.allow(RegExp(r'^[1-9][0-9]*'))
               ],
             ),
           ),
