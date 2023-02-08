@@ -559,7 +559,7 @@ class _InversionesScreenState extends State<InversionesScreen> {
                                                                     child: Text(
                                                                       maybeHandleOverflow(
                                                                           emprendedor,
-                                                                          22,
+                                                                          20,
                                                                           "..."),
                                                                       style: AppTheme.of(
                                                                               context)

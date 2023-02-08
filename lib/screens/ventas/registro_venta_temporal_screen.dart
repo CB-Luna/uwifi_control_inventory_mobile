@@ -235,49 +235,41 @@ class _RegistroVentaTemporalScreenState
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(10, 20, 10, 0),
+                                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                                  10, 20, 10, 5),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
-                                                  Container(
-                                                    width: MediaQuery.of(context)
-                                                            .size
-                                                            .width *
-                                                        0.87,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          const Color(0x9C000000),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                              10, 0, 0, 0),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          Text(
-                                                            widget.emprendimiento
-                                                                .nombre,
-                                                            style: AppTheme.of(
-                                                                    context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily: AppTheme.of(
-                                                                          context)
-                                                                      .bodyText1Family,
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 18,
-                                                                ),
-                                                          ),
-                                                        ],
+                                                  Expanded(
+                                                    child: Container(
+                                                      height: 40,
+                                                      decoration: BoxDecoration(
+                                                        color: const Color(0x9C000000),
+                                                        borderRadius: BorderRadius.circular(8),
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional.fromSTEB(
+                                                                10, 0, 10, 0),
+                                                        child: Row(
+                                                          mainAxisSize: MainAxisSize.max,
+                                                          children: [
+                                                            Text(
+                                                              maybeHandleOverflow(
+                                                                  widget.emprendimiento.nombre,
+                                                                  30,
+                                                                  "..."),
+                                                              style: AppTheme.of(context)
+                                                                  .bodyText1
+                                                                  .override(
+                                                                    fontFamily: AppTheme.of(context)
+                                                                        .bodyText1Family,
+                                                                    color: Colors.white,
+                                                                    fontSize: 18,
+                                                                  ),
+                                                            ),
+                                                          ],
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
@@ -285,152 +277,115 @@ class _RegistroVentaTemporalScreenState
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(10, 5, 10, 0),
+                                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                                  10, 10, 10, 10),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
-                                                  Container(
-                                                    width: MediaQuery.of(context)
-                                                            .size
-                                                            .width *
-                                                        0.45,
-                                                    height: 60,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          const Color(0x9C000000),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                              10, 0, 0, 0),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize.max,
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                        0,
-                                                                        5,
-                                                                        0,
-                                                                        0),
-                                                                child: Text(
-                                                                  'Total del proyecto',
-                                                                  style: AppTheme.of(
-                                                                          context)
-                                                                      .bodyText1
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            AppTheme.of(context)
-                                                                                .bodyText1Family,
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontSize:
-                                                                            12,
-                                                                      ),
-                                                                ),
-                                                              ),
-                                                              Text(
-                                                                currencyFormat.format(totalProyecto.toStringAsFixed(2)),
-                                                                style: AppTheme.of(
-                                                                        context)
+                                                  Flexible(
+                                                    flex: 2,
+                                                    child: Container(
+                                                      height: 65,
+                                                      decoration: BoxDecoration(
+                                                        color: const Color(0x9C000000),
+                                                        borderRadius: BorderRadius.circular(8),
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional.fromSTEB(
+                                                                10, 0, 10, 0),
+                                                        child: Column(
+                                                          mainAxisSize: MainAxisSize.max,
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                      .fromSTEB(0, 5, 0, 0),
+                                                              child: Text(
+                                                                'Total del proyecto',
+                                                                style: AppTheme.of(context)
                                                                     .bodyText1
                                                                     .override(
                                                                       fontFamily:
                                                                           AppTheme.of(context)
                                                                               .bodyText1Family,
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          25,
+                                                                      color: Colors.white,
+                                                                      fontSize: 12,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              maybeHandleOverflow(currencyFormat.format(
+                                                                  totalProyecto
+                                                                      .toStringAsFixed(2)), 11, "..."),
+                                                              style: AppTheme.of(context)
+                                                                  .bodyText1
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        AppTheme.of(context)
+                                                                            .bodyText1Family,
+                                                                    color: Colors.white,
+                                                                    fontSize: 25,
+                                                                  ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 20,
+                                                  ),
+                                                  Flexible(
+                                                    flex: 1,
+                                                    child: Container(
+                                                      height: 65,
+                                                      decoration: BoxDecoration(
+                                                        color: const Color(0x9C000000),
+                                                        borderRadius: BorderRadius.circular(8),
+                                                      ),
+                                                      child: Row(
+                                                        mainAxisSize: MainAxisSize.max,
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        children: [
+                                                          Column(
+                                                            mainAxisSize: MainAxisSize.max,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment.center,
+                                                            children: [
+                                                              Padding(
+                                                                padding: const EdgeInsetsDirectional
+                                                                    .fromSTEB(0, 5, 0, 0),
+                                                                child: Text(
+                                                                  'Cantidad Partidas',
+                                                                  style: AppTheme.of(context)
+                                                                      .bodyText1
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            AppTheme.of(context)
+                                                                                .bodyText1Family,
+                                                                        color: Colors.white,
+                                                                        fontSize: 10,
+                                                                      ),
+                                                                ),
+                                                              ),
+                                                              Text(
+                                                                prodRegistradosVendidos.length.toString(),
+                                                                style: AppTheme.of(context)
+                                                                    .bodyText1
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          AppTheme.of(context)
+                                                                              .bodyText1Family,
+                                                                      color: Colors.white,
+                                                                      fontSize: 25,
                                                                     ),
                                                               ),
                                                             ],
                                                           ),
                                                         ],
                                                       ),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    width: MediaQuery.of(context)
-                                                            .size
-                                                            .width *
-                                                        0.3,
-                                                    height: 60,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          const Color(0x9C000000),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                      0, 5, 0, 0),
-                                                              child: Text(
-                                                                'Cantidad Partidas',
-                                                                style: AppTheme.of(
-                                                                        context)
-                                                                    .bodyText1
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          AppTheme.of(context)
-                                                                              .bodyText1Family,
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          12,
-                                                                    ),
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              prodRegistradosVendidos
-                                                                  .length
-                                                                  .toString(),
-                                                              style: AppTheme.of(
-                                                                      context)
-                                                                  .bodyText1
-                                                                  .override(
-                                                                    fontFamily: AppTheme.of(
-                                                                            context)
-                                                                        .bodyText1Family,
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize: 25,
-                                                                  ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
                                                     ),
                                                   ),
                                                 ],
@@ -702,25 +657,25 @@ class _RegistroVentaTemporalScreenState
                                                                                       .end,
                                                                               children: [
                                                                                 Text(
-                                                                                      "Inicio: ${dateTimeFormat('d/MMMM/y',
+                                                                                      "Inicio: ${dateTimeFormat('d/MMM/y',
                                                                                           ventaController.fechaInicio)}",
                                                                                       textAlign:
                                                                                           TextAlign.end,
                                                                                       style: AppTheme.of(context).bodyText1.override(
                                                                                             fontFamily: AppTheme.of(context).bodyText1Family,
                                                                                             color: AppTheme.of(context).secondaryText,
-                                                                                            fontSize: 12,
+                                                                                            fontSize: 10,
                                                                                           ),
                                                                                     ),
                                                                                 Text(
-                                                                                      "Termino: ${dateTimeFormat('d/MMMM/y',
+                                                                                      "Termino: ${dateTimeFormat('d/MMM/y',
                                                                                           ventaController.fechaTermino!)}",
                                                                                       textAlign:
                                                                                           TextAlign.end,
                                                                                       style: AppTheme.of(context).bodyText1.override(
                                                                                             fontFamily: AppTheme.of(context).bodyText1Family,
                                                                                             color: AppTheme.of(context).primaryText,
-                                                                                            fontSize: 12,
+                                                                                            fontSize: 10,
                                                                                           ),
                                                                                     ),
                                                                               ],

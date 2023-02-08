@@ -5,6 +5,7 @@ import 'package:bizpro_app/database/entitys.dart';
 import 'package:bizpro_app/helpers/globals.dart';
 import 'package:bizpro_app/providers/database_providers/producto_emprendedor_controller.dart';
 import 'package:bizpro_app/screens/productos/editar_producto_emprendedor.dart';
+import 'package:bizpro_app/screens/productos/productos_emprendedor_screen.dart';
 import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
 import 'package:bizpro_app/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +13,12 @@ import 'package:provider/provider.dart';
 
 class DetalleProductoEmprendedor extends StatefulWidget {
   final ProductosEmp productoEmprendedor;
+  final int idEmprendimiento;
 
   const DetalleProductoEmprendedor({
     Key? key,
-    required this.productoEmprendedor,
+    required this.productoEmprendedor, 
+    required this.idEmprendimiento,
   }) : super(key: key);
 
   @override
@@ -112,7 +115,15 @@ class _DetalleProductoEmprendedorState
                                     ),
                                     child: InkWell(
                                       onTap: () async {
-                                        Navigator.pop(context);
+                                        await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                              ProductosEmprendedorScreen(
+                                                idEmprendimiento: widget.idEmprendimiento,
+                                              ),
+                                            ),
+                                          );
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,

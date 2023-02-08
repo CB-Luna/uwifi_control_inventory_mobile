@@ -313,7 +313,7 @@ class _EditarProductoInversionJornadaState
                                               Padding(
                                                 padding:
                                                     const EdgeInsetsDirectional
-                                                        .fromSTEB(5, 0, 5, 10),
+                                                        .fromSTEB(5, 0, 0, 10),
                                                 child: InkWell(
                                                   onTap: () async {
                                                     String? option =

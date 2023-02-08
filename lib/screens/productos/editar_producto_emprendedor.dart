@@ -123,8 +123,9 @@ class _EditarProductoEmprendedorScreenState
                                     MaterialPageRoute(
                                     builder: (context) =>
                                         DetalleProductoEmprendedor(
-                                        productoEmprendedor: widget.productoEmprendedor
-                                        ,)),
+                                        productoEmprendedor: widget.productoEmprendedor,
+                                        idEmprendimiento: widget.emprendimiento.id,
+                                        )),
                                   );
                                 },
                                 child: Row(

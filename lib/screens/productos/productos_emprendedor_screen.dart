@@ -449,6 +449,7 @@ class _ProductosEmprendedorScreenState
                                                   DetalleProductoEmprendedor(
                                                 productoEmprendedor:
                                                     productoEmprendedor,
+                                                idEmprendimiento: widget.idEmprendimiento,
                                               ),
                                             ),
                                           );

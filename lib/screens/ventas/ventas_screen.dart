@@ -548,7 +548,7 @@ class _VentasScreenState extends State<VentasScreen> {
                                                                     child: Text(
                                                                       maybeHandleOverflow(
                                                                           emprendedor,
-                                                                          25,
+                                                                          20,
                                                                           "..."),
                                                                       style: AppTheme.of(
                                                                               context)
@@ -574,60 +574,37 @@ class _VentasScreenState extends State<VentasScreen> {
                                                                     MainAxisAlignment
                                                                         .spaceAround,
                                                                 children: [
-                                                                  Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.all(
-                                                                              5.0),
-                                                                      child: Text(dateTimeFormat(
-                                                                          "d/MMMM/y",
-                                                                          venta
-                                                                              .fechaInicio)))
+                                                                  Text(dateTimeFormat(
+                                                                      "d/MMM/y",
+                                                                      venta
+                                                                          .fechaInicio))
                                                                               ,
-                                                                  Padding(
-                                                                        padding:
-                                                                        const EdgeInsets.all(
-                                                                            5.0),
-                                                                        child:Text(
-                                                                          maybeHandleOverflow(
-                                                                              dateTimeFormat("d/MMMM/y", venta.fechaTermino),
-                                                                              19,
-                                                                              "..."),
-                                                                        ),
-                                                                      ),
+                                                                  Text(
+                                                                    maybeHandleOverflow(
+                                                                        dateTimeFormat("d/MMM/y", venta.fechaTermino),
+                                                                        19,
+                                                                        "..."),
+                                                                  ),
                                                                   
                                                           ])),
                                                             Padding(
-                                                                    padding:
-                                                                        const EdgeInsetsDirectional.fromSTEB(
-                                                                            5,0,5,5),
-                                                                    child: Row(
-                                                                      mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceAround,
-                                                                children: [
-                                                                  Padding(
-                                                                    padding:
-                                                                    const EdgeInsets.all(
-                                                                        5.0),
-                                                                    child:Text(
-                                                                      "ID Local: ${venta.id}",
-                                                                      style: AppTheme.of(context).bodyText1,
-                                                                    ),
-                                                                  ),
-                                                                  Padding(
-                                                                    padding:
-                                                                    const EdgeInsets.all(
-                                                                        5.0),
-                                                                    child:Text(
-                                                                      "ID Emi Web: ${venta.idEmiWeb ?? 'Sin ID'}",
-                                                                      style: AppTheme.of(context).bodyText1,
-                                                                    ),
-                                                                  ),
-                                                          ]),
-                                                                  ),
+                                                            padding:
+                                                            const EdgeInsets.all(
+                                                                3.0),
+                                                            child:Text(
+                                                              "ID Local: ${venta.id}",
+                                                              style: AppTheme.of(context).bodyText1,
+                                                            ),
+                                                            ),
+                                                            Padding(
+                                                            padding:
+                                                            const EdgeInsets.all(
+                                                                3.0),
+                                                            child:Text(
+                                                              "ID Emi Web: ${venta.idEmiWeb ?? 'Sin ID'}",
+                                                              style: AppTheme.of(context).bodyText1,
+                                                            ),
+                                                            ),
                                                                   Padding(
                                                                     padding:
                                                                         const EdgeInsetsDirectional.fromSTEB(
