@@ -1,6 +1,8 @@
+import 'package:bizpro_app/helpers/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'package:bizpro_app/helpers/globals.dart';
@@ -40,6 +42,16 @@ DeepLinkBloc bloc = DeepLinkBloc();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initHiveForFlutter();
+  final defaultHeaders = ({
+    "apikey": apiKeySupabase,
+  });
+  final HttpLink httpLink = HttpLink(urlSupabase, defaultHeaders: defaultHeaders);
+  final AuthLink authLink = AuthLink(getToken: () async => 'Bearer $apiKeySupabase');
+  final Link link = authLink.concat(httpLink);
+  ValueNotifier<GraphQLClient> client = ValueNotifier(
+    GraphQLClient(link: link, cache: GraphQLCache(store: HiveStore()))
+  );
   //Esconder Navigation Bar
   SystemChrome.setEnabledSystemUIMode(
     SystemUiMode.manual, 
@@ -145,13 +157,17 @@ void main() async {
           lazy: false,
         ),
       ],
-      child: const MyApp(),
+      child: MyApp(client: client,),
     ),
   );
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final ValueNotifier<GraphQLClient> client;
+  const MyApp({
+      Key? key, 
+      required this.client
+    }) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -168,25 +184,30 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'bizproEM',
-      localizationsDelegates: const [
-        AppLocalizationsDelegate(),
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      locale: _locale,
-      supportedLocales: const [Locale('en', '')],
-      theme: ThemeData(brightness: Brightness.light),
-      themeMode: _themeMode,
-      navigatorKey: NavigationService.navigatorKey,
-      scaffoldMessengerKey: snackbarKey,
-      initialRoute: '/',
-      routes: {
-        '/': (_) => const SplashScreen(),
-      },
+    return GraphQLProvider(
+      client: widget.client,
+      child: CacheProvider(
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'tallerAlex',
+          localizationsDelegates: const [
+            AppLocalizationsDelegate(),
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          locale: _locale,
+          supportedLocales: const [Locale('en', '')],
+          theme: ThemeData(brightness: Brightness.light),
+          themeMode: _themeMode,
+          navigatorKey: NavigationService.navigatorKey,
+          scaffoldMessengerKey: snackbarKey,
+          initialRoute: '/',
+          routes: {
+            '/': (_) => const SplashScreen(),
+          },
+        ),
+      ),
     );
   }
 }

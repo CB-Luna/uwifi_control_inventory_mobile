@@ -63,7 +63,8 @@ const String baseUrlEmiWebNonSecure = "http://20.186.180.168:9023/ememi-nonsecur
 // const String baseUrlEmiWebNonSecure = "http://20.186.180.168:19023/ememi-nonsecure-services/api";
 
 
-
+const apiKeySupabase = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVka2lha25lcnhzdGtoeGJmZnh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzYzMzIxMTMsImV4cCI6MTk5MTkwODExM30.UYbQW-ze4hl8JsY2Y0JjzcY0IfgK44nA07Z5od7kCsY";
+const urlSupabase = "https://udkiaknerxstkhxbffxv.supabase.co/graphql/v1"; 
 final client = PocketBase(baseUrl);
 //^[a-zA-Z\sñÑà-úÀ-Ú]*$
 final nombreCharacters = RegExp(r'^(([A-Z]{1}|[ÁÉÍÓÚÑ]{1})[a-zá-ÿ]+[ ]?)+$');
