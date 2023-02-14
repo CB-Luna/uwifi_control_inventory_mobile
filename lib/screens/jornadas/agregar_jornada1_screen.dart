@@ -1,15 +1,15 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
 
-import 'package:bizpro_app/providers/database_providers/jornada_controller.dart';
-import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:bizpro_app/screens/jornadas/jornada_creada.dart';
-import 'package:bizpro_app/util/flutter_flow_util.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/jornada_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/emprendimiento_controller.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
+import 'package:taller_alex_app_asesor/screens/jornadas/jornada_creada.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class AgregarJornada1Screen extends StatefulWidget {

@@ -1,7 +1,7 @@
-import 'package:bizpro_app/objectbox.g.dart';
+import 'package:taller_alex_app_asesor/objectbox.g.dart';
 import 'package:flutter/material.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/database/entitys.dart';
+import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
 
 class InversionJornadaController extends ChangeNotifier {
 

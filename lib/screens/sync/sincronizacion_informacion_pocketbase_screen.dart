@@ -1,19 +1,19 @@
-import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/modelsPocketbase/temporals/instruccion_no_sincronizada.dart';
-import 'package:bizpro_app/providers/sync_provider_emi_web.dart';
-import 'package:bizpro_app/util/flutter_flow_util.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/modelsPocketbase/temporals/instruccion_no_sincronizada.dart';
+import 'package:taller_alex_app_asesor/providers/sync_provider_emi_web.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/theme/theme.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
 
-import 'package:bizpro_app/providers/sync_provider_pocketbase.dart';
+import 'package:taller_alex_app_asesor/providers/sync_provider_pocketbase.dart';
 
-import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:taller_alex_app_asesor/screens/emprendimientos/emprendimientos_screen.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
 class SincronizacionInformacionPocketbaseScreen extends StatefulWidget {
   final List<InstruccionNoSincronizada> instruccionesFallidasEmiWeb;

@@ -1,22 +1,22 @@
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/util/flutter_flow_util.dart';
+import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
-import 'package:bizpro_app/theme/theme.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/database/entitys.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:bizpro_app/providers/user_provider.dart';
-import 'package:bizpro_app/screens/widgets/pdf/api/pdf_invoice_inversiones.dart';
-import 'package:bizpro_app/screens/widgets/pdf/models/inversiones_invoice.dart';
-import 'package:bizpro_app/screens/widgets/pdf/api/pdf_api.dart';
-import 'package:bizpro_app/screens/widgets/pdf/models/invoice_info.dart';
-import 'package:bizpro_app/screens/inversiones/agregar_primer_producto_inversion_screen.dart';
-import 'package:bizpro_app/screens/inversiones/main_tab_opciones.dart';
-import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
-import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:bizpro_app/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/providers/user_provider.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/pdf/api/pdf_invoice_inversiones.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/pdf/models/inversiones_invoice.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/pdf/api/pdf_api.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/pdf/models/invoice_info.dart';
+import 'package:taller_alex_app_asesor/screens/inversiones/agregar_primer_producto_inversion_screen.dart';
+import 'package:taller_alex_app_asesor/screens/inversiones/main_tab_opciones.dart';
+import 'package:taller_alex_app_asesor/screens/emprendimientos/detalle_emprendimiento_screen.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
 
 class InversionesScreen extends StatefulWidget {
   final int idEmprendimiento;

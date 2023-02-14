@@ -1,10 +1,10 @@
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/modelsPocketbase/temporals/productos_solicitados_temporal.dart';
-import 'package:bizpro_app/modelsPocketbase/temporals/save_instruccion_producto_inversion_j3_temporal.dart';
-import 'package:bizpro_app/objectbox.g.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/modelsPocketbase/temporals/productos_solicitados_temporal.dart';
+import 'package:taller_alex_app_asesor/modelsPocketbase/temporals/save_instruccion_producto_inversion_j3_temporal.dart';
+import 'package:taller_alex_app_asesor/objectbox.g.dart';
 import 'package:flutter/material.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/database/entitys.dart';
+import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:uuid/uuid.dart';
 
 class ProductoInversionJornadaController extends ChangeNotifier {

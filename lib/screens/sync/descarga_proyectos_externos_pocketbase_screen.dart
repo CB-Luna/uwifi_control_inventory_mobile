@@ -1,12 +1,12 @@
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/providers/sync_emprendimientos_externos_pocketbase_provider.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/providers/sync_emprendimientos_externos_pocketbase_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/theme/theme.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:lottie/lottie.dart';
-import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:taller_alex_app_asesor/screens/emprendimientos/emprendimientos_screen.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
 class DescargaProyectosExternosPocketbaseScreen extends StatefulWidget {
   final Usuarios usuario;

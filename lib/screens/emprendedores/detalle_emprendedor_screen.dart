@@ -1,14 +1,14 @@
 import 'dart:io';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/screens/emprendedores/editar_emprendedor.dart';
-import 'package:bizpro_app/screens/emprendedores/emprendedores_screen.dart';
-import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/screens/emprendedores/editar_emprendedor.dart';
+import 'package:taller_alex_app_asesor/screens/emprendedores/emprendedores_screen.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/theme/theme.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_expanded_image_view.dart';
 
 class DetallesEmprendedorScreen extends StatefulWidget {
   final int idEmprendedor;

@@ -1,9 +1,9 @@
-// import 'package:bizpro_app/util/flutter_flow_util.dart';
+// import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 // import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
 
-// import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
-// import 'package:bizpro_app/theme/theme.dart';
+// import 'package:taller_alex_app_asesor/providers/database_providers/emprendimiento_controller.dart';
+// import 'package:taller_alex_app_asesor/theme/theme.dart';
 // import 'package:cached_network_image/cached_network_image.dart';
 
 // class ListaEmpredimientosWidget extends StatefulWidget {

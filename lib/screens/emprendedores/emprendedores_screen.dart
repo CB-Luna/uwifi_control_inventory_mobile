@@ -1,26 +1,26 @@
 import 'dart:io';
 
-import 'package:bizpro_app/screens/emprendedores/grid_emprendedores_screen.dart';
+import 'package:taller_alex_app_asesor/screens/emprendedores/grid_emprendedores_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:bizpro_app/main.dart';
+import 'package:taller_alex_app_asesor/main.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/database/entitys.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:bizpro_app/util/util.dart';
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/providers/database_providers/emprendedor_controller.dart';
-import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/screens/emprendedores/detalle_emprendedor_screen.dart';
-import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
-import 'package:bizpro_app/screens/widgets/custom_button.dart';
-import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
-import 'package:bizpro_app/screens/widgets/side_menu/side_menu.dart';
-import 'package:bizpro_app/screens/widgets/pdf/api/pdf_api.dart';
-import 'package:bizpro_app/screens/widgets/pdf/api/pdf_invoice_emprendedor.dart';
-import 'package:bizpro_app/screens/widgets/pdf/models/emprendedor_invoice.dart';
-import 'package:bizpro_app/screens/widgets/pdf/models/invoice_info.dart';
+import 'package:taller_alex_app_asesor/util/util.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/emprendedor_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/screens/emprendedores/detalle_emprendedor_screen.dart';
+import 'package:taller_alex_app_asesor/screens/perfil_usuario/perfil_usuario_screen.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/custom_button.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/side_menu/side_menu.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/pdf/api/pdf_api.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/pdf/api/pdf_invoice_emprendedor.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/pdf/models/emprendedor_invoice.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/pdf/models/invoice_info.dart';
 
 class EmprendedoresScreen extends StatefulWidget {
   const EmprendedoresScreen({

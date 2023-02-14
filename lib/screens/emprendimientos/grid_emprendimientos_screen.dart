@@ -1,10 +1,10 @@
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
-import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
-import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/util/util.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
+import 'package:taller_alex_app_asesor/screens/emprendimientos/detalle_emprendimiento_screen.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:taller_alex_app_asesor/util/util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

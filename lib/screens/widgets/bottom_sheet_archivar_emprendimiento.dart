@@ -1,5 +1,5 @@
-import 'package:bizpro_app/screens/archivados/archivados_screen.dart';
-import 'package:bizpro_app/theme/theme.dart';
+import 'package:taller_alex_app_asesor/screens/archivados/archivados_screen.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 

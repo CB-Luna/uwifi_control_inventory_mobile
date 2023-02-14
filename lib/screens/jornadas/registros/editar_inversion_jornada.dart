@@ -1,16 +1,16 @@
 import 'dart:io';
-import 'package:bizpro_app/providers/database_providers/producto_inversion_jornada_controller.dart';
-import 'package:bizpro_app/screens/jornadas/editar_jornada3_screen.dart';
-import 'package:bizpro_app/screens/jornadas/registros/agregar_producto_inversion_jornada.dart';
-import 'package:bizpro_app/screens/jornadas/registros/editar_producto_inversion_jornada.dart';
-import 'package:bizpro_app/screens/jornadas/registros/inversion_jornada3_actualizada.dart';
-import 'package:bizpro_app/util/flutter_flow_util.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/producto_inversion_jornada_controller.dart';
+import 'package:taller_alex_app_asesor/screens/jornadas/editar_jornada3_screen.dart';
+import 'package:taller_alex_app_asesor/screens/jornadas/registros/agregar_producto_inversion_jornada.dart';
+import 'package:taller_alex_app_asesor/screens/jornadas/registros/editar_producto_inversion_jornada.dart';
+import 'package:taller_alex_app_asesor/screens/jornadas/registros/inversion_jornada3_actualizada.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
-import 'package:bizpro_app/theme/theme.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_animations.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:provider/provider.dart';
 
 class EditarInversionJornadaScreen extends StatefulWidget {

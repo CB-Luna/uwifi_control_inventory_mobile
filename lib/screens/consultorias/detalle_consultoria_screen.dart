@@ -1,16 +1,16 @@
 import 'dart:io';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
-import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_expanded_image_view.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/util/util.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:taller_alex_app_asesor/util/util.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:bizpro_app/screens/consultorias/editar_consultoria_screen.dart';
-import 'package:bizpro_app/screens/consultorias/detalle_tarea_consultoria_screen.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
+import 'package:taller_alex_app_asesor/screens/consultorias/editar_consultoria_screen.dart';
+import 'package:taller_alex_app_asesor/screens/consultorias/detalle_tarea_consultoria_screen.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_animations.dart';
 
 class DetalleConsultoriaScreen extends StatefulWidget {
   final Consultorias consultoria;

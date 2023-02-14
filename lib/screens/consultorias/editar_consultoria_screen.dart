@@ -1,23 +1,23 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/objectbox.g.dart';
-import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
-import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
+import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/objectbox.g.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/custom_bottom_sheet.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_expanded_image_view.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/database/entitys.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/util/flutter_flow_util.dart';
-import 'package:bizpro_app/providers/database_providers/consultoria_controller.dart';
-import 'package:bizpro_app/screens/consultorias/consultoria_actualizada.dart';
-import 'package:bizpro_app/screens/widgets/drop_down.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/consultoria_controller.dart';
+import 'package:taller_alex_app_asesor/screens/consultorias/consultoria_actualizada.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/drop_down.dart';
 
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
 import '../widgets/custom_bottom_sheet.dart';
 import '../widgets/flutter_flow_expanded_image_view.dart';

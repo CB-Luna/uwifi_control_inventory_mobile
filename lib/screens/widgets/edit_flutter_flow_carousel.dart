@@ -1,6 +1,6 @@
 // Automatic FlutterFlow imports
-import 'package:bizpro_app/screens/widgets/bottom_sheet_validacion_eliminar_imagen.dart';
-import 'package:bizpro_app/screens/widgets/custom_bottom_eliminar_imagen.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_validacion_eliminar_imagen.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/custom_bottom_eliminar_imagen.dart';
 import 'package:flutter/material.dart';
 // Begin custom widget code
 import 'package:carousel_slider/carousel_slider.dart';

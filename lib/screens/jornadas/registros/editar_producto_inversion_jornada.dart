@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bizpro_app/modelsPocketbase/temporals/save_instruccion_producto_inversion_j3_temporal.dart';
-import 'package:bizpro_app/screens/jornadas/registros/editar_inversion_jornada.dart';
-import 'package:bizpro_app/screens/widgets/bottom_sheet_eliminar_producto.dart';
-import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
-import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
+import 'package:taller_alex_app_asesor/modelsPocketbase/temporals/save_instruccion_producto_inversion_j3_temporal.dart';
+import 'package:taller_alex_app_asesor/screens/jornadas/registros/editar_inversion_jornada.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_eliminar_producto.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/custom_bottom_sheet.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,16 +13,16 @@ import 'package:lottie/lottie.dart';
 import 'package:number_text_input_formatter/number_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/objectbox.g.dart';
-import 'package:bizpro_app/providers/database_providers/producto_inversion_jornada_controller.dart';
-import 'package:bizpro_app/screens/widgets/drop_down.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/objectbox.g.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/producto_inversion_jornada_controller.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/drop_down.dart';
 
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
 class EditarProductoInversionJornada extends StatefulWidget {
   final ProdSolicitado productoSol;

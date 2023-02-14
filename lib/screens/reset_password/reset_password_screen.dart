@@ -1,12 +1,12 @@
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/screens/screens.dart';
-import 'package:bizpro_app/screens/widgets/custom_button.dart';
-import 'package:bizpro_app/services/auth_service.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/screens/screens.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/custom_button.dart';
+import 'package:taller_alex_app_asesor/services/auth_service.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:bizpro_app/theme/theme.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   const ResetPasswordScreen({Key? key, this.email}) : super(key: key);

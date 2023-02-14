@@ -1,25 +1,25 @@
 import 'dart:io';
-import 'package:bizpro_app/providers/sync_provider_emi_web.dart';
-import 'package:bizpro_app/screens/inversiones/detalle_cotizacion.dart';
-import 'package:bizpro_app/screens/inversiones/editar_producto_inversion.dart';
-import 'package:bizpro_app/screens/productos/productos_emprendedor_screen.dart';
-import 'package:bizpro_app/screens/screens.dart';
-import 'package:bizpro_app/screens/sync/cotizaciones_emi_web_screen.dart';
-import 'package:bizpro_app/util/flutter_flow_util.dart';
+import 'package:taller_alex_app_asesor/providers/sync_provider_emi_web.dart';
+import 'package:taller_alex_app_asesor/screens/inversiones/detalle_cotizacion.dart';
+import 'package:taller_alex_app_asesor/screens/inversiones/editar_producto_inversion.dart';
+import 'package:taller_alex_app_asesor/screens/productos/productos_emprendedor_screen.dart';
+import 'package:taller_alex_app_asesor/screens/screens.dart';
+import 'package:taller_alex_app_asesor/screens/sync/cotizaciones_emi_web_screen.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/screens/inversiones/cotizacion_aceptada.dart';
-import 'package:bizpro_app/screens/inversiones/cotizacion_cancelada.dart';
-import 'package:bizpro_app/screens/inversiones/cotizacion_solicitar_otra.dart';
-import 'package:bizpro_app/providers/database_providers/cotizacion_controller.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/screens/inversiones/cotizacion_aceptada.dart';
+import 'package:taller_alex_app_asesor/screens/inversiones/cotizacion_cancelada.dart';
+import 'package:taller_alex_app_asesor/screens/inversiones/cotizacion_solicitar_otra.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/cotizacion_controller.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_animations.dart';
 
 class CotizacionTab extends StatefulWidget {
   final Emprendimientos emprendimiento;

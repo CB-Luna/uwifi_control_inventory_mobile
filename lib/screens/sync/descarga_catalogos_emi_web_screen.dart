@@ -1,13 +1,13 @@
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/providers/providers.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/providers/catalogo_emi_web_provider.dart';
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:bizpro_app/screens/sync/descarga_catalogos_pocketbase_screen.dart';
-import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
+import 'package:taller_alex_app_asesor/providers/catalogo_emi_web_provider.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
+import 'package:taller_alex_app_asesor/screens/sync/descarga_catalogos_pocketbase_screen.dart';
+import 'package:taller_alex_app_asesor/screens/emprendimientos/emprendimientos_screen.dart';
 
 class DescargaCatalogosEmiWebScreen extends StatefulWidget {
   const DescargaCatalogosEmiWebScreen({Key? key}) : super(key: key);

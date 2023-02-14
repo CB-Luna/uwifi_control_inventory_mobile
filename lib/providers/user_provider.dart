@@ -1,11 +1,11 @@
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/modelsEmiWeb/get_token_emi_web.dart';
-import 'package:bizpro_app/screens/screens.dart';
-import 'package:bizpro_app/services/navigation_service.dart';
-import 'package:bizpro_app/util/flutter_flow_util.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/modelsEmiWeb/get_token_emi_web.dart';
+import 'package:taller_alex_app_asesor/screens/screens.dart';
+import 'package:taller_alex_app_asesor/services/navigation_service.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 

@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:bizpro_app/modelsEmiWeb/temporals/get_emp_externo_emi_web_temp.dart';
-import 'package:bizpro_app/modelsPocketbase/temporals/usuario_proyectos_temporal.dart';
-import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
-import 'package:bizpro_app/screens/emprendimientos_externos/perfil_usuario_externo_screen.dart';
-import 'package:bizpro_app/screens/widgets/flutter_icon_button.dart';
-import 'package:bizpro_app/theme/theme.dart';
+import 'package:taller_alex_app_asesor/modelsEmiWeb/temporals/get_emp_externo_emi_web_temp.dart';
+import 'package:taller_alex_app_asesor/modelsPocketbase/temporals/usuario_proyectos_temporal.dart';
+import 'package:taller_alex_app_asesor/screens/emprendimientos/emprendimientos_screen.dart';
+import 'package:taller_alex_app_asesor/screens/emprendimientos_externos/perfil_usuario_externo_screen.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_icon_button.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 import '../../util/util.dart';

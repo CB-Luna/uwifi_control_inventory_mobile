@@ -1,14 +1,14 @@
-import 'package:bizpro_app/helpers/sync_instruction.dart';
-import 'package:bizpro_app/modelsPocketbase/get_inversion.dart';
-import 'package:bizpro_app/modelsPocketbase/get_inversion_x_prod_cotizados.dart';
-import 'package:bizpro_app/modelsPocketbase/temporals/get_basic_inversion_pocketbase.dart';
-import 'package:bizpro_app/modelsPocketbase/temporals/instruccion_no_sincronizada.dart';
+import 'package:taller_alex_app_asesor/helpers/sync_instruction.dart';
+import 'package:taller_alex_app_asesor/modelsPocketbase/get_inversion.dart';
+import 'package:taller_alex_app_asesor/modelsPocketbase/get_inversion_x_prod_cotizados.dart';
+import 'package:taller_alex_app_asesor/modelsPocketbase/temporals/get_basic_inversion_pocketbase.dart';
+import 'package:taller_alex_app_asesor/modelsPocketbase/temporals/instruccion_no_sincronizada.dart';
 import 'package:flutter/material.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/objectbox.g.dart';
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/modelsPocketbase/get_prod_cotizados.dart';
+import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/objectbox.g.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/modelsPocketbase/get_prod_cotizados.dart';
 
 class SyncProviderPocketbase extends ChangeNotifier {
   bool procesocargando = false;

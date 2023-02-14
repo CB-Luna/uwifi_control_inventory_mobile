@@ -1,9 +1,9 @@
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/screens/consultorias/detalle_consultoria_screen.dart';
-import 'package:bizpro_app/util/flutter_flow_util.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/screens/consultorias/detalle_consultoria_screen.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/database/entitys.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
 
 
 class TarjetaDescripcionConsultoria extends StatefulWidget {

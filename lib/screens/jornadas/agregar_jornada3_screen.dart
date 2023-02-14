@@ -1,32 +1,32 @@
 import 'dart:convert';
 import 'dart:io' as libraryIO;
-import 'package:bizpro_app/modelsPocketbase/temporals/productos_solicitados_temporal.dart';
-import 'package:bizpro_app/modelsPocketbase/temporals/save_imagenes_local.dart';
-import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
+import 'package:taller_alex_app_asesor/modelsPocketbase/temporals/productos_solicitados_temporal.dart';
+import 'package:taller_alex_app_asesor/modelsPocketbase/temporals/save_imagenes_local.dart';
+import 'package:taller_alex_app_asesor/screens/emprendimientos/detalle_emprendimiento_screen.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
 import 'package:badges/badges.dart';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/objectbox.g.dart';
-import 'package:bizpro_app/providers/database_providers/producto_inversion_jornada_controller.dart';
-import 'package:bizpro_app/screens/jornadas/jornada_creada.dart';
-import 'package:bizpro_app/screens/jornadas/registros/inversion_jornada_temporal_screen.dart';
-import 'package:bizpro_app/screens/widgets/bottom_sheet_imagenes_completas.dart';
-import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
-import 'package:bizpro_app/screens/widgets/drop_down.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_carousel.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/objectbox.g.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/producto_inversion_jornada_controller.dart';
+import 'package:taller_alex_app_asesor/screens/jornadas/jornada_creada.dart';
+import 'package:taller_alex_app_asesor/screens/jornadas/registros/inversion_jornada_temporal_screen.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_imagenes_completas.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/custom_bottom_sheet.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/drop_down.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_carousel.dart';
 
-import 'package:bizpro_app/providers/database_providers/jornada_controller.dart';
-import 'package:bizpro_app/providers/database_providers/inversion_jornada_controller.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/jornada_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/inversion_jornada_controller.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
-import 'package:bizpro_app/util/flutter_flow_util.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class AgregarJornada3Screen extends StatefulWidget {

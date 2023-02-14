@@ -1,22 +1,22 @@
-import 'package:bizpro_app/main.dart';
+import 'package:taller_alex_app_asesor/main.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/providers/providers.dart';
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/helpers/process_encryption.dart';
-import 'package:bizpro_app/providers/roles_emi_web_provider.dart';
-import 'package:bizpro_app/providers/roles_pocketbase_provider.dart';
-import 'package:bizpro_app/services/api_service.dart';
+import 'package:taller_alex_app_asesor/providers/providers.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:taller_alex_app_asesor/helpers/process_encryption.dart';
+import 'package:taller_alex_app_asesor/providers/roles_emi_web_provider.dart';
+import 'package:taller_alex_app_asesor/providers/roles_pocketbase_provider.dart';
+import 'package:taller_alex_app_asesor/services/api_service.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/services/auth_service.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/services/auth_service.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
-import 'package:bizpro_app/screens/screens.dart';
-import 'package:bizpro_app/util/custom_functions.dart';
-import 'package:bizpro_app/screens/widgets/toggle_icon.dart';
-import 'package:bizpro_app/screens/widgets/custom_button.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
+import 'package:taller_alex_app_asesor/screens/screens.dart';
+import 'package:taller_alex_app_asesor/util/custom_functions.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/toggle_icon.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/custom_button.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);

@@ -1,5 +1,5 @@
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/util/util.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:taller_alex_app_asesor/util/util.dart';
 import 'package:flutter/material.dart';
 
 String formatTimeOfDay(TimeOfDay timeOfDay) {

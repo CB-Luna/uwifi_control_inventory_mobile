@@ -1,4 +1,4 @@
-name: bizpro_app
+name: taller_alex_app_asesor
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -81,6 +81,7 @@ dependencies:
   pocketbase: ^0.1.1
   provider: ^6.0.3
   shared_preferences: ^2.0.15
+  supabase_flutter: ^1.4.0
   syncfusion_flutter_datepicker: ^20.2.40
   timeago: ^3.2.2
   tuple: ^2.0.1

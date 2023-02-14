@@ -1,4 +1,4 @@
-import 'package:bizpro_app/modelsPocketbase/temporals/save_imagenes_local.dart';
+import 'package:taller_alex_app_asesor/modelsPocketbase/temporals/save_imagenes_local.dart';
 
 class SaveInstruccionImagenTemporal {
     final String instruccion;

@@ -1,19 +1,19 @@
 
 
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/providers/database_providers/consultoria_controller.dart';
-import 'package:bizpro_app/screens/consultorias/consultoria_archivada_screen.dart';
-import 'package:bizpro_app/screens/consultorias/consultoria_desarchivada_screen.dart';
-import 'package:bizpro_app/screens/consultorias/widgets/tarjeta_descripcion_consultoria.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/consultoria_controller.dart';
+import 'package:taller_alex_app_asesor/screens/consultorias/consultoria_archivada_screen.dart';
+import 'package:taller_alex_app_asesor/screens/consultorias/consultoria_desarchivada_screen.dart';
+import 'package:taller_alex_app_asesor/screens/consultorias/widgets/tarjeta_descripcion_consultoria.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/database/entitys.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
-import 'package:bizpro_app/screens/jornadas/detalle_jornada_screen.dart';
-import 'package:bizpro_app/util/flutter_flow_util.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
+import 'package:taller_alex_app_asesor/screens/jornadas/detalle_jornada_screen.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:expandable/expandable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

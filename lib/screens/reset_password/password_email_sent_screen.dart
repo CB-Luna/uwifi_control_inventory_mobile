@@ -1,6 +1,6 @@
-import 'package:bizpro_app/screens/login_screen/login_screen.dart';
-import 'package:bizpro_app/screens/widgets/custom_button.dart';
-import 'package:bizpro_app/theme/theme.dart';
+import 'package:taller_alex_app_asesor/screens/login_screen/login_screen.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/custom_button.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 

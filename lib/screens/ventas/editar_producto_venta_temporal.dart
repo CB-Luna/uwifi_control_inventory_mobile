@@ -1,19 +1,19 @@
-import 'package:bizpro_app/modelsPocketbase/temporals/productos_vendidos_temporal.dart';
-import 'package:bizpro_app/screens/ventas/registro_venta_temporal_screen.dart';
-import 'package:bizpro_app/screens/widgets/bottom_sheet_eliminar_producto.dart';
+import 'package:taller_alex_app_asesor/modelsPocketbase/temporals/productos_vendidos_temporal.dart';
+import 'package:taller_alex_app_asesor/screens/ventas/registro_venta_temporal_screen.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_eliminar_producto.dart';
 import 'package:flutter/material.dart';
-import 'package:bizpro_app/theme/theme.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/objectbox.g.dart';
-import 'package:bizpro_app/screens/widgets/drop_down.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/objectbox.g.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/drop_down.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
-import 'package:bizpro_app/providers/database_providers/producto_venta_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/producto_venta_controller.dart';
 
 class EditarProductoVentaTemporal extends StatefulWidget {
   final Emprendimientos emprendimiento;

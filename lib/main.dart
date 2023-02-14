@@ -1,15 +1,16 @@
-import 'package:bizpro_app/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/providers/deeplink_bloc.dart';
-import 'package:bizpro_app/providers/providers.dart';
-import 'package:bizpro_app/database/object_box_database.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/providers/deeplink_bloc.dart';
+import 'package:taller_alex_app_asesor/providers/providers.dart';
+import 'package:taller_alex_app_asesor/database/object_box_database.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'providers/database_providers/consultoria_controller.dart';
 import 'providers/database_providers/emprendedor_controller.dart';
 import 'providers/database_providers/emprendimiento_controller.dart';
@@ -17,21 +18,21 @@ import 'providers/database_providers/producto_venta_controller.dart';
 import 'providers/database_providers/producto_inversion_jornada_controller.dart';
 import 'providers/database_providers/usuario_controller.dart';
 import 'providers/database_providers/jornada_controller.dart';
-import 'package:bizpro_app/providers/catalogo_emi_web_provider.dart';
-import 'package:bizpro_app/providers/sync_provider_emi_web.dart';
-import 'package:bizpro_app/providers/catalogo_pocketbase_provider.dart';
-import 'package:bizpro_app/providers/roles_emi_web_provider.dart';
-import 'package:bizpro_app/providers/roles_pocketbase_provider.dart';
-import 'package:bizpro_app/providers/database_providers/cotizacion_controller.dart';
-import 'package:bizpro_app/providers/database_providers/inversion_controller.dart';
-import 'package:bizpro_app/providers/database_providers/inversion_jornada_controller.dart';
-import 'package:bizpro_app/providers/database_providers/producto_emprendedor_controller.dart';
-import 'package:bizpro_app/providers/database_providers/recepcion_y_entrega_inversion_controller.dart';
-import 'package:bizpro_app/providers/sync_provider_pocketbase.dart';
+import 'package:taller_alex_app_asesor/providers/catalogo_emi_web_provider.dart';
+import 'package:taller_alex_app_asesor/providers/sync_provider_emi_web.dart';
+import 'package:taller_alex_app_asesor/providers/catalogo_pocketbase_provider.dart';
+import 'package:taller_alex_app_asesor/providers/roles_emi_web_provider.dart';
+import 'package:taller_alex_app_asesor/providers/roles_pocketbase_provider.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/cotizacion_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/inversion_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/inversion_jornada_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/producto_emprendedor_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/recepcion_y_entrega_inversion_controller.dart';
+import 'package:taller_alex_app_asesor/providers/sync_provider_pocketbase.dart';
 
-import 'package:bizpro_app/screens/screens.dart';
-import 'package:bizpro_app/services/navigation_service.dart';
-import 'package:bizpro_app/internationalization/internationalization.dart';
+import 'package:taller_alex_app_asesor/screens/screens.dart';
+import 'package:taller_alex_app_asesor/services/navigation_service.dart';
+import 'package:taller_alex_app_asesor/internationalization/internationalization.dart';
 
 import 'providers/database_providers/venta_controller.dart';
 import 'providers/sync_emprendimientos_externos_pocketbase_provider.dart';
@@ -42,12 +43,16 @@ DeepLinkBloc bloc = DeepLinkBloc();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Supabase.initialize(
+    url: supabaseURL,
+    anonKey: anonKey,
+  );
   await initHiveForFlutter();
   final defaultHeaders = ({
-    "apikey": apiKeySupabase,
+    "apikey": anonKey,
   });
-  final HttpLink httpLink = HttpLink(urlSupabase, defaultHeaders: defaultHeaders);
-  final AuthLink authLink = AuthLink(getToken: () async => 'Bearer $apiKeySupabase');
+  final HttpLink httpLink = HttpLink(supabaseURL, defaultHeaders: defaultHeaders);
+  final AuthLink authLink = AuthLink(getToken: () async => 'Bearer $anonKey');
   final Link link = authLink.concat(httpLink);
   ValueNotifier<GraphQLClient> client = ValueNotifier(
     GraphQLClient(link: link, cache: GraphQLCache(store: HiveStore()))

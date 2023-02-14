@@ -1,10 +1,11 @@
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_animations.dart';
 
 //***********< SERVIDORES DE POCKETBASE LOCALES >**************/
 
@@ -63,8 +64,10 @@ const String baseUrlEmiWebNonSecure = "http://20.186.180.168:9023/ememi-nonsecur
 // const String baseUrlEmiWebNonSecure = "http://20.186.180.168:19023/ememi-nonsecure-services/api";
 
 
-const apiKeySupabase = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVka2lha25lcnhzdGtoeGJmZnh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzYzMzIxMTMsImV4cCI6MTk5MTkwODExM30.UYbQW-ze4hl8JsY2Y0JjzcY0IfgK44nA07Z5od7kCsY";
-const urlSupabase = "https://udkiaknerxstkhxbffxv.supabase.co/graphql/v1"; 
+const anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVka2lha25lcnhzdGtoeGJmZnh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzYzMzIxMTMsImV4cCI6MTk5MTkwODExM30.UYbQW-ze4hl8JsY2Y0JjzcY0IfgK44nA07Z5od7kCsY";
+const supabaseURL = "https://udkiaknerxstkhxbffxv.supabase.co/graphql/v1"; 
+
+
 final client = PocketBase(baseUrl);
 //^[a-zA-Z\sñÑà-úÀ-Ú]*$
 final nombreCharacters = RegExp(r'^(([A-Z]{1}|[ÁÉÍÓÚÑ]{1})[a-zá-ÿ]+[ ]?)+$');

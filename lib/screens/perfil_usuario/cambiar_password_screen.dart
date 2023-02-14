@@ -1,15 +1,15 @@
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/helpers/process_encryption.dart';
-import 'package:bizpro_app/providers/user_provider.dart';
-import 'package:bizpro_app/screens/perfil_usuario/password_actualizado_screen.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:bizpro_app/util/flutter_flow_util.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/helpers/process_encryption.dart';
+import 'package:taller_alex_app_asesor/providers/user_provider.dart';
+import 'package:taller_alex_app_asesor/screens/perfil_usuario/password_actualizado_screen.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/theme/theme.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:provider/provider.dart';
 
 class CambiarPasswordScreen extends StatefulWidget {

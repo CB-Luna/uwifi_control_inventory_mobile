@@ -1,4 +1,4 @@
-import 'package:bizpro_app/theme/theme.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 class CustomMenuItem extends StatelessWidget {

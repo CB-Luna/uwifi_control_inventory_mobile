@@ -1,27 +1,27 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bizpro_app/screens/emprendedores/detalle_emprendedor_screen.dart';
+import 'package:taller_alex_app_asesor/screens/emprendedores/detalle_emprendedor_screen.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:bizpro_app/database/entitys.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/theme/theme.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
 
-import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/objectbox.g.dart';
-import 'package:bizpro_app/providers/database_providers/emprendedor_controller.dart';
-import 'package:bizpro_app/screens/emprendedores/emprendedor_actualizado.dart';
-import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
-import 'package:bizpro_app/screens/widgets/drop_down.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/objectbox.g.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/emprendedor_controller.dart';
+import 'package:taller_alex_app_asesor/screens/emprendedores/emprendedor_actualizado.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/custom_bottom_sheet.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/drop_down.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
 
 class EditarEmprendedor extends StatefulWidget {
   final Emprendedores emprendedor;

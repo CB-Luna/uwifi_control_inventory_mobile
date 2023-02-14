@@ -1,12 +1,12 @@
-import 'package:bizpro_app/main.dart';
+import 'package:taller_alex_app_asesor/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import 'package:bizpro_app/providers/providers.dart';
-import 'package:bizpro_app/screens/screens.dart';
-import 'package:bizpro_app/theme/theme.dart';
+import 'package:taller_alex_app_asesor/providers/providers.dart';
+import 'package:taller_alex_app_asesor/screens/screens.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({

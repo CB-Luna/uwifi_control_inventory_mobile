@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/modelsPocketbase/get_roles.dart';
+import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/modelsPocketbase/get_roles.dart';
 import '../objectbox.g.dart';
 
 class RolesPocketbaseProvider extends ChangeNotifier {

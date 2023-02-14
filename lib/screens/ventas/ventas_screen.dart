@@ -1,22 +1,22 @@
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/util/flutter_flow_util.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
-import 'package:bizpro_app/theme/theme.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
-import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
-import 'package:bizpro_app/screens/ventas/editar_venta.dart';
-import 'package:bizpro_app/screens/widgets/pdf/models/invoice_info.dart';
-import 'package:bizpro_app/screens/widgets/pdf/models/ventas_invoice.dart';
-import 'package:bizpro_app/screens/widgets/pdf/api/pdf_api.dart';
-import 'package:bizpro_app/screens/widgets/pdf/api/pdf_invoice_ventas.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
+import 'package:taller_alex_app_asesor/screens/emprendimientos/detalle_emprendimiento_screen.dart';
+import 'package:taller_alex_app_asesor/screens/ventas/editar_venta.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/pdf/models/invoice_info.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/pdf/models/ventas_invoice.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/pdf/api/pdf_api.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/pdf/api/pdf_invoice_ventas.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:bizpro_app/screens/ventas/agregar_venta.dart';
-import 'package:bizpro_app/screens/widgets/get_image_widget.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:bizpro_app/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/screens/ventas/agregar_venta.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/get_image_widget.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
 
 class VentasScreen extends StatefulWidget {
   final List<Ventas> ventas;

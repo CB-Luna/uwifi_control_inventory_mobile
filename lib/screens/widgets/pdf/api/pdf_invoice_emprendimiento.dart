@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:bizpro_app/screens/widgets/pdf/api/pdf_api.dart';
-import 'package:bizpro_app/screens/widgets/pdf/models/emprendimiento_invoice.dart';
-import 'package:bizpro_app/screens/widgets/pdf/models/invoice_info.dart';
-import 'package:bizpro_app/screens/widgets/pdf/utils.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/pdf/api/pdf_api.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/pdf/models/emprendimiento_invoice.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/pdf/models/invoice_info.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/pdf/utils.dart';
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;

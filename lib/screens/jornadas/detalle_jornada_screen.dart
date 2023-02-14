@@ -1,19 +1,19 @@
 import 'dart:io';
-import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
+import 'package:taller_alex_app_asesor/screens/emprendimientos/detalle_emprendimiento_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/providers/database_providers/jornada_controller.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/jornada_controller.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:bizpro_app/screens/jornadas/editar_jornada1_screen.dart';
-import 'package:bizpro_app/screens/jornadas/editar_jornada2_screen.dart';
-import 'package:bizpro_app/screens/jornadas/editar_jornada3_screen.dart';
-import 'package:bizpro_app/screens/jornadas/editar_jornada4_screen.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_carousel.dart';
+import 'package:taller_alex_app_asesor/screens/jornadas/editar_jornada1_screen.dart';
+import 'package:taller_alex_app_asesor/screens/jornadas/editar_jornada2_screen.dart';
+import 'package:taller_alex_app_asesor/screens/jornadas/editar_jornada3_screen.dart';
+import 'package:taller_alex_app_asesor/screens/jornadas/editar_jornada4_screen.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_animations.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_carousel.dart';
 
 class DetalleJornadaScreen extends StatefulWidget {
   final Jornadas jornada;

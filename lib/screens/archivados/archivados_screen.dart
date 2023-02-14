@@ -1,18 +1,18 @@
-import 'package:bizpro_app/providers/database_providers/emprendimiento_controller.dart';
-import 'package:bizpro_app/screens/archivados/emprendimiento_desarchivado_screen.dart';
-import 'package:bizpro_app/screens/emprendimientos/components/tarjeta_descripcion_widget.dart';
-import 'package:bizpro_app/screens/widgets/bottom_sheet_desarchivar_emprendimiento.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/emprendimiento_controller.dart';
+import 'package:taller_alex_app_asesor/screens/archivados/emprendimiento_desarchivado_screen.dart';
+import 'package:taller_alex_app_asesor/screens/emprendimientos/components/tarjeta_descripcion_widget.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_desarchivar_emprendimiento.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/util/util.dart';
+import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/util/util.dart';
 
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/screens/widgets/side_menu/side_menu.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/side_menu/side_menu.dart';
 
 class ArchivadosScreen extends StatefulWidget {
   const ArchivadosScreen({Key? key}) : super(key: key);

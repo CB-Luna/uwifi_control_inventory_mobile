@@ -1,20 +1,20 @@
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/screens/emprendimientos/detalle_emprendimiento_screen.dart';
+import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/screens/emprendimientos/detalle_emprendimiento_screen.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
-import 'package:bizpro_app/theme/theme.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/screens/productos/agregar_producto_emprendedor_screen.dart';
-import 'package:bizpro_app/screens/productos/detalle_producto_emprendedor.dart';
-import 'package:bizpro_app/screens/widgets/pdf/api/pdf_api.dart';
-import 'package:bizpro_app/screens/widgets/pdf/api/pdf_invoice_productos_emprendedor.dart';
-import 'package:bizpro_app/screens/widgets/pdf/models/invoice_info.dart';
-import 'package:bizpro_app/screens/widgets/pdf/models/productos_emprendedor_invoice.dart';
-import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/screens/productos/agregar_producto_emprendedor_screen.dart';
+import 'package:taller_alex_app_asesor/screens/productos/detalle_producto_emprendedor.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/pdf/api/pdf_api.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/pdf/api/pdf_invoice_productos_emprendedor.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/pdf/models/invoice_info.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/pdf/models/productos_emprendedor_invoice.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
 import '../widgets/get_image_widget.dart';
 

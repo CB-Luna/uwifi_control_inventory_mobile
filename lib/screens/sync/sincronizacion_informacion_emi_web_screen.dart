@@ -1,12 +1,12 @@
-import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/providers/sync_provider_emi_web.dart';
-import 'package:bizpro_app/providers/user_provider.dart';
-import 'package:bizpro_app/screens/sync/sincronizacion_informacion_pocketbase_screen.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/providers/sync_provider_emi_web.dart';
+import 'package:taller_alex_app_asesor/providers/user_provider.dart';
+import 'package:taller_alex_app_asesor/screens/sync/sincronizacion_informacion_pocketbase_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/theme/theme.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
 
 class SincronizacionInformacionEmiWebScreen extends StatefulWidget {
   const SincronizacionInformacionEmiWebScreen({Key? key}) : super(key: key);

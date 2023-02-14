@@ -1,8 +1,8 @@
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/modelsPocketbase/temporals/usuario_proyectos_temporal.dart';
-import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
-import 'package:bizpro_app/screens/archivados/archivados_screen.dart';
-import 'package:bizpro_app/theme/theme.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/modelsPocketbase/temporals/usuario_proyectos_temporal.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
+import 'package:taller_alex_app_asesor/screens/archivados/archivados_screen.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';

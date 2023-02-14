@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/screens/sync/sincronizacion_informacion_emi_web_screen.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:taller_alex_app_asesor/screens/sync/sincronizacion_informacion_emi_web_screen.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
 class BottomSheetSincronizarWidget extends StatefulWidget {
   final bool isVisible;

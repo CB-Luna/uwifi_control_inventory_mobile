@@ -1,8 +1,8 @@
-import 'package:bizpro_app/screens/emprendimientos/components/frente_tarjeta_descripcion_widget.dart';
-import 'package:bizpro_app/screens/emprendimientos/components/reverso_tarjeta_descripcion_widget.dart';
+import 'package:taller_alex_app_asesor/screens/emprendimientos/components/frente_tarjeta_descripcion_widget.dart';
+import 'package:taller_alex_app_asesor/screens/emprendimientos/components/reverso_tarjeta_descripcion_widget.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
-import 'package:bizpro_app/database/entitys.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
 
 
 class TargetaDescripcionWidget extends StatefulWidget {

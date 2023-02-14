@@ -1,22 +1,22 @@
 import 'dart:io';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/objectbox.g.dart';
-import 'package:bizpro_app/providers/database_providers/consultoria_controller.dart';
-import 'package:bizpro_app/screens/consultorias/consultoria_creada.dart';
-import 'package:bizpro_app/screens/inversiones/agregar_primer_producto_inversion_screen.dart';
-import 'package:bizpro_app/screens/ventas/agregar_venta.dart';
-import 'package:bizpro_app/screens/widgets/drop_down.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/objectbox.g.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/consultoria_controller.dart';
+import 'package:taller_alex_app_asesor/screens/consultorias/consultoria_creada.dart';
+import 'package:taller_alex_app_asesor/screens/inversiones/agregar_primer_producto_inversion_screen.dart';
+import 'package:taller_alex_app_asesor/screens/ventas/agregar_venta.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/drop_down.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
 
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
-import 'package:bizpro_app/util/flutter_flow_util.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class AgregarConsultoriaScreen extends StatefulWidget {

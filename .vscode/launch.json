@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "bizpro_app",
+            "name": "taller_alex_app_asesor",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "bizpro_app (profile mode)",
+            "name": "taller_alex_app_asesor (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "bizpro_app (release mode)",
+            "name": "taller_alex_app_asesor (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

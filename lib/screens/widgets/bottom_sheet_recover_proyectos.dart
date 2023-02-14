@@ -1,9 +1,9 @@
-import 'package:bizpro_app/providers/sync_emprendimientos_externos_emi_web_provider.dart';
-import 'package:bizpro_app/screens/emprendimientos_externos/usuarios_externos_screen.dart';
+import 'package:taller_alex_app_asesor/providers/sync_emprendimientos_externos_emi_web_provider.dart';
+import 'package:taller_alex_app_asesor/screens/emprendimientos_externos/usuarios_externos_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 import 'package:provider/provider.dart';
 
 class BottomSheetRecoverProyectosWidget extends StatefulWidget {

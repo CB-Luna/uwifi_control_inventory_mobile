@@ -1,5 +1,5 @@
 
-import 'package:bizpro_app/screens/widgets/pdf/models/invoice_info.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/pdf/models/invoice_info.dart';
 
 class EmprendedorInvoice {
   final InvoiceInfo info;

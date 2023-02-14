@@ -1,17 +1,17 @@
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/providers/sync_provider_emi_web.dart';
-import 'package:bizpro_app/screens/inversiones/inversiones_screen.dart';
-import 'package:bizpro_app/screens/inversiones/pagos_screen.dart';
+import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/providers/sync_provider_emi_web.dart';
+import 'package:taller_alex_app_asesor/screens/inversiones/inversiones_screen.dart';
+import 'package:taller_alex_app_asesor/screens/inversiones/pagos_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/screens/inversiones/tabs/cotizacion_tab.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/screens/inversiones/tabs/cotizacion_tab.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/screens/inversiones/tabs/inversion_tab.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/screens/inversiones/tabs/inversion_tab.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_animations.dart';
 
 class MainTabOpcionesScreen extends StatefulWidget {
   final Emprendimientos emprendimiento;

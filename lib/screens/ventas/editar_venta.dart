@@ -1,17 +1,17 @@
 import 'dart:io';
-import 'package:bizpro_app/screens/ventas/ventas_screen.dart';
+import 'package:taller_alex_app_asesor/screens/ventas/ventas_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/theme/theme.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
 
-import 'package:bizpro_app/providers/database_providers/venta_controller.dart';
-import 'package:bizpro_app/providers/database_providers/producto_venta_controller.dart';
-import 'package:bizpro_app/screens/ventas/venta_actualizada.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/venta_controller.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/producto_venta_controller.dart';
+import 'package:taller_alex_app_asesor/screens/ventas/venta_actualizada.dart';
 import 'package:badges/badges.dart';
-import 'package:bizpro_app/screens/ventas/registro_venta_screen.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:bizpro_app/util/flutter_flow_util.dart';
+import 'package:taller_alex_app_asesor/screens/ventas/registro_venta_screen.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class EditarVentaScreen extends StatefulWidget {

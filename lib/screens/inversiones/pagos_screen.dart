@@ -1,29 +1,29 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/screens/inversiones/inversiones_screen.dart';
-import 'package:bizpro_app/screens/inversiones/pagos/entrega_inversion_concluida.dart';
-import 'package:bizpro_app/screens/inversiones/pagos/pagos_concluidos.dart';
-import 'package:bizpro_app/screens/inversiones/pagos/recepcion_inversion_concluida.dart';
-import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_expanded_image_view.dart';
-import 'package:bizpro_app/util/flutter_flow_util.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/screens/inversiones/inversiones_screen.dart';
+import 'package:taller_alex_app_asesor/screens/inversiones/pagos/entrega_inversion_concluida.dart';
+import 'package:taller_alex_app_asesor/screens/inversiones/pagos/pagos_concluidos.dart';
+import 'package:taller_alex_app_asesor/screens/inversiones/pagos/recepcion_inversion_concluida.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/custom_bottom_sheet.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_expanded_image_view.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/theme/theme.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/providers/database_providers/recepcion_y_entrega_inversion_controller.dart';
-import 'package:bizpro_app/screens/inversiones/main_tab_opciones.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/recepcion_y_entrega_inversion_controller.dart';
+import 'package:taller_alex_app_asesor/screens/inversiones/main_tab_opciones.dart';
 import 'package:expandable/expandable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
-import 'package:bizpro_app/screens/widgets/toggle_icon.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/toggle_icon.dart';
 
 class PagosScreen extends StatefulWidget {
   final int idInversion;

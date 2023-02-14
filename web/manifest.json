@@ -1,6 +1,6 @@
 {
-    "name": "bizpro_app",
-    "short_name": "bizpro_app",
+    "name": "taller_alex_app_asesor",
+    "short_name": "taller_alex_app_asesor",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

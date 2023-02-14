@@ -1,10 +1,10 @@
 import 'dart:ffi';
 
-import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/util/flutter_flow_util.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/database/entitys.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ReversoTarjetaDescripcionWidget extends StatefulWidget {

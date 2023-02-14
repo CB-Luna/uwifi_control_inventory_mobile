@@ -1,20 +1,20 @@
 import 'dart:io';
-import 'package:bizpro_app/providers/sync_provider_pocketbase.dart';
-import 'package:bizpro_app/util/flutter_flow_util.dart';
+import 'package:taller_alex_app_asesor/providers/sync_provider_pocketbase.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/screens/inversiones/agregar_producto_inversion_screen.dart';
-import 'package:bizpro_app/screens/inversiones/editar_producto_inversion.dart';
-import 'package:bizpro_app/screens/widgets/bottom_sheet_sincronizar_widget.dart';
-//import 'package:bizpro_app/util/util.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/screens/inversiones/agregar_producto_inversion_screen.dart';
+import 'package:taller_alex_app_asesor/screens/inversiones/editar_producto_inversion.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_sincronizar_widget.dart';
+//import 'package:taller_alex_app_asesor/util/util.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/helpers/constants.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_animations.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:taller_alex_app_asesor/helpers/constants.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_animations.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 import 'package:provider/provider.dart';
 
 class InversionTab extends StatefulWidget {

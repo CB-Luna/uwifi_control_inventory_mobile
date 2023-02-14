@@ -1,4 +1,4 @@
-import 'package:bizpro_app/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:http_interceptor/http/interceptor_contract.dart';
 import 'package:http_interceptor/models/request_data.dart';
 import 'package:http_interceptor/models/response_data.dart';

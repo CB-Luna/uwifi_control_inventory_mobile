@@ -1,4 +1,4 @@
-import 'package:bizpro_app/database/entitys.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
 
 class SaveInstruccionProductoInversionJ3Temporal {
     final String instruccion;

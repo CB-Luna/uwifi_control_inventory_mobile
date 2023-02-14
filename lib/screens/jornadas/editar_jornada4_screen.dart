@@ -1,25 +1,25 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/modelsPocketbase/temporals/save_imagenes_local.dart';
-import 'package:bizpro_app/modelsPocketbase/temporals/save_instruccion_imagen_temporal.dart';
-import 'package:bizpro_app/screens/widgets/bottom_sheet_imagenes_completas.dart';
-import 'package:bizpro_app/screens/widgets/bottom_sheet_validacion_eliminar_imagen.dart';
-import 'package:bizpro_app/screens/widgets/custom_bottom_eliminar_imagen.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/modelsPocketbase/temporals/save_imagenes_local.dart';
+import 'package:taller_alex_app_asesor/modelsPocketbase/temporals/save_instruccion_imagen_temporal.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_imagenes_completas.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_validacion_eliminar_imagen.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/custom_bottom_eliminar_imagen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/providers/database_providers/jornada_controller.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_widgets.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/jornada_controller.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
-import 'package:bizpro_app/util/flutter_flow_util.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:bizpro_app/screens/widgets/custom_bottom_sheet.dart';
-import 'package:bizpro_app/screens/jornadas/jornada_actualizada.dart';
-import 'package:bizpro_app/screens/widgets/flutter_flow_checkbox_group.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/custom_bottom_sheet.dart';
+import 'package:taller_alex_app_asesor/screens/jornadas/jornada_actualizada.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_checkbox_group.dart';
 
 class EditarJornada4Screen extends StatefulWidget {
   final Jornadas jornada;

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:bizpro_app/theme/theme.dart';
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:bizpro_app/screens/consultorias/agregar_consultoria_screen.dart';
-import 'package:bizpro_app/screens/inversiones/inversiones_screen.dart';
-import 'package:bizpro_app/screens/jornadas/agregar_jornada1_screen.dart';
-import 'package:bizpro_app/screens/jornadas/agregar_jornada2_screen.dart';
-import 'package:bizpro_app/screens/jornadas/agregar_jornada3_screen.dart';
-import 'package:bizpro_app/screens/jornadas/agregar_jornada4_screen.dart';
-import 'package:bizpro_app/screens/productos/productos_emprendedor_screen.dart';
-import 'package:bizpro_app/screens/ventas/ventas_screen.dart';
+import 'package:taller_alex_app_asesor/screens/consultorias/agregar_consultoria_screen.dart';
+import 'package:taller_alex_app_asesor/screens/inversiones/inversiones_screen.dart';
+import 'package:taller_alex_app_asesor/screens/jornadas/agregar_jornada1_screen.dart';
+import 'package:taller_alex_app_asesor/screens/jornadas/agregar_jornada2_screen.dart';
+import 'package:taller_alex_app_asesor/screens/jornadas/agregar_jornada3_screen.dart';
+import 'package:taller_alex_app_asesor/screens/jornadas/agregar_jornada4_screen.dart';
+import 'package:taller_alex_app_asesor/screens/productos/productos_emprendedor_screen.dart';
+import 'package:taller_alex_app_asesor/screens/ventas/ventas_screen.dart';
 
 
 class MenuInferiorDetalleEmprendimiento extends StatefulWidget {

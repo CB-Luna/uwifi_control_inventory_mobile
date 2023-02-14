@@ -1,8 +1,8 @@
-import 'package:bizpro_app/providers/user_provider.dart';
-import 'package:bizpro_app/screens/screens.dart';
-import 'package:bizpro_app/screens/widgets/custom_button.dart';
-import 'package:bizpro_app/services/auth_service.dart';
-import 'package:bizpro_app/theme/theme.dart';
+import 'package:taller_alex_app_asesor/providers/user_provider.dart';
+import 'package:taller_alex_app_asesor/screens/screens.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/custom_button.dart';
+import 'package:taller_alex_app_asesor/services/auth_service.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

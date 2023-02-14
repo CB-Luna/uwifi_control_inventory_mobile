@@ -1,25 +1,25 @@
 import 'dart:io';
 
-import 'package:bizpro_app/database/entitys.dart';
-import 'package:bizpro_app/helpers/globals.dart';
-import 'package:bizpro_app/main.dart';
-import 'package:bizpro_app/providers/database_providers/usuario_controller.dart';
-import 'package:bizpro_app/screens/archivados/archivados_screen.dart';
-import 'package:bizpro_app/screens/perfil_usuario/perfil_usuario_screen.dart';
-import 'package:bizpro_app/screens/widgets/bottom_sheet_cerrar_sesion.dart';
-import 'package:bizpro_app/screens/widgets/bottom_sheet_recover_catalogos.dart';
-import 'package:bizpro_app/screens/widgets/bottom_sheet_recover_proyectos.dart';
-import 'package:bizpro_app/screens/widgets/bottom_sheet_sincronizar_widget.dart';
-import 'package:bizpro_app/util/flutter_flow_util.dart';
+import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
+import 'package:taller_alex_app_asesor/main.dart';
+import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
+import 'package:taller_alex_app_asesor/screens/archivados/archivados_screen.dart';
+import 'package:taller_alex_app_asesor/screens/perfil_usuario/perfil_usuario_screen.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_cerrar_sesion.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_recover_catalogos.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_recover_proyectos.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_sincronizar_widget.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:bizpro_app/providers/providers.dart';
-import 'package:bizpro_app/theme/theme.dart';
+import 'package:taller_alex_app_asesor/providers/providers.dart';
+import 'package:taller_alex_app_asesor/theme/theme.dart';
 
-import 'package:bizpro_app/screens/emprendedores/emprendedores_screen.dart';
-import 'package:bizpro_app/screens/emprendimientos/emprendimientos_screen.dart';
-import 'package:bizpro_app/screens/widgets/side_menu/custom_menu_item.dart';
+import 'package:taller_alex_app_asesor/screens/emprendedores/emprendedores_screen.dart';
+import 'package:taller_alex_app_asesor/screens/emprendimientos/emprendimientos_screen.dart';
+import 'package:taller_alex_app_asesor/screens/widgets/side_menu/custom_menu_item.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({Key? key}) : super(key: key);
