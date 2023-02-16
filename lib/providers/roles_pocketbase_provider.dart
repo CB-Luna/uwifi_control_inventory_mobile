@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/helpers/constants.dart';
 import 'package:taller_alex_app_asesor/modelsPocketbase/get_roles.dart';
+import 'package:taller_alex_app_asesor/modelsSupabase/get_roles_supabase.dart';
+import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import '../objectbox.g.dart';
 
 class RolesPocketbaseProvider extends ChangeNotifier {
@@ -27,7 +30,7 @@ class RolesPocketbaseProvider extends ChangeNotifier {
     // notifyListeners();
   }
 
-  Future<bool> getRolesPocketbase() async {
+  Future<bool> getRolesSupabase() async {
     exitoso = await getRoles();
     //Verificamos que no haya habido errores al sincronizar
     if (exitoso) {
@@ -45,37 +48,50 @@ class RolesPocketbaseProvider extends ChangeNotifier {
     }
   }
 
-//Función para recuperar el catálogo de roles desde Pocketbase
+//Función para recuperar el catálogo de roles desde Supabase
   Future<bool> getRoles() async {
-    try {
-      //Se recupera toda la colección de roles en Pocketbase
-      final records = await client.records.
-      getFullList('roles', batch: 200, sort: '+rol');
-      if (records.isNotEmpty) {
-        //Existen datos de roles en Pocketbase
-        final List<GetRoles> listRoles = [];
-        for (var element in records) {
-          listRoles.add(getRolesFromMap(element.toString()));
+    String queryGetRoles = """
+      query Query {
+        rolesCollection {
+          edges {
+            node {
+              id
+              rol
+              created_at
+            }
+          }
         }
-        for (var i = 0; i < listRoles.length; i++) {
+      }
+      """;
+    try {
+      //Se recupera toda la colección de roles en Supabase
+      final records = await sbGQL.query(
+        QueryOptions(
+          document: gql(queryGetRoles),
+          fetchPolicy: FetchPolicy.noCache,
+          onError: (error) {
+            return null;
+        },),
+      );
+
+      if (records.data != null) {
+        //Existen datos de roles en Supabase
+        print("****Roles: ${jsonEncode(records.data.toString())}");
+        final responseListRoles = getRolesSupabaseFromMap(jsonEncode(records.data).toString());
+        for (var element in responseListRoles.rolesCollection.edges) {
           //Se valida que el nuevo rol aún no existe en Objectbox
-          final rolExistente = dataBase.rolesBox.query(Roles_.idDBR.equals(listRoles[i].id)).build().findUnique();
+          final rolExistente = dataBase.rolesBox.query(Roles_.idDBR.equals(element.node.id)).build().findUnique();
           if (rolExistente == null) {
             final nuevoRol = Roles(
-            rol: listRoles[i].rol,
-            idDBR: listRoles[i].id, 
-            idEmiWeb: listRoles[i].idEmiWeb,
+            rol: element.node.rol,
+            idDBR: element.node.id, 
             );
             dataBase.rolesBox.put(nuevoRol);
             //print('Rol Nuevo agregado exitosamente');
           } else {
-            //Se valida que no se hayan hecho actualizaciones del registro en Pocketbase
-            if (rolExistente.fechaRegistro != listRoles[i].updated) {
               //Se actualiza el registro en Objectbox
-              rolExistente.rol = listRoles[i].rol;
-              rolExistente.fechaRegistro = listRoles[i].updated!;
+              rolExistente.rol = element.node.rol;
               dataBase.rolesBox.put(rolExistente);
-            }
           }
         }
         return true;
@@ -84,6 +100,7 @@ class RolesPocketbaseProvider extends ChangeNotifier {
         return false;
       }
     } catch (e) {
+      print("Error getRoleSupabase: $e");
       return false;
     }
   }

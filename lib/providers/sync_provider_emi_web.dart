@@ -96,7 +96,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                 //Se recuperan los id Emi Web de los roles del Usuario
                 for (var i = 0; i < responseListRoles.payload!.length; i++) {
                   final rol = dataBase.rolesBox
-                      .query(Roles_.idEmiWeb.equals(
+                      .query(Roles_.idDBR.equals(
                           responseListRoles.payload![i].idCatRoles.toString()))
                       .build()
                       .findUnique();
@@ -104,7 +104,7 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                     //print( "Se recupera el rol tipo: '${rol.rol}' del usuario a registrar con id: '${rol.idDBR}'");
                     if (rol.rol != "Staff Logística" &&
                         rol.rol != "Staff Dirección") {
-                      listRoles.add(rol.idDBR!);
+                      listRoles.add(rol.idDBR);
                     }
                   }
                 }
@@ -207,7 +207,6 @@ class SyncProviderEmiWeb extends ChangeNotifier {
                   filter: "id='${updateUsuario.idDBR}'");
               if (recordUsuario.isNotEmpty) {
                 // Se actualiza el usuario con éxito
-                updateUsuario.archivado = true;
                 dataBase.usuariosBox.put(updateUsuario);
               }
             }

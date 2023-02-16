@@ -1565,8 +1565,7 @@ class CatalogoPocketbaseProvider extends ChangeNotifier {
           updateUsuario.apellidoP = usuario.apellidoP;
           updateUsuario.apellidoM = usuario.apellidoM;
           updateUsuario.telefono = usuario.telefono;
-          updateUsuario.celular = usuario.celular;
-          updateUsuario.archivado = usuario.archivado;
+          updateUsuario.celular = usuario.celular!;
           //Se agregan los roles actualizados
           updateUsuario.roles.clear();
           for (var i = 0; i < usuario.idRolesFk.length; i++) {

@@ -39,6 +39,8 @@ import 'providers/sync_emprendimientos_externos_pocketbase_provider.dart';
 import 'providers/sync_emprendimientos_externos_emi_web_provider.dart';
 
 late ObjectBoxDatabase dataBase;
+late SupabaseClient supabaseClient;
+late GraphQLClient sbGQL;
 DeepLinkBloc bloc = DeepLinkBloc();
 
 void main() async {
@@ -51,11 +53,11 @@ void main() async {
   final defaultHeaders = ({
     "apikey": anonKey,
   });
-  final HttpLink httpLink = HttpLink(supabaseURL, defaultHeaders: defaultHeaders);
+  final HttpLink httpLink = HttpLink(supabaseGraphqlURL, defaultHeaders: defaultHeaders);
   final AuthLink authLink = AuthLink(getToken: () async => 'Bearer $anonKey');
   final Link link = authLink.concat(httpLink);
   ValueNotifier<GraphQLClient> client = ValueNotifier(
-    GraphQLClient(link: link, cache: GraphQLCache(store: HiveStore()))
+    sbGQL = GraphQLClient(link: link, cache: GraphQLCache(store: HiveStore()))
   );
   //Esconder Navigation Bar
   SystemChrome.setEnabledSystemUIMode(
@@ -64,7 +66,7 @@ void main() async {
   dataBase = await ObjectBoxDatabase.create();
   GoogleFonts.config.allowRuntimeFetching = false;
   await initGlobals();
-
+ supabaseClient = Supabase.instance.client;
   runApp(
     MultiProvider(
       providers: [
@@ -162,16 +164,14 @@ void main() async {
           lazy: false,
         ),
       ],
-      child: MyApp(client: client,),
+      child: const MyApp(),
     ),
   );
 }
 
 class MyApp extends StatefulWidget {
-  final ValueNotifier<GraphQLClient> client;
   const MyApp({
       Key? key, 
-      required this.client
     }) : super(key: key);
 
   @override
@@ -189,30 +189,25 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return GraphQLProvider(
-      client: widget.client,
-      child: CacheProvider(
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'tallerAlex',
-          localizationsDelegates: const [
-            AppLocalizationsDelegate(),
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          locale: _locale,
-          supportedLocales: const [Locale('en', '')],
-          theme: ThemeData(brightness: Brightness.light),
-          themeMode: _themeMode,
-          navigatorKey: NavigationService.navigatorKey,
-          scaffoldMessengerKey: snackbarKey,
-          initialRoute: '/',
-          routes: {
-            '/': (_) => const SplashScreen(),
-          },
-        ),
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'tallerAlex',
+      localizationsDelegates: const [
+        AppLocalizationsDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      locale: _locale,
+      supportedLocales: const [Locale('en', '')],
+      theme: ThemeData(brightness: Brightness.light),
+      themeMode: _themeMode,
+      navigatorKey: NavigationService.navigatorKey,
+      scaffoldMessengerKey: snackbarKey,
+      initialRoute: '/',
+      routes: {
+        '/': (_) => const SplashScreen(),
+      },
     );
   }
 }

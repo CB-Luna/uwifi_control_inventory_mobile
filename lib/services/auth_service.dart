@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:taller_alex_app_asesor/helpers/constants.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/main.dart';
@@ -10,6 +11,8 @@ import 'package:taller_alex_app_asesor/modelsPocketbase/emi_user_by_id.dart';
 import 'package:taller_alex_app_asesor/modelsPocketbase/get_imagen_usuario.dart';
 import 'package:taller_alex_app_asesor/modelsPocketbase/get_one_emi_user.dart';
 import 'package:taller_alex_app_asesor/modelsPocketbase/login_response.dart';
+import 'package:taller_alex_app_asesor/modelsSupabase/get_usuario_supabase.dart';
+import 'package:taller_alex_app_asesor/modelsSupabase/response_login_supabase.dart';
 import 'package:taller_alex_app_asesor/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -93,7 +96,6 @@ abstract class AuthService {
                 filter: "id='${updateUsuario.idDBR}'");
               if (recordUsuario.isNotEmpty) {
                 // Se actualiza el usuario con éxito
-                updateUsuario.archivado = true;
                 dataBase.usuariosBox.put(updateUsuario); 
               }
             }
@@ -112,42 +114,68 @@ abstract class AuthService {
     }
   }
 
-  static Future<GetUsuarioEmiWeb?> loginEmiWeb(String email, String password) async {
+  static Future<ResponseLoginSupabase?> loginSupabase(String email, String password) async {
     try {
-      final responseTokenEmiWeb = await getTokenOAuthEmiWeb(email, password);
-      if(responseTokenEmiWeb != null) {
-            //Se recupera la información del usuario desde Emi Web
-            var url = Uri.parse("$baseUrlEmiWebServices/usuarios?correo=$email");
-            var tokenActual = await storage.read(key: "tokenEmiWeb");
-            //print("Token Actual: $tokenActual");
-            final headers = ({
-                "Content-Type": "application/json",
-                'Authorization': 'Bearer $tokenActual',
-              });
-            var responseUsuarioData = await get(
-              url,
-              headers: headers
-            );
-            switch (responseUsuarioData.statusCode) {
-              case 200: //Caso éxitoso
-                //print("Es 200 en loginEmiWeb");
-                final responseUsuarioEmiWeb = getUsuarioEmiWebFromMap(
-                const Utf8Decoder().convert(responseUsuarioData.bodyBytes));
-                return responseUsuarioEmiWeb;
-              case 401: //Error de Token incorrecto
-                //print("Es 401 en loginEmiWeb");
-                loginEmiWeb(email, password);
-                return null;
-              case 404: //Error de ruta incorrecta
-                //print("Es 404 en loginEmiWeb");
-                return null;
-              default:
-                return null;
-            }
-        } else{
-          return null;
-        }
+      //Se recupera la información del usuario desde Supabase
+      final responseSupabase = await supabaseClient.auth.signInWithPassword(email: email, password: password);
+      if (responseSupabase.session?.expiresIn != null) {
+        print("Response Supabase: ${jsonEncode(responseSupabase.session)}");
+          final responseUsuarioSupabase = responseLoginSupabaseFromMap(
+          jsonEncode(responseSupabase.session));
+          return responseUsuarioSupabase;
+      } else {
+        return null;
+      }
     } catch (e) {
+      print("Error: $e");
+      return null;
+    }
+  }
+
+  static Future<GetUsuarioSupabase?> getUserByUserIDSupabase(String userId) async {
+    String queryGetUserByUserID = """
+      query Query {
+        usuarioCollection (filter: { user_id: { eq: "$userId"} }){
+          edges {
+            node {
+              id
+              nombre
+              apellido_p
+              apellido_m
+              curp
+              telefono
+              celular
+              correo
+              id_rol_fk
+              id_imagen_fk
+              fecha_nacimiento
+              created_at
+            }
+          }
+        }
+      }
+      """;
+    try {
+      //Se recupera la información del Usuario en Supabase
+      final record = await sbGQL.query(
+        QueryOptions(
+          document: gql(queryGetUserByUserID),
+          fetchPolicy: FetchPolicy.noCache,
+          onError: (error) {
+            return null;
+        },),
+      );
+      if (record.data != null) {
+        //Existen datos del Usuario en Supabase
+        print("***Usuario: ${jsonEncode(record.data).toString()}");
+        final responseUsuario = getUsuarioSupabaseFromMap(jsonEncode(record.data).toString());
+        return responseUsuario;
+      } else {
+        //No existen el Usuario en Supabase
+        return null;
+      }
+    } catch (e) {
+      print("Error en GetUsuarioSupabase: $e");
       return null;
     }
   }
@@ -193,11 +221,11 @@ abstract class AuthService {
           List<String> listRoles = [];
           //Se recuperan los id Emi Web de los roles del Usuario
           for (var i = 0; i < responseUsuarioCompletoEmiWeb.payload!.tiposUsuario!.length; i++) {
-            final rol = dataBase.rolesBox.query(Roles_.idEmiWeb.equals(responseUsuarioCompletoEmiWeb.payload!.tiposUsuario![i].idCatRoles.toString())).build().findUnique();
+            final rol = dataBase.rolesBox.query(Roles_.idDBR.equals(responseUsuarioCompletoEmiWeb.payload!.tiposUsuario![i].idCatRoles.toString())).build().findUnique();
             if (rol != null) {
               //print("Se recupera el rol tipo: '${rol.rol}' del usuario a registrar con id: '${rol.idDBR}'");
               if (rol.rol != "Staff Logística" && rol.rol != "Staff Dirección") {
-                listRoles.add(rol.idDBR!);
+                listRoles.add(rol.idDBR);
               }
             } 
           }
@@ -376,11 +404,11 @@ abstract class AuthService {
             List<String> listRoles = [];
             //Se recuperan los id Emi Web de los roles del Usuario
             for (var i = 0; i < responseGetUsuarioDataCompletoParse.payload!.tiposUsuario!.length; i++) {
-              final rol = dataBase.rolesBox.query(Roles_.idEmiWeb.equals(responseGetUsuarioDataCompletoParse.payload!.tiposUsuario![i].idCatRoles.toString())).build().findUnique();
+              final rol = dataBase.rolesBox.query(Roles_.idDBR.equals(responseGetUsuarioDataCompletoParse.payload!.tiposUsuario![i].idCatRoles.toString())).build().findUnique();
               if (rol != null) {
                 //print("Se recupera el rol tipo: '${rol.rol}' del usuario a registrar con id: '${rol.idDBR}'");
                 if (rol.rol != "Staff Logística" && rol.rol != "Staff Dirección") {
-                  listRoles.add(rol.idDBR!);
+                  listRoles.add(rol.idDBR);
                 }
               } 
             }

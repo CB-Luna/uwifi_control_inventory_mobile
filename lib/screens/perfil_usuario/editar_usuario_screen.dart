@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/helpers/constants.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/objectbox.g.dart';
@@ -19,7 +20,6 @@ import 'package:taller_alex_app_asesor/providers/database_providers/usuario_cont
 import 'package:taller_alex_app_asesor/screens/perfil_usuario/usuario_actualizado.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/custom_bottom_sheet.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/custom_button.dart';
-import 'package:taller_alex_app_asesor/theme/theme.dart';
 
 class EditarUsuarioScreen extends StatefulWidget {
   const EditarUsuarioScreen({
@@ -70,7 +70,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
       onWillPop: () async => false,
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: AppTheme.of(context).primaryBackground,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: SingleChildScrollView(
           child: GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
@@ -94,9 +94,9 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height * 0.8,
-                    decoration: const BoxDecoration(
-                      color: Color(0x554672FF),
-                      borderRadius: BorderRadius.only(
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).grayLighter,
+                      borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(0),
                         bottomRight: Radius.circular(0),
                         topLeft: Radius.circular(100),
@@ -116,7 +116,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                         width: MediaQuery.of(context).size.width,
                         height: 60,
                         decoration: BoxDecoration(
-                          color: const Color(0x554672FF),
+                          color: FlutterFlowTheme.of(context).grayLighter,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Padding(
@@ -134,7 +134,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                     width: 80,
                                     height: 40,
                                     decoration: BoxDecoration(
-                                      color: AppTheme.of(context).secondaryText,
+                                      color: FlutterFlowTheme.of(context).primaryColor,
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: InkWell(
@@ -153,11 +153,11 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                           ),
                                           Text(
                                             'Atrás',
-                                            style: AppTheme.of(context)
+                                            style: FlutterFlowTheme.of(context)
                                                 .bodyText1
                                                 .override(
                                                   fontFamily:
-                                                      AppTheme.of(context)
+                                                      FlutterFlowTheme.of(context)
                                                           .bodyText1Family,
                                                   color: Colors.white,
                                                   fontSize: 16,
@@ -182,12 +182,12 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                       child: AutoSizeText(
                                         "Perfil de ${maybeHandleOverflow('${widget.usuario.nombre} ${widget.usuario.apellidoP}', 25, '...')}",
                                         maxLines: 2,
-                                        style: AppTheme.of(context)
+                                        style: FlutterFlowTheme.of(context)
                                             .bodyText1
                                             .override(
-                                              fontFamily: AppTheme.of(context)
+                                              fontFamily: FlutterFlowTheme.of(context)
                                                   .bodyText1Family,
-                                              color: AppTheme.of(context)
+                                              color: FlutterFlowTheme.of(context)
                                                   .primaryText,
                                               fontSize: 15,
                                             ),
@@ -219,14 +219,14 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                       shape: BoxShape.circle,
                                     ),
                                     child: Container(
-                                      color: Colors.blue,
+                                      color: FlutterFlowTheme.of(context).primaryColor,
                                       child: Center(
                                         child: Text(
                                           "${widget.usuario.nombre.substring(0, 1)} ${widget.usuario.apellidoP.substring(0, 1)}",
-                                          style: AppTheme.of(context)
+                                          style: FlutterFlowTheme.of(context)
                                               .bodyText1
                                               .override(
-                                                fontFamily: AppTheme.of(context)
+                                                fontFamily: FlutterFlowTheme.of(context)
                                                     .bodyText1Family,
                                                 color: Colors.white,
                                                 fontSize: 70,
@@ -309,26 +309,26 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                         });
                                       },
                                       text: 'Cambiar Foto',
-                                      icon: const Icon(
+                                      icon: Icon(
                                         Icons.add_a_photo,
-                                        color: Color(0xFF221573),
+                                        color: FlutterFlowTheme.of(context).tertiaryColor,
                                         size: 15,
                                       ),
                                       options: ButtonOptions(
                                         width: 150,
                                         height: 30,
                                         color: Colors.white,
-                                        textStyle: AppTheme.of(context)
+                                        textStyle: FlutterFlowTheme.of(context)
                                             .subtitle2
                                             .override(
-                                              fontFamily: AppTheme.of(context)
+                                              fontFamily: FlutterFlowTheme.of(context)
                                                   .subtitle2Family,
-                                              color: const Color(0xFF221573),
+                                              color: FlutterFlowTheme.of(context).tertiaryColor,
                                               fontSize: 10,
                                               fontWeight: FontWeight.w500,
                                             ),
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFF221573),
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context).tertiaryColor,
                                           width: 2,
                                         ),
                                         borderRadius: BorderRadius.circular(8),
@@ -344,9 +344,9 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                 0, 20, 0, 0),
                             child: Text(
                               widget.usuario.correo,
-                              style: AppTheme.of(context).bodyText1.override(
+                              style: FlutterFlowTheme.of(context).bodyText1.override(
                                     fontFamily:
-                                        AppTheme.of(context).bodyText1Family,
+                                        FlutterFlowTheme.of(context).bodyText1Family,
                                     fontSize: 15,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -574,26 +574,26 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                         }
                                       },
                                       text: 'Guardar cambios',
-                                      icon: const Icon(
+                                      icon: Icon(
                                         Icons.check_rounded,
-                                        color: Color(0xFF221573),
+                                        color: FlutterFlowTheme.of(context).tertiaryColor,
                                         size: 15,
                                       ),
                                       options: ButtonOptions(
                                         width: 150,
                                         height: 30,
                                         color: Colors.white,
-                                        textStyle: AppTheme.of(context)
+                                        textStyle: FlutterFlowTheme.of(context)
                                             .subtitle2
                                             .override(
-                                              fontFamily: AppTheme.of(context)
+                                              fontFamily: FlutterFlowTheme.of(context)
                                                   .subtitle2Family,
-                                              color: const Color(0xFF221573),
+                                              color: FlutterFlowTheme.of(context).tertiaryColor,
                                               fontSize: 10,
                                               fontWeight: FontWeight.w500,
                                             ),
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFF221573),
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context).tertiaryColor,
                                           width: 2,
                                         ),
                                         borderRadius: BorderRadius.circular(8),
@@ -615,22 +615,22 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                               decoration: InputDecoration(
                                 labelText: "Nombre(s)*",
                                 labelStyle:
-                                    AppTheme.of(context).bodyText1.override(
+                                    FlutterFlowTheme.of(context).bodyText1.override(
                                           fontFamily: 'Poppins',
-                                          color: const Color(0xFF221573),
+                                          color: FlutterFlowTheme.of(context).tertiaryColor,
                                           fontSize: 15,
                                           fontWeight: FontWeight.normal,
                                         ),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0xFF221573),
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).tertiaryColor,
                                     width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0xFF221573),
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).tertiaryColor,
                                     width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(12),
@@ -638,7 +638,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                 filled: true,
                                 fillColor: Colors.white,
                               ),
-                              style: AppTheme.of(context).bodyText1,
+                              style: FlutterFlowTheme.of(context).bodyText1,
                               validator: FormBuilderValidators.compose([
                                   (value){
                                     return (capitalizadoCharacters.hasMatch(value ?? ''))
@@ -664,22 +664,22 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                               decoration: InputDecoration(
                                 labelText: "Apellido Paterno*",
                                 labelStyle:
-                                    AppTheme.of(context).bodyText1.override(
+                                    FlutterFlowTheme.of(context).bodyText1.override(
                                           fontFamily: 'Poppins',
-                                          color: const Color(0xFF221573),
+                                          color: FlutterFlowTheme.of(context).tertiaryColor,
                                           fontSize: 15,
                                           fontWeight: FontWeight.normal,
                                         ),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0xFF221573),
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).tertiaryColor,
                                     width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0xFF221573),
+                                  borderSide:  BorderSide(
+                                    color: FlutterFlowTheme.of(context).tertiaryColor,
                                     width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(12),
@@ -687,7 +687,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                 filled: true,
                                 fillColor: Colors.white,
                               ),
-                              style: AppTheme.of(context).bodyText1,
+                              style: FlutterFlowTheme.of(context).bodyText1,
                               validator: FormBuilderValidators.compose([
                                 (value){
                                   return (capitalizadoCharacters.hasMatch(value ?? ''))
@@ -713,22 +713,22 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                               decoration: InputDecoration(
                                 labelText: "Apellido Materno",
                                 labelStyle:
-                                    AppTheme.of(context).bodyText1.override(
+                                    FlutterFlowTheme.of(context).bodyText1.override(
                                           fontFamily: 'Poppins',
-                                          color: const Color(0xFF221573),
+                                          color: FlutterFlowTheme.of(context).tertiaryColor,
                                           fontSize: 15,
                                           fontWeight: FontWeight.normal,
                                         ),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0xFF221573),
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).tertiaryColor,
                                     width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0xFF221573),
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).tertiaryColor,
                                     width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(12),
@@ -736,7 +736,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                 filled: true,
                                 fillColor: Colors.white,
                               ),
-                              style: AppTheme.of(context).bodyText1,
+                              style: FlutterFlowTheme.of(context).bodyText1,
                             ),
                           ),
                           Padding(
@@ -749,22 +749,22 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                               decoration: InputDecoration(
                                 labelText: "Teléfono",
                                 labelStyle:
-                                    AppTheme.of(context).bodyText1.override(
+                                    FlutterFlowTheme.of(context).bodyText1.override(
                                           fontFamily: 'Poppins',
-                                          color: const Color(0xFF221573),
+                                          color: FlutterFlowTheme.of(context).tertiaryColor,
                                           fontSize: 15,
                                           fontWeight: FontWeight.normal,
                                         ),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0xFF221573),
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).tertiaryColor,
                                     width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0xFF221573),
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).tertiaryColor,
                                     width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(12),
@@ -772,7 +772,7 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                 filled: true,
                                 fillColor: Colors.white,
                               ),
-                              style: AppTheme.of(context).bodyText1,
+                              style: FlutterFlowTheme.of(context).bodyText1,
                               keyboardType: TextInputType.number,
                               inputFormatters: [
                                 LengthLimitingTextInputFormatter(10),
@@ -802,21 +802,21 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                                   width: double.infinity,
                                   height: 50,
                                   textStyle:
-                                      AppTheme.of(context).title3.override(
+                                      FlutterFlowTheme.of(context).title3.override(
                                             fontFamily: 'Poppins',
-                                            color: const Color(0xFF221573),
+                                            color: FlutterFlowTheme.of(context).tertiaryColor,
                                             fontSize: 15,
                                             fontWeight: FontWeight.normal,
                                           ),
                                   hintText: 'Seleccione un rol',
-                                  icon: const Icon(
+                                  icon: Icon(
                                     Icons.keyboard_arrow_down_rounded,
-                                    color: Color(0xFF221573),
+                                    color: FlutterFlowTheme.of(context).tertiaryColor,
                                     size: 30,
                                   ),
                                   fillColor: Colors.white,
                                   elevation: 2,
-                                  borderColor: const Color(0xFF221573),
+                                  borderColor: FlutterFlowTheme.of(context).tertiaryColor,
                                   borderWidth: 2,
                                   borderRadius: 8,
                                   margin: const EdgeInsetsDirectional.fromSTEB(
@@ -853,12 +853,12 @@ class _EditarUsuarioScreenState extends State<EditarUsuarioScreen> {
                               options: FFButtonOptions(
                                 width: 180,
                                 height: 40,
-                                color: AppTheme.of(context).secondaryText,
-                                textStyle: AppTheme.of(context)
+                                color: FlutterFlowTheme.of(context).tertiaryColor,
+                                textStyle: FlutterFlowTheme.of(context)
                                     .subtitle2
                                     .override(
                                       fontFamily:
-                                          AppTheme.of(context).subtitle2Family,
+                                          FlutterFlowTheme.of(context).subtitle2Family,
                                       color: Colors.white,
                                       fontSize: 15,
                                     ),

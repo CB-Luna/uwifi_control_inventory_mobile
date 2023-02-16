@@ -1,636 +1,588 @@
-import 'package:taller_alex_app_asesor/main.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:taller_alex_app_asesor/providers/providers.dart';
-import 'package:taller_alex_app_asesor/theme/theme.dart';
-import 'package:taller_alex_app_asesor/helpers/process_encryption.dart';
-import 'package:taller_alex_app_asesor/providers/roles_emi_web_provider.dart';
-import 'package:taller_alex_app_asesor/providers/roles_pocketbase_provider.dart';
-import 'package:taller_alex_app_asesor/services/api_service.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:taller_alex_app_asesor/helpers/globals.dart';
-import 'package:taller_alex_app_asesor/services/auth_service.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
+import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_widgets.dart';
+import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
-import 'package:taller_alex_app_asesor/screens/screens.dart';
-import 'package:taller_alex_app_asesor/util/custom_functions.dart';
+import 'package:taller_alex_app_asesor/providers/providers.dart';
+import 'package:taller_alex_app_asesor/providers/roles_pocketbase_provider.dart';
+import 'package:taller_alex_app_asesor/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/toggle_icon.dart';
-import 'package:taller_alex_app_asesor/screens/widgets/custom_button.dart';
+import 'package:taller_alex_app_asesor/services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
   bool contrasenaVisibility = false;
-
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
   final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     final UserState userState = Provider.of<UserState>(context);
     final usuarioProvider = Provider.of<UsuarioController>(context);
-    final rolesPocketbaseProvider =
+    final rolesSupabaseProvider =
         Provider.of<RolesPocketbaseProvider>(context);
-    final rolesEmiWebProvider = Provider.of<RolesEmiWebProvider>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: const Color(0xFFCAEFFE),
-        body: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: SingleChildScrollView(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              decoration: BoxDecoration(
-                color: const Color(0xFFD9EEF9),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: Image.asset(
-                    'assets/images/bglogin2.png',
-                  ).image,
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      //LOGO
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
-                        child: Image.asset(
-                          'assets/images/emlogo.png',
-                          fit: BoxFit.cover,
-                        ),
+        backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
+        body: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 1,
+          decoration: BoxDecoration(
+            color: FlutterFlowTheme.of(context).tertiaryColor,
+            image: DecorationImage(
+              fit: BoxFit.fitWidth,
+              image: Image.asset(
+                'assets/images/bgFleet@2x.png',
+              ).image,
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+            child: SingleChildScrollView(
+              child: Form(
+                key: formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 70, 0, 70),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/images/tallerAlexLogo.png',
+                            width: 120,
+                            height: 120,
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ],
                       ),
-
-                      //TITULO
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-                        child: Container(
-                          height: 40,
-                          decoration: const BoxDecoration(
-                            color: Color(0x00EEEEEE),
-                          ),
-                          child: Text(
-                            'Inicia sesión',
-                            style: AppTheme.of(context).title1.override(
-                                  fontFamily: 'Poppins',
-                                  color: const Color(0xFF221573),
-                                ),
-                          ),
-                        ),
-                      ),
-
-                      //CORREO
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
-                        child: TextFormField(
-                          maxLength: 50,
-                          controller: userState.emailController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'El correo es requerido';
-                            } else if (!EmailValidator.validate(value)) {
-                              return 'Por favor ingresa un correo válido';
-                            }
-                            return null;
-                          },
-                          decoration: getInputDecoration(
-                            context: context,
-                            labelText: 'Correo electrónico *',
-                          ),
-                          style: AppTheme.of(context).bodyText1.override(
-                                fontFamily: 'Poppins',
-                                color: const Color(0xFF221573),
-                                fontSize: 15,
-                                fontWeight: FontWeight.normal,
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          'Taller Automotriz Alex',
+                          style: FlutterFlowTheme.of(context).title1.override(
+                                fontFamily: 'Outfit',
+                                color: FlutterFlowTheme.of(context).alternate,
+                                fontSize: 36,
                               ),
                         ),
-                      ),
-
-                      //CONTRASEÑA
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                        child: TextFormField(
-                          maxLength: 50,
-                          controller: userState.passwordController,
-                          obscureText: !contrasenaVisibility,
-                          obscuringCharacter: '*',
-                          validator: (value) {
-                            final RegExp regex = RegExp(
-                                r"^(?=.*[A-Z])(?=.*\d)(?=.*\d)[A-Za-z\d!#\$%&/\(\)=?¡¿+\*\.\-_:,;]{8,50}$");
-                            if (value == null || value.isEmpty) {
-                              //contrasena.hasMatch(value ?? '')
-                              return 'La contraseña es requerida';
-                            } else if (!regex.hasMatch(value)) {
-                              return 'La contraseña debe tener al menos 8 caracteres, una letra mayúscula y dos números.\nLos caracteres especiales válidos son: !#\$%&/()=?¡¿+*.-_:,; y no se permite el uso de\nespacios, tildes o acentos.';
-                            }
-                            return null;
-                          },
-                          decoration: getInputDecoration(
-                            context: context,
-                            labelText: 'Contraseña *',
-                            inkWell: InkWell(
-                              onTap: () => setState(
-                                () => contrasenaVisibility =
-                                    !contrasenaVisibility,
-                              ),
-                              focusNode: FocusNode(skipTraversal: true),
-                              child: Icon(
-                                contrasenaVisibility
-                                    ? Icons.visibility_outlined
-                                    : Icons.visibility_off_outlined,
-                                color: const Color(0xFF4672FF),
-                                size: 22,
-                              ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 24),
+                            child: Text(
+                              'El cuidado perfecto para su carro',
+                              style: FlutterFlowTheme.of(context).title3.override(
+                                    fontFamily: 'Outfit',
+                                    color: FlutterFlowTheme.of(context).alternate,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                             ),
                           ),
-                          style: AppTheme.of(context).bodyText1.override(
-                                fontFamily: 'Poppins',
-                                color: const Color(0xFF393838),
-                                fontSize: 15,
-                                fontWeight: FontWeight.normal,
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              controller: userState.emailController,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                labelText: 'Correo electrónico',
+                                labelStyle: FlutterFlowTheme.of(context).bodyText2,
+                                hintText: 'Ingresa tu correo electrónico...',
+                                hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFDBE2E7),
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFDBE2E7),
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
+                                contentPadding:
+                                    const EdgeInsetsDirectional.fromSTEB(16, 24, 0, 24),
+                                errorStyle: TextStyle(
+                                  color: FlutterFlowTheme.of(context).white,
+                                ),
                               ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Outfit',
+                                    color:
+                                        FlutterFlowTheme.of(context).tertiaryColor,
+                                  ),
+                              validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'El correo es requerido';
+                              } else if (!EmailValidator.validate(value)) {
+                                return 'Por favor ingresa un correo válido';
+                              }
+                              return null;
+                            },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              maxLength: 50,
+                              controller: userState.passwordController,
+                              obscureText: !contrasenaVisibility,
+                              obscuringCharacter: '*',
+                              decoration: InputDecoration(
+                                labelText: 'Contraseña',
+                                labelStyle: FlutterFlowTheme.of(context).bodyText2,
+                                hintText: 'Ingresa tu contraseña...',
+                                hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFDBE2E7),
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFDBE2E7),
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
+                                errorStyle: TextStyle(
+                                  color: FlutterFlowTheme.of(context).white,
+                                ),
+                                contentPadding:
+                                    const EdgeInsetsDirectional.fromSTEB(16, 24, 24, 24),
+                                suffixIcon: InkWell(
+                                  onTap: () => setState(
+                                    () => contrasenaVisibility =
+                                        !contrasenaVisibility,
+                                  ),
+                                  focusNode: FocusNode(skipTraversal: true),
+                                  child: Icon(
+                                    contrasenaVisibility
+                                        ? Icons.visibility_outlined
+                                        : Icons.visibility_off_outlined,
+                                    color: FlutterFlowTheme.of(context).primaryColor,
+                                    size: 22,
+                                  ),
+                                ),
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Lexend Deca',
+                                    color:
+                                        FlutterFlowTheme.of(context).tertiaryColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                      child: Container(
+                        width: 146,
+                        height: 40,
+                        decoration: const BoxDecoration(
+                          color: Color(0x00EEEEEE),
+                        ),
+                        child: GestureDetector(
+                          onTap: () async {
+                            userState.updateRecuerdame();
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Recordarme',
+                                style:
+                                    FlutterFlowTheme.of(context).bodyText1.override(
+                                          fontFamily: 'Poppins',
+                                          color: FlutterFlowTheme.of(context).alternate,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                              ),
+                              ToggleIcon(
+                                onPressed: () async {
+                                  userState.updateRecuerdame();
+                                },
+                                value: userState.recuerdame,
+                                onIcon: Icon(
+                                  Icons.check_box,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  size: 25,
+                                ),
+                                offIcon: Icon(
+                                  Icons.check_box_outline_blank,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  size: 25,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-
-                      //BOTÓN INGRESAR
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-                        child: CustomButton(
-                          onPressed: () async {
-                            if (!formKey.currentState!.validate()) {
-                              return;
-                            }
-                            //Se revisa el estatus de la Red
-                            final connectivityResult =
-                                await (Connectivity().checkConnectivity());
-                            if (connectivityResult == ConnectivityResult.none) {
-                              //print("Proceso offline");
-                              //Proceso Offline
-                              final passwordEncrypted = processEncryption(
-                                  userState.passwordController.text);
-                              if (passwordEncrypted == null) {
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () async {
+                              // await Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => CreateAccountWidget(),
+                              //   ),
+                              // );
+                            },
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '¿Aún no tienes cuenta?',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Lexend Deca',
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                ),
+                                Text(
+                                  'Crear Cuenta',
+                                  style: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'Outfit',
+                                        color:
+                                            FlutterFlowTheme.of(context).alternate,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          FFButtonWidget(
+                            onPressed: () async {
+                              if (!formKey.currentState!.validate()) {
                                 return;
                               }
-                              final usuarioActual =
-                                  usuarioProvider.validateUserOffline(
-                                      userState.emailController.text,
-                                      passwordEncrypted);
-                              if (usuarioActual != null) {
-                                //print('Usuario ya existente');
-                                if (usuarioActual.archivado) {
-                                  snackbarKey.currentState
-                                      ?.showSnackBar(const SnackBar(
-                                    content: Text(
-                                        "El usuario se encuentra archivado, comuníquese con el Administrador."),
-                                  ));
-                                  return;
-                                }
-                                if (usuarioActual.roles.toList().isEmpty) {
-                                  snackbarKey.currentState
-                                      ?.showSnackBar(const SnackBar(
-                                    content: Text(
-                                        "El Usuario no cuenta con los permisos necesarios para ingresar, favor de comunicarse con el Administrador."),
-                                  ));
-                                  return;
-                                }
-                                //Se guarda el ID DEL USUARIO (correo electrónico)
-                                prefs.setString(
-                                    "userId", userState.emailController.text);
-                                //Se guarda el Password encriptado
-                                prefs.setString(
-                                    "passEncrypted", passwordEncrypted);
-                                usuarioProvider
-                                    .getUser(prefs.getString("userId")!);
-
-                                if (userState.recuerdame == true) {
-                                  await userState.setEmail();
-                                  //TODO: quitar?
-                                  await userState.setPassword();
-                                } else {
-                                  userState.emailController.text = '';
-                                  userState.passwordController.text = '';
-                                  await prefs.remove('email');
-                                  await prefs.remove('password');
-                                }
-
-                                if (!mounted) return;
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const EmprendimientosScreen(),
-                                  ),
-                                );
-                              } else {
-                                //print('Usuario no existente localmente');
-                                snackbarKey.currentState
-                                    ?.showSnackBar(const SnackBar(
-                                  content: Text(
-                                      "Credenciales incorrectas o no ha sido registrado al sistema"),
-                                ));
-                              }
-                            } else {
-                              //print("Proceso online");
-                              //Login a Emi Web
-                              final passwordEncrypted = processEncryption(
-                                  userState.passwordController.text);
-                              if (passwordEncrypted == null) {
-                                return;
-                              }
-                              final loginResponseEmiWeb =
-                                  await AuthService.loginEmiWeb(
-                                userState.emailController.text,
-                                passwordEncrypted,
-                              );
-                              if (loginResponseEmiWeb != null) {
-                                //Se descargan los roles desde Emi Web
-                                rolesEmiWebProvider.exitoso = true;
-                                rolesEmiWebProvider.procesoCargando(true);
-                                rolesEmiWebProvider.procesoTerminado(false);
-                                rolesEmiWebProvider.procesoExitoso(false);
-                                Future<bool> booleanoEmiWeb =
-                                    rolesEmiWebProvider.getRolesEmiWeb(
+                              //Se revisa el estatus de la Red
+                              final connectivityResult =
+                                  await (Connectivity().checkConnectivity());
+                              if (connectivityResult == ConnectivityResult.none) {
+                                //print("Proceso offline");
+                                //Proceso Offline
+                                final usuarioActual =
+                                    usuarioProvider.validateUserOffline(
                                         userState.emailController.text,
-                                        passwordEncrypted);
-                                if (await booleanoEmiWeb) {
-                                  //Se descargan los roles desde Pocketbase
-                                  //print("Se ha realizado con éxito el proceso de Roles Emi Web");
-                                  rolesPocketbaseProvider.exitoso = true;
-                                  rolesPocketbaseProvider.procesoCargando(true);
-                                  rolesPocketbaseProvider
-                                      .procesoTerminado(false);
-                                  rolesPocketbaseProvider.procesoExitoso(false);
-                                  Future<bool> booleanoPocketbase =
-                                      rolesPocketbaseProvider
-                                          .getRolesPocketbase();
-                                  if (await booleanoPocketbase) {
-                                    //print("Se ha realizado con éxito el proceso de getRolesPocketbase");
-                                    var stringValidateUsuario =
-                                        AuthService.validateUsuarioInPocketbase(
-                                            userState.emailController.text);
-                                    if (await stringValidateUsuario == "Null") {
-                                      //print("Es null");
+                                        userState.passwordController.text);
+                                if (usuarioActual != null) {
+                                  //print('Usuario ya existente');
+                                  //Se guarda el ID DEL USUARIO (correo electrónico)
+                                  prefs.setString(
+                                      "userId", userState.emailController.text);
+                                  //Se guarda el Password encriptado
+                                  prefs.setString(
+                                      "passEncrypted", userState.passwordController.text);
+                                  usuarioProvider
+                                      .getUser(prefs.getString("userId")!);
+              
+                                  if (userState.recuerdame == true) {
+                                    await userState.setEmail();
+                                    await userState.setPassword();
+                                  } else {
+                                    userState.emailController.text = '';
+                                    userState.passwordController.text = '';
+                                    await prefs.remove('email');
+                                    await prefs.remove('password');
+                                  }
+              
+                                  if (!mounted) return;
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const EmprendimientosScreen(),
+                                    ),
+                                  );
+                                } else {
+                                  //print('Usuario no existente localmente');
+                                  snackbarKey.currentState
+                                      ?.showSnackBar(const SnackBar(
+                                    content: Text(
+                                        "Credenciales no válidas o el usuario no ha sido registrado al sistema."),
+                                  ));
+                                }
+                              } else {
+                                // print("Proceso online");
+                                //Login a Supabase
+                                final loginResponseSupabase =
+                                    await AuthService.loginSupabase(
+                                  userState.emailController.text,
+                                  userState.passwordController.text,
+                                );
+                                if (loginResponseSupabase != null) {
+                                  final getUsuarioSupabase =
+                                    await AuthService.getUserByUserIDSupabase(
+                                    loginResponseSupabase.user.id
+                                  );
+                                  if (getUsuarioSupabase != null) {
+                                     //Se descargan los roles desde Supabase
+                                    rolesSupabaseProvider.exitoso = true;
+                                    rolesSupabaseProvider.procesoCargando(true);
+                                    rolesSupabaseProvider.procesoTerminado(false);
+                                    rolesSupabaseProvider.procesoExitoso(false);
+                                    Future<bool> booleanoSupabase =
+                                        rolesSupabaseProvider.getRolesSupabase();
+                                    if (await booleanoSupabase) {
+                                      await userState.setTokenPocketbase(
+                                          loginResponseSupabase.accessToken);
+                                      final userId =
+                                          loginResponseSupabase.user.email;
+                                      //Se guarda el ID DEL USUARIO (correo)
+                                      prefs.setString("userId", userId);
+                                      //Se guarda el Password encriptado
+                                      prefs.setString(
+                                          "passEncrypted", userState.passwordController.text);
+                                      //Se válida que el Usuario exista localmente
+                                      if (usuarioProvider
+                                          .validateUsuario(userId)) {
+                                        //print('Usuario ya existente');
+                                        usuarioProvider.getUser(userId);
+                                        usuarioProvider.update(
+                                          getUsuarioSupabase.usuarioCollection.edges.first.node.correo,
+                                          getUsuarioSupabase.usuarioCollection.edges.first.node.nombre,
+                                          getUsuarioSupabase.usuarioCollection.edges.first.node.apellidoP,
+                                          getUsuarioSupabase.usuarioCollection.edges.first.node.apellidoM,
+                                          getUsuarioSupabase.usuarioCollection.edges.first.node.telefono,
+                                          getUsuarioSupabase.usuarioCollection.edges.first.node.celular,
+                                          userState.passwordController.text,
+                                          null,
+                                          [getUsuarioSupabase.usuarioCollection.edges.first.node.idRolFk],
+                                        );
+                                      } else {
+                                        usuarioProvider.add(
+                                          getUsuarioSupabase.usuarioCollection.edges.first.node.nombre,
+                                          getUsuarioSupabase.usuarioCollection.edges.first.node.apellidoP,
+                                          getUsuarioSupabase.usuarioCollection.edges.first.node.apellidoM,
+                                          getUsuarioSupabase.usuarioCollection.edges.first.node.telefono,
+                                          getUsuarioSupabase.usuarioCollection.edges.first.node.celular,
+                                          getUsuarioSupabase.usuarioCollection.edges.first.node.curp,
+                                          loginResponseSupabase.user.email,
+                                          userState.passwordController.text,
+                                          null,
+                                          [getUsuarioSupabase.usuarioCollection.edges.first.node.idRolFk],
+                                          getUsuarioSupabase.usuarioCollection.edges.first.node.id,
+                                          getUsuarioSupabase.usuarioCollection.edges.first.node.id,
+                                          getUsuarioSupabase.usuarioCollection.edges.first.node.fechaNacimiento,
+                                        );
+                                        usuarioProvider.getUser(loginResponseSupabase.user.email);
+                                      }
+                                      if (userState.recuerdame == true) {
+                                        await userState.setEmail();
+                                        await userState.setPassword();
+                                      } else {
+                                        userState.emailController.text = '';
+                                        userState.passwordController.text =
+                                            '';
+                                        await prefs.remove('email');
+                                        await prefs.remove('password');
+                                      }
+              
+                                      if (!mounted) return;
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const EmprendimientosScreen(),
+                                        ),
+                                      );
+                                    } else {
                                       snackbarKey.currentState
                                           ?.showSnackBar(const SnackBar(
                                         content: Text(
-                                            "Falló al validar Usuario en Servidor."),
+                                            "Falló al descargar roles desde el Servidor."),
                                       ));
-                                    } else {
-                                      if (await stringValidateUsuario ==
-                                          "NoUserExist") {
-                                        //print("Es NoUserExist");
-                                        //Se postea el Usuario en Pocketbase
-                                        if (!await AuthService
-                                            .postUsuarioPocketbase(
-                                                loginResponseEmiWeb,
-                                                userState.emailController.text,
-                                                passwordEncrypted)) {
-                                          snackbarKey.currentState
-                                              ?.showSnackBar(const SnackBar(
-                                            content: Text(
-                                                "Falló al recuperar Usuario del Servidor."),
-                                          ));
-                                          return;
-                                        }
-                                      } else {
-                                        //Se actualiza Usuario en Pocketbase
-                                        if (!await AuthService
-                                            .updateUsuarioPocketbase(
-                                          loginResponseEmiWeb,
-                                          passwordEncrypted,
-                                          userState.emailController.text,
-                                          await stringValidateUsuario,
-                                        )) {
-                                          snackbarKey.currentState
-                                              ?.showSnackBar(const SnackBar(
-                                            content: Text(
-                                                "Falló al actualizar datos de Usuario en Servidor."),
-                                          ));
-                                          return;
-                                        }
-                                      }
-                                      //Login a Pocketbase Nuevamente
-                                      final loginResponsePocketbase =
-                                          await AuthService.loginPocketbase(
-                                        userState.emailController.text,
-                                        passwordEncrypted,
-                                      );
-                                      if (loginResponsePocketbase != null) {
-                                        await userState.setTokenPocketbase(
-                                            loginResponsePocketbase.token);
-                                        final userId =
-                                            loginResponsePocketbase.user.email;
-                                        //Se guarda el ID DEL USUARIO (correo)
-                                        prefs.setString("userId", userId);
-                                        //Se guarda el Password encriptado
-                                        prefs.setString(
-                                            "passEncrypted", passwordEncrypted);
-                                        //User Query
-                                        final emiUser = await ApiService
-                                            .getEmiUserPocketbase(
-                                                loginResponsePocketbase
-                                                    .user.id);
-
-                                        final idDBR =
-                                            await AuthService.userEMIByID(
-                                                loginResponsePocketbase
-                                                    .user.id);
-
-                                        final imageUser =
-                                            await AuthService.imagenUsuarioByID(
-                                                emiUser?.items?[0].idImagenFk ??
-                                                    "empty");
-
-                                        //print("Hola miro el IdDBR $idDBR");
-                                        if (emiUser == null) {
-                                          //print("Si es null");
-                                          return;
-                                        }
-                                        //print("Hola miro el IdDBR post $idDBR");
-                                        if (usuarioProvider
-                                            .validateUsuario(userId)) {
-                                          //print('Usuario ya existente');
-                                          usuarioProvider.getUser(userId);
-                                          usuarioProvider.update(
-                                            loginResponsePocketbase.user.email,
-                                            emiUser.items![0].nombreUsuario,
-                                            emiUser.items![0].apellidoP,
-                                            emiUser.items![0].apellidoM,
-                                            emiUser.items![0].telefono,
-                                            emiUser.items![0].celular,
-                                            passwordEncrypted,
-                                            imageUser,
-                                            emiUser.items?[0].idRolesFk ?? [],
-                                            emiUser.items![0].archivado,
-                                          );
-                                          if (emiUser
-                                              .items![0].idRolesFk!.isEmpty) {
-                                            snackbarKey.currentState
-                                                ?.showSnackBar(const SnackBar(
-                                              content: Text(
-                                                  "El Usuario no cuenta con los permisos necesarios para iniciar sesión, favor de comunicarse con el Administrador."),
-                                            ));
-                                            return;
-                                          }
-                                          if (emiUser.items![0].archivado) {
-                                            snackbarKey.currentState
-                                                ?.showSnackBar(const SnackBar(
-                                              content: Text(
-                                                  "El usuario se encuentra archivado, comuníquese con el Administrador."),
-                                            ));
-                                            return;
-                                          }
-                                        } else {
-                                          usuarioProvider.add(
-                                            emiUser.items![0].nombreUsuario,
-                                            emiUser.items![0].apellidoP,
-                                            emiUser.items![0].apellidoM,
-                                            emiUser.items![0].telefono,
-                                            emiUser.items![0].celular,
-                                            loginResponsePocketbase.user.email,
-                                            passwordEncrypted,
-                                            imageUser,
-                                            idDBR,
-                                            emiUser.items?[0].idRolesFk ?? [],
-                                            emiUser.items![0].idEmiWeb,
-                                            emiUser.items![0].archivado,
-                                          );
-                                          usuarioProvider.getUser(
-                                              loginResponsePocketbase
-                                                  .user.email);
-                                        }
-                                        if (userState.recuerdame == true) {
-                                          await userState.setEmail();
-                                          //TODO: quitar?
-                                          await userState.setPassword();
-                                        } else {
-                                          userState.emailController.text = '';
-                                          userState.passwordController.text =
-                                              '';
-                                          await prefs.remove('email');
-                                          await prefs.remove('password');
-                                        }
-
-                                        if (!mounted) return;
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const EmprendimientosScreen(),
-                                          ),
-                                        );
-                                      } else {
-                                        snackbarKey.currentState
-                                            ?.showSnackBar(const SnackBar(
-                                          content: Text(
-                                              "Usuario ingresado inexistente."),
-                                        ));
-                                      }
                                     }
                                   } else {
                                     snackbarKey.currentState
-                                        ?.showSnackBar(const SnackBar(
-                                      content: Text(
-                                          "Falló al descargar roles de Pocketbase."),
+                                      ?.showSnackBar(const SnackBar(
+                                    content: Text(
+                                        "Falló al recuperar datos del Usuario desde el Servidor."),
                                     ));
                                   }
                                 } else {
                                   snackbarKey.currentState
                                       ?.showSnackBar(const SnackBar(
                                     content: Text(
-                                        "Falló al descargar roles de Emi Web."),
-                                  ));
+                                        "Credenciales inválidas, revise que la contraseña y el correo electrónico sean correctos."),
+                                    ));
                                 }
-                              } else {
-                                return;
                               }
-                            }
-                          },
-                          text: 'Ingresar',
-                          options: ButtonOptions(
-                            width: 170,
-                            height: 50,
-                            color: const Color(0xFF4672FF),
-                            textStyle: AppTheme.of(context).subtitle2.override(
-                                  fontFamily: 'Montserrat',
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                            elevation: 0,
-                            borderSide: const BorderSide(
-                              color: Colors.transparent,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ),
-
-                      //Recordar
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-                        child: Container(
-                          width: 146,
-                          height: 40,
-                          decoration: const BoxDecoration(
-                            color: Color(0x00EEEEEE),
-                          ),
-                          child: GestureDetector(
-                            onTap: () async {
-                              userState.updateRecuerdame();
                             },
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Recordarme',
-                                  style:
-                                      AppTheme.of(context).bodyText1.override(
-                                            fontFamily: 'Poppins',
-                                            color: const Color(0xFF4672FF),
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                ),
-                                ToggleIcon(
-                                  onPressed: () async {
-                                    userState.updateRecuerdame();
-                                  },
-                                  value: userState.recuerdame,
-                                  onIcon: const Icon(
-                                    Icons.check_box,
-                                    color: Color(0xFF4672FF),
-                                    size: 25,
-                                  ),
-                                  offIcon: const Icon(
-                                    Icons.check_box_outline_blank,
-                                    color: Color(0xFF4672FF),
-                                    size: 25,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      //Restablecer contraseña
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-                        child: InkWell(
-                          onTap: () async {
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const ResetPasswordScreen(),
+                            text: 'Ingresar',
+                            options: FFButtonOptions(
+                              width: 130,
+                              height: 50,
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                              textStyle:
+                                  FlutterFlowTheme.of(context).subtitle1.override(
+                                        fontFamily: 'Lexend Deca',
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                              elevation: 3,
+                              borderSide: const BorderSide(
+                                color: Colors.transparent,
+                                width: 1,
                               ),
-                            );
-                          },
-                          child: Text(
-                            '¿Olvidaste tu contraseña?',
-                            style: AppTheme.of(context).bodyText1.override(
-                                  fontFamily: 'Poppins',
-                                  color: const Color(0xFF221573),
-                                  fontSize: 15,
-                                  decoration: TextDecoration.underline,
-                                ),
-                          ),
-                        ),
-                      ),
-
-                      Flexible(
-                        child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 20.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 5, 0),
-                                      child: FaIcon(
-                                        FontAwesomeIcons.shieldHalved,
-                                        color: Color(0xFF959595),
-                                        size: 40,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0, 0, 5, 0),
-                                      child: Text(
-                                        'Acceso\nseguro',
-                                        style: AppTheme.of(context)
-                                            .bodyText1
-                                            .override(
-                                              fontFamily: 'Poppins',
-                                              color: const Color(0xFF959595),
-                                              fontSize: 13,
-                                            ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Container(
-                                  width: 2,
-                                  height: 80,
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xFF959595),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      5, 0, 0, 0),
-                                  child: Text(
-                                    "La seguridad es nuestra prioridad,\npara ello utilizamos los estándares\nmás altos.",
-                                    style:
-                                        AppTheme.of(context).bodyText1.override(
-                                              fontFamily: 'Poppins',
-                                              color: const Color(0xFF959595),
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ],
+                              borderRadius: BorderRadius.circular(50),
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 44),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        0, 12, 0, 24),
+                                    child: FFButtonWidget(
+                                      onPressed: () async {
+                                        // await Navigator.push(
+                                        //   context,
+                                        //   MaterialPageRoute(
+                                        //     builder: (context) =>
+                                        //         ForgotPasswordWidget(),
+                                        //   ),
+                                        // );
+                                      },
+                                      text: '¿Olvidaste tu contraseña?',
+                                      options: FFButtonOptions(
+                                        width: 170,
+                                        height: 30,
+                                        color: const Color(0x00FFFFFF),
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .subtitle2
+                                            .override(
+                                              fontFamily: 'Lexend Deca',
+                                              color: Colors.white,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                        elevation: 0,
+                                        borderSide: const BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(0),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

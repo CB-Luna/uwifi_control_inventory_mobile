@@ -616,6 +616,52 @@ class _AgregarJornada1ScreenState extends State<AgregarJornada1Screen> {
                             ),
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0, 5, 0, 0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional
+                                    .fromSTEB(0, 0, 0, 15),
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    
+                                  },
+                                  text: 'Registrar',
+                                  icon: const Icon(
+                                    Icons.check_rounded,
+                                    color: Colors.white,
+                                    size: 15,
+                                  ),
+                                  options: FFButtonOptions(
+                                    width: 150,
+                                    height: 50,
+                                    color: AppTheme.of(context)
+                                        .secondaryText,
+                                    textStyle: AppTheme.of(context)
+                                        .title3
+                                        .override(
+                                          fontFamily: 'Poppins',
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w300,
+                                        ),
+                                    elevation: 3,
+                                    borderSide: BorderSide(
+                                      color: AppTheme.of(context)
+                                          .secondaryText,
+                                      width: 0,
+                                    ),
+                                    borderRadius:
+                                        BorderRadius.circular(8),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),

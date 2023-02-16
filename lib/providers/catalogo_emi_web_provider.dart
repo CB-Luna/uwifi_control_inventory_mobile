@@ -2435,7 +2435,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                           .payload!.tiposUsuario!.length;
                   i++) {
                 final rol = dataBase.rolesBox
-                    .query(Roles_.idEmiWeb.equals(
+                    .query(Roles_.idDBR.equals(
                         responseGetUsuarioDataCompletoParse
                             .payload!.tiposUsuario![i].idCatRoles
                             .toString()))
@@ -2444,7 +2444,7 @@ class CatalogoEmiWebProvider extends ChangeNotifier {
                 if (rol != null) {
                   if (rol.rol != "Staff Logística" &&
                       rol.rol != "Staff Dirección") {
-                    listRoles.add(rol.idDBR!);
+                    listRoles.add(rol.idDBR);
                   }
                 }
               }

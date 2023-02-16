@@ -18,8 +18,9 @@ class UsuarioController extends ChangeNotifier {
   String nombre = '';
   String apellidoP = '';
   String apellidoM = '';
-  DateTime? nacimiento;
+  DateTime nacimiento = DateTime.now();
   String telefono = '';
+  String curp = '';
   String celular = '';
   String correo = '';
   String password = '';
@@ -54,14 +55,15 @@ class UsuarioController extends ChangeNotifier {
       String apellidoP,
       String? apellidoM,
       String? telefono,
-      String? celular,
+      String celular,
+      String curp,
       String correo,
       String password,
       GetImagenUsuario? imagen,
-      String? idDBR,
       List<String> rolesIdDBR,
+      String idDBR,
       String idEmiWeb,
-      bool archivado,
+      DateTime fechaNacimiento,
       ) async {
     late Imagenes nuevaImagenUsuario;
     final nuevoUsuario = Usuarios(
@@ -73,8 +75,9 @@ class UsuarioController extends ChangeNotifier {
         correo: correo,
         password: password,
         idDBR: idDBR, 
-        idEmiWeb: idEmiWeb,
-        archivado: archivado,
+        idEmiWeb: idEmiWeb, 
+        fechaNacimiento: fechaNacimiento, 
+        curp: curp,
         );
     if (imagen != null) {
       final uInt8ListImagen = base64Decode(imagen.base64);
@@ -125,11 +128,10 @@ class UsuarioController extends ChangeNotifier {
       String newApellidoP,
       String? newApellidoM,
       String? newTelefono,
-      String? newCelular,
+      String newCelular,
       String newPassword,
       GetImagenUsuario? newImagen,
       List<String> newRolesIdDBR,
-      bool newArchivado,
       ) async {
     // Se recupera el usuario por id
     final updateUsuario = dataBase.usuariosBox.query(Usuarios_.correo.equals(correo)).build().findUnique();
@@ -140,7 +142,6 @@ class UsuarioController extends ChangeNotifier {
       updateUsuario.telefono = newTelefono;
       updateUsuario.celular = newCelular;
       updateUsuario.password = newPassword;
-      updateUsuario.archivado = newArchivado;
       //Se agregan los roles actualizados
       updateUsuario.roles.clear();
       for (var i = 0; i < newRolesIdDBR.length; i++) {

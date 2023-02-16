@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:taller_alex_app_asesor/database/entitys.dart';
+import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/helpers/globals.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
-import 'package:taller_alex_app_asesor/screens/archivados/archivados_screen.dart';
 import 'package:taller_alex_app_asesor/screens/perfil_usuario/perfil_usuario_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_cerrar_sesion.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/bottom_sheet_recover_catalogos.dart';
@@ -15,8 +15,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_alex_app_asesor/providers/providers.dart';
-import 'package:taller_alex_app_asesor/theme/theme.dart';
-
 import 'package:taller_alex_app_asesor/screens/emprendedores/emprendedores_screen.dart';
 import 'package:taller_alex_app_asesor/screens/emprendimientos/emprendimientos_screen.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/side_menu/custom_menu_item.dart';
@@ -26,8 +24,6 @@ class SideMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const String currentUserPhoto =
-        'assets/images/default-user-profile-picture.jpg';
     final usuarioProvider = Provider.of<UsuarioController>(context);
     final UserState userState = Provider.of<UserState>(context);
 
@@ -58,7 +54,7 @@ class SideMenu extends StatelessWidget {
                     image: DecorationImage(
                       fit: BoxFit.cover,
                       image: Image.asset(
-                        'assets/images/bglogin2.png',
+                        'assets/images/bgFleet@2x.png',
                       ).image,
                     ),
                     borderRadius: BorderRadius.circular(0)),
@@ -84,19 +80,19 @@ class SideMenu extends StatelessWidget {
                               shape: BoxShape.circle,
                             ),
                             child: Image.asset(
-                              'assets/images/emlogo.png',
+                              'assets/images/tallerAlexLogo.png',
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 5, 0, 0, 0),
                             child: Text(
-                              'Encuentro con México',
+                              'Taller Automotriz Alex',
                               maxLines: 2,
-                              style: AppTheme.of(context).bodyText1.override(
+                              style: FlutterFlowTheme.of(context).bodyText2.override(
                                     fontFamily:
-                                        AppTheme.of(context).bodyText1Family,
-                                    color: AppTheme.of(context).primaryText,
+                                        FlutterFlowTheme.of(context).bodyText1Family,
+                                    color: FlutterFlowTheme.of(context).primaryBtnText,
                                     fontSize: 14,
                                   ),
                             ),
@@ -133,15 +129,15 @@ class SideMenu extends StatelessWidget {
                                         shape: BoxShape.circle,
                                       ),
                                       child: Container(
-                                        color: Colors.blue,
+                                        color: FlutterFlowTheme.of(context).primaryColor,
                                         child: Center(
                                           child: Text(
                                             "${currentUser.nombre.substring(0, 1)} ${currentUser.apellidoP.substring(0, 1)}",
-                                            style: AppTheme.of(context)
+                                            style: FlutterFlowTheme.of(context)
                                                 .bodyText1
                                                 .override(
                                                   fontFamily:
-                                                      AppTheme.of(context)
+                                                      FlutterFlowTheme.of(context)
                                                           .bodyText1Family,
                                                   color: Colors.white,
                                                   fontSize: 14,
@@ -176,10 +172,10 @@ class SideMenu extends StatelessWidget {
                               child: Text(
                                 maybeHandleOverflow("${usuarioProvider.usuarioCurrent!.nombre} ${usuarioProvider.usuarioCurrent!.apellidoP}", 16, "..."),
                                 maxLines: 2,
-                                style: AppTheme.of(context).bodyText1.override(
+                                style: FlutterFlowTheme.of(context).bodyText1.override(
                                       fontFamily:
-                                          AppTheme.of(context).bodyText1Family,
-                                      color: AppTheme.of(context).primaryText,
+                                          FlutterFlowTheme.of(context).bodyText1Family,
+                                      color: FlutterFlowTheme.of(context).white,
                                       fontSize: 15,
                                     ),
                               ),
@@ -190,7 +186,7 @@ class SideMenu extends StatelessWidget {
                     ),
 
                     CustomMenuItem(
-                      label: 'Emprendimientos',
+                      label: 'Órdenes',
                       iconData: Icons.home,
                       onTap: () async {
                         await Navigator.push(
@@ -204,7 +200,7 @@ class SideMenu extends StatelessWidget {
 
                     // if (userState.rol == Rol.administrador)
                     CustomMenuItem(
-                      label: 'Emprendedores',
+                      label: 'Clientes',
                       iconData: Icons.groups,
                       onTap: () async {
                         if (currentUser.rol.target!.rol == "Voluntario Estratégico") {
@@ -218,27 +214,6 @@ class SideMenu extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) => const EmprendedoresScreen(),
-                            ),
-                          );
-                        }
-                      },
-                    ),
-
-                    CustomMenuItem(
-                      label: 'Archivados',
-                      iconData: Icons.file_download_outlined,
-                      onTap: () async {
-                        if (currentUser.rol.target!.rol == "Voluntario Estratégico") {
-                          snackbarKey.currentState
-                              ?.showSnackBar(const SnackBar(
-                            content: Text(
-                                "Este usuario no tiene permisos para esta acción."),
-                          ));
-                        } else {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ArchivadosScreen(),
                             ),
                           );
                         }
@@ -290,7 +265,7 @@ class SideMenu extends StatelessWidget {
                     ),
 
                     CustomMenuItem(
-                      label: 'Sinc. Proyectos',
+                      label: 'Sinc. Órdenes',
                       iconData: Icons.downloading_outlined,
                       lineHeight: 1.2,
                       onTap: () async {

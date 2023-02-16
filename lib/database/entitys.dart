@@ -518,13 +518,14 @@ class Usuarios {
   String apellidoP;
   String? apellidoM;
   String? telefono;
-  String? celular;
+  String celular;
+  String curp;
   String correo;
   String password;
   DateTime fechaRegistro;
-  bool archivado;
+  DateTime fechaNacimiento;
   @Unique()
-  String? idDBR;
+  String idDBR;
   @Unique()
   String idEmiWeb;
   final bitacora = ToMany<Bitacora>();
@@ -541,12 +542,13 @@ class Usuarios {
     required this.apellidoP,
     this.apellidoM,
     this.telefono,
-    this.celular,
+    required this.celular,
+    required this.curp,
     required this.correo,
     required this.password,
+    required this.fechaNacimiento,
     DateTime? fechaRegistro,
-    required this.archivado,
-    this.idDBR,
+    required this.idDBR,
     required this.idEmiWeb,
   }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
@@ -560,9 +562,7 @@ class Roles {
   String rol;
   DateTime fechaRegistro;
   @Unique()
-  String? idDBR;
-  @Unique()
-  String idEmiWeb;
+  String idDBR;
   final bitacora = ToOne<Bitacora>();
   final usuarios = ToMany<Usuarios>();
 
@@ -570,8 +570,7 @@ class Roles {
     this.id = 0,
     required this.rol,
     DateTime? fechaRegistro,
-    this.idDBR,
-    required this.idEmiWeb,
+    required this.idDBR,
   }) : fechaRegistro = fechaRegistro ?? DateTime.now();
 
   String get fechaRegistroFormat =>

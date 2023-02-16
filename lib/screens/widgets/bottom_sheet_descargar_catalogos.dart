@@ -1,7 +1,6 @@
+import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/screens/sync/descarga_catalogos_emi_web_screen.dart';
 import 'package:flutter/material.dart';
-
-import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
 class BottomSheetDescargarCatalogos extends StatefulWidget {
@@ -21,7 +20,7 @@ class _BottomSheetDescargarCatalogosState
       width: MediaQuery.of(context).size.width,
       height: 350,
       decoration: BoxDecoration(
-        color: AppTheme.of(context).secondaryBackground,
+        color: FlutterFlowTheme.of(context).secondaryBackground,
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(0),
           bottomRight: Radius.circular(0),
@@ -47,7 +46,7 @@ class _BottomSheetDescargarCatalogosState
                         thickness: 3,
                         indent: 150,
                         endIndent: 150,
-                        color: AppTheme.of(context).primaryBackground,
+                        color: FlutterFlowTheme.of(context).primaryBackground,
                       ),
                       Row(
                         mainAxisSize: MainAxisSize.max,
@@ -60,11 +59,11 @@ class _BottomSheetDescargarCatalogosState
                               child: Text(
                                 'Advertencia: Necesitas descargar los catálogos para llenar algunos formularios.',
                                 textAlign: TextAlign.center,
-                                style: AppTheme.of(context).title2.override(
+                                style: FlutterFlowTheme.of(context).title2.override(
                                       fontFamily:
-                                          AppTheme.of(context).title2Family,
-                                      color: AppTheme.of(context).primaryText,
-                                      fontSize: 14,
+                                          FlutterFlowTheme.of(context).title2Family,
+                                      color: FlutterFlowTheme.of(context).primaryText,
+                                      fontSize: 22,
                                     ),
                               ),
                             ),
@@ -77,11 +76,11 @@ class _BottomSheetDescargarCatalogosState
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const[
+                          children: [
                             Icon(
                               Icons.warning_amber_outlined,
                               size: 50,
-                              color: Color(0xFF221573),
+                              color: FlutterFlowTheme.of(context).primaryColor,
                             ),
                           ],
                         ),
@@ -96,11 +95,12 @@ class _BottomSheetDescargarCatalogosState
                               child: Text(
                                 'Algunos campos en el llenado de los formularios se encuentra vacío, debe de descargar esta información faltante que se encuentra en Internet.',
                                 textAlign: TextAlign.center,
-                                style: AppTheme.of(context).bodyText2.override(
+                                style: FlutterFlowTheme.of(context).bodyText2.override(
                                       fontFamily:
-                                          AppTheme.of(context).bodyText2Family,
-                                      color: AppTheme.of(context).secondaryText,
+                                          FlutterFlowTheme.of(context).bodyText2Family,
+                                      color: FlutterFlowTheme.of(context).secondaryText,
                                       fontWeight: FontWeight.w500,
+                                      fontSize: 20
                                     ),
                               ),
                             ),
@@ -123,11 +123,11 @@ class _BottomSheetDescargarCatalogosState
                                 width: 150,
                                 height: 50,
                                 color: const Color(0xFF8C8C8C),
-                                textStyle: AppTheme.of(context)
+                                textStyle: FlutterFlowTheme.of(context)
                                     .subtitle2
                                     .override(
                                       fontFamily:
-                                          AppTheme.of(context).subtitle2Family,
+                                          FlutterFlowTheme.of(context).subtitle2Family,
                                       color: Colors.white,
                                       fontWeight: FontWeight.normal,
                                     ),
@@ -156,9 +156,9 @@ class _BottomSheetDescargarCatalogosState
                               options: FFButtonOptions(
                                 width: 150,
                                 height: 50,
-                                color: AppTheme.of(context).secondaryText,
+                                color: FlutterFlowTheme.of(context).primaryColor,
                                 textStyle:
-                                    AppTheme.of(context).subtitle2.override(
+                                    FlutterFlowTheme.of(context).subtitle2.override(
                                           fontFamily: 'Poppins',
                                           color: Colors.white,
                                           fontSize: 16,

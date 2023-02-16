@@ -100,7 +100,7 @@ class RolesEmiWebProvider extends ChangeNotifier {
     }
   }
 
-//Función para recuperar el catálogo de roles desde Emi Web
+//Función para recuperar el catálogo de roles desde Supabase
   Future<bool> getRoles(String email, String password) async {
     try {
       var url = Uri.parse("$baseUrlEmiWebServices/catalogos/roles");

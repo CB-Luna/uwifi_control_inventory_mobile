@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/providers/providers.dart';
-import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:taller_alex_app_asesor/screens/widgets/flutter_flow_widgets.dart';
 
 class BottomSheetCerrarSesion extends StatefulWidget {
@@ -22,7 +22,7 @@ class _BottomSheetCerrarSesionState
       width: MediaQuery.of(context).size.width,
       height: 350,
       decoration: BoxDecoration(
-        color: AppTheme.of(context).secondaryBackground,
+        color: FlutterFlowTheme.of(context).secondaryBackground,
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(0),
           bottomRight: Radius.circular(0),
@@ -48,7 +48,7 @@ class _BottomSheetCerrarSesionState
                         thickness: 3,
                         indent: 150,
                         endIndent: 150,
-                        color: AppTheme.of(context).primaryBackground,
+                        color: FlutterFlowTheme.of(context).primaryBackground,
                       ),
                       Row(
                         mainAxisSize: MainAxisSize.max,
@@ -61,11 +61,11 @@ class _BottomSheetCerrarSesionState
                               child: Text(
                                 '¿Seguro que quieres Cerrar Sesión?',
                                 textAlign: TextAlign.center,
-                                style: AppTheme.of(context).title2.override(
+                                style: FlutterFlowTheme.of(context).title2.override(
                                       fontFamily:
-                                          AppTheme.of(context).title2Family,
-                                      color: AppTheme.of(context).primaryText,
-                                      fontSize: 19,
+                                          FlutterFlowTheme.of(context).title2Family,
+                                      color: FlutterFlowTheme.of(context).primaryText,
+                                      fontSize: 22,
                                     ),
                               ),
                             ),
@@ -82,11 +82,12 @@ class _BottomSheetCerrarSesionState
                               child: Text(
                                 'Toda la información que no hayas sincronizado se mantendrá guardada de forma local.',
                                 textAlign: TextAlign.center,
-                                style: AppTheme.of(context).bodyText2.override(
+                                style: FlutterFlowTheme.of(context).bodyText2.override(
                                       fontFamily:
-                                          AppTheme.of(context).bodyText2Family,
-                                      color: AppTheme.of(context).secondaryText,
+                                          FlutterFlowTheme.of(context).bodyText2Family,
+                                      color: FlutterFlowTheme.of(context).secondaryText,
                                       fontWeight: FontWeight.w500,
+                                      fontSize: 20
                                     ),
                               ),
                             ),
@@ -99,11 +100,11 @@ class _BottomSheetCerrarSesionState
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const[
+                          children: [
                             Icon(
                               Icons.exit_to_app_outlined,
                               size: 80,
-                              color: Color(0xFF221573),
+                              color: FlutterFlowTheme.of(context).primaryColor,
                             ),
                           ],
                         ),
@@ -124,11 +125,11 @@ class _BottomSheetCerrarSesionState
                                 width: 150,
                                 height: 50,
                                 color: const Color(0xFF8C8C8C),
-                                textStyle: AppTheme.of(context)
+                                textStyle: FlutterFlowTheme.of(context)
                                     .subtitle2
                                     .override(
                                       fontFamily:
-                                          AppTheme.of(context).subtitle2Family,
+                                          FlutterFlowTheme.of(context).subtitle2Family,
                                       color: Colors.white,
                                       fontWeight: FontWeight.normal,
                                     ),
@@ -147,9 +148,9 @@ class _BottomSheetCerrarSesionState
                               options: FFButtonOptions(
                                 width: 150,
                                 height: 50,
-                                color: AppTheme.of(context).secondaryText,
+                                color: FlutterFlowTheme.of(context).primaryColor,
                                 textStyle:
-                                  AppTheme.of(context).subtitle2.override(
+                                  FlutterFlowTheme.of(context).subtitle2.override(
                                     fontFamily: 'Poppins',
                                     color: Colors.white,
                                     fontSize: 16,

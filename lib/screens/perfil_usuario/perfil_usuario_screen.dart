@@ -1,12 +1,12 @@
 import 'dart:io';
 
+import 'package:taller_alex_app_asesor/flutter_flow/flutter_flow_theme.dart';
 import 'package:taller_alex_app_asesor/main.dart';
 import 'package:taller_alex_app_asesor/screens/perfil_usuario/device_information_widget.dart';
 import 'package:taller_alex_app_asesor/screens/screens.dart';
 import 'package:taller_alex_app_asesor/util/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:taller_alex_app_asesor/theme/theme.dart';
 import 'package:taller_alex_app_asesor/database/entitys.dart';
 import 'package:taller_alex_app_asesor/providers/database_providers/usuario_controller.dart';
 import 'package:taller_alex_app_asesor/screens/perfil_usuario/editar_usuario_screen.dart';
@@ -55,32 +55,19 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
       onWillPop: () async => false,
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: AppTheme.of(context).primaryBackground,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Stack(
             children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 1,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFEEEEEE),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: Image.asset(
-                      'assets/images/bglogin2.png',
-                    ).image,
-                  ),
-                ),
-              ),
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 230, 0, 0),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * 0.8,
-                  decoration: const BoxDecoration(
-                    color: Color(0x554672FF),
-                    borderRadius: BorderRadius.only(
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).grayLighter,
+                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(0),
                       bottomRight: Radius.circular(0),
                       topLeft: Radius.circular(100),
@@ -99,7 +86,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                       width: MediaQuery.of(context).size.width,
                       height: 60,
                       decoration: BoxDecoration(
-                        color: const Color(0x554672FF),
+                        color: FlutterFlowTheme.of(context).grayLighter,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Padding(
@@ -117,7 +104,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                                   width: 80,
                                   height: 40,
                                   decoration: BoxDecoration(
-                                    color: AppTheme.of(context).secondaryText,
+                                    color: FlutterFlowTheme.of(context).primaryColor,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: InkWell(
@@ -142,10 +129,10 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                                         ),
                                         Text(
                                           'Atrás',
-                                          style: AppTheme.of(context)
+                                          style: FlutterFlowTheme.of(context)
                                               .bodyText1
                                               .override(
-                                                fontFamily: AppTheme.of(context)
+                                                fontFamily: FlutterFlowTheme.of(context)
                                                     .bodyText1Family,
                                                 color: Colors.white,
                                                 fontSize: 16,
@@ -170,12 +157,12 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                                     child: AutoSizeText(
                                       "Perfil de ${maybeHandleOverflow('${currentUser.nombre} ${currentUser.apellidoP}', 18, '...')}",
                                       maxLines: 2,
-                                      style: AppTheme.of(context)
+                                      style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
-                                            fontFamily: AppTheme.of(context)
+                                            fontFamily: FlutterFlowTheme.of(context)
                                                 .bodyText1Family,
-                                            color: AppTheme.of(context)
+                                            color: FlutterFlowTheme.of(context)
                                                 .primaryText,
                                             fontSize: 15,
                                           ),
@@ -188,7 +175,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                               width: 45,
                               height: 40,
                               decoration: BoxDecoration(
-                                color: AppTheme.of(context).secondaryText,
+                                color: FlutterFlowTheme.of(context).primaryColor,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Row(
@@ -232,13 +219,13 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                               shape: BoxShape.circle,
                             ),
                             child: Container(
-                              color: Colors.blue,
+                              color: FlutterFlowTheme.of(context).primaryColor,
                               child: Center(
                                 child: Text(
                                   "${currentUser.nombre.substring(0, 1)} ${currentUser.apellidoP.substring(0, 1)}",
                                   style:
-                                      AppTheme.of(context).bodyText1.override(
-                                            fontFamily: AppTheme.of(context)
+                                      FlutterFlowTheme.of(context).bodyText1.override(
+                                            fontFamily: FlutterFlowTheme.of(context)
                                                 .bodyText1Family,
                                             color: Colors.white,
                                             fontSize: 70,
@@ -300,10 +287,10 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                               const EdgeInsetsDirectional.fromSTEB(0, 0, 2, 0),
                           child: Text(
                             "${currentUser.nombre} ${currentUser.apellidoP}",
-                            style: AppTheme.of(context).bodyText1.override(
+                            style: FlutterFlowTheme.of(context).bodyText1.override(
                                   fontFamily:
-                                      AppTheme.of(context).bodyText1Family,
-                                  color: AppTheme.of(context).primaryText,
+                                      FlutterFlowTheme.of(context).bodyText1Family,
+                                  color: FlutterFlowTheme.of(context).primaryText,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -316,8 +303,8 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                     child: Text(
                       currentUser.correo,
-                      style: AppTheme.of(context).bodyText1.override(
-                            fontFamily: AppTheme.of(context).bodyText1Family,
+                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                            fontFamily: FlutterFlowTheme.of(context).bodyText1Family,
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
                           ),
@@ -329,7 +316,7 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                       width: 180,
                       height: 30,
                       decoration: BoxDecoration(
-                        color: AppTheme.of(context).secondaryText,
+                        color: FlutterFlowTheme.of(context).primaryColor,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Column(
@@ -351,9 +338,9 @@ class _PerfilUsuarioScreenState extends State<PerfilUsuarioScreen> {
                               ),
                               Text(
                                 currentUser.rol.target!.rol,
-                                style: AppTheme.of(context).bodyText1.override(
+                                style: FlutterFlowTheme.of(context).bodyText1.override(
                                       fontFamily:
-                                          AppTheme.of(context).bodyText1Family,
+                                          FlutterFlowTheme.of(context).bodyText1Family,
                                       color: Colors.white,
                                       fontWeight: FontWeight.w300,
                                     ),

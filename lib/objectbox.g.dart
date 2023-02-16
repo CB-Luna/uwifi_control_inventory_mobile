@@ -148,7 +148,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(10, 252808688812742776),
       name: 'Usuarios',
-      lastPropertyId: const IdUid(26, 6277362090783645144),
+      lastPropertyId: const IdUid(28, 9106146166091297461),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -203,11 +203,6 @@ final _entities = <ModelEntity>[
             flags: 2080,
             indexId: const IdUid(70, 177953814522194844)),
         ModelProperty(
-            id: const IdUid(19, 1119031807460084459),
-            name: 'archivado',
-            type: 1,
-            flags: 0),
-        ModelProperty(
             id: const IdUid(24, 6133859733044332540),
             name: 'rolId',
             type: 11,
@@ -226,7 +221,17 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(250, 4481819197045105238),
-            relationTarget: 'Imagenes')
+            relationTarget: 'Imagenes'),
+        ModelProperty(
+            id: const IdUid(27, 3443423026800618837),
+            name: 'curp',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(28, 9106146166091297461),
+            name: 'fechaNacimiento',
+            type: 10,
+            flags: 0)
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -1287,13 +1292,7 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(123, 1234571576087817606),
-            relationTarget: 'Bitacora'),
-        ModelProperty(
-            id: const IdUid(7, 6054280734454924450),
-            name: 'idEmiWeb',
-            type: 9,
-            flags: 2080,
-            indexId: const IdUid(236, 5375138088732281764))
+            relationTarget: 'Bitacora')
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -2743,7 +2742,8 @@ ModelDefinition getObjectBoxModel() {
         713793477301725008,
         6763248896344001454,
         3029635981322260859,
-        530782811209096402
+        530782811209096402,
+        5375138088732281764
       ],
       retiredPropertyUids: const [
         7079790605743243388,
@@ -3078,7 +3078,9 @@ ModelDefinition getObjectBoxModel() {
         4450405447758241168,
         2418703915789470072,
         1964545965879321706,
-        3359767737465312075
+        3359767737465312075,
+        1119031807460084459,
+        6054280734454924450
       ],
       retiredRelationUids: const [
         1226469011453769556,
@@ -3283,14 +3285,13 @@ ModelDefinition getObjectBoxModel() {
           final telefonoOffset = object.telefono == null
               ? null
               : fbb.writeString(object.telefono!);
-          final celularOffset =
-              object.celular == null ? null : fbb.writeString(object.celular!);
+          final celularOffset = fbb.writeString(object.celular);
           final correoOffset = fbb.writeString(object.correo);
           final passwordOffset = fbb.writeString(object.password);
-          final idDBROffset =
-              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
+          final idDBROffset = fbb.writeString(object.idDBR);
           final idEmiWebOffset = fbb.writeString(object.idEmiWeb);
-          fbb.startTable(27);
+          final curpOffset = fbb.writeString(object.curp);
+          fbb.startTable(29);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nombreOffset);
           fbb.addOffset(2, apellidoPOffset);
@@ -3301,10 +3302,11 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(8, passwordOffset);
           fbb.addInt64(11, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addOffset(15, idDBROffset);
-          fbb.addBool(18, object.archivado);
           fbb.addInt64(23, object.rol.targetId);
           fbb.addOffset(24, idEmiWebOffset);
           fbb.addInt64(25, object.imagen.targetId);
+          fbb.addOffset(26, curpOffset);
+          fbb.addInt64(27, object.fechaNacimiento.millisecondsSinceEpoch);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -3323,15 +3325,16 @@ ModelDefinition getObjectBoxModel() {
               telefono: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 14),
               celular: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 16),
+                  .vTableGet(buffer, rootOffset, 16, ''),
+              curp: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 56, ''),
               correo: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 18, ''),
-              password: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 20, ''),
-              fechaRegistro:
-                  DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0)),
-              archivado: const fb.BoolReader().vTableGet(buffer, rootOffset, 40, false),
-              idDBR: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 34),
+              password:
+                  const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 20, ''),
+              fechaNacimiento: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 58, 0)),
+              fechaRegistro: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0)),
+              idDBR: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 34, ''),
               idEmiWeb: const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 52, ''));
           object.rol.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 50, 0);
@@ -4428,16 +4431,13 @@ ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (Roles object, fb.Builder fbb) {
           final rolOffset = fbb.writeString(object.rol);
-          final idDBROffset =
-              object.idDBR == null ? null : fbb.writeString(object.idDBR!);
-          final idEmiWebOffset = fbb.writeString(object.idEmiWeb);
+          final idDBROffset = fbb.writeString(object.idDBR);
           fbb.startTable(8);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, rolOffset);
           fbb.addInt64(2, object.fechaRegistro.millisecondsSinceEpoch);
           fbb.addOffset(3, idDBROffset);
           fbb.addInt64(5, object.bitacora.targetId);
-          fbb.addOffset(6, idEmiWebOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4452,9 +4452,7 @@ ModelDefinition getObjectBoxModel() {
               fechaRegistro: DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
               idDBR: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 10),
-              idEmiWeb: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 16, ''));
+                  .vTableGet(buffer, rootOffset, 10, ''));
           object.bitacora.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
           object.bitacora.attach(store);
@@ -5832,21 +5830,25 @@ class Usuarios_ {
   static final idDBR =
       QueryStringProperty<Usuarios>(_entities[1].properties[9]);
 
-  /// see [Usuarios.archivado]
-  static final archivado =
-      QueryBooleanProperty<Usuarios>(_entities[1].properties[10]);
-
   /// see [Usuarios.rol]
   static final rol =
-      QueryRelationToOne<Usuarios, Roles>(_entities[1].properties[11]);
+      QueryRelationToOne<Usuarios, Roles>(_entities[1].properties[10]);
 
   /// see [Usuarios.idEmiWeb]
   static final idEmiWeb =
-      QueryStringProperty<Usuarios>(_entities[1].properties[12]);
+      QueryStringProperty<Usuarios>(_entities[1].properties[11]);
 
   /// see [Usuarios.imagen]
   static final imagen =
-      QueryRelationToOne<Usuarios, Imagenes>(_entities[1].properties[13]);
+      QueryRelationToOne<Usuarios, Imagenes>(_entities[1].properties[12]);
+
+  /// see [Usuarios.curp]
+  static final curp =
+      QueryStringProperty<Usuarios>(_entities[1].properties[13]);
+
+  /// see [Usuarios.fechaNacimiento]
+  static final fechaNacimiento =
+      QueryIntegerProperty<Usuarios>(_entities[1].properties[14]);
 
   /// see [Usuarios.bitacora]
   static final bitacora =
@@ -6522,10 +6524,6 @@ class Roles_ {
   /// see [Roles.bitacora]
   static final bitacora =
       QueryRelationToOne<Roles, Bitacora>(_entities[18].properties[4]);
-
-  /// see [Roles.idEmiWeb]
-  static final idEmiWeb =
-      QueryStringProperty<Roles>(_entities[18].properties[5]);
 
   /// see [Roles.usuarios]
   static final usuarios =

@@ -17,5 +17,5 @@ Future<void> initGlobals() async {
   prefs = await SharedPreferences.getInstance();
 }
 
-final supabase = Supabase.instance.client;
+
 
